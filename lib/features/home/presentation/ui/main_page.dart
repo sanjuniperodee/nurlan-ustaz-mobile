@@ -11,6 +11,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFB1AFAF),
       appBar: AppBar(title: const Text('ГЛАВНЫЙ')),
     );
   }

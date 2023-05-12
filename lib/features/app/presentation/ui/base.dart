@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/main_page.dart';
 
 class Base extends StatefulWidget {
@@ -19,42 +20,81 @@ class _BaseState extends State<Base> {
   int _currentIndex = 0;
 
   final List<Widget> _children = [
-    MainPage(),
-    MainPage(),
-    MainPage(),
+    const MainPage(),
+    const MainPage(),
+    const MainPage(),
+    const MainPage(),
+    const MainPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFB1AFAF),
       body: _children[_currentIndex],
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          onTabTapped(1);
-        },
-        tooltip: "Add Savings",
-        elevation: 0,
-        backgroundColor: Colors.white,
-        child: const Icon(Icons.attach_money, color: Colors.indigo),
+      bottomNavigationBar: ClipRRect(
+        borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(30), topRight: Radius.circular(30)),
+        child: SizedBox(
+          height: 124,
+          child: BottomNavigationBar(
+              showUnselectedLabels: true,
+              type: BottomNavigationBarType.fixed,
+              selectedItemColor: Color(0xFFF9A502),
+              unselectedItemColor: Color(0xFF252525),
+              onTap: onTabTapped,
+              currentIndex: _currentIndex,
+              items: [
+                BottomNavigationBarItem(
+                  icon: SvgPicture.asset(
+                    'assets/icons/home.svg',
+                  ),
+                  label: "Басты бет",
+                ),
+                BottomNavigationBarItem(
+                  icon: SvgPicture.asset(
+                    'assets/icons/book.svg',
+                  ),
+                  label: "Ислам ілімі",
+                ),
+                BottomNavigationBarItem(
+                    icon: Column(
+                      children: [
+                        SvgPicture.asset(
+                          'assets/icons/moon.svg',
+                          height: 55,
+                        ),
+                        SizedBox(
+                          height: 7,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 16.0),
+                          child: Text(
+                            'Түс жору',
+                            style: TextStyle(
+                                color: _currentIndex == 2
+                                    ? Color(0xFFF9A502)
+                                    : Color(0xFF252525)),
+                          ),
+                        )
+                      ],
+                    ),
+                    label: ''),
+                BottomNavigationBarItem(
+                  icon: SvgPicture.asset(
+                    'assets/icons/book2.svg',
+                  ),
+                  label: "Таңдаулылар",
+                ),
+                BottomNavigationBarItem(
+                  icon: SvgPicture.asset(
+                    'assets/icons/calendar.svg',
+                  ),
+                  label: "Жоспарлар",
+                ),
+              ]),
+        ),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomNavigationBar(
-          onTap: onTabTapped,
-          currentIndex: _currentIndex,
-          items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: "Home",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.attach_money),
-              label: "Save",
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.account_circle),
-              label: "Profile",
-            ),
-          ]),
     );
   }
 
