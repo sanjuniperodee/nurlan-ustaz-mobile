@@ -150,6 +150,10 @@ flutter_screenutil
 2.12
 file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/flutter_screenutil-5.8.0/
 file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/flutter_screenutil-5.8.0/lib/
+flutter_svg
+2.17
+file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/flutter_svg-1.1.6/
+file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/flutter_svg-1.1.6/lib/
 freezed
 2.17
 file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/freezed-2.3.3/
@@ -270,6 +274,14 @@ path
 2.12
 file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/path-1.8.2/
 file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/path-1.8.2/lib/
+path_drawing
+2.12
+file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/path_drawing-1.0.1/
+file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/path_drawing-1.0.1/lib/
+path_parsing
+2.12
+file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/path_parsing-1.0.1/
+file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/path_parsing-1.0.1/lib/
 path_provider
 2.17
 file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/path_provider-2.0.15/
@@ -474,6 +486,10 @@ yaml
 2.12
 file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/yaml-3.1.1/
 file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/yaml-3.1.1/lib/
+nurlan_ustaz_flutter
+2.18
+file:///Users/nurgeldisertai/Elefanto%20PRJ/nurlan_ustaz_flutter/
+file:///Users/nurgeldisertai/Elefanto%20PRJ/nurlan_ustaz_flutter/lib/
 sky_engine
 2.12
 file:///Users/nurgeldisertai/flutter/bin/cache/pkg/sky_engine/
@@ -494,8 +510,4 @@ flutter_web_plugins
 2.17
 file:///Users/nurgeldisertai/flutter/packages/flutter_web_plugins/
 file:///Users/nurgeldisertai/flutter/packages/flutter_web_plugins/lib/
-nurlan_ustaz_flutter
-2.18
-file:///Users/nurgeldisertai/nurlan_ustaz_flutter/
-file:///Users/nurgeldisertai/nurlan_ustaz_flutter/lib/
 2
