@@ -5,8 +5,6 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import 'package:hive/hive.dart';
-import 'package:hive_flutter/hive_flutter.dart';
 import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 
 typedef AsyncDependencies<D> = Future<D> Function();
@@ -33,12 +31,12 @@ mixin MainRunner {
     // ignore: avoid-ignoring-return-values
     WidgetsFlutterBinding.ensureInitialized();
     await initLocator();
-    await Hive.initFlutter();
+
     // await Firebase.initializeApp(
     //   options: DefaultFirebaseOptions.currentPlatform,
     // );
     // await NotificationService().init();
-    
+
     // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
     final app = await _initApp(shouldSend, asyncDependencies, appBuilder);

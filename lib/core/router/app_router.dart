@@ -1,0 +1,28 @@
+import 'package:auto_route/auto_route.dart';
+import 'package:flutter/material.dart';
+import 'package:auto_route/empty_router_widgets.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/launcher.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/main_page.dart';
+part 'app_router.gr.dart';
+
+@MaterialAutoRouter(
+  // replaceInRouteName: 'Page,Route',
+
+  routes: <AutoRoute>[
+    AutoRoute(
+      page: LauncherApp,
+      initial: true,
+      children: [
+        AutoRoute(page: MainPage, name: 'MainRouterPage'),
+        // AutoRoute(
+        //   page: EmptyRouterPage,
+        //   name: 'BaseHomeRouter',
+        //   children: [
+        //     AutoRoute(page:  MainPage(), initial: true),
+        //   ],
+        // ),
+      ],
+    ),
+  ],
+)
+class AppRouter extends _$AppRouter {}

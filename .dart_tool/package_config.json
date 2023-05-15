@@ -27,13 +27,13 @@
     },
     {
       "name": "auto_route",
-      "rootUri": "file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/auto_route-6.4.0",
+      "rootUri": "file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/auto_route-5.0.4",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
     {
       "name": "auto_route_generator",
-      "rootUri": "file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/auto_route_generator-6.0.0",
+      "rootUri": "file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/auto_route_generator-5.0.3",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -234,12 +234,6 @@
       "rootUri": "file:///Users/nurgeldisertai/flutter/packages/flutter_localizations",
       "packageUri": "lib/",
       "languageVersion": "2.17"
-    },
-    {
-      "name": "flutter_screenutil",
-      "rootUri": "file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/flutter_screenutil-5.8.0",
-      "packageUri": "lib/",
-      "languageVersion": "2.12"
     },
     {
       "name": "flutter_svg",
@@ -770,7 +764,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-05-15T04:46:16.301106Z",
+  "generated": "2023-05-15T08:48:39.379316Z",
   "generator": "pub",
   "generatorVersion": "2.18.5"
 }

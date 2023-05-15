@@ -30,19 +30,19 @@ packages:
     source: hosted
     version: "2.9.0"
   auto_route:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: auto_route
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.4.0"
+    version: "5.0.4"
   auto_route_generator:
     dependency: "direct dev"
     description:
       name: auto_route_generator
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.0"
+    version: "5.0.3"
   bloc:
     dependency: transitive
     description:
@@ -270,13 +270,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_screenutil:
-    dependency: "direct main"
-    description:
-      name: flutter_screenutil
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "5.8.0"
   flutter_svg:
     dependency: "direct main"
     description:
