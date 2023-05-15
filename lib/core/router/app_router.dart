@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:auto_route/empty_router_widgets.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/launcher.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/main_page.dart';
 part 'app_router.gr.dart';

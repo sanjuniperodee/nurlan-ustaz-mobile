@@ -3,12 +3,13 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+
 import 'package:nurlan_ustaz_flutter/features/app/logic/not_auth_logic.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/repositories/auth_repository.dart';
 
 part 'app_bloc.freezed.dart';
-part 'app_state.dart';
 part 'app_event.dart';
+part 'app_state.dart';
 
 const _tag = 'AppBloc';
 

@@ -49,7 +49,7 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
 
   #ui
-  # flutter_screenutil: ^5.7.0
+  flutter_screenutil: ^5.7.0
   flutter_svg: ^1.1.6
 
   json_annotation: ^4.7.0
