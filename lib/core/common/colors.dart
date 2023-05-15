@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-const NO_INTERNET_TEXT = 'no_internet_text'; //'Нет интернета!';
+const noInternetText = 'no_internet_text'; //'Нет интернета!';
 class AppColors {
   AppColors._(); // this basically makes it so you can't instantiate this class
   static const Color background = Color(0xFFE5E5E5);

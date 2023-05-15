@@ -1,5 +1,6 @@
 // ignore_for_file: constant_identifier_names
 
+// ignore: depend_on_referenced_packages
 import 'package:equatable/equatable.dart';
 
 abstract class Failure extends Equatable {

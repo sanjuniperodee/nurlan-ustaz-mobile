@@ -13,6 +13,7 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:shared_preferences/shared_preferences.dart' as _i4;
 
+import '../../features/app/bloc/app_bloc.dart' as _i9;
 import '../../features/app/logic/not_auth_logic.dart' as _i8;
 import '../../features/auth/data/datasource/local/auth_local_ds.dart' as _i3;
 import '../../features/auth/data/datasource/remote/auth_remote_ds.dart' as _i5;
@@ -39,6 +40,10 @@ extension GetItInjectableX on _i1.GetIt {
       localDS: gh<_i3.AuthLocalDs>(),
     ));
     gh.singleton<_i8.NotAuthLogic>(_i8.NotAuthLogic());
+    gh.singleton<_i9.AppBloc>(_i9.AppBloc(
+      gh<_i7.AuthRepository>(),
+      gh<_i8.NotAuthLogic>(),
+    ));
     return this;
   }
 }
