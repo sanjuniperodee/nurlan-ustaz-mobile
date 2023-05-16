@@ -1,4 +1,16 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
+import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
+import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
+import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_appbar_widget.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/main_button.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/models/banner_local_model.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -8,11 +20,282 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  List<BannerLocalModel> list = [
+    BannerLocalModel(title: 'Семинар', url: Assets.banner1Svg),
+    BannerLocalModel(title: 'Қайырымдылық', url: Assets.banner2Svg),
+    BannerLocalModel(title: 'Қызметтер', url: Assets.banner3Svg),
+    BannerLocalModel(title: 'Тікелей эфир', url: Assets.banner4Svg),
+    BannerLocalModel(title: 'Дүңгрішек', url: Assets.banner5Svg),
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFF2F8FF),
-      appBar: AppBar(title: const Text('ГЛАВНЫЙ')),
+      body: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: SizedBox(
+          height: 1.1.sh,
+          child: Stack(
+            children: [
+              const GlobalAppBar(),
+              Positioned(
+                top: 80.h,
+                left: 16.r,
+                right: 16.r,
+                child: SizedBox(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Image.asset(
+                            Assets.logoNurlan,
+                            width: 145.w,
+                            height: 39.h,
+                          ),
+                          Row(
+                            children: [
+                              SvgPicture.asset(Assets.notiSvg),
+                              SizedBox(
+                                width: 8.r,
+                              ),
+                              SvgPicture.asset(Assets.userSvg),
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 32.h),
+                      SizedBox(
+                        height: 56.h,
+                        width: 1.sw,
+                        child: ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          physics: const BouncingScrollPhysics(),
+                          itemCount: list.length,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                context.router.push(
+                                  const SeminarPageRoute(),
+                                );
+                              },
+                              child: Padding(
+                                padding: EdgeInsets.only(right: 8.r),
+                                child: Container(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 10.r),
+                                  height: 56,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.white,
+                                    borderRadius: BorderRadius.circular(75),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      SvgPicture.asset(list[index].url),
+                                      SizedBox(width: 8.r),
+                                      Text(
+                                        list[index].title,
+                                        style: AppStyles.sp14fw400,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      SizedBox(height: 20.h),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          InkWell(
+                            onTap: () {},
+                            child: Align(
+                              alignment: Alignment.centerLeft,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Алматы, 7 наурыз 2023',
+                                    style: AppStyles.sp14fw400,
+                                  ),
+                                  // SizedBox(
+                                  //   width: 175.w,
+                                  // ),
+                                  SvgPicture.asset(Assets.arrowUpOutlineSvg),
+                                ],
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 16.h,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  SvgPicture.asset(Assets.shalatSvg),
+                                  SizedBox(
+                                    width: 10.r,
+                                  ),
+                                  Text(
+                                    'Таң намазы уақыты',
+                                    style: AppStyles.sp16fw400
+                                        .apply(color: AppColors.black),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    '05 : 11',
+                                    style: AppStyles.sp16fw400
+                                        .apply(color: AppColors.blue),
+                                  ),
+                                  Text(
+                                    '– 00 : 53 : 29',
+                                    style: AppStyles.sp12fw400
+                                        .apply(color: AppColors.black),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 15.h,
+                          ),
+                          AppButton(
+                            onTap: () {},
+                            text: 'Түс жору',
+                            color: const Color(0xFF2941F4),
+                          ),
+                          SizedBox(height: 16.h),
+                          const MainButton(
+                            text: 'Ұстаз айтыңызшы...',
+                          ),
+                          SizedBox(height: 16.h),
+                          Container(
+                            width: 1.sw,
+                            decoration: BoxDecoration(
+                                gradient: const LinearGradient(
+                                  begin: Alignment.topRight,
+                                  end: Alignment.bottomRight,
+                                  colors: [
+                                    Color(0xFFFAE0AB),
+                                    Color(0xFFF9A502),
+                                  ],
+                                ),
+                                borderRadius: BorderRadius.circular(24)),
+                            padding: EdgeInsets.only(
+                                top: 19.r,
+                                bottom: 19.r,
+                                left: 92.r,
+                                right: 92.r),
+                            child: Column(
+                              children: [
+                                SvgPicture.asset(Assets.boxStorySvg),
+                                SizedBox(
+                                  height: 12.h,
+                                ),
+                                Text(
+                                  'Бола ма?\nБолмай ма?',
+                                  textAlign: TextAlign.center,
+                                  style: AppStyles.sp22fw700
+                                      .apply(color: AppColors.white),
+                                )
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 16.h),
+                          const MainButton(
+                            text: 'Жаңалықтар',
+                          ),
+                          SizedBox(height: 16.h),
+                          SizedBox(
+                            height: 210.h,
+                            width: 1.sw,
+                            child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              physics: const BouncingScrollPhysics(),
+                              itemCount: 9,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: EdgeInsets.only(right: 12.r),
+                                  child: Container(
+                                    height: 66.h,
+                                    width: 200.w,
+                                    decoration: BoxDecoration(
+                                      color: AppColors.white,
+                                      borderRadius: BorderRadius.circular(30),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(30),
+                                          child: Image.asset(
+                                            Assets.Islam,
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        SizedBox(width: 12.r),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 12.r,
+                                              top: 4.r,
+                                              bottom: 4.r),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              SizedBox(height: 2.h),
+                                              Text(
+                                                'Жаңалық тақырыбы',
+                                                style: AppStyles.sp14fw400
+                                                    .apply(
+                                                        color: AppColors.black),
+                                              ),
+                                              SizedBox(height: 2.h),
+                                              Text(
+                                                '10.02.2023',
+                                                style: AppStyles.sp12fw400
+                                                    .apply(
+                                                        color: AppColors.grey),
+                                              ),
+                                              SizedBox(height: 4.h),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }

@@ -15,6 +15,844 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
+mixin _$AppEvent {
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() checkAuth,
+    required TResult Function() onboardingSave,
+    required TResult Function() logining,
+    required TResult Function() refreshLocal,
+    required TResult Function() exiting,
+    required TResult Function() deleting,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? checkAuth,
+    TResult? Function()? onboardingSave,
+    TResult? Function()? logining,
+    TResult? Function()? refreshLocal,
+    TResult? Function()? exiting,
+    TResult? Function()? deleting,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? checkAuth,
+    TResult Function()? onboardingSave,
+    TResult Function()? logining,
+    TResult Function()? refreshLocal,
+    TResult Function()? exiting,
+    TResult Function()? deleting,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_CheckAuth value) checkAuth,
+    required TResult Function(_OnboardingSave value) onboardingSave,
+    required TResult Function(_Logining value) logining,
+    required TResult Function(_RefreshLocal value) refreshLocal,
+    required TResult Function(_Exiting value) exiting,
+    required TResult Function(_Deleting value) deleting,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_CheckAuth value)? checkAuth,
+    TResult? Function(_OnboardingSave value)? onboardingSave,
+    TResult? Function(_Logining value)? logining,
+    TResult? Function(_RefreshLocal value)? refreshLocal,
+    TResult? Function(_Exiting value)? exiting,
+    TResult? Function(_Deleting value)? deleting,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_CheckAuth value)? checkAuth,
+    TResult Function(_OnboardingSave value)? onboardingSave,
+    TResult Function(_Logining value)? logining,
+    TResult Function(_RefreshLocal value)? refreshLocal,
+    TResult Function(_Exiting value)? exiting,
+    TResult Function(_Deleting value)? deleting,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $AppEventCopyWith<$Res> {
+  factory $AppEventCopyWith(AppEvent value, $Res Function(AppEvent) then) =
+      _$AppEventCopyWithImpl<$Res, AppEvent>;
+}
+
+/// @nodoc
+class _$AppEventCopyWithImpl<$Res, $Val extends AppEvent>
+    implements $AppEventCopyWith<$Res> {
+  _$AppEventCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+}
+
+/// @nodoc
+abstract class _$$_CheckAuthCopyWith<$Res> {
+  factory _$$_CheckAuthCopyWith(
+          _$_CheckAuth value, $Res Function(_$_CheckAuth) then) =
+      __$$_CheckAuthCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_CheckAuthCopyWithImpl<$Res>
+    extends _$AppEventCopyWithImpl<$Res, _$_CheckAuth>
+    implements _$$_CheckAuthCopyWith<$Res> {
+  __$$_CheckAuthCopyWithImpl(
+      _$_CheckAuth _value, $Res Function(_$_CheckAuth) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_CheckAuth implements _CheckAuth {
+  const _$_CheckAuth();
+
+  @override
+  String toString() {
+    return 'AppEvent.checkAuth()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_CheckAuth);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() checkAuth,
+    required TResult Function() onboardingSave,
+    required TResult Function() logining,
+    required TResult Function() refreshLocal,
+    required TResult Function() exiting,
+    required TResult Function() deleting,
+  }) {
+    return checkAuth();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? checkAuth,
+    TResult? Function()? onboardingSave,
+    TResult? Function()? logining,
+    TResult? Function()? refreshLocal,
+    TResult? Function()? exiting,
+    TResult? Function()? deleting,
+  }) {
+    return checkAuth?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? checkAuth,
+    TResult Function()? onboardingSave,
+    TResult Function()? logining,
+    TResult Function()? refreshLocal,
+    TResult Function()? exiting,
+    TResult Function()? deleting,
+    required TResult orElse(),
+  }) {
+    if (checkAuth != null) {
+      return checkAuth();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_CheckAuth value) checkAuth,
+    required TResult Function(_OnboardingSave value) onboardingSave,
+    required TResult Function(_Logining value) logining,
+    required TResult Function(_RefreshLocal value) refreshLocal,
+    required TResult Function(_Exiting value) exiting,
+    required TResult Function(_Deleting value) deleting,
+  }) {
+    return checkAuth(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_CheckAuth value)? checkAuth,
+    TResult? Function(_OnboardingSave value)? onboardingSave,
+    TResult? Function(_Logining value)? logining,
+    TResult? Function(_RefreshLocal value)? refreshLocal,
+    TResult? Function(_Exiting value)? exiting,
+    TResult? Function(_Deleting value)? deleting,
+  }) {
+    return checkAuth?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_CheckAuth value)? checkAuth,
+    TResult Function(_OnboardingSave value)? onboardingSave,
+    TResult Function(_Logining value)? logining,
+    TResult Function(_RefreshLocal value)? refreshLocal,
+    TResult Function(_Exiting value)? exiting,
+    TResult Function(_Deleting value)? deleting,
+    required TResult orElse(),
+  }) {
+    if (checkAuth != null) {
+      return checkAuth(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _CheckAuth implements AppEvent {
+  const factory _CheckAuth() = _$_CheckAuth;
+}
+
+/// @nodoc
+abstract class _$$_OnboardingSaveCopyWith<$Res> {
+  factory _$$_OnboardingSaveCopyWith(
+          _$_OnboardingSave value, $Res Function(_$_OnboardingSave) then) =
+      __$$_OnboardingSaveCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_OnboardingSaveCopyWithImpl<$Res>
+    extends _$AppEventCopyWithImpl<$Res, _$_OnboardingSave>
+    implements _$$_OnboardingSaveCopyWith<$Res> {
+  __$$_OnboardingSaveCopyWithImpl(
+      _$_OnboardingSave _value, $Res Function(_$_OnboardingSave) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_OnboardingSave implements _OnboardingSave {
+  const _$_OnboardingSave();
+
+  @override
+  String toString() {
+    return 'AppEvent.onboardingSave()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_OnboardingSave);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() checkAuth,
+    required TResult Function() onboardingSave,
+    required TResult Function() logining,
+    required TResult Function() refreshLocal,
+    required TResult Function() exiting,
+    required TResult Function() deleting,
+  }) {
+    return onboardingSave();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? checkAuth,
+    TResult? Function()? onboardingSave,
+    TResult? Function()? logining,
+    TResult? Function()? refreshLocal,
+    TResult? Function()? exiting,
+    TResult? Function()? deleting,
+  }) {
+    return onboardingSave?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? checkAuth,
+    TResult Function()? onboardingSave,
+    TResult Function()? logining,
+    TResult Function()? refreshLocal,
+    TResult Function()? exiting,
+    TResult Function()? deleting,
+    required TResult orElse(),
+  }) {
+    if (onboardingSave != null) {
+      return onboardingSave();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_CheckAuth value) checkAuth,
+    required TResult Function(_OnboardingSave value) onboardingSave,
+    required TResult Function(_Logining value) logining,
+    required TResult Function(_RefreshLocal value) refreshLocal,
+    required TResult Function(_Exiting value) exiting,
+    required TResult Function(_Deleting value) deleting,
+  }) {
+    return onboardingSave(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_CheckAuth value)? checkAuth,
+    TResult? Function(_OnboardingSave value)? onboardingSave,
+    TResult? Function(_Logining value)? logining,
+    TResult? Function(_RefreshLocal value)? refreshLocal,
+    TResult? Function(_Exiting value)? exiting,
+    TResult? Function(_Deleting value)? deleting,
+  }) {
+    return onboardingSave?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_CheckAuth value)? checkAuth,
+    TResult Function(_OnboardingSave value)? onboardingSave,
+    TResult Function(_Logining value)? logining,
+    TResult Function(_RefreshLocal value)? refreshLocal,
+    TResult Function(_Exiting value)? exiting,
+    TResult Function(_Deleting value)? deleting,
+    required TResult orElse(),
+  }) {
+    if (onboardingSave != null) {
+      return onboardingSave(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _OnboardingSave implements AppEvent {
+  const factory _OnboardingSave() = _$_OnboardingSave;
+}
+
+/// @nodoc
+abstract class _$$_LoginingCopyWith<$Res> {
+  factory _$$_LoginingCopyWith(
+          _$_Logining value, $Res Function(_$_Logining) then) =
+      __$$_LoginingCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_LoginingCopyWithImpl<$Res>
+    extends _$AppEventCopyWithImpl<$Res, _$_Logining>
+    implements _$$_LoginingCopyWith<$Res> {
+  __$$_LoginingCopyWithImpl(
+      _$_Logining _value, $Res Function(_$_Logining) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_Logining implements _Logining {
+  const _$_Logining();
+
+  @override
+  String toString() {
+    return 'AppEvent.logining()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_Logining);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() checkAuth,
+    required TResult Function() onboardingSave,
+    required TResult Function() logining,
+    required TResult Function() refreshLocal,
+    required TResult Function() exiting,
+    required TResult Function() deleting,
+  }) {
+    return logining();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? checkAuth,
+    TResult? Function()? onboardingSave,
+    TResult? Function()? logining,
+    TResult? Function()? refreshLocal,
+    TResult? Function()? exiting,
+    TResult? Function()? deleting,
+  }) {
+    return logining?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? checkAuth,
+    TResult Function()? onboardingSave,
+    TResult Function()? logining,
+    TResult Function()? refreshLocal,
+    TResult Function()? exiting,
+    TResult Function()? deleting,
+    required TResult orElse(),
+  }) {
+    if (logining != null) {
+      return logining();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_CheckAuth value) checkAuth,
+    required TResult Function(_OnboardingSave value) onboardingSave,
+    required TResult Function(_Logining value) logining,
+    required TResult Function(_RefreshLocal value) refreshLocal,
+    required TResult Function(_Exiting value) exiting,
+    required TResult Function(_Deleting value) deleting,
+  }) {
+    return logining(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_CheckAuth value)? checkAuth,
+    TResult? Function(_OnboardingSave value)? onboardingSave,
+    TResult? Function(_Logining value)? logining,
+    TResult? Function(_RefreshLocal value)? refreshLocal,
+    TResult? Function(_Exiting value)? exiting,
+    TResult? Function(_Deleting value)? deleting,
+  }) {
+    return logining?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_CheckAuth value)? checkAuth,
+    TResult Function(_OnboardingSave value)? onboardingSave,
+    TResult Function(_Logining value)? logining,
+    TResult Function(_RefreshLocal value)? refreshLocal,
+    TResult Function(_Exiting value)? exiting,
+    TResult Function(_Deleting value)? deleting,
+    required TResult orElse(),
+  }) {
+    if (logining != null) {
+      return logining(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Logining implements AppEvent {
+  const factory _Logining() = _$_Logining;
+}
+
+/// @nodoc
+abstract class _$$_RefreshLocalCopyWith<$Res> {
+  factory _$$_RefreshLocalCopyWith(
+          _$_RefreshLocal value, $Res Function(_$_RefreshLocal) then) =
+      __$$_RefreshLocalCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_RefreshLocalCopyWithImpl<$Res>
+    extends _$AppEventCopyWithImpl<$Res, _$_RefreshLocal>
+    implements _$$_RefreshLocalCopyWith<$Res> {
+  __$$_RefreshLocalCopyWithImpl(
+      _$_RefreshLocal _value, $Res Function(_$_RefreshLocal) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_RefreshLocal implements _RefreshLocal {
+  const _$_RefreshLocal();
+
+  @override
+  String toString() {
+    return 'AppEvent.refreshLocal()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_RefreshLocal);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() checkAuth,
+    required TResult Function() onboardingSave,
+    required TResult Function() logining,
+    required TResult Function() refreshLocal,
+    required TResult Function() exiting,
+    required TResult Function() deleting,
+  }) {
+    return refreshLocal();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? checkAuth,
+    TResult? Function()? onboardingSave,
+    TResult? Function()? logining,
+    TResult? Function()? refreshLocal,
+    TResult? Function()? exiting,
+    TResult? Function()? deleting,
+  }) {
+    return refreshLocal?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? checkAuth,
+    TResult Function()? onboardingSave,
+    TResult Function()? logining,
+    TResult Function()? refreshLocal,
+    TResult Function()? exiting,
+    TResult Function()? deleting,
+    required TResult orElse(),
+  }) {
+    if (refreshLocal != null) {
+      return refreshLocal();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_CheckAuth value) checkAuth,
+    required TResult Function(_OnboardingSave value) onboardingSave,
+    required TResult Function(_Logining value) logining,
+    required TResult Function(_RefreshLocal value) refreshLocal,
+    required TResult Function(_Exiting value) exiting,
+    required TResult Function(_Deleting value) deleting,
+  }) {
+    return refreshLocal(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_CheckAuth value)? checkAuth,
+    TResult? Function(_OnboardingSave value)? onboardingSave,
+    TResult? Function(_Logining value)? logining,
+    TResult? Function(_RefreshLocal value)? refreshLocal,
+    TResult? Function(_Exiting value)? exiting,
+    TResult? Function(_Deleting value)? deleting,
+  }) {
+    return refreshLocal?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_CheckAuth value)? checkAuth,
+    TResult Function(_OnboardingSave value)? onboardingSave,
+    TResult Function(_Logining value)? logining,
+    TResult Function(_RefreshLocal value)? refreshLocal,
+    TResult Function(_Exiting value)? exiting,
+    TResult Function(_Deleting value)? deleting,
+    required TResult orElse(),
+  }) {
+    if (refreshLocal != null) {
+      return refreshLocal(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _RefreshLocal implements AppEvent {
+  const factory _RefreshLocal() = _$_RefreshLocal;
+}
+
+/// @nodoc
+abstract class _$$_ExitingCopyWith<$Res> {
+  factory _$$_ExitingCopyWith(
+          _$_Exiting value, $Res Function(_$_Exiting) then) =
+      __$$_ExitingCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_ExitingCopyWithImpl<$Res>
+    extends _$AppEventCopyWithImpl<$Res, _$_Exiting>
+    implements _$$_ExitingCopyWith<$Res> {
+  __$$_ExitingCopyWithImpl(_$_Exiting _value, $Res Function(_$_Exiting) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_Exiting implements _Exiting {
+  const _$_Exiting();
+
+  @override
+  String toString() {
+    return 'AppEvent.exiting()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_Exiting);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() checkAuth,
+    required TResult Function() onboardingSave,
+    required TResult Function() logining,
+    required TResult Function() refreshLocal,
+    required TResult Function() exiting,
+    required TResult Function() deleting,
+  }) {
+    return exiting();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? checkAuth,
+    TResult? Function()? onboardingSave,
+    TResult? Function()? logining,
+    TResult? Function()? refreshLocal,
+    TResult? Function()? exiting,
+    TResult? Function()? deleting,
+  }) {
+    return exiting?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? checkAuth,
+    TResult Function()? onboardingSave,
+    TResult Function()? logining,
+    TResult Function()? refreshLocal,
+    TResult Function()? exiting,
+    TResult Function()? deleting,
+    required TResult orElse(),
+  }) {
+    if (exiting != null) {
+      return exiting();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_CheckAuth value) checkAuth,
+    required TResult Function(_OnboardingSave value) onboardingSave,
+    required TResult Function(_Logining value) logining,
+    required TResult Function(_RefreshLocal value) refreshLocal,
+    required TResult Function(_Exiting value) exiting,
+    required TResult Function(_Deleting value) deleting,
+  }) {
+    return exiting(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_CheckAuth value)? checkAuth,
+    TResult? Function(_OnboardingSave value)? onboardingSave,
+    TResult? Function(_Logining value)? logining,
+    TResult? Function(_RefreshLocal value)? refreshLocal,
+    TResult? Function(_Exiting value)? exiting,
+    TResult? Function(_Deleting value)? deleting,
+  }) {
+    return exiting?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_CheckAuth value)? checkAuth,
+    TResult Function(_OnboardingSave value)? onboardingSave,
+    TResult Function(_Logining value)? logining,
+    TResult Function(_RefreshLocal value)? refreshLocal,
+    TResult Function(_Exiting value)? exiting,
+    TResult Function(_Deleting value)? deleting,
+    required TResult orElse(),
+  }) {
+    if (exiting != null) {
+      return exiting(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Exiting implements AppEvent {
+  const factory _Exiting() = _$_Exiting;
+}
+
+/// @nodoc
+abstract class _$$_DeletingCopyWith<$Res> {
+  factory _$$_DeletingCopyWith(
+          _$_Deleting value, $Res Function(_$_Deleting) then) =
+      __$$_DeletingCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_DeletingCopyWithImpl<$Res>
+    extends _$AppEventCopyWithImpl<$Res, _$_Deleting>
+    implements _$$_DeletingCopyWith<$Res> {
+  __$$_DeletingCopyWithImpl(
+      _$_Deleting _value, $Res Function(_$_Deleting) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_Deleting implements _Deleting {
+  const _$_Deleting();
+
+  @override
+  String toString() {
+    return 'AppEvent.deleting()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_Deleting);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() checkAuth,
+    required TResult Function() onboardingSave,
+    required TResult Function() logining,
+    required TResult Function() refreshLocal,
+    required TResult Function() exiting,
+    required TResult Function() deleting,
+  }) {
+    return deleting();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? checkAuth,
+    TResult? Function()? onboardingSave,
+    TResult? Function()? logining,
+    TResult? Function()? refreshLocal,
+    TResult? Function()? exiting,
+    TResult? Function()? deleting,
+  }) {
+    return deleting?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? checkAuth,
+    TResult Function()? onboardingSave,
+    TResult Function()? logining,
+    TResult Function()? refreshLocal,
+    TResult Function()? exiting,
+    TResult Function()? deleting,
+    required TResult orElse(),
+  }) {
+    if (deleting != null) {
+      return deleting();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_CheckAuth value) checkAuth,
+    required TResult Function(_OnboardingSave value) onboardingSave,
+    required TResult Function(_Logining value) logining,
+    required TResult Function(_RefreshLocal value) refreshLocal,
+    required TResult Function(_Exiting value) exiting,
+    required TResult Function(_Deleting value) deleting,
+  }) {
+    return deleting(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_CheckAuth value)? checkAuth,
+    TResult? Function(_OnboardingSave value)? onboardingSave,
+    TResult? Function(_Logining value)? logining,
+    TResult? Function(_RefreshLocal value)? refreshLocal,
+    TResult? Function(_Exiting value)? exiting,
+    TResult? Function(_Deleting value)? deleting,
+  }) {
+    return deleting?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_CheckAuth value)? checkAuth,
+    TResult Function(_OnboardingSave value)? onboardingSave,
+    TResult Function(_Logining value)? logining,
+    TResult Function(_RefreshLocal value)? refreshLocal,
+    TResult Function(_Exiting value)? exiting,
+    TResult Function(_Deleting value)? deleting,
+    required TResult orElse(),
+  }) {
+    if (deleting != null) {
+      return deleting(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _Deleting implements AppEvent {
+  const factory _Deleting() = _$_Deleting;
+}
+
+/// @nodoc
 mixin _$AppState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
@@ -882,842 +1720,4 @@ abstract class _ErrorState implements AppState {
   @JsonKey(ignore: true)
   _$$_ErrorStateCopyWith<_$_ErrorState> get copyWith =>
       throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-mixin _$AppEvent {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() checkAuth,
-    required TResult Function() onboardingSave,
-    required TResult Function() logining,
-    required TResult Function() refreshLocal,
-    required TResult Function() exiting,
-    required TResult Function() deleting,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? checkAuth,
-    TResult? Function()? onboardingSave,
-    TResult? Function()? logining,
-    TResult? Function()? refreshLocal,
-    TResult? Function()? exiting,
-    TResult? Function()? deleting,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? checkAuth,
-    TResult Function()? onboardingSave,
-    TResult Function()? logining,
-    TResult Function()? refreshLocal,
-    TResult Function()? exiting,
-    TResult Function()? deleting,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_CheckAuth value) checkAuth,
-    required TResult Function(_OnboardingSave value) onboardingSave,
-    required TResult Function(_Logining value) logining,
-    required TResult Function(_RefreshLocal value) refreshLocal,
-    required TResult Function(_Exiting value) exiting,
-    required TResult Function(_Deleting value) deleting,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_CheckAuth value)? checkAuth,
-    TResult? Function(_OnboardingSave value)? onboardingSave,
-    TResult? Function(_Logining value)? logining,
-    TResult? Function(_RefreshLocal value)? refreshLocal,
-    TResult? Function(_Exiting value)? exiting,
-    TResult? Function(_Deleting value)? deleting,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_CheckAuth value)? checkAuth,
-    TResult Function(_OnboardingSave value)? onboardingSave,
-    TResult Function(_Logining value)? logining,
-    TResult Function(_RefreshLocal value)? refreshLocal,
-    TResult Function(_Exiting value)? exiting,
-    TResult Function(_Deleting value)? deleting,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $AppEventCopyWith<$Res> {
-  factory $AppEventCopyWith(AppEvent value, $Res Function(AppEvent) then) =
-      _$AppEventCopyWithImpl<$Res, AppEvent>;
-}
-
-/// @nodoc
-class _$AppEventCopyWithImpl<$Res, $Val extends AppEvent>
-    implements $AppEventCopyWith<$Res> {
-  _$AppEventCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-}
-
-/// @nodoc
-abstract class _$$_CheckAuthCopyWith<$Res> {
-  factory _$$_CheckAuthCopyWith(
-          _$_CheckAuth value, $Res Function(_$_CheckAuth) then) =
-      __$$_CheckAuthCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$_CheckAuthCopyWithImpl<$Res>
-    extends _$AppEventCopyWithImpl<$Res, _$_CheckAuth>
-    implements _$$_CheckAuthCopyWith<$Res> {
-  __$$_CheckAuthCopyWithImpl(
-      _$_CheckAuth _value, $Res Function(_$_CheckAuth) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$_CheckAuth implements _CheckAuth {
-  const _$_CheckAuth();
-
-  @override
-  String toString() {
-    return 'AppEvent.checkAuth()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_CheckAuth);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() checkAuth,
-    required TResult Function() onboardingSave,
-    required TResult Function() logining,
-    required TResult Function() refreshLocal,
-    required TResult Function() exiting,
-    required TResult Function() deleting,
-  }) {
-    return checkAuth();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? checkAuth,
-    TResult? Function()? onboardingSave,
-    TResult? Function()? logining,
-    TResult? Function()? refreshLocal,
-    TResult? Function()? exiting,
-    TResult? Function()? deleting,
-  }) {
-    return checkAuth?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? checkAuth,
-    TResult Function()? onboardingSave,
-    TResult Function()? logining,
-    TResult Function()? refreshLocal,
-    TResult Function()? exiting,
-    TResult Function()? deleting,
-    required TResult orElse(),
-  }) {
-    if (checkAuth != null) {
-      return checkAuth();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_CheckAuth value) checkAuth,
-    required TResult Function(_OnboardingSave value) onboardingSave,
-    required TResult Function(_Logining value) logining,
-    required TResult Function(_RefreshLocal value) refreshLocal,
-    required TResult Function(_Exiting value) exiting,
-    required TResult Function(_Deleting value) deleting,
-  }) {
-    return checkAuth(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_CheckAuth value)? checkAuth,
-    TResult? Function(_OnboardingSave value)? onboardingSave,
-    TResult? Function(_Logining value)? logining,
-    TResult? Function(_RefreshLocal value)? refreshLocal,
-    TResult? Function(_Exiting value)? exiting,
-    TResult? Function(_Deleting value)? deleting,
-  }) {
-    return checkAuth?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_CheckAuth value)? checkAuth,
-    TResult Function(_OnboardingSave value)? onboardingSave,
-    TResult Function(_Logining value)? logining,
-    TResult Function(_RefreshLocal value)? refreshLocal,
-    TResult Function(_Exiting value)? exiting,
-    TResult Function(_Deleting value)? deleting,
-    required TResult orElse(),
-  }) {
-    if (checkAuth != null) {
-      return checkAuth(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _CheckAuth implements AppEvent {
-  const factory _CheckAuth() = _$_CheckAuth;
-}
-
-/// @nodoc
-abstract class _$$_OnboardingSaveCopyWith<$Res> {
-  factory _$$_OnboardingSaveCopyWith(
-          _$_OnboardingSave value, $Res Function(_$_OnboardingSave) then) =
-      __$$_OnboardingSaveCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$_OnboardingSaveCopyWithImpl<$Res>
-    extends _$AppEventCopyWithImpl<$Res, _$_OnboardingSave>
-    implements _$$_OnboardingSaveCopyWith<$Res> {
-  __$$_OnboardingSaveCopyWithImpl(
-      _$_OnboardingSave _value, $Res Function(_$_OnboardingSave) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$_OnboardingSave implements _OnboardingSave {
-  const _$_OnboardingSave();
-
-  @override
-  String toString() {
-    return 'AppEvent.onboardingSave()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_OnboardingSave);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() checkAuth,
-    required TResult Function() onboardingSave,
-    required TResult Function() logining,
-    required TResult Function() refreshLocal,
-    required TResult Function() exiting,
-    required TResult Function() deleting,
-  }) {
-    return onboardingSave();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? checkAuth,
-    TResult? Function()? onboardingSave,
-    TResult? Function()? logining,
-    TResult? Function()? refreshLocal,
-    TResult? Function()? exiting,
-    TResult? Function()? deleting,
-  }) {
-    return onboardingSave?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? checkAuth,
-    TResult Function()? onboardingSave,
-    TResult Function()? logining,
-    TResult Function()? refreshLocal,
-    TResult Function()? exiting,
-    TResult Function()? deleting,
-    required TResult orElse(),
-  }) {
-    if (onboardingSave != null) {
-      return onboardingSave();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_CheckAuth value) checkAuth,
-    required TResult Function(_OnboardingSave value) onboardingSave,
-    required TResult Function(_Logining value) logining,
-    required TResult Function(_RefreshLocal value) refreshLocal,
-    required TResult Function(_Exiting value) exiting,
-    required TResult Function(_Deleting value) deleting,
-  }) {
-    return onboardingSave(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_CheckAuth value)? checkAuth,
-    TResult? Function(_OnboardingSave value)? onboardingSave,
-    TResult? Function(_Logining value)? logining,
-    TResult? Function(_RefreshLocal value)? refreshLocal,
-    TResult? Function(_Exiting value)? exiting,
-    TResult? Function(_Deleting value)? deleting,
-  }) {
-    return onboardingSave?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_CheckAuth value)? checkAuth,
-    TResult Function(_OnboardingSave value)? onboardingSave,
-    TResult Function(_Logining value)? logining,
-    TResult Function(_RefreshLocal value)? refreshLocal,
-    TResult Function(_Exiting value)? exiting,
-    TResult Function(_Deleting value)? deleting,
-    required TResult orElse(),
-  }) {
-    if (onboardingSave != null) {
-      return onboardingSave(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _OnboardingSave implements AppEvent {
-  const factory _OnboardingSave() = _$_OnboardingSave;
-}
-
-/// @nodoc
-abstract class _$$_LoginingCopyWith<$Res> {
-  factory _$$_LoginingCopyWith(
-          _$_Logining value, $Res Function(_$_Logining) then) =
-      __$$_LoginingCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$_LoginingCopyWithImpl<$Res>
-    extends _$AppEventCopyWithImpl<$Res, _$_Logining>
-    implements _$$_LoginingCopyWith<$Res> {
-  __$$_LoginingCopyWithImpl(
-      _$_Logining _value, $Res Function(_$_Logining) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$_Logining implements _Logining {
-  const _$_Logining();
-
-  @override
-  String toString() {
-    return 'AppEvent.logining()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Logining);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() checkAuth,
-    required TResult Function() onboardingSave,
-    required TResult Function() logining,
-    required TResult Function() refreshLocal,
-    required TResult Function() exiting,
-    required TResult Function() deleting,
-  }) {
-    return logining();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? checkAuth,
-    TResult? Function()? onboardingSave,
-    TResult? Function()? logining,
-    TResult? Function()? refreshLocal,
-    TResult? Function()? exiting,
-    TResult? Function()? deleting,
-  }) {
-    return logining?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? checkAuth,
-    TResult Function()? onboardingSave,
-    TResult Function()? logining,
-    TResult Function()? refreshLocal,
-    TResult Function()? exiting,
-    TResult Function()? deleting,
-    required TResult orElse(),
-  }) {
-    if (logining != null) {
-      return logining();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_CheckAuth value) checkAuth,
-    required TResult Function(_OnboardingSave value) onboardingSave,
-    required TResult Function(_Logining value) logining,
-    required TResult Function(_RefreshLocal value) refreshLocal,
-    required TResult Function(_Exiting value) exiting,
-    required TResult Function(_Deleting value) deleting,
-  }) {
-    return logining(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_CheckAuth value)? checkAuth,
-    TResult? Function(_OnboardingSave value)? onboardingSave,
-    TResult? Function(_Logining value)? logining,
-    TResult? Function(_RefreshLocal value)? refreshLocal,
-    TResult? Function(_Exiting value)? exiting,
-    TResult? Function(_Deleting value)? deleting,
-  }) {
-    return logining?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_CheckAuth value)? checkAuth,
-    TResult Function(_OnboardingSave value)? onboardingSave,
-    TResult Function(_Logining value)? logining,
-    TResult Function(_RefreshLocal value)? refreshLocal,
-    TResult Function(_Exiting value)? exiting,
-    TResult Function(_Deleting value)? deleting,
-    required TResult orElse(),
-  }) {
-    if (logining != null) {
-      return logining(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Logining implements AppEvent {
-  const factory _Logining() = _$_Logining;
-}
-
-/// @nodoc
-abstract class _$$_RefreshLocalCopyWith<$Res> {
-  factory _$$_RefreshLocalCopyWith(
-          _$_RefreshLocal value, $Res Function(_$_RefreshLocal) then) =
-      __$$_RefreshLocalCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$_RefreshLocalCopyWithImpl<$Res>
-    extends _$AppEventCopyWithImpl<$Res, _$_RefreshLocal>
-    implements _$$_RefreshLocalCopyWith<$Res> {
-  __$$_RefreshLocalCopyWithImpl(
-      _$_RefreshLocal _value, $Res Function(_$_RefreshLocal) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$_RefreshLocal implements _RefreshLocal {
-  const _$_RefreshLocal();
-
-  @override
-  String toString() {
-    return 'AppEvent.refreshLocal()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_RefreshLocal);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() checkAuth,
-    required TResult Function() onboardingSave,
-    required TResult Function() logining,
-    required TResult Function() refreshLocal,
-    required TResult Function() exiting,
-    required TResult Function() deleting,
-  }) {
-    return refreshLocal();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? checkAuth,
-    TResult? Function()? onboardingSave,
-    TResult? Function()? logining,
-    TResult? Function()? refreshLocal,
-    TResult? Function()? exiting,
-    TResult? Function()? deleting,
-  }) {
-    return refreshLocal?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? checkAuth,
-    TResult Function()? onboardingSave,
-    TResult Function()? logining,
-    TResult Function()? refreshLocal,
-    TResult Function()? exiting,
-    TResult Function()? deleting,
-    required TResult orElse(),
-  }) {
-    if (refreshLocal != null) {
-      return refreshLocal();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_CheckAuth value) checkAuth,
-    required TResult Function(_OnboardingSave value) onboardingSave,
-    required TResult Function(_Logining value) logining,
-    required TResult Function(_RefreshLocal value) refreshLocal,
-    required TResult Function(_Exiting value) exiting,
-    required TResult Function(_Deleting value) deleting,
-  }) {
-    return refreshLocal(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_CheckAuth value)? checkAuth,
-    TResult? Function(_OnboardingSave value)? onboardingSave,
-    TResult? Function(_Logining value)? logining,
-    TResult? Function(_RefreshLocal value)? refreshLocal,
-    TResult? Function(_Exiting value)? exiting,
-    TResult? Function(_Deleting value)? deleting,
-  }) {
-    return refreshLocal?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_CheckAuth value)? checkAuth,
-    TResult Function(_OnboardingSave value)? onboardingSave,
-    TResult Function(_Logining value)? logining,
-    TResult Function(_RefreshLocal value)? refreshLocal,
-    TResult Function(_Exiting value)? exiting,
-    TResult Function(_Deleting value)? deleting,
-    required TResult orElse(),
-  }) {
-    if (refreshLocal != null) {
-      return refreshLocal(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _RefreshLocal implements AppEvent {
-  const factory _RefreshLocal() = _$_RefreshLocal;
-}
-
-/// @nodoc
-abstract class _$$_ExitingCopyWith<$Res> {
-  factory _$$_ExitingCopyWith(
-          _$_Exiting value, $Res Function(_$_Exiting) then) =
-      __$$_ExitingCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$_ExitingCopyWithImpl<$Res>
-    extends _$AppEventCopyWithImpl<$Res, _$_Exiting>
-    implements _$$_ExitingCopyWith<$Res> {
-  __$$_ExitingCopyWithImpl(_$_Exiting _value, $Res Function(_$_Exiting) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$_Exiting implements _Exiting {
-  const _$_Exiting();
-
-  @override
-  String toString() {
-    return 'AppEvent.exiting()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Exiting);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() checkAuth,
-    required TResult Function() onboardingSave,
-    required TResult Function() logining,
-    required TResult Function() refreshLocal,
-    required TResult Function() exiting,
-    required TResult Function() deleting,
-  }) {
-    return exiting();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? checkAuth,
-    TResult? Function()? onboardingSave,
-    TResult? Function()? logining,
-    TResult? Function()? refreshLocal,
-    TResult? Function()? exiting,
-    TResult? Function()? deleting,
-  }) {
-    return exiting?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? checkAuth,
-    TResult Function()? onboardingSave,
-    TResult Function()? logining,
-    TResult Function()? refreshLocal,
-    TResult Function()? exiting,
-    TResult Function()? deleting,
-    required TResult orElse(),
-  }) {
-    if (exiting != null) {
-      return exiting();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_CheckAuth value) checkAuth,
-    required TResult Function(_OnboardingSave value) onboardingSave,
-    required TResult Function(_Logining value) logining,
-    required TResult Function(_RefreshLocal value) refreshLocal,
-    required TResult Function(_Exiting value) exiting,
-    required TResult Function(_Deleting value) deleting,
-  }) {
-    return exiting(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_CheckAuth value)? checkAuth,
-    TResult? Function(_OnboardingSave value)? onboardingSave,
-    TResult? Function(_Logining value)? logining,
-    TResult? Function(_RefreshLocal value)? refreshLocal,
-    TResult? Function(_Exiting value)? exiting,
-    TResult? Function(_Deleting value)? deleting,
-  }) {
-    return exiting?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_CheckAuth value)? checkAuth,
-    TResult Function(_OnboardingSave value)? onboardingSave,
-    TResult Function(_Logining value)? logining,
-    TResult Function(_RefreshLocal value)? refreshLocal,
-    TResult Function(_Exiting value)? exiting,
-    TResult Function(_Deleting value)? deleting,
-    required TResult orElse(),
-  }) {
-    if (exiting != null) {
-      return exiting(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Exiting implements AppEvent {
-  const factory _Exiting() = _$_Exiting;
-}
-
-/// @nodoc
-abstract class _$$_DeletingCopyWith<$Res> {
-  factory _$$_DeletingCopyWith(
-          _$_Deleting value, $Res Function(_$_Deleting) then) =
-      __$$_DeletingCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$_DeletingCopyWithImpl<$Res>
-    extends _$AppEventCopyWithImpl<$Res, _$_Deleting>
-    implements _$$_DeletingCopyWith<$Res> {
-  __$$_DeletingCopyWithImpl(
-      _$_Deleting _value, $Res Function(_$_Deleting) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$_Deleting implements _Deleting {
-  const _$_Deleting();
-
-  @override
-  String toString() {
-    return 'AppEvent.deleting()';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Deleting);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() checkAuth,
-    required TResult Function() onboardingSave,
-    required TResult Function() logining,
-    required TResult Function() refreshLocal,
-    required TResult Function() exiting,
-    required TResult Function() deleting,
-  }) {
-    return deleting();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? checkAuth,
-    TResult? Function()? onboardingSave,
-    TResult? Function()? logining,
-    TResult? Function()? refreshLocal,
-    TResult? Function()? exiting,
-    TResult? Function()? deleting,
-  }) {
-    return deleting?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? checkAuth,
-    TResult Function()? onboardingSave,
-    TResult Function()? logining,
-    TResult Function()? refreshLocal,
-    TResult Function()? exiting,
-    TResult Function()? deleting,
-    required TResult orElse(),
-  }) {
-    if (deleting != null) {
-      return deleting();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_CheckAuth value) checkAuth,
-    required TResult Function(_OnboardingSave value) onboardingSave,
-    required TResult Function(_Logining value) logining,
-    required TResult Function(_RefreshLocal value) refreshLocal,
-    required TResult Function(_Exiting value) exiting,
-    required TResult Function(_Deleting value) deleting,
-  }) {
-    return deleting(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_CheckAuth value)? checkAuth,
-    TResult? Function(_OnboardingSave value)? onboardingSave,
-    TResult? Function(_Logining value)? logining,
-    TResult? Function(_RefreshLocal value)? refreshLocal,
-    TResult? Function(_Exiting value)? exiting,
-    TResult? Function(_Deleting value)? deleting,
-  }) {
-    return deleting?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_CheckAuth value)? checkAuth,
-    TResult Function(_OnboardingSave value)? onboardingSave,
-    TResult Function(_Logining value)? logining,
-    TResult Function(_RefreshLocal value)? refreshLocal,
-    TResult Function(_Exiting value)? exiting,
-    TResult Function(_Deleting value)? deleting,
-    required TResult orElse(),
-  }) {
-    if (deleting != null) {
-      return deleting(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Deleting implements AppEvent {
-  const factory _Deleting() = _$_Deleting;
 }

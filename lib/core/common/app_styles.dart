@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppStyles {
   //w700
@@ -27,7 +28,8 @@ class AppStyles {
   static const sp20fw400 = TextStyle(fontWeight: FontWeight.w400, fontSize: 20);
   static const sp18fw400 = TextStyle(fontWeight: FontWeight.w400, fontSize: 18);
   static const sp16fw400 = TextStyle(fontWeight: FontWeight.w400, fontSize: 16);
-  static const sp14fw400 = TextStyle(fontWeight: FontWeight.w400, fontSize: 14);
+  static TextStyle sp14fw400 =
+      TextStyle(fontWeight: FontWeight.w400, fontSize: 14.sp);
   static const sp12fw400 = TextStyle(fontWeight: FontWeight.w400, fontSize: 12);
   static const sp10fw400 = TextStyle(fontWeight: FontWeight.w400, fontSize: 10);
 }

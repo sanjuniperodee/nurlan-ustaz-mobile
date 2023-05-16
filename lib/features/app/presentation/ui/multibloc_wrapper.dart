@@ -32,7 +32,7 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         //
       ],
       child: ScreenUtilInit(
-        designSize: const Size(375, 667),
+        designSize: const Size(375, 812),
         builder: (context, child) {
           return MaterialApp(
             debugShowCheckedModeBanner: false,
