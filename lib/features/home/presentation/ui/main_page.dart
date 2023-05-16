@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -147,7 +148,7 @@ class _MainPageState extends State<MainPage> {
                                     width: 10.r,
                                   ),
                                   Text(
-                                    'Таң намазы уақыты',
+                                    'namaz_time'.tr(),
                                     style: AppStyles.sp16fw400
                                         .apply(color: AppColors.black),
                                   ),

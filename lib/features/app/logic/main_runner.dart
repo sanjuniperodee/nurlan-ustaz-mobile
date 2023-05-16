@@ -2,6 +2,7 @@
 
 import 'dart:async';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -31,7 +32,8 @@ mixin MainRunner {
     // ignore: avoid-ignoring-return-values
     WidgetsFlutterBinding.ensureInitialized();
     await initLocator();
-
+    await EasyLocalization.ensureInitialized();
+    EasyLocalization.logger.enableLevels = [];
     // await Firebase.initializeApp(
     //   options: DefaultFirebaseOptions.currentPlatform,
     // );
@@ -41,7 +43,16 @@ mixin MainRunner {
 
     final app = await _initApp(shouldSend, asyncDependencies, appBuilder);
     runApp(
-      app,
+      EasyLocalization(
+        useFallbackTranslations: true,
+        supportedLocales: const [
+          Locale('ru'),
+          Locale('kk'),
+        ],
+        path: 'assets/translations',
+        fallbackLocale: const Locale('kk'),
+        child: app,
+      ),
     );
   }
 }

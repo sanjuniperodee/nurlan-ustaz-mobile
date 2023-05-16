@@ -42,6 +42,7 @@ dependencies:
   get_it: ^7.2.0
   flutter_bloc: ^8.1.2
   rxdart: ^0.27.7
+  easy_localization: ^3.0.1
   #storage
   shared_preferences: ^2.0.15
   hive: ^2.2.3
@@ -92,6 +93,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/lottie/
+    - assets/translations/
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

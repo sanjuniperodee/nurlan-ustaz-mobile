@@ -182,6 +182,18 @@
       "languageVersion": "2.15"
     },
     {
+      "name": "easy_localization",
+      "rootUri": "file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/easy_localization-3.0.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
+      "name": "easy_logger",
+      "rootUri": "file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/easy_logger-0.0.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "equatable",
       "rootUri": "file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/equatable-2.0.5",
       "packageUri": "lib/",
@@ -770,7 +782,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-05-16T10:01:18.994528Z",
+  "generated": "2023-05-16T12:41:47.838661Z",
   "generator": "pub",
   "generatorVersion": "2.18.5"
 }
