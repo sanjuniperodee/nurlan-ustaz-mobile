@@ -30,11 +30,12 @@ class _SeminarPageState extends State<SeminarPage> {
               child: Column(
                 children: [
                   Row(
-                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SvgPicture.asset(Assets.backButtonSvg),
                       Text(
                         'Семинар',
+                        textAlign: TextAlign.center,
                         style:
                             AppStyles.sp20fw700.apply(color: AppColors.white),
                       )
