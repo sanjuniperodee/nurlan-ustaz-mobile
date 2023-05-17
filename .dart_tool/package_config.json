@@ -98,6 +98,12 @@
       "languageVersion": "2.12"
     },
     {
+      "name": "carousel_slider",
+      "rootUri": "file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/carousel_slider-4.2.1",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "characters",
       "rootUri": "file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/characters-1.2.1",
       "packageUri": "lib/",
@@ -180,6 +186,12 @@
       "rootUri": "file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/dio-5.1.2",
       "packageUri": "lib/",
       "languageVersion": "2.15"
+    },
+    {
+      "name": "dots_indicator",
+      "rootUri": "file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/dots_indicator-3.0.0",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
     },
     {
       "name": "easy_localization",
@@ -782,7 +794,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-05-16T12:41:47.838661Z",
+  "generated": "2023-05-17T12:42:58.906180Z",
   "generator": "pub",
   "generatorVersion": "2.18.5"
 }

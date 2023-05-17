@@ -1,3 +1,4 @@
+import 'dart:developer';
 
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/common/shared_keys.dart';
@@ -10,6 +11,11 @@ abstract class AuthLocalDs {
   Future<void> saveOnboardingStatusToCache({
     required bool isOnboarding,
   });
+
+  Future<void> saveLocale({
+    required String locale,
+  });
+  String getLocale();
 }
 
 @Injectable(as: AuthLocalDs)
@@ -35,6 +41,25 @@ class AuthLocalDsImpl extends AuthLocalDs {
         message: 'В кэше нет запрашиваемые данные: isOnboarding, $e',
       );
     }
+  }
+
+@override
+  String getLocale() {
+    try {
+      final String? locale = sharedPreferences.getString(SharedKeys.APP_LOCALE);
+      if (locale == null) {
+        return 'ru'; // default locale
+      }
+      return locale;
+    } catch (e) {
+      log('##### getLocale::: $e AppLocale не был найден в кэше');
+      throw CacheException(message: 'AppLocale не был найден в кэше');
+    }
+  }
+
+  @override
+  Future<void> saveLocale({required String locale}) async {
+    await sharedPreferences.setString(SharedKeys.APP_LOCALE, locale);
   }
 
   @override

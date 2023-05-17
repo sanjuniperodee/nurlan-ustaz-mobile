@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/app_bloc.dart';
+import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
 
 import '../../../../core/services/locator_service.dart';
 
@@ -27,7 +28,9 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         BlocProvider<AppBloc>(
           create: (context) => getIt<AppBloc>(),
         ),
-
+        BlocProvider<LanguageCubit>(
+          create: (context) => getIt<LanguageCubit>(),
+        ),
         //AUTH
         //
       ],

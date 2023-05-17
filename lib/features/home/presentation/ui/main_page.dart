@@ -22,11 +22,28 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   List<BannerLocalModel> list = [
-    BannerLocalModel(title: 'Семинар', url: Assets.banner1Svg),
-    BannerLocalModel(title: 'Қайырымдылық', url: Assets.banner2Svg),
-    BannerLocalModel(title: 'Қызметтер', url: Assets.banner3Svg),
-    BannerLocalModel(title: 'Тікелей эфир', url: Assets.banner4Svg),
-    BannerLocalModel(title: 'Дүңгрішек', url: Assets.banner5Svg),
+    BannerLocalModel(
+        title: 'Семинар', url: Assets.banner1Svg, route: 'SeminarPageRoute'),
+    BannerLocalModel(
+        title: 'Қайырымдылық',
+        url: Assets.banner2Svg,
+        route: 'CharityPageRoute'),
+    BannerLocalModel(
+        title: 'Қызметтер', url: Assets.banner3Svg, route: 'CharityPageRoute'),
+    BannerLocalModel(
+        title: 'Тікелей эфир',
+        url: Assets.banner4Svg,
+        route: 'CharityPageRoute'),
+    BannerLocalModel(
+        title: 'Дүңгрішек', url: Assets.banner5Svg, route: 'CharityPageRoute'),
+  ];
+
+  final myRouteHome = [
+    const SeminarPageRoute(),
+    const CharityPageRoute(),
+    const SeminarPageRoute(),
+    const CharityPageRoute(),
+    const SeminarPageRoute(),
   ];
 
   @override
@@ -59,7 +76,13 @@ class _MainPageState extends State<MainPage> {
                           ),
                           Row(
                             children: [
-                              SvgPicture.asset(Assets.notiSvg),
+                              GestureDetector(
+                                  onTap: () {
+                                    context.router.push(
+                                      const NotificationPageRoute(),
+                                    );
+                                  },
+                                  child: SvgPicture.asset(Assets.notiSvg)),
                               SizedBox(
                                 width: 8.r,
                               ),
@@ -78,10 +101,11 @@ class _MainPageState extends State<MainPage> {
                           itemCount: list.length,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
+                            for (int n = 0; n < myRouteHome.length; n++) {}
                             return InkWell(
                               onTap: () {
                                 context.router.push(
-                                  const SeminarPageRoute(),
+                                  myRouteHome[index],
                                 );
                               },
                               child: Padding(

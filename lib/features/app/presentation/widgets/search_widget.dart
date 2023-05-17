@@ -1,0 +1,35 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
+import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
+
+class SearchWidget extends StatelessWidget {
+  const SearchWidget({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(24.0),
+        color: const Color(0xFFFFFFFF).withOpacity(0.4),
+      ),
+      child: TextField(
+        style: AppStyles.sp18fw400.apply(color: AppColors.white),
+        decoration: InputDecoration(
+          hintText: 'Іздеу',
+          hintStyle:
+              AppStyles.sp18fw400.apply(color: AppColors.white),
+          prefixIcon: const Icon(
+            Icons.search,
+            color: AppColors.white,
+          ),
+          border: InputBorder.none,
+          contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16.0, vertical: 14.0).r,
+        ),
+      ),
+    );
+  }
+}

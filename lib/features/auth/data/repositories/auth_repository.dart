@@ -12,6 +12,10 @@ abstract class AuthRepository {
   Future<Either<Failure, bool>> saveOnboardingStatus({
     required bool isOnboarding,
   });
+  Future<Either<Failure, String>> saveLocale({
+    required String locale,
+  });
+  Either<Failure, String> getLocale();
 }
 
 @Singleton(as: AuthRepository)
@@ -24,6 +28,27 @@ class AuthRepositoryImpl extends AuthRepository {
     required this.localDS,
   });
 
+  @override
+  Either<Failure, String> getLocale() {
+    try {
+      final String msg = localDS.getLocale();
+
+      return Right(msg);
+    } on CacheException catch (e) {
+      return Left(CacheFailure(message: e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> saveLocale({required String locale}) async {
+    try {
+      await localDS.saveLocale(locale: locale);
+
+      return const Right('Success');
+    } on CacheException catch (e) {
+      return Left(CacheFailure(message: e.message));
+    }
+  }
 
   @override
   Future<Either<Failure, bool>> getOnboardingStatus() async {
@@ -34,8 +59,6 @@ class AuthRepositoryImpl extends AuthRepository {
       return Left(CacheFailure(message: e.message));
     }
   }
-
-
 
   @override
   Future<Either<Failure, bool>> saveOnboardingStatus({

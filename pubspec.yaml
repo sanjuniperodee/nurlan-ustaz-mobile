@@ -52,6 +52,9 @@ dependencies:
   #ui
   flutter_screenutil: ^5.7.0
   flutter_svg: ^1.1.6
+  carousel_slider: ^4.0.0
+  dots_indicator: ^3.0.0
+  
 
   json_annotation: ^4.7.0
   json_serializable: ^6.5.4
