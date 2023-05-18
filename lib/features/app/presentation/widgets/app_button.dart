@@ -25,7 +25,7 @@ class AppButton extends StatelessWidget {
     return TextButton(
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all<Color>(onTap == null
-            ? AppColors.lightGrey
+            ? AppColors.grey2
             : color ?? AppColors.primaryColor),
         shape: MaterialStateProperty.all<OutlinedBorder>(
             RoundedRectangleBorder(borderRadius: BorderRadius.circular(75).r)),
@@ -43,10 +43,10 @@ class AppButton extends StatelessWidget {
               )
             : Text(text,
                 textAlign: TextAlign.center,
-                style: AppStyles.sp14fw600.apply(
+                style: getTextStyle(CustomTextStyles.s16w200).apply(fontFamily: FontTypes.Philosopher.name).copyWith(fontWeight: FontWeight.w700,fontSize: 24.sp).apply(
                   color: onTap != null
                       ? textColor ?? AppColors.white
-                      : AppColors.grey,
+                      : AppColors.grey1,
                 )),
       ),
     );

@@ -1,3 +1,4 @@
+import 'app_styles.dart';
 import 'colors.dart';
 import 'font_family.dart';
 /**
@@ -26,7 +27,7 @@ import 'font_family.dart';
 import 'package:flutter/material.dart';
 
 final ThemeData themeData = ThemeData(
-  fontFamily: FontFamily.productSans,
+  fontFamily: FontTypes.Philosopher.name,
   brightness: Brightness.light,
   primaryColor: AppColors.primaryColor,
 );

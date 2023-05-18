@@ -25,7 +25,7 @@ class MainButton extends StatelessWidget {
         children: [
           Text(
             text,
-            style: AppStyles.sp20fw700.apply(color: AppColors.black),
+            style: getTextStyle(CustomTextStyles.s16w200).apply(fontFamily: FontTypes.Philosopher.name).copyWith(fontWeight: FontWeight.w700,fontSize: 20.sp),
           ),
 
           // SizedBox(

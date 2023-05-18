@@ -12,6 +12,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_page.
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/services_page.dart';
 
 import '../../features/home/presentation/ui/live_broadcasts_page.dart';
+import 'package:nurlan_ustaz_flutter/features/tus_zhoru/tus_zhoru_page.dart';
 part 'app_router.gr.dart';
 
 @MaterialAutoRouter(
@@ -23,6 +24,11 @@ part 'app_router.gr.dart';
       initial: true,
       children: [
         AutoRoute(page: MainPage, name: 'MainRouterPage'),
+        AutoRoute(page: TusZhoruPage,name: 'TusZhoruRouterPage' ),
+
+
+
+
         // AutoRoute(
         //   page: EmptyRouterPage,
         //   name: 'BaseHomeRouter',
