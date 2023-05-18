@@ -38,9 +38,9 @@ class _BaseState extends State<Base> {
       ],
       bottomNavigationBuilder: (_, tabsRouter) {
         return ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(30.0),
-            topRight: Radius.circular(30.0),
+          borderRadius:  BorderRadius.only(
+            topLeft: const Radius.circular(30.0).r,
+            topRight: const Radius.circular(30.0).r,
           ),
           child: BottomNavigationBar(
               selectedLabelStyle: getTextStyle(CustomTextStyles.s14w400)
@@ -83,13 +83,13 @@ class _BaseState extends State<Base> {
                       children: [
                         SvgPicture.asset(
                           Assets.moonSvg,
-                          height: 55,
+                          height: 55.h,
                         ),
-                        const SizedBox(
-                          height: 7,
+                         SizedBox(
+                          height: 7.h,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(bottom: 16.0),
+                          padding: const EdgeInsets.only(bottom: 16.0).r,
                           child: Text(
                             'Түс жору',
                             style: getTextStyle(CustomTextStyles.s14w400)

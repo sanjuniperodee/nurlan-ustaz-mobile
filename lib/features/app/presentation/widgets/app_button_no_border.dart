@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 
-
-
-
 class AppButtonNoBorder extends StatelessWidget {
   final Function()? onTap;
   final String text;
@@ -36,11 +33,12 @@ class AppButtonNoBorder extends StatelessWidget {
                   child: CircularProgressIndicator(),
                 ),
               )
-            : Text(text,
+            : Text(
+                text,
                 textAlign: TextAlign.center,
-                style: AppStyles.sp14fw600.apply(
-                  color: textColor,
-                )),
+                style: getTextStyle(CustomTextStyles.s14w400)
+                    .apply(color: textColor),
+              ),
       ),
     );
   }

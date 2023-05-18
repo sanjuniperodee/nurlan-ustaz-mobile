@@ -64,9 +64,9 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                 child: DotsIndicator(
                   dotsCount: images.length,
                   position: _currentIndex,
-                  decorator: const DotsDecorator(
+                  decorator: DotsDecorator(
                     color: AppColors.white, // Color of non-selected indicators
-                    activeColor: AppColors.grey, // Color of selected indicator
+                    activeColor: AppColors.grey1, // Color of selected indicator
                   ),
                 ),
               ),
@@ -97,8 +97,8 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                     children: [
                       Text(
                         'Мәскеу сапары',
-                        style:
-                            AppStyles.sp20fw700.apply(color: AppColors.grey900),
+                        style: getTextStyle(CustomTextStyles.s20w700)
+                            .apply(color: AppColors.black),
                       ),
                       SizedBox(
                         height: 12.h,
@@ -113,8 +113,8 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                               ),
                               Text(
                                 '1 мамыр, 15:00',
-                                style: AppStyles.sp14fw400
-                                    .apply(color: AppColors.grey900),
+                                style: getTextStyle(CustomTextStyles.s14w400)
+                                    .apply(color: AppColors.grey2),
                               ),
                               SizedBox(
                                 width: 28.w,
@@ -125,8 +125,8 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                               ),
                               Text(
                                 'Мәскеу қаласы',
-                                style: AppStyles.sp14fw400
-                                    .apply(color: AppColors.grey900),
+                                style: getTextStyle(CustomTextStyles.s14w400)
+                                    .apply(color: AppColors.grey2),
                               ),
                             ],
                           ),
@@ -143,7 +143,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                 SvgPicture.asset(Assets.heartSvg),
                                 Text(
                                   '12',
-                                  style: AppStyles.sp14fw400,
+                                  style: getTextStyle(CustomTextStyles.s14w400),
                                 ),
                                 SizedBox(
                                   width: 12.w,
@@ -151,7 +151,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                 SvgPicture.asset(Assets.commentSvg),
                                 Text(
                                   '12',
-                                  style: AppStyles.sp14fw400,
+                                  style: getTextStyle(CustomTextStyles.s14w400),
                                 ),
                                 SizedBox(
                                   width: 12.w,

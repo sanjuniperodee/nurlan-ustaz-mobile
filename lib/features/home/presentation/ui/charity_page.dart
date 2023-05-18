@@ -70,8 +70,9 @@ class _CharityPageState extends State<CharityPage> {
                                   ),
                                   Text(
                                     'Харекет қайырымдылық қоры',
-                                    style: AppStyles.sp16fw500
-                                        .apply(color: AppColors.black),
+                                    style:
+                                        getTextStyle(CustomTextStyles.s16w500)
+                                            .apply(color: AppColors.black),
                                   ),
                                   const Icon(
                                     Icons.arrow_forward,

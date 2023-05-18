@@ -10,6 +10,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/notifications
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_detail_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/services_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/shop_page.dart';
 
 import '../../features/home/presentation/ui/live_broadcasts_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/tus_zhoru_page.dart';
@@ -24,18 +25,7 @@ part 'app_router.gr.dart';
       initial: true,
       children: [
         AutoRoute(page: MainPage, name: 'MainRouterPage'),
-        AutoRoute(page: TusZhoruPage,name: 'TusZhoruRouterPage' ),
-
-
-
-
-        // AutoRoute(
-        //   page: EmptyRouterPage,
-        //   name: 'BaseHomeRouter',
-        //   children: [
-        //     AutoRoute(page:  MainPage(), initial: true),
-        //   ],
-        // ),
+        AutoRoute(page: TusZhoruPage, name: 'TusZhoruRouterPage'),
       ],
     ),
     //
@@ -61,6 +51,9 @@ part 'app_router.gr.dart';
     ),
     AutoRoute(
       page: LiveBroadcastsPage,
+    ),
+    AutoRoute(
+      page: ShopPage,
     ),
   ],
 )

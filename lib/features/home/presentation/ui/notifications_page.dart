@@ -56,7 +56,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                 iconColor: AppColors.orange,
                                 title: Text(
                                   'Жаңалықтар',
-                                  style: AppStyles.sp14fw400,
+                                  style: getTextStyle(CustomTextStyles.s14w400),
                                 ),
                                 children: <Widget>[
                                   ListTile(
@@ -65,13 +65,15 @@ class _NotificationPageState extends State<NotificationPage> {
                                         SvgPicture.asset(Assets.orangeDotSvg),
                                     title: Text(
                                       'Таң намазы',
-                                      style: AppStyles.sp14fw400
-                                          .apply(color: AppColors.black),
+                                      style:
+                                          getTextStyle(CustomTextStyles.s14w400)
+                                              .apply(color: AppColors.black),
                                     ),
                                     subtitle: Text(
                                       'Жаңа ғана',
-                                      style: AppStyles.sp12fw400
-                                          .apply(color: AppColors.grey),
+                                      style:
+                                          getTextStyle(CustomTextStyles.s12w400)
+                                              .apply(color: AppColors.grey2),
                                     ),
                                   ),
                                 ],

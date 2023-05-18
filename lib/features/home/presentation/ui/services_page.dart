@@ -73,8 +73,9 @@ class _ServicesPageState extends State<ServicesPage> {
                                     ),
                                     Text(
                                       'Жеке жүздесу',
-                                      style: AppStyles.sp16fw500
-                                          .apply(color: AppColors.black),
+                                      style:
+                                          getTextStyle(CustomTextStyles.s16w500)
+                                              .apply(color: AppColors.black),
                                     ),
                                   ],
                                 ),

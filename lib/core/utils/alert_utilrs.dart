@@ -15,9 +15,10 @@ class AlertUtils {
     ScaffoldMessenger.of(context).hideCurrentSnackBar();
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         duration: duration ?? const Duration(milliseconds: 1000),
-        backgroundColor: AppColors.background,
+        backgroundColor: AppColors.background1,
         content: Text(messageKey,
-            style: AppStyles.sp16fw400.apply(color: AppColors.black))));
+            style: getTextStyle(CustomTextStyles.s36w500)
+                .apply(color: AppColors.black))));
   }
 
   static Future<bool> showTwoOptionDialog({
@@ -35,7 +36,7 @@ class AlertUtils {
           alignment: Alignment.center,
           title: Text(
             title,
-            style: AppStyles.sp16fw700,
+            style: getTextStyle(CustomTextStyles.s16w200),
             textAlign: TextAlign.center,
           ),
           shape: RoundedRectangleBorder(
@@ -50,7 +51,7 @@ class AlertUtils {
                   padding: const EdgeInsets.symmetric(vertical: 16),
                   child: Text(
                     messageKey,
-                    style: AppStyles.sp14fw400,
+                    style: getTextStyle(CustomTextStyles.s14w400),
                   ),
                 ),
                 Padding(
@@ -64,7 +65,7 @@ class AlertUtils {
                             Navigator.pop(context, false);
                           },
                           text: button1Text,
-                          textColor: AppColors.grey,
+                          textColor: AppColors.grey1,
                         ),
                       ),
                       Flexible(
@@ -167,11 +168,9 @@ class Alert {
                 ),
                 Align(
                   alignment: Alignment.center,
-                  child: Text(
-                    message,
-                    style: AppStyles.sp16fw700
-                        .apply(color: const Color(0xFFFF335F)),
-                  ),
+                  child: Text(message,
+                      style: getTextStyle(CustomTextStyles.s16w700)
+                          .apply(color: AppColors.red)),
                 ),
               ],
             ),

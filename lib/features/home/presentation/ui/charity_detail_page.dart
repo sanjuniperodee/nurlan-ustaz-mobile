@@ -53,24 +53,24 @@ class _CharityDetailPageState extends State<CharityDetailPage> {
                     children: [
                       Text(
                         'Харекет қайырымдылық қоры',
-                        style:
-                            AppStyles.sp20fw700.apply(color: AppColors.black),
+                        style: getTextStyle(CustomTextStyles.s20w700)
+                            .apply(color: AppColors.black),
                       ),
                       SizedBox(
                         height: 20.h,
                       ),
                       Text(
                         'Благотворительный Фонд «Харекет» основан 07 октября 2017 года в рамках проекта «ЖИЛЬЕ – ЗА 1000 ТЕНГЕ» в городе Алматы. С момента основание фонд приобрел более 650 домов нуждающимся семьям и у четырех тысяч детей появились собственные дома.',
-                        style:
-                            AppStyles.sp16fw400.apply(color: AppColors.black),
+                        style: getTextStyle(CustomTextStyles.s16w400)
+                            .apply(color: AppColors.black),
                       ),
                       SizedBox(
                         height: 20.h,
                       ),
                       Text(
                         'Реквизиты',
-                        style:
-                            AppStyles.sp20fw700.apply(color: AppColors.black),
+                        style: getTextStyle(CustomTextStyles.s20w700)
+                            .apply(color: AppColors.black),
                       ),
                       ListView.builder(
                         itemCount: 3,
@@ -90,7 +90,8 @@ class _CharityDetailPageState extends State<CharityDetailPage> {
                                   iconColor: AppColors.orange,
                                   title: Text(
                                     'Каспи (Гүлмира Мұқанқызы)',
-                                    style: AppStyles.sp14fw400,
+                                    style:
+                                        getTextStyle(CustomTextStyles.s14w400),
                                   ),
                                   children: <Widget>[
                                     ListTile(
@@ -99,8 +100,8 @@ class _CharityDetailPageState extends State<CharityDetailPage> {
                                           Assets.paymentCardSvg),
                                       title: Text(
                                         '4440 4440 0000 0000',
-                                        style: AppStyles.sp14fw400
-                                            .apply(color: AppColors.black),
+                                        style: getTextStyle(
+                                            CustomTextStyles.s14w400),
                                       ),
                                       trailing:
                                           SvgPicture.asset(Assets.copiedSvg),
@@ -111,8 +112,8 @@ class _CharityDetailPageState extends State<CharityDetailPage> {
                                           SvgPicture.asset(Assets.phoneSvg),
                                       title: Text(
                                         '+7 777 777 77 77',
-                                        style: AppStyles.sp14fw400
-                                            .apply(color: AppColors.black),
+                                        style: getTextStyle(
+                                            CustomTextStyles.s14w400),
                                       ),
                                       trailing:
                                           SvgPicture.asset(Assets.copiedSvg),
@@ -122,8 +123,8 @@ class _CharityDetailPageState extends State<CharityDetailPage> {
                                       leading: SvgPicture.asset(Assets.dontSvg),
                                       title: Text(
                                         '720 208 401 907',
-                                        style: AppStyles.sp14fw400
-                                            .apply(color: AppColors.black),
+                                        style: getTextStyle(
+                                            CustomTextStyles.s14w400),
                                       ),
                                     ),
                                   ],

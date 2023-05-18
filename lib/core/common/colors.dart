@@ -14,11 +14,10 @@ class AppColors {
   static const Color danger = Colors.orange;
   static const Color white = Colors.white;
   static const Color red = Colors.red;
+  static const Color orange = Color(0xFFF9A502);
 
   static const Color blue = Color(0xFF1B51CC);
-  static const Color black = Color(0xFF222222);
 
-  static const Color white = Color(0xFFFFFFFF);
   static const Color green = Color(0xFF2C896A);
   static const Color lightGreen = Color(0xFFDEEEE9);
 

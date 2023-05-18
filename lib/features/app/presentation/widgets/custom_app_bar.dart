@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
@@ -8,7 +7,8 @@ import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 class CustomAppBar extends StatelessWidget {
   final String title;
   const CustomAppBar({
-    Key? key, required this.title,
+    Key? key,
+    required this.title,
   }) : super(key: key);
 
   @override
@@ -26,7 +26,7 @@ class CustomAppBar extends StatelessWidget {
             child: Text(
               title,
               textAlign: TextAlign.center,
-              style: AppStyles.sp20fw700
+              style: getTextStyle(CustomTextStyles.s20w700)
                   .apply(color: AppColors.white),
             ),
           ),

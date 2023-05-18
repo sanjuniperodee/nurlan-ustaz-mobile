@@ -98,19 +98,22 @@ class _LiveBroadcastsPageState extends State<LiveBroadcastsPage> {
                                             children: [
                                               Text(
                                                 '10.02.2023',
-                                                style: AppStyles.sp12fw400
+                                                style: getTextStyle(
+                                                        CustomTextStyles
+                                                            .s12w400)
                                                     .apply(
-                                                        color: AppColors.grey),
+                                                        color: AppColors.grey1),
                                               ),
                                               SizedBox(
                                                 height: 5.h,
                                               ),
                                               Text(
                                                 'Семинар тақырыбы',
-                                                style: AppStyles.sp16fw500
+                                                style: getTextStyle(
+                                                        CustomTextStyles
+                                                            .s16w500)
                                                     .apply(
-                                                        color:
-                                                            AppColors.black1a),
+                                                        color: AppColors.black),
                                               ),
                                               SizedBox(
                                                 height: 5.h,
@@ -118,10 +121,11 @@ class _LiveBroadcastsPageState extends State<LiveBroadcastsPage> {
                                               Text(
                                                 'Оразаға кезінде тарауих намазын оқу сауабын білетін боласыз',
                                                 textAlign: TextAlign.start,
-                                                style: AppStyles.sp12fw400
+                                                style: getTextStyle(
+                                                        CustomTextStyles
+                                                            .s12w400)
                                                     .apply(
-                                                        color:
-                                                            AppColors.grey900),
+                                                        color: AppColors.grey2),
                                               ),
                                             ],
                                           ),

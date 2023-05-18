@@ -42,7 +42,7 @@ class _MainPageState extends State<MainPage> {
     const CharityPageRoute(),
     const ServicesPageRoute(),
     const LiveBroadcastsPageRoute(),
-    const SeminarPageRoute(),
+    const ShopPageRoute(),
   ];
 
   @override
@@ -121,10 +121,12 @@ class _MainPageState extends State<MainPage> {
                                     children: [
                                       SvgPicture.asset(list[index].url),
                                       SizedBox(width: 8.r),
-                                      Text(
-                                        list[index].title,
-                                        style:  getTextStyle(CustomTextStyles.s14w400).apply(fontFamily: FontTypes.Philosopher.name)
-                                      ),
+                                      Text(list[index].title,
+                                          style: getTextStyle(
+                                                  CustomTextStyles.s14w400)
+                                              .apply(
+                                                  fontFamily: FontTypes
+                                                      .Philosopher.name)),
                                     ],
                                   ),
                                 ),
@@ -145,10 +147,12 @@ class _MainPageState extends State<MainPage> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    'Алматы, 7 наурыз 2023',
-                                    style:  getTextStyle(CustomTextStyles.s14w400).apply(fontFamily: FontTypes.SF_Pro.name)
-                                  ),
+                                  Text('Алматы, 7 наурыз 2023',
+                                      style:
+                                          getTextStyle(CustomTextStyles.s14w400)
+                                              .apply(
+                                                  fontFamily:
+                                                      FontTypes.SF_Pro.name)),
                                   // SizedBox(
                                   //   width: 175.w,
                                   // ),
@@ -170,13 +174,14 @@ class _MainPageState extends State<MainPage> {
                                   SizedBox(
                                     width: 10.r,
                                   ),
-                                  Text(
-                                    'Таң намазы уақыты',
-                                    style:  getTextStyle(CustomTextStyles.s16w200).apply(fontFamily: FontTypes.SF_Pro.name).copyWith(fontWeight: FontWeight.w400)
-                                    'namaz_time'.tr(),
-                                    style: AppStyles.sp16fw400
-                                        .apply(color: AppColors.black),
-                                  ),
+                                  Text('Таң намазы уақыты',
+                                      style:
+                                          getTextStyle(CustomTextStyles.s16w200)
+                                              .apply(
+                                                  fontFamily:
+                                                      FontTypes.SF_Pro.name)
+                                              .copyWith(
+                                                  fontWeight: FontWeight.w400)),
                                 ],
                               ),
                               Column(
@@ -185,13 +190,24 @@ class _MainPageState extends State<MainPage> {
                                 children: [
                                   Text(
                                     '05 : 11',
-                                    style:getTextStyle(CustomTextStyles.s16w200).apply(fontFamily: FontTypes.SF_Pro.name).copyWith(fontWeight: FontWeight.w500)
+                                    style: getTextStyle(
+                                            CustomTextStyles.s16w200)
+                                        .apply(
+                                            fontFamily: FontTypes.SF_Pro.name)
+                                        .copyWith(fontWeight: FontWeight.w500)
                                         .apply(color: AppColors.blue),
                                   ),
                                   Text(
                                     '– 00 : 53 : 29',
-                                    style: getTextStyle(CustomTextStyles.s16w200).apply(fontFamily: FontTypes.SF_Pro.name).copyWith(fontWeight: FontWeight.w400,fontSize: 14.sp)
-                                        .apply(color: AppColors.black),
+                                    style:
+                                        getTextStyle(CustomTextStyles.s16w200)
+                                            .apply(
+                                                fontFamily:
+                                                    FontTypes.SF_Pro.name)
+                                            .copyWith(
+                                                fontWeight: FontWeight.w400,
+                                                fontSize: 14.sp)
+                                            .apply(color: AppColors.black),
                                   )
                                 ],
                               )
@@ -236,7 +252,12 @@ class _MainPageState extends State<MainPage> {
                                 Text(
                                   'Бола ма?\nБолмай ма?',
                                   textAlign: TextAlign.center,
-                                  style:  getTextStyle(CustomTextStyles.s16w200).copyWith(fontFamily: FontTypes.Philosopher.name,fontSize: 24.sp,fontWeight: FontWeight.w700)
+                                  style: getTextStyle(CustomTextStyles.s16w200)
+                                      .copyWith(
+                                          fontFamily:
+                                              FontTypes.Philosopher.name,
+                                          fontSize: 24.sp,
+                                          fontWeight: FontWeight.w700)
                                       .apply(color: AppColors.white),
                                 )
                               ],
@@ -288,14 +309,26 @@ class _MainPageState extends State<MainPage> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               SizedBox(height: 2.h),
-                                              Text(
-                                                'Жаңалық тақырыбы',
-                                                style:  getTextStyle(CustomTextStyles.s14w400).copyWith(fontFamily: FontTypes.SF_Pro.name,fontWeight: FontWeight.w500,color: Colors.black)
-                                              ),
+                                              Text('Жаңалық тақырыбы',
+                                                  style: getTextStyle(
+                                                          CustomTextStyles
+                                                              .s14w400)
+                                                      .copyWith(
+                                                          fontFamily: FontTypes
+                                                              .SF_Pro.name,
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color: Colors.black)),
                                               SizedBox(height: 2.h),
                                               Text(
                                                 '10.02.2023',
-                                                style:  getTextStyle(CustomTextStyles.s14w400).copyWith(fontFamily: FontTypes.SF_Pro.name,fontSize: 12.sp)
+                                                style: getTextStyle(
+                                                        CustomTextStyles
+                                                            .s14w400)
+                                                    .copyWith(
+                                                        fontFamily: FontTypes
+                                                            .SF_Pro.name,
+                                                        fontSize: 12.sp)
                                                     .apply(
                                                         color: AppColors.grey1),
                                               ),

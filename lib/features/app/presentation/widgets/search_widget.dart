@@ -16,18 +16,19 @@ class SearchWidget extends StatelessWidget {
         color: const Color(0xFFFFFFFF).withOpacity(0.4),
       ),
       child: TextField(
-        style: AppStyles.sp18fw400.apply(color: AppColors.white),
+        style: getTextStyle(CustomTextStyles.s18w400)
+            .apply(color: AppColors.white),
         decoration: InputDecoration(
           hintText: 'Іздеу',
-          hintStyle:
-              AppStyles.sp18fw400.apply(color: AppColors.white),
+          hintStyle: getTextStyle(CustomTextStyles.s18w400)
+              .apply(color: AppColors.white),
           prefixIcon: const Icon(
             Icons.search,
             color: AppColors.white,
           ),
           border: InputBorder.none,
-          contentPadding: const EdgeInsets.symmetric(
-              horizontal: 16.0, vertical: 14.0).r,
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 16.0, vertical: 14.0).r,
         ),
       ),
     );
