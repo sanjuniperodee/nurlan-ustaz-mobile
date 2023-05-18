@@ -43,8 +43,14 @@ class _BaseState extends State<Base> {
               selectedItemColor: const Color(0xFFF9A502),
               unselectedItemColor: const Color(0xFF252525),
               // unselectedLabelStyle: TextStyle(fontSize: 10),
-              onTap: onTabTapped,
-              currentIndex: _currentIndex,
+              onTap: (index) {
+                if (tabsRouter.activeIndex == index) {
+                  tabsRouter.popTop();
+                } else {
+                  tabsRouter.setActiveIndex(index);
+                }
+              },
+              currentIndex: tabsRouter.activeIndex,
               items: [
                 BottomNavigationBarItem(
                   icon: _currentIndex != 0
@@ -99,11 +105,5 @@ class _BaseState extends State<Base> {
         );
       },
     );
-  }
-
-  void onTabTapped(int index) {
-    setState(() {
-      _currentIndex = index;
-    });
   }
 }

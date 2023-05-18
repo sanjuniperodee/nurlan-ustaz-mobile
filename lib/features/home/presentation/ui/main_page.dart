@@ -11,7 +11,6 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_butto
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_appbar_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/main_button.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/banner_local_model.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_page.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -41,8 +40,8 @@ class _MainPageState extends State<MainPage> {
   final myRouteHome = [
     const SeminarPageRoute(),
     const CharityPageRoute(),
-    const SeminarPageRoute(),
-    const CharityPageRoute(),
+    const ServicesPageRoute(),
+    const LiveBroadcastsPageRoute(),
     const SeminarPageRoute(),
   ];
 

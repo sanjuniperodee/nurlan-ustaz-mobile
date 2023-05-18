@@ -41,6 +41,9 @@ class Assets {
   static const String dontSvg = '$svgPath/dont.svg';
   static const String phoneSvg = '$svgPath/phone.svg';
   static const String paymentCardSvg = '$svgPath/payment_card.svg';
+  static const String radioCircleSvg = '$svgPath/radio_circle.svg';
+  static const String radioOnSvg = '$svgPath/radio_on.svg';
+  static const String playSvg = '$svgPath/play.svg';
 
   //IMAGESSS
   static const String logoNurlan = '$path/logo_nurlan.png';
