@@ -140,7 +140,11 @@ class _MainPageState extends State<MainPage> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              context.router.push(
+                                const NamazPageRoute(),
+                              );
+                            },
                             child: Align(
                               alignment: Alignment.centerLeft,
                               child: Row(
@@ -279,64 +283,74 @@ class _MainPageState extends State<MainPage> {
                               itemBuilder: (context, index) {
                                 return Padding(
                                   padding: EdgeInsets.only(right: 12.r),
-                                  child: Container(
-                                    height: 66.h,
-                                    width: 200.w,
-                                    decoration: BoxDecoration(
-                                      color: AppColors.white,
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(30),
-                                          child: Image.asset(
-                                            Assets.Islam,
-                                            fit: BoxFit.cover,
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      context.router.push(
+                                        const NewsPageRoute(),
+                                      );
+                                    },
+                                    child: Container(
+                                      height: 66.h,
+                                      width: 200.w,
+                                      decoration: BoxDecoration(
+                                        color: AppColors.white,
+                                        borderRadius: BorderRadius.circular(30),
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            child: Image.asset(
+                                              Assets.Islam,
+                                              fit: BoxFit.cover,
+                                            ),
                                           ),
-                                        ),
-                                        SizedBox(width: 12.r),
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 12.r,
-                                              top: 4.r,
-                                              bottom: 4.r),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(height: 2.h),
-                                              Text('Жаңалық тақырыбы',
+                                          SizedBox(width: 12.r),
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                                left: 12.r,
+                                                top: 4.r,
+                                                bottom: 4.r),
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                SizedBox(height: 2.h),
+                                                Text('Жаңалық тақырыбы',
+                                                    style: getTextStyle(
+                                                            CustomTextStyles
+                                                                .s14w400)
+                                                        .copyWith(
+                                                            fontFamily:
+                                                                FontTypes.SF_Pro
+                                                                    .name,
+                                                            fontWeight:
+                                                                FontWeight.w500,
+                                                            color:
+                                                                Colors.black)),
+                                                SizedBox(height: 2.h),
+                                                Text(
+                                                  '10.02.2023',
                                                   style: getTextStyle(
                                                           CustomTextStyles
                                                               .s14w400)
                                                       .copyWith(
                                                           fontFamily: FontTypes
                                                               .SF_Pro.name,
-                                                          fontWeight:
-                                                              FontWeight.w500,
-                                                          color: Colors.black)),
-                                              SizedBox(height: 2.h),
-                                              Text(
-                                                '10.02.2023',
-                                                style: getTextStyle(
-                                                        CustomTextStyles
-                                                            .s14w400)
-                                                    .copyWith(
-                                                        fontFamily: FontTypes
-                                                            .SF_Pro.name,
-                                                        fontSize: 12.sp)
-                                                    .apply(
-                                                        color: AppColors.grey1),
-                                              ),
-                                              SizedBox(height: 4.h),
-                                            ],
+                                                          fontSize: 12.sp)
+                                                      .apply(
+                                                          color:
+                                                              AppColors.grey1),
+                                                ),
+                                                SizedBox(height: 4.h),
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ],
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 );

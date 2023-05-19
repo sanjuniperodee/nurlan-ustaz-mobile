@@ -96,6 +96,7 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/lottie/
+    - assets/translations/
     - assets/fonts/
   fonts:
     - family: SF_Pro

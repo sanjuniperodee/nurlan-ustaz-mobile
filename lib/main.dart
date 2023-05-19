@@ -4,5 +4,5 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/nurlan_ustaz_a
 
 Future<void> main() => MainRunner.run<AsyncAppDependencies>(
       asyncDependencies: AsyncAppDependencies.obtain,
-      appBuilder: (dependencies) =>  NurlanUstazApp(),
+      appBuilder: (dependencies) => NurlanUstazApp(),
     );

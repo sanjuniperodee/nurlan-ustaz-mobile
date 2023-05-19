@@ -14,6 +14,8 @@ class Assets {
   static const String oyuSvg = '$svgPath/kazakh_oyu.svg';
 
   static const String shareSvg = '$svgPath/share.svg';
+  static const String locationSvg = '$svgPath/location.svg';
+  static const String compassSvg = '$svgPath/compass.svg';
   static const String commentSvg = '$svgPath/comment.svg';
   static const String heartSvg = '$svgPath/heart.svg';
   static const String mapSvg = '$svgPath/map.svg';

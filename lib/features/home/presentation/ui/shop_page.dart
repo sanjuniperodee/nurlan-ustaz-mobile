@@ -1,16 +1,10 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
-import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_appbar_widget.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_widget.dart';
-
-import '../../../../core/common/assets.dart';
 
 class ShopPage extends StatefulWidget {
   const ShopPage({Key? key}) : super(key: key);
@@ -39,6 +33,60 @@ class _ShopPageState extends State<ShopPage> {
                   children: [
                     const CustomAppBar(
                       title: 'Дүңгіршек',
+                    ),
+                    SizedBox(
+                      height: 36.h,
+                    ),
+                    Text(
+                      'ТОП',
+                      style: getTextStyle(CustomTextStyles.s20w700)
+                          .apply(color: AppColors.white),
+                    ),
+                    GridView.builder(
+                      itemCount: 3,
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.all(0),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 10.0,
+                        mainAxisSpacing: 10.0,
+                      ),
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: Image.asset('assets/images/shop.png'),
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      height: 16.h,
+                    ),
+                    Text(
+                      'Барлығы',
+                      style: getTextStyle(CustomTextStyles.s20w700)
+                          .apply(color: AppColors.black),
+                    ),
+                    GridView.builder(
+                      itemCount: 9,
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.all(0),
+                      gridDelegate:
+                          const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 3,
+                        crossAxisSpacing: 10.0,
+                        mainAxisSpacing: 10.0,
+                      ),
+                      itemBuilder: (BuildContext context, int index) {
+                        return Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+                          child: Image.asset('assets/images/shop.png'),
+                        );
+                      },
                     ),
                   ],
                 ),
