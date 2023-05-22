@@ -4,17 +4,26 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'colors.dart';
 
 enum CustomTextStyles {
-  s16w200,
-  s16w400,
-  s14w200,
-  s18w400,
+  s12w200,
   s12w400,
+  s12w500,
+  s12w600,
+  s12w700,
+  s14w200,
   s14w400,
+  s14w500,
+  s14w600,
+  s14w700,
+  s14w800,
+  s16w200, //s16
+  s16w400,
+  s16w500,
+  s16w600,
+  s16w700,
+  s18w400,
   s36w500,
   s36w700,
-  s16w700,
   s20w700,
-  s16w500,
 }
 
 enum FontTypes { Philosopher, SF_Pro }
@@ -31,13 +40,13 @@ TextStyle getTextStyle(
           fontSize: 36.sp,
           fontFamily: fontFamily.name,
           color: color);
-            case CustomTextStyles.s12w400:
+    case CustomTextStyles.s12w400:
       return TextStyle(
           fontWeight: FontWeight.w400,
           fontSize: 12.sp,
           fontFamily: fontFamily.name,
           color: color);
-                case CustomTextStyles.s18w400:
+    case CustomTextStyles.s18w400:
       return TextStyle(
           fontWeight: FontWeight.w400,
           fontSize: 18.sp,
@@ -49,7 +58,7 @@ TextStyle getTextStyle(
           fontSize: 16.sp,
           fontFamily: fontFamily.name,
           color: color);
-           case CustomTextStyles.s16w400:
+    case CustomTextStyles.s16w400:
       return TextStyle(
           fontWeight: FontWeight.w400,
           fontSize: 16.sp,

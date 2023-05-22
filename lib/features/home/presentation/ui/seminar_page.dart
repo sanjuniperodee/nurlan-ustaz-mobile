@@ -45,7 +45,7 @@ class _SeminarPageState extends State<SeminarPage> {
                     SizedBox(
                       height: 36.h,
                     ),
-                    const SearchWidget(),
+                     SearchWidget(onChanged: (value){},),
                     ListView.builder(
                       itemCount: 3,
                       shrinkWrap: true,

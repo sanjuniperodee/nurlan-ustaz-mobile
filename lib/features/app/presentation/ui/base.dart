@@ -27,7 +27,7 @@ class _BaseState extends State<Base> {
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
       backgroundColor: const Color(0xFFF2F8FF),
-      routes:    const [
+      routes:     [
         MainRouterPage(),
         MainRouterPage(),
         TusZhoruRouterPage(),

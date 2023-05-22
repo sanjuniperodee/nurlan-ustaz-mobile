@@ -44,7 +44,7 @@ class _LiveBroadcastsPageState extends State<LiveBroadcastsPage> {
                     SizedBox(
                       height: 36.h,
                     ),
-                    const SearchWidget(),
+                     SearchWidget(onChanged: (value){},),
                     ListView.builder(
                       itemCount: 3,
                       shrinkWrap: true,
