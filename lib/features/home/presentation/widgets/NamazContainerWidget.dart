@@ -1,9 +1,11 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
+import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 
 class NamazContainerWidget extends StatelessWidget {
   const NamazContainerWidget({
@@ -75,18 +77,25 @@ class NamazContainerWidget extends StatelessWidget {
                         )
                       ],
                     ),
-                    Row(
-                      children: [
-                        SvgPicture.asset(Assets.compassSvg),
-                        SizedBox(
-                          width: 4.w,
-                        ),
-                        Text(
-                          'Құбыла',
-                          style: getTextStyle(CustomTextStyles.s16w400)
-                              .apply(color: AppColors.black),
-                        )
-                      ],
+                    GestureDetector(
+                      onTap: () {
+                        context.router.push(
+                          const QiblahPageRoute(),
+                        );
+                      },
+                      child: Row(
+                        children: [
+                          SvgPicture.asset(Assets.compassSvg),
+                          SizedBox(
+                            width: 4.w,
+                          ),
+                          Text(
+                            'Құбыла',
+                            style: getTextStyle(CustomTextStyles.s16w400)
+                                .apply(color: AppColors.black),
+                          )
+                        ],
+                      ),
                     ),
                   ],
                 ),

@@ -8,6 +8,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/charity_page.
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/main_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/news_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/notifications_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/qiblah_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_detail_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/services_page.dart';
@@ -67,6 +68,9 @@ part 'app_router.gr.dart';
     ),
     AutoRoute(
       page: NamazPage,
+    ),
+    AutoRoute(
+      page: QiblahPage,
     ),
   ],
 )

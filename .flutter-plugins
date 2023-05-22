@@ -1,9 +1,20 @@
 # This is a generated file; do not edit or check into version control.
+flutter_compass=/Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/flutter_compass-0.7.0/
+flutter_qiblah=/Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/flutter_qiblah-2.1.0/
+geolocator=/Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/geolocator-9.0.2/
+geolocator_android=/Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/geolocator_android-4.1.8/
+geolocator_apple=/Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/geolocator_apple-2.2.5/
+geolocator_web=/Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/geolocator_web-2.1.6/
+geolocator_windows=/Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/geolocator_windows-0.1.1/
 path_provider=/Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/path_provider-2.0.15/
 path_provider_android=/Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/path_provider_android-2.0.27/
 path_provider_foundation=/Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/path_provider_foundation-2.2.3/
 path_provider_linux=/Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/path_provider_linux-2.1.10/
 path_provider_windows=/Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/path_provider_windows-2.1.6/
+permission_handler=/Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/permission_handler-10.2.0/
+permission_handler_android=/Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/permission_handler_android-10.2.1/
+permission_handler_apple=/Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/permission_handler_apple-9.0.8/
+permission_handler_windows=/Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/permission_handler_windows-0.1.2/
 share_plus=/Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/share_plus-6.3.4/
 shared_preferences=/Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/shared_preferences-2.1.1/
 shared_preferences_android=/Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/shared_preferences_android-2.1.4/
