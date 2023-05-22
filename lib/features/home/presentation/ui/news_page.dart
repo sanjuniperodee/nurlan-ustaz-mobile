@@ -45,7 +45,9 @@ class _NewsPageState extends State<NewsPage> {
                     SizedBox(
                       height: 36.h,
                     ),
-                    const SearchWidget(),
+                    SearchWidget(
+                      onChanged: (String) {},
+                    ),
                     ListView.builder(
                       itemCount: 3,
                       shrinkWrap: true,
