@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nurlan_ustaz_flutter/core/utils/pay_dialog.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_text_form_field.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/question_page.dart';
 
@@ -30,7 +31,12 @@ class _QuestionPageState extends State<QuestionPage> {
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: AppButton(
-          onTap: () {},
+          onTap: () {
+            showDialog(context: context, builder: (context){
+              return PayDialog();
+            });
+
+          },
           text: 'Жіберу',
           color: AppColors.blue,
         ),
@@ -97,7 +103,7 @@ class _QuestionPageState extends State<QuestionPage> {
                           height: 40,
                         ),
                         CustomTextFormField(
-                          minLines: 20,
+                          minLines: 15,
                           inputFormatters: [
                             LengthLimitingTextInputFormatter(999),
                           ],

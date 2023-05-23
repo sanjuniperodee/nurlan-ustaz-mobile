@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -48,7 +49,7 @@ class PayDialog extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            const SizedBox(height: 27),
+            SizedBox(height: 27),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: MaterialButton(
