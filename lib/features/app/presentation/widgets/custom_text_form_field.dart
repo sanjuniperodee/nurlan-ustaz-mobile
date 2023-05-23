@@ -19,6 +19,9 @@ class CustomTextFormField extends StatefulWidget {
   final bool obscureText;
   final List<TextInputFormatter>? inputFormatters;
   final Function(String?)? onFieldSubmitted;
+  final int? maxLines;
+  final int? minLines;
+
 
 
   const CustomTextFormField({
@@ -35,7 +38,7 @@ class CustomTextFormField extends StatefulWidget {
     this.inputFormatters,
     this.enabled = true,
     this.obscureText = false,
-    this.obscureIcon, this.onFieldSubmitted,
+    this.obscureIcon, this.onFieldSubmitted, this.maxLines, this.minLines,
   }) : super(key: key);
 
   @override
@@ -54,6 +57,8 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      minLines: widget.minLines,
+      maxLines: widget.maxLines,
       onFieldSubmitted: widget.onFieldSubmitted,
       enabled: widget.enabled,
       textInputAction: widget.textInputAction,
