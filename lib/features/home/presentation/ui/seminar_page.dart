@@ -25,7 +25,7 @@ class _SeminarPageState extends State<SeminarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF2F8FF),
+      backgroundColor:  AppColors.lightBlue,
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: SizedBox(
@@ -45,7 +45,9 @@ class _SeminarPageState extends State<SeminarPage> {
                     SizedBox(
                       height: 36.h,
                     ),
-                     SearchWidget(onChanged: (value){},),
+                    SearchWidget(
+                      onChanged: (value) {},
+                    ),
                     ListView.builder(
                       itemCount: 3,
                       shrinkWrap: true,
@@ -75,8 +77,8 @@ class _SeminarPageState extends State<SeminarPage> {
                                   SizedBox(
                                     width: 12.w,
                                   ),
-                                  SizedBox(
-                                    width: 240.w,
+                                  Expanded(
+                                    // width: 240.w,
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,

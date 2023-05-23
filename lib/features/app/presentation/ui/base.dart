@@ -26,15 +26,13 @@ class _BaseState extends State<Base> {
   @override
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
-      backgroundColor: const Color(0xFFF2F8FF),
+      backgroundColor: AppColors.lightBlue,
       routes:     [
         MainRouterPage(),
-        MainRouterPage(),
+        IslamTeachingRouterPage(),
         TusZhoruRouterPage(),
         MainRouterPage(),
         MainRouterPage(),
-
-
       ],
       bottomNavigationBuilder: (_, tabsRouter) {
         return ClipRRect(

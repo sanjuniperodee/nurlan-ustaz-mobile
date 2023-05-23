@@ -29,23 +29,17 @@ class _QiblahPageState extends State<QiblahPage> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        title: 'Flutter Demo',
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: FutureBuilder(
-          builder: (context, snapshot) {
-            if (hasPermission) {
-              return const QiblahWidget();
-            } else {
-              return const Scaffold(
-                backgroundColor: Color.fromARGB(255, 48, 48, 48),
-              );
-            }
-          },
-          future: getPermission(),
-        ));
+    return FutureBuilder(
+      builder: (context, snapshot) {
+        if (hasPermission) {
+          return const QiblahWidget();
+        } else {
+          return const Scaffold(
+            backgroundColor: Color.fromARGB(255, 48, 48, 48),
+          );
+        }
+      },
+      future: getPermission(),
+    );
   }
 }

@@ -21,7 +21,7 @@ class _NotificationPageState extends State<NotificationPage> {
   Widget build(BuildContext context) {
     final theme = Theme.of(context).copyWith(dividerColor: Colors.transparent);
     return Scaffold(
-      backgroundColor: const Color(0xFFF2F8FF),
+      backgroundColor:  AppColors.lightBlue,
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: SizedBox(
