@@ -11,7 +11,7 @@ import '../../core/common/colors.dart';
 import '../../core/router/app_router.dart';
 import '../app/presentation/widgets/custom_app_bar.dart';
 import '../app/presentation/widgets/custom_tab_bar.dart';
-import '../app/presentation/widgets/global_appbar_widget.dart';
+import '../app/presentation/widgets/global_custom_widget.dart';
 import '../app/presentation/widgets/search_widget.dart';
 
 class TusZhoruPage extends StatefulWidget {
@@ -48,7 +48,7 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
           height: 1.1.sh,
           child: Stack(
             children: [
-              const GlobalAppBar(),
+              const GlobalCustomBody(),
               Positioned(
                 top: 80.h,
                 left: 16.r,

@@ -6,7 +6,7 @@ import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_appbar_widget.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/widgets/NamazContainerWidget.dart';
 
 class NamazPage extends StatefulWidget {
