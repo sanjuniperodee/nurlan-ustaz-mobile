@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_text_form_field.dart';
+import 'package:nurlan_ustaz_flutter/features/tus_zhoru/question_page.dart';
 
 import '../../core/common/app_styles.dart';
 import '../../core/common/colors.dart';
@@ -16,6 +18,9 @@ class QuestionPage extends StatefulWidget {
   @override
   State<QuestionPage> createState() => _QuestionPageState();
 }
+
+ TextEditingController controllerForAtau = TextEditingController();
+ TextEditingController controllerForTusimbde = TextEditingController();
 
 class _QuestionPageState extends State<QuestionPage> {
   @override
@@ -32,7 +37,7 @@ class _QuestionPageState extends State<QuestionPage> {
       ),
       backgroundColor: AppColors.white,
       body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+        primary: true,
         child: SizedBox(
           height: 1.1.sh,
           child: Stack(
@@ -67,9 +72,52 @@ class _QuestionPageState extends State<QuestionPage> {
                         SizedBox(
                           height: 40.h,
                         ),
-                        CustomTextFormField(hintText: 'Aтауы...'),
-                        SizedBox(height: 40,),
-                        CustomTextFormField(hintText: 'ff')
+                        CustomTextFormField(
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(60),
+                          ],
+                          onChanged: (value){
+                            setState(() {
+                            });
+
+                          },
+                          hintText: 'Aтауы...',
+                          controller: controllerForAtau,
+                        ),
+                        SizedBox(height: 8,),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              '${controllerForAtau.value.text.length}/60',
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 40,
+                        ),
+                        CustomTextFormField(
+                          minLines: 20,
+                          inputFormatters: [
+                            LengthLimitingTextInputFormatter(999),
+                          ],
+                          onChanged: (value){
+                            setState(() {
+                            });
+                          },
+                          hintText: 'ff',
+                          controller: controllerForTusimbde,
+                        ),
+                        SizedBox(height: 8,),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              '${controllerForTusimbde.text.length}/999',
+                            ),
+                          ],
+                        ),
                       ],
                     ),
                   )),
