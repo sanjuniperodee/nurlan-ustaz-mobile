@@ -2,7 +2,14 @@ import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/Allah_names_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/Islam_teaching_page.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/ayat_day_page.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/dhikr_page.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_page.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/fatua_page.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/prayers_page.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/surah_page.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/launcher.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/charity_detail_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/charity_page.dart';
@@ -85,6 +92,14 @@ part 'app_router.gr.dart';
 
     AutoRoute(page: TusZhoruDetailPage),
     AutoRoute(page: QuestionPage),
+    //Islam teaching
+    AutoRoute(page: AyatDayPage),
+    AutoRoute(page: DutyPage),
+    AutoRoute(page: AllahNamesPage),
+    AutoRoute(page: DhikrPage),
+    AutoRoute(page: FatuaPage),
+    AutoRoute(page: PrayersPage),
+    AutoRoute(page: SurahPage),
   ],
 )
 class AppRouter extends _$AppRouter {}

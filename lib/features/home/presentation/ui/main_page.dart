@@ -8,7 +8,7 @@ import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_widget.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/main_button.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/banner_local_model.dart';
 
@@ -22,19 +22,25 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   List<BannerLocalModel> list = [
     BannerLocalModel(
-        title: 'Семинар', url: Assets.banner1Svg, route: 'SeminarPageRoute'),
+      title: 'Семинар',
+      url: Assets.banner1Svg,
+    ),
     BannerLocalModel(
-        title: 'Қайырымдылық',
-        url: Assets.banner2Svg,
-        route: 'CharityPageRoute'),
+      title: 'Қайырымдылық',
+      url: Assets.banner2Svg,
+    ),
     BannerLocalModel(
-        title: 'Қызметтер', url: Assets.banner3Svg, route: 'CharityPageRoute'),
+      title: 'Қызметтер',
+      url: Assets.banner3Svg,
+    ),
     BannerLocalModel(
-        title: 'Тікелей эфир',
-        url: Assets.banner4Svg,
-        route: 'CharityPageRoute'),
+      title: 'Тікелей эфир',
+      url: Assets.banner4Svg,
+    ),
     BannerLocalModel(
-        title: 'Дүңгрішек', url: Assets.banner5Svg, route: 'CharityPageRoute'),
+      title: 'Дүңгрішек',
+      url: Assets.banner5Svg,
+    ),
   ];
 
   final myRouteHome = [

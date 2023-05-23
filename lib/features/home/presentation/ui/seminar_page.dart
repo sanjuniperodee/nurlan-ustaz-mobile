@@ -8,7 +8,7 @@ import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_widget.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_widget.dart';
 
 import '../../../../core/common/assets.dart';

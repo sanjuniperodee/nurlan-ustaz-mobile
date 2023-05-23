@@ -11,7 +11,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_butto
 import 'package:share_plus/share_plus.dart';
 
 import '../app/presentation/widgets/custom_app_bar.dart';
-import '../app/presentation/widgets/global_custom_widget.dart';
+import '../app/presentation/widgets/global_custom_body_widget.dart';
 
 class TusZhoruDetailPage extends StatefulWidget {
   final String title;
