@@ -97,12 +97,14 @@ part 'app_router.gr.dart';
 
     AutoRoute(page: TusZhoruDetailPage),
     AutoRoute(page: QuestionPage),
+    //TosZhoru
+
+    AutoRoute(page: TusZhoruDetailPage),
+    AutoRoute(page: QuestionPage),
     AutoRoute(
       page: CommentPage,
     ),
-    //TosZhoru
-    AutoRoute(page: TusZhoruDetailPage),
-    AutoRoute(page: QuestionPage),
+
     //Islam teaching
     AutoRoute(page: AyatDayPage),
     AutoRoute(page: DutyPage),
