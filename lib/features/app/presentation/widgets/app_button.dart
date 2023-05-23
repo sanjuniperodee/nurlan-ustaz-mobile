@@ -22,32 +22,33 @@ class AppButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextButton(
-      style: ButtonStyle(
-        backgroundColor: MaterialStateProperty.all<Color>(onTap == null
-            ? AppColors.grey2
-            : color ?? AppColors.primaryColor),
-        shape: MaterialStateProperty.all<OutlinedBorder>(
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(75).r)),
-      ),
-      onPressed: onTap,
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        width: 339.w,
-        child: isLoading
-            ? Container(
-                height: 15.h,
-                width: 15.w,
-                padding: const EdgeInsets.all(0.0).r,
-                child: const Center(child: CircularProgressIndicator()),
-              )
-            : Text(text,
-                textAlign: TextAlign.center,
-                style: getTextStyle(CustomTextStyles.s16w200).apply(fontFamily: FontTypes.Philosopher.name).copyWith(fontWeight: FontWeight.w700,fontSize: 24.sp).apply(
-                  color: onTap != null
-                      ? textColor ?? AppColors.white
-                      : AppColors.grey1,
-                )),
+    return Container(
+      decoration: BoxDecoration(gradient: AppColors.gradientPrimaryActiveButton,
+      borderRadius: BorderRadius.all(Radius.circular(30))),
+
+      child: MaterialButton(
+        onPressed: onTap,
+        child: Container(
+
+          padding: const EdgeInsets.all(10),
+          width: 339.w,
+          child: isLoading
+              ? Container(
+                  height: 15.h,
+                  width: 15.w,
+                  padding: const EdgeInsets.all(0.0).r,
+                  child: const Center(child: CircularProgressIndicator()),
+                )
+              : Container(
+                child: Text(text,
+                    textAlign: TextAlign.center,
+                    style: getTextStyle(CustomTextStyles.s16w200).apply(fontFamily: FontTypes.Philosopher.name).copyWith(fontWeight: FontWeight.w700,fontSize: 24.sp).apply(
+                      color: onTap != null
+                          ? textColor ?? AppColors.white
+                          : AppColors.grey1,
+                    )),
+              ),
+        ),
       ),
     );
   }
