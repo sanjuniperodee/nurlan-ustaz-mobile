@@ -8,7 +8,7 @@ import '../../core/common/app_styles.dart';
 import '../../core/common/colors.dart';
 import '../app/presentation/widgets/app_button.dart';
 import '../app/presentation/widgets/custom_app_bar.dart';
-import '../app/presentation/widgets/global_custom_body_widget.dart';
+import '../app/presentation/widgets/global_appbar_widget.dart';
 
 class QuestionPage extends StatefulWidget {
   const QuestionPage({Key? key}) : super(key: key);
@@ -37,7 +37,7 @@ class _QuestionPageState extends State<QuestionPage> {
           height: 1.1.sh,
           child: Stack(
             children: [
-              const GlobalCustomBody(),
+              const GlobalAppBar(),
               Positioned(
                 top: 80.h,
                 left: 16.r,

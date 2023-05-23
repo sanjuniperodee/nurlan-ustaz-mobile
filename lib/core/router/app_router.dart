@@ -24,6 +24,8 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/services_page
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/shop_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/question_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/tus_zhoru_details_page.dart';
+import 'package:nurlan_ustaz_flutter/features/tus_zhoru/question_page.dart';
+import 'package:nurlan_ustaz_flutter/features/tus_zhoru/tus_zhoru_details_page.dart';
 
 import '../../features/home/presentation/ui/live_broadcasts_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/tus_zhoru_page.dart';
@@ -85,6 +87,10 @@ part 'app_router.gr.dart';
     AutoRoute(
       page: QiblahPage,
     ),
+    //TosZhoru
+
+    AutoRoute(page: TusZhoruDetailPage),
+    AutoRoute(page: QuestionPage),
     AutoRoute(
       page: CommentPage,
     ),
