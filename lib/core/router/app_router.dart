@@ -33,8 +33,8 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_detai
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/services_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/shop_page.dart';
-import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/question_page.dart';
-import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/tus_zhoru_details_page.dart';
+import 'package:nurlan_ustaz_flutter/features/tus_zhoru/question_page.dart';
+import 'package:nurlan_ustaz_flutter/features/tus_zhoru/tus_zhoru_details_page.dart';
 
 import '../../features/Islam_teaching/presentation/ui/detail_prayers_page.dart';
 import '../../features/Islam_teaching/presentation/ui/name_detail_page.dart';
@@ -106,32 +106,6 @@ part 'app_router.gr.dart';
 
     AutoRoute(page: TusZhoruDetailPage),
     AutoRoute(page: QuestionPage),
-    AutoRoute(
-      page: CommentPage,
-    ),
-
-    //Islam teaching
-    AutoRoute(page: AyatDayPage),
-    AutoRoute(page: DutyPage),
-    AutoRoute(page: AllahNamesPage),
-    AutoRoute(page: DhikrPage),
-    AutoRoute(page: DhikrDetailPage),
-    AutoRoute(page: FatuaPage),
-    AutoRoute(page: PrayersPage),
-    AutoRoute(page: SurahPage),
-    AutoRoute(page: SurahDetailPage),
-    AutoRoute(page: PrayersDetailPage),
-    AutoRoute(page: NameDetailPage),
-    AutoRoute(page: NamePage),
-    //Islam teaching// 5 duty
-    AutoRoute(page: ImanPage),
-    AutoRoute(page: NamazReadPage),
-    AutoRoute(page: NamazPatternPage),
-    AutoRoute(page: WudhuPage),
-    AutoRoute(page: NamazDutyPage),
-    AutoRoute(page: OrazaPage),
-    AutoRoute(page: PligrimagePage),
-    AutoRoute(page: ZakatPage),
   ],
 )
 class AppRouter extends _$AppRouter {}
