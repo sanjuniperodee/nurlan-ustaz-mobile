@@ -5,7 +5,7 @@ import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_appbar_widget.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_widget.dart';
 
 import '../../../../core/common/assets.dart';
 
@@ -28,7 +28,7 @@ class _NotificationPageState extends State<NotificationPage> {
           height: 1.1.sh,
           child: Stack(
             children: [
-              const GlobalAppBar(),
+              const GlobalCustomBody(),
               Positioned(
                 top: 80.h,
                 left: 16.r,
