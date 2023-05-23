@@ -13,12 +13,15 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_detai
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/services_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/shop_page.dart';
+import 'package:nurlan_ustaz_flutter/features/tus_zhoru/question_page.dart';
+import 'package:nurlan_ustaz_flutter/features/tus_zhoru/tus_zhoru_details_page.dart';
 
 import '../../features/home/presentation/ui/live_broadcasts_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/tus_zhoru_page.dart';
 
 import '../../features/home/presentation/ui/namaz_page.dart';
 import '../../features/home/presentation/ui/news_detail_page.dart';
+
 part 'app_router.gr.dart';
 
 @MaterialAutoRouter(
@@ -72,6 +75,10 @@ part 'app_router.gr.dart';
     AutoRoute(
       page: QiblahPage,
     ),
+    //TosZhoru
+
+    AutoRoute(page: TusZhoruDetailPage),
+    AutoRoute(page: QuestionPage),
   ],
 )
 class AppRouter extends _$AppRouter {}
