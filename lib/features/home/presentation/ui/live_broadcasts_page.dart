@@ -24,7 +24,7 @@ class _LiveBroadcastsPageState extends State<LiveBroadcastsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF2F8FF),
+      backgroundColor:  AppColors.lightBlue,
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: SizedBox(

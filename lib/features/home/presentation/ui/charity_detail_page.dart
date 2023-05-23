@@ -41,7 +41,7 @@ class _CharityDetailPageState extends State<CharityDetailPage> {
                   height: 1.sh,
                   width: 1.sw,
                   decoration: BoxDecoration(
-                      color: const Color(0xFFF2F8FF),
+                      color: AppColors.lightBlue,
                       borderRadius: BorderRadius.only(
                         topRight: const Radius.circular(30).r,
                         topLeft: const Radius.circular(30).r,

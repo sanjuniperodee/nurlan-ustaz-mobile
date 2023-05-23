@@ -10,6 +10,8 @@ class IslamTeachingPage extends StatefulWidget {
 class _IslamTeachingPageState extends State<IslamTeachingPage> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      
+    );
   }
 }
