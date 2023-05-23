@@ -33,8 +33,6 @@ class _BaseState extends State<Base> {
         TusZhoruRouterPage(),
         MainRouterPage(),
         MainRouterPage(),
-
-
       ],
       bottomNavigationBuilder: (_, tabsRouter) {
         return ClipRRect(

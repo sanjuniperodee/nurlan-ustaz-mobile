@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +7,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
+import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/core/utils/alert_utilrs.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
 
@@ -30,7 +32,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
       body: SingleChildScrollView(
         physics: const BouncingScrollPhysics(),
         child: SizedBox(
-          height: 1.1.sh,
+          height: 1.2.sh,
           child: Stack(children: [
             CarouselSlider(
               options: CarouselOptions(
@@ -179,6 +181,29 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                         },
                         text: 'Сатып алу',
                         color: AppColors.blue,
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      Text(
+                        '«Алланың қалауымен некемізді 12-ақпан күні Қасиетті Меккеде қидық. Өзім үнемі шет елде өткізсем деп ойлайтынмын, бірақ дәл Алланың үйінде, Пайғамбарымыз Мұхаммедтің (с.ғ.с) тікелей ұрпақтары біздің некемізді қияды деп ешқашан ойламаппын. Қасиетті Мекке қаласында бәрі Алланың қалауымен болды. Яғни, басымызға жазылған тағдыр. Бұл – біз үшін ең қуанышты күн, естен кетпес тарихи сәт.Ең қызығы, некемізді осы елдің лауазымды шейхтары қиды. Олар үшін де бұл бір жаңалық болды. Бұрын-соңды болмаған жағдай. Алла тағала бұндай бақытты көптің біріне бұйыртпайды, бірақ, Аллаға шүкір, біз өз елімізден бірінші болып, дәл осы Алланың үйінде, пайғамбар ұрпақтарының келісімімен некемізді қидық» деп жазды жігіт.',
+                        style: getTextStyle(CustomTextStyles.s16w400)
+                            .apply(color: AppColors.black),
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          context.router.push(
+                            const CommentPageRoute(),
+                          );
+                        },
+                        child: Text(
+                          'Пікірлерді көру (2)',
+                          style: getTextStyle(CustomTextStyles.s16w400)
+                              .apply(color: AppColors.grey1),
+                        ),
                       )
                     ],
                   ),

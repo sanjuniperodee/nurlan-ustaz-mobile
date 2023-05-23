@@ -3,6 +3,10 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_qiblah/flutter_qiblah.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 class QiblahWidget extends StatefulWidget {
   const QiblahWidget({super.key});
@@ -49,26 +53,57 @@ class _QiblahWidgetState extends State<QiblahWidget>
             begin = (qiblahDirection.qiblah * (pi / 180) * -1);
             _animationController!.forward(from: 0);
 
-            return Center(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+            return Scaffold(
+              body: SizedBox(
+                height: 1.1.sh,
+                child: Stack(
                   children: [
-                    Text(
-                      "${qiblahDirection.direction.toInt()}°",
-                      style: const TextStyle(color: Colors.white, fontSize: 24),
+                    Container(
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                        begin: Alignment.topRight,
+                        end: Alignment.bottomLeft,
+                        colors: [
+                          const Color(0xFF1151C2).withOpacity(0.9),
+                          const Color(0xFF8F8CF7).withOpacity(0.9),
+                        ],
+                      )),
                     ),
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    SizedBox(
-                        height: 300,
-                        child: AnimatedBuilder(
-                          animation: animation!,
-                          builder: (context, child) => Transform.rotate(
-                              angle: animation!.value,
-                              child: Image.asset('assets/images/qibla.png')),
-                        ))
-                  ]),
+                    Positioned(
+                        top: 48.h,
+                        left: 16.r,
+                        right: 16.r,
+                        child: SizedBox(
+                          height: 1.sh,
+                          child: Column(
+                            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              const CustomAppBar(
+                                title: 'Құбыла',
+                              ),
+                              Expanded(
+                                flex: 2,
+                                child: SizedBox(
+                                    height: 300,
+                                    child: AnimatedBuilder(
+                                      animation: animation!,
+                                      builder: (context, child) =>
+                                          Transform.rotate(
+                                              angle: animation!.value,
+                                              child: SvgPicture.asset(
+                                                  'assets/icons/qibla.svg')),
+                                    )),
+                              ),
+                              Expanded(
+                                  flex: 2,
+                                  child: SvgPicture.asset(
+                                      'assets/icons/build.svg'))
+                            ],
+                          ),
+                        )),
+                  ],
+                ),
+              ),
             );
           },
         ),

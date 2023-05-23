@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/launcher.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/charity_detail_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/charity_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/comment_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/main_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/news_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/notifications_page.dart';
@@ -71,6 +72,9 @@ part 'app_router.gr.dart';
     ),
     AutoRoute(
       page: QiblahPage,
+    ),
+    AutoRoute(
+      page: CommentPage,
     ),
   ],
 )

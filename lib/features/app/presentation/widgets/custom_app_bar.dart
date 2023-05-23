@@ -23,10 +23,12 @@ class CustomAppBar extends StatelessWidget {
       children: hideIcon != null
           ? [
               Center(
-                child: Text(title,
+                child: Text(
+                  title,
                   textAlign: TextAlign.center,
                   style: getTextStyle(CustomTextStyles.s20w700)
-                      .copyWith(color: AppColors.white,fontSize: 36),),
+                      .copyWith(color: AppColors.white, fontSize: 36),
+                ),
               ),
             ]
           : [

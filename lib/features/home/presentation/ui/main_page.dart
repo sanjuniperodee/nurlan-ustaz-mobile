@@ -273,7 +273,7 @@ class _MainPageState extends State<MainPage> {
                           ),
                           SizedBox(height: 16.h),
                           SizedBox(
-                            height: 210.h,
+                            height: 176.h,
                             width: 1.sw,
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
@@ -290,8 +290,8 @@ class _MainPageState extends State<MainPage> {
                                       );
                                     },
                                     child: Container(
-                                      height: 66.h,
-                                      width: 200.w,
+                                      height: 110.h,
+                                      width: 180.w,
                                       decoration: BoxDecoration(
                                         color: AppColors.white,
                                         borderRadius: BorderRadius.circular(30),
@@ -306,6 +306,7 @@ class _MainPageState extends State<MainPage> {
                                             child: Image.asset(
                                               Assets.Islam,
                                               fit: BoxFit.cover,
+                                              height: 110.h,
                                             ),
                                           ),
                                           SizedBox(width: 12.r),
