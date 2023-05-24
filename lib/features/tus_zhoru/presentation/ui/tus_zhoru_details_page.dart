@@ -8,11 +8,10 @@ import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/utils/alert_utilrs.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../app/presentation/widgets/custom_app_bar.dart';
-
+import '../../../app/presentation/widgets/global_custom_widget.dart';
 
 class TusZhoruDetailPage extends StatefulWidget {
   final String title;

@@ -94,10 +94,7 @@ part 'app_router.gr.dart';
       page: QiblahPage,
     ),
     //TosZhoru
-
-    AutoRoute(page: TusZhoruDetailPage),
-    AutoRoute(page: QuestionPage),
-    //TosZhoru
+    
 
     AutoRoute(page: TusZhoruDetailPage),
     AutoRoute(page: QuestionPage),
