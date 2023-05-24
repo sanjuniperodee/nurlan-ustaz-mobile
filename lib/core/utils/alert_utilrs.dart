@@ -43,45 +43,43 @@ class AlertUtils {
             borderRadius: BorderRadius.circular(10),
           ),
           backgroundColor: AppColors.white,
-          content: Container(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: Text(
-                    messageKey,
-                    style: getTextStyle(CustomTextStyles.s14w400),
-                  ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Text(
+                  messageKey,
+                  style: getTextStyle(CustomTextStyles.s14w400),
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 32),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Flexible(
-                        child: AppButtonNoBorder(
-                          onTap: () {
-                            Navigator.pop(context, false);
-                          },
-                          text: button1Text,
-                          textColor: AppColors.grey1,
-                        ),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 32),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Flexible(
+                      child: AppButtonNoBorder(
+                        onTap: () {
+                          Navigator.pop(context, false);
+                        },
+                        text: button1Text,
+                        textColor: AppColors.grey1,
                       ),
-                      Flexible(
-                        child: AppButtonNoBorder(
-                          onTap: () {
-                            Navigator.pop(context, true);
-                          },
-                          text: button2Text,
-                          textColor: AppColors.primaryColor,
-                        ),
+                    ),
+                    Flexible(
+                      child: AppButtonNoBorder(
+                        onTap: () {
+                          Navigator.pop(context, true);
+                        },
+                        text: button2Text,
+                        textColor: AppColors.primaryColor,
                       ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+                    ),
+                  ],
+                ),
+              )
+            ],
           )),
     );
   }

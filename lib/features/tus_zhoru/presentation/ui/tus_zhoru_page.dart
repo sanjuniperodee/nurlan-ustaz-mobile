@@ -64,7 +64,7 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                   height: 20,
                 ),
                 CustomTabBar(
-                  tabs: [
+                  tabs: const [
                     Tab(
                       text: 'Барлығы',
                     ),
@@ -104,8 +104,7 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                                 padding: EdgeInsets.symmetric(
                                     vertical: 15, horizontal: 16),
                                 child: Row(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
@@ -120,15 +119,14 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                                           style: getTextStyle(
                                                   CustomTextStyles.s16w500)
                                               .apply(
-                                                  fontFamily: FontTypes
-                                                      .SF_Pro.name),
+                                                  fontFamily:
+                                                      FontTypes.SF_Pro.name),
                                         ),
                                         SizedBox(
                                           height: 4,
                                         ),
                                         Text(
-                                          _mockList[index].subtitle.length >
-                                                  30
+                                          _mockList[index].subtitle.length > 30
                                               ? _mockList[index]
                                                       .subtitle
                                                       .substring(0, 30) +
@@ -161,23 +159,20 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                             ),
                           );
                         },
-                        separatorBuilder:
-                            (BuildContext context, int index) {
+                        separatorBuilder: (BuildContext context, int index) {
                           return SizedBox(
                             height: 8,
                           );
                         },
                       )
                     : Padding(
-                        padding:
-                            EdgeInsets.only(top: 121, left: 10, right: 10),
+                        padding: EdgeInsets.only(top: 121, left: 10, right: 10),
                         child: Center(
                           child: Text(
                             "Бұл бөлімде Нұрлан ұстаздан жеке түс жорытуға тапсырыс бере аласыз. Түскен сомадан сіздің атыңыздан түс садақасы беріледі",
                             textAlign: TextAlign.center,
                             style: getTextStyle(CustomTextStyles.s14w500)
-                                .copyWith(
-                                    fontFamily: FontTypes.SF_Pro.name),
+                                .copyWith(fontFamily: FontTypes.SF_Pro.name),
                           ),
                         ),
                       )

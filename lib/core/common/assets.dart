@@ -55,6 +55,7 @@ class Assets {
 
   //IMAGESSS
   static const String logoNurlan = '$path/logo_nurlan.png';
+  static const String hand = '$path/hand.png';
   static const String alert = '$path/alert.png';
   // ignore: constant_identifier_names
   static const String Islam = '$path/Islam.png';

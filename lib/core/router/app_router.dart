@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/Allah_names_page.dart';
@@ -8,6 +6,7 @@ import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/aya
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/dhikr_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/fatua_page.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/name_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/prayers_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/surah_page.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/launcher.dart';
@@ -28,6 +27,9 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/shop_page.dar
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/question_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/tus_zhoru_details_page.dart';
 
+import '../../features/Islam_teaching/presentation/ui/detail_prayers_page.dart';
+import '../../features/Islam_teaching/presentation/ui/name_detail_page.dart';
+import '../../features/Islam_teaching/presentation/ui/surah_detail_page.dart';
 import '../../features/home/presentation/ui/live_broadcasts_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/tus_zhoru_page.dart';
 
@@ -109,6 +111,10 @@ part 'app_router.gr.dart';
     AutoRoute(page: FatuaPage),
     AutoRoute(page: PrayersPage),
     AutoRoute(page: SurahPage),
+    AutoRoute(page: SurahDetailPage),
+    AutoRoute(page: PrayersDetailPage),
+    AutoRoute(page: NameDetailPage),
+    AutoRoute(page: NamePage),
   ],
 )
 class AppRouter extends _$AppRouter {}

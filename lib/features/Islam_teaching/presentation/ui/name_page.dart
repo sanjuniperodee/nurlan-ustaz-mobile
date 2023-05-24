@@ -8,14 +8,18 @@ import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_widget.dart';
 
-class PrayersPage extends StatefulWidget {
-  const PrayersPage({super.key});
+import '../../../app/presentation/widgets/custom_tab_bar.dart';
+
+class NamePage extends StatefulWidget {
+  const NamePage({super.key});
 
   @override
-  State<PrayersPage> createState() => _PrayersPageState();
+  State<NamePage> createState() => _NamePageState();
 }
 
-class _PrayersPageState extends State<PrayersPage> {
+int currentIndex = 0;
+
+class _NamePageState extends State<NamePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -53,14 +57,33 @@ class _PrayersPageState extends State<PrayersPage> {
                           height: 56.h,
                         ),
                         const CustomAppBar(
-                          title: 'Дұғалар',
+                          title: 'Есімдер мағынасы',
                         ),
                         SizedBox(
                           height: 36.h,
                         ),
                         SearchWidget(onChanged: (string) {}),
+                        SizedBox(
+                          height: 22.h,
+                        ),
+                        CustomTabBar(
+                          tabs: const [
+                            Tab(
+                              text: 'Ер',
+                            ),
+                            Tab(
+                              text: 'Әйел',
+                            ),
+                          ],
+                          onTap: (int) {
+                            setState(() {
+                              currentIndex = int;
+                            });
+                          },
+                          length: 2,
+                        ),
                         ListView.builder(
-                          itemCount: 3,
+                          itemCount: 23,
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
@@ -69,7 +92,7 @@ class _PrayersPageState extends State<PrayersPage> {
                               child: GestureDetector(
                                 onTap: () {
                                   context.router.push(
-                                    const PrayersDetailPageRoute(),
+                                    const NameDetailPageRoute(),
                                   );
                                 },
                                 child: Container(
@@ -77,25 +100,23 @@ class _PrayersPageState extends State<PrayersPage> {
                                       color: AppColors.white,
                                       borderRadius: BorderRadius.circular(20)),
                                   child: ListTile(
-                                    iconColor: AppColors.black,
-                                    title: Text(
-                                      'Қатты қиналғанда оқылатын дұға',
-                                      style: getTextStyle(
-                                          CustomTextStyles.s16w500),
-                                    ),
-                                    subtitle: Text(
-                                      'Сенен басқа Тәңір жоқ. Сені кемшілік атаулыдан пәктеймін. Расында, мен өз-өзіме зұлымдық етушілерден болдым».',
-                                      style:
-                                          getTextStyle(CustomTextStyles.s14w400)
-                                              .apply(color: AppColors.grey2),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                    trailing: Image.asset(
-                                      Assets.hand,
-                                      height: 20.r,
-                                      width: 20.r,
-                                    ),
-                                  ),
+                                      iconColor: AppColors.black,
+                                      title: Text(
+                                        currentIndex == 0 ? 'Аңсар' : 'Анара',
+                                        style: getTextStyle(
+                                            CustomTextStyles.s16w500),
+                                      ),
+                                      subtitle: Text(
+                                        'Көмекшілер, қолдаушылар, жолсерік.',
+                                        style: getTextStyle(
+                                                CustomTextStyles.s14w400)
+                                            .apply(color: AppColors.grey2),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      trailing: const Icon(
+                                        Icons.arrow_forward_ios_outlined,
+                                        color: AppColors.orange,
+                                      )),
                                 ),
                               ),
                             );
