@@ -33,8 +33,8 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_detai
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/services_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/shop_page.dart';
-import 'package:nurlan_ustaz_flutter/features/tus_zhoru/question_page.dart';
-import 'package:nurlan_ustaz_flutter/features/tus_zhoru/tus_zhoru_details_page.dart';
+import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/question_page.dart';
+import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/tus_zhoru_details_page.dart';
 
 import '../../features/Islam_teaching/presentation/ui/detail_prayers_page.dart';
 import '../../features/Islam_teaching/presentation/ui/name_detail_page.dart';
@@ -63,8 +63,6 @@ part 'app_router.gr.dart';
     //
     //HOME
     //
-    AutoRoute(page: ProfileMainPage),
-    AutoRoute(page: PaymentsPage),
     AutoRoute(page: ProfileInfoPage),
     AutoRoute(
       page: SeminarPage,
@@ -103,9 +101,11 @@ part 'app_router.gr.dart';
       page: QiblahPage,
     ),
     //TosZhoru
-
     AutoRoute(page: TusZhoruDetailPage),
     AutoRoute(page: QuestionPage),
+    AutoRoute(page: ProfileMainPage),
+    AutoRoute(page: PaymentsPage),
+
   ],
 )
 class AppRouter extends _$AppRouter {}

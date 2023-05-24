@@ -1,15 +1,17 @@
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
-// ignore: depend_on_referenced_packages
+import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
+import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
+import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
+import 'package:nurlan_ustaz_flutter/core/utils/alert_utilrs.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
 import 'package:share_plus/share_plus.dart';
 
-import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
-import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
-
 import '../../../app/presentation/widgets/custom_app_bar.dart';
+import '../../../app/presentation/widgets/global_custom_widget.dart';
 
 class TusZhoruDetailPage extends StatefulWidget {
   final String title;

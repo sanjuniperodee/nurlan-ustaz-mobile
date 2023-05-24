@@ -1,11 +1,16 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/model/payment_model.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_text_form_profile.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_widget.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/widgets/profile_menu_item.dart';
 
+import '../../../../../../core/common/assets.dart';
 import '../../../../../../core/common/colors.dart';
 import '../../../../../app/presentation/widgets/custom_app_bar.dart';
 import '../../../../../app/presentation/widgets/custom_tab_bar.dart';
@@ -29,14 +34,14 @@ class _PaymentsPageState extends State<PaymentsPage> {
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Column(children: [
-            const CustomAppBar(
+            CustomAppBar(
               title: 'Сатып алынған қызметтер',
             ),
-            const SizedBox(
+            SizedBox(
               height: 36,
             ),
             CustomTabBar(
-              tabs: const [
+              tabs: [
                 Tab(
                   text: 'Түс жорулар',
                 ),
@@ -51,7 +56,7 @@ class _PaymentsPageState extends State<PaymentsPage> {
               },
               length: 2,
             ),
-            const SizedBox(
+            SizedBox(
               height: 20,
             ),
             ListView.separated(
@@ -59,8 +64,7 @@ class _PaymentsPageState extends State<PaymentsPage> {
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
                   return Container(
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 12, horizontal: 12),
+                    padding: EdgeInsets.symmetric(vertical: 12,horizontal: 12),
                     width: double.infinity,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -78,41 +82,30 @@ class _PaymentsPageState extends State<PaymentsPage> {
                                       fontFamily: FontTypes.SF_Pro.name,
                                       color: AppColors.grey1),
                             ),
-                            const SizedBox(
+                            SizedBox(
                               height: 2,
                             ),
                             Text(
                               '${payments[index].title}',
                               style: getTextStyle(CustomTextStyles.s16w600)
-                                  .copyWith(
-                                      fontFamily: FontTypes.SF_Pro.name,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16),
+                                  .copyWith(fontFamily: FontTypes.SF_Pro.name,fontWeight: FontWeight.w600,fontSize: 16),
                             )
                           ],
                         ),
                         Row(
                           children: [
-                            Text(
-                              '${payments[index].amount} ₸',
-                              style: getTextStyle(CustomTextStyles.s16w600)
-                                  .copyWith(color: AppColors.orange),
-                            ),
-                            const SizedBox(
-                              width: 13,
-                            ),
-                            SvgPicture.asset(
-                              'assets/icons/chevron_right.svg',
-                              color: AppColors.orange,
-                            ),
+                            Text('${payments[index].amount} ₸',style: getTextStyle(CustomTextStyles.s16w600).copyWith(color: AppColors.orange),),
+                            SizedBox(width: 13,),
+                            SvgPicture.asset('assets/icons/chevron_right.svg',color: AppColors.orange,),
                           ],
                         )
+
                       ],
                     ),
                   );
                 },
                 separatorBuilder: (BuildContext context, int index) {
-                  return const SizedBox(
+                  return SizedBox(
                     height: 12,
                   );
                 },
