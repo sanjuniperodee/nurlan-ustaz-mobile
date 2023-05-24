@@ -52,6 +52,8 @@ part 'app_router.gr.dart';
     //
     //HOME
     //
+    AutoRoute(page: ProfileMainPage),
+    AutoRoute(page: PaymentsPage),
     AutoRoute(page: ProfileInfoPage),
     AutoRoute(
       page: SeminarPage,
@@ -107,9 +109,6 @@ part 'app_router.gr.dart';
     AutoRoute(page: FatuaPage),
     AutoRoute(page: PrayersPage),
     AutoRoute(page: SurahPage),
-    AutoRoute(page: ProfileMainPage),
-    AutoRoute(page: PaymentsPage),
-
   ],
 )
 class AppRouter extends _$AppRouter {}

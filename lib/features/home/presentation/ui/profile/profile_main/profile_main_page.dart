@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/widgets/profile_menu_item.dart';
 
 import '../../../../../../core/common/app_styles.dart';
@@ -11,7 +12,7 @@ import '../../../../../../core/common/assets.dart';
 import '../../../../../../core/common/colors.dart';
 import '../../../../../../core/router/app_router.dart';
 import '../../../../../app/presentation/widgets/custom_app_bar.dart';
-import '../../../../../app/presentation/widgets/global_custom_widget.dart';
+
 
 class ProfileMainPage extends StatefulWidget {
   const ProfileMainPage({Key? key}) : super(key: key);
