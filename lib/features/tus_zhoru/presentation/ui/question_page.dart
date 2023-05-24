@@ -1,14 +1,17 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/utils/pay_dialog.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_text_form_field.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
+import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/question_page.dart';
 
 import '../../../../core/common/app_styles.dart';
 import '../../../../core/common/colors.dart';
 import '../../../app/presentation/widgets/app_button.dart';
 import '../../../app/presentation/widgets/custom_app_bar.dart';
+import '../../../app/presentation/widgets/global_custom_widget.dart';
 
 class QuestionPage extends StatefulWidget {
   const QuestionPage({Key? key}) : super(key: key);
@@ -17,8 +20,8 @@ class QuestionPage extends StatefulWidget {
   State<QuestionPage> createState() => _QuestionPageState();
 }
 
-TextEditingController controllerForAtau = TextEditingController();
-TextEditingController controllerForTusimbde = TextEditingController();
+ TextEditingController controllerForAtau = TextEditingController();
+ TextEditingController controllerForTusimbde = TextEditingController();
 
 class _QuestionPageState extends State<QuestionPage> {
   @override
@@ -29,11 +32,10 @@ class _QuestionPageState extends State<QuestionPage> {
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: AppButton(
           onTap: () {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return PayDialog();
-                });
+            showDialog(context: context, builder: (context){
+              return PayDialog();
+            });
+
           },
           text: 'Жіберу',
           color: AppColors.blue,
@@ -52,7 +54,7 @@ class _QuestionPageState extends State<QuestionPage> {
                 left: 16.r,
                 right: 16.r,
                 child: Column(
-                  children: const [
+                  children: [
                     CustomAppBar(
                       title: 'Тапсырыс беру',
                     ),
@@ -80,15 +82,15 @@ class _QuestionPageState extends State<QuestionPage> {
                           inputFormatters: [
                             LengthLimitingTextInputFormatter(60),
                           ],
-                          onChanged: (value) {
-                            setState(() {});
+                          onChanged: (value){
+                            setState(() {
+                            });
+
                           },
                           hintText: 'Aтауы...',
                           controller: controllerForAtau,
                         ),
-                        SizedBox(
-                          height: 8,
-                        ),
+                        SizedBox(height: 8,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
@@ -105,15 +107,15 @@ class _QuestionPageState extends State<QuestionPage> {
                           inputFormatters: [
                             LengthLimitingTextInputFormatter(999),
                           ],
-                          onChanged: (value) {
-                            setState(() {});
+                          onChanged: (value){
+                            setState(() {
+                            });
                           },
                           hintText: 'ff',
                           controller: controllerForTusimbde,
                         ),
-                        SizedBox(
-                          height: 8,
-                        ),
+                        SizedBox(height: 8,),
+
                         Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
