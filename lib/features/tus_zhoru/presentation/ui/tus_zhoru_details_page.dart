@@ -10,8 +10,8 @@ import 'package:nurlan_ustaz_flutter/core/utils/alert_utilrs.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
 import 'package:share_plus/share_plus.dart';
 
-import '../app/presentation/widgets/custom_app_bar.dart';
-import '../app/presentation/widgets/global_appbar_widget.dart';
+import '../../../app/presentation/widgets/custom_app_bar.dart';
+import '../../../app/presentation/widgets/global_custom_widget.dart';
 
 class TusZhoruDetailPage extends StatefulWidget {
   final String title;
@@ -112,30 +112,22 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
         ),
       ),
       backgroundColor: AppColors.white,
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: SizedBox(
-          height: 1.1.sh,
-          child: Stack(
-            children: [
-              const GlobalAppBar(),
-              Positioned(
-                top: 80.h,
-                left: 16.r,
-                right: 16.r,
-                child: Column(
-                  children: [
-                    CustomAppBar(
-                      title: widget.title,
-                    ),
-                  ],
-                ),
-              ),
-              Positioned(
-                  top: 124,
-                  left: 0,
-                  right: 0,
-                  child: Container(
+      body: GlobalCustomBody(
+        horizontalPadding: 0,
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: SizedBox(
+            height: 1.1.sh,
+            child: Stack(
+              children:[ Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 12),
+                    child: CustomAppBar(title: widget.title),
+                  ),
+                  SizedBox(height: 24,),
+                  Container(
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                     height: 700,
                     width: double.maxFinite,
@@ -186,7 +178,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                               onTap: () {},
                               child: Container(
                                 height: 44.h,
-                                width: 166.w,
+                                width: 150.w,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
                                   color: Color(0xFF8F8CF7).withOpacity(0.13),
@@ -220,7 +212,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                               },
                               child: Container(
                                 height: 44,
-                                width: 166,
+                                width: 150,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
                                   color: Color(0xFF8F8CF7).withOpacity(0.13),
@@ -251,8 +243,11 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                         ),
                       ],
                     ),
-                  )),
-            ],
+                  ),
+                ],
+              ),
+          ]
+            ),
           ),
         ),
       ),

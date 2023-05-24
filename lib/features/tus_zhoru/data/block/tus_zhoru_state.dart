@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import '../../../core/model/tus_zhoru_model.dart';
+import '../../../../core/model/tus_zhoru_model.dart';
 
 part 'tus_zhoru_state.freezed.dart';
 

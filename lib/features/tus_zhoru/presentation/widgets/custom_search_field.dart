@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../../core/common/app_styles.dart';
-import '../../../core/common/colors.dart';
+import '../../../../core/common/app_styles.dart';
+import '../../../../core/common/colors.dart';
 
 class CustomTextFormField extends StatefulWidget {
   final String hintText;

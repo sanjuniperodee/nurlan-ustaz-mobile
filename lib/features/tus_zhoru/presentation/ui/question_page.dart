@@ -5,13 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/utils/pay_dialog.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_text_form_field.dart';
-import 'package:nurlan_ustaz_flutter/features/tus_zhoru/question_page.dart';
+import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/question_page.dart';
 
-import '../../core/common/app_styles.dart';
-import '../../core/common/colors.dart';
-import '../app/presentation/widgets/app_button.dart';
-import '../app/presentation/widgets/custom_app_bar.dart';
-import '../app/presentation/widgets/global_appbar_widget.dart';
+import '../../../../core/common/app_styles.dart';
+import '../../../../core/common/colors.dart';
+import '../../../app/presentation/widgets/app_button.dart';
+import '../../../app/presentation/widgets/custom_app_bar.dart';
+import '../../../app/presentation/widgets/global_custom_widget.dart';
 
 class QuestionPage extends StatefulWidget {
   const QuestionPage({Key? key}) : super(key: key);
@@ -48,7 +48,7 @@ class _QuestionPageState extends State<QuestionPage> {
           height: 1.1.sh,
           child: Stack(
             children: [
-              const GlobalAppBar(),
+              const GlobalCustomBody(),
               Positioned(
                 top: 80.h,
                 left: 16.r,
