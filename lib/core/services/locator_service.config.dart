@@ -25,8 +25,8 @@ import '../../features/Islam_teaching/data/datasource/remote/Islam_teaching_remo
     as _i9;
 import '../../features/Islam_teaching/data/repositories/Islam_teaching_repository.dart'
     as _i10;
-import '../../features/tus_zhoru/cubit/tus_zhoru_cubit.dart' as _i13;
-import '../../features/tus_zhoru/cubit/tus_zhoru_state.dart' as _i14;
+import '../../features/tus_zhoru/data/block/tus_zhoru_cubit.dart' as _i13;
+import '../../features/tus_zhoru/data/block/tus_zhoru_state.dart' as _i14;
 import '../platform/dio_wrapper.dart' as _i6;
 
 extension GetItInjectableX on _i1.GetIt {

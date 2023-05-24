@@ -4,10 +4,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 
 class GlobalCustomBody extends StatelessWidget {
+  final double? horizontalPadding;
   final Widget? child;
   const GlobalCustomBody({
     Key? key,
-    this.child,
+    this.child, this.horizontalPadding,
   }) : super(key: key);
 
   @override
@@ -28,7 +29,7 @@ class GlobalCustomBody extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 40, left: 16, right: 16).r,
+            padding:  EdgeInsets.only(top: 40, left: horizontalPadding ?? 16, right: horizontalPadding ?? 16).r,
             child: child ?? const SizedBox(),
           ),
         ],

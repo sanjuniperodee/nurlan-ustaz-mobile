@@ -77,7 +77,13 @@ class _MainPageState extends State<MainPage> {
                         SizedBox(
                           width: 8.r,
                         ),
-                        SvgPicture.asset(Assets.userSvg),
+                        GestureDetector(
+                          onTap: (){
+                            context.router.push(
+                              const ProfileMainPageRoute(),
+                            );
+                          },
+                            child: SvgPicture.asset(Assets.userSvg)),
                       ],
                     ),
                   ],

@@ -10,16 +10,19 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/comment_page.
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/main_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/news_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/notifications_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/payment_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/profile_info_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/profile_main_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/qiblah_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_detail_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/services_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/shop_page.dart';
-import 'package:nurlan_ustaz_flutter/features/tus_zhoru/question_page.dart';
-import 'package:nurlan_ustaz_flutter/features/tus_zhoru/tus_zhoru_details_page.dart';
+import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/question_page.dart';
+import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/tus_zhoru_details_page.dart';
 
 import '../../features/home/presentation/ui/live_broadcasts_page.dart';
-import 'package:nurlan_ustaz_flutter/features/tus_zhoru/tus_zhoru_page.dart';
+import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/tus_zhoru_page.dart';
 
 import '../../features/home/presentation/ui/namaz_page.dart';
 import '../../features/home/presentation/ui/news_detail_page.dart';
@@ -42,6 +45,7 @@ part 'app_router.gr.dart';
     //
     //HOME
     //
+    AutoRoute(page: ProfileInfoPage),
     AutoRoute(
       page: SeminarPage,
     ),
@@ -82,9 +86,11 @@ part 'app_router.gr.dart';
       page: CommentPage,
     ),
     //TosZhoru
-
     AutoRoute(page: TusZhoruDetailPage),
     AutoRoute(page: QuestionPage),
+    AutoRoute(page: ProfileMainPage),
+    AutoRoute(page: PaymentsPage),
+
   ],
 )
 class AppRouter extends _$AppRouter {}
