@@ -4,8 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_widget.dart';
 
 class SurahDetailPage extends StatefulWidget {
   const SurahDetailPage({super.key});
@@ -15,6 +13,7 @@ class SurahDetailPage extends StatefulWidget {
 }
 
 class _SurahDetailPageState extends State<SurahDetailPage> {
+  bool favorite = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,10 +76,15 @@ class _SurahDetailPageState extends State<SurahDetailPage> {
                                 SizedBox(
                                   width: 16.w,
                                 ),
-                                SvgPicture.asset(
-                                  Assets.bookMarkSvg,
-                                  color: AppColors.white,
-                                )
+                                GestureDetector(
+                                    onTap: () {
+                                      setState(() {
+                                        favorite = !favorite;
+                                      });
+                                    },
+                                    child: SvgPicture.asset(favorite
+                                        ? Assets.bookMark1Svg
+                                        : Assets.bookMarkSvg))
                               ],
                             )
                           ],
