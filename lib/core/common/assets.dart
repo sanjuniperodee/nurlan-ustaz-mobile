@@ -52,6 +52,8 @@ class Assets {
   static const String radioCircleSvg = '$svgPath/radio_circle.svg';
   static const String radioOnSvg = '$svgPath/radio_on.svg';
   static const String playSvg = '$svgPath/play.svg';
+  static const String replaySvg = '$svgPath/replay.svg';
+  static const String infoCircleSvg = '$svgPath/info_circle.svg';
 
   //IMAGESSS
   static const String logoNurlan = '$path/logo_nurlan.png';
