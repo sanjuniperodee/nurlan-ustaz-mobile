@@ -6,7 +6,7 @@ import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
 
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_widget.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 
 import '../../../../core/common/assets.dart';
 
@@ -22,98 +22,87 @@ class _ServicesPageState extends State<ServicesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor:  AppColors.lightBlue,
-      body: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
+      backgroundColor: AppColors.lightBlue,
+      body: GlobalCustomBody(
         child: SizedBox(
-          height: 1.1.sh,
-          child: Stack(
-            children: [
-              const GlobalCustomBody(),
-              Positioned(
-                top: 80.h,
-                left: 16.r,
-                right: 16.r,
-                child: Column(
-                  children: [
-                    const CustomAppBar(
-                      title: 'Қызметтер',
-                    ),
-                    ListView.builder(
-                      itemCount: 3,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: EdgeInsets.only(top: 12.r),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: AppColors.white,
-                                borderRadius: BorderRadius.circular(20).r),
-                            padding: const EdgeInsets.symmetric(
-                                    vertical: 12, horizontal: 12)
-                                .r
-                                .r,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                const CustomAppBar(
+                  title: 'Қызметтер',
+                ),
+                ListView.builder(
+                  itemCount: 13,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: EdgeInsets.only(top: 12.r),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: AppColors.white,
+                            borderRadius: BorderRadius.circular(20).r),
+                        padding: const EdgeInsets.symmetric(
+                                vertical: 12, horizontal: 12)
+                            .r
+                            .r,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Row(
                               children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      decoration: BoxDecoration(
-                                          color: AppColors.orange,
-                                          borderRadius:
-                                              BorderRadius.circular(12).r),
-                                      padding: const EdgeInsets.all(15).r,
-                                      child: SvgPicture.asset(
-                                          'assets/icons/marri.svg'),
-                                    ),
-                                    SizedBox(
-                                      width: 8.w,
-                                    ),
-                                    Text(
-                                      'Жеке жүздесу',
-                                      style:
-                                          getTextStyle(CustomTextStyles.s16w500)
-                                              .apply(color: AppColors.black),
-                                    ),
-                                  ],
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: AppColors.orange,
+                                      borderRadius:
+                                          BorderRadius.circular(12).r),
+                                  padding: const EdgeInsets.all(15).r,
+                                  child: SvgPicture.asset(
+                                      'assets/icons/marri.svg'),
                                 ),
-                                GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedIndex = index;
-                                      });
-                                    },
-                                    child: selectedIndex != index
-                                        ? SvgPicture.asset(
-                                            Assets.radioCircleSvg)
-                                        : SvgPicture.asset(Assets.radioOnSvg))
+                                SizedBox(
+                                  width: 8.w,
+                                ),
+                                Text(
+                                  'Жеке жүздесу',
+                                  style: getTextStyle(CustomTextStyles.s16w500)
+                                      .apply(color: AppColors.black),
+                                ),
                               ],
                             ),
-                          ),
-                        );
-                      },
-                    ),
-                    SizedBox(
-                      height: 24.h,
-                    ),
-                    const Text(
-                      'Жоғарыдағы қызметтердің бірін таңдап, батырманы басыңыз',
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(
-                      height: 24.h,
-                    ),
-                    AppButton(
-                      onTap: () {},
-                      text: 'Өтініш қалдыру',
-                      color: AppColors.blue,
-                    )
-                  ],
+                            GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    selectedIndex = index;
+                                  });
+                                },
+                                child: selectedIndex != index
+                                    ? SvgPicture.asset(Assets.radioCircleSvg)
+                                    : SvgPicture.asset(Assets.radioOnSvg))
+                          ],
+                        ),
+                      ),
+                    );
+                  },
                 ),
-              ),
-            ],
+                SizedBox(
+                  height: 24.h,
+                ),
+                const Text(
+                  'Жоғарыдағы қызметтердің бірін таңдап, батырманы басыңыз',
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 24.h,
+                ),
+                AppButton(
+                  onTap: () {},
+                  text: 'Өтініш қалдыру',
+                  color: AppColors.blue,
+                )
+              ],
+            ),
           ),
         ),
       ),

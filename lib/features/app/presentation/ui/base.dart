@@ -31,7 +31,7 @@ class _BaseState extends State<Base> {
         MainRouterPage(),
         IslamTeachingRouterPage(),
         TusZhoruRouterPage(),
-        MainRouterPage(),
+        TandaulilarMainRouterPage(),
         MainRouterPage(),
       ],
       bottomNavigationBuilder: (_, tabsRouter) {

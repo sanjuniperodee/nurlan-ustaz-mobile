@@ -56,48 +56,50 @@ class NamazContainerWidget extends StatelessWidget {
                 style: getTextStyle(CustomTextStyles.s16w400)
                     .apply(color: AppColors.black),
               ),
-              SizedBox(
-                height: 30.h,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16).r,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        SvgPicture.asset(Assets.locationSvg),
-                        SizedBox(
-                          width: 4.w,
-                        ),
-                        Text(
-                          'Алматы',
-                          style: getTextStyle(CustomTextStyles.s16w400)
-                              .apply(color: AppColors.black),
-                        )
-                      ],
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        context.router.push(
-                          const QiblahPageRoute(),
-                        );
-                      },
-                      child: Row(
+              Expanded(
+                flex: 4,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                  ).r,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
                         children: [
-                          SvgPicture.asset(Assets.compassSvg),
+                          SvgPicture.asset(Assets.locationSvg),
                           SizedBox(
                             width: 4.w,
                           ),
                           Text(
-                            'Құбыла',
+                            'Алматы',
                             style: getTextStyle(CustomTextStyles.s16w400)
                                 .apply(color: AppColors.black),
                           )
                         ],
                       ),
-                    ),
-                  ],
+                      GestureDetector(
+                        onTap: () {
+                          context.router.push(
+                            const QiblahPageRoute(),
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(Assets.compassSvg),
+                            SizedBox(
+                              width: 4.w,
+                            ),
+                            Text(
+                              'Құбыла',
+                              style: getTextStyle(CustomTextStyles.s16w400)
+                                  .apply(color: AppColors.black),
+                            )
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               )
             ],

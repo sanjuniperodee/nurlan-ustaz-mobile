@@ -2,7 +2,14 @@ import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/Allah_names_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/Islam_teaching_page.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/ayat_day_page.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/dhikr_page.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_page.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/fatua_page.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/prayers_page.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/surah_page.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/launcher.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/charity_detail_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/charity_page.dart';
@@ -10,14 +17,20 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/comment_page.
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/main_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/news_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/notifications_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/about_app_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/add_new_card_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/change_password_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/payment_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/profile_cards_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/profile_info_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/profile_main_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/profile_notification_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/qiblah_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_detail_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/services_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/shop_page.dart';
+import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/ui/tandaulilar_main_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/question_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/tus_zhoru_details_page.dart';
 
@@ -26,6 +39,7 @@ import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/tus_zhor
 
 import '../../features/home/presentation/ui/namaz_page.dart';
 import '../../features/home/presentation/ui/news_detail_page.dart';
+import '../../features/home/presentation/ui/profile/profile_main/faq_page.dart';
 
 part 'app_router.gr.dart';
 
@@ -40,11 +54,20 @@ part 'app_router.gr.dart';
         AutoRoute(page: MainPage, name: 'MainRouterPage'),
         AutoRoute(page: IslamTeachingPage, name: 'IslamTeachingRouterPage'),
         AutoRoute(page: TusZhoruPage, name: 'TusZhoruRouterPage'),
+        AutoRoute(page: TandaulilarMainPage,name: 'TandaulilarMainRouterPage'),
       ],
     ),
     //
     //HOME
     //
+    AutoRoute(page: AddNewCardPage),
+    AutoRoute(page: ChangePasswordPage),
+    AutoRoute(page: ProfileNotificationPage),
+    AutoRoute(page: FaqPage),
+    AutoRoute(page: AboutAppPage),
+    AutoRoute(page: ProfileCardsPage),
+    AutoRoute(page: ProfileMainPage),
+    AutoRoute(page: PaymentsPage),
     AutoRoute(page: ProfileInfoPage),
     AutoRoute(
       page: SeminarPage,
@@ -82,15 +105,24 @@ part 'app_router.gr.dart';
     AutoRoute(
       page: QiblahPage,
     ),
+    //TosZhoru
+
+    AutoRoute(page: TusZhoruDetailPage),
+    AutoRoute(page: QuestionPage),
     AutoRoute(
       page: CommentPage,
     ),
     //TosZhoru
     AutoRoute(page: TusZhoruDetailPage),
     AutoRoute(page: QuestionPage),
-    AutoRoute(page: ProfileMainPage),
-    AutoRoute(page: PaymentsPage),
-
+    //Islam teaching
+    AutoRoute(page: AyatDayPage),
+    AutoRoute(page: DutyPage),
+    AutoRoute(page: AllahNamesPage),
+    AutoRoute(page: DhikrPage),
+    AutoRoute(page: FatuaPage),
+    AutoRoute(page: PrayersPage),
+    AutoRoute(page: SurahPage),
   ],
 )
 class AppRouter extends _$AppRouter {}

@@ -14,6 +14,12 @@ class Assets {
   static const String oyuSvg = '$svgPath/kazakh_oyu.svg';
 
   static const String shareSvg = '$svgPath/share.svg';
+  static const String duty5Svg = '$svgPath/5_duty.svg';
+  static const String allahSvg = '$svgPath/allah.svg';
+  static const String praySvg = '$svgPath/pray.svg';
+  static const String quranSvg = '$svgPath/quran.svg';
+  static const String scheduleSvg = '$svgPath/schedule.svg';
+  static const String tasbihSvg = '$svgPath/tasbih.svg';
   static const String locationSvg = '$svgPath/location.svg';
   static const String compassSvg = '$svgPath/compass.svg';
   static const String commentSvg = '$svgPath/comment.svg';

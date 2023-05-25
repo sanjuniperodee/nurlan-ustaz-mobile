@@ -9,11 +9,12 @@ import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 class CustomAppBar extends StatelessWidget {
   final String title;
   final bool? hideIcon;
+  final Color? color;
 
   const CustomAppBar({
     Key? key,
     required this.title,
-    this.hideIcon,
+    this.hideIcon, this.color,
   }) : super(key: key);
 
   @override
@@ -27,7 +28,7 @@ class CustomAppBar extends StatelessWidget {
                   title,
                   textAlign: TextAlign.center,
                   style: getTextStyle(CustomTextStyles.s20w700)
-                      .copyWith(color: AppColors.white, fontSize: 36),
+                      .copyWith(color: color == null ? AppColors.white : color, fontSize: 36),
                 ),
               ),
             ]
@@ -36,7 +37,7 @@ class CustomAppBar extends StatelessWidget {
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: SvgPicture.asset(Assets.backButtonSvg)),
+                  child: SvgPicture.asset(Assets.backButtonSvg,color: color == null ? AppColors.white : color,)),
               Expanded(
                 child: Align(
                   alignment: Alignment.center,
@@ -44,7 +45,7 @@ class CustomAppBar extends StatelessWidget {
                     title,
                     textAlign: TextAlign.center,
                     style: getTextStyle(CustomTextStyles.s20w700)
-                        .apply(color: AppColors.white),
+                        .apply(color: color == null ? AppColors.white : color),
                   ),
                 ),
               )
