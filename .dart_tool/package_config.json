@@ -405,7 +405,7 @@
     },
     {
       "name": "graphs",
-      "rootUri": "file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/graphs-2.3.0",
+      "rootUri": "file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/graphs-2.3.1",
       "packageUri": "lib/",
       "languageVersion": "2.18"
     },
@@ -920,7 +920,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-05-24T07:34:05.747153Z",
+  "generated": "2023-05-25T05:16:05.800636Z",
   "generator": "pub",
   "generatorVersion": "2.18.5"
 }

@@ -5,13 +5,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/model/tus_zhoru_model.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 
 import '../../../../core/common/app_styles.dart';
 import '../../../../core/common/colors.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../app/presentation/widgets/custom_app_bar.dart';
 import '../../../app/presentation/widgets/custom_tab_bar.dart';
-import '../../../app/presentation/widgets/global_custom_widget.dart';
 import '../../../app/presentation/widgets/search_widget.dart';
 
 class TusZhoruPage extends StatefulWidget {
@@ -103,8 +103,7 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                                 padding: EdgeInsets.symmetric(
                                     vertical: 15, horizontal: 16),
                                 child: Row(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
@@ -119,15 +118,14 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                                           style: getTextStyle(
                                                   CustomTextStyles.s16w500)
                                               .apply(
-                                                  fontFamily: FontTypes
-                                                      .SF_Pro.name),
+                                                  fontFamily:
+                                                      FontTypes.SF_Pro.name),
                                         ),
                                         SizedBox(
                                           height: 4,
                                         ),
                                         Text(
-                                          _mockList[index].subtitle.length >
-                                                  30
+                                          _mockList[index].subtitle.length > 30
                                               ? _mockList[index]
                                                       .subtitle
                                                       .substring(0, 30) +
@@ -160,23 +158,20 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                             ),
                           );
                         },
-                        separatorBuilder:
-                            (BuildContext context, int index) {
+                        separatorBuilder: (BuildContext context, int index) {
                           return SizedBox(
                             height: 8,
                           );
                         },
                       )
                     : Padding(
-                        padding:
-                            EdgeInsets.only(top: 121, left: 10, right: 10),
+                        padding: EdgeInsets.only(top: 121, left: 10, right: 10),
                         child: Center(
                           child: Text(
                             "Бұл бөлімде Нұрлан ұстаздан жеке түс жорытуға тапсырыс бере аласыз. Түскен сомадан сіздің атыңыздан түс садақасы беріледі",
                             textAlign: TextAlign.center,
                             style: getTextStyle(CustomTextStyles.s14w500)
-                                .copyWith(
-                                    fontFamily: FontTypes.SF_Pro.name),
+                                .copyWith(fontFamily: FontTypes.SF_Pro.name),
                           ),
                         ),
                       )
