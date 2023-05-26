@@ -14,6 +14,12 @@ class Assets {
   static const String oyuSvg = '$svgPath/kazakh_oyu.svg';
 
   static const String shareSvg = '$svgPath/share.svg';
+  static const String nam5Svg = '$svgPath/nam5.svg';
+  static const String nam4Svg = '$svgPath/nam4.svg';
+  static const String nam3Svg = '$svgPath/nam3.svg';
+  static const String nam2Svg = '$svgPath/nam2.svg';
+  static const String nam1Svg = '$svgPath/nam1.svg';
+  static const String wudhuSvg = '$svgPath/wudhu.svg';
   static const String duty5Svg = '$svgPath/5_duty.svg';
   static const String allahSvg = '$svgPath/allah.svg';
   static const String praySvg = '$svgPath/pray.svg';
@@ -55,6 +61,11 @@ class Assets {
   static const String replaySvg = '$svgPath/replay.svg';
   static const String heart1Svg = '$svgPath/heart_1.svg';
   static const String infoCircleSvg = '$svgPath/info_circle.svg';
+  static const String kaabaSvg = '$svgPath/kaaba-2.svg';
+  static const String mosqueSvg = '$svgPath/mosque.svg';
+  static const String pray_5Svg = '$svgPath/pray_5.svg';
+  static const String prayer_3Svg = '$svgPath/prayer-3.svg';
+  static const String zakatSvg = '$svgPath/zakat.svg';
 
   //IMAGESSS
   static const String logoNurlan = '$path/logo_nurlan.png';

@@ -5,7 +5,15 @@ import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/Isl
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/ayat_day_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/dhikr_detail_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/dhikr_page.dart';
-import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_page.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_5/duty_page.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_5/iman_page.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_5/namaz_duty_page.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_5/namaz_pattern_page.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_5/namaz_read_page.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_5/oraza_page.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_5/pligrimage_page.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_5/wudhu_page.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_5/zakat_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/fatua_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/name_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/prayers_page.dart';
@@ -115,6 +123,15 @@ part 'app_router.gr.dart';
     AutoRoute(page: PrayersDetailPage),
     AutoRoute(page: NameDetailPage),
     AutoRoute(page: NamePage),
+    //Islam teaching// 5 duty
+    AutoRoute(page: ImanPage),
+    AutoRoute(page: NamazReadPage),
+    AutoRoute(page: NamazPatternPage),
+    AutoRoute(page: WudhuPage),
+    AutoRoute(page: NamazDutyPage),
+    AutoRoute(page: OrazaPage),
+    AutoRoute(page: PligrimagePage),
+    AutoRoute(page: ZakatPage),
   ],
 )
 class AppRouter extends _$AppRouter {}
