@@ -93,14 +93,14 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                               'Жк'
                             ],
                             events: _events,
-                            isExpandable: false,
+                            isExpandable: true,
                             eventDoneColor: Colors.green,
                             selectedColor: Colors.pink,
                             todayColor: Colors.blue,
                             eventColor: Colors.grey,
                             locale: 'kk_Kz',
                             todayButtonText: '',
-                            isExpanded: false,
+                            isExpanded: true,
                             dayOfWeekStyle: TextStyle(
                                 color: Colors.black,
                                 fontWeight: FontWeight.w800,
