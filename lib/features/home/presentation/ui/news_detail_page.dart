@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
@@ -6,8 +7,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
-import 'package:nurlan_ustaz_flutter/core/utils/alert_utilrs.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
+import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
+import 'package:share_plus/share_plus.dart';
 
 class NewsDetailPage extends StatefulWidget {
   const NewsDetailPage({super.key});
@@ -23,7 +24,8 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
     'assets/images/nur.png'
   ];
   int _currentIndex = 0;
-
+  bool favorite = false;
+  bool heart = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -116,7 +118,15 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                           Expanded(
                             child: Row(
                               children: [
-                                SvgPicture.asset(Assets.heartSvg),
+                                InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        heart = !heart;
+                                      });
+                                    },
+                                    child: SvgPicture.asset(heart
+                                        ? Assets.heartSvg
+                                        : Assets.heart1Svg)),
                                 Text(
                                   '12',
                                   style: getTextStyle(CustomTextStyles.s14w400),
@@ -132,11 +142,24 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                 SizedBox(
                                   width: 12.w,
                                 ),
-                                SvgPicture.asset(Assets.shareSvg),
+                                InkWell(
+                                    onTap: () {
+                                      Share.share('Hello',
+                                          subject: 'Nurlan_ustaz');
+                                    },
+                                    child: SvgPicture.asset(Assets.shareSvg)),
                               ],
                             ),
                           ),
-                          SvgPicture.asset(Assets.bookMarkSvg)
+                          GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  favorite = !favorite;
+                                });
+                              },
+                              child: SvgPicture.asset(favorite
+                                  ? Assets.bookMarkSvg
+                                  : Assets.bookMark1Svg))
                         ],
                       ),
                       SizedBox(
@@ -146,6 +169,21 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                         '«Алланың қалауымен некемізді 12-ақпан күні Қасиетті Меккеде қидық. Өзім үнемі шет елде өткізсем деп ойлайтынмын, бірақ дәл Алланың үйінде, Пайғамбарымыз Мұхаммедтің (с.ғ.с) тікелей ұрпақтары біздің некемізді қияды деп ешқашан ойламаппын. Қасиетті Мекке қаласында бәрі Алланың қалауымен болды. Яғни, басымызға жазылған тағдыр. Бұл – біз үшін ең қуанышты күн, естен кетпес тарихи сәт.Ең қызығы, некемізді осы елдің лауазымды шейхтары қиды. Олар үшін де бұл бір жаңалық болды. Бұрын-соңды болмаған жағдай. Алла тағала бұндай бақытты көптің біріне бұйыртпайды, бірақ, Аллаға шүкір, біз өз елімізден бірінші болып, дәл осы Алланың үйінде, пайғамбар ұрпақтарының келісімімен некемізді қидық» деп жазды жігіт.Барлық пікірлерді көру (56)',
                         style: getTextStyle(CustomTextStyles.s16w400)
                             .apply(color: AppColors.black),
+                      ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          context.router.push(
+                            const CommentPageRoute(),
+                          );
+                        },
+                        child: Text(
+                          'Пікірлерді көру (2)',
+                          style: getTextStyle(CustomTextStyles.s16w400)
+                              .apply(color: AppColors.grey1),
+                        ),
                       )
                     ],
                   ),

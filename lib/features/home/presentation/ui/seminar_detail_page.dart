@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
@@ -10,6 +12,7 @@ import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/core/utils/alert_utilrs.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
+import 'package:share_plus/share_plus.dart';
 
 class SeminarDetailPage extends StatefulWidget {
   const SeminarDetailPage({super.key});
@@ -25,7 +28,8 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
     'assets/images/nur.png'
   ];
   int _currentIndex = 0;
-
+  bool favorite = false;
+  bool heart = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -142,7 +146,15 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                           Expanded(
                             child: Row(
                               children: [
-                                SvgPicture.asset(Assets.heartSvg),
+                                InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        heart = !heart;
+                                      });
+                                    },
+                                    child: SvgPicture.asset(heart
+                                        ? Assets.heartSvg
+                                        : Assets.heart1Svg)),
                                 Text(
                                   '12',
                                   style: getTextStyle(CustomTextStyles.s14w400),
@@ -158,11 +170,24 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                 SizedBox(
                                   width: 12.w,
                                 ),
-                                SvgPicture.asset(Assets.shareSvg),
+                                InkWell(
+                                    onTap: () {
+                                      Share.share('Hello',
+                                          subject: 'Nurlan_ustaz');
+                                    },
+                                    child: SvgPicture.asset(Assets.shareSvg)),
                               ],
                             ),
                           ),
-                          SvgPicture.asset(Assets.bookMarkSvg)
+                          GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  favorite = !favorite;
+                                });
+                              },
+                              child: SvgPicture.asset(favorite
+                                  ? Assets.bookMarkSvg
+                                  : Assets.bookMark1Svg))
                         ],
                       ),
                       SizedBox(

@@ -5,10 +5,17 @@ import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 
-class CommentDeepItemWidget extends StatelessWidget {
+class CommentDeepItemWidget extends StatefulWidget {
   const CommentDeepItemWidget({
     Key? key,
   }) : super(key: key);
+
+  @override
+  State<CommentDeepItemWidget> createState() => _CommentDeepItemWidgetState();
+}
+
+class _CommentDeepItemWidgetState extends State<CommentDeepItemWidget> {
+  bool heart = false;
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +71,14 @@ class CommentDeepItemWidget extends StatelessWidget {
                       style: getTextStyle(CustomTextStyles.s14w700)
                           .apply(color: AppColors.black),
                     ),
-                    SvgPicture.asset(Assets.heartSvg)
+                    InkWell(
+                        onTap: () {
+                          setState(() {
+                            heart = !heart;
+                          });
+                        },
+                        child: SvgPicture.asset(
+                            heart ? Assets.heartSvg : Assets.heart1Svg)),
                   ],
                 ),
                 const SizedBox(

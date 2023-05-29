@@ -33,6 +33,7 @@ class _DhikrDetailPageState extends State<DhikrDetailPage> {
     });
   }
 
+  bool favorite = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,7 +87,15 @@ class _DhikrDetailPageState extends State<DhikrDetailPage> {
                             children: [
                               Align(
                                   alignment: Alignment.topRight,
-                                  child: SvgPicture.asset(Assets.bookMark1Svg)),
+                                  child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          favorite = !favorite;
+                                        });
+                                      },
+                                      child: SvgPicture.asset(favorite
+                                          ? Assets.bookMarkSvg
+                                          : Assets.bookMark1Svg))),
                               SizedBox(
                                 height: 60.h,
                               ),

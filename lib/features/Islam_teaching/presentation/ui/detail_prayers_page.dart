@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/widgets/audioItem_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_widget.dart';
-
+import 'package:share_plus/share_plus.dart';
 import '../widgets/floating_container_widget.dart';
 
 class PrayersDetailPage extends StatefulWidget {
@@ -18,6 +16,7 @@ class PrayersDetailPage extends StatefulWidget {
 }
 
 class _PrayersDetailPageState extends State<PrayersDetailPage> {
+  bool favorite = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -90,12 +89,23 @@ class _PrayersDetailPageState extends State<PrayersDetailPage> {
                                 child: Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
-                                  children: const [
+                                  children: [
                                     FloatinContainerWidget(
                                       text: 'Таңдаулы',
-                                      url: Assets.bookMark1Svg,
+                                      onTap: () {
+                                        setState(() {
+                                          favorite = !favorite;
+                                        });
+                                      },
+                                      url: favorite
+                                          ? Assets.bookMark1Svg
+                                          : Assets.bookMarkSvg,
                                     ),
                                     FloatinContainerWidget(
+                                      onTap: () {
+                                        Share.share('Hello',
+                                            subject: 'Nurlan_ustaz');
+                                      },
                                       text: 'Бөлісу',
                                       url: Assets.shareSvg,
                                     ),
