@@ -8,14 +8,14 @@ import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_widget.dart';
 
-class DhikrPage extends StatefulWidget {
-  const DhikrPage({super.key});
+class TandaulyDhikrPage extends StatefulWidget {
+  const TandaulyDhikrPage({super.key});
 
   @override
-  State<DhikrPage> createState() => _DhikrPageState();
+  State<TandaulyDhikrPage> createState() => _TandaulyDhikrPageState();
 }
 
-class _DhikrPageState extends State<DhikrPage> {
+class _TandaulyDhikrPageState extends State<TandaulyDhikrPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +29,7 @@ class _DhikrPageState extends State<DhikrPage> {
               fit: BoxFit.cover,
             ),
             Positioned(
-                // left: 280.r,
+              // left: 280.r,
                 top: 10.r,
                 child: Opacity(
                   opacity: 0.5,
@@ -53,7 +53,7 @@ class _DhikrPageState extends State<DhikrPage> {
                           height: 56.h,
                         ),
                         const CustomAppBar(
-                          title: 'Зікірлер',
+                          title: 'Таңдаулы зікірлер',
                         ),
                         SizedBox(
                           height: 36.h,

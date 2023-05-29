@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/widgets/audioItem_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_widget.dart';
 
@@ -60,7 +61,7 @@ class _AllahNamesPageState extends State<AllahNamesPage> {
                         ),
                         SearchWidget(onChanged: (string) {}),
                         ListView.builder(
-                          itemCount: 3,
+                          itemCount: 23,
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
@@ -91,6 +92,13 @@ class _AllahNamesPageState extends State<AllahNamesPage> {
                                         style: getTextStyle(
                                                 CustomTextStyles.s14w400)
                                             .apply(color: AppColors.black),
+                                      ),
+                                      SizedBox(
+                                        height: 12.h,
+                                      ),
+                                      const AudioItemWidget(),
+                                      SizedBox(
+                                        height: 12.h,
                                       ),
                                       Text(
                                         'Қамқоршы Алла Тағала мұсылмандардың, сондай-ақ кәпірлердің өмірлік қажеттерін өтейді. Алланың бұл есімін зікір еткен адамның ойлау және жаттау қабілеті күшейеді.',

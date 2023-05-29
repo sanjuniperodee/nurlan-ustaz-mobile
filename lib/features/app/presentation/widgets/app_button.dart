@@ -25,7 +25,8 @@ class AppButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          gradient: AppColors.gradientPrimaryActiveButton,
+        color: color != null ? color : null,
+          gradient: color !=null ? null :AppColors.gradientPrimaryActiveButton,
           borderRadius: BorderRadius.all(Radius.circular(30))),
       child: MaterialButton(
         onPressed: onTap,

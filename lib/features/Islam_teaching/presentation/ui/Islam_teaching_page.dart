@@ -166,7 +166,11 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
                         SizedBox(
                           height: 16.h,
                         ),
-                        AppButton(onTap: () {}, text: 'Есімдер мағынасы'),
+                        AppButton(
+                            onTap: () {
+                              context.router.push(const NamePageRoute());
+                            },
+                            text: 'Есімдер мағынасы'),
                         SizedBox(
                           height: 16.h,
                         ),

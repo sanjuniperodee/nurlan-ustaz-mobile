@@ -8,14 +8,18 @@ import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_widget.dart';
 
-class DhikrPage extends StatefulWidget {
-  const DhikrPage({super.key});
+import '../../../app/presentation/widgets/custom_tab_bar.dart';
+
+class TandaulyNamePage extends StatefulWidget {
+  const TandaulyNamePage({super.key});
 
   @override
-  State<DhikrPage> createState() => _DhikrPageState();
+  State<TandaulyNamePage> createState() => _TandaulyNamePageState();
 }
 
-class _DhikrPageState extends State<DhikrPage> {
+int currentIndex = 0;
+
+class _TandaulyNamePageState extends State<TandaulyNamePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +33,7 @@ class _DhikrPageState extends State<DhikrPage> {
               fit: BoxFit.cover,
             ),
             Positioned(
-                // left: 280.r,
+              // left: 280.r,
                 top: 10.r,
                 child: Opacity(
                   opacity: 0.5,
@@ -53,14 +57,33 @@ class _DhikrPageState extends State<DhikrPage> {
                           height: 56.h,
                         ),
                         const CustomAppBar(
-                          title: 'Зікірлер',
+                          title: 'Таңдаулы eсімдер',
                         ),
                         SizedBox(
                           height: 36.h,
                         ),
                         SearchWidget(onChanged: (string) {}),
+                        SizedBox(
+                          height: 22.h,
+                        ),
+                        CustomTabBar(
+                          tabs: const [
+                            Tab(
+                              text: 'Ер',
+                            ),
+                            Tab(
+                              text: 'Әйел',
+                            ),
+                          ],
+                          onTap: (int) {
+                            setState(() {
+                              currentIndex = int;
+                            });
+                          },
+                          length: 2,
+                        ),
                         ListView.builder(
-                          itemCount: 3,
+                          itemCount: 23,
                           shrinkWrap: true,
                           physics: const NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
@@ -69,7 +92,7 @@ class _DhikrPageState extends State<DhikrPage> {
                               child: GestureDetector(
                                 onTap: () {
                                   context.router.push(
-                                    const DhikrDetailPageRoute(),
+                                    const NameDetailPageRoute(),
                                   );
                                 },
                                 child: Container(
@@ -77,18 +100,23 @@ class _DhikrPageState extends State<DhikrPage> {
                                       color: AppColors.white,
                                       borderRadius: BorderRadius.circular(20)),
                                   child: ListTile(
-                                    iconColor: AppColors.black,
-                                    title: Text(
-                                      'Салауат',
-                                      style: getTextStyle(
-                                          CustomTextStyles.s16w500),
-                                    ),
-                                    trailing: Image.asset(
-                                      Assets.hand,
-                                      height: 20.r,
-                                      width: 20.r,
-                                    ),
-                                  ),
+                                      iconColor: AppColors.black,
+                                      title: Text(
+                                        currentIndex == 0 ? 'Аңсар' : 'Анара',
+                                        style: getTextStyle(
+                                            CustomTextStyles.s16w500),
+                                      ),
+                                      subtitle: Text(
+                                        'Көмекшілер, қолдаушылар, жолсерік.',
+                                        style: getTextStyle(
+                                            CustomTextStyles.s14w400)
+                                            .apply(color: AppColors.grey2),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      trailing: const Icon(
+                                        Icons.arrow_forward_ios_outlined,
+                                        color: AppColors.orange,
+                                      )),
                                 ),
                               ),
                             );

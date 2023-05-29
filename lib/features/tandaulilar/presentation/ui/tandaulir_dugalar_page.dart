@@ -8,14 +8,14 @@ import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_widget.dart';
 
-class DhikrPage extends StatefulWidget {
-  const DhikrPage({super.key});
+class TandaulyDugalarPage extends StatefulWidget {
+  const TandaulyDugalarPage({super.key});
 
   @override
-  State<DhikrPage> createState() => _DhikrPageState();
+  State<TandaulyDugalarPage> createState() => _TandaulyDugalarPageState();
 }
 
-class _DhikrPageState extends State<DhikrPage> {
+class _TandaulyDugalarPageState extends State<TandaulyDugalarPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,7 +29,7 @@ class _DhikrPageState extends State<DhikrPage> {
               fit: BoxFit.cover,
             ),
             Positioned(
-                // left: 280.r,
+              // left: 280.r,
                 top: 10.r,
                 child: Opacity(
                   opacity: 0.5,
@@ -53,7 +53,7 @@ class _DhikrPageState extends State<DhikrPage> {
                           height: 56.h,
                         ),
                         const CustomAppBar(
-                          title: 'Зікірлер',
+                          title: 'Таңдаулы дұғалар',
                         ),
                         SizedBox(
                           height: 36.h,
@@ -69,7 +69,7 @@ class _DhikrPageState extends State<DhikrPage> {
                               child: GestureDetector(
                                 onTap: () {
                                   context.router.push(
-                                    const DhikrDetailPageRoute(),
+                                    const PrayersDetailPageRoute(),
                                   );
                                 },
                                 child: Container(
@@ -79,9 +79,16 @@ class _DhikrPageState extends State<DhikrPage> {
                                   child: ListTile(
                                     iconColor: AppColors.black,
                                     title: Text(
-                                      'Салауат',
+                                      'Қатты қиналғанда оқылатын дұға',
                                       style: getTextStyle(
                                           CustomTextStyles.s16w500),
+                                    ),
+                                    subtitle: Text(
+                                      'Сенен басқа Тәңір жоқ. Сені кемшілік атаулыдан пәктеймін. Расында, мен өз-өзіме зұлымдық етушілерден болдым».',
+                                      style:
+                                      getTextStyle(CustomTextStyles.s14w400)
+                                          .apply(color: AppColors.grey2),
+                                      overflow: TextOverflow.ellipsis,
                                     ),
                                     trailing: Image.asset(
                                       Assets.hand,

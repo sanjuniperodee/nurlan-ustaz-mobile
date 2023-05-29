@@ -12,7 +12,6 @@ import '../../../../core/common/colors.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../app/presentation/widgets/custom_app_bar.dart';
 import '../../../app/presentation/widgets/custom_tab_bar.dart';
-
 import '../../../app/presentation/widgets/search_widget.dart';
 
 class TusZhoruPage extends StatefulWidget {
@@ -46,143 +45,134 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
       body: GlobalCustomBody(
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
-          child: SizedBox(
-            height: 1.1.sh,
-            child: Column(
-              children: [
-                const CustomAppBar(
-                  hideIcon: true,
-                  title: 'Түс жору',
-                ),
-                SizedBox(
-                  height: 36.h,
-                ),
-                SearchWidget(
-                  onChanged: (value) {},
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                CustomTabBar(
-                  tabs: [
-                    Tab(
-                      text: 'Барлығы',
-                    ),
-                    Tab(
-                      text: 'Өз түсім',
-                    ),
-                  ],
-                  onTap: (int) {
-                    setState(() {
-                      currentIndex = int;
-                    });
-                  },
-                  length: 2,
-                ),
-                currentIndex == 0
-                    ? ListView.separated(
-                        itemCount: _mockList.length,
-                        shrinkWrap: true,
-                        physics: const BouncingScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 1.sp),
-                            child: GestureDetector(
-                              onTap: () {
-                                context.router.push(
-                                  TusZhoruDetailPageRoute(
-                                      text: _mockList[index].textInfo,
-                                      title: _mockList[index].title),
-                                );
-                              },
-                              child: Container(
-                                height: 71,
-                                decoration: BoxDecoration(
-                                  color: AppColors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 15, horizontal: 16),
-                                child: Row(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          _mockList[index].title,
-                                          style: getTextStyle(
-                                                  CustomTextStyles.s16w500)
-                                              .apply(
-                                                  fontFamily: FontTypes
-                                                      .SF_Pro.name),
-                                        ),
-                                        SizedBox(
-                                          height: 4,
-                                        ),
-                                        Text(
-                                          _mockList[index].subtitle.length >
-                                                  30
-                                              ? _mockList[index]
-                                                      .subtitle
-                                                      .substring(0, 30) +
-                                                  '...'
-                                              : _mockList[index].subtitle,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: getTextStyle(
-                                                  CustomTextStyles.s14w400)
-                                              .apply(
-                                                  fontFamily:
-                                                      FontTypes.SF_Pro.name,
-                                                  color: AppColors.grey1
-                                                      .withOpacity(0.55)),
-                                        )
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      width: 12.w,
-                                    ),
-                                    Center(
-                                      child: SvgPicture.asset(
-                                        'assets/icons/chevronDown.svg',
-                                        color: AppColors.primaryColor,
+          child: Column(
+            children: [
+              const CustomAppBar(
+                hideIcon: true,
+                title: 'Түс жору',
+              ),
+              SizedBox(
+                height: 36.h,
+              ),
+              SearchWidget(
+                onChanged: (value) {},
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              CustomTabBar(
+                tabs: [
+                  Tab(
+                    text: 'Барлығы',
+                  ),
+                  Tab(
+                    text: 'Өз түсім',
+                  ),
+                ],
+                onTap: (int) {
+                  setState(() {
+                    currentIndex = int;
+                  });
+                },
+                length: 2,
+              ),
+              currentIndex == 0
+                  ? ListView.separated(
+                      itemCount: _mockList.length,
+                      shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 1.sp),
+                          child: GestureDetector(
+                            onTap: () {
+                              context.router.push(
+                                TusZhoruDetailPageRoute(
+                                    text: _mockList[index].textInfo,
+                                    title: _mockList[index].title),
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.white,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 15, horizontal: 16),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        _mockList[index].title,
+                                        style: getTextStyle(
+                                                CustomTextStyles.s16w500)
+                                            .apply(
+                                                fontFamily:
+                                                    FontTypes.SF_Pro.name),
                                       ),
-                                    )
-                                  ],
-                                ),
+                                      SizedBox(
+                                        height: 4,
+                                      ),
+                                      Text(
+                                        _mockList[index].subtitle.length > 30
+                                            ? _mockList[index]
+                                                    .subtitle
+                                                    .substring(0, 30) +
+                                                '...'
+                                            : _mockList[index].subtitle,
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: getTextStyle(
+                                                CustomTextStyles.s14w400)
+                                            .apply(
+                                                fontFamily:
+                                                    FontTypes.SF_Pro.name,
+                                                color: AppColors.grey1
+                                                    .withOpacity(0.55)),
+                                      )
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    width: 12.w,
+                                  ),
+                                  Center(
+                                    child: SvgPicture.asset(
+                                      'assets/icons/chevronDown.svg',
+                                      color: AppColors.primaryColor,
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
-                          );
-                        },
-                        separatorBuilder:
-                            (BuildContext context, int index) {
-                          return SizedBox(
-                            height: 8,
-                          );
-                        },
-                      )
-                    : Padding(
-                        padding:
-                            EdgeInsets.only(top: 121, left: 10, right: 10),
-                        child: Center(
-                          child: Text(
-                            "Бұл бөлімде Нұрлан ұстаздан жеке түс жорытуға тапсырыс бере аласыз. Түскен сомадан сіздің атыңыздан түс садақасы беріледі",
-                            textAlign: TextAlign.center,
-                            style: getTextStyle(CustomTextStyles.s14w500)
-                                .copyWith(
-                                    fontFamily: FontTypes.SF_Pro.name),
                           ),
+                        );
+                      },
+                      separatorBuilder: (BuildContext context, int index) {
+                        return SizedBox(
+                          height: 8,
+                        );
+                      },
+                    )
+                  : Padding(
+                      padding: EdgeInsets.only(top: 121, left: 10, right: 10),
+                      child: Center(
+                        child: Text(
+                          "Бұл бөлімде Нұрлан ұстаздан жеке түс жорытуға тапсырыс бере аласыз. Түскен сомадан сіздің атыңыздан түс садақасы беріледі",
+                          textAlign: TextAlign.center,
+                          style: getTextStyle(CustomTextStyles.s14w500)
+                              .copyWith(fontFamily: FontTypes.SF_Pro.name),
                         ),
-                      )
-              ],
-            ),
+                      ),
+                    )
+            ],
           ),
         ),
       ),

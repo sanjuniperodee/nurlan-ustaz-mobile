@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -55,10 +56,10 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
   @override
   Widget build(BuildContext context) {
     final List<String> news = <String>[
-      'assets/images/example_circle.png',
-      'assets/images/islam_circle.png',
-      'assets/images/hands_circle.png',
-      'assets/images/zhanalyk_circle.png'
+      'assets/images/mosque.png',
+      'assets/images/book_circle.png',
+      'assets/images/hands.png',
+      'assets/images/islam_people.png'
     ];
     return Scaffold(
       backgroundColor: AppColors.lightBlue,
@@ -101,9 +102,23 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 CategoryCard(
-                                    title: 'Жаңалықтар', imageList: news),
+                                  title: 'Жаңалықтар',
+                                  imageList: news,
+                                  onTap: () {
+                                    context.router.push(
+                                      const TandaulyNewsPageRoute(),
+                                    );
+                                  },
+                                ),
                                 CategoryCard(
-                                    title: 'Тікелей эфирлер', imageList: news)
+                                  title: 'Тікелей эфирлер',
+                                  imageList: news,
+                                  onTap: () {
+                                    context.router.push(
+                                      const TandaulyLiveBroadcastsPageRoute(),
+                                    );
+                                  },
+                                )
                               ],
                             ),
                             SizedBox(
@@ -113,19 +128,52 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                               title: 'Семинарлар',
                               imageList: news,
                               titleColor: AppColors.blue,
+                              onTap: () {
+                                context.router.push(
+                                  const TandaulySeminarPageRoute(),
+                                );
+                              },
                             ),
                             SizedBox(
                               height: 32.h,
                             ),
-                            Wrap(
-                              spacing: 9.w,
-                              runSpacing: 9.h,
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                CategoryTitleCard(title: 'Түс жорулар', onTap: (){}),
-                                CategoryTitleCard(title: 'Есімдер', onTap: (){}),
-                                CategoryTitleCard(title: 'Дұғалар', onTap: (){}),
-                                CategoryTitleCard(title: 'Зікірлер', onTap: (){}),
-
+                                CategoryTitleCard(
+                                    title: 'Түс жорулар',
+                                    onTap: () {
+                                      context.router.push(
+                                        TandaulyTusZhoruPageRoute(),
+                                      );
+                                    }),
+                                CategoryTitleCard(
+                                    title: 'Есімдер',
+                                    onTap: () {
+                                      context.router.push(
+                                        const TandaulyNamePageRoute(),
+                                      );
+                                    }),
+                              ],
+                            ),
+                            SizedBox(height: 9.h,),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                CategoryTitleCard(
+                                    title: 'Дұғалар',
+                                    onTap: () {
+                                      context.router.push(
+                                        const TandaulyDugalarPageRoute(),
+                                      );
+                                    }),
+                                CategoryTitleCard(
+                                    title: 'Зікірлер',
+                                    onTap: () {
+                                      context.router.push(
+                                        const TandaulyDhikrPageRoute(),
+                                      );
+                                    }),
                               ],
                             )
                           ],

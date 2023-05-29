@@ -213,7 +213,6 @@ class _MainPageState extends State<MainPage> {
                     AppButton(
                       onTap: () {},
                       text: 'Түс жору',
-                      color: const Color(0xFF2941F4),
                     ),
                     SizedBox(height: 16.h),
                     const MainButton(

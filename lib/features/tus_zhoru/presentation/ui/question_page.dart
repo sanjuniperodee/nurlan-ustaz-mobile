@@ -42,7 +42,6 @@ class _QuestionPageState extends State<QuestionPage> {
           color: AppColors.blue,
         ),
       ),
-      backgroundColor: AppColors.white,
       body: SingleChildScrollView(
         primary: true,
         child: SizedBox(

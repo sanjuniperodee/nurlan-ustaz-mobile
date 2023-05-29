@@ -31,15 +31,15 @@ class AppColors {
       begin: Alignment.centerLeft,
       end: Alignment.centerRight);
   static Gradient gradientPrimaryDisabledButton = LinearGradient(colors: [
-    Color(0xFF1151C2).withOpacity(0.3),
-    Color(0xFF8F8CF7).withOpacity(0.3)
+    const Color(0xFF1151C2).withOpacity(0.3),
+    const Color(0xFF8F8CF7).withOpacity(0.3)
   ], begin: Alignment.centerLeft, end: Alignment.centerRight);
   static Gradient gradientSecondaryDisabledButton = LinearGradient(colors: [
-    Color(0xFF1151C2).withOpacity(0.40),
-    Color(0xFF8F8CF7).withOpacity(0.40)
+    const Color(0xFF1151C2).withOpacity(0.40),
+    const Color(0xFF8F8CF7).withOpacity(0.40)
   ], begin: Alignment.centerLeft, end: Alignment.centerRight);
   static Gradient gradientSecondaryActiveButton = LinearGradient(colors: [
-    Color(0xFF1151C2).withOpacity(0.18),
-    Color(0xFF8F8CF7).withOpacity(0.18)
+    const Color(0xFF1151C2).withOpacity(0.18),
+    const Color(0xFF8F8CF7).withOpacity(0.18)
   ], begin: Alignment.centerLeft, end: Alignment.centerRight);
 }
