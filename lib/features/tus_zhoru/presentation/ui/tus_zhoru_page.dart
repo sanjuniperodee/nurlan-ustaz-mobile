@@ -1,17 +1,18 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/model/tus_zhoru_model.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 
 import '../../../../core/common/app_styles.dart';
 import '../../../../core/common/colors.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../app/presentation/widgets/custom_app_bar.dart';
 import '../../../app/presentation/widgets/custom_tab_bar.dart';
-import '../../../app/presentation/widgets/global_custom_widget.dart';
+
 import '../../../app/presentation/widgets/search_widget.dart';
 
 class TusZhoruPage extends StatefulWidget {

@@ -100,12 +100,37 @@ part 'app_router.gr.dart';
     AutoRoute(
       page: QiblahPage,
     ),
+    AutoRoute(
+      page: CommentPage,
+    ),
+
     //TosZhoru
     AutoRoute(page: TusZhoruDetailPage),
     AutoRoute(page: QuestionPage),
     AutoRoute(page: ProfileMainPage),
     AutoRoute(page: PaymentsPage),
-
+    //Islam teaching
+    AutoRoute(page: AyatDayPage),
+    AutoRoute(page: DutyPage),
+    AutoRoute(page: AllahNamesPage),
+    AutoRoute(page: DhikrPage),
+    AutoRoute(page: DhikrDetailPage),
+    AutoRoute(page: FatuaPage),
+    AutoRoute(page: PrayersPage),
+    AutoRoute(page: SurahPage),
+    AutoRoute(page: SurahDetailPage),
+    AutoRoute(page: PrayersDetailPage),
+    AutoRoute(page: NameDetailPage),
+    AutoRoute(page: NamePage),
+    //Islam teaching// 5 duty
+    AutoRoute(page: ImanPage),
+    AutoRoute(page: NamazReadPage),
+    AutoRoute(page: NamazPatternPage),
+    AutoRoute(page: WudhuPage),
+    AutoRoute(page: NamazDutyPage),
+    AutoRoute(page: OrazaPage),
+    AutoRoute(page: PligrimagePage),
+    AutoRoute(page: ZakatPage),
   ],
 )
 class AppRouter extends _$AppRouter {}
