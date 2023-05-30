@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "53340493475",
+    "project_id": "nurlanustazdev0",
+    "storage_bucket": "nurlanustazdev0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:53340493475:android:3048e5ebe28c1553f1d116",
+        "android_client_info": {
+          "package_name": "com.nurlan_ustaz_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDjL_Nhu-W4tHdcpNfWLM6DSp-wLGyzjbk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

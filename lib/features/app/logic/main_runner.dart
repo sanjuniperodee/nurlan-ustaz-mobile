@@ -3,10 +3,14 @@
 import 'dart:async';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
+import 'package:nurlan_ustaz_flutter/core/services/notification_service.dart';
+import 'package:nurlan_ustaz_flutter/firebase_options.dart';
 
 typedef AsyncDependencies<D> = Future<D> Function();
 typedef AppBuilder<D> = Widget Function(
@@ -34,12 +38,12 @@ mixin MainRunner {
     await initLocator();
     await EasyLocalization.ensureInitialized();
     EasyLocalization.logger.enableLevels = [];
-    // await Firebase.initializeApp(
-    //   options: DefaultFirebaseOptions.currentPlatform,
-    // );
-    // await NotificationService().init();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    await NotificationService().init();
 
-    // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+    FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
     final app = await _initApp(shouldSend, asyncDependencies, appBuilder);
     runApp(
@@ -56,7 +60,7 @@ mixin MainRunner {
     );
   }
 }
-// Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-//   await Firebase.initializeApp();
-//   print("Handling a background message: ${message.messageId}");
-// }
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print("Handling a background message: ${message.messageId}");
+}

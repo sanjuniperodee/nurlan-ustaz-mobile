@@ -113,7 +113,8 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
       ),
       backgroundColor: AppColors.white,
       body: GlobalCustomBody(
-        horizontalPadding: 0,
+        left: 0,
+        right: 0,
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: SizedBox(
