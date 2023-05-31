@@ -72,7 +72,8 @@ class _KausarDioInterceptor extends Interceptor {
     // final String locale = _authLocalDS.getLocale();
 
     // if (tokenModel?.access != null) {
-    //   options.headers['Authorization'] = 'Bearer ${tokenModel!.access}';
+    options.headers['Authorization'] =
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg1NTIxMDMyLCJpYXQiOjE2ODU0MzQ2MzIsImp0aSI6ImEwYzM5NDQ2NmMwOTQ4N2JiMmQ2OTE1NTQ4MWVhY2RkIiwidXNlcl9pZCI6MjN9.cj8uSsfdlZKzG5AqQwwt436GeDzyhnixPM1YI8xOH4k';
     // }
     options.headers['Accept'] = "application/json";
     // options.headers['Content-Language'] = locale.replaceAll('kk', 'kz');

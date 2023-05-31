@@ -39,6 +39,7 @@ dependencies:
   dartz: ^0.10.1
   permission_handler: ^10.2.0
   audioplayers: ^4.0.1
+  url_launcher: ^6.1.11
   #state
   injectable: ^2.1.0
   provider: ^6.0.5
@@ -57,13 +58,14 @@ dependencies:
   firebase_messaging: ^14.4.0
   flutter_local_notifications: ^13.0.0
 
-
+  
   #ui
   flutter_screenutil: ^5.7.0
   flutter_svg: ^1.1.6
   carousel_slider: ^4.0.0
   dots_indicator: ^3.0.0
   flutter_qiblah: ^2.1.0
+  fluttertoast: ^8.2.1
   
 
   json_annotation: ^4.7.0

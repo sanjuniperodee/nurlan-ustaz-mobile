@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
-import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/widgets/ayat_day__card_widget.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/ayat_dto.dart';
+
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
-import 'package:nurlan_ustaz_flutter/features/home/data/models/banner_local_model.dart';
 
 class AyatDayPage extends StatefulWidget {
-  const AyatDayPage({super.key});
+  final AyatDTO ayatDTO;
+  const AyatDayPage({super.key, required this.ayatDTO});
 
   @override
   State<AyatDayPage> createState() => _AyatDayPageState();
@@ -53,13 +53,14 @@ class _AyatDayPageState extends State<AyatDayPage> {
                       const Padding(
                         padding: EdgeInsets.all(16.0),
                         child: CustomAppBar(
-                          title: 'Қызметтер',
+                          title: 'Күн аяты',
                         ),
                       ),
                       SizedBox(
                         height: 36.h,
                       ),
                       Container(
+                        // height: 1.sh,
                         decoration: BoxDecoration(
                             color: AppColors.lightBlue.withOpacity(0.3),
                             borderRadius: const BorderRadius.only(
@@ -68,6 +69,7 @@ class _AyatDayPageState extends State<AyatDayPage> {
                         padding: const EdgeInsets.symmetric(
                             vertical: 20, horizontal: 16),
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -78,7 +80,7 @@ class _AyatDayPageState extends State<AyatDayPage> {
                                       .apply(color: AppColors.black),
                                 ),
                                 Text(
-                                  ' 7:205',
+                                  widget.ayatDTO.name ?? 'ERROR',
                                   style: getTextStyle(CustomTextStyles.s20w700)
                                       .apply(color: AppColors.black),
                                 ),
@@ -88,7 +90,7 @@ class _AyatDayPageState extends State<AyatDayPage> {
                               height: 16.h,
                             ),
                             Text(
-                              'وَاذْكُرْ رَبَّكَ فِي نَفْسِكَ تَضَرُّعًا وَخِيفَةً وَدُونَ الْجَهْرِ مِنَ الْقَوْلِ بِالْغُدُوِّ وَالْآصَالِ وَلَا تَكُنْ مِنَ الْغَافِلِ',
+                              widget.ayatDTO.arabic ?? 'ERROR',
                               style: getTextStyle(CustomTextStyles.s16w400)
                                   .apply(color: AppColors.black),
                             ),
@@ -96,7 +98,7 @@ class _AyatDayPageState extends State<AyatDayPage> {
                               height: 28.h,
                             ),
                             Text(
-                              'Және Раббыңды жалбарына әрі қорыққан түрде ішіңнен және жария емес кейіпте таңертең және кешке (күн батардан бұрын) есіңе ал да, ғапыл қалушылардан болма.  Және Раббыңды жалбарына әрі қорыққан түрде ішіңнен және жария емес кейіпте таңертең және кешке (күн батардан бұрын) есіңе ал да, ғапыл қалушылардан болма.  Және Раббыңды жалбарына әрі қорыққан түрде ішіңнен және жария емес кейіпте таңертең және кешке (күн батардан бұрын) есіңе ал да, ғапыл қалушылардан болма.  Және Раббыңды жалбарына әрі қорыққан түрде ішіңнен және жария емес кейіпте таңертең және кешке (күн батардан бұрын) есіңе ал да, ғапыл қалушылардан болма.',
+                              widget.ayatDTO.translation ?? 'ERROR',
                               style: getTextStyle(CustomTextStyles.s16w400)
                                   .apply(color: AppColors.black),
                             ),

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/ayat_of_day_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/pillars_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/app_bloc.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
 
@@ -33,6 +35,15 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         ),
         //AUTH
         //
+
+        //ISlAM TEACHING
+        //
+        BlocProvider<AyatOfDayCubit>(
+          create: (context) => getIt<AyatOfDayCubit>(),
+        ),
+        BlocProvider<PillarsCubit>(
+          create: (context) => getIt<PillarsCubit>(),
+        ),
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),

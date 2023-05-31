@@ -410,6 +410,12 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "fluttertoast",
+      "rootUri": "file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/fluttertoast-8.2.2",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+    },
+    {
       "name": "freezed",
       "rootUri": "file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/freezed-2.3.3",
       "packageUri": "lib/",
@@ -920,8 +926,32 @@
       "languageVersion": "2.17"
     },
     {
+      "name": "url_launcher",
+      "rootUri": "file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/url_launcher-6.1.11",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "url_launcher_android",
+      "rootUri": "file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/url_launcher_android-6.0.35",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
+      "name": "url_launcher_ios",
+      "rootUri": "file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/url_launcher_ios-6.1.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.18"
+    },
+    {
       "name": "url_launcher_linux",
       "rootUri": "file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/url_launcher_linux-3.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "url_launcher_macos",
+      "rootUri": "file:///Users/nurgeldisertai/.pub-cache/hosted/pub.dartlang.org/url_launcher_macos-3.0.5",
       "packageUri": "lib/",
       "languageVersion": "2.17"
     },
@@ -998,7 +1028,7 @@
       "languageVersion": "2.18"
     }
   ],
-  "generated": "2023-05-30T05:57:58.399221Z",
+  "generated": "2023-05-30T11:44:34.156572Z",
   "generator": "pub",
   "generatorVersion": "2.18.5"
 }

@@ -3,7 +3,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
-import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 
 class MainButton extends StatelessWidget {
   final String text;
@@ -16,7 +15,7 @@ class MainButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 1.sw,
-      padding: EdgeInsets.only(
+      padding: const EdgeInsets.only(
           // left: 16.r,
           // right: 16.r,
           ),
@@ -25,7 +24,9 @@ class MainButton extends StatelessWidget {
         children: [
           Text(
             text,
-            style: getTextStyle(CustomTextStyles.s16w200).apply(fontFamily: FontTypes.Philosopher.name).copyWith(fontWeight: FontWeight.w700,fontSize: 20.sp),
+            style: getTextStyle(CustomTextStyles.s16w200)
+                .apply(fontFamily: FontTypes.Philosopher.name)
+                .copyWith(fontWeight: FontWeight.w700, fontSize: 20.sp),
           ),
 
           // SizedBox(

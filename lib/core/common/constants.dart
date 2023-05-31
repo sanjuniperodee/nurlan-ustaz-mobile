@@ -1,0 +1,1 @@
+const NO_INTERNET_TEXT = 'no_internet_text';

@@ -262,8 +262,15 @@ class _MainPageState extends State<MainPage> {
                           ),
                         ),
                         SizedBox(height: 16.h),
-                        const MainButton(
-                          text: 'Жаңалықтар',
+                        InkWell(
+                          onTap: () {
+                            context.router.push(
+                              const NewsPageRoute(),
+                            );
+                          },
+                          child: const MainButton(
+                            text: 'Жаңалықтар',
+                          ),
                         ),
                         SizedBox(height: 16.h),
                       ],
@@ -284,7 +291,7 @@ class _MainPageState extends State<MainPage> {
                         child: GestureDetector(
                           onTap: () {
                             context.router.push(
-                              const NewsPageRoute(),
+                              const NewsDetailPageRoute(),
                             );
                           },
                           child: Container(
