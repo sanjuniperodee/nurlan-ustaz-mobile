@@ -1,22 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/duas_favorite_cubit.dart';
+import 'package:share_plus/share_plus.dart';
+
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/result_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/duas_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/widgets/audioItem_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
-import 'package:share_plus/share_plus.dart';
+
 import '../widgets/floating_container_widget.dart';
 
 class PrayersDetailPage extends StatefulWidget {
-  const PrayersDetailPage({super.key});
+  final ResultDTO result;
+  const PrayersDetailPage({super.key, required this.result});
 
   @override
   State<PrayersDetailPage> createState() => _PrayersDetailPageState();
 }
 
 class _PrayersDetailPageState extends State<PrayersDetailPage> {
-  bool favorite = false;
+  late bool isFavorite;
+  @override
+  void initState() {
+    // TODO: implement initState
+    isFavorite = widget.result.isSaved!;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -51,9 +65,16 @@ class _PrayersDetailPageState extends State<PrayersDetailPage> {
                       SizedBox(
                         height: 56.h,
                       ),
-                      const Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: CustomAppBar(title: 'Қиналғанда оқылатын дұға'),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: CustomAppBar(
+                          title: widget.result.name ?? 'ERROR',
+                          onTap: () {
+                            BlocProvider.of<DuasCubit>(context)
+                                .duas()
+                                .then((value) => Navigator.pop(context));
+                          },
+                        ),
                       ),
                       SizedBox(
                         height: 26.h,
@@ -69,20 +90,29 @@ class _PrayersDetailPageState extends State<PrayersDetailPage> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                'وَاذْكُرْ رَبَّكَ فِي نَفْسِكَ تَضَرُّعًا وَخِيفَةً وَدُونَ الْجَهْرِ مِنَ الْقَوْلِ بِالْغُدُوِّ  وَالْآصَالِ وَلَا تَكُنْ مِنَ الْغَافِلِ',
+                                widget.result.arabic ?? 'ERROR',
                                 style: getTextStyle(CustomTextStyles.s14w400),
                               ),
                               SizedBox(
                                 height: 24.h,
                               ),
                               Text(
-                                'Әлхамдулилләһи әлләзи ахяна баъда мә әмәтәнә уә иләиһин-нушур».\n\n«Өлгеннен кейін қайта тірілткен Аллаһқа мадақ болғай! Өлгеннен кейін қайта тірілуіміз тек Оған ғана тән».',
+                                widget.result.transcription ?? 'ERROR',
                                 style: getTextStyle(CustomTextStyles.s14w400),
                               ),
                               SizedBox(
                                 height: 14.h,
                               ),
-                              const AudioItemWidget(),
+                              Text(
+                                widget.result.translation ?? 'ERROR',
+                                style: getTextStyle(CustomTextStyles.s14w400),
+                              ),
+                              SizedBox(
+                                height: 14.h,
+                              ),
+                              AudioItemWidget(
+                                audioUrl: widget.result.audio ?? '',
+                              ),
                               const Spacer(),
                               Align(
                                 alignment: Alignment.bottomCenter,
@@ -93,11 +123,14 @@ class _PrayersDetailPageState extends State<PrayersDetailPage> {
                                     FloatinContainerWidget(
                                       text: 'Таңдаулы',
                                       onTap: () {
-                                        setState(() {
-                                          favorite = !favorite;
-                                        });
+                                        BlocProvider.of<DuasFavoriteCubit>(
+                                                context)
+                                            .duasFavorite(
+                                                id: widget.result.id ?? 0);
+                                        isFavorite = !isFavorite;
+                                        setState(() {});
                                       },
-                                      url: favorite
+                                      url: isFavorite
                                           ? Assets.bookMark1Svg
                                           : Assets.bookMarkSvg,
                                     ),

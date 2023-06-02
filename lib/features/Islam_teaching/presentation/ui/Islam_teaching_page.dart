@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +14,7 @@ import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/widget
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/banner_local_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class IslamTeachingPage extends StatefulWidget {
   const IslamTeachingPage({super.key});
@@ -50,7 +53,7 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
   final myRouteHome = [
     const DutyPageRoute(),
     const AllahNamesPageRoute(),
-    const FatuaPageRoute(),
+    const AllahNamesPageRoute(),
     const SurahPageRoute(),
     const PrayersPageRoute(),
     const DhikrPageRoute(),
@@ -60,6 +63,7 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
     // TODO: implement initState
     super.initState();
     BlocProvider.of<AyatOfDayCubit>(context).auatOfDay();
+    BlocProvider.of<AyatOfDayCubit>(context).fatya();
   }
 
   @override
@@ -91,7 +95,7 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
                 ),
               );
             },
-            loaded: (ayat) {
+            loaded: (ayat, fatyas) {
               return SizedBox(
                 height: 1.sh,
                 child: Stack(
@@ -156,9 +160,12 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
                                         n++) {}
                                     return InkWell(
                                       onTap: () {
-                                        context.router.push(
-                                          myRouteHome[index],
-                                        );
+                                        list[index].title == 'Пәтуә бөлімі'
+                                            ? _launchURL(
+                                                fatyas.first.url ?? 'ERROR')
+                                            : context.router.push(
+                                                myRouteHome[index],
+                                              );
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.only(
@@ -238,5 +245,13 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
         },
       ),
     );
+  }
+
+  _launchURL(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
   }
 }

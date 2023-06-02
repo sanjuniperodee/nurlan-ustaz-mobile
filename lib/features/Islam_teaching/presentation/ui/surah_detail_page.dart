@@ -1,19 +1,31 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/result_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/surah_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/surah_favorite_cubit.dart';
 
 class SurahDetailPage extends StatefulWidget {
-  const SurahDetailPage({super.key});
+  final ResultDTO result;
+  const SurahDetailPage({super.key, required this.result});
 
   @override
   State<SurahDetailPage> createState() => _SurahDetailPageState();
 }
 
 class _SurahDetailPageState extends State<SurahDetailPage> {
-  bool favorite = false;
+  late bool isFavorite;
+  @override
+  void initState() {
+    // TODO: implement initState
+    isFavorite = widget.result.isSaved!;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,13 +67,15 @@ class _SurahDetailPageState extends State<SurahDetailPage> {
                           children: [
                             GestureDetector(
                                 onTap: () {
-                                  Navigator.pop(context);
+                                  BlocProvider.of<SurahCubit>(context)
+                                      .sura()
+                                      .then((value) => Navigator.pop(context));
                                 },
                                 child: SvgPicture.asset(Assets.backButtonSvg)),
                             Align(
                               alignment: Alignment.center,
                               child: Text(
-                                'Фатиха',
+                                widget.result.name ?? 'ERROR',
                                 textAlign: TextAlign.center,
                                 style: getTextStyle(CustomTextStyles.s20w700)
                                     .apply(color: AppColors.white),
@@ -78,11 +92,15 @@ class _SurahDetailPageState extends State<SurahDetailPage> {
                                 ),
                                 GestureDetector(
                                     onTap: () {
-                                      setState(() {
-                                        favorite = !favorite;
-                                      });
+                                      BlocProvider.of<SurahFavoriteCubit>(
+                                              context)
+                                          .surahFavorite(
+                                              id: widget.result.id ?? 0);
+
+                                      isFavorite = !isFavorite;
+                                      setState(() {});
                                     },
-                                    child: SvgPicture.asset(favorite
+                                    child: SvgPicture.asset(isFavorite
                                         ? Assets.bookMark1Svg
                                         : Assets.bookMarkSvg))
                               ],
@@ -92,53 +110,73 @@ class _SurahDetailPageState extends State<SurahDetailPage> {
                         SizedBox(
                           height: 26.h,
                         ),
-                        ListView.builder(
-                          itemCount: 3,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: const EdgeInsets.only(top: 12.0),
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                      color: AppColors.white,
-                                      borderRadius: BorderRadius.circular(24)),
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 16, horizontal: 20),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        '1:1',
-                                        style: getTextStyle(
-                                            CustomTextStyles.s16w400),
-                                      ),
-                                      SizedBox(
-                                        height: 24.h,
-                                      ),
-                                      Align(
-                                        alignment: Alignment.centerRight,
-                                        child: Text(
-                                          'بِسْمِ اللّهِ الرَّحْمـَنِ الرَّحِيم',
-                                          textAlign: TextAlign.left,
-                                          style: getTextStyle(
-                                              CustomTextStyles.s14w400),
+                        if (widget.result.ayats != null)
+                          ListView.builder(
+                            itemCount: widget.result.ayats?.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return Padding(
+                                padding: const EdgeInsets.only(top: 12.0),
+                                child: Container(
+                                    decoration: BoxDecoration(
+                                        color: AppColors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(24)),
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 16, horizontal: 20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            widget.result.ayats![index].name ??
+                                                'ERROR',
+                                            style: getTextStyle(
+                                                CustomTextStyles.s16w400),
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        height: 12.h,
-                                      ),
-                                      Text(
-                                        'Бисмил-лә һир-рахмәнир-рахим,\n\nРахман һәм Рахымды Аллаһтың атымен бастаймын.',
-                                        style: getTextStyle(
-                                            CustomTextStyles.s16w400),
-                                      ),
-                                    ],
-                                  )),
-                            );
-                          },
-                        )
+                                        SizedBox(
+                                          height: 24.h,
+                                        ),
+                                        Align(
+                                          alignment: Alignment.centerRight,
+                                          child: Text(
+                                            widget.result.ayats![index]
+                                                    .arabic ??
+                                                'ERROR',
+                                            textAlign: TextAlign.left,
+                                            style: getTextStyle(
+                                                CustomTextStyles.s14w400),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 12.h,
+                                        ),
+                                        Text(
+                                          widget.result.ayats![index]
+                                                  .transcription ??
+                                              'ERROR',
+                                          style: getTextStyle(
+                                              CustomTextStyles.s16w400),
+                                        ),
+                                        SizedBox(
+                                          height: 12.h,
+                                        ),
+                                        Text(
+                                          widget.result.ayats![index]
+                                                  .translation ??
+                                              'ERROR',
+                                          style: getTextStyle(
+                                              CustomTextStyles.s16w400),
+                                        ),
+                                      ],
+                                    )),
+                              );
+                            },
+                          )
                       ],
                     ),
                   )),

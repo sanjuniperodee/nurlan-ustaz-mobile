@@ -29,7 +29,6 @@ class _ProfileMainPage extends State<ProfileMainPage> {
         child: SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: SizedBox(
-            height: 1.1.sh,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [

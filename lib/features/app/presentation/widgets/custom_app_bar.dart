@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
@@ -9,10 +7,12 @@ import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 class CustomAppBar extends StatelessWidget {
   final String title;
   final bool? hideIcon;
+  final Function()? onTap;
 
   const CustomAppBar({
     Key? key,
     required this.title,
+    this.onTap,
     this.hideIcon,
   }) : super(key: key);
 
@@ -33,9 +33,10 @@ class CustomAppBar extends StatelessWidget {
             ]
           : [
               GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
+                  onTap: onTap ??
+                      () {
+                        Navigator.pop(context);
+                      },
                   child: SvgPicture.asset(Assets.backButtonSvg)),
               Expanded(
                 child: Align(

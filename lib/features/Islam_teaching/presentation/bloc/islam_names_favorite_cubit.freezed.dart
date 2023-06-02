@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'ayat_of_day_cubit.dart';
+part of 'islam_names_favorite_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,12 +15,12 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$AyatOfDayState {
+mixin _$IslamNamesFavoriteState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function(AyatDTO ayat, List<PillarsDTO> pillars) loaded,
+    required TResult Function() loaded,
     required TResult Function(String message) errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -28,7 +28,7 @@ mixin _$AyatOfDayState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialState,
     TResult? Function()? loadingState,
-    TResult? Function(AyatDTO ayat, List<PillarsDTO> pillars)? loaded,
+    TResult? Function()? loaded,
     TResult? Function(String message)? errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ mixin _$AyatOfDayState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(AyatDTO ayat, List<PillarsDTO> pillars)? loaded,
+    TResult Function()? loaded,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) =>
@@ -69,16 +69,17 @@ mixin _$AyatOfDayState {
 }
 
 /// @nodoc
-abstract class $AyatOfDayStateCopyWith<$Res> {
-  factory $AyatOfDayStateCopyWith(
-          AyatOfDayState value, $Res Function(AyatOfDayState) then) =
-      _$AyatOfDayStateCopyWithImpl<$Res, AyatOfDayState>;
+abstract class $IslamNamesFavoriteStateCopyWith<$Res> {
+  factory $IslamNamesFavoriteStateCopyWith(IslamNamesFavoriteState value,
+          $Res Function(IslamNamesFavoriteState) then) =
+      _$IslamNamesFavoriteStateCopyWithImpl<$Res, IslamNamesFavoriteState>;
 }
 
 /// @nodoc
-class _$AyatOfDayStateCopyWithImpl<$Res, $Val extends AyatOfDayState>
-    implements $AyatOfDayStateCopyWith<$Res> {
-  _$AyatOfDayStateCopyWithImpl(this._value, this._then);
+class _$IslamNamesFavoriteStateCopyWithImpl<$Res,
+        $Val extends IslamNamesFavoriteState>
+    implements $IslamNamesFavoriteStateCopyWith<$Res> {
+  _$IslamNamesFavoriteStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -95,7 +96,7 @@ abstract class _$$_InitialPageCopyWith<$Res> {
 
 /// @nodoc
 class __$$_InitialPageCopyWithImpl<$Res>
-    extends _$AyatOfDayStateCopyWithImpl<$Res, _$_InitialPage>
+    extends _$IslamNamesFavoriteStateCopyWithImpl<$Res, _$_InitialPage>
     implements _$$_InitialPageCopyWith<$Res> {
   __$$_InitialPageCopyWithImpl(
       _$_InitialPage _value, $Res Function(_$_InitialPage) _then)
@@ -109,7 +110,7 @@ class _$_InitialPage implements _InitialPage {
 
   @override
   String toString() {
-    return 'AyatOfDayState.initialState()';
+    return 'IslamNamesFavoriteState.initialState()';
   }
 
   @override
@@ -126,7 +127,7 @@ class _$_InitialPage implements _InitialPage {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function(AyatDTO ayat, List<PillarsDTO> pillars) loaded,
+    required TResult Function() loaded,
     required TResult Function(String message) errorState,
   }) {
     return initialState();
@@ -137,7 +138,7 @@ class _$_InitialPage implements _InitialPage {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialState,
     TResult? Function()? loadingState,
-    TResult? Function(AyatDTO ayat, List<PillarsDTO> pillars)? loaded,
+    TResult? Function()? loaded,
     TResult? Function(String message)? errorState,
   }) {
     return initialState?.call();
@@ -148,7 +149,7 @@ class _$_InitialPage implements _InitialPage {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(AyatDTO ayat, List<PillarsDTO> pillars)? loaded,
+    TResult Function()? loaded,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -196,7 +197,7 @@ class _$_InitialPage implements _InitialPage {
   }
 }
 
-abstract class _InitialPage implements AyatOfDayState {
+abstract class _InitialPage implements IslamNamesFavoriteState {
   const factory _InitialPage() = _$_InitialPage;
 }
 
@@ -209,7 +210,7 @@ abstract class _$$_LoadingStateCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadingStateCopyWithImpl<$Res>
-    extends _$AyatOfDayStateCopyWithImpl<$Res, _$_LoadingState>
+    extends _$IslamNamesFavoriteStateCopyWithImpl<$Res, _$_LoadingState>
     implements _$$_LoadingStateCopyWith<$Res> {
   __$$_LoadingStateCopyWithImpl(
       _$_LoadingState _value, $Res Function(_$_LoadingState) _then)
@@ -223,7 +224,7 @@ class _$_LoadingState implements _LoadingState {
 
   @override
   String toString() {
-    return 'AyatOfDayState.loadingState()';
+    return 'IslamNamesFavoriteState.loadingState()';
   }
 
   @override
@@ -240,7 +241,7 @@ class _$_LoadingState implements _LoadingState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function(AyatDTO ayat, List<PillarsDTO> pillars) loaded,
+    required TResult Function() loaded,
     required TResult Function(String message) errorState,
   }) {
     return loadingState();
@@ -251,7 +252,7 @@ class _$_LoadingState implements _LoadingState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialState,
     TResult? Function()? loadingState,
-    TResult? Function(AyatDTO ayat, List<PillarsDTO> pillars)? loaded,
+    TResult? Function()? loaded,
     TResult? Function(String message)? errorState,
   }) {
     return loadingState?.call();
@@ -262,7 +263,7 @@ class _$_LoadingState implements _LoadingState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(AyatDTO ayat, List<PillarsDTO> pillars)? loaded,
+    TResult Function()? loaded,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -310,7 +311,7 @@ class _$_LoadingState implements _LoadingState {
   }
 }
 
-abstract class _LoadingState implements AyatOfDayState {
+abstract class _LoadingState implements IslamNamesFavoriteState {
   const factory _LoadingState() = _$_LoadingState;
 }
 
@@ -319,97 +320,45 @@ abstract class _$$_LoadedStateCopyWith<$Res> {
   factory _$$_LoadedStateCopyWith(
           _$_LoadedState value, $Res Function(_$_LoadedState) then) =
       __$$_LoadedStateCopyWithImpl<$Res>;
-  @useResult
-  $Res call({AyatDTO ayat, List<PillarsDTO> pillars});
-
-  $AyatDTOCopyWith<$Res> get ayat;
 }
 
 /// @nodoc
 class __$$_LoadedStateCopyWithImpl<$Res>
-    extends _$AyatOfDayStateCopyWithImpl<$Res, _$_LoadedState>
+    extends _$IslamNamesFavoriteStateCopyWithImpl<$Res, _$_LoadedState>
     implements _$$_LoadedStateCopyWith<$Res> {
   __$$_LoadedStateCopyWithImpl(
       _$_LoadedState _value, $Res Function(_$_LoadedState) _then)
       : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? ayat = null,
-    Object? pillars = null,
-  }) {
-    return _then(_$_LoadedState(
-      ayat: null == ayat
-          ? _value.ayat
-          : ayat // ignore: cast_nullable_to_non_nullable
-              as AyatDTO,
-      pillars: null == pillars
-          ? _value._pillars
-          : pillars // ignore: cast_nullable_to_non_nullable
-              as List<PillarsDTO>,
-    ));
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $AyatDTOCopyWith<$Res> get ayat {
-    return $AyatDTOCopyWith<$Res>(_value.ayat, (value) {
-      return _then(_value.copyWith(ayat: value));
-    });
-  }
 }
 
 /// @nodoc
 
 class _$_LoadedState implements _LoadedState {
-  const _$_LoadedState(
-      {required this.ayat, required final List<PillarsDTO> pillars})
-      : _pillars = pillars;
-
-  @override
-  final AyatDTO ayat;
-  final List<PillarsDTO> _pillars;
-  @override
-  List<PillarsDTO> get pillars {
-    if (_pillars is EqualUnmodifiableListView) return _pillars;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_pillars);
-  }
+  const _$_LoadedState();
 
   @override
   String toString() {
-    return 'AyatOfDayState.loaded(ayat: $ayat, pillars: $pillars)';
+    return 'IslamNamesFavoriteState.loaded()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_LoadedState &&
-            (identical(other.ayat, ayat) || other.ayat == ayat) &&
-            const DeepCollectionEquality().equals(other._pillars, _pillars));
+        (other.runtimeType == runtimeType && other is _$_LoadedState);
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, ayat, const DeepCollectionEquality().hash(_pillars));
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
-      __$$_LoadedStateCopyWithImpl<_$_LoadedState>(this, _$identity);
+  int get hashCode => runtimeType.hashCode;
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function(AyatDTO ayat, List<PillarsDTO> pillars) loaded,
+    required TResult Function() loaded,
     required TResult Function(String message) errorState,
   }) {
-    return loaded(ayat, pillars);
+    return loaded();
   }
 
   @override
@@ -417,10 +366,10 @@ class _$_LoadedState implements _LoadedState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialState,
     TResult? Function()? loadingState,
-    TResult? Function(AyatDTO ayat, List<PillarsDTO> pillars)? loaded,
+    TResult? Function()? loaded,
     TResult? Function(String message)? errorState,
   }) {
-    return loaded?.call(ayat, pillars);
+    return loaded?.call();
   }
 
   @override
@@ -428,12 +377,12 @@ class _$_LoadedState implements _LoadedState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(AyatDTO ayat, List<PillarsDTO> pillars)? loaded,
+    TResult Function()? loaded,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(ayat, pillars);
+      return loaded();
     }
     return orElse();
   }
@@ -476,16 +425,8 @@ class _$_LoadedState implements _LoadedState {
   }
 }
 
-abstract class _LoadedState implements AyatOfDayState {
-  const factory _LoadedState(
-      {required final AyatDTO ayat,
-      required final List<PillarsDTO> pillars}) = _$_LoadedState;
-
-  AyatDTO get ayat;
-  List<PillarsDTO> get pillars;
-  @JsonKey(ignore: true)
-  _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
-      throw _privateConstructorUsedError;
+abstract class _LoadedState implements IslamNamesFavoriteState {
+  const factory _LoadedState() = _$_LoadedState;
 }
 
 /// @nodoc
@@ -499,7 +440,7 @@ abstract class _$$_ErrorStateCopyWith<$Res> {
 
 /// @nodoc
 class __$$_ErrorStateCopyWithImpl<$Res>
-    extends _$AyatOfDayStateCopyWithImpl<$Res, _$_ErrorState>
+    extends _$IslamNamesFavoriteStateCopyWithImpl<$Res, _$_ErrorState>
     implements _$$_ErrorStateCopyWith<$Res> {
   __$$_ErrorStateCopyWithImpl(
       _$_ErrorState _value, $Res Function(_$_ErrorState) _then)
@@ -529,7 +470,7 @@ class _$_ErrorState implements _ErrorState {
 
   @override
   String toString() {
-    return 'AyatOfDayState.errorState(message: $message)';
+    return 'IslamNamesFavoriteState.errorState(message: $message)';
   }
 
   @override
@@ -554,7 +495,7 @@ class _$_ErrorState implements _ErrorState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function(AyatDTO ayat, List<PillarsDTO> pillars) loaded,
+    required TResult Function() loaded,
     required TResult Function(String message) errorState,
   }) {
     return errorState(message);
@@ -565,7 +506,7 @@ class _$_ErrorState implements _ErrorState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialState,
     TResult? Function()? loadingState,
-    TResult? Function(AyatDTO ayat, List<PillarsDTO> pillars)? loaded,
+    TResult? Function()? loaded,
     TResult? Function(String message)? errorState,
   }) {
     return errorState?.call(message);
@@ -576,7 +517,7 @@ class _$_ErrorState implements _ErrorState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(AyatDTO ayat, List<PillarsDTO> pillars)? loaded,
+    TResult Function()? loaded,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -624,7 +565,7 @@ class _$_ErrorState implements _ErrorState {
   }
 }
 
-abstract class _ErrorState implements AyatOfDayState {
+abstract class _ErrorState implements IslamNamesFavoriteState {
   const factory _ErrorState({required final String message}) = _$_ErrorState;
 
   String get message;

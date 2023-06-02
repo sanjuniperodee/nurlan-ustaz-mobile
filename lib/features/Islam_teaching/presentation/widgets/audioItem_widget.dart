@@ -1,17 +1,21 @@
+import 'dart:developer';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 
 class AudioItemWidget extends StatefulWidget {
-  const AudioItemWidget({Key? key}) : super(key: key);
+  final String audioUrl;
+  const AudioItemWidget({Key? key, required this.audioUrl}) : super(key: key);
 
   @override
   State<AudioItemWidget> createState() => _AudioItemWidgetState();
 }
 
 class _AudioItemWidgetState extends State<AudioItemWidget> {
-  final audioPlayer = AudioPlayer();
+  AudioPlayer audioPlayer = AudioPlayer();
+  PlayerState? audioPlayerState;
   bool isPlaying = false;
 
   Duration duration = Duration.zero; // For total duration
@@ -21,7 +25,8 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
   void initState() {
     super.initState();
 
-    setAudioPlayer();
+    audioPlayer = AudioPlayer();
+    audioPlayerState = PlayerState.stopped;
 
     audioPlayer.onDurationChanged.listen((newDuration) {
       setState(() {
@@ -46,11 +51,26 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
     });
   }
 
-  Future<void> setAudioPlayer() async {
-    final player = AudioCache(prefix: "assets/audios/");
-    final url = await player.load("song.mp3");
-    audioPlayer.setSourceUrl(url.path);
-    audioPlayer.setReleaseMode(ReleaseMode.stop);
+  Future<void> play() async {
+    await audioPlayer.play(UrlSource(widget.audioUrl));
+    log(widget.audioUrl);
+
+    setState(() {
+      audioPlayerState = PlayerState.playing;
+    });
+  }
+
+  Future<void> pause() async {
+    await audioPlayer.pause();
+    setState(() {
+      audioPlayerState = PlayerState.paused;
+    });
+  }
+
+  @override
+  void dispose() {
+    audioPlayer.dispose();
+    super.dispose();
   }
 
   @override
@@ -64,9 +84,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
         children: [
           GestureDetector(
             onTap: () async {
-              isPlaying
-                  ? await audioPlayer.pause()
-                  : await audioPlayer.resume();
+              play();
             },
             child: Icon(
               isPlaying ? Icons.pause : Icons.play_arrow,
@@ -77,7 +95,6 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
           Slider(
             value: position.inMilliseconds.toDouble(),
             max: duration.inMilliseconds.toDouble(),
-            
             activeColor: AppColors.orange,
             inactiveColor: AppColors.orange,
             onChanged: (value) {

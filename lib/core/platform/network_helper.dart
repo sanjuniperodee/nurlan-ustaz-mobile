@@ -22,9 +22,21 @@ mixin EndPoints {
 
   //HOME
   static const String banner = '/api/v1/banners';
+  static const String seminar = '/api/banner/seminars/';
+  static const String charities = '/api/additional-services/charities/';
+  static const String imamServices = '/api/additional-services/imam-services/';
+  static const String lives = '/api/blog/lives/';
+  static const String partners = '/api/additional-services/partners/';
+  static const String news = '/api/banner/news/';
 
   //ISLAM TEACHING
 
   static const String ayatOfDay = '/api/knowledge/surahs/ayat_of_the_day/';
   static const String pillars = '/api/islam/pillars/';
+  static const String fatwas = '/api/knowledge/fatwas/';
+  static const String namesOfAllah = '/api/knowledge/names_of_allah/';
+  static const String surahs = '/api/knowledge/surahs/';
+  static const String duha = '/api/knowledge/duas/';
+  static const String dhikrs = '/api/knowledge/dhikrs/';
+  static const String muslimNames = '/api/knowledge/muslim_names/';
 }

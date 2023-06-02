@@ -1,21 +1,36 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/result_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/islam_names_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/islam_names_favorite_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
 import 'package:share_plus/share_plus.dart';
 import '../widgets/floating_container_widget.dart';
 
 class NameDetailPage extends StatefulWidget {
-  const NameDetailPage({super.key});
+  final ResultDTO result;
+  final int index;
+  const NameDetailPage({super.key, required this.result, required this.index});
 
   @override
   State<NameDetailPage> createState() => _NameDetailPageState();
 }
 
 class _NameDetailPageState extends State<NameDetailPage> {
-  bool favorite = false;
+  late bool isFavorite;
+  @override
+  void initState() {
+    // TODO: implement initState
+    isFavorite = widget.result.isSaved!;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,9 +65,18 @@ class _NameDetailPageState extends State<NameDetailPage> {
                       SizedBox(
                         height: 56.h,
                       ),
-                      const Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: CustomAppBar(title: 'Адам'),
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: CustomAppBar(
+                          title: widget.result.name ?? 'ERROR',
+                          onTap: () {
+                            log(widget.index.toString());
+                            BlocProvider.of<IslamNamesCubit>(context)
+                                .islamNames(
+                                    gender: widget.index == 0 ? 'M' : 'F')
+                                .then((value) => Navigator.pop(context));
+                          },
+                        ),
                       ),
                       SizedBox(
                         height: 26.h,
@@ -68,14 +92,14 @@ class _NameDetailPageState extends State<NameDetailPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Аңсар',
+                                widget.result.name ?? 'ERROR',
                                 style: getTextStyle(CustomTextStyles.s20w700),
                               ),
                               SizedBox(
                                 height: 12.h,
                               ),
                               Text(
-                                'Аңсар — көмекшілер, қолдаушылар, жолсерік. Мединенің төл тұрғындары, Алла елшісі мен оның сахабалары қоныс аударып келгенде, ислам дінін қабылдап, оларға пана тауып берген. Тіпті, пайғамбар "Басқа адамдар бір жолмен жүрсе, аңсарлар келесі жолмен жүрсе, мен аңсарлардың соңынан барар едім" деген болатын;',
+                                widget.result.description ?? 'ERROR',
                                 style: getTextStyle(CustomTextStyles.s16w400),
                               ),
                               SizedBox(
@@ -84,21 +108,25 @@ class _NameDetailPageState extends State<NameDetailPage> {
                               Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
-                                children:  [
+                                children: [
                                   FloatinContainerWidget(
                                     text: 'Таңдаулы',
                                     onTap: () {
-                                      setState(() {
-                                        favorite = !favorite;
-                                      });
+                                      BlocProvider.of<IslamNamesFavoriteCubit>(
+                                              context)
+                                          .islamNamesFavorite(
+                                              id: widget.result.id ?? 0);
+                                      isFavorite = !isFavorite;
+                                      setState(() {});
                                     },
-                                    url: favorite
+                                    url: isFavorite
                                         ? Assets.bookMark1Svg
                                         : Assets.bookMarkSvg,
                                   ),
                                   FloatinContainerWidget(
                                     onTap: () {
-                                      Share.share('Hello',
+                                      Share.share(
+                                          widget.result.description ?? 'ERROR',
                                           subject: 'Nurlan_ustaz');
                                     },
                                     text: 'Бөлісу',
