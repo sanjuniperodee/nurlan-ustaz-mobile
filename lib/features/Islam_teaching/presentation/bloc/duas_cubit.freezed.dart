@@ -20,7 +20,7 @@ mixin _$DuasState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function(List<ResultDTO> duha) loaded,
+    required TResult Function(List<ResultTeachingDTO> duha) loaded,
     required TResult Function(String message) errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -28,7 +28,7 @@ mixin _$DuasState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialState,
     TResult? Function()? loadingState,
-    TResult? Function(List<ResultDTO> duha)? loaded,
+    TResult? Function(List<ResultTeachingDTO> duha)? loaded,
     TResult? Function(String message)? errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ mixin _$DuasState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(List<ResultDTO> duha)? loaded,
+    TResult Function(List<ResultTeachingDTO> duha)? loaded,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) =>
@@ -125,7 +125,7 @@ class _$_InitialPage implements _InitialPage {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function(List<ResultDTO> duha) loaded,
+    required TResult Function(List<ResultTeachingDTO> duha) loaded,
     required TResult Function(String message) errorState,
   }) {
     return initialState();
@@ -136,7 +136,7 @@ class _$_InitialPage implements _InitialPage {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialState,
     TResult? Function()? loadingState,
-    TResult? Function(List<ResultDTO> duha)? loaded,
+    TResult? Function(List<ResultTeachingDTO> duha)? loaded,
     TResult? Function(String message)? errorState,
   }) {
     return initialState?.call();
@@ -147,7 +147,7 @@ class _$_InitialPage implements _InitialPage {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(List<ResultDTO> duha)? loaded,
+    TResult Function(List<ResultTeachingDTO> duha)? loaded,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -239,7 +239,7 @@ class _$_LoadingState implements _LoadingState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function(List<ResultDTO> duha) loaded,
+    required TResult Function(List<ResultTeachingDTO> duha) loaded,
     required TResult Function(String message) errorState,
   }) {
     return loadingState();
@@ -250,7 +250,7 @@ class _$_LoadingState implements _LoadingState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialState,
     TResult? Function()? loadingState,
-    TResult? Function(List<ResultDTO> duha)? loaded,
+    TResult? Function(List<ResultTeachingDTO> duha)? loaded,
     TResult? Function(String message)? errorState,
   }) {
     return loadingState?.call();
@@ -261,7 +261,7 @@ class _$_LoadingState implements _LoadingState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(List<ResultDTO> duha)? loaded,
+    TResult Function(List<ResultTeachingDTO> duha)? loaded,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -319,7 +319,7 @@ abstract class _$$_LoadedStateCopyWith<$Res> {
           _$_LoadedState value, $Res Function(_$_LoadedState) then) =
       __$$_LoadedStateCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<ResultDTO> duha});
+  $Res call({List<ResultTeachingDTO> duha});
 }
 
 /// @nodoc
@@ -339,7 +339,7 @@ class __$$_LoadedStateCopyWithImpl<$Res>
       duha: null == duha
           ? _value._duha
           : duha // ignore: cast_nullable_to_non_nullable
-              as List<ResultDTO>,
+              as List<ResultTeachingDTO>,
     ));
   }
 }
@@ -347,11 +347,12 @@ class __$$_LoadedStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadedState implements _LoadedState {
-  const _$_LoadedState({required final List<ResultDTO> duha}) : _duha = duha;
+  const _$_LoadedState({required final List<ResultTeachingDTO> duha})
+      : _duha = duha;
 
-  final List<ResultDTO> _duha;
+  final List<ResultTeachingDTO> _duha;
   @override
-  List<ResultDTO> get duha {
+  List<ResultTeachingDTO> get duha {
     if (_duha is EqualUnmodifiableListView) return _duha;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_duha);
@@ -385,7 +386,7 @@ class _$_LoadedState implements _LoadedState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function(List<ResultDTO> duha) loaded,
+    required TResult Function(List<ResultTeachingDTO> duha) loaded,
     required TResult Function(String message) errorState,
   }) {
     return loaded(duha);
@@ -396,7 +397,7 @@ class _$_LoadedState implements _LoadedState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialState,
     TResult? Function()? loadingState,
-    TResult? Function(List<ResultDTO> duha)? loaded,
+    TResult? Function(List<ResultTeachingDTO> duha)? loaded,
     TResult? Function(String message)? errorState,
   }) {
     return loaded?.call(duha);
@@ -407,7 +408,7 @@ class _$_LoadedState implements _LoadedState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(List<ResultDTO> duha)? loaded,
+    TResult Function(List<ResultTeachingDTO> duha)? loaded,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -456,10 +457,10 @@ class _$_LoadedState implements _LoadedState {
 }
 
 abstract class _LoadedState implements DuasState {
-  const factory _LoadedState({required final List<ResultDTO> duha}) =
+  const factory _LoadedState({required final List<ResultTeachingDTO> duha}) =
       _$_LoadedState;
 
-  List<ResultDTO> get duha;
+  List<ResultTeachingDTO> get duha;
   @JsonKey(ignore: true)
   _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -531,7 +532,7 @@ class _$_ErrorState implements _ErrorState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function(List<ResultDTO> duha) loaded,
+    required TResult Function(List<ResultTeachingDTO> duha) loaded,
     required TResult Function(String message) errorState,
   }) {
     return errorState(message);
@@ -542,7 +543,7 @@ class _$_ErrorState implements _ErrorState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialState,
     TResult? Function()? loadingState,
-    TResult? Function(List<ResultDTO> duha)? loaded,
+    TResult? Function(List<ResultTeachingDTO> duha)? loaded,
     TResult? Function(String message)? errorState,
   }) {
     return errorState?.call(message);
@@ -553,7 +554,7 @@ class _$_ErrorState implements _ErrorState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(List<ResultDTO> duha)? loaded,
+    TResult Function(List<ResultTeachingDTO> duha)? loaded,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {

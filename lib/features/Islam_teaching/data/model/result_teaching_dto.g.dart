@@ -1,12 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'result_dto.dart';
+part of 'result_teaching_dto.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_ResultDTO _$$_ResultDTOFromJson(Map<String, dynamic> json) => _$_ResultDTO(
+_$_ResultTeachingDTO _$$_ResultTeachingDTOFromJson(Map<String, dynamic> json) =>
+    _$_ResultTeachingDTO(
       isSaved: json['is_saved'] as bool? ?? false,
       id: json['id'] as int?,
       name: json['name'] as String?,
@@ -22,7 +23,8 @@ _$_ResultDTO _$$_ResultDTOFromJson(Map<String, dynamic> json) => _$_ResultDTO(
           .toList(),
     );
 
-Map<String, dynamic> _$$_ResultDTOToJson(_$_ResultDTO instance) =>
+Map<String, dynamic> _$$_ResultTeachingDTOToJson(
+        _$_ResultTeachingDTO instance) =>
     <String, dynamic>{
       'is_saved': instance.isSaved,
       'id': instance.id,

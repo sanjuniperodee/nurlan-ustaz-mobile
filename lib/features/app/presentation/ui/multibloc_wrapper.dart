@@ -14,6 +14,7 @@ import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/s
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/surah_favorite_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/app_bloc.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.dart';
 
 import '../../../../core/services/locator_service.dart';
 
@@ -44,6 +45,11 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         ),
         //AUTH
         //
+        //HOME
+        //
+        BlocProvider<NewsCubit>(
+          create: (context) => getIt<NewsCubit>(),
+        ),
 
         //ISlAM TEACHING
         //

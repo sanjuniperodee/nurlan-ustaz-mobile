@@ -5,7 +5,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
-import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/result_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/result_teaching_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/dhikrs_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/dhikrs_favorite_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/widgets/audioItem_widget.dart';
@@ -15,7 +15,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_ap
 import '../widgets/dhikr_button_widget.dart';
 
 class DhikrDetailPage extends StatefulWidget {
-  final ResultDTO result;
+  final ResultTeachingDTO result;
   const DhikrDetailPage({super.key, required this.result});
 
   @override

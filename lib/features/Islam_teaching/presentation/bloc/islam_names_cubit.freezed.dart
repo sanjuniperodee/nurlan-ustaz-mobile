@@ -20,7 +20,8 @@ mixin _$IslamNamesState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function(List<ResultDTO> islam) loaded,
+    required TResult Function() loadingMoreState,
+    required TResult Function(List<ResultTeachingDTO> islam) loaded,
     required TResult Function(String message) errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -28,7 +29,8 @@ mixin _$IslamNamesState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialState,
     TResult? Function()? loadingState,
-    TResult? Function(List<ResultDTO> islam)? loaded,
+    TResult? Function()? loadingMoreState,
+    TResult? Function(List<ResultTeachingDTO> islam)? loaded,
     TResult? Function(String message)? errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +38,8 @@ mixin _$IslamNamesState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(List<ResultDTO> islam)? loaded,
+    TResult Function()? loadingMoreState,
+    TResult Function(List<ResultTeachingDTO> islam)? loaded,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) =>
@@ -45,6 +48,7 @@ mixin _$IslamNamesState {
   TResult map<TResult extends Object?>({
     required TResult Function(_InitialPage value) initialState,
     required TResult Function(_LoadingState value) loadingState,
+    required TResult Function(_LoadingMoreState value) loadingMoreState,
     required TResult Function(_LoadedState value) loaded,
     required TResult Function(_ErrorState value) errorState,
   }) =>
@@ -53,6 +57,7 @@ mixin _$IslamNamesState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_InitialPage value)? initialState,
     TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_LoadingMoreState value)? loadingMoreState,
     TResult? Function(_LoadedState value)? loaded,
     TResult? Function(_ErrorState value)? errorState,
   }) =>
@@ -61,6 +66,7 @@ mixin _$IslamNamesState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitialPage value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
+    TResult Function(_LoadingMoreState value)? loadingMoreState,
     TResult Function(_LoadedState value)? loaded,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
@@ -126,7 +132,8 @@ class _$_InitialPage implements _InitialPage {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function(List<ResultDTO> islam) loaded,
+    required TResult Function() loadingMoreState,
+    required TResult Function(List<ResultTeachingDTO> islam) loaded,
     required TResult Function(String message) errorState,
   }) {
     return initialState();
@@ -137,7 +144,8 @@ class _$_InitialPage implements _InitialPage {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialState,
     TResult? Function()? loadingState,
-    TResult? Function(List<ResultDTO> islam)? loaded,
+    TResult? Function()? loadingMoreState,
+    TResult? Function(List<ResultTeachingDTO> islam)? loaded,
     TResult? Function(String message)? errorState,
   }) {
     return initialState?.call();
@@ -148,7 +156,8 @@ class _$_InitialPage implements _InitialPage {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(List<ResultDTO> islam)? loaded,
+    TResult Function()? loadingMoreState,
+    TResult Function(List<ResultTeachingDTO> islam)? loaded,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -163,6 +172,7 @@ class _$_InitialPage implements _InitialPage {
   TResult map<TResult extends Object?>({
     required TResult Function(_InitialPage value) initialState,
     required TResult Function(_LoadingState value) loadingState,
+    required TResult Function(_LoadingMoreState value) loadingMoreState,
     required TResult Function(_LoadedState value) loaded,
     required TResult Function(_ErrorState value) errorState,
   }) {
@@ -174,6 +184,7 @@ class _$_InitialPage implements _InitialPage {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_InitialPage value)? initialState,
     TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_LoadingMoreState value)? loadingMoreState,
     TResult? Function(_LoadedState value)? loaded,
     TResult? Function(_ErrorState value)? errorState,
   }) {
@@ -185,6 +196,7 @@ class _$_InitialPage implements _InitialPage {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitialPage value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
+    TResult Function(_LoadingMoreState value)? loadingMoreState,
     TResult Function(_LoadedState value)? loaded,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
@@ -240,7 +252,8 @@ class _$_LoadingState implements _LoadingState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function(List<ResultDTO> islam) loaded,
+    required TResult Function() loadingMoreState,
+    required TResult Function(List<ResultTeachingDTO> islam) loaded,
     required TResult Function(String message) errorState,
   }) {
     return loadingState();
@@ -251,7 +264,8 @@ class _$_LoadingState implements _LoadingState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialState,
     TResult? Function()? loadingState,
-    TResult? Function(List<ResultDTO> islam)? loaded,
+    TResult? Function()? loadingMoreState,
+    TResult? Function(List<ResultTeachingDTO> islam)? loaded,
     TResult? Function(String message)? errorState,
   }) {
     return loadingState?.call();
@@ -262,7 +276,8 @@ class _$_LoadingState implements _LoadingState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(List<ResultDTO> islam)? loaded,
+    TResult Function()? loadingMoreState,
+    TResult Function(List<ResultTeachingDTO> islam)? loaded,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -277,6 +292,7 @@ class _$_LoadingState implements _LoadingState {
   TResult map<TResult extends Object?>({
     required TResult Function(_InitialPage value) initialState,
     required TResult Function(_LoadingState value) loadingState,
+    required TResult Function(_LoadingMoreState value) loadingMoreState,
     required TResult Function(_LoadedState value) loaded,
     required TResult Function(_ErrorState value) errorState,
   }) {
@@ -288,6 +304,7 @@ class _$_LoadingState implements _LoadingState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_InitialPage value)? initialState,
     TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_LoadingMoreState value)? loadingMoreState,
     TResult? Function(_LoadedState value)? loaded,
     TResult? Function(_ErrorState value)? errorState,
   }) {
@@ -299,6 +316,7 @@ class _$_LoadingState implements _LoadingState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitialPage value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
+    TResult Function(_LoadingMoreState value)? loadingMoreState,
     TResult Function(_LoadedState value)? loaded,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
@@ -315,12 +333,132 @@ abstract class _LoadingState implements IslamNamesState {
 }
 
 /// @nodoc
+abstract class _$$_LoadingMoreStateCopyWith<$Res> {
+  factory _$$_LoadingMoreStateCopyWith(
+          _$_LoadingMoreState value, $Res Function(_$_LoadingMoreState) then) =
+      __$$_LoadingMoreStateCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_LoadingMoreStateCopyWithImpl<$Res>
+    extends _$IslamNamesStateCopyWithImpl<$Res, _$_LoadingMoreState>
+    implements _$$_LoadingMoreStateCopyWith<$Res> {
+  __$$_LoadingMoreStateCopyWithImpl(
+      _$_LoadingMoreState _value, $Res Function(_$_LoadingMoreState) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_LoadingMoreState implements _LoadingMoreState {
+  const _$_LoadingMoreState();
+
+  @override
+  String toString() {
+    return 'IslamNamesState.loadingMoreState()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_LoadingMoreState);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() initialState,
+    required TResult Function() loadingState,
+    required TResult Function() loadingMoreState,
+    required TResult Function(List<ResultTeachingDTO> islam) loaded,
+    required TResult Function(String message) errorState,
+  }) {
+    return loadingMoreState();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? initialState,
+    TResult? Function()? loadingState,
+    TResult? Function()? loadingMoreState,
+    TResult? Function(List<ResultTeachingDTO> islam)? loaded,
+    TResult? Function(String message)? errorState,
+  }) {
+    return loadingMoreState?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? initialState,
+    TResult Function()? loadingState,
+    TResult Function()? loadingMoreState,
+    TResult Function(List<ResultTeachingDTO> islam)? loaded,
+    TResult Function(String message)? errorState,
+    required TResult orElse(),
+  }) {
+    if (loadingMoreState != null) {
+      return loadingMoreState();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_InitialPage value) initialState,
+    required TResult Function(_LoadingState value) loadingState,
+    required TResult Function(_LoadingMoreState value) loadingMoreState,
+    required TResult Function(_LoadedState value) loaded,
+    required TResult Function(_ErrorState value) errorState,
+  }) {
+    return loadingMoreState(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_InitialPage value)? initialState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_LoadingMoreState value)? loadingMoreState,
+    TResult? Function(_LoadedState value)? loaded,
+    TResult? Function(_ErrorState value)? errorState,
+  }) {
+    return loadingMoreState?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_InitialPage value)? initialState,
+    TResult Function(_LoadingState value)? loadingState,
+    TResult Function(_LoadingMoreState value)? loadingMoreState,
+    TResult Function(_LoadedState value)? loaded,
+    TResult Function(_ErrorState value)? errorState,
+    required TResult orElse(),
+  }) {
+    if (loadingMoreState != null) {
+      return loadingMoreState(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _LoadingMoreState implements IslamNamesState {
+  const factory _LoadingMoreState() = _$_LoadingMoreState;
+}
+
+/// @nodoc
 abstract class _$$_LoadedStateCopyWith<$Res> {
   factory _$$_LoadedStateCopyWith(
           _$_LoadedState value, $Res Function(_$_LoadedState) then) =
       __$$_LoadedStateCopyWithImpl<$Res>;
   @useResult
-  $Res call({List<ResultDTO> islam});
+  $Res call({List<ResultTeachingDTO> islam});
 }
 
 /// @nodoc
@@ -340,7 +478,7 @@ class __$$_LoadedStateCopyWithImpl<$Res>
       islam: null == islam
           ? _value._islam
           : islam // ignore: cast_nullable_to_non_nullable
-              as List<ResultDTO>,
+              as List<ResultTeachingDTO>,
     ));
   }
 }
@@ -348,11 +486,12 @@ class __$$_LoadedStateCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_LoadedState implements _LoadedState {
-  const _$_LoadedState({required final List<ResultDTO> islam}) : _islam = islam;
+  const _$_LoadedState({required final List<ResultTeachingDTO> islam})
+      : _islam = islam;
 
-  final List<ResultDTO> _islam;
+  final List<ResultTeachingDTO> _islam;
   @override
-  List<ResultDTO> get islam {
+  List<ResultTeachingDTO> get islam {
     if (_islam is EqualUnmodifiableListView) return _islam;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_islam);
@@ -386,7 +525,8 @@ class _$_LoadedState implements _LoadedState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function(List<ResultDTO> islam) loaded,
+    required TResult Function() loadingMoreState,
+    required TResult Function(List<ResultTeachingDTO> islam) loaded,
     required TResult Function(String message) errorState,
   }) {
     return loaded(islam);
@@ -397,7 +537,8 @@ class _$_LoadedState implements _LoadedState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialState,
     TResult? Function()? loadingState,
-    TResult? Function(List<ResultDTO> islam)? loaded,
+    TResult? Function()? loadingMoreState,
+    TResult? Function(List<ResultTeachingDTO> islam)? loaded,
     TResult? Function(String message)? errorState,
   }) {
     return loaded?.call(islam);
@@ -408,7 +549,8 @@ class _$_LoadedState implements _LoadedState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(List<ResultDTO> islam)? loaded,
+    TResult Function()? loadingMoreState,
+    TResult Function(List<ResultTeachingDTO> islam)? loaded,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -423,6 +565,7 @@ class _$_LoadedState implements _LoadedState {
   TResult map<TResult extends Object?>({
     required TResult Function(_InitialPage value) initialState,
     required TResult Function(_LoadingState value) loadingState,
+    required TResult Function(_LoadingMoreState value) loadingMoreState,
     required TResult Function(_LoadedState value) loaded,
     required TResult Function(_ErrorState value) errorState,
   }) {
@@ -434,6 +577,7 @@ class _$_LoadedState implements _LoadedState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_InitialPage value)? initialState,
     TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_LoadingMoreState value)? loadingMoreState,
     TResult? Function(_LoadedState value)? loaded,
     TResult? Function(_ErrorState value)? errorState,
   }) {
@@ -445,6 +589,7 @@ class _$_LoadedState implements _LoadedState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitialPage value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
+    TResult Function(_LoadingMoreState value)? loadingMoreState,
     TResult Function(_LoadedState value)? loaded,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
@@ -457,10 +602,10 @@ class _$_LoadedState implements _LoadedState {
 }
 
 abstract class _LoadedState implements IslamNamesState {
-  const factory _LoadedState({required final List<ResultDTO> islam}) =
+  const factory _LoadedState({required final List<ResultTeachingDTO> islam}) =
       _$_LoadedState;
 
-  List<ResultDTO> get islam;
+  List<ResultTeachingDTO> get islam;
   @JsonKey(ignore: true)
   _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
       throw _privateConstructorUsedError;
@@ -532,7 +677,8 @@ class _$_ErrorState implements _ErrorState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function(List<ResultDTO> islam) loaded,
+    required TResult Function() loadingMoreState,
+    required TResult Function(List<ResultTeachingDTO> islam) loaded,
     required TResult Function(String message) errorState,
   }) {
     return errorState(message);
@@ -543,7 +689,8 @@ class _$_ErrorState implements _ErrorState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialState,
     TResult? Function()? loadingState,
-    TResult? Function(List<ResultDTO> islam)? loaded,
+    TResult? Function()? loadingMoreState,
+    TResult? Function(List<ResultTeachingDTO> islam)? loaded,
     TResult? Function(String message)? errorState,
   }) {
     return errorState?.call(message);
@@ -554,7 +701,8 @@ class _$_ErrorState implements _ErrorState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function(List<ResultDTO> islam)? loaded,
+    TResult Function()? loadingMoreState,
+    TResult Function(List<ResultTeachingDTO> islam)? loaded,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -569,6 +717,7 @@ class _$_ErrorState implements _ErrorState {
   TResult map<TResult extends Object?>({
     required TResult Function(_InitialPage value) initialState,
     required TResult Function(_LoadingState value) loadingState,
+    required TResult Function(_LoadingMoreState value) loadingMoreState,
     required TResult Function(_LoadedState value) loaded,
     required TResult Function(_ErrorState value) errorState,
   }) {
@@ -580,6 +729,7 @@ class _$_ErrorState implements _ErrorState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_InitialPage value)? initialState,
     TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_LoadingMoreState value)? loadingMoreState,
     TResult? Function(_LoadedState value)? loaded,
     TResult? Function(_ErrorState value)? errorState,
   }) {
@@ -591,6 +741,7 @@ class _$_ErrorState implements _ErrorState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitialPage value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
+    TResult Function(_LoadingMoreState value)? loadingMoreState,
     TResult Function(_LoadedState value)? loaded,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),

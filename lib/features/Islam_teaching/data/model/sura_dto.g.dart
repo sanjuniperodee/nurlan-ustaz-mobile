@@ -11,7 +11,7 @@ _$_SuraDTO _$$_SuraDTOFromJson(Map<String, dynamic> json) => _$_SuraDTO(
       next: json['next'] as String?,
       previous: json['previous'] as String?,
       results: (json['results'] as List<dynamic>?)
-          ?.map((e) => ResultDTO.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => ResultTeachingDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 

@@ -7,8 +7,9 @@ import 'package:nurlan_ustaz_flutter/core/platform/network_info.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/datasource/remote/Islam_teaching_remote_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/ayat_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/names_of_Allah_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/pagination_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/pillars_dto.dart';
-import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/result_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/result_teaching_dto.dart';
 
 const _tag = 'AuthRepository';
 
@@ -20,14 +21,14 @@ abstract class IslamTeachingRepository {
   Future<Either<Failure, bool>> islamNamesFavorite({required int id});
   Future<Either<Failure, List<PillarsDTO>>> pillars();
   Future<Either<Failure, List<PillarsDTO>>> fatwas();
-  Future<Either<Failure, List<ResultDTO>>> sura(
+  Future<Either<Failure, List<ResultTeachingDTO>>> sura(
       {String? search, bool? isSaved});
-  Future<Either<Failure, List<ResultDTO>>> dhikrs(
+  Future<Either<Failure, List<ResultTeachingDTO>>> dhikrs(
       {String? search, bool? isSaved});
-  Future<Either<Failure, List<ResultDTO>>> duha(
+  Future<Either<Failure, List<ResultTeachingDTO>>> duha(
       {String? search, bool? isSaved});
-  Future<Either<Failure, List<ResultDTO>>> islamNames(
-      {String? search, bool? isSaved, String? gender});
+  Future<Either<Failure, List<ResultTeachingDTO>>> islamNames(
+      {String? search, bool? isSaved, String? gender, int? page});
   Future<Either<Failure, List<NamesOfAllahDTO>>> namesOfAllah(
       {String? search, bool? isSaved});
 }
@@ -126,11 +127,11 @@ class IslamTeachingRepositoryImpl extends IslamTeachingRepository {
   }
 
   @override
-  Future<Either<Failure, List<ResultDTO>>> sura(
+  Future<Either<Failure, List<ResultTeachingDTO>>> sura(
       {String? search, bool? isSaved}) async {
     if (await networkInfo.isConnected) {
       try {
-        final List<ResultDTO> sura =
+        final List<ResultTeachingDTO> sura =
             await remoteDS.sura(search: search, isSaved: isSaved);
         return Right(sura);
       } on ServerException catch (e) {
@@ -142,12 +143,15 @@ class IslamTeachingRepositoryImpl extends IslamTeachingRepository {
   }
 
   @override
-  Future<Either<Failure, List<ResultDTO>>> islamNames(
-      {String? search, bool? isSaved, String? gender}) async {
+  Future<Either<Failure, List<ResultTeachingDTO>>> islamNames(
+      {String? search, bool? isSaved, String? gender, int? page}) async {
     if (await networkInfo.isConnected) {
       try {
-        final List<ResultDTO> names = await remoteDS.islamNames(
-            search: search, isSaved: isSaved, gender: gender);
+        final List<ResultTeachingDTO> names = await remoteDS.islamNames(
+            search: search,
+            isSaved: isSaved,
+            gender: gender,
+            currentPage: page);
         return Right(names);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -158,11 +162,11 @@ class IslamTeachingRepositoryImpl extends IslamTeachingRepository {
   }
 
   @override
-  Future<Either<Failure, List<ResultDTO>>> dhikrs(
+  Future<Either<Failure, List<ResultTeachingDTO>>> dhikrs(
       {String? search, bool? isSaved}) async {
     if (await networkInfo.isConnected) {
       try {
-        final List<ResultDTO> dhikrs =
+        final List<ResultTeachingDTO> dhikrs =
             await remoteDS.dhikrs(search: search, isSaved: isSaved);
         return Right(dhikrs);
       } on ServerException catch (e) {
@@ -174,11 +178,11 @@ class IslamTeachingRepositoryImpl extends IslamTeachingRepository {
   }
 
   @override
-  Future<Either<Failure, List<ResultDTO>>> duha(
+  Future<Either<Failure, List<ResultTeachingDTO>>> duha(
       {String? search, bool? isSaved}) async {
     if (await networkInfo.isConnected) {
       try {
-        final List<ResultDTO> duha =
+        final List<ResultTeachingDTO> duha =
             await remoteDS.duas(search: search, isSaved: isSaved);
         return Right(duha);
       } on ServerException catch (e) {

@@ -2,12 +2,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/ayat_dto.dart';
 
-part 'result_dto.freezed.dart';
-part 'result_dto.g.dart';
+part 'result_teaching_dto.freezed.dart';
+part 'result_teaching_dto.g.dart';
 
 @freezed
-class ResultDTO with _$ResultDTO {
-  const factory ResultDTO({
+class ResultTeachingDTO with _$ResultTeachingDTO {
+  const factory ResultTeachingDTO({
     @JsonKey(name: "is_saved") @Default(false) bool? isSaved,
     int? id,
     String? name,
@@ -19,8 +19,8 @@ class ResultDTO with _$ResultDTO {
     String? description,
     String? gender,
     List<AyatDTO>? ayats,
-  }) = _ResultDTO;
+  }) = _ResultTeachingDTO;
 
-  factory ResultDTO.fromJson(Map<String, dynamic> json) =>
-      _$ResultDTOFromJson(json);
+  factory ResultTeachingDTO.fromJson(Map<String, dynamic> json) =>
+      _$ResultTeachingDTOFromJson(json);
 }

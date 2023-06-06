@@ -15,62 +15,72 @@ class AudioItemWidget extends StatefulWidget {
 
 class _AudioItemWidgetState extends State<AudioItemWidget> {
   AudioPlayer audioPlayer = AudioPlayer();
-  PlayerState? audioPlayerState;
-  bool isPlaying = false;
+  PlayerState audioPlayerState = PlayerState.paused;
+  String url =
+      'http://86.107.45.90:8000/api/media/knowledge/names_of_allah/аттахият_uZxzPO7.mp3';
 
-  Duration duration = Duration.zero; // For total duration
-  Duration position = Duration.zero; // For the current position
+  /// Optional
+  int timeProgress = 0;
+  int audioDuration = 0;
 
   @override
   void initState() {
     super.initState();
 
-    audioPlayer = AudioPlayer();
-    audioPlayerState = PlayerState.stopped;
-
-    audioPlayer.onDurationChanged.listen((newDuration) {
+    /// Compulsory
+    audioPlayer.onPlayerStateChanged.listen((PlayerState state) {
       setState(() {
-        duration = newDuration;
+        audioPlayerState = state;
       });
     });
 
-    audioPlayer.onPositionChanged.listen((newPosition) {
-      if (mounted) {
-        setState(() {
-          position = newPosition;
-        });
-      }
+    /// Optional
+    audioPlayer.setSource(UrlSource(
+        url)); // Triggers the onDurationChanged listener and sets the max duration string
+    audioPlayer.onDurationChanged.listen((Duration duration) {
+      setState(() {
+        audioDuration = duration.inSeconds;
+      });
     });
-
-    audioPlayer.onPlayerStateChanged.listen((state) {
-      if (mounted) {
-        setState(() {
-          isPlaying = state == PlayerState.playing;
-        });
-      }
+    audioPlayer.onPositionChanged.listen((Duration position) async {
+      setState(() {
+        timeProgress = position.inSeconds;
+      });
     });
   }
 
-  Future<void> play() async {
-    await audioPlayer.play(UrlSource(widget.audioUrl));
-    log(widget.audioUrl);
-
-    setState(() {
-      audioPlayerState = PlayerState.playing;
-    });
-  }
-
-  Future<void> pause() async {
-    await audioPlayer.pause();
-    setState(() {
-      audioPlayerState = PlayerState.paused;
-    });
-  }
-
+  /// Compulsory
   @override
   void dispose() {
+    audioPlayer.release();
     audioPlayer.dispose();
     super.dispose();
+  }
+
+  /// Compulsory
+  playMusic() async {
+    // Add the parameter "isLocal: true" if you want to access a local file
+    await audioPlayer.play(UrlSource(url));
+  }
+
+  /// Compulsory
+  pauseMusic() async {
+    await audioPlayer.pause();
+  }
+
+  /// Optional
+  void seekToSec(int sec) {
+    Duration newPos = Duration(seconds: sec);
+    audioPlayer
+        .seek(newPos); // Jumps to the given position within the audio file
+  }
+
+  /// Optional
+  String getTimeString(int seconds) {
+    String minuteString =
+        '${(seconds / 60).floor() < 10 ? 0 : ''}${(seconds / 60).floor()}';
+    String secondString = '${seconds % 60 < 10 ? 0 : ''}${seconds % 60}';
+    return '$minuteString:$secondString'; // Returns a string with the format mm:ss
   }
 
   @override
@@ -84,25 +94,26 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
         children: [
           GestureDetector(
             onTap: () async {
-              play();
+              audioPlayerState == PlayerState.playing
+                  ? pauseMusic()
+                  : playMusic();
             },
             child: Icon(
-              isPlaying ? Icons.pause : Icons.play_arrow,
+              audioPlayerState == PlayerState.playing
+                  ? Icons.pause
+                  : Icons.play_arrow,
               color: AppColors.orange,
               size: 40.h,
             ),
           ),
           Slider(
-            value: position.inMilliseconds.toDouble(),
-            max: duration.inMilliseconds.toDouble(),
+            value: timeProgress.toDouble(),
+            max: audioDuration.toDouble(),
+            onChanged: (value) {
+              seekToSec(value.toInt());
+            },
             activeColor: AppColors.orange,
             inactiveColor: AppColors.orange,
-            onChanged: (value) {
-              setState(() {
-                position = Duration(milliseconds: value.toInt());
-              });
-              audioPlayer.seek(position);
-            },
           ),
         ],
       ),

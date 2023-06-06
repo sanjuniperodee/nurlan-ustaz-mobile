@@ -161,7 +161,7 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
                                     return InkWell(
                                       onTap: () {
                                         list[index].title == 'Пәтуә бөлімі'
-                                            ? _launchURL(
+                                            ? _launchUrl(
                                                 fatyas.first.url ?? 'ERROR')
                                             : context.router.push(
                                                 myRouteHome[index],
@@ -247,11 +247,10 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
     );
   }
 
-  _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
+  Future<void> _launchUrl(String _urll) async {
+    final Uri _url = Uri.parse('${_urll}');
+    if (!await launchUrl(_url)) {
+      throw Exception('Could not launch $_url');
     }
   }
 }

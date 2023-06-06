@@ -23,7 +23,7 @@ mixin _$SuraDTO {
   int? get count => throw _privateConstructorUsedError;
   String? get next => throw _privateConstructorUsedError;
   String? get previous => throw _privateConstructorUsedError;
-  List<ResultDTO>? get results => throw _privateConstructorUsedError;
+  List<ResultTeachingDTO>? get results => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +36,10 @@ abstract class $SuraDTOCopyWith<$Res> {
       _$SuraDTOCopyWithImpl<$Res, SuraDTO>;
   @useResult
   $Res call(
-      {int? count, String? next, String? previous, List<ResultDTO>? results});
+      {int? count,
+      String? next,
+      String? previous,
+      List<ResultTeachingDTO>? results});
 }
 
 /// @nodoc
@@ -73,7 +76,7 @@ class _$SuraDTOCopyWithImpl<$Res, $Val extends SuraDTO>
       results: freezed == results
           ? _value.results
           : results // ignore: cast_nullable_to_non_nullable
-              as List<ResultDTO>?,
+              as List<ResultTeachingDTO>?,
     ) as $Val);
   }
 }
@@ -86,7 +89,10 @@ abstract class _$$_SuraDTOCopyWith<$Res> implements $SuraDTOCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int? count, String? next, String? previous, List<ResultDTO>? results});
+      {int? count,
+      String? next,
+      String? previous,
+      List<ResultTeachingDTO>? results});
 }
 
 /// @nodoc
@@ -120,7 +126,7 @@ class __$$_SuraDTOCopyWithImpl<$Res>
       results: freezed == results
           ? _value._results
           : results // ignore: cast_nullable_to_non_nullable
-              as List<ResultDTO>?,
+              as List<ResultTeachingDTO>?,
     ));
   }
 }
@@ -129,7 +135,10 @@ class __$$_SuraDTOCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_SuraDTO implements _SuraDTO {
   const _$_SuraDTO(
-      {this.count, this.next, this.previous, final List<ResultDTO>? results})
+      {this.count,
+      this.next,
+      this.previous,
+      final List<ResultTeachingDTO>? results})
       : _results = results;
 
   factory _$_SuraDTO.fromJson(Map<String, dynamic> json) =>
@@ -141,9 +150,9 @@ class _$_SuraDTO implements _SuraDTO {
   final String? next;
   @override
   final String? previous;
-  final List<ResultDTO>? _results;
+  final List<ResultTeachingDTO>? _results;
   @override
-  List<ResultDTO>? get results {
+  List<ResultTeachingDTO>? get results {
     final value = _results;
     if (value == null) return null;
     if (_results is EqualUnmodifiableListView) return _results;
@@ -192,7 +201,7 @@ abstract class _SuraDTO implements SuraDTO {
       {final int? count,
       final String? next,
       final String? previous,
-      final List<ResultDTO>? results}) = _$_SuraDTO;
+      final List<ResultTeachingDTO>? results}) = _$_SuraDTO;
 
   factory _SuraDTO.fromJson(Map<String, dynamic> json) = _$_SuraDTO.fromJson;
 
@@ -203,7 +212,7 @@ abstract class _SuraDTO implements SuraDTO {
   @override
   String? get previous;
   @override
-  List<ResultDTO>? get results;
+  List<ResultTeachingDTO>? get results;
   @override
   @JsonKey(ignore: true)
   _$$_SuraDTOCopyWith<_$_SuraDTO> get copyWith =>

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +8,7 @@ import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/result_teaching_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/islam_names_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_widget.dart';
@@ -22,11 +25,23 @@ class NamePage extends StatefulWidget {
 
 class _NamePageState extends State<NamePage> {
   int currentIndex = 0;
+  final ScrollController _scrollController = ScrollController();
+  int page = 1;
+
+  bool isLoadingMore = false;
+  List<ResultTeachingDTO> listOfIslamNames = [];
   @override
   void initState() {
     // TODO: implement initState
-    BlocProvider.of<IslamNamesCubit>(context).islamNames(gender: 'M');
+    BlocProvider.of<IslamNamesCubit>(context).islamNames(gender: 'M', page: 1);
+    _scrollController.addListener(_scrollListener);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -36,9 +51,19 @@ class _NamePageState extends State<NamePage> {
       body: BlocConsumer<IslamNamesCubit, IslamNamesState>(
         listener: (context, state) {
           state.maybeWhen(
-            orElse: () {},
+            orElse: () {
+              isLoadingMore = false;
+            },
             errorState: (message) {
+              isLoadingMore = false;
               buildErrorCustomSnackBar(context, message);
+            },
+            loadingMoreState: () {
+              isLoadingMore = true;
+            },
+            loaded: (islam) {
+              isLoadingMore = false;
+              listOfIslamNames = islam;
             },
           );
           // TODO: implement listener
@@ -46,20 +71,6 @@ class _NamePageState extends State<NamePage> {
         builder: (context, state) {
           return state.maybeWhen(
             orElse: () {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.red,
-                ),
-              );
-            },
-            loadingState: () {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.yellow,
-                ),
-              );
-            },
-            loaded: (islam) {
               return SizedBox(
                 height: 1.sh,
                 child: Stack(
@@ -83,6 +94,7 @@ class _NamePageState extends State<NamePage> {
                     SizedBox(
                       child: SingleChildScrollView(
                           physics: const BouncingScrollPhysics(),
+                          controller: _scrollController,
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),
                             child: Column(
@@ -102,7 +114,8 @@ class _NamePageState extends State<NamePage> {
                                   BlocProvider.of<IslamNamesCubit>(context)
                                       .islamNames(
                                           gender: currentIndex != 0 ? 'M' : 'F',
-                                          search: string);
+                                          search: string,
+                                          page: 1);
                                 }),
                                 SizedBox(
                                   height: 22.h,
@@ -120,15 +133,15 @@ class _NamePageState extends State<NamePage> {
                                     BlocProvider.of<IslamNamesCubit>(context)
                                         .islamNames(
                                             gender:
-                                                currentIndex != 0 ? 'M' : 'F');
-                                    setState(() {
-                                      currentIndex = int;
-                                    });
+                                                currentIndex != 0 ? 'M' : 'F',
+                                            page: 1);
+
+                                    currentIndex = int;
                                   },
                                   length: 2,
                                 ),
                                 ListView.builder(
-                                  itemCount: islam.length,
+                                  itemCount: listOfIslamNames.length,
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
@@ -139,7 +152,8 @@ class _NamePageState extends State<NamePage> {
                                           context.router.push(
                                             NameDetailPageRoute(
                                                 index: currentIndex,
-                                                result: islam[index]),
+                                                result:
+                                                    listOfIslamNames[index]),
                                           );
                                         },
                                         child: Container(
@@ -150,12 +164,14 @@ class _NamePageState extends State<NamePage> {
                                           child: ListTile(
                                               iconColor: AppColors.black,
                                               title: Text(
-                                                islam[index].name ?? 'ERROR',
+                                                listOfIslamNames[index].name ??
+                                                    'ERROR',
                                                 style: getTextStyle(
                                                     CustomTextStyles.s16w500),
                                               ),
                                               subtitle: Text(
-                                                islam[index].description ??
+                                                listOfIslamNames[index]
+                                                        .description ??
                                                     'ERROR',
                                                 style: getTextStyle(
                                                         CustomTextStyles
@@ -173,7 +189,15 @@ class _NamePageState extends State<NamePage> {
                                       ),
                                     );
                                   },
-                                )
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                isLoadingMore
+                                    ? const Align(
+                                        alignment: Alignment.center,
+                                        child: CircularProgressIndicator())
+                                    : const SizedBox(),
                               ],
                             ),
                           )),
@@ -182,9 +206,25 @@ class _NamePageState extends State<NamePage> {
                 ),
               );
             },
+            // loadingState: () {
+            //   return const Center(
+            //     child: CircularProgressIndicator(
+            //       color: Colors.yellow,
+            //     ),
+            //   );
+            // },
           );
         },
       ),
     );
+  }
+
+  void _scrollListener() {
+    if (isLoadingMore) return;
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      page++;
+      BlocProvider.of<IslamNamesCubit>(context).islamNames(page: page);
+    }
   }
 }

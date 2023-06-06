@@ -34,7 +34,7 @@ class _DutyDetailPageState extends State<DutyDetailPage> {
                     log('URL${widget.pillarsDTO.url}');
                     widget.pillarsDTO.type == 2
                         ? context.router.push(const NamazPatternPageRoute())
-                        : _launchURL(widget.pillarsDTO.url ?? '');
+                        : _launchUrl(widget.pillarsDTO.url ?? '');
                   },
                   text: widget.pillarsDTO.type == 2
                       ? 'Намаз оқу үлгісі'
@@ -95,11 +95,10 @@ class _DutyDetailPageState extends State<DutyDetailPage> {
     );
   }
 
-  _launchURL(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
+  Future<void> _launchUrl(String _urll) async {
+    final Uri _url = Uri.parse('${_urll}');
+    if (!await launchUrl(_url)) {
+      throw Exception('Could not launch $_url');
     }
   }
 }

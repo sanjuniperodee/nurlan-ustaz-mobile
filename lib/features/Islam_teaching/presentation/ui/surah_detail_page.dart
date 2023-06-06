@@ -5,12 +5,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
-import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/result_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/result_teaching_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/surah_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/surah_favorite_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/widgets/audioItem_widget.dart';
 
 class SurahDetailPage extends StatefulWidget {
-  final ResultDTO result;
+  final ResultTeachingDTO result;
   const SurahDetailPage({super.key, required this.result});
 
   @override
@@ -83,9 +84,14 @@ class _SurahDetailPageState extends State<SurahDetailPage> {
                             ),
                             Row(
                               children: [
-                                const Icon(
-                                  Icons.music_note_outlined,
-                                  color: AppColors.white,
+                                InkWell(
+                                  onTap: () {
+                                    showAlertDialog(context);
+                                  },
+                                  child: const Icon(
+                                    Icons.music_note_outlined,
+                                    color: AppColors.white,
+                                  ),
                                 ),
                                 SizedBox(
                                   width: 16.w,
@@ -184,6 +190,36 @@ class _SurahDetailPageState extends State<SurahDetailPage> {
           ],
         ),
       ),
+    );
+  }
+
+  showAlertDialog(BuildContext context) {
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(
+                10.0), // Set your desired border radius here
+          ),
+          title: Align(
+            alignment: Alignment.topRight,
+            child: InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: SvgPicture.asset(
+                Assets.cancelSvg,
+                color: AppColors.black,
+              ),
+            ),
+          ),
+          content: SizedBox(
+              height: 40,
+              child: AudioItemWidget(audioUrl: widget.result.audio ?? '')),
+        );
+      },
     );
   }
 }
