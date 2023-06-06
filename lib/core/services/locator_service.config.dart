@@ -15,7 +15,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart'
     as _i13;
 import 'package:shared_preferences/shared_preferences.dart' as _i4;
 
-import '../../features/app/bloc/app_bloc.dart' as _i17;
+import '../../features/app/bloc/app_bloc.dart' as _i13;
 import '../../features/app/bloc/other_list_bloc/language_cubit.dart' as _i11;
 import '../../features/app/logic/not_auth_logic.dart' as _i14;
 import '../../features/auth/data/datasource/local/auth_local_ds.dart' as _i3;
@@ -29,33 +29,7 @@ import '../../features/Islam_teaching/data/datasource/local/Islam_teaching_local
 import '../../features/Islam_teaching/data/datasource/remote/Islam_teaching_remote_ds.dart'
     as _i10;
 import '../../features/Islam_teaching/data/repositories/Islam_teaching_repository.dart'
-    as _i19;
-import '../../features/Islam_teaching/presentation/bloc/ayat_of_day_cubit.dart'
-    as _i25;
-import '../../features/Islam_teaching/presentation/bloc/dhikrs_cubit.dart'
-    as _i26;
-import '../../features/Islam_teaching/presentation/bloc/dhikrs_favorite_cubit.dart'
-    as _i27;
-import '../../features/Islam_teaching/presentation/bloc/duas_cubit.dart'
-    as _i28;
-import '../../features/Islam_teaching/presentation/bloc/duas_favorite_cubit.dart'
-    as _i29;
-import '../../features/Islam_teaching/presentation/bloc/islam_names_cubit.dart'
-    as _i30;
-import '../../features/Islam_teaching/presentation/bloc/islam_names_favorite_cubit.dart'
-    as _i31;
-import '../../features/Islam_teaching/presentation/bloc/names_of_Allah_cubit.dart'
-    as _i20;
-import '../../features/Islam_teaching/presentation/bloc/pillars_cubit.dart'
-    as _i22;
-import '../../features/Islam_teaching/presentation/bloc/surah_cubit.dart'
-    as _i23;
-import '../../features/Islam_teaching/presentation/bloc/surah_favorite_cubit.dart'
-    as _i24;
-import '../../features/tus_zhoru/presentation/bloc/tus_zhoru_cubit.dart'
-    as _i15;
-import '../../features/tus_zhoru/presentation/bloc/tus_zhoru_state.dart'
-    as _i16;
+    as _i10;
 import '../platform/dio_wrapper.dart' as _i6;
 import '../platform/network_info.dart' as _i12;
 
@@ -86,12 +60,8 @@ extension GetItInjectableX on _i1.GetIt {
         () => _i10.IslamTeachingRemoteDsImpl(gh<_i6.DioWrapper>()));
     gh.singleton<_i11.LanguageCubit>(
         _i11.LanguageCubit(gh<_i7.AuthRepository>()));
-    gh.singleton<_i12.NetworkInfo>(
-        _i12.NetworkInfoImp(gh<_i13.InternetConnectionChecker>()));
-    gh.singleton<_i14.NotAuthLogic>(_i14.NotAuthLogic());
-    gh.factory<_i15.TusZhoruCubit>(
-        () => _i15.TusZhoruCubit(gh<_i16.TusZhoruState>()));
-    gh.singleton<_i17.AppBloc>(_i17.AppBloc(
+    gh.singleton<_i12.NotAuthLogic>(_i12.NotAuthLogic());
+    gh.singleton<_i13.AppBloc>(_i13.AppBloc(
       gh<_i7.AuthRepository>(),
       gh<_i14.NotAuthLogic>(),
     ));
