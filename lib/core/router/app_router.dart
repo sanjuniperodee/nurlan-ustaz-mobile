@@ -59,6 +59,7 @@ import '../../features/home/presentation/ui/news_detail_page.dart';
 import '../../features/home/presentation/ui/profile/profile_main/faq_page.dart';
 import '../../features/tandaulilar/presentation/ui/tandauly_name_page.dart';
 import '../../features/tandaulilar/presentation/ui/tandauly_tus_zhoru.dart';
+import '../../features/zhosparlar/presentation/ui/ramazan_checklist.dart';
 
 part 'app_router.gr.dart';
 
@@ -80,6 +81,7 @@ part 'app_router.gr.dart';
     //
     //HOME
     //
+    AutoRoute(page: RamazanChecklist),
     AutoRoute(page: AddNewCardPage),
     AutoRoute(page: ChangePasswordPage),
     AutoRoute(page: ProfileNotificationPage),

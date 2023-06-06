@@ -13,7 +13,7 @@ import 'package:get_it/get_it.dart' as _i1;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:shared_preferences/shared_preferences.dart' as _i4;
 
-import '../../features/app/bloc/app_bloc.dart' as _i15;
+import '../../features/app/bloc/app_bloc.dart' as _i13;
 import '../../features/app/bloc/other_list_bloc/language_cubit.dart' as _i11;
 import '../../features/app/logic/not_auth_logic.dart' as _i12;
 import '../../features/auth/data/datasource/local/auth_local_ds.dart' as _i3;
@@ -25,10 +25,6 @@ import '../../features/Islam_teaching/data/datasource/remote/Islam_teaching_remo
     as _i9;
 import '../../features/Islam_teaching/data/repositories/Islam_teaching_repository.dart'
     as _i10;
-import '../../features/tus_zhoru/presentation/bloc/tus_zhoru_cubit.dart'
-    as _i13;
-import '../../features/tus_zhoru/presentation/bloc/tus_zhoru_state.dart'
-    as _i14;
 import '../platform/dio_wrapper.dart' as _i6;
 
 extension GetItInjectableX on _i1.GetIt {
@@ -61,9 +57,7 @@ extension GetItInjectableX on _i1.GetIt {
     gh.singleton<_i11.LanguageCubit>(
         _i11.LanguageCubit(gh<_i7.AuthRepository>()));
     gh.singleton<_i12.NotAuthLogic>(_i12.NotAuthLogic());
-    gh.factory<_i13.TusZhoruCubit>(
-        () => _i13.TusZhoruCubit(gh<_i14.TusZhoruState>()));
-    gh.singleton<_i15.AppBloc>(_i15.AppBloc(
+    gh.singleton<_i13.AppBloc>(_i13.AppBloc(
       gh<_i7.AuthRepository>(),
       gh<_i12.NotAuthLogic>(),
     ));
