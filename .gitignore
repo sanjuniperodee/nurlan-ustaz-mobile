@@ -10,7 +10,6 @@
 .svn/
 .dart_tool/
 .dart_tool/package_config.json
-.flutter-plugins-dependencies
 # IntelliJ related
 *.iml
 *.ipr
