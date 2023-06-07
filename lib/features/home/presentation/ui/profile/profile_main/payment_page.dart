@@ -64,7 +64,7 @@ class _PaymentsPageState extends State<PaymentsPage> {
                 physics: const BouncingScrollPhysics(),
                 itemBuilder: (context, index) {
                   return Container(
-                    padding: EdgeInsets.symmetric(vertical: 12,horizontal: 12),
+                    padding: EdgeInsets.symmetric(vertical: 12, horizontal: 12),
                     width: double.infinity,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -88,18 +88,29 @@ class _PaymentsPageState extends State<PaymentsPage> {
                             Text(
                               '${payments[index].title}',
                               style: getTextStyle(CustomTextStyles.s16w600)
-                                  .copyWith(fontFamily: FontTypes.SF_Pro.name,fontWeight: FontWeight.w600,fontSize: 16),
+                                  .copyWith(
+                                      fontFamily: FontTypes.SF_Pro.name,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 16),
                             )
                           ],
                         ),
                         Row(
                           children: [
-                            Text('${payments[index].amount} ₸',style: getTextStyle(CustomTextStyles.s16w600).copyWith(color: AppColors.orange),),
-                            SizedBox(width: 13,),
-                            SvgPicture.asset('assets/icons/chevron_right.svg',color: AppColors.orange,),
+                            Text(
+                              '${payments[index].amount} ₸',
+                              style: getTextStyle(CustomTextStyles.s16w600)
+                                  .copyWith(color: AppColors.orange),
+                            ),
+                            SizedBox(
+                              width: 13,
+                            ),
+                            SvgPicture.asset(
+                              'assets/icons/chevron_right.svg',
+                              color: AppColors.orange,
+                            ),
                           ],
                         )
-
                       ],
                     ),
                   );
