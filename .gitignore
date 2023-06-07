@@ -8,6 +8,7 @@
 .buildlog/
 .history
 .svn/
+.dart_tool/
 .dart_tool/package_config.json
 .flutter-plugins-dependencies
 # IntelliJ related
@@ -31,7 +32,6 @@
 .pub-cache/
 .pub/
 /build/
-pubspec.lock
 
 # Web related
 lib/generated_plugin_registrant.dart
