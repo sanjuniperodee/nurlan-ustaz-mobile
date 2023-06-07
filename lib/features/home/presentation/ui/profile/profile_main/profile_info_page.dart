@@ -5,7 +5,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_text_form_profile.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_widget.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
+
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/widgets/profile_menu_item.dart';
 
 import '../../../../../../core/common/assets.dart';
@@ -121,10 +122,14 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                                 color: AppColors.red,
                                 fontWeight: FontWeight.w600),
                         onTap: () {}),
-                    SizedBox(height: 36,),
-                    AppButton(onTap: (){
-                      Navigator.of(context).pop();
-                    }, text: 'Өзгерісті сақтау')
+                    SizedBox(
+                      height: 36,
+                    ),
+                    AppButton(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        text: 'Өзгерісті сақтау')
                   ],
                 )
               ],

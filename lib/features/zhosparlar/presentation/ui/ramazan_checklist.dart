@@ -31,7 +31,7 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
     return Scaffold(
       backgroundColor: AppColors.lightBlue,
       body: GlobalCustomBody(
-        horizontalPadding: 0,
+        left: 0,
         child: SizedBox(
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
@@ -185,15 +185,19 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
                                                       onPressed: () {
                                                         Navigator.pop(context);
                                                       },
-                                                      child: Text('OK',
+                                                      child: Text(
+                                                        'OK',
                                                         style: getTextStyle(
-                                                            CustomTextStyles
-                                                                .s14w500)
+                                                                CustomTextStyles
+                                                                    .s14w500)
                                                             .copyWith(
-                                                            fontFamily:
-                                                            FontTypes
-                                                                .SF_Pro
-                                                                .name,color: AppColors.blue),),
+                                                                fontFamily:
+                                                                    FontTypes
+                                                                        .SF_Pro
+                                                                        .name,
+                                                                color: AppColors
+                                                                    .blue),
+                                                      ),
                                                     ),
                                                   ),
                                                 ],
@@ -213,9 +217,8 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
                             ),
                           ),
                           InkWell(
-                            onTap:(){
-                              setState(() {
-                              });
+                            onTap: () {
+                              setState(() {});
                             },
                             child: Container(
                               width: 56.w,
@@ -250,9 +253,8 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
                               children: [
                                 Text(
                                   'Семинар тақырыбы',
-                                  style:
-                                      getTextStyle(CustomTextStyles.s16w500)
-                                          .apply(color: AppColors.black),
+                                  style: getTextStyle(CustomTextStyles.s16w500)
+                                      .apply(color: AppColors.black),
                                 ),
                               ],
                             ),

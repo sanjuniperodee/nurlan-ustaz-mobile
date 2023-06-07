@@ -28,11 +28,11 @@ class _BaseState extends State<Base> {
     return AutoTabsScaffold(
       backgroundColor: AppColors.lightBlue,
       routes:     [
-        MainRouterPage(),
-        IslamTeachingRouterPage(),
+        const MainRouterPage(),
+        const IslamTeachingRouterPage(),
         TusZhoruRouterPage(),
-        TandaulilarMainRouterPage(),
-        ZhosparymRouterPage(),
+        const TandaulilarMainRouterPage(),
+        const ZhosparymRouterPage(),
       ],
       bottomNavigationBuilder: (_, tabsRouter) {
         return ClipRRect(

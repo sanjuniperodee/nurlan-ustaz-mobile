@@ -10,9 +10,9 @@ class AppButton extends StatelessWidget {
   final Color? color;
   final Color? textColor;
   final Color? inactiveTextColor;
-  bool isLoading;
+  final bool isLoading;
 
-  AppButton(
+  const AppButton(
       {super.key,
       required this.onTap,
       required this.text,
@@ -25,9 +25,10 @@ class AppButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: color != null ? color : null,
-          gradient: color !=null ? null :AppColors.gradientPrimaryActiveButton,
-          borderRadius: BorderRadius.all(Radius.circular(30))),
+          color: color ?? null,
+          gradient:
+              color != null ? null : AppColors.gradientPrimaryActiveButton,
+          borderRadius: const BorderRadius.all(Radius.circular(30)).r),
       child: MaterialButton(
         onPressed: onTap,
         child: Container(
@@ -40,7 +41,7 @@ class AppButton extends StatelessWidget {
                   padding: const EdgeInsets.all(0.0).r,
                   child: const Center(child: CircularProgressIndicator()),
                 )
-              : Container(
+              : SizedBox(
                   child: Text(text,
                       textAlign: TextAlign.center,
                       style: getTextStyle(CustomTextStyles.s16w200)

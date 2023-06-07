@@ -91,9 +91,9 @@ class _TandaulyNamePageState extends State<TandaulyNamePage> {
                               padding: const EdgeInsets.only(top: 8.0),
                               child: GestureDetector(
                                 onTap: () {
-                                  context.router.push(
-                                    const NameDetailPageRoute(),
-                                  );
+                                  // context.router.push(
+                                  //   const NameDetailPageRoute(index: null, result: null),
+                                  // );
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(

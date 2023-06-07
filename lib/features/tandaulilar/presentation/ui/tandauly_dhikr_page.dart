@@ -29,7 +29,7 @@ class _TandaulyDhikrPageState extends State<TandaulyDhikrPage> {
               fit: BoxFit.cover,
             ),
             Positioned(
-              // left: 280.r,
+                // left: 280.r,
                 top: 10.r,
                 child: Opacity(
                   opacity: 0.5,
@@ -68,9 +68,9 @@ class _TandaulyDhikrPageState extends State<TandaulyDhikrPage> {
                               padding: const EdgeInsets.only(top: 8.0),
                               child: GestureDetector(
                                 onTap: () {
-                                  context.router.push(
-                                    const DhikrDetailPageRoute(),
-                                  );
+                                  // context.router.push(
+                                  //   const DhikrDetailPageRoute(result: null),
+                                  // );
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(

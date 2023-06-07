@@ -68,9 +68,9 @@ class _TandaulyDugalarPageState extends State<TandaulyDugalarPage> {
                               padding: const EdgeInsets.only(top: 8.0),
                               child: GestureDetector(
                                 onTap: () {
-                                  context.router.push(
-                                    const PrayersDetailPageRoute(),
-                                  );
+                                  // context.router.push(
+                                  //    PrayersDetailPageRoute(result: ),
+                                  // );
                                 },
                                 child: Container(
                                   decoration: BoxDecoration(

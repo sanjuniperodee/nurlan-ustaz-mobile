@@ -7,8 +7,8 @@ class AppButtonNoBorder extends StatelessWidget {
   final Color? color;
   final Color? textColor;
   final Color? inactiveTextColor;
-  bool isLoading;
-  AppButtonNoBorder(
+ final bool isLoading;
+  const AppButtonNoBorder(
       {super.key,
       required this.onTap,
       required this.text,

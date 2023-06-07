@@ -15,7 +15,7 @@ class CustomAppBar extends StatelessWidget {
     required this.title,
     this.onTap,
     this.hideIcon,
-    this.hideIcon, this.color,
+    this.color,
   }) : super(key: key);
 
   @override
@@ -28,8 +28,9 @@ class CustomAppBar extends StatelessWidget {
                 child: Text(
                   title,
                   textAlign: TextAlign.center,
-                  style: getTextStyle(CustomTextStyles.s20w700)
-                      .copyWith(color: color == null ? AppColors.white : color, fontSize: 36),
+                  style: getTextStyle(CustomTextStyles.s20w700).copyWith(
+                      color: color == null ? AppColors.white : color,
+                      fontSize: 36),
                 ),
               ),
             ]
@@ -38,7 +39,10 @@ class CustomAppBar extends StatelessWidget {
                   onTap: () {
                     Navigator.pop(context);
                   },
-                  child: SvgPicture.asset(Assets.backButtonSvg,color: color == null ? AppColors.white : color,)),
+                  child: SvgPicture.asset(
+                    Assets.backButtonSvg,
+                    color: color == null ? AppColors.white : color,
+                  )),
               Expanded(
                 child: Align(
                   alignment: Alignment.center,

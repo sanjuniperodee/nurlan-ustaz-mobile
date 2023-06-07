@@ -47,7 +47,6 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
   final myRouteHome = [
     const DutyPageRoute(),
     const AllahNamesPageRoute(),
-    const FatuaPageRoute(),
     const SurahPageRoute(),
     const PrayersPageRoute(),
     const DhikrPageRoute(),
@@ -156,7 +155,9 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                                     }),
                               ],
                             ),
-                            SizedBox(height: 9.h,),
+                            SizedBox(
+                              height: 9.h,
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [

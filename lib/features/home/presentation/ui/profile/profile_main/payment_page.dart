@@ -7,7 +7,8 @@ import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/model/payment_model.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_text_form_profile.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_widget.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
+
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/widgets/profile_menu_item.dart';
 
 import '../../../../../../core/common/assets.dart';
@@ -29,102 +30,103 @@ class _PaymentsPageState extends State<PaymentsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: GlobalCustomBody(
-          child: SizedBox(
-            height: 1.1.sh,
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Column(children: [
-                const CustomAppBar(
-                  title: 'Сатып алынған қызметтер',
+      child: SizedBox(
+        height: 1.1.sh,
+        child: SingleChildScrollView(
+          physics: const BouncingScrollPhysics(),
+          child: Column(children: [
+            const CustomAppBar(
+              title: 'Сатып алынған қызметтер',
+            ),
+            const SizedBox(
+              height: 36,
+            ),
+            CustomTabBar(
+              tabs: const [
+                Tab(
+                  text: 'Түс жорулар',
                 ),
-                const SizedBox(
-                  height: 36,
+                Tab(
+                  text: 'Семинарлар',
                 ),
-                CustomTabBar(
-                  tabs: const [
-                    Tab(
-                      text: 'Түс жорулар',
+              ],
+              onTap: (int) {
+                setState(() {
+                  currentIndex = int;
+                });
+              },
+              length: 2,
+            ),
+            ListView.separated(
+                shrinkWrap: true,
+                physics: const BouncingScrollPhysics(),
+                itemBuilder: (context, index) {
+                  return Container(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 12.h, horizontal: 12.w),
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: AppColors.white,
                     ),
-                    Tab(
-                      text: 'Семинарлар',
-                    ),
-                  ],
-                  onTap: (int) {
-                    setState(() {
-                      currentIndex = int;
-                    });
-                  },
-                  length: 2,
-                ),
-                ListView.separated(
-                    shrinkWrap: true,
-                    physics: const BouncingScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return Container(
-                        padding:  EdgeInsets.symmetric(
-                            vertical: 12.h, horizontal: 12.w),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: AppColors.white,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
                           children: [
-                            Column(
-                              children: [
-                                Text(
-                                  '${DateFormat('dd.MM.yyyy').format(
-                                      payments[index].date)}',
-                                  style: getTextStyle(CustomTextStyles.s12w400)
-                                      .copyWith(
+                            Text(
+                              '${DateFormat('dd.MM.yyyy').format(payments[index].date)}',
+                              style: getTextStyle(CustomTextStyles.s12w400)
+                                  .copyWith(
                                       fontFamily: FontTypes.SF_Pro.name,
                                       color: AppColors.grey1),
-                                ),
-                                SizedBox(
-                                  height: 2.h,
-                                ),
-                                Text(
-                                  '${payments[index].title}',
-                                  style: getTextStyle(CustomTextStyles.s16w600)
-                                      .copyWith(
+                            ),
+                            SizedBox(
+                              height: 2.h,
+                            ),
+                            Text(
+                              '${payments[index].title}',
+                              style: getTextStyle(CustomTextStyles.s16w600)
+                                  .copyWith(
                                       fontFamily: FontTypes.SF_Pro.name,
                                       fontWeight: FontWeight.w600,
                                       fontSize: 16),
-                                )
-                              ],
-                            ),
-                            Row(
-                              children: [
-                                Text('${payments[index].amount} ₸',
-                                  style: getTextStyle(CustomTextStyles.s16w600)
-                                      .copyWith(color: AppColors.orange),),
-                                SizedBox(width: 13,),
-                                SvgPicture.asset(
-                                  'assets/icons/chevron_right.svg',
-                                  color: AppColors.orange,),
-                              ],
                             )
-
                           ],
                         ),
-                      );
-                    },
-                    separatorBuilder: (BuildContext context, int index) {
-                      return SizedBox(
-                        height: 12.h,
-                      );
-                    },
-                    itemCount: payments.length)
-              ]),
-            ),
-          ),
-        ));
+                        Row(
+                          children: [
+                            Text(
+                              '${payments[index].amount} ₸',
+                              style: getTextStyle(CustomTextStyles.s16w600)
+                                  .copyWith(color: AppColors.orange),
+                            ),
+                            SizedBox(
+                              width: 13,
+                            ),
+                            SvgPicture.asset(
+                              'assets/icons/chevron_right.svg',
+                              color: AppColors.orange,
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  );
+                },
+                separatorBuilder: (BuildContext context, int index) {
+                  return SizedBox(
+                    height: 12.h,
+                  );
+                },
+                itemCount: payments.length)
+          ]),
+        ),
+      ),
+    ));
   }
 
-
-  final List<PaymentModel>payments = List.generate(20, (index) { return
-    PaymentModel(title: 'Aдамдар', date: DateTime.now(), amount: 3000);
+  final List<PaymentModel> payments = List.generate(20, (index) {
+    return PaymentModel(title: 'Aдамдар', date: DateTime.now(), amount: 3000);
   });
-
 }
