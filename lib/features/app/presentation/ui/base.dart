@@ -31,8 +31,8 @@ class _BaseState extends State<Base> {
         MainRouterPage(),
         IslamTeachingRouterPage(),
         TusZhoruRouterPage(),
-        MainRouterPage(),
-        MainRouterPage(),
+        TandaulilarMainRouterPage(),
+        ZhosparymRouterPage(),
       ],
       bottomNavigationBuilder: (_, tabsRouter) {
         return ClipRRect(

@@ -177,7 +177,6 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                             InkWell(
                               onTap: () {},
                               child: Container(
-                                height: 44.h,
                                 width: 150.w,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
@@ -211,7 +210,6 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                     subject: 'Nurlan_ustaz');
                               },
                               child: Container(
-                                height: 44,
                                 width: 150,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),

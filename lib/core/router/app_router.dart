@@ -25,16 +25,28 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/comment_page.
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/main_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/news_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/notifications_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/about_app_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/add_new_card_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/change_password_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/payment_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/profile_cards_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/profile_info_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/profile_main_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/profile_notification_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/qiblah_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_detail_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/services_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/shop_page.dart';
+import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/ui/tandaulilar_main_page.dart';
+import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/ui/tandaulir_dugalar_page.dart';
+import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/ui/tandauly_dhikr_page.dart';
+import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/ui/tandauly_live_broadcast.dart';
+import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/ui/tandauly_seminar_page.dart';
+import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/ui/tandauly_zhanalyktar.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/question_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/tus_zhoru_details_page.dart';
+import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/ui/zhosparym_page.dart';
 
 import '../../features/Islam_teaching/presentation/ui/detail_prayers_page.dart';
 import '../../features/Islam_teaching/presentation/ui/name_detail_page.dart';
@@ -62,6 +74,8 @@ part 'app_router.gr.dart';
         AutoRoute(page: MainPage, name: 'MainRouterPage'),
         AutoRoute(page: IslamTeachingPage, name: 'IslamTeachingRouterPage'),
         AutoRoute(page: TusZhoruPage, name: 'TusZhoruRouterPage'),
+        AutoRoute(page: TandaulilarMainPage,name: 'TandaulilarMainRouterPage'),
+        AutoRoute(page: ZhosparymPage,name: 'ZhosparymRouterPage'),
       ],
     ),
     //
@@ -135,6 +149,14 @@ part 'app_router.gr.dart';
     AutoRoute(page: PrayersDetailPage),
     AutoRoute(page: NameDetailPage),
     AutoRoute(page: NamePage),
+    //Tandaulilar
+    AutoRoute(page: TandaulyNewsPage),
+    AutoRoute(page: TandaulyLiveBroadcastsPage),
+    AutoRoute(page: TandaulySeminarPage),
+    AutoRoute(page: TandaulyTusZhoruPage),
+    AutoRoute(page: TandaulyDugalarPage),
+    AutoRoute(page: TandaulyNamePage),
+    AutoRoute(page: TandaulyDhikrPage),
     //Islam teaching// 5 duty
     AutoRoute(page: DutyDetailPage),
     AutoRoute(page: NamazReadPage),
