@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'duas_cubit.dart';
+part of 'post_service_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,13 +15,12 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
 /// @nodoc
-mixin _$DuasState {
+mixin _$PostServiceState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function() loadingMoreState,
-    required TResult Function(List<ResultTeachingDTO> duha) loaded,
+    required TResult Function() loaded,
     required TResult Function(String message) errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -29,8 +28,7 @@ mixin _$DuasState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialState,
     TResult? Function()? loadingState,
-    TResult? Function()? loadingMoreState,
-    TResult? Function(List<ResultTeachingDTO> duha)? loaded,
+    TResult? Function()? loaded,
     TResult? Function(String message)? errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -38,8 +36,7 @@ mixin _$DuasState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function()? loadingMoreState,
-    TResult Function(List<ResultTeachingDTO> duha)? loaded,
+    TResult Function()? loaded,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) =>
@@ -48,7 +45,6 @@ mixin _$DuasState {
   TResult map<TResult extends Object?>({
     required TResult Function(_InitialPage value) initialState,
     required TResult Function(_LoadingState value) loadingState,
-    required TResult Function(_LoadingMoreState value) loadingMoreState,
     required TResult Function(_LoadedState value) loaded,
     required TResult Function(_ErrorState value) errorState,
   }) =>
@@ -57,7 +53,6 @@ mixin _$DuasState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_InitialPage value)? initialState,
     TResult? Function(_LoadingState value)? loadingState,
-    TResult? Function(_LoadingMoreState value)? loadingMoreState,
     TResult? Function(_LoadedState value)? loaded,
     TResult? Function(_ErrorState value)? errorState,
   }) =>
@@ -66,7 +61,6 @@ mixin _$DuasState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitialPage value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_LoadingMoreState value)? loadingMoreState,
     TResult Function(_LoadedState value)? loaded,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
@@ -75,15 +69,16 @@ mixin _$DuasState {
 }
 
 /// @nodoc
-abstract class $DuasStateCopyWith<$Res> {
-  factory $DuasStateCopyWith(DuasState value, $Res Function(DuasState) then) =
-      _$DuasStateCopyWithImpl<$Res, DuasState>;
+abstract class $PostServiceStateCopyWith<$Res> {
+  factory $PostServiceStateCopyWith(
+          PostServiceState value, $Res Function(PostServiceState) then) =
+      _$PostServiceStateCopyWithImpl<$Res, PostServiceState>;
 }
 
 /// @nodoc
-class _$DuasStateCopyWithImpl<$Res, $Val extends DuasState>
-    implements $DuasStateCopyWith<$Res> {
-  _$DuasStateCopyWithImpl(this._value, this._then);
+class _$PostServiceStateCopyWithImpl<$Res, $Val extends PostServiceState>
+    implements $PostServiceStateCopyWith<$Res> {
+  _$PostServiceStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -100,7 +95,7 @@ abstract class _$$_InitialPageCopyWith<$Res> {
 
 /// @nodoc
 class __$$_InitialPageCopyWithImpl<$Res>
-    extends _$DuasStateCopyWithImpl<$Res, _$_InitialPage>
+    extends _$PostServiceStateCopyWithImpl<$Res, _$_InitialPage>
     implements _$$_InitialPageCopyWith<$Res> {
   __$$_InitialPageCopyWithImpl(
       _$_InitialPage _value, $Res Function(_$_InitialPage) _then)
@@ -114,7 +109,7 @@ class _$_InitialPage implements _InitialPage {
 
   @override
   String toString() {
-    return 'DuasState.initialState()';
+    return 'PostServiceState.initialState()';
   }
 
   @override
@@ -131,8 +126,7 @@ class _$_InitialPage implements _InitialPage {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function() loadingMoreState,
-    required TResult Function(List<ResultTeachingDTO> duha) loaded,
+    required TResult Function() loaded,
     required TResult Function(String message) errorState,
   }) {
     return initialState();
@@ -143,8 +137,7 @@ class _$_InitialPage implements _InitialPage {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialState,
     TResult? Function()? loadingState,
-    TResult? Function()? loadingMoreState,
-    TResult? Function(List<ResultTeachingDTO> duha)? loaded,
+    TResult? Function()? loaded,
     TResult? Function(String message)? errorState,
   }) {
     return initialState?.call();
@@ -155,8 +148,7 @@ class _$_InitialPage implements _InitialPage {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function()? loadingMoreState,
-    TResult Function(List<ResultTeachingDTO> duha)? loaded,
+    TResult Function()? loaded,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -171,7 +163,6 @@ class _$_InitialPage implements _InitialPage {
   TResult map<TResult extends Object?>({
     required TResult Function(_InitialPage value) initialState,
     required TResult Function(_LoadingState value) loadingState,
-    required TResult Function(_LoadingMoreState value) loadingMoreState,
     required TResult Function(_LoadedState value) loaded,
     required TResult Function(_ErrorState value) errorState,
   }) {
@@ -183,7 +174,6 @@ class _$_InitialPage implements _InitialPage {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_InitialPage value)? initialState,
     TResult? Function(_LoadingState value)? loadingState,
-    TResult? Function(_LoadingMoreState value)? loadingMoreState,
     TResult? Function(_LoadedState value)? loaded,
     TResult? Function(_ErrorState value)? errorState,
   }) {
@@ -195,7 +185,6 @@ class _$_InitialPage implements _InitialPage {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitialPage value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_LoadingMoreState value)? loadingMoreState,
     TResult Function(_LoadedState value)? loaded,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
@@ -207,7 +196,7 @@ class _$_InitialPage implements _InitialPage {
   }
 }
 
-abstract class _InitialPage implements DuasState {
+abstract class _InitialPage implements PostServiceState {
   const factory _InitialPage() = _$_InitialPage;
 }
 
@@ -220,7 +209,7 @@ abstract class _$$_LoadingStateCopyWith<$Res> {
 
 /// @nodoc
 class __$$_LoadingStateCopyWithImpl<$Res>
-    extends _$DuasStateCopyWithImpl<$Res, _$_LoadingState>
+    extends _$PostServiceStateCopyWithImpl<$Res, _$_LoadingState>
     implements _$$_LoadingStateCopyWith<$Res> {
   __$$_LoadingStateCopyWithImpl(
       _$_LoadingState _value, $Res Function(_$_LoadingState) _then)
@@ -234,7 +223,7 @@ class _$_LoadingState implements _LoadingState {
 
   @override
   String toString() {
-    return 'DuasState.loadingState()';
+    return 'PostServiceState.loadingState()';
   }
 
   @override
@@ -251,8 +240,7 @@ class _$_LoadingState implements _LoadingState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function() loadingMoreState,
-    required TResult Function(List<ResultTeachingDTO> duha) loaded,
+    required TResult Function() loaded,
     required TResult Function(String message) errorState,
   }) {
     return loadingState();
@@ -263,8 +251,7 @@ class _$_LoadingState implements _LoadingState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialState,
     TResult? Function()? loadingState,
-    TResult? Function()? loadingMoreState,
-    TResult? Function(List<ResultTeachingDTO> duha)? loaded,
+    TResult? Function()? loaded,
     TResult? Function(String message)? errorState,
   }) {
     return loadingState?.call();
@@ -275,8 +262,7 @@ class _$_LoadingState implements _LoadingState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function()? loadingMoreState,
-    TResult Function(List<ResultTeachingDTO> duha)? loaded,
+    TResult Function()? loaded,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -291,7 +277,6 @@ class _$_LoadingState implements _LoadingState {
   TResult map<TResult extends Object?>({
     required TResult Function(_InitialPage value) initialState,
     required TResult Function(_LoadingState value) loadingState,
-    required TResult Function(_LoadingMoreState value) loadingMoreState,
     required TResult Function(_LoadedState value) loaded,
     required TResult Function(_ErrorState value) errorState,
   }) {
@@ -303,7 +288,6 @@ class _$_LoadingState implements _LoadingState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_InitialPage value)? initialState,
     TResult? Function(_LoadingState value)? loadingState,
-    TResult? Function(_LoadingMoreState value)? loadingMoreState,
     TResult? Function(_LoadedState value)? loaded,
     TResult? Function(_ErrorState value)? errorState,
   }) {
@@ -315,7 +299,6 @@ class _$_LoadingState implements _LoadingState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitialPage value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_LoadingMoreState value)? loadingMoreState,
     TResult Function(_LoadedState value)? loaded,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
@@ -327,40 +310,40 @@ class _$_LoadingState implements _LoadingState {
   }
 }
 
-abstract class _LoadingState implements DuasState {
+abstract class _LoadingState implements PostServiceState {
   const factory _LoadingState() = _$_LoadingState;
 }
 
 /// @nodoc
-abstract class _$$_LoadingMoreStateCopyWith<$Res> {
-  factory _$$_LoadingMoreStateCopyWith(
-          _$_LoadingMoreState value, $Res Function(_$_LoadingMoreState) then) =
-      __$$_LoadingMoreStateCopyWithImpl<$Res>;
+abstract class _$$_LoadedStateCopyWith<$Res> {
+  factory _$$_LoadedStateCopyWith(
+          _$_LoadedState value, $Res Function(_$_LoadedState) then) =
+      __$$_LoadedStateCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_LoadingMoreStateCopyWithImpl<$Res>
-    extends _$DuasStateCopyWithImpl<$Res, _$_LoadingMoreState>
-    implements _$$_LoadingMoreStateCopyWith<$Res> {
-  __$$_LoadingMoreStateCopyWithImpl(
-      _$_LoadingMoreState _value, $Res Function(_$_LoadingMoreState) _then)
+class __$$_LoadedStateCopyWithImpl<$Res>
+    extends _$PostServiceStateCopyWithImpl<$Res, _$_LoadedState>
+    implements _$$_LoadedStateCopyWith<$Res> {
+  __$$_LoadedStateCopyWithImpl(
+      _$_LoadedState _value, $Res Function(_$_LoadedState) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_LoadingMoreState implements _LoadingMoreState {
-  const _$_LoadingMoreState();
+class _$_LoadedState implements _LoadedState {
+  const _$_LoadedState();
 
   @override
   String toString() {
-    return 'DuasState.loadingMoreState()';
+    return 'PostServiceState.loaded()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_LoadingMoreState);
+        (other.runtimeType == runtimeType && other is _$_LoadedState);
   }
 
   @override
@@ -371,11 +354,10 @@ class _$_LoadingMoreState implements _LoadingMoreState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function() loadingMoreState,
-    required TResult Function(List<ResultTeachingDTO> duha) loaded,
+    required TResult Function() loaded,
     required TResult Function(String message) errorState,
   }) {
-    return loadingMoreState();
+    return loaded();
   }
 
   @override
@@ -383,11 +365,10 @@ class _$_LoadingMoreState implements _LoadingMoreState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialState,
     TResult? Function()? loadingState,
-    TResult? Function()? loadingMoreState,
-    TResult? Function(List<ResultTeachingDTO> duha)? loaded,
+    TResult? Function()? loaded,
     TResult? Function(String message)? errorState,
   }) {
-    return loadingMoreState?.call();
+    return loaded?.call();
   }
 
   @override
@@ -395,166 +376,12 @@ class _$_LoadingMoreState implements _LoadingMoreState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function()? loadingMoreState,
-    TResult Function(List<ResultTeachingDTO> duha)? loaded,
-    TResult Function(String message)? errorState,
-    required TResult orElse(),
-  }) {
-    if (loadingMoreState != null) {
-      return loadingMoreState();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_InitialPage value) initialState,
-    required TResult Function(_LoadingState value) loadingState,
-    required TResult Function(_LoadingMoreState value) loadingMoreState,
-    required TResult Function(_LoadedState value) loaded,
-    required TResult Function(_ErrorState value) errorState,
-  }) {
-    return loadingMoreState(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_InitialPage value)? initialState,
-    TResult? Function(_LoadingState value)? loadingState,
-    TResult? Function(_LoadingMoreState value)? loadingMoreState,
-    TResult? Function(_LoadedState value)? loaded,
-    TResult? Function(_ErrorState value)? errorState,
-  }) {
-    return loadingMoreState?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_InitialPage value)? initialState,
-    TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_LoadingMoreState value)? loadingMoreState,
-    TResult Function(_LoadedState value)? loaded,
-    TResult Function(_ErrorState value)? errorState,
-    required TResult orElse(),
-  }) {
-    if (loadingMoreState != null) {
-      return loadingMoreState(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _LoadingMoreState implements DuasState {
-  const factory _LoadingMoreState() = _$_LoadingMoreState;
-}
-
-/// @nodoc
-abstract class _$$_LoadedStateCopyWith<$Res> {
-  factory _$$_LoadedStateCopyWith(
-          _$_LoadedState value, $Res Function(_$_LoadedState) then) =
-      __$$_LoadedStateCopyWithImpl<$Res>;
-  @useResult
-  $Res call({List<ResultTeachingDTO> duha});
-}
-
-/// @nodoc
-class __$$_LoadedStateCopyWithImpl<$Res>
-    extends _$DuasStateCopyWithImpl<$Res, _$_LoadedState>
-    implements _$$_LoadedStateCopyWith<$Res> {
-  __$$_LoadedStateCopyWithImpl(
-      _$_LoadedState _value, $Res Function(_$_LoadedState) _then)
-      : super(_value, _then);
-
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? duha = null,
-  }) {
-    return _then(_$_LoadedState(
-      duha: null == duha
-          ? _value._duha
-          : duha // ignore: cast_nullable_to_non_nullable
-              as List<ResultTeachingDTO>,
-    ));
-  }
-}
-
-/// @nodoc
-
-class _$_LoadedState implements _LoadedState {
-  const _$_LoadedState({required final List<ResultTeachingDTO> duha})
-      : _duha = duha;
-
-  final List<ResultTeachingDTO> _duha;
-  @override
-  List<ResultTeachingDTO> get duha {
-    if (_duha is EqualUnmodifiableListView) return _duha;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_duha);
-  }
-
-  @override
-  String toString() {
-    return 'DuasState.loaded(duha: $duha)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_LoadedState &&
-            const DeepCollectionEquality().equals(other._duha, _duha));
-  }
-
-  @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(_duha));
-
-  @JsonKey(ignore: true)
-  @override
-  @pragma('vm:prefer-inline')
-  _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
-      __$$_LoadedStateCopyWithImpl<_$_LoadedState>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() initialState,
-    required TResult Function() loadingState,
-    required TResult Function() loadingMoreState,
-    required TResult Function(List<ResultTeachingDTO> duha) loaded,
-    required TResult Function(String message) errorState,
-  }) {
-    return loaded(duha);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? initialState,
-    TResult? Function()? loadingState,
-    TResult? Function()? loadingMoreState,
-    TResult? Function(List<ResultTeachingDTO> duha)? loaded,
-    TResult? Function(String message)? errorState,
-  }) {
-    return loaded?.call(duha);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? initialState,
-    TResult Function()? loadingState,
-    TResult Function()? loadingMoreState,
-    TResult Function(List<ResultTeachingDTO> duha)? loaded,
+    TResult Function()? loaded,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded(duha);
+      return loaded();
     }
     return orElse();
   }
@@ -564,7 +391,6 @@ class _$_LoadedState implements _LoadedState {
   TResult map<TResult extends Object?>({
     required TResult Function(_InitialPage value) initialState,
     required TResult Function(_LoadingState value) loadingState,
-    required TResult Function(_LoadingMoreState value) loadingMoreState,
     required TResult Function(_LoadedState value) loaded,
     required TResult Function(_ErrorState value) errorState,
   }) {
@@ -576,7 +402,6 @@ class _$_LoadedState implements _LoadedState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_InitialPage value)? initialState,
     TResult? Function(_LoadingState value)? loadingState,
-    TResult? Function(_LoadingMoreState value)? loadingMoreState,
     TResult? Function(_LoadedState value)? loaded,
     TResult? Function(_ErrorState value)? errorState,
   }) {
@@ -588,7 +413,6 @@ class _$_LoadedState implements _LoadedState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitialPage value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_LoadingMoreState value)? loadingMoreState,
     TResult Function(_LoadedState value)? loaded,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
@@ -600,14 +424,8 @@ class _$_LoadedState implements _LoadedState {
   }
 }
 
-abstract class _LoadedState implements DuasState {
-  const factory _LoadedState({required final List<ResultTeachingDTO> duha}) =
-      _$_LoadedState;
-
-  List<ResultTeachingDTO> get duha;
-  @JsonKey(ignore: true)
-  _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
-      throw _privateConstructorUsedError;
+abstract class _LoadedState implements PostServiceState {
+  const factory _LoadedState() = _$_LoadedState;
 }
 
 /// @nodoc
@@ -621,7 +439,7 @@ abstract class _$$_ErrorStateCopyWith<$Res> {
 
 /// @nodoc
 class __$$_ErrorStateCopyWithImpl<$Res>
-    extends _$DuasStateCopyWithImpl<$Res, _$_ErrorState>
+    extends _$PostServiceStateCopyWithImpl<$Res, _$_ErrorState>
     implements _$$_ErrorStateCopyWith<$Res> {
   __$$_ErrorStateCopyWithImpl(
       _$_ErrorState _value, $Res Function(_$_ErrorState) _then)
@@ -651,7 +469,7 @@ class _$_ErrorState implements _ErrorState {
 
   @override
   String toString() {
-    return 'DuasState.errorState(message: $message)';
+    return 'PostServiceState.errorState(message: $message)';
   }
 
   @override
@@ -676,8 +494,7 @@ class _$_ErrorState implements _ErrorState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function() loadingMoreState,
-    required TResult Function(List<ResultTeachingDTO> duha) loaded,
+    required TResult Function() loaded,
     required TResult Function(String message) errorState,
   }) {
     return errorState(message);
@@ -688,8 +505,7 @@ class _$_ErrorState implements _ErrorState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialState,
     TResult? Function()? loadingState,
-    TResult? Function()? loadingMoreState,
-    TResult? Function(List<ResultTeachingDTO> duha)? loaded,
+    TResult? Function()? loaded,
     TResult? Function(String message)? errorState,
   }) {
     return errorState?.call(message);
@@ -700,8 +516,7 @@ class _$_ErrorState implements _ErrorState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function()? loadingMoreState,
-    TResult Function(List<ResultTeachingDTO> duha)? loaded,
+    TResult Function()? loaded,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -716,7 +531,6 @@ class _$_ErrorState implements _ErrorState {
   TResult map<TResult extends Object?>({
     required TResult Function(_InitialPage value) initialState,
     required TResult Function(_LoadingState value) loadingState,
-    required TResult Function(_LoadingMoreState value) loadingMoreState,
     required TResult Function(_LoadedState value) loaded,
     required TResult Function(_ErrorState value) errorState,
   }) {
@@ -728,7 +542,6 @@ class _$_ErrorState implements _ErrorState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_InitialPage value)? initialState,
     TResult? Function(_LoadingState value)? loadingState,
-    TResult? Function(_LoadingMoreState value)? loadingMoreState,
     TResult? Function(_LoadedState value)? loaded,
     TResult? Function(_ErrorState value)? errorState,
   }) {
@@ -740,7 +553,6 @@ class _$_ErrorState implements _ErrorState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_InitialPage value)? initialState,
     TResult Function(_LoadingState value)? loadingState,
-    TResult Function(_LoadingMoreState value)? loadingMoreState,
     TResult Function(_LoadedState value)? loaded,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
@@ -752,7 +564,7 @@ class _$_ErrorState implements _ErrorState {
   }
 }
 
-abstract class _ErrorState implements DuasState {
+abstract class _ErrorState implements PostServiceState {
   const factory _ErrorState({required final String message}) = _$_ErrorState;
 
   String get message;

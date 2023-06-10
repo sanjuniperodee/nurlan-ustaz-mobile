@@ -70,11 +70,16 @@ class _NameDetailPageState extends State<NameDetailPage> {
                         child: CustomAppBar(
                           title: widget.result.name ?? 'ERROR',
                           onTap: () {
+                            if (widget.index == 0) {
+                              log(1.toString());
+                              BlocProvider.of<IslamNamesCubit>(context)
+                                  .islamNamesMan(page: 1);
+                            } else {
+                              log(2.toString());
+                              BlocProvider.of<IslamNamesCubit>(context)
+                                  .islamWoman(page: 1);
+                            }
                             log(widget.index.toString());
-                            BlocProvider.of<IslamNamesCubit>(context)
-                                .islamNames(
-                                    gender: widget.index == 0 ? 'M' : 'F',page: 1)
-                                .then((value) => Navigator.pop(context));
                           },
                         ),
                       ),

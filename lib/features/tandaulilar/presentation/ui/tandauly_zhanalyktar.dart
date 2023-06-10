@@ -13,7 +13,6 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_ap
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_widget.dart';
 
-
 class TandaulyNewsPage extends StatefulWidget {
   const TandaulyNewsPage({Key? key}) : super(key: key);
 
@@ -52,9 +51,9 @@ class _TandaulyNewsPageState extends State<TandaulyNewsPage> {
                       padding: EdgeInsets.only(bottom: 20.r),
                       child: GestureDetector(
                         onTap: () {
-                          context.router.push(
-                            const NewsDetailPageRoute(),
-                          );
+                          // context.router.push(
+                          //   const NewsDetailPageRoute(),
+                          // );
                         },
                         child: Container(
                           height: 116.h,

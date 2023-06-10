@@ -27,13 +27,14 @@ class _NamePageState extends State<NamePage> {
   int currentIndex = 0;
   final ScrollController _scrollController = ScrollController();
   int page = 1;
-
+  String searchText = '';
   bool isLoadingMore = false;
   List<ResultTeachingDTO> listOfIslamNames = [];
   @override
   void initState() {
     // TODO: implement initState
-    BlocProvider.of<IslamNamesCubit>(context).islamNames(gender: 'M', page: 1);
+    BlocProvider.of<IslamNamesCubit>(context)
+        .islamNamesMan(page: 1, isFirstCall: true);
     _scrollController.addListener(_scrollListener);
     super.initState();
   }
@@ -111,11 +112,30 @@ class _NamePageState extends State<NamePage> {
                                   height: 36.h,
                                 ),
                                 SearchWidget(onChanged: (string) {
-                                  BlocProvider.of<IslamNamesCubit>(context)
-                                      .islamNames(
-                                          gender: currentIndex != 0 ? 'M' : 'F',
-                                          search: string,
-                                          page: 1);
+                                  searchText = string;
+                                  if (string.isEmpty) {
+                                    if (currentIndex == 0) {
+                                      log(1.toString());
+                                      BlocProvider.of<IslamNamesCubit>(context)
+                                          .islamNamesMan(page: 1);
+                                    } else {
+                                      log(2.toString());
+                                      BlocProvider.of<IslamNamesCubit>(context)
+                                          .islamWoman(page: 1);
+                                    }
+                                  } else {
+                                    if (currentIndex == 0) {
+                                      log(1.toString());
+                                      BlocProvider.of<IslamNamesCubit>(context)
+                                          .islamNamesMan(
+                                              page: 1, search: searchText);
+                                    } else {
+                                      log(2.toString());
+                                      BlocProvider.of<IslamNamesCubit>(context)
+                                          .islamWoman(
+                                              page: 1, search: searchText);
+                                    }
+                                  }
                                 }),
                                 SizedBox(
                                   height: 22.h,
@@ -130,12 +150,24 @@ class _NamePageState extends State<NamePage> {
                                     ),
                                   ],
                                   onTap: (int) {
-                                    BlocProvider.of<IslamNamesCubit>(context)
-                                        .islamNames(
-                                            gender:
-                                                currentIndex != 0 ? 'M' : 'F',
-                                            page: 1);
-
+                                    log('INDEX:::${currentIndex.toString()}');
+                                    if (currentIndex != 0) {
+                                      log(1.toString());
+                                      BlocProvider.of<IslamNamesCubit>(context)
+                                          .islamNamesMan(
+                                              page: 1,
+                                              search: searchText.isNotEmpty
+                                                  ? searchText
+                                                  : null);
+                                    } else {
+                                      log(2.toString());
+                                      BlocProvider.of<IslamNamesCubit>(context)
+                                          .islamWoman(
+                                              page: 1,
+                                              search: searchText.isNotEmpty
+                                                  ? searchText
+                                                  : null);
+                                    }
                                     currentIndex = int;
                                   },
                                   length: 2,
@@ -224,7 +256,13 @@ class _NamePageState extends State<NamePage> {
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
       page++;
-      BlocProvider.of<IslamNamesCubit>(context).islamNames(page: page);
+      if (currentIndex == 0) {
+        log(1.toString());
+        BlocProvider.of<IslamNamesCubit>(context).islamNamesMan(page: page);
+      } else {
+        log(2.toString());
+        BlocProvider.of<IslamNamesCubit>(context).islamWoman(page: page);
+      }
     }
   }
 }

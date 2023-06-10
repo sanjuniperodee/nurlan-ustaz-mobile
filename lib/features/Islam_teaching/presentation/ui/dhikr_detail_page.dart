@@ -84,7 +84,7 @@ class _DhikrDetailPageState extends State<DhikrDetailPage> {
                           title: widget.result.name ?? 'ERROR',
                           onTap: () {
                             BlocProvider.of<DhikrsCubit>(context)
-                                .dhikrs()
+                                .dhikrs(page: 1)
                                 .then((value) => Navigator.pop(context));
                           },
                         ),

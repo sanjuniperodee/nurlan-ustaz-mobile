@@ -5,49 +5,49 @@ import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/repositories/home_repository.dart';
 
-part 'news_cubit.freezed.dart';
+part 'lives_cubit.freezed.dart';
 
 @singleton
-class NewsCubit extends Cubit<NewsState> {
+class LivesCubit extends Cubit<LivesState> {
   final HomeRepository _homeRepository;
-  NewsCubit(
+  LivesCubit(
     this._homeRepository,
-  ) : super(const NewsState.initialState());
+  ) : super(const LivesState.initialState());
 
-  Future<void> news({
+  Future<void> lives({
     String? search,
     bool? isSaved,
     required int page,
     bool? isFirstCall,
   }) async {
     page > 1
-        ? emit(const NewsState.loadingMoreState())
-        : emit(const NewsState.loadingState());
-    final failureOrUser = await _homeRepository.news(
+        ? emit(const LivesState.loadingMoreState())
+        : emit(const LivesState.loadingState());
+    final failureOrUser = await _homeRepository.lives(
         search: search, isSaved: isSaved, page: page, isFirstCall: isFirstCall);
     failureOrUser.fold(
       (l) {
-        emit(NewsState.errorState(message: mapFailureToMessageBack(l)));
+        emit(LivesState.errorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
-        emit(NewsState.loaded(news: r));
+        emit(LivesState.loaded(lives: r));
       },
     );
   }
 }
 
 @freezed
-class NewsState with _$NewsState {
-  const factory NewsState.initialState() = _InitialPage;
+class LivesState with _$LivesState {
+  const factory LivesState.initialState() = _InitialPage;
 
-  const factory NewsState.loadingState() = _LoadingState;
-  const factory NewsState.loadingMoreState() = _LoadingMoreState;
+  const factory LivesState.loadingState() = _LoadingState;
+  const factory LivesState.loadingMoreState() = _LoadingMoreState;
 
-  const factory NewsState.loaded({
-    required List<ResultHomeDTO> news,
+  const factory LivesState.loaded({
+    required List<ResultHomeDTO> lives,
   }) = _LoadedState;
 
-  const factory NewsState.errorState({
+  const factory LivesState.errorState({
     required String message,
   }) = _ErrorState;
 }

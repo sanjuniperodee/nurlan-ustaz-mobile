@@ -6,6 +6,7 @@ import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/result_teaching_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/dhikrs_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
@@ -19,11 +20,23 @@ class DhikrPage extends StatefulWidget {
 }
 
 class _DhikrPageState extends State<DhikrPage> {
+  final ScrollController _scrollController = ScrollController();
+  int page = 1;
+  String searchText = '';
+  List<ResultTeachingDTO> listOfDhikrs = [];
+  bool isLoadingMore = false;
   @override
   void initState() {
     // TODO: implement initState
-    BlocProvider.of<DhikrsCubit>(context).dhikrs();
+    BlocProvider.of<DhikrsCubit>(context).dhikrs(page: 1, isFirstCall: true);
+    _scrollController.addListener(_scrollListener);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -33,30 +46,26 @@ class _DhikrPageState extends State<DhikrPage> {
       body: BlocConsumer<DhikrsCubit, DhikrsState>(
         listener: (context, state) {
           state.maybeWhen(
-            orElse: () {},
+            orElse: () {
+              isLoadingMore = false;
+            },
             errorState: (message) {
+              isLoadingMore = false;
               buildErrorCustomSnackBar(context, message);
             },
-          );
+            loadingMoreState: () {
+              isLoadingMore = true;
+            },
+            loaded: (news) {
+              isLoadingMore = false;
+              listOfDhikrs = news;
+            },
+          ); //
           // TODO: implement listener
         },
         builder: (context, state) {
           return state.maybeWhen(
             orElse: () {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.red,
-                ),
-              );
-            },
-            loadingState: () {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.yellow,
-                ),
-              );
-            },
-            loaded: (dhikrs) {
               return SizedBox(
                 height: 1.sh,
                 child: Stack(
@@ -96,11 +105,19 @@ class _DhikrPageState extends State<DhikrPage> {
                                   height: 36.h,
                                 ),
                                 SearchWidget(onChanged: (string) {
-                                  BlocProvider.of<DhikrsCubit>(context)
-                                      .dhikrs(search: string);
+                                  searchText = string;
+                                  if (string.isEmpty) {
+                                    BlocProvider.of<DhikrsCubit>(context)
+                                        .dhikrs(
+                                      page: 1,
+                                    );
+                                  } else {
+                                    BlocProvider.of<DhikrsCubit>(context)
+                                        .dhikrs(page: 1, search: searchText);
+                                  }
                                 }),
                                 ListView.builder(
-                                  itemCount: dhikrs.length,
+                                  itemCount: listOfDhikrs.length,
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
@@ -110,7 +127,7 @@ class _DhikrPageState extends State<DhikrPage> {
                                         onTap: () {
                                           context.router.push(
                                             DhikrDetailPageRoute(
-                                                result: dhikrs[index]),
+                                                result: listOfDhikrs[index]),
                                           );
                                         },
                                         child: Container(
@@ -121,7 +138,8 @@ class _DhikrPageState extends State<DhikrPage> {
                                           child: ListTile(
                                             iconColor: AppColors.black,
                                             title: Text(
-                                              dhikrs[index].name ?? 'ERROR',
+                                              listOfDhikrs[index].name ??
+                                                  'ERROR',
                                               style: getTextStyle(
                                                   CustomTextStyles.s16w500),
                                             ),
@@ -148,5 +166,14 @@ class _DhikrPageState extends State<DhikrPage> {
         },
       ),
     );
+  }
+
+  void _scrollListener() {
+    if (isLoadingMore) return;
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      page++;
+      BlocProvider.of<DhikrsCubit>(context).dhikrs(page: page);
+    }
   }
 }

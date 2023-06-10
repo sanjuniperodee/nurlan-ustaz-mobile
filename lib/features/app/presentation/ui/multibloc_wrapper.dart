@@ -14,7 +14,13 @@ import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/s
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/surah_favorite_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/app_bloc.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/charities_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/lives_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/partners_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/post_service_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/services_cubit.dart';
 
 import '../../../../core/services/locator_service.dart';
 
@@ -50,7 +56,24 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         BlocProvider<NewsCubit>(
           create: (context) => getIt<NewsCubit>(),
         ),
-
+        BlocProvider<SeminarCubit>(
+          create: (context) => getIt<SeminarCubit>(),
+        ),
+        BlocProvider<ServicesCubit>(
+          create: (context) => getIt<ServicesCubit>(),
+        ),
+        BlocProvider<CharitiesCubit>(
+          create: (context) => getIt<CharitiesCubit>(),
+        ),
+        BlocProvider<LivesCubit>(
+          create: (context) => getIt<LivesCubit>(),
+        ),
+        BlocProvider<PartnersCubit>(
+          create: (context) => getIt<PartnersCubit>(),
+        ),
+        BlocProvider<PostServiceCubit>(
+          create: (context) => getIt<PostServiceCubit>(),
+        ),
         //ISlAM TEACHING
         //
         BlocProvider<DhikrsCubit>(

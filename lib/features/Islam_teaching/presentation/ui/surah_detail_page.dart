@@ -69,7 +69,7 @@ class _SurahDetailPageState extends State<SurahDetailPage> {
                             GestureDetector(
                                 onTap: () {
                                   BlocProvider.of<SurahCubit>(context)
-                                      .sura()
+                                      .sura(page: 1)
                                       .then((value) => Navigator.pop(context));
                                 },
                                 child: SvgPicture.asset(Assets.backButtonSvg)),

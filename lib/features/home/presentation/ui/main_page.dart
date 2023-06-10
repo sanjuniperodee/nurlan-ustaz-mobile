@@ -57,7 +57,7 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     // TODO: implement initState
-    BlocProvider.of<NewsCubit>(context).news(page: 1);
+    BlocProvider.of<NewsCubit>(context).news(page: 1, isFirstCall: true);
 
     super.initState();
   }
@@ -351,7 +351,7 @@ class _MainPageState extends State<MainPage> {
                                 child: GestureDetector(
                                   onTap: () {
                                     context.router.push(
-                                      const NewsDetailPageRoute(),
+                                      NewsDetailPageRoute(result: news[index]),
                                     );
                                   },
                                   child: Container(

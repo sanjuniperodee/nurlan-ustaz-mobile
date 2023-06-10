@@ -22,13 +22,32 @@ abstract class IslamTeachingRepository {
   Future<Either<Failure, List<PillarsDTO>>> pillars();
   Future<Either<Failure, List<PillarsDTO>>> fatwas();
   Future<Either<Failure, List<ResultTeachingDTO>>> sura(
-      {String? search, bool? isSaved});
+      {String? search,
+      bool? isSaved,
+      int? currentPage,
+      bool? isFirstCall = false});
   Future<Either<Failure, List<ResultTeachingDTO>>> dhikrs(
-      {String? search, bool? isSaved});
+      {String? search,
+      bool? isSaved,
+      int? currentPage,
+      bool? isFirstCall = false});
   Future<Either<Failure, List<ResultTeachingDTO>>> duha(
-      {String? search, bool? isSaved});
-  Future<Either<Failure, List<ResultTeachingDTO>>> islamNames(
-      {String? search, bool? isSaved, String? gender, int? page});
+      {String? search,
+      bool? isSaved,
+      int? currentPage,
+      bool? isFirstCall = false});
+  Future<Either<Failure, List<ResultTeachingDTO>>> islamNamesMan({
+    String? search,
+    bool? isSaved,
+    int? page,
+    bool? isFirstCall,
+  });
+  Future<Either<Failure, List<ResultTeachingDTO>>> islamWoman({
+    String? search,
+    bool? isSaved,
+    int? page,
+    bool? isFirstCall,
+  });
   Future<Either<Failure, List<NamesOfAllahDTO>>> namesOfAllah(
       {String? search, bool? isSaved});
 }
@@ -127,12 +146,19 @@ class IslamTeachingRepositoryImpl extends IslamTeachingRepository {
   }
 
   @override
-  Future<Either<Failure, List<ResultTeachingDTO>>> sura(
-      {String? search, bool? isSaved}) async {
+  Future<Either<Failure, List<ResultTeachingDTO>>> sura({
+    String? search,
+    bool? isSaved,
+    bool? isFirstCall,
+    int? currentPage,
+  }) async {
     if (await networkInfo.isConnected) {
       try {
-        final List<ResultTeachingDTO> sura =
-            await remoteDS.sura(search: search, isSaved: isSaved);
+        final List<ResultTeachingDTO> sura = await remoteDS.sura(
+            search: search,
+            isSaved: isSaved,
+            isFirstCall: isFirstCall,
+            currentPage: currentPage);
         return Right(sura);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -143,15 +169,20 @@ class IslamTeachingRepositoryImpl extends IslamTeachingRepository {
   }
 
   @override
-  Future<Either<Failure, List<ResultTeachingDTO>>> islamNames(
-      {String? search, bool? isSaved, String? gender, int? page}) async {
+  Future<Either<Failure, List<ResultTeachingDTO>>> islamNamesMan({
+    String? search,
+    bool? isSaved,
+    String? gender,
+    int? page,
+    bool? isFirstCall,
+  }) async {
     if (await networkInfo.isConnected) {
       try {
-        final List<ResultTeachingDTO> names = await remoteDS.islamNames(
+        final List<ResultTeachingDTO> names = await remoteDS.islamNamesMan(
             search: search,
             isSaved: isSaved,
-            gender: gender,
-            currentPage: page);
+            currentPage: page,
+            isFirstCall: isFirstCall);
         return Right(names);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -162,12 +193,43 @@ class IslamTeachingRepositoryImpl extends IslamTeachingRepository {
   }
 
   @override
-  Future<Either<Failure, List<ResultTeachingDTO>>> dhikrs(
-      {String? search, bool? isSaved}) async {
+  Future<Either<Failure, List<ResultTeachingDTO>>> islamWoman({
+    String? search,
+    bool? isSaved,
+    String? gender,
+    int? page,
+    bool? isFirstCall,
+  }) async {
     if (await networkInfo.isConnected) {
       try {
-        final List<ResultTeachingDTO> dhikrs =
-            await remoteDS.dhikrs(search: search, isSaved: isSaved);
+        final List<ResultTeachingDTO> names = await remoteDS.islamWoman(
+            search: search,
+            isSaved: isSaved,
+            currentPage: page,
+            isFirstCall: isFirstCall);
+        return Right(names);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ResultTeachingDTO>>> dhikrs({
+    String? search,
+    bool? isSaved,
+    int? currentPage,
+    bool? isFirstCall,
+  }) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final List<ResultTeachingDTO> dhikrs = await remoteDS.dhikrs(
+            search: search,
+            isSaved: isSaved,
+            isFirstCall: isFirstCall,
+            currentPage: currentPage);
         return Right(dhikrs);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -178,12 +240,19 @@ class IslamTeachingRepositoryImpl extends IslamTeachingRepository {
   }
 
   @override
-  Future<Either<Failure, List<ResultTeachingDTO>>> duha(
-      {String? search, bool? isSaved}) async {
+  Future<Either<Failure, List<ResultTeachingDTO>>> duha({
+    String? search,
+    bool? isSaved,
+    int? currentPage,
+    bool? isFirstCall,
+  }) async {
     if (await networkInfo.isConnected) {
       try {
-        final List<ResultTeachingDTO> duha =
-            await remoteDS.duas(search: search, isSaved: isSaved);
+        final List<ResultTeachingDTO> duha = await remoteDS.duas(
+            search: search,
+            isSaved: isSaved,
+            isFirstCall: isFirstCall,
+            currentPage: currentPage);
         return Right(duha);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
