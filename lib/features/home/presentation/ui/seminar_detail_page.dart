@@ -79,21 +79,21 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
             );
           }).toList(),
         ),
-        if(widget.result.media !=null)
-        Positioned.fill(
-          top: 210.r,
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: DotsIndicator(
-              dotsCount:  1,
-              position: _currentIndex,
-              decorator: DotsDecorator(
-                color: AppColors.white, // Color of non-selected indicators
-                activeColor: AppColors.grey1, // Color of selected indicator
+        if (widget.result.media != null)
+          Positioned.fill(
+            top: 210.r,
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: DotsIndicator(
+                dotsCount: 1,
+                position: _currentIndex,
+                decorator: DotsDecorator(
+                  color: AppColors.white, // Color of non-selected indicators
+                  activeColor: AppColors.grey1, // Color of selected indicator
+                ),
               ),
             ),
           ),
-        ),
         SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(
@@ -239,7 +239,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                     GestureDetector(
                       onTap: () {
                         context.router.push(
-                          const CommentPageRoute(),
+                          CommentPageRoute(id: widget.result.id!),
                         );
                       },
                       child: Text(

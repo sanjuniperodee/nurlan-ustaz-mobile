@@ -1,13 +1,23 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem_like_cubit.dart';
 
 class CommentDeepItemWidget extends StatefulWidget {
+  final ResultHomeDTO resultHomeDTO;
+  final int id;
   const CommentDeepItemWidget({
     Key? key,
+    required this.resultHomeDTO,
+    required this.id,
   }) : super(key: key);
 
   @override
@@ -15,7 +25,15 @@ class CommentDeepItemWidget extends StatefulWidget {
 }
 
 class _CommentDeepItemWidgetState extends State<CommentDeepItemWidget> {
-  bool heart = false;
+  late bool isLiked;
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    isLiked = widget.resultHomeDTO.isLiked!;
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,15 +42,20 @@ class _CommentDeepItemWidgetState extends State<CommentDeepItemWidget> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            height: 40,
-            width: 40,
-            decoration: BoxDecoration(borderRadius: BorderRadius.circular(100)),
+          SizedBox(
+            height: 40.h,
+            width: 40.w,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(100),
-              child: Image.network(
-                'https://i.pinimg.com/originals/6d/f8/bb/6df8bbb26f6cde4d1e2919e1340eeef3.jpg',
+              child: CachedNetworkImage(
+                imageUrl: widget.resultHomeDTO.user!.avatar ??
+                    'https://i.pinimg.com/originals/6d/f8/bb/6df8bbb26f6cde4d1e2919e1340eeef3.jpg',
                 fit: BoxFit.cover,
+                width: double.infinity,
+                errorWidget: (a, b, c) => SizedBox(
+                  height: 40.h,
+                  width: 40.w,
+                ),
               ),
             ),
           ),
@@ -46,7 +69,7 @@ class _CommentDeepItemWidgetState extends State<CommentDeepItemWidget> {
                 Row(
                   children: [
                     Text(
-                      'Айнұр Саин',
+                      widget.resultHomeDTO.user!.fullName ?? 'ERROR',
                       style: getTextStyle(CustomTextStyles.s14w700)
                           .apply(color: AppColors.black),
                     ),
@@ -54,7 +77,8 @@ class _CommentDeepItemWidgetState extends State<CommentDeepItemWidget> {
                       width: 4.w,
                     ),
                     Text(
-                      'Бүгін',
+                      DateFormat('dd.MM.yyyy').format(DateTime.parse(
+                          widget.resultHomeDTO.createdAt.toString())),
                       style: getTextStyle(CustomTextStyles.s12w700)
                           .apply(color: AppColors.grey1),
                     ),
@@ -67,18 +91,21 @@ class _CommentDeepItemWidgetState extends State<CommentDeepItemWidget> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      '@Айнур Саин Алматыда',
+                      widget.resultHomeDTO.body ?? 'ERROR',
                       style: getTextStyle(CustomTextStyles.s14w700)
                           .apply(color: AppColors.black),
                     ),
                     InkWell(
                         onTap: () {
-                          setState(() {
-                            heart = !heart;
-                          });
+                          BlocProvider.of<CommentSemLikeCubit>(context)
+                              .seminarCommentLike(
+                                  id: widget.id,
+                                  commentId: widget.resultHomeDTO.id ?? 0);
+                          isLiked = !isLiked;
+                          setState(() {});
                         },
                         child: SvgPicture.asset(
-                            heart ? Assets.heartSvg : Assets.heart1Svg)),
+                            isLiked ? Assets.heartSvg : Assets.heart1Svg)),
                   ],
                 ),
                 const SizedBox(

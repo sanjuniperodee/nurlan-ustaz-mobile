@@ -15,6 +15,12 @@ abstract class HomeRemoteDs {
   Future<bool> seminarLike({required int id});
   Future<bool> newsFavorite({required int id});
   Future<bool> newsLike({required int id});
+  Future<bool> commentSemPost(
+      {required int id,
+      required int commentId,
+      required String body,
+      required String userName});
+  Future<bool> commentSemLike({required int id, required int commentId});
   Future<bool> livesFavorite({required int id});
 
   Future<List<ResultHomeDTO>> news(
@@ -34,6 +40,8 @@ abstract class HomeRemoteDs {
       bool? isFirstCall = false});
   Future<List<ResultHomeDTO>> charities(
       {int? currentPage, bool? isFirstCall = false});
+  Future<List<ResultHomeDTO>> commentSeminar(
+      {int? currentPage, bool? isFirstCall = false, int? id});
   Future<bool> postImamService({required List<int> id});
   Future<List<MediaDTO>> services(
       {int? currentPage, bool? isFirstCall = false});
@@ -58,6 +66,8 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   int? lpc;
   List<MediaDTO> servicesPage = [];
   int? lpServices;
+  List<ResultHomeDTO> commentSeminarPage = [];
+  int? lpComSem;
 
   @override
   Future<bool> livesFavorite({required int id}) async {
@@ -135,6 +145,48 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   }
 
   @override
+  Future<bool> commentSemPost(
+      {required int id,
+      required int commentId,
+      required String body,
+      required String userName}) async {
+    try {
+      final response =
+          await dio.post('${EndPoints.seminar}/$id/comment/', data: {
+        'parent': commentId,
+        'body': body,
+        'user': {
+          'full_name': userName,
+        }
+      });
+
+      return true;
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<bool> commentSemLike({required int id, required int commentId}) async {
+    try {
+      final response = await dio
+          .post('${EndPoints.seminar}/$id/toggle_like_comment/', data: {
+        'comment': commentId,
+      });
+
+      return true;
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
   Future<List<ResultHomeDTO>> charities(
       {int? currentPage, bool? isFirstCall = false}) async {
     try {
@@ -158,6 +210,41 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
                 .map((e) => ResultHomeDTO.fromJson(e as Map<String, dynamic>))
                 .toList());
         return charitiesPage;
+      }
+      // log('PAGE${response.data['meta']['pagination']['page']}');
+      throw 'ERROR';
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<List<ResultHomeDTO>> commentSeminar(
+      {int? currentPage, bool? isFirstCall = false, int? id}) async {
+    try {
+      if (isFirstCall ?? false) {
+        commentSeminarPage.clear();
+      }
+      if (lpComSem != null && currentPage! >= lpComSem! && currentPage != 1) {
+        return commentSeminarPage;
+      }
+      final response = await dio.get(
+        '${EndPoints.seminar}$id/comments/',
+        queryParameters: {
+          'page[number]': currentPage,
+        },
+      );
+      if (response.statusCode == 200) {
+        lpComSem = response.data['meta']['pagination']['pages'];
+
+        commentSeminarPage.addAll(
+            ((response.data as Map<String, dynamic>)['results'] as List)
+                .map((e) => ResultHomeDTO.fromJson(e as Map<String, dynamic>))
+                .toList());
+        return commentSeminarPage;
       }
       // log('PAGE${response.data['meta']['pagination']['page']}');
       throw 'ERROR';

@@ -15,6 +15,8 @@ _$_ResultHomeDTO _$$_ResultHomeDTOFromJson(Map<String, dynamic> json) =>
       likesCount: json['likes_count'] as int?,
       comentCount: json['comments_count'] as int?,
       id: json['id'] as int?,
+      parent: json['parent'] as int?,
+      body: json['body'] as String?,
       name: json['name'] as String?,
       logo: json['logo'] as String?,
       title: json['title'] as String?,
@@ -22,6 +24,9 @@ _$_ResultHomeDTO _$$_ResultHomeDTOFromJson(Map<String, dynamic> json) =>
       text: json['text'] as String?,
       cover: json['cover'] as String?,
       link: json['link'] as String?,
+      user: json['user'] == null
+          ? null
+          : UserCommentDTO.fromJson(json['user'] as Map<String, dynamic>),
       startTime: json['start_time'] == null
           ? null
           : DateTime.parse(json['start_time'] as String),
@@ -35,6 +40,9 @@ _$_ResultHomeDTO _$$_ResultHomeDTOFromJson(Map<String, dynamic> json) =>
       requisites: (json['requisites'] as List<dynamic>?)
           ?.map((e) => RequisitesDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
+      children: (json['children'] as List<dynamic>?)
+          ?.map((e) => ResultHomeDTO.fromJson(e as Map<String, dynamic>))
+          .toList(),
       address: json['address'] as String?,
     );
 
@@ -47,6 +55,8 @@ Map<String, dynamic> _$$_ResultHomeDTOToJson(_$_ResultHomeDTO instance) =>
       'likes_count': instance.likesCount,
       'comments_count': instance.comentCount,
       'id': instance.id,
+      'parent': instance.parent,
+      'body': instance.body,
       'name': instance.name,
       'logo': instance.logo,
       'title': instance.title,
@@ -54,10 +64,12 @@ Map<String, dynamic> _$$_ResultHomeDTOToJson(_$_ResultHomeDTO instance) =>
       'text': instance.text,
       'cover': instance.cover,
       'link': instance.link,
+      'user': instance.user,
       'start_time': instance.startTime?.toIso8601String(),
       'created_at': instance.createdAt?.toIso8601String(),
       'is_active': instance.isActive,
       'media': instance.media,
       'requisites': instance.requisites,
+      'children': instance.children,
       'address': instance.address,
     };

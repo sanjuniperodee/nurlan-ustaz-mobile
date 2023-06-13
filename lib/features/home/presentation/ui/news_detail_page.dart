@@ -187,9 +187,9 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                     ),
                     GestureDetector(
                       onTap: () {
-                        context.router.push(
-                          const CommentPageRoute(),
-                        );
+                        // context.router.push(
+                        //   const CommentPageRoute(),
+                        // );
                       },
                       child: Text(
                         'Пікірлерді көру ${widget.result.comentCount}',

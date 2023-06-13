@@ -33,12 +33,25 @@ abstract class HomeRepository {
     int? page,
     bool? isFirstCall,
   });
+  Future<Either<Failure, List<ResultHomeDTO>>> commentSem(
+      {int? page, bool? isFirstCall, int? id});
   Future<Either<Failure, List<MediaDTO>>> services({
     int? page,
     bool? isFirstCall,
   });
+
   Future<Either<Failure, bool>> seminarFavorite({required int id});
   Future<Either<Failure, bool>> seminarLike({required int id});
+  Future<Either<Failure, bool>> commentSemPost({
+    required int id,
+    required int commentId,
+    required String body,
+    required String userName,
+  });
+  Future<Either<Failure, bool>> commentSemLike({
+    required int id,
+    required int commentId,
+  });
   Future<Either<Failure, bool>> newsFavorite({required int id});
   Future<Either<Failure, bool>> newsLike({required int id});
   Future<Either<Failure, bool>> livesFavorite({required int id});
@@ -114,6 +127,44 @@ class HomeRepositoryImpl extends HomeRepository {
     if (await networkInfo.isConnected) {
       try {
         final bool res = await remoteDS.seminarLike(id: id);
+        return Right(res);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> commentSemPost({
+    required int id,
+    required int commentId,
+    required String body,
+    required String userName,
+  }) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final bool res = await remoteDS.commentSemPost(
+            id: id, commentId: commentId, body: body, userName: userName);
+        return Right(res);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> commentSemLike({
+    required int id,
+    required int commentId,
+  }) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final bool res =
+            await remoteDS.commentSemLike(id: id, commentId: commentId);
         return Right(res);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -210,6 +261,25 @@ class HomeRepositoryImpl extends HomeRepository {
       try {
         final List<ResultHomeDTO> charities = await remoteDS.charities(
             currentPage: page, isFirstCall: isFirstCall);
+        return Right(charities);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ResultHomeDTO>>> commentSem({
+    int? page,
+    bool? isFirstCall,
+    int? id,
+  }) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final List<ResultHomeDTO> charities = await remoteDS.commentSeminar(
+            currentPage: page, isFirstCall: isFirstCall, id: id);
         return Right(charities);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
