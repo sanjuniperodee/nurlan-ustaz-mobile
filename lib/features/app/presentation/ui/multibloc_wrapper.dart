@@ -16,10 +16,15 @@ import 'package:nurlan_ustaz_flutter/features/app/bloc/app_bloc.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/charities_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/lives_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/lives_fav_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_fav_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_like_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/partners_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/post_service_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_fav_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_like_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/services_cubit.dart';
 
 import '../../../../core/services/locator_service.dart';
@@ -73,6 +78,21 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         ),
         BlocProvider<PostServiceCubit>(
           create: (context) => getIt<PostServiceCubit>(),
+        ),
+        BlocProvider<SeminarFavCubit>(
+          create: (context) => getIt<SeminarFavCubit>(),
+        ),
+        BlocProvider<LivesFavCubit>(
+          create: (context) => getIt<LivesFavCubit>(),
+        ),
+        BlocProvider<SeminarLikeCubit>(
+          create: (context) => getIt<SeminarLikeCubit>(),
+        ),
+        BlocProvider<NewsFavCubit>(
+          create: (context) => getIt<NewsFavCubit>(),
+        ),
+        BlocProvider<NewsLikeCubit>(
+          create: (context) => getIt<NewsLikeCubit>(),
         ),
         //ISlAM TEACHING
         //

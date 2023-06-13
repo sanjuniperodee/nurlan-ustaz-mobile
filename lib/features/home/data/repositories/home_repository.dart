@@ -37,6 +37,11 @@ abstract class HomeRepository {
     int? page,
     bool? isFirstCall,
   });
+  Future<Either<Failure, bool>> seminarFavorite({required int id});
+  Future<Either<Failure, bool>> seminarLike({required int id});
+  Future<Either<Failure, bool>> newsFavorite({required int id});
+  Future<Either<Failure, bool>> newsLike({required int id});
+  Future<Either<Failure, bool>> livesFavorite({required int id});
 }
 
 @Singleton(as: HomeRepository)
@@ -47,6 +52,76 @@ class HomeRepositoryImpl extends HomeRepository {
     required this.remoteDS,
     required this.networkInfo,
   });
+
+  @override
+  Future<Either<Failure, bool>> livesFavorite({required int id}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final bool res = await remoteDS.livesFavorite(id: id);
+        return Right(res);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> newsFavorite({required int id}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final bool res = await remoteDS.newsFavorite(id: id);
+        return Right(res);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> newsLike({required int id}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final bool res = await remoteDS.newsLike(id: id);
+        return Right(res);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> seminarFavorite({required int id}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final bool res = await remoteDS.seminarFavorite(id: id);
+        return Right(res);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> seminarLike({required int id}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final bool res = await remoteDS.seminarLike(id: id);
+        return Right(res);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
 
   @override
   Future<Either<Failure, bool>> postImamService({

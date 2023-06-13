@@ -24,6 +24,7 @@ class ResultHomeDTO with _$ResultHomeDTO {
       String? cover,
       String? link,
       @JsonKey(name: "start_time") DateTime? startTime,
+      @JsonKey(name: "created_at") DateTime? createdAt,
       @JsonKey(name: "is_active") bool? isActive,
       List<MediaDTO>? media,
       List<RequisitesDTO>? requisites,

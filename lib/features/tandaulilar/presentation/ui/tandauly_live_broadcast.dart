@@ -49,9 +49,9 @@ class _TandaulyLiveBroadcastsPageState extends State<TandaulyLiveBroadcastsPage>
                       padding: EdgeInsets.only(bottom: 20.r),
                       child: GestureDetector(
                         onTap: () {
-                          context.router.push(
-                            const SeminarDetailPageRoute(),
-                          );
+                          // context.router.push(
+                          //   const SeminarDetailPageRoute(),
+                          // );
                         },
                         child: Container(
                           height: 164.h,

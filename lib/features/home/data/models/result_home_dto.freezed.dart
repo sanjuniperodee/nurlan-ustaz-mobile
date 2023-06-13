@@ -42,6 +42,8 @@ mixin _$ResultHomeDTO {
   String? get link => throw _privateConstructorUsedError;
   @JsonKey(name: "start_time")
   DateTime? get startTime => throw _privateConstructorUsedError;
+  @JsonKey(name: "created_at")
+  DateTime? get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: "is_active")
   bool? get isActive => throw _privateConstructorUsedError;
   List<MediaDTO>? get media => throw _privateConstructorUsedError;
@@ -76,6 +78,7 @@ abstract class $ResultHomeDTOCopyWith<$Res> {
       String? cover,
       String? link,
       @JsonKey(name: "start_time") DateTime? startTime,
+      @JsonKey(name: "created_at") DateTime? createdAt,
       @JsonKey(name: "is_active") bool? isActive,
       List<MediaDTO>? media,
       List<RequisitesDTO>? requisites,
@@ -110,6 +113,7 @@ class _$ResultHomeDTOCopyWithImpl<$Res, $Val extends ResultHomeDTO>
     Object? cover = freezed,
     Object? link = freezed,
     Object? startTime = freezed,
+    Object? createdAt = freezed,
     Object? isActive = freezed,
     Object? media = freezed,
     Object? requisites = freezed,
@@ -176,6 +180,10 @@ class _$ResultHomeDTOCopyWithImpl<$Res, $Val extends ResultHomeDTO>
           ? _value.startTime
           : startTime // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -220,6 +228,7 @@ abstract class _$$_ResultHomeDTOCopyWith<$Res>
       String? cover,
       String? link,
       @JsonKey(name: "start_time") DateTime? startTime,
+      @JsonKey(name: "created_at") DateTime? createdAt,
       @JsonKey(name: "is_active") bool? isActive,
       List<MediaDTO>? media,
       List<RequisitesDTO>? requisites,
@@ -252,6 +261,7 @@ class __$$_ResultHomeDTOCopyWithImpl<$Res>
     Object? cover = freezed,
     Object? link = freezed,
     Object? startTime = freezed,
+    Object? createdAt = freezed,
     Object? isActive = freezed,
     Object? media = freezed,
     Object? requisites = freezed,
@@ -318,6 +328,10 @@ class __$$_ResultHomeDTOCopyWithImpl<$Res>
           ? _value.startTime
           : startTime // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       isActive: freezed == isActive
           ? _value.isActive
           : isActive // ignore: cast_nullable_to_non_nullable
@@ -357,6 +371,7 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
       this.cover,
       this.link,
       @JsonKey(name: "start_time") this.startTime,
+      @JsonKey(name: "created_at") this.createdAt,
       @JsonKey(name: "is_active") this.isActive,
       final List<MediaDTO>? media,
       final List<RequisitesDTO>? requisites,
@@ -405,6 +420,9 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
   @JsonKey(name: "start_time")
   final DateTime? startTime;
   @override
+  @JsonKey(name: "created_at")
+  final DateTime? createdAt;
+  @override
   @JsonKey(name: "is_active")
   final bool? isActive;
   final List<MediaDTO>? _media;
@@ -432,7 +450,7 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
 
   @override
   String toString() {
-    return 'ResultHomeDTO(isLiked: $isLiked, isSaved: $isSaved, isLive: $isLive, isTop: $isTop, likesCount: $likesCount, comentCount: $comentCount, id: $id, name: $name, logo: $logo, title: $title, description: $description, text: $text, cover: $cover, link: $link, startTime: $startTime, isActive: $isActive, media: $media, requisites: $requisites, address: $address)';
+    return 'ResultHomeDTO(isLiked: $isLiked, isSaved: $isSaved, isLive: $isLive, isTop: $isTop, likesCount: $likesCount, comentCount: $comentCount, id: $id, name: $name, logo: $logo, title: $title, description: $description, text: $text, cover: $cover, link: $link, startTime: $startTime, createdAt: $createdAt, isActive: $isActive, media: $media, requisites: $requisites, address: $address)';
   }
 
   @override
@@ -459,6 +477,8 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
             (identical(other.link, link) || other.link == link) &&
             (identical(other.startTime, startTime) ||
                 other.startTime == startTime) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
             (identical(other.isActive, isActive) ||
                 other.isActive == isActive) &&
             const DeepCollectionEquality().equals(other._media, _media) &&
@@ -486,6 +506,7 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
         cover,
         link,
         startTime,
+        createdAt,
         isActive,
         const DeepCollectionEquality().hash(_media),
         const DeepCollectionEquality().hash(_requisites),
@@ -523,6 +544,7 @@ abstract class _ResultHomeDTO implements ResultHomeDTO {
       final String? cover,
       final String? link,
       @JsonKey(name: "start_time") final DateTime? startTime,
+      @JsonKey(name: "created_at") final DateTime? createdAt,
       @JsonKey(name: "is_active") final bool? isActive,
       final List<MediaDTO>? media,
       final List<RequisitesDTO>? requisites,
@@ -568,6 +590,9 @@ abstract class _ResultHomeDTO implements ResultHomeDTO {
   @override
   @JsonKey(name: "start_time")
   DateTime? get startTime;
+  @override
+  @JsonKey(name: "created_at")
+  DateTime? get createdAt;
   @override
   @JsonKey(name: "is_active")
   bool? get isActive;

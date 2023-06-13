@@ -1,5 +1,8 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,6 +18,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_cu
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_fav_cubit.dart';
 
 class SeminarPage extends StatefulWidget {
   const SeminarPage({Key? key}) : super(key: key);
@@ -25,11 +29,13 @@ class SeminarPage extends StatefulWidget {
 
 class _SeminarPageState extends State<SeminarPage> {
   int selectedIndex = -1;
+
   final ScrollController _scrollController = ScrollController();
   int page = 1;
   String searchText = '';
   List<ResultHomeDTO> listOfSeminars = [];
   bool isLoadingMore = false;
+  List<bool> listOfFav = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -64,6 +70,14 @@ class _SeminarPageState extends State<SeminarPage> {
             loaded: (seminar) {
               isLoadingMore = false;
               listOfSeminars = seminar;
+              listOfFav.clear();
+              listOfSeminars.forEach(
+                (element) {
+                  listOfFav.add(element.isSaved!);
+                },
+              );
+
+              setState(() {});
             },
           );
           // TODO: implement listener
@@ -76,7 +90,8 @@ class _SeminarPageState extends State<SeminarPage> {
                   physics: const BouncingScrollPhysics(),
                   child: Column(
                     children: [
-                      const CustomAppBar(
+                      CustomAppBar(
+                        onTap: () {},
                         title: 'Семинар',
                       ),
                       SizedBox(
@@ -105,7 +120,9 @@ class _SeminarPageState extends State<SeminarPage> {
                             child: GestureDetector(
                               onTap: () {
                                 context.router.push(
-                                  const SeminarDetailPageRoute(),
+                                  SeminarDetailPageRoute(
+                                      result: listOfSeminars[index],
+                                      isFav: listOfFav[index]),
                                 );
                               },
                               child: Container(
@@ -152,7 +169,11 @@ class _SeminarPageState extends State<SeminarPage> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                '10.02.2023',
+                                                DateFormat('dd.MM.yyyy').format(
+                                                    DateTime.parse(
+                                                        listOfSeminars[index]
+                                                            .createdAt
+                                                            .toString())),
                                                 style: getTextStyle(
                                                         CustomTextStyles
                                                             .s12w400)
@@ -175,11 +196,20 @@ class _SeminarPageState extends State<SeminarPage> {
                                           ),
                                           GestureDetector(
                                               onTap: () {
-                                                setState(() {
-                                                  selectedIndex = index;
-                                                });
+                                                BlocProvider.of<
+                                                            SeminarFavCubit>(
+                                                        context)
+                                                    .seminarFavorite(
+                                                        id: listOfSeminars[
+                                                                    index]
+                                                                .id ??
+                                                            0);
+                                                listOfFav[index] =
+                                                    !listOfFav[index];
+
+                                                setState(() {});
                                               },
-                                              child: selectedIndex != index
+                                              child: listOfFav[index]
                                                   ? SvgPicture.asset(
                                                       Assets.bookMarkSvg)
                                                   : SvgPicture.asset(

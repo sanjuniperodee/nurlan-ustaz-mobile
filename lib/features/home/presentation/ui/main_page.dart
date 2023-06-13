@@ -351,7 +351,9 @@ class _MainPageState extends State<MainPage> {
                                 child: GestureDetector(
                                   onTap: () {
                                     context.router.push(
-                                      NewsDetailPageRoute(result: news[index]),
+                                      NewsDetailPageRoute(
+                                          result: news[index],
+                                          isFav: news[index].isSaved!),
                                     );
                                   },
                                   child: Container(
@@ -403,7 +405,10 @@ class _MainPageState extends State<MainPage> {
                                                           color: Colors.black)),
                                               SizedBox(height: 2.h),
                                               Text(
-                                                '10.02.2023',
+                                                DateFormat('dd.MM.yyyy').format(
+                                                    DateTime.parse(news[index]
+                                                        .createdAt
+                                                        .toString())),
                                                 style: getTextStyle(
                                                         CustomTextStyles
                                                             .s14w400)

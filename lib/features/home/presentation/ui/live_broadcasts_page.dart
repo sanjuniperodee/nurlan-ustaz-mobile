@@ -1,13 +1,9 @@
-import 'package:auto_route/auto_route.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:hive/hive.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
-import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
@@ -15,6 +11,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_cu
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/lives_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/lives_fav_cubit.dart';
 
 import '../../../../core/common/assets.dart';
 
@@ -32,6 +29,7 @@ class _LiveBroadcastsPageState extends State<LiveBroadcastsPage> {
   String searchText = '';
   List<ResultHomeDTO> listOfLives = [];
   bool isLoadingMore = false;
+  List<bool> listOfFav = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -66,6 +64,14 @@ class _LiveBroadcastsPageState extends State<LiveBroadcastsPage> {
             loaded: (news) {
               isLoadingMore = false;
               listOfLives = news;
+              listOfFav.clear();
+              listOfLives.forEach(
+                (element) {
+                  listOfFav.add(element.isSaved!);
+                },
+              );
+
+              setState(() {});
             },
           );
           // TODO: implement listener
@@ -106,9 +112,10 @@ class _LiveBroadcastsPageState extends State<LiveBroadcastsPage> {
                             padding: EdgeInsets.only(bottom: 20.r),
                             child: GestureDetector(
                               onTap: () {
-                                context.router.push(
-                                  const SeminarDetailPageRoute(),
-                                );
+                                // context.router.push(
+                                //   SeminarDetailPageRoute(
+                                //       result: listOfLives[index]),
+                                // );
                               },
                               child: Container(
                                 height: 164.h,
@@ -253,11 +260,18 @@ class _LiveBroadcastsPageState extends State<LiveBroadcastsPage> {
                                           ),
                                           GestureDetector(
                                               onTap: () {
-                                                setState(() {
-                                                  selectedIndex = index;
-                                                });
+                                                BlocProvider.of<LivesFavCubit>(
+                                                        context)
+                                                    .livesFav(
+                                                        id: listOfLives[index]
+                                                                .id ??
+                                                            0);
+                                                listOfFav[index] =
+                                                    !listOfFav[index];
+
+                                                setState(() {});
                                               },
-                                              child: selectedIndex != index
+                                              child: listOfFav[index]
                                                   ? SvgPicture.asset(
                                                       Assets.bookMarkSvg)
                                                   : SvgPicture.asset(

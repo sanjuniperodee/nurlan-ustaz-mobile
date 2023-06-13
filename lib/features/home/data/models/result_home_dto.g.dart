@@ -25,6 +25,9 @@ _$_ResultHomeDTO _$$_ResultHomeDTOFromJson(Map<String, dynamic> json) =>
       startTime: json['start_time'] == null
           ? null
           : DateTime.parse(json['start_time'] as String),
+      createdAt: json['created_at'] == null
+          ? null
+          : DateTime.parse(json['created_at'] as String),
       isActive: json['is_active'] as bool?,
       media: (json['media'] as List<dynamic>?)
           ?.map((e) => MediaDTO.fromJson(e as Map<String, dynamic>))
@@ -52,6 +55,7 @@ Map<String, dynamic> _$$_ResultHomeDTOToJson(_$_ResultHomeDTO instance) =>
       'cover': instance.cover,
       'link': instance.link,
       'start_time': instance.startTime?.toIso8601String(),
+      'created_at': instance.createdAt?.toIso8601String(),
       'is_active': instance.isActive,
       'media': instance.media,
       'requisites': instance.requisites,

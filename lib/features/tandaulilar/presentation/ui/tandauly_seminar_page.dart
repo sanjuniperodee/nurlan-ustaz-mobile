@@ -50,9 +50,9 @@ class _TandaulySeminarPageState extends State<TandaulySeminarPage> {
                       padding: EdgeInsets.only(bottom: 20.r),
                       child: GestureDetector(
                         onTap: () {
-                          context.router.push(
-                            const SeminarDetailPageRoute(),
-                          );
+                          // context.router.push(
+                          //   const SeminarDetailPageRoute(),
+                          // );
                         },
                         child: Container(
                           height: 116.h,
@@ -74,17 +74,17 @@ class _TandaulySeminarPageState extends State<TandaulySeminarPage> {
                                 // width: 240.w,
                                 child: Row(
                                   mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                                      MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Column(
                                       crossAxisAlignment:
-                                      CrossAxisAlignment.start,
+                                          CrossAxisAlignment.start,
                                       children: [
                                         Text(
                                           '10.02.2023',
                                           style: getTextStyle(
-                                              CustomTextStyles.s12w400)
+                                                  CustomTextStyles.s12w400)
                                               .apply(color: AppColors.grey1),
                                         ),
                                         SizedBox(
@@ -93,22 +93,22 @@ class _TandaulySeminarPageState extends State<TandaulySeminarPage> {
                                         Text(
                                           'Семинар тақырыбы',
                                           style: getTextStyle(
-                                              CustomTextStyles.s16w500)
+                                                  CustomTextStyles.s16w500)
                                               .apply(color: AppColors.black),
                                         ),
                                       ],
                                     ),
-                                GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        selectedIndex = index;
-                                      });
-                                    },
-                                    child: selectedIndex != index
-                                        ? SvgPicture.asset(
-                                        Assets.bookMark1Svg)
-                                        : SvgPicture.asset(
-                                        Assets.bookMarkSvg)),
+                                    GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            selectedIndex = index;
+                                          });
+                                        },
+                                        child: selectedIndex != index
+                                            ? SvgPicture.asset(
+                                                Assets.bookMark1Svg)
+                                            : SvgPicture.asset(
+                                                Assets.bookMarkSvg)),
                                   ],
                                 ),
                               ),

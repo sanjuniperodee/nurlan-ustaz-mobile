@@ -1,9 +1,12 @@
 import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
@@ -12,24 +15,37 @@ import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/core/utils/alert_utilrs.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_fav_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_like_cubit.dart';
 import 'package:share_plus/share_plus.dart';
 
 class SeminarDetailPage extends StatefulWidget {
-  const SeminarDetailPage({super.key});
+  final ResultHomeDTO result;
+  final bool isFav;
+  const SeminarDetailPage(
+      {super.key, required this.result, required this.isFav});
 
   @override
   State<SeminarDetailPage> createState() => _SeminarDetailPageState();
 }
 
 class _SeminarDetailPageState extends State<SeminarDetailPage> {
-  List images = [
-    'assets/images/nur.png',
-    'assets/images/nur.png',
-    'assets/images/nur.png'
-  ];
   int _currentIndex = 0;
-  bool favorite = false;
-  bool heart = false;
+  late bool isFavorite;
+  late bool isLiked;
+  late int likeCount;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    isFavorite = widget.isFav;
+    isLiked = widget.result.isLiked!;
+    likeCount = widget.result.likesCount!;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,24 +63,29 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
               });
             },
           ),
-          items: images.map((i) {
+          items: widget.result.media!.map((i) {
             return Builder(
               builder: (BuildContext context) {
-                return Image.asset(
-                  i,
-                  fit: BoxFit.cover,
-                  width: 1.sw,
-                );
+                return CachedNetworkImage(
+                    imageUrl: i.file ?? 'assets/images/nur.png',
+                    fit: BoxFit.cover,
+                    width: 1.sw,
+                    errorWidget: (a, b, c) => Image.asset(
+                          'assets/images/nur.png',
+                          fit: BoxFit.cover,
+                          width: 1.sw,
+                        ));
               },
             );
           }).toList(),
         ),
+        if(widget.result.media !=null)
         Positioned.fill(
           top: 210.r,
           child: Align(
             alignment: Alignment.topCenter,
             child: DotsIndicator(
-              dotsCount: images.length,
+              dotsCount:  1,
               position: _currentIndex,
               decorator: DotsDecorator(
                 color: AppColors.white, // Color of non-selected indicators
@@ -91,7 +112,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'Мәскеу сапары',
+                      widget.result.title ?? 'ERROR',
                       style: getTextStyle(CustomTextStyles.s20w700)
                           .apply(color: AppColors.black),
                     ),
@@ -107,7 +128,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                               width: 10.w,
                             ),
                             Text(
-                              '1 мамыр, 15:00',
+                              '${DateFormat('d').format(DateTime.parse(widget.result.startTime.toString()))}  ${DateFormat('MMMM').format(DateTime.parse(widget.result.startTime.toString()))}, ${DateFormat('HH:MM').format(DateTime.parse(widget.result.startTime.toString()))}',
                               style: getTextStyle(CustomTextStyles.s14w400)
                                   .apply(color: AppColors.grey2),
                             ),
@@ -119,7 +140,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                               width: 10.w,
                             ),
                             Text(
-                              'Мәскеу қаласы',
+                              widget.result.address ?? 'ERROR',
                               style: getTextStyle(CustomTextStyles.s14w400)
                                   .apply(color: AppColors.grey2),
                             ),
@@ -137,15 +158,22 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                             children: [
                               InkWell(
                                   onTap: () {
-                                    setState(() {
-                                      heart = !heart;
-                                    });
+                                    BlocProvider.of<SeminarLikeCubit>(context)
+                                        .seminarLike(id: widget.result.id ?? 0);
+                                    isLiked = !isLiked;
+                                    if (isLiked == true) {
+                                      likeCount += 1;
+                                    } else {
+                                      likeCount -= 1;
+                                    }
+
+                                    setState(() {});
                                   },
-                                  child: SvgPicture.asset(heart
+                                  child: SvgPicture.asset(isLiked
                                       ? Assets.heartSvg
                                       : Assets.heart1Svg)),
                               Text(
-                                '12',
+                                likeCount.toString(),
                                 style: getTextStyle(CustomTextStyles.s14w400),
                               ),
                               SizedBox(
@@ -153,7 +181,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                               ),
                               SvgPicture.asset(Assets.commentSvg),
                               Text(
-                                '12',
+                                widget.result.comentCount.toString(),
                                 style: getTextStyle(CustomTextStyles.s14w400),
                               ),
                               SizedBox(
@@ -170,11 +198,12 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                         ),
                         GestureDetector(
                             onTap: () {
-                              setState(() {
-                                favorite = !favorite;
-                              });
+                              BlocProvider.of<SeminarFavCubit>(context)
+                                  .seminarFavorite(id: widget.result.id ?? 0);
+                              isFavorite = !isFavorite;
+                              setState(() {});
                             },
-                            child: SvgPicture.asset(favorite
+                            child: SvgPicture.asset(isFavorite
                                 ? Assets.bookMarkSvg
                                 : Assets.bookMark1Svg))
                       ],
@@ -200,7 +229,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                       height: 20.h,
                     ),
                     Text(
-                      '«Алланың қалауымен некемізді 12-ақпан күні Қасиетті Меккеде қидық. Өзім үнемі шет елде өткізсем деп ойлайтынмын, бірақ дәл Алланың үйінде, Пайғамбарымыз Мұхаммедтің (с.ғ.с) тікелей ұрпақтары біздің некемізді қияды деп ешқашан ойламаппын. Қасиетті Мекке қаласында бәрі Алланың қалауымен болды. Яғни, басымызға жазылған тағдыр. Бұл – біз үшін ең қуанышты күн, естен кетпес тарихи сәт.Ең қызығы, некемізді осы елдің лауазымды шейхтары қиды. Олар үшін де бұл бір жаңалық болды. Бұрын-соңды болмаған жағдай. Алла тағала бұндай бақытты көптің біріне бұйыртпайды, бірақ, Аллаға шүкір, біз өз елімізден бірінші болып, дәл осы Алланың үйінде, пайғамбар ұрпақтарының келісімімен некемізді қидық» деп жазды жігіт.',
+                      widget.result.text ?? 'ERROR',
                       style: getTextStyle(CustomTextStyles.s16w400)
                           .apply(color: AppColors.black),
                     ),
@@ -214,7 +243,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                         );
                       },
                       child: Text(
-                        'Пікірлерді көру (2)',
+                        'Пікірлерді көру (${widget.result.comentCount})',
                         style: getTextStyle(CustomTextStyles.s16w400)
                             .apply(color: AppColors.grey1),
                       ),
@@ -228,7 +257,9 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
             left: 16.r,
             child: GestureDetector(
                 onTap: () {
-                  Navigator.pop(context);
+                  BlocProvider.of<SeminarCubit>(context)
+                      .seminar(page: 1, isFirstCall: true)
+                      .then((value) => Navigator.pop(context));
                 },
                 child: SvgPicture.asset(Assets.backStackSvg))),
       ]),

@@ -1,4 +1,8 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,6 +18,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_cu
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_fav_cubit.dart';
 
 class NewsPage extends StatefulWidget {
   const NewsPage({Key? key}) : super(key: key);
@@ -29,6 +34,7 @@ class _NewsPageState extends State<NewsPage> {
   String searchText = '';
   List<ResultHomeDTO> listOfNews = [];
   bool isLoadingMore = false;
+  List<bool> listOfFav = [];
   @override
   void initState() {
     // TODO: implement initState
@@ -63,6 +69,14 @@ class _NewsPageState extends State<NewsPage> {
             loaded: (news) {
               isLoadingMore = false;
               listOfNews = news;
+              listOfFav.clear();
+              listOfNews.forEach(
+                (element) {
+                  listOfFav.add(element.isSaved!);
+                },
+              );
+
+              setState(() {});
             },
           );
           // TODO: implement listener
@@ -106,7 +120,8 @@ class _NewsPageState extends State<NewsPage> {
                                 onTap: () {
                                   context.router.push(
                                     NewsDetailPageRoute(
-                                        result: listOfNews[index]),
+                                        result: listOfNews[index],
+                                        isFav: listOfFav[index]),
                                   );
                                 },
                                 child: Container(
@@ -122,7 +137,22 @@ class _NewsPageState extends State<NewsPage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Image.asset('assets/images/seminar.png'),
+                                      ClipRRect(
+                                        borderRadius: const BorderRadius.all(
+                                                Radius.circular(12))
+                                            .r,
+                                        child: CachedNetworkImage(
+                                          imageUrl:
+                                              listOfNews[index].cover ?? '',
+                                          fit: BoxFit.cover,
+                                          height: 100.h,
+                                          width: 80.w,
+                                          errorWidget: (a, b, c) => SizedBox(
+                                            width: 100.w,
+                                            height: 80.h,
+                                          ),
+                                        ),
+                                      ),
                                       SizedBox(
                                         width: 12.w,
                                       ),
@@ -139,7 +169,11 @@ class _NewsPageState extends State<NewsPage> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  '10.02.2023',
+                                                   DateFormat('dd.MM.yyyy').format(
+                                                    DateTime.parse(
+                                                        listOfNews[index]
+                                                            .createdAt
+                                                            .toString())),
                                                   style: getTextStyle(
                                                           CustomTextStyles
                                                               .s12w400)
@@ -164,11 +198,18 @@ class _NewsPageState extends State<NewsPage> {
                                             ),
                                             GestureDetector(
                                                 onTap: () {
-                                                  setState(() {
-                                                    // selectedIndex = index;
-                                                  });
+                                                  BlocProvider.of<NewsFavCubit>(
+                                                          context)
+                                                      .newsFav(
+                                                          id: listOfNews[index]
+                                                                  .id ??
+                                                              0);
+                                                  listOfFav[index] =
+                                                      !listOfFav[index];
+
+                                                  setState(() {});
                                                 },
-                                                child: selectedIndex != index
+                                                child: listOfFav[index]
                                                     ? SvgPicture.asset(
                                                         Assets.bookMarkSvg)
                                                     : SvgPicture.asset(

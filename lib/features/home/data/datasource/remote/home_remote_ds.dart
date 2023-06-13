@@ -11,6 +11,12 @@ import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.d
 const _tag = 'HomeRemoteDS';
 
 abstract class HomeRemoteDs {
+  Future<bool> seminarFavorite({required int id});
+  Future<bool> seminarLike({required int id});
+  Future<bool> newsFavorite({required int id});
+  Future<bool> newsLike({required int id});
+  Future<bool> livesFavorite({required int id});
+
   Future<List<ResultHomeDTO>> news(
       {String? search,
       bool? isSaved,
@@ -52,6 +58,81 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   int? lpc;
   List<MediaDTO> servicesPage = [];
   int? lpServices;
+
+  @override
+  Future<bool> livesFavorite({required int id}) async {
+    try {
+      final response = await dio.post(
+        '${EndPoints.lives}/$id/toggle_save/',
+      );
+      return true;
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<bool> newsFavorite({required int id}) async {
+    try {
+      final response = await dio.post(
+        '${EndPoints.news}/$id/toggle_save/',
+      );
+      return true;
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<bool> newsLike({required int id}) async {
+    try {
+      final response = await dio.post(
+        '${EndPoints.news}/$id/toggle_like/',
+      );
+      return true;
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<bool> seminarFavorite({required int id}) async {
+    try {
+      final response = await dio.post(
+        '${EndPoints.seminar}/$id/toggle_save/',
+      );
+      return true;
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<bool> seminarLike({required int id}) async {
+    try {
+      final response = await dio.post(
+        '${EndPoints.seminar}/$id/toggle_like/',
+      );
+      return true;
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
 
   @override
   Future<List<ResultHomeDTO>> charities(

@@ -86,7 +86,8 @@ class _CharityPageState extends State<CharityPage> {
                             child: GestureDetector(
                               onTap: () {
                                 context.router.push(
-                                  const CharityDetailPageRoute(),
+                                  CharityDetailPageRoute(
+                                      result: listOfCharity[index]),
                                 );
                               },
                               child: Container(
@@ -96,11 +97,9 @@ class _CharityPageState extends State<CharityPage> {
                                 padding: const EdgeInsets.symmetric(
                                         vertical: 12, horizontal: 12)
                                     .r,
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    ClipRRect(
+                                child: ListTile(
+                                    contentPadding: const EdgeInsets.all(0),
+                                    leading: ClipRRect(
                                       borderRadius: const BorderRadius.all(
                                               Radius.circular(12))
                                           .r,
@@ -108,7 +107,7 @@ class _CharityPageState extends State<CharityPage> {
                                         imageUrl:
                                             listOfCharity[index].cover ?? '',
                                         fit: BoxFit.cover,
-                                        height: 55.h,
+                                        height: 65.h,
                                         width: 55.w,
                                         errorWidget: (a, b, c) => SizedBox(
                                           width: 55.w,
@@ -116,18 +115,17 @@ class _CharityPageState extends State<CharityPage> {
                                         ),
                                       ),
                                     ),
-                                    Text(
+                                    title: Text(
                                       listOfCharity[index].title ?? 'ERROR',
+                                      textAlign: TextAlign.left,
                                       style:
                                           getTextStyle(CustomTextStyles.s16w500)
                                               .apply(color: AppColors.black),
                                     ),
-                                    const Icon(
+                                    trailing: const Icon(
                                       Icons.arrow_forward,
                                       color: AppColors.orange,
-                                    )
-                                  ],
-                                ),
+                                    )),
                               ),
                             ),
                           );

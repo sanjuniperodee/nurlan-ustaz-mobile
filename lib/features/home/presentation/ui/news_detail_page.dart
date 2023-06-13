@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
@@ -9,25 +11,34 @@ import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_fav_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_like_cubit.dart';
 import 'package:share_plus/share_plus.dart';
 
 class NewsDetailPage extends StatefulWidget {
   final ResultHomeDTO result;
-  const NewsDetailPage({super.key, required this.result});
+  final bool isFav;
+  const NewsDetailPage({super.key, required this.result, required this.isFav});
 
   @override
   State<NewsDetailPage> createState() => _NewsDetailPageState();
 }
 
 class _NewsDetailPageState extends State<NewsDetailPage> {
-  List images = [
-    'assets/images/nur.png',
-    'assets/images/nur.png',
-    'assets/images/nur.png'
-  ];
   int _currentIndex = 0;
-  bool favorite = false;
-  bool heart = false;
+  late bool isFavorite;
+  late bool isLiked;
+  late int likeCount;
+  @override
+  void initState() {
+    // TODO: implement initState
+    isFavorite = widget.isFav;
+    isLiked = widget.result.isLiked!;
+    likeCount = widget.result.likesCount!;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,13 +56,16 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
               });
             },
           ),
-          items: images.map((i) {
+          items: widget.result.media!.map((i) {
             return Builder(
               builder: (BuildContext context) {
-                return Image.asset(
-                  i,
+                return CachedNetworkImage(
+                  imageUrl: i.file ?? '',
                   fit: BoxFit.cover,
                   width: 1.sw,
+                  errorWidget: (a, b, c) => SizedBox(
+                    height: 80.h,
+                  ),
                 );
               },
             );
@@ -62,7 +76,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
           child: Align(
             alignment: Alignment.topCenter,
             child: DotsIndicator(
-              dotsCount: images.length,
+              dotsCount: widget.result.media?.length ?? 0,
               position: _currentIndex,
               decorator: DotsDecorator(
                 color: AppColors.white, // Color of non-selected indicators
@@ -76,7 +90,6 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
           child: Padding(
               padding: const EdgeInsets.only(top: 239).r,
               child: Container(
-                // height: 1.sh,
                 width: 1.sw,
                 decoration: BoxDecoration(
                     color: AppColors.white,
@@ -111,15 +124,22 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                             children: [
                               InkWell(
                                   onTap: () {
-                                    setState(() {
-                                      heart = !heart;
-                                    });
+                                    BlocProvider.of<NewsLikeCubit>(context)
+                                        .newsLike(id: widget.result.id ?? 0);
+                                    isLiked = !isLiked;
+                                    if (isLiked == true) {
+                                      likeCount += 1;
+                                    } else {
+                                      likeCount -= 1;
+                                    }
+
+                                    setState(() {});
                                   },
-                                  child: SvgPicture.asset(heart
+                                  child: SvgPicture.asset(isLiked
                                       ? Assets.heartSvg
                                       : Assets.heart1Svg)),
                               Text(
-                                widget.result.likesCount.toString(),
+                                likeCount.toString(),
                                 style: getTextStyle(CustomTextStyles.s14w400),
                               ),
                               SizedBox(
@@ -144,11 +164,12 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                         ),
                         GestureDetector(
                             onTap: () {
-                              setState(() {
-                                favorite = !favorite;
-                              });
+                              BlocProvider.of<NewsFavCubit>(context)
+                                  .newsFav(id: widget.result.id ?? 0);
+                              isFavorite = !isFavorite;
+                              setState(() {});
                             },
-                            child: SvgPicture.asset(favorite
+                            child: SvgPicture.asset(isFavorite
                                 ? Assets.bookMarkSvg
                                 : Assets.bookMark1Svg))
                       ],
@@ -157,7 +178,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                       height: 21.h,
                     ),
                     Text(
-                      '«Алланың қалауымен некемізді 12-ақпан күні Қасиетті Меккеде қидық. Өзім үнемі шет елде өткізсем деп ойлайтынмын, бірақ дәл Алланың үйінде, Пайғамбарымыз Мұхаммедтің (с.ғ.с) тікелей ұрпақтары біздің некемізді қияды деп ешқашан ойламаппын. Қасиетті Мекке қаласында бәрі Алланың қалауымен болды. Яғни, басымызға жазылған тағдыр. Бұл – біз үшін ең қуанышты күн, естен кетпес тарихи сәт.Ең қызығы, некемізді осы елдің лауазымды шейхтары қиды. Олар үшін де бұл бір жаңалық болды. Бұрын-соңды болмаған жағдай. Алла тағала бұндай бақытты көптің біріне бұйыртпайды, бірақ, Аллаға шүкір, біз өз елімізден бірінші болып, дәл осы Алланың үйінде, пайғамбар ұрпақтарының келісімімен некемізді қидық» деп жазды жігіт.Барлық пікірлерді көру (56)«Алланың қалауымен некемізді 12-ақпан күні Қасиетті Меккеде қидық. Өзім үнемі шет елде өткізсем деп ойлайтынмын, бірақ дәл Алланың үйінде, Пайғамбарымыз Мұхаммедтің (с.ғ.с) тікелей ұрпақтары біздің некемізді қияды деп ешқашан ойламаппын. Қасиетті Мекке қаласында бәрі Алланың қалауымен болды. Яғни, басымызға жазылған тағдыр. Бұл – біз үшін ең қуанышты күн, естен кетпес тарихи сәт.Ең қызығы, некемізді осы елдің лауазымды шейхтары қиды. Олар үшін де бұл бір жаңалық болды. Бұрын-соңды болмаған жағдай. Алла тағала бұндай бақытты көптің біріне бұйыртпайды, бірақ, Аллаға шүкір, біз өз елімізден бірінші болып, дәл осы Алланың үйінде, пайғамбар ұрпақтарының келісімімен некемізді қидық» деп жазды жігіт.Барлық пікірлерді көру (56)',
+                      widget.result.text ?? 'ERROR',
                       style: getTextStyle(CustomTextStyles.s16w400)
                           .apply(color: AppColors.black),
                     ),
@@ -185,7 +206,9 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
             left: 16.r,
             child: GestureDetector(
                 onTap: () {
-                  Navigator.pop(context);
+                  BlocProvider.of<NewsCubit>(context)
+                      .news(page: 1, isFirstCall: true)
+                      .then((value) => Navigator.pop(context));
                 },
                 child: SvgPicture.asset(Assets.backStackSvg))),
       ]),
