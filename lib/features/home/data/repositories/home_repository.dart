@@ -35,6 +35,8 @@ abstract class HomeRepository {
   });
   Future<Either<Failure, List<ResultHomeDTO>>> commentSem(
       {int? page, bool? isFirstCall, int? id});
+  Future<Either<Failure, List<ResultHomeDTO>>> commentNews(
+      {int? page, bool? isFirstCall, int? id});
   Future<Either<Failure, List<MediaDTO>>> services({
     int? page,
     bool? isFirstCall,
@@ -48,7 +50,17 @@ abstract class HomeRepository {
     required String body,
     required String userName,
   });
+  Future<Either<Failure, bool>> commentNewsPost({
+    required int id,
+    required int commentId,
+    required String body,
+    required String userName,
+  });
   Future<Either<Failure, bool>> commentSemLike({
+    required int id,
+    required int commentId,
+  });
+  Future<Either<Failure, bool>> commentNewsLike({
     required int id,
     required int commentId,
   });
@@ -137,6 +149,26 @@ class HomeRepositoryImpl extends HomeRepository {
   }
 
   @override
+  Future<Either<Failure, bool>> commentNewsPost({
+    required int id,
+    required int commentId,
+    required String body,
+    required String userName,
+  }) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final bool res = await remoteDS.commentNewsPost(
+            id: id, commentId: commentId, body: body, userName: userName);
+        return Right(res);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
   Future<Either<Failure, bool>> commentSemPost({
     required int id,
     required int commentId,
@@ -147,6 +179,24 @@ class HomeRepositoryImpl extends HomeRepository {
       try {
         final bool res = await remoteDS.commentSemPost(
             id: id, commentId: commentId, body: body, userName: userName);
+        return Right(res);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> commentNewsLike({
+    required int id,
+    required int commentId,
+  }) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final bool res =
+            await remoteDS.commentNewsLike(id: id, commentId: commentId);
         return Right(res);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -261,6 +311,25 @@ class HomeRepositoryImpl extends HomeRepository {
       try {
         final List<ResultHomeDTO> charities = await remoteDS.charities(
             currentPage: page, isFirstCall: isFirstCall);
+        return Right(charities);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ResultHomeDTO>>> commentNews({
+    int? page,
+    bool? isFirstCall,
+    int? id,
+  }) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final List<ResultHomeDTO> charities = await remoteDS.commentNews(
+            currentPage: page, isFirstCall: isFirstCall, id: id);
         return Right(charities);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));

@@ -15,6 +15,9 @@ import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/s
 import 'package:nurlan_ustaz_flutter/features/app/bloc/app_bloc.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/charities_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_like_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_post_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem_like_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem_post_cubit.dart';
@@ -72,6 +75,15 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         ),
         BlocProvider<CharitiesCubit>(
           create: (context) => getIt<CharitiesCubit>(),
+        ),
+        BlocProvider<CommentNewsCubit>(
+          create: (context) => getIt<CommentNewsCubit>(),
+        ),
+        BlocProvider<CommentNewsLikeCubit>(
+          create: (context) => getIt<CommentNewsLikeCubit>(),
+        ),
+        BlocProvider<CommentNewsPostCubit>(
+          create: (context) => getIt<CommentNewsPostCubit>(),
         ),
         BlocProvider<CommentSemCubit>(
           create: (context) => getIt<CommentSemCubit>(),
