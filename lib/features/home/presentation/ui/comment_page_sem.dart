@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,28 +11,35 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_ap
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem_post_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/widgets/comment_deep_item_widget.dart';
 
-class CommentPage extends StatefulWidget {
+class CommentPageSem extends StatefulWidget {
   final int id;
-  const CommentPage({super.key, required this.id});
+  const CommentPageSem({super.key, required this.id});
 
   @override
-  State<CommentPage> createState() => _CommentPageState();
+  State<CommentPageSem> createState() => _CommentPageSemState();
 }
 
-class _CommentPageState extends State<CommentPage> {
+class _CommentPageSemState extends State<CommentPageSem> {
   final ScrollController _scrollController = ScrollController();
   int page = 1;
   final TextEditingController _textEditingController = TextEditingController();
   List<ResultHomeDTO> listOfComments = [];
   bool isLoadingMore = false;
+  int? idChildComment;
+  FocusNode focusNode = FocusNode();
   @override
   void initState() {
     // TODO: implement initState
     BlocProvider.of<CommentSemCubit>(context)
         .commentsSem(page: 1, isFirstCall: true, id: widget.id);
     _scrollController.addListener(_scrollListener);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      FocusScope.of(context).requestFocus(focusNode);
+    });
     super.initState();
   }
 
@@ -47,7 +56,9 @@ class _CommentPageState extends State<CommentPage> {
       appBar: AppBar(
         leading: GestureDetector(
             onTap: () {
-              Navigator.pop(context);
+              BlocProvider.of<SeminarDetailCubit>(context)
+                  .seminarDetail(id: widget.id)
+                  .then((value) => Navigator.pop(context));
             },
             child: const Icon(
               Icons.arrow_back,
@@ -96,12 +107,43 @@ class _CommentPageState extends State<CommentPage> {
                 padding: const EdgeInsets.symmetric(
                   horizontal: 16,
                 ),
-                child: TextField(
-                  autofocus: true, // Set autofocus to true
-
-                  controller: _textEditingController,
-                  decoration: const InputDecoration(
-                      hintText: 'Пікір білдіру', border: InputBorder.none),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        autofocus: true, // Set autofocus to true
+                        focusNode: focusNode,
+                        controller: _textEditingController,
+                        decoration: const InputDecoration(
+                            hintText: 'Пікір білдіру',
+                            border: InputBorder.none),
+                      ),
+                    ),
+                    BlocListener<CommentSemPostCubit, CommentSemPostState>(
+                      listener: (context, state) {
+                        log(state.toString());
+                        state.maybeWhen(orElse: () {
+                          log(state.toString());
+                        }, loaded: () {
+                          BlocProvider.of<CommentSemCubit>(context).commentsSem(
+                              page: 1, isFirstCall: true, id: widget.id);
+                        });
+                      },
+                      child: IconButton(
+                        icon: const Icon(Icons.send),
+                        onPressed: () {
+                          BlocProvider.of<CommentSemPostCubit>(context)
+                              .seminarCommentPost(
+                            body: _textEditingController.text,
+                            id: widget.id,
+                            commentId: idChildComment,
+                          );
+                          idChildComment = null;
+                          _textEditingController.clear();
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
@@ -146,51 +188,68 @@ class _CommentPageState extends State<CommentPage> {
                       )
                     : Padding(
                         padding: const EdgeInsets.symmetric(
-                                vertical: 56, horizontal: 16)
+                                vertical: 26, horizontal: 16)
                             .r,
                         child: ListView.builder(
                           physics: const NeverScrollableScrollPhysics(),
                           shrinkWrap: true,
                           itemCount: listOfComments.length,
                           itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                CommentDeepItemWidget(
+                            return Theme(
+                              data: ThemeData()
+                                  .copyWith(dividerColor: Colors.transparent),
+                              child: ExpansionTile(
+                                title: CommentDeepItemWidget(
                                   resultHomeDTO: listOfComments[index],
                                   id: widget.id,
+                                  type: 'sem',
+                                  ans: false,
+                                  callback: () {
+                                    _textEditingController.text =
+                                        '@${listOfComments[index].user!.fullName!}';
+                                    _textEditingController.selection =
+                                        TextSelection.fromPosition(TextPosition(
+                                            offset: _textEditingController
+                                                .text.length));
+                                    idChildComment = listOfComments[index].id;
+                                  },
                                 ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 65),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      if (listOfComments[index].children !=
-                                          null)
-                                        ListView.builder(
-                                          physics:
-                                              const NeverScrollableScrollPhysics(),
-                                          itemCount: listOfComments[index]
-                                              .children!
-                                              .length,
-                                          shrinkWrap: true,
-                                          itemBuilder: (context, indexx) {
-                                            return Padding(
-                                              padding: const EdgeInsets.only(
-                                                  bottom: 8),
-                                              child: CommentDeepItemWidget(
-                                                resultHomeDTO:
-                                                    listOfComments[index]
-                                                        .children![indexx],
-                                                id: widget.id,
-                                              ),
-                                            );
-                                          },
-                                        )
-                                    ],
-                                  ),
-                                )
-                              ],
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 65),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        if (listOfComments[index].children !=
+                                            null)
+                                          ListView.builder(
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            itemCount: listOfComments[index]
+                                                .children!
+                                                .length,
+                                            shrinkWrap: true,
+                                            itemBuilder: (context, indexx) {
+                                              return Padding(
+                                                padding: const EdgeInsets.only(
+                                                    bottom: 18),
+                                                child: CommentDeepItemWidget(
+                                                  resultHomeDTO:
+                                                      listOfComments[index]
+                                                          .children![indexx],
+                                                  id: widget.id,
+                                                  type: 'sem',
+                                                  ans: true,
+                                                ),
+                                              );
+                                            },
+                                          )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
                             );
                           },
                         )),

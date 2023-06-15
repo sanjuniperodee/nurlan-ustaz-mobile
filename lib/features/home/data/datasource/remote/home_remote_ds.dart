@@ -15,20 +15,21 @@ abstract class HomeRemoteDs {
   Future<bool> seminarLike({required int id});
   Future<bool> newsFavorite({required int id});
   Future<bool> newsLike({required int id});
-  Future<bool> commentSemPost(
-      {required int id,
-      required int commentId,
-      required String body,
-      required String userName});
-  Future<bool> commentNewsPost(
-      {required int id,
-      required int commentId,
-      required String body,
-      required String userName});
+  Future<bool> commentSemPost({
+    required int id,
+    int? commentId,
+    required String body,
+  });
+  Future<bool> commentNewsPost({
+    required int id,
+    int? commentId,
+    required String body,
+  });
   Future<bool> commentSemLike({required int id, required int commentId});
   Future<bool> commentNewsLike({required int id, required int commentId});
   Future<bool> livesFavorite({required int id});
-
+  Future<ResultHomeDTO> newsDetail({required int id});
+  Future<ResultHomeDTO> seminarDetail({required int id});
   Future<List<ResultHomeDTO>> news(
       {String? search,
       bool? isSaved,
@@ -125,6 +126,40 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   }
 
   @override
+  Future<ResultHomeDTO> newsDetail({required int id}) async {
+    try {
+      final response = await dio.get(
+        '${EndPoints.news}/$id/',
+      );
+      return ResultHomeDTO.fromJson(
+        (response.data as Map<String, dynamic>),
+      );
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<ResultHomeDTO> seminarDetail({required int id}) async {
+    try {
+      final response = await dio.get(
+        '${EndPoints.seminar}/$id/',
+      );
+      return ResultHomeDTO.fromJson(
+        (response.data as Map<String, dynamic>),
+      );
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
   Future<bool> seminarFavorite({required int id}) async {
     try {
       final response = await dio.post(
@@ -155,20 +190,16 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   }
 
   @override
-  Future<bool> commentNewsPost(
-      {required int id,
-      required int commentId,
-      required String body,
-      required String userName}) async {
+  Future<bool> commentNewsPost({
+    required int id,
+    int? commentId,
+    required String body,
+  }) async {
     try {
       final response = await dio.post('${EndPoints.news}/$id/comment/', data: {
-        'parent': commentId,
+        if (commentId != null) 'parent': commentId,
         'body': body,
-        'user': {
-          'full_name': userName,
-        }
       });
-
       return true;
     } on DioError catch (e) {
       throw ServerException(
@@ -179,19 +210,16 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   }
 
   @override
-  Future<bool> commentSemPost(
-      {required int id,
-      required int commentId,
-      required String body,
-      required String userName}) async {
+  Future<bool> commentSemPost({
+    required int id,
+    int? commentId,
+    required String body,
+  }) async {
     try {
       final response =
           await dio.post('${EndPoints.seminar}/$id/comment/', data: {
         'parent': commentId,
         'body': body,
-        'user': {
-          'full_name': userName,
-        }
       });
 
       return true;

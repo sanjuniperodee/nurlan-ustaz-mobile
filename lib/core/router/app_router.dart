@@ -22,7 +22,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/launcher.dart'
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/charity_detail_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/charity_page.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/comment_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/comment_page_sem.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/main_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/news_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/notifications_page.dart';
@@ -52,6 +52,7 @@ import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/ui/zhospar
 import '../../features/Islam_teaching/presentation/ui/detail_prayers_page.dart';
 import '../../features/Islam_teaching/presentation/ui/name_detail_page.dart';
 import '../../features/Islam_teaching/presentation/ui/surah_detail_page.dart';
+import '../../features/home/presentation/ui/comment_page_news.dart';
 import '../../features/home/presentation/ui/live_broadcasts_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/tus_zhoru_page.dart';
 
@@ -75,8 +76,8 @@ part 'app_router.gr.dart';
         AutoRoute(page: MainPage, name: 'MainRouterPage'),
         AutoRoute(page: IslamTeachingPage, name: 'IslamTeachingRouterPage'),
         AutoRoute(page: TusZhoruPage, name: 'TusZhoruRouterPage'),
-        AutoRoute(page: TandaulilarMainPage,name: 'TandaulilarMainRouterPage'),
-        AutoRoute(page: ZhosparymPage,name: 'ZhosparymRouterPage'),
+        AutoRoute(page: TandaulilarMainPage, name: 'TandaulilarMainRouterPage'),
+        AutoRoute(page: ZhosparymPage, name: 'ZhosparymRouterPage'),
       ],
     ),
     //
@@ -129,9 +130,11 @@ part 'app_router.gr.dart';
       page: QiblahPage,
     ),
     AutoRoute(
-      page: CommentPage,
+      page: CommentPageSem,
     ),
-
+    AutoRoute(
+      page: CommentPageNews,
+    ),
     //TosZhoru
     AutoRoute(page: TusZhoruDetailPage),
     AutoRoute(page: QuestionPage),

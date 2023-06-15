@@ -8,16 +8,22 @@ import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_like_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem_like_cubit.dart';
 
 class CommentDeepItemWidget extends StatefulWidget {
   final ResultHomeDTO resultHomeDTO;
   final int id;
+  final String type;
+  final bool ans;
+  final void Function()? callback;
   const CommentDeepItemWidget({
     Key? key,
     required this.resultHomeDTO,
     required this.id,
+    required this.type,
+    required this.ans,
+    this.callback,
   }) : super(key: key);
 
   @override
@@ -26,12 +32,13 @@ class CommentDeepItemWidget extends StatefulWidget {
 
 class _CommentDeepItemWidgetState extends State<CommentDeepItemWidget> {
   late bool isLiked;
+  late int likeCount;
   @override
   void initState() {
     // TODO: implement initState
 
     isLiked = widget.resultHomeDTO.isLiked!;
-
+    likeCount = widget.resultHomeDTO.likesCount!;
     super.initState();
   }
 
@@ -89,42 +96,68 @@ class _CommentDeepItemWidgetState extends State<CommentDeepItemWidget> {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      widget.resultHomeDTO.body ?? 'ERROR',
-                      style: getTextStyle(CustomTextStyles.s14w700)
-                          .apply(color: AppColors.black),
+                    Flexible(
+                      child: Text(
+                        widget.resultHomeDTO.body ?? 'ERROR',
+                        style: getTextStyle(CustomTextStyles.s14w700)
+                            .apply(color: AppColors.black),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 4.w,
                     ),
                     InkWell(
                         onTap: () {
-                          BlocProvider.of<CommentSemLikeCubit>(context)
-                              .seminarCommentLike(
-                                  id: widget.id,
-                                  commentId: widget.resultHomeDTO.id ?? 0);
+                          widget.type == 'sem'
+                              ? BlocProvider.of<CommentSemLikeCubit>(context)
+                                  .seminarCommentLike(
+                                      id: widget.id,
+                                      commentId: widget.resultHomeDTO.id ?? 0)
+                              : BlocProvider.of<CommentNewsLikeCubit>(context)
+                                  .newsCommentLike(
+                                      id: widget.id,
+                                      commentId: widget.resultHomeDTO.id ?? 0);
                           isLiked = !isLiked;
+                          if (isLiked == true) {
+                            likeCount += 1;
+                          } else {
+                            likeCount -= 1;
+                          }
                           setState(() {});
                         },
-                        child: SvgPicture.asset(
-                            isLiked ? Assets.heartSvg : Assets.heart1Svg)),
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(
+                                isLiked ? Assets.heartSvg : Assets.heart1Svg),
+                            SizedBox(
+                              width: 2.w,
+                            ),
+                            Text(likeCount.toString()),
+                          ],
+                        )),
                   ],
                 ),
                 const SizedBox(
                   height: 4,
                 ),
-                InkWell(
-                  borderRadius: BorderRadius.circular(8),
-                  onTap: () {},
-                  child: const Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8),
-                      child: Text(
-                        'Жауап беру',
-                        style: TextStyle(
-                            decoration: TextDecoration.underline,
-                            fontSize: 12,
-                            color: AppColors.grey2,
-                            fontWeight: FontWeight.w500),
-                      )),
-                ),
+                widget.ans
+                    ? const SizedBox()
+                    : InkWell(
+                        borderRadius: BorderRadius.circular(8),
+                        onTap: widget.callback ?? () {},
+                        child: const Padding(
+                            padding: EdgeInsets.symmetric(vertical: 8),
+                            child: Text(
+                              'Жауап беру',
+                              style: TextStyle(
+                                  decoration: TextDecoration.underline,
+                                  fontSize: 12,
+                                  color: AppColors.grey2,
+                                  fontWeight: FontWeight.w500),
+                            )),
+                      ),
               ],
             ),
           )

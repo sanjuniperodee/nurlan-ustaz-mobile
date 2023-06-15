@@ -17,6 +17,7 @@ import 'package:nurlan_ustaz_flutter/core/utils/alert_utilrs.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_fav_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_like_cubit.dart';
 import 'package:share_plus/share_plus.dart';
@@ -40,229 +41,254 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
   @override
   void initState() {
     // TODO: implement initState
+    BlocProvider.of<SeminarDetailCubit>(context)
+        .seminarDetail(id: widget.result.id!);
     isFavorite = widget.isFav;
     isLiked = widget.result.isLiked!;
     likeCount = widget.result.likesCount!;
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(children: [
-        CarouselSlider(
-          options: CarouselOptions(
-            viewportFraction: 1,
-            autoPlay: true,
-            autoPlayInterval: const Duration(seconds: 3),
-            enlargeCenterPage: true,
-            aspectRatio: 16 / 9,
-            onPageChanged: (index, _) {
-              setState(() {
-                _currentIndex = index;
-              });
+      body: BlocBuilder<SeminarDetailCubit, SeminarDetailState>(
+        builder: (context, state) {
+          return state.maybeWhen(
+            orElse: () {
+              return const Center();
             },
-          ),
-          items: widget.result.media!.map((i) {
-            return Builder(
-              builder: (BuildContext context) {
-                return CachedNetworkImage(
-                    imageUrl: i.file ?? 'assets/images/nur.png',
-                    fit: BoxFit.cover,
-                    width: 1.sw,
-                    errorWidget: (a, b, c) => Image.asset(
-                          'assets/images/nur.png',
-                          fit: BoxFit.cover,
-                          width: 1.sw,
-                        ));
-              },
-            );
-          }).toList(),
-        ),
-        if (widget.result.media != null)
-          Positioned.fill(
-            top: 210.r,
-            child: Align(
-              alignment: Alignment.topCenter,
-              child: DotsIndicator(
-                dotsCount: 1,
-                position: _currentIndex,
-                decorator: DotsDecorator(
-                  color: AppColors.white, // Color of non-selected indicators
-                  activeColor: AppColors.grey1, // Color of selected indicator
+            loaded: (res) {
+              return Stack(children: [
+                CarouselSlider(
+                  options: CarouselOptions(
+                    viewportFraction: 1,
+                    autoPlay: true,
+                    autoPlayInterval: const Duration(seconds: 3),
+                    enlargeCenterPage: true,
+                    aspectRatio: 16 / 9,
+                    onPageChanged: (index, _) {
+                      setState(() {
+                        _currentIndex = index;
+                      });
+                    },
+                  ),
+                  items: widget.result.media!.map((i) {
+                    return Builder(
+                      builder: (BuildContext context) {
+                        return CachedNetworkImage(
+                            imageUrl: i.file ?? 'assets/images/nur.png',
+                            fit: BoxFit.cover,
+                            width: 1.sw,
+                            errorWidget: (a, b, c) => Image.asset(
+                                  'assets/images/nur.png',
+                                  fit: BoxFit.cover,
+                                  width: 1.sw,
+                                ));
+                      },
+                    );
+                  }).toList(),
                 ),
-              ),
-            ),
-          ),
-        SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Padding(
-              padding: const EdgeInsets.only(top: 239).r,
-              child: Container(
-                height: 1.sh,
-                width: 1.sw,
-                decoration: BoxDecoration(
-                    color: AppColors.white,
-                    borderRadius: BorderRadius.only(
-                      topRight: const Radius.circular(30).r,
-                      topLeft: const Radius.circular(30).r,
-                    )),
-                padding: EdgeInsets.symmetric(vertical: 16.r, horizontal: 16.r),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.result.title ?? 'ERROR',
-                      style: getTextStyle(CustomTextStyles.s20w700)
-                          .apply(color: AppColors.black),
+                if (widget.result.media != null)
+                  Positioned.fill(
+                    top: 210.r,
+                    child: Align(
+                      alignment: Alignment.topCenter,
+                      child: DotsIndicator(
+                        dotsCount: 1,
+                        position: _currentIndex,
+                        decorator: DotsDecorator(
+                          color: AppColors
+                              .white, // Color of non-selected indicators
+                          activeColor:
+                              AppColors.grey1, // Color of selected indicator
+                        ),
+                      ),
                     ),
-                    SizedBox(
-                      height: 12.h,
-                    ),
-                    Row(
-                      children: [
-                        Row(
+                  ),
+                SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Padding(
+                      padding: const EdgeInsets.only(top: 239).r,
+                      child: Container(
+                        height: 1.sh,
+                        width: 1.sw,
+                        decoration: BoxDecoration(
+                            color: AppColors.white,
+                            borderRadius: BorderRadius.only(
+                              topRight: const Radius.circular(30).r,
+                              topLeft: const Radius.circular(30).r,
+                            )),
+                        padding: EdgeInsets.symmetric(
+                            vertical: 16.r, horizontal: 16.r),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SvgPicture.asset(Assets.seminarCalendarSvg),
+                            Text(
+                              widget.result.title ?? 'ERROR',
+                              style: getTextStyle(CustomTextStyles.s20w700)
+                                  .apply(color: AppColors.black),
+                            ),
                             SizedBox(
-                              width: 10.w,
+                              height: 12.h,
+                            ),
+                            Row(
+                              children: [
+                                Row(
+                                  children: [
+                                    SvgPicture.asset(Assets.seminarCalendarSvg),
+                                    SizedBox(
+                                      width: 10.w,
+                                    ),
+                                    Text(
+                                      '${DateFormat('d').format(DateTime.parse(widget.result.startTime.toString()))}  ${DateFormat('MMMM').format(DateTime.parse(widget.result.startTime.toString()))}, ${DateFormat('HH:MM').format(DateTime.parse(widget.result.startTime.toString()))}',
+                                      style:
+                                          getTextStyle(CustomTextStyles.s14w400)
+                                              .apply(color: AppColors.grey2),
+                                    ),
+                                    SizedBox(
+                                      width: 28.w,
+                                    ),
+                                    SvgPicture.asset(Assets.mapSvg),
+                                    SizedBox(
+                                      width: 10.w,
+                                    ),
+                                    Text(
+                                      widget.result.address ?? 'ERROR',
+                                      style:
+                                          getTextStyle(CustomTextStyles.s14w400)
+                                              .apply(color: AppColors.grey2),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 23.h,
+                            ),
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Row(
+                                    children: [
+                                      InkWell(
+                                          onTap: () {
+                                            BlocProvider.of<SeminarLikeCubit>(
+                                                    context)
+                                                .seminarLike(
+                                                    id: widget.result.id ?? 0);
+                                            isLiked = !isLiked;
+                                            if (isLiked == true) {
+                                              likeCount += 1;
+                                            } else {
+                                              likeCount -= 1;
+                                            }
+
+                                            setState(() {});
+                                          },
+                                          child: SvgPicture.asset(isLiked
+                                              ? Assets.heartSvg
+                                              : Assets.heart1Svg)),
+                                      Text(
+                                        likeCount.toString(),
+                                        style: getTextStyle(
+                                            CustomTextStyles.s14w400),
+                                      ),
+                                      SizedBox(
+                                        width: 12.w,
+                                      ),
+                                      SvgPicture.asset(Assets.commentSvg),
+                                      Text(
+                                        res.comentCount.toString(),
+                                        style: getTextStyle(
+                                            CustomTextStyles.s14w400),
+                                      ),
+                                      SizedBox(
+                                        width: 12.w,
+                                      ),
+                                      InkWell(
+                                          onTap: () {
+                                            Share.share('Hello',
+                                                subject: 'Nurlan_ustaz');
+                                          },
+                                          child: SvgPicture.asset(
+                                              Assets.shareSvg)),
+                                    ],
+                                  ),
+                                ),
+                                GestureDetector(
+                                    onTap: () {
+                                      BlocProvider.of<SeminarFavCubit>(context)
+                                          .seminarFavorite(
+                                              id: widget.result.id ?? 0);
+                                      isFavorite = !isFavorite;
+                                      setState(() {});
+                                    },
+                                    child: SvgPicture.asset(isFavorite
+                                        ? Assets.bookMarkSvg
+                                        : Assets.bookMark1Svg))
+                              ],
+                            ),
+                            SizedBox(
+                              height: 39.h,
+                            ),
+                            AppButton(
+                              onTap: () {
+                                Alert.dialogBuilder(
+                                    context: context,
+                                    message: 'Төлем сәтті аяқталды',
+                                    gradientColors: [
+                                      const Color(0xFF1151C2),
+                                      const Color(0xFF2941F4).withOpacity(0.1),
+                                      const Color(0xFF4E5BF3).withOpacity(0.1),
+                                    ]);
+                              },
+                              text: 'Сатып алу',
+                              color: AppColors.blue,
+                            ),
+                            SizedBox(
+                              height: 20.h,
                             ),
                             Text(
-                              '${DateFormat('d').format(DateTime.parse(widget.result.startTime.toString()))}  ${DateFormat('MMMM').format(DateTime.parse(widget.result.startTime.toString()))}, ${DateFormat('HH:MM').format(DateTime.parse(widget.result.startTime.toString()))}',
-                              style: getTextStyle(CustomTextStyles.s14w400)
-                                  .apply(color: AppColors.grey2),
+                              widget.result.text ?? 'ERROR',
+                              style: getTextStyle(CustomTextStyles.s16w400)
+                                  .apply(color: AppColors.black),
                             ),
                             SizedBox(
-                              width: 28.w,
+                              height: 20.h,
                             ),
-                            SvgPicture.asset(Assets.mapSvg),
-                            SizedBox(
-                              width: 10.w,
-                            ),
-                            Text(
-                              widget.result.address ?? 'ERROR',
-                              style: getTextStyle(CustomTextStyles.s14w400)
-                                  .apply(color: AppColors.grey2),
-                            ),
+                            GestureDetector(
+                              onTap: () {
+                                context.router.push(
+                                  CommentPageSemRoute(id: widget.result.id!),
+                                );
+                              },
+                              child: Text(
+                                'Пікірлерді көру (${res.comentCount})',
+                                style: getTextStyle(CustomTextStyles.s16w400)
+                                    .apply(color: AppColors.grey1),
+                              ),
+                            )
                           ],
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 23.h,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          child: Row(
-                            children: [
-                              InkWell(
-                                  onTap: () {
-                                    BlocProvider.of<SeminarLikeCubit>(context)
-                                        .seminarLike(id: widget.result.id ?? 0);
-                                    isLiked = !isLiked;
-                                    if (isLiked == true) {
-                                      likeCount += 1;
-                                    } else {
-                                      likeCount -= 1;
-                                    }
-
-                                    setState(() {});
-                                  },
-                                  child: SvgPicture.asset(isLiked
-                                      ? Assets.heartSvg
-                                      : Assets.heart1Svg)),
-                              Text(
-                                likeCount.toString(),
-                                style: getTextStyle(CustomTextStyles.s14w400),
-                              ),
-                              SizedBox(
-                                width: 12.w,
-                              ),
-                              SvgPicture.asset(Assets.commentSvg),
-                              Text(
-                                widget.result.comentCount.toString(),
-                                style: getTextStyle(CustomTextStyles.s14w400),
-                              ),
-                              SizedBox(
-                                width: 12.w,
-                              ),
-                              InkWell(
-                                  onTap: () {
-                                    Share.share('Hello',
-                                        subject: 'Nurlan_ustaz');
-                                  },
-                                  child: SvgPicture.asset(Assets.shareSvg)),
-                            ],
-                          ),
-                        ),
-                        GestureDetector(
-                            onTap: () {
-                              BlocProvider.of<SeminarFavCubit>(context)
-                                  .seminarFavorite(id: widget.result.id ?? 0);
-                              isFavorite = !isFavorite;
-                              setState(() {});
-                            },
-                            child: SvgPicture.asset(isFavorite
-                                ? Assets.bookMarkSvg
-                                : Assets.bookMark1Svg))
-                      ],
-                    ),
-                    SizedBox(
-                      height: 39.h,
-                    ),
-                    AppButton(
-                      onTap: () {
-                        Alert.dialogBuilder(
-                            context: context,
-                            message: 'Төлем сәтті аяқталды',
-                            gradientColors: [
-                              Color(0xFF1151C2),
-                              Color(0xFF2941F4).withOpacity(0.1),
-                              Color(0xFF4E5BF3).withOpacity(0.1),
-                            ]);
-                      },
-                      text: 'Сатып алу',
-                      color: AppColors.blue,
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Text(
-                      widget.result.text ?? 'ERROR',
-                      style: getTextStyle(CustomTextStyles.s16w400)
-                          .apply(color: AppColors.black),
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        context.router.push(
-                          CommentPageRoute(id: widget.result.id!),
-                        );
-                      },
-                      child: Text(
-                        'Пікірлерді көру (${widget.result.comentCount})',
-                        style: getTextStyle(CustomTextStyles.s16w400)
-                            .apply(color: AppColors.grey1),
-                      ),
-                    )
-                  ],
+                      )),
                 ),
-              )),
-        ),
-        Positioned(
-            top: 54.r,
-            left: 16.r,
-            child: GestureDetector(
-                onTap: () {
-                  BlocProvider.of<SeminarCubit>(context)
-                      .seminar(page: 1, isFirstCall: true)
-                      .then((value) => Navigator.pop(context));
-                },
-                child: SvgPicture.asset(Assets.backStackSvg))),
-      ]),
+                Positioned(
+                    top: 54.r,
+                    left: 16.r,
+                    child: GestureDetector(
+                        onTap: () {
+                          BlocProvider.of<SeminarCubit>(context)
+                              .seminar(page: 1, isFirstCall: true)
+                              .then((value) => Navigator.pop(context));
+                        },
+                        child: SvgPicture.asset(Assets.backStackSvg))),
+              ]);
+            },
+          );
+        },
+      ),
     );
   }
 }

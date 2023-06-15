@@ -12,6 +12,13 @@ class QiblahPage extends StatefulWidget {
 class _QiblahPageState extends State<QiblahPage> {
   bool hasPermission = false;
 
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    getPermission();
+  }
+
   Future getPermission() async {
     if (await Permission.location.serviceStatus.isEnabled) {
       var status = await Permission.location.status;

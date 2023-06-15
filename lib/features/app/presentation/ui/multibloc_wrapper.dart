@@ -24,11 +24,13 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/lives_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/lives_fav_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_fav_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_like_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/partners_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/post_service_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_fav_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_like_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/services_cubit.dart';
@@ -114,6 +116,12 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         ),
         BlocProvider<NewsFavCubit>(
           create: (context) => getIt<NewsFavCubit>(),
+        ),
+        BlocProvider<NewsDetailCubit>(
+          create: (context) => getIt<NewsDetailCubit>(),
+        ),
+        BlocProvider<SeminarDetailCubit>(
+          create: (context) => getIt<SeminarDetailCubit>(),
         ),
         BlocProvider<NewsLikeCubit>(
           create: (context) => getIt<NewsLikeCubit>(),

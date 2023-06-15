@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -15,19 +17,24 @@ class CommentNewsPostCubit extends Cubit<CommentNewsPostState> {
 
   Future<void> newsCommentPost({
     required int id,
-    required int commentId,
+    int? commentId,
     required String body,
-    required String userName,
   }) async {
+    emit(const CommentNewsPostState.loadingState());
     final failureOrUser = await _homeRepository.commentNewsPost(
-        id: id, commentId: commentId, body: body, userName: userName);
+      id: id,
+      commentId: commentId,
+      body: body,
+    );
     failureOrUser.fold(
       (l) {
         emit(CommentNewsPostState.errorState(
             message: mapFailureToMessageBack(l)));
       },
       (r) {
+        log('1');
         emit(const CommentNewsPostState.loaded());
+        log('2');
       },
     );
   }

@@ -23,28 +23,31 @@ import '../../features/auth/data/datasource/remote/auth_remote_ds.dart' as _i5;
 import '../../features/auth/data/repositories/auth_repository.dart' as _i7;
 import '../../features/home/data/datasource/remote/home_remote_ds.dart' as _i8;
 import '../../features/home/data/repositories/home_repository.dart' as _i16;
-import '../../features/home/presentation/bloc/charities_cubit.dart' as _i34;
-import '../../features/home/presentation/bloc/comment_news_cubit.dart' as _i35;
+import '../../features/home/presentation/bloc/charities_cubit.dart' as _i36;
+import '../../features/home/presentation/bloc/comment_news_cubit.dart' as _i37;
 import '../../features/home/presentation/bloc/comment_news_like_cubit.dart'
-    as _i36;
+    as _i38;
 import '../../features/home/presentation/bloc/comment_news_post_cubit.dart'
-    as _i37;
-import '../../features/home/presentation/bloc/comment_sem_cubit.dart' as _i38;
-import '../../features/home/presentation/bloc/comment_sem_like_cubit.dart'
     as _i39;
+import '../../features/home/presentation/bloc/comment_sem_cubit.dart' as _i40;
+import '../../features/home/presentation/bloc/comment_sem_like_cubit.dart'
+    as _i41;
 import '../../features/home/presentation/bloc/comment_sem_post_cubit.dart'
-    as _i40;
+    as _i42;
 import '../../features/home/presentation/bloc/lives_cubit.dart' as _i18;
 import '../../features/home/presentation/bloc/lives_fav_cubit.dart' as _i19;
 import '../../features/home/presentation/bloc/news_cubit.dart' as _i21;
-import '../../features/home/presentation/bloc/news_fav_cubit.dart' as _i22;
-import '../../features/home/presentation/bloc/news_like_cubit.dart' as _i23;
-import '../../features/home/presentation/bloc/partners_cubit.dart' as _i24;
-import '../../features/home/presentation/bloc/post_service_cubit.dart' as _i26;
-import '../../features/home/presentation/bloc/seminar_cubit.dart' as _i27;
-import '../../features/home/presentation/bloc/seminar_fav_cubit.dart' as _i28;
-import '../../features/home/presentation/bloc/seminar_like_cubit.dart' as _i29;
-import '../../features/home/presentation/bloc/services_cubit.dart' as _i30;
+import '../../features/home/presentation/bloc/news_detail_cubit.dart' as _i22;
+import '../../features/home/presentation/bloc/news_fav_cubit.dart' as _i23;
+import '../../features/home/presentation/bloc/news_like_cubit.dart' as _i24;
+import '../../features/home/presentation/bloc/partners_cubit.dart' as _i25;
+import '../../features/home/presentation/bloc/post_service_cubit.dart' as _i27;
+import '../../features/home/presentation/bloc/seminar_cubit.dart' as _i28;
+import '../../features/home/presentation/bloc/seminar_detail_cubit.dart'
+    as _i29;
+import '../../features/home/presentation/bloc/seminar_fav_cubit.dart' as _i30;
+import '../../features/home/presentation/bloc/seminar_like_cubit.dart' as _i31;
+import '../../features/home/presentation/bloc/services_cubit.dart' as _i32;
 import '../../features/Islam_teaching/data/datasource/local/Islam_teaching_local_ds.dart'
     as _i9;
 import '../../features/Islam_teaching/data/datasource/remote/Islam_teaching_remote_ds.dart'
@@ -52,27 +55,27 @@ import '../../features/Islam_teaching/data/datasource/remote/Islam_teaching_remo
 import '../../features/Islam_teaching/data/repositories/Islam_teaching_repository.dart'
     as _i17;
 import '../../features/Islam_teaching/presentation/bloc/ayat_of_day_cubit.dart'
-    as _i33;
+    as _i35;
 import '../../features/Islam_teaching/presentation/bloc/dhikrs_cubit.dart'
-    as _i41;
-import '../../features/Islam_teaching/presentation/bloc/dhikrs_favorite_cubit.dart'
-    as _i42;
-import '../../features/Islam_teaching/presentation/bloc/duas_cubit.dart'
     as _i43;
-import '../../features/Islam_teaching/presentation/bloc/duas_favorite_cubit.dart'
+import '../../features/Islam_teaching/presentation/bloc/dhikrs_favorite_cubit.dart'
     as _i44;
-import '../../features/Islam_teaching/presentation/bloc/islam_names_cubit.dart'
+import '../../features/Islam_teaching/presentation/bloc/duas_cubit.dart'
     as _i45;
-import '../../features/Islam_teaching/presentation/bloc/islam_names_favorite_cubit.dart'
+import '../../features/Islam_teaching/presentation/bloc/duas_favorite_cubit.dart'
     as _i46;
+import '../../features/Islam_teaching/presentation/bloc/islam_names_cubit.dart'
+    as _i47;
+import '../../features/Islam_teaching/presentation/bloc/islam_names_favorite_cubit.dart'
+    as _i48;
 import '../../features/Islam_teaching/presentation/bloc/names_of_Allah_cubit.dart'
     as _i20;
 import '../../features/Islam_teaching/presentation/bloc/pillars_cubit.dart'
-    as _i25;
+    as _i26;
 import '../../features/Islam_teaching/presentation/bloc/surah_cubit.dart'
-    as _i31;
+    as _i33;
 import '../../features/Islam_teaching/presentation/bloc/surah_favorite_cubit.dart'
-    as _i32;
+    as _i34;
 import '../platform/dio_wrapper.dart' as _i6;
 import '../platform/network_info.dart' as _i12;
 
@@ -124,56 +127,60 @@ extension GetItInjectableX on _i1.GetIt {
     gh.singleton<_i20.NamesOfAllahCubit>(
         _i20.NamesOfAllahCubit(gh<_i17.IslamTeachingRepository>()));
     gh.singleton<_i21.NewsCubit>(_i21.NewsCubit(gh<_i16.HomeRepository>()));
-    gh.singleton<_i22.NewsFavCubit>(
-        _i22.NewsFavCubit(gh<_i16.HomeRepository>()));
-    gh.singleton<_i23.NewsLikeCubit>(
-        _i23.NewsLikeCubit(gh<_i16.HomeRepository>()));
-    gh.singleton<_i24.PartnersCubit>(
-        _i24.PartnersCubit(gh<_i16.HomeRepository>()));
-    gh.singleton<_i25.PillarsCubit>(
-        _i25.PillarsCubit(gh<_i17.IslamTeachingRepository>()));
-    gh.singleton<_i26.PostServiceCubit>(
-        _i26.PostServiceCubit(gh<_i16.HomeRepository>()));
-    gh.singleton<_i27.SeminarCubit>(
-        _i27.SeminarCubit(gh<_i16.HomeRepository>()));
-    gh.singleton<_i28.SeminarFavCubit>(
-        _i28.SeminarFavCubit(gh<_i16.HomeRepository>()));
-    gh.singleton<_i29.SeminarLikeCubit>(
-        _i29.SeminarLikeCubit(gh<_i16.HomeRepository>()));
-    gh.singleton<_i30.ServicesCubit>(
-        _i30.ServicesCubit(gh<_i16.HomeRepository>()));
-    gh.singleton<_i31.SurahCubit>(
-        _i31.SurahCubit(gh<_i17.IslamTeachingRepository>()));
-    gh.singleton<_i32.SurahFavoriteCubit>(
-        _i32.SurahFavoriteCubit(gh<_i17.IslamTeachingRepository>()));
-    gh.singleton<_i33.AyatOfDayCubit>(
-        _i33.AyatOfDayCubit(gh<_i17.IslamTeachingRepository>()));
-    gh.singleton<_i34.CharitiesCubit>(
-        _i34.CharitiesCubit(gh<_i16.HomeRepository>()));
-    gh.singleton<_i35.CommentNewsCubit>(
-        _i35.CommentNewsCubit(gh<_i16.HomeRepository>()));
-    gh.singleton<_i36.CommentNewsLikeCubit>(
-        _i36.CommentNewsLikeCubit(gh<_i16.HomeRepository>()));
-    gh.singleton<_i37.CommentNewsPostCubit>(
-        _i37.CommentNewsPostCubit(gh<_i16.HomeRepository>()));
-    gh.singleton<_i38.CommentSemCubit>(
-        _i38.CommentSemCubit(gh<_i16.HomeRepository>()));
-    gh.singleton<_i39.CommentSemLikeCubit>(
-        _i39.CommentSemLikeCubit(gh<_i16.HomeRepository>()));
-    gh.singleton<_i40.CommentSemPostCubit>(
-        _i40.CommentSemPostCubit(gh<_i16.HomeRepository>()));
-    gh.singleton<_i41.DhikrsCubit>(
-        _i41.DhikrsCubit(gh<_i17.IslamTeachingRepository>()));
-    gh.singleton<_i42.DhikrsFavoriteCubit>(
-        _i42.DhikrsFavoriteCubit(gh<_i17.IslamTeachingRepository>()));
-    gh.singleton<_i43.DuasCubit>(
-        _i43.DuasCubit(gh<_i17.IslamTeachingRepository>()));
-    gh.singleton<_i44.DuasFavoriteCubit>(
-        _i44.DuasFavoriteCubit(gh<_i17.IslamTeachingRepository>()));
-    gh.singleton<_i45.IslamNamesCubit>(
-        _i45.IslamNamesCubit(gh<_i17.IslamTeachingRepository>()));
-    gh.singleton<_i46.IslamNamesFavoriteCubit>(
-        _i46.IslamNamesFavoriteCubit(gh<_i17.IslamTeachingRepository>()));
+    gh.singleton<_i22.NewsDetailCubit>(
+        _i22.NewsDetailCubit(gh<_i16.HomeRepository>()));
+    gh.singleton<_i23.NewsFavCubit>(
+        _i23.NewsFavCubit(gh<_i16.HomeRepository>()));
+    gh.singleton<_i24.NewsLikeCubit>(
+        _i24.NewsLikeCubit(gh<_i16.HomeRepository>()));
+    gh.singleton<_i25.PartnersCubit>(
+        _i25.PartnersCubit(gh<_i16.HomeRepository>()));
+    gh.singleton<_i26.PillarsCubit>(
+        _i26.PillarsCubit(gh<_i17.IslamTeachingRepository>()));
+    gh.singleton<_i27.PostServiceCubit>(
+        _i27.PostServiceCubit(gh<_i16.HomeRepository>()));
+    gh.singleton<_i28.SeminarCubit>(
+        _i28.SeminarCubit(gh<_i16.HomeRepository>()));
+    gh.singleton<_i29.SeminarDetailCubit>(
+        _i29.SeminarDetailCubit(gh<_i16.HomeRepository>()));
+    gh.singleton<_i30.SeminarFavCubit>(
+        _i30.SeminarFavCubit(gh<_i16.HomeRepository>()));
+    gh.singleton<_i31.SeminarLikeCubit>(
+        _i31.SeminarLikeCubit(gh<_i16.HomeRepository>()));
+    gh.singleton<_i32.ServicesCubit>(
+        _i32.ServicesCubit(gh<_i16.HomeRepository>()));
+    gh.singleton<_i33.SurahCubit>(
+        _i33.SurahCubit(gh<_i17.IslamTeachingRepository>()));
+    gh.singleton<_i34.SurahFavoriteCubit>(
+        _i34.SurahFavoriteCubit(gh<_i17.IslamTeachingRepository>()));
+    gh.singleton<_i35.AyatOfDayCubit>(
+        _i35.AyatOfDayCubit(gh<_i17.IslamTeachingRepository>()));
+    gh.singleton<_i36.CharitiesCubit>(
+        _i36.CharitiesCubit(gh<_i16.HomeRepository>()));
+    gh.singleton<_i37.CommentNewsCubit>(
+        _i37.CommentNewsCubit(gh<_i16.HomeRepository>()));
+    gh.singleton<_i38.CommentNewsLikeCubit>(
+        _i38.CommentNewsLikeCubit(gh<_i16.HomeRepository>()));
+    gh.singleton<_i39.CommentNewsPostCubit>(
+        _i39.CommentNewsPostCubit(gh<_i16.HomeRepository>()));
+    gh.singleton<_i40.CommentSemCubit>(
+        _i40.CommentSemCubit(gh<_i16.HomeRepository>()));
+    gh.singleton<_i41.CommentSemLikeCubit>(
+        _i41.CommentSemLikeCubit(gh<_i16.HomeRepository>()));
+    gh.singleton<_i42.CommentSemPostCubit>(
+        _i42.CommentSemPostCubit(gh<_i16.HomeRepository>()));
+    gh.singleton<_i43.DhikrsCubit>(
+        _i43.DhikrsCubit(gh<_i17.IslamTeachingRepository>()));
+    gh.singleton<_i44.DhikrsFavoriteCubit>(
+        _i44.DhikrsFavoriteCubit(gh<_i17.IslamTeachingRepository>()));
+    gh.singleton<_i45.DuasCubit>(
+        _i45.DuasCubit(gh<_i17.IslamTeachingRepository>()));
+    gh.singleton<_i46.DuasFavoriteCubit>(
+        _i46.DuasFavoriteCubit(gh<_i17.IslamTeachingRepository>()));
+    gh.singleton<_i47.IslamNamesCubit>(
+        _i47.IslamNamesCubit(gh<_i17.IslamTeachingRepository>()));
+    gh.singleton<_i48.IslamNamesFavoriteCubit>(
+        _i48.IslamNamesFavoriteCubit(gh<_i17.IslamTeachingRepository>()));
     return this;
   }
 }

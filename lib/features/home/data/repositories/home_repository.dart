@@ -46,15 +46,13 @@ abstract class HomeRepository {
   Future<Either<Failure, bool>> seminarLike({required int id});
   Future<Either<Failure, bool>> commentSemPost({
     required int id,
-    required int commentId,
+    int? commentId,
     required String body,
-    required String userName,
   });
   Future<Either<Failure, bool>> commentNewsPost({
     required int id,
-    required int commentId,
+    int? commentId,
     required String body,
-    required String userName,
   });
   Future<Either<Failure, bool>> commentSemLike({
     required int id,
@@ -64,6 +62,8 @@ abstract class HomeRepository {
     required int id,
     required int commentId,
   });
+  Future<Either<Failure, ResultHomeDTO>> newsDetail({required int id});
+  Future<Either<Failure, ResultHomeDTO>> seminarDetail({required int id});
   Future<Either<Failure, bool>> newsFavorite({required int id});
   Future<Either<Failure, bool>> newsLike({required int id});
   Future<Either<Failure, bool>> livesFavorite({required int id});
@@ -83,6 +83,35 @@ class HomeRepositoryImpl extends HomeRepository {
     if (await networkInfo.isConnected) {
       try {
         final bool res = await remoteDS.livesFavorite(id: id);
+        return Right(res);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ResultHomeDTO>> newsDetail({required int id}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final ResultHomeDTO res = await remoteDS.newsDetail(id: id);
+        return Right(res);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ResultHomeDTO>> seminarDetail(
+      {required int id}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final ResultHomeDTO res = await remoteDS.seminarDetail(id: id);
         return Right(res);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -151,14 +180,16 @@ class HomeRepositoryImpl extends HomeRepository {
   @override
   Future<Either<Failure, bool>> commentNewsPost({
     required int id,
-    required int commentId,
+    int? commentId,
     required String body,
-    required String userName,
   }) async {
     if (await networkInfo.isConnected) {
       try {
         final bool res = await remoteDS.commentNewsPost(
-            id: id, commentId: commentId, body: body, userName: userName);
+          id: id,
+          commentId: commentId,
+          body: body,
+        );
         return Right(res);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -171,14 +202,16 @@ class HomeRepositoryImpl extends HomeRepository {
   @override
   Future<Either<Failure, bool>> commentSemPost({
     required int id,
-    required int commentId,
+    int? commentId,
     required String body,
-    required String userName,
   }) async {
     if (await networkInfo.isConnected) {
       try {
         final bool res = await remoteDS.commentSemPost(
-            id: id, commentId: commentId, body: body, userName: userName);
+          id: id,
+          commentId: commentId,
+          body: body,
+        );
         return Right(res);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));

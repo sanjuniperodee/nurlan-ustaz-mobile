@@ -15,12 +15,15 @@ class CommentSemPostCubit extends Cubit<CommentSemPostState> {
 
   Future<void> seminarCommentPost({
     required int id,
-    required int commentId,
+    int? commentId,
     required String body,
-    required String userName,
   }) async {
+    emit(const CommentSemPostState.loadingState());
     final failureOrUser = await _homeRepository.commentSemPost(
-        id: id, commentId: commentId, body: body, userName: userName);
+      id: id,
+      commentId: commentId,
+      body: body,
+    );
     failureOrUser.fold(
       (l) {
         emit(CommentSemPostState.errorState(
