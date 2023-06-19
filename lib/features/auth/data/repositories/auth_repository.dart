@@ -31,16 +31,17 @@ abstract class AuthRepository {
       {required TokenCreateDTO createTokenDTO});
 
   Future<Either<Failure, UserDTO>> postUser({required UserDTO userDTO});
+  Future<Either<Failure, UserDTO>> getUser();
 
   Future<Either<Failure, bool>> activateUser(
       {required ActivateUserDTO activateUserDTO});
+  Future<Either<Failure, bool>> newPass(
+      {required String curPass, required String newPass, required String pass});
 
   Future<Either<Failure, String>> refreshToken({required String refreshToken});
 
   Either<Failure, String> authCheck();
   Either<Failure, String> logOut();
-
-
 }
 
 @Singleton(as: AuthRepository)
@@ -116,6 +117,21 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
+  Future<Either<Failure, UserDTO>> getUser() async {
+    if (await networkInfo.isConnected) {
+      try {
+        final UserDTO result = await remoteDS.getUser();
+
+        return Right(result);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
   Future<Either<Failure, TokenDTO>> createJTW(
       {required TokenCreateDTO createTokenDTO}) async {
     if (await networkInfo.isConnected) {
@@ -127,6 +143,24 @@ class AuthRepositoryImpl extends AuthRepository {
         return Right(result);
       } on ServerException catch (e) {
         log('madi');
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> newPass(
+      {required String curPass,
+      required String newPass,
+      required String pass}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        await remoteDS.changePass(
+            curPass: curPass, newPass: newPass, pass: pass);
+        return const Right(true);
+      } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
       }
     } else {
@@ -188,7 +222,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Either<Failure, String> logOut()  {
+  Either<Failure, String> logOut() {
     try {
       // final user = localDS.getUserFromCache();
       localDS.removeUserFromCache();
@@ -197,9 +231,4 @@ class AuthRepositoryImpl extends AuthRepository {
       return Left(CacheFailure(message: e.message));
     }
   }
-
-
-
-
-
 }

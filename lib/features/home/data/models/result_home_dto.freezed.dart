@@ -52,6 +52,7 @@ mixin _$ResultHomeDTO {
   List<MediaDTO>? get media => throw _privateConstructorUsedError;
   List<RequisitesDTO>? get requisites => throw _privateConstructorUsedError;
   List<ResultHomeDTO>? get children => throw _privateConstructorUsedError;
+  List<StatisticsDTO>? get statistics => throw _privateConstructorUsedError;
   String? get address => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -90,6 +91,7 @@ abstract class $ResultHomeDTOCopyWith<$Res> {
       List<MediaDTO>? media,
       List<RequisitesDTO>? requisites,
       List<ResultHomeDTO>? children,
+      List<StatisticsDTO>? statistics,
       String? address});
 
   $UserCommentDTOCopyWith<$Res>? get user;
@@ -131,6 +133,7 @@ class _$ResultHomeDTOCopyWithImpl<$Res, $Val extends ResultHomeDTO>
     Object? media = freezed,
     Object? requisites = freezed,
     Object? children = freezed,
+    Object? statistics = freezed,
     Object? address = freezed,
   }) {
     return _then(_value.copyWith(
@@ -226,6 +229,10 @@ class _$ResultHomeDTOCopyWithImpl<$Res, $Val extends ResultHomeDTO>
           ? _value.children
           : children // ignore: cast_nullable_to_non_nullable
               as List<ResultHomeDTO>?,
+      statistics: freezed == statistics
+          ? _value.statistics
+          : statistics // ignore: cast_nullable_to_non_nullable
+              as List<StatisticsDTO>?,
       address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -278,6 +285,7 @@ abstract class _$$_ResultHomeDTOCopyWith<$Res>
       List<MediaDTO>? media,
       List<RequisitesDTO>? requisites,
       List<ResultHomeDTO>? children,
+      List<StatisticsDTO>? statistics,
       String? address});
 
   @override
@@ -318,6 +326,7 @@ class __$$_ResultHomeDTOCopyWithImpl<$Res>
     Object? media = freezed,
     Object? requisites = freezed,
     Object? children = freezed,
+    Object? statistics = freezed,
     Object? address = freezed,
   }) {
     return _then(_$_ResultHomeDTO(
@@ -413,6 +422,10 @@ class __$$_ResultHomeDTOCopyWithImpl<$Res>
           ? _value._children
           : children // ignore: cast_nullable_to_non_nullable
               as List<ResultHomeDTO>?,
+      statistics: freezed == statistics
+          ? _value._statistics
+          : statistics // ignore: cast_nullable_to_non_nullable
+              as List<StatisticsDTO>?,
       address: freezed == address
           ? _value.address
           : address // ignore: cast_nullable_to_non_nullable
@@ -448,10 +461,12 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
       final List<MediaDTO>? media,
       final List<RequisitesDTO>? requisites,
       final List<ResultHomeDTO>? children,
+      final List<StatisticsDTO>? statistics,
       this.address})
       : _media = media,
         _requisites = requisites,
-        _children = children;
+        _children = children,
+        _statistics = statistics;
 
   factory _$_ResultHomeDTO.fromJson(Map<String, dynamic> json) =>
       _$$_ResultHomeDTOFromJson(json);
@@ -535,12 +550,22 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
     return EqualUnmodifiableListView(value);
   }
 
+  final List<StatisticsDTO>? _statistics;
+  @override
+  List<StatisticsDTO>? get statistics {
+    final value = _statistics;
+    if (value == null) return null;
+    if (_statistics is EqualUnmodifiableListView) return _statistics;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
+
   @override
   final String? address;
 
   @override
   String toString() {
-    return 'ResultHomeDTO(isLiked: $isLiked, isSaved: $isSaved, isLive: $isLive, isTop: $isTop, likesCount: $likesCount, comentCount: $comentCount, id: $id, parent: $parent, body: $body, name: $name, logo: $logo, title: $title, description: $description, text: $text, cover: $cover, link: $link, user: $user, startTime: $startTime, createdAt: $createdAt, isActive: $isActive, media: $media, requisites: $requisites, children: $children, address: $address)';
+    return 'ResultHomeDTO(isLiked: $isLiked, isSaved: $isSaved, isLive: $isLive, isTop: $isTop, likesCount: $likesCount, comentCount: $comentCount, id: $id, parent: $parent, body: $body, name: $name, logo: $logo, title: $title, description: $description, text: $text, cover: $cover, link: $link, user: $user, startTime: $startTime, createdAt: $createdAt, isActive: $isActive, media: $media, requisites: $requisites, children: $children, statistics: $statistics, address: $address)';
   }
 
   @override
@@ -578,6 +603,8 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
             const DeepCollectionEquality()
                 .equals(other._requisites, _requisites) &&
             const DeepCollectionEquality().equals(other._children, _children) &&
+            const DeepCollectionEquality()
+                .equals(other._statistics, _statistics) &&
             (identical(other.address, address) || other.address == address));
   }
 
@@ -608,6 +635,7 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
         const DeepCollectionEquality().hash(_media),
         const DeepCollectionEquality().hash(_requisites),
         const DeepCollectionEquality().hash(_children),
+        const DeepCollectionEquality().hash(_statistics),
         address
       ]);
 
@@ -650,6 +678,7 @@ abstract class _ResultHomeDTO implements ResultHomeDTO {
       final List<MediaDTO>? media,
       final List<RequisitesDTO>? requisites,
       final List<ResultHomeDTO>? children,
+      final List<StatisticsDTO>? statistics,
       final String? address}) = _$_ResultHomeDTO;
 
   factory _ResultHomeDTO.fromJson(Map<String, dynamic> json) =
@@ -710,6 +739,8 @@ abstract class _ResultHomeDTO implements ResultHomeDTO {
   List<RequisitesDTO>? get requisites;
   @override
   List<ResultHomeDTO>? get children;
+  @override
+  List<StatisticsDTO>? get statistics;
   @override
   String? get address;
   @override

@@ -80,7 +80,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
         loadingState: () {},
         loadedState: (user) {
           context.router.push(CodeVerificationRoute(
-              email: emailController.text, password: passwordController.text , userId: user.id ?? 0));
+              email: emailController.text,
+              password: passwordController.text,
+              userId: user.id ?? 0));
         },
         errorState: (message) {
           buildErrorCustomSnackBar(context, message);
@@ -231,12 +233,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
           ),
           AppButton(
               onTap: () async {
-                if(passwordController.text !=
-                    passwordRepeatController.text){
+                if (passwordController.text != passwordRepeatController.text) {
                   buildErrorCustomSnackBar(context, 'Пароли не совпадают');
                 }
-
-
 
                 if (nameController.text.isEmpty ||
                     emailController.text.isEmpty ||

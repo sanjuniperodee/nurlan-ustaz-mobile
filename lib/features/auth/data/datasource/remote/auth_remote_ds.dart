@@ -14,7 +14,10 @@ const _tag = 'AuthRemoteDS';
 abstract class AuthRemoteDs {
   Future<UserDTO> postUser({required UserDTO userDTO});
 
+  Future<UserDTO> getUser();
   Future<bool> activateUser({required ActivateUserDTO activateUserDTO});
+  Future<bool> changePass(
+      {required String curPass, required String newPass, required String pass});
 
   Future<TokenDTO> createJwt({required TokenCreateDTO tokenCreateDTO});
   Future<TokenDTO> refreshJwt({required String refreshToken});
@@ -45,6 +48,19 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
   }
 
   @override
+  Future<UserDTO> getUser() async {
+    try {
+      final response = await dio.get(
+        '${EndPoints.createUser}/me/',
+      );
+
+      return UserDTO.fromJson(response.data);
+    } catch (e) {
+      throw ServerException(message: e.toString());
+    }
+  }
+
+  @override
   Future<TokenDTO> createJwt({required TokenCreateDTO tokenCreateDTO}) async {
     try {
       print('hello');
@@ -65,6 +81,29 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
         EndPoints.activateUser,
         data: activateUserDTO.toJson(),
       );
+      return true;
+    } catch (e) {
+      throw ServerException(message: e.toString());
+    }
+  }
+
+  @override
+  Future<bool> changePass(
+      {required String curPass,
+      required String newPass,
+      required String pass}) async {
+    try {
+      final result = await dio.post(
+        EndPoints.newPass,
+        data: {
+          'new_password': newPass,
+          're_new_password': pass,
+          'current_password': curPass,
+        },
+      );
+      log(curPass.toString());
+      log(newPass.toString());
+      log(pass.toString());
       return true;
     } catch (e) {
       throw ServerException(message: e.toString());

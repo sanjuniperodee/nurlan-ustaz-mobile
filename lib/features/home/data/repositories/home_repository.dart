@@ -5,6 +5,7 @@ import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_info.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/datasource/remote/home_remote_ds.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/models/faq_model_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/media_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 
@@ -63,6 +64,8 @@ abstract class HomeRepository {
     required int commentId,
   });
   Future<Either<Failure, ResultHomeDTO>> newsDetail({required int id});
+  Future<Either<Failure, List<FaqModelDTO>>> faq();
+  Future<Either<Failure, List<ResultHomeDTO>>> projectInfo();
   Future<Either<Failure, ResultHomeDTO>> seminarDetail({required int id});
   Future<Either<Failure, bool>> newsFavorite({required int id});
   Future<Either<Failure, bool>> newsLike({required int id});
@@ -83,6 +86,34 @@ class HomeRepositoryImpl extends HomeRepository {
     if (await networkInfo.isConnected) {
       try {
         final bool res = await remoteDS.livesFavorite(id: id);
+        return Right(res);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ResultHomeDTO>>> projectInfo() async {
+    if (await networkInfo.isConnected) {
+      try {
+        final List<ResultHomeDTO> res = await remoteDS.projectInfo();
+        return Right(res);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<FaqModelDTO>>> faq() async {
+    if (await networkInfo.isConnected) {
+      try {
+        final List<FaqModelDTO> res = await remoteDS.faq();
         return Right(res);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));

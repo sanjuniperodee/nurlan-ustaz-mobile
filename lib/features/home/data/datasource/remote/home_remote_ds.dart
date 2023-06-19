@@ -5,6 +5,7 @@ import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/dio_wrapper.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/models/faq_model_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/media_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 
@@ -29,6 +30,8 @@ abstract class HomeRemoteDs {
   Future<bool> commentNewsLike({required int id, required int commentId});
   Future<bool> livesFavorite({required int id});
   Future<ResultHomeDTO> newsDetail({required int id});
+  Future<List<FaqModelDTO>> faq();
+  Future<List<ResultHomeDTO>> projectInfo();
   Future<ResultHomeDTO> seminarDetail({required int id});
   Future<List<ResultHomeDTO>> news(
       {String? search,
@@ -117,6 +120,41 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
         '${EndPoints.news}/$id/toggle_like/',
       );
       return true;
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<List<ResultHomeDTO>> projectInfo() async {
+    try {
+      final response = await dio.get(
+        EndPoints.prjInfo,
+      );
+      return ((response.data as List<dynamic>))
+          .map((e) => ResultHomeDTO.fromJson(e))
+          .toList();
+
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<List<FaqModelDTO>> faq() async {
+    try {
+      final response = await dio.get(
+        EndPoints.faq,
+      );
+      return ((response.data as Map<String, dynamic>)['results'] as List)
+          .map((x) => FaqModelDTO.fromJson(x as Map<String, dynamic>))
+          .toList();
     } on DioError catch (e) {
       throw ServerException(
         message:
