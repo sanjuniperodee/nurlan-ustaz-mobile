@@ -61,21 +61,21 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                   height: 32,
                 ),
                 CustomTextFormProfile(
-                    hintText: 'Аты-жөні', labelText: 'Аты-жөні'),
+                    hintText: 'Аты-жөні', labelText: 'Аты-жөні',onChanged: (value){}),
                 SizedBox(
                   height: 24,
                 ),
-                CustomTextFormProfile(hintText: 'Email', labelText: 'Email'),
-                SizedBox(
-                  height: 24,
-                ),
-                CustomTextFormProfile(
-                    hintText: 'Телефон нөмірі', labelText: 'Телефон нөмірі'),
+                CustomTextFormProfile(hintText: 'Email', labelText: 'Email',onChanged: (value){}),
                 SizedBox(
                   height: 24,
                 ),
                 CustomTextFormProfile(
-                    hintText: 'Туған күні', labelText: 'Туған күні'),
+                    hintText: 'Телефон нөмірі', labelText: 'Телефон нөмірі',onChanged: (value){}),
+                SizedBox(
+                  height: 24,
+                ),
+                CustomTextFormProfile(
+                    hintText: 'Туған күні', labelText: 'Туған күні',onChanged: (value){}),
                 SizedBox(
                   height: 16,
                 ),

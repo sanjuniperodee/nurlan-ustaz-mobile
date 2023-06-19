@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
@@ -12,6 +13,7 @@ import '../../../../../../core/common/app_styles.dart';
 import '../../../../../../core/common/assets.dart';
 import '../../../../../../core/common/colors.dart';
 import '../../../../../../core/router/app_router.dart';
+import '../../../../../app/bloc/app_bloc.dart';
 import '../../../../../app/presentation/widgets/custom_app_bar.dart';
 
 class ProfileMainPage extends StatefulWidget {
@@ -184,7 +186,12 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                   child: Column(
                     children: [
                       ProfileMenuItem(
-                          isExit: true, title: 'Шығу', onTap: () {}),
+                          isExit: true, title: 'Шығу', onTap: () {
+                            print('zdarova');
+                        BlocProvider.of<AppBloc>(context)
+                            .add(const AppEvent.exiting());
+                        context.router.push(LoginPageRoute());
+                      }),
                     ],
                   ),
                 ),

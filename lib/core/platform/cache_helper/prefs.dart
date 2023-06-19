@@ -1,14 +1,13 @@
-
-
+import 'package:nurlan_ustaz_flutter/core/common/shared_keys.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-
 
 class Prefs {
   final SharedPreferences? sharedPreferences;
+
   Prefs({
     this.sharedPreferences,
   });
+
   Future<void> logOutUser() async {
     final prefs = await SharedPreferences.getInstance();
     prefs.clear();
@@ -19,7 +18,6 @@ class Prefs {
     sharedPreferences.setString('device_token', deviceToken);
   }
 
-  
   Future<String?> getDeviceToken() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     final String? deviceToken =
@@ -34,7 +32,7 @@ class Prefs {
 
   Future<String?> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('token');
+    return prefs.getString(SharedKeys.ACCESS_TOKEN);
   }
 
   void setToken(String? token) async {

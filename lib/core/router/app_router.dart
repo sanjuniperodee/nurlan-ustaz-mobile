@@ -19,6 +19,9 @@ import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/nam
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/prayers_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/surah_page.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/launcher.dart';
+
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/code_verification_page.dart';
+
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/charity_detail_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/charity_page.dart';
@@ -39,6 +42,8 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_detai
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/services_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/shop_page.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/login_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi.dart';
 import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/ui/tandaulilar_main_page.dart';
 
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/question_page.dart';
@@ -89,6 +94,7 @@ part 'app_router.gr.dart';
     AutoRoute(page: ProfileMainPage),
     AutoRoute(page: PaymentsPage),
     AutoRoute(page: ProfileInfoPage),
+    AutoRoute(page: UstazAitinizhi),
     AutoRoute(
       page: SeminarPage,
     ),
@@ -158,6 +164,9 @@ part 'app_router.gr.dart';
     AutoRoute(page: NamazPatternPage),
     AutoRoute(page: WudhuPage),
     AutoRoute(page: NamazDutyPage),
+    //Auth
+    AutoRoute(page: LoginPage),
+    AutoRoute(page: CodeVerification),
   ],
 )
 class AppRouter extends _$AppRouter {}

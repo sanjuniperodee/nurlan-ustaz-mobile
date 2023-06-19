@@ -126,6 +126,7 @@ class _SurahPageState extends State<SurahPage> {
                                       child: GestureDetector(
                                         onTap: () {
                                           context.router.push(
+
                                             SurahDetailPageRoute(
                                                 result: listOfSurah[index]),
                                           );

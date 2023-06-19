@@ -134,7 +134,9 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
                                 GestureDetector(
                                     onTap: () {
                                       context.router.push(
-                                        AyatDayPageRoute(ayatDTO: ayat),
+                                          AyatDayPageRoute(
+                                            ayatDTO: ayat
+                                        ),
                                       );
                                     },
                                     child: AyatDayCardWidget(

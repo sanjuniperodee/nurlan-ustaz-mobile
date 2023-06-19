@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/app_bloc.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/base.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/on_boarding.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/login_page.dart';
 
 class LauncherApp extends StatefulWidget {
   const LauncherApp({super.key});
@@ -18,7 +20,7 @@ class _LauncherAppState extends State<LauncherApp> {
   }
 
   Future<void> init() async {
-    // BlocProvider.of<AppBloc>(context).add(const AppEvent.checkAuth());
+    BlocProvider.of<AppBloc>(context).add(const AppEvent.checkAuth());
   }
 
   @override
@@ -27,7 +29,7 @@ class _LauncherAppState extends State<LauncherApp> {
       builder: (context, state) {
         return state.maybeWhen(
           onBoardingState: () {
-            return const Base();
+            return const OnBoardingPage();
           },
           loadingState: () {
             return const Base();
@@ -39,10 +41,10 @@ class _LauncherAppState extends State<LauncherApp> {
             //   ),
             // );
           },
-          // notAuthorizedState: () {
-          //   return const Base();
-          //   // return const SignInPage();
-          // },
+          notAuthorizedState: () {
+            // return const SignInPage();
+            return const LoginPage();
+          },
           // notVerifyed: () {
           //   return const SizedBox();
           // },
@@ -55,9 +57,6 @@ class _LauncherAppState extends State<LauncherApp> {
               ),
             );
           },
-          // inAppState: () {
-          //   return const Base();
-          // },
           orElse: () {
             return const Base();
           },
