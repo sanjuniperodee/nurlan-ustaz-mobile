@@ -42,8 +42,8 @@ class _AddNewCardPageState extends State<AddNewCardPage> {
                   title: 'Жаңа карта',
                 ),
                 const SizedBox(height: 44),
-                const CustomTextFormProfile(
-                    hintText: 'Карта нөмірі', labelText: 'Карта нөмірі'),
+                 CustomTextFormProfile(
+                    hintText: 'Карта нөмірі', labelText: 'Карта нөмірі',onChanged: (value){}),
                 const SizedBox(
                   height: 24,
                 ),
@@ -54,12 +54,12 @@ class _AddNewCardPageState extends State<AddNewCardPage> {
                       width: 150.w,
                         child: CustomTextFormProfile(
                             hintText: 'Жарамдылық мерзімі',
-                            labelText: 'Жарамдылық мерзімі')),
+                            labelText: 'Жарамдылық мерзімі',onChanged: (value){})),
                     Container(
                         width: 150.w,
                         child: CustomTextFormProfile(
                             hintText: 'CVV',
-                            labelText: 'CVV')),
+                            labelText: 'CVV',onChanged: (value){})),
                   ],
                 ),
               ],

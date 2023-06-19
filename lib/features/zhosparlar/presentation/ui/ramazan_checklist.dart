@@ -86,7 +86,7 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
                   itemBuilder: (context, index) {
                     return Slidable(
                       endActionPane: ActionPane(
-                        extentRatio: 0.3,
+                        extentRatio: 0.33,
                         motion: const ScrollMotion(),
                         children: [
                           InkWell(

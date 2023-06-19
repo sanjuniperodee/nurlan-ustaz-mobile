@@ -53,7 +53,9 @@ class _MainPageState extends State<MainPage> {
     const ServicesPageRoute(),
     const LiveBroadcastsPageRoute(),
     const ShopPageRoute(),
+    const UstazAitinizhiRoute()
   ];
+
   @override
   void initState() {
     // TODO: implement initState
@@ -279,7 +281,9 @@ class _MainPageState extends State<MainPage> {
                                   text: 'Түс жору',
                                 ),
                                 SizedBox(height: 16.h),
-                                const MainButton(
+                                MainButton(
+                                  onTap: () => context.router
+                                      .push(const UstazAitinizhiRoute()),
                                   text: 'Ұстаз айтыңызшы...',
                                 ),
                                 SizedBox(height: 16.h),

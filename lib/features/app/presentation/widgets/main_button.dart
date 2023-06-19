@@ -6,38 +6,42 @@ import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 
 class MainButton extends StatelessWidget {
   final String text;
+  final void Function()? onTap;
   const MainButton({
     Key? key,
-    required this.text,
+    required this.text, this.onTap,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 1.sw,
-      padding: const EdgeInsets.only(
-          // left: 16.r,
-          // right: 16.r,
-          ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Text(
-            text,
-            style: getTextStyle(CustomTextStyles.s16w200)
-                .apply(fontFamily: FontTypes.Philosopher.name)
-                .copyWith(fontWeight: FontWeight.w700, fontSize: 20.sp),
-          ),
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        width: 1.sw,
+        padding: const EdgeInsets.only(
+            // left: 16.r,
+            // right: 16.r,
+            ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              text,
+              style: getTextStyle(CustomTextStyles.s16w200)
+                  .apply(fontFamily: FontTypes.Philosopher.name)
+                  .copyWith(fontWeight: FontWeight.w700, fontSize: 20.sp),
+            ),
 
-          // SizedBox(
-          //   width: 150.w,
-          // ),
-          SvgPicture.asset(
-            Assets.chevronDownSvg,
-            width: 24.r,
-            height: 24.r,
-          )
-        ],
+            // SizedBox(
+            //   width: 150.w,
+            // ),
+            SvgPicture.asset(
+              Assets.chevronDownSvg,
+              width: 24.r,
+              height: 24.r,
+            )
+          ],
+        ),
       ),
     );
   }

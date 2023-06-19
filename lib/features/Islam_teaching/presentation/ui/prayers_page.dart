@@ -109,8 +109,9 @@ class _PrayersPageState extends State<PrayersPage> {
                                       child: GestureDetector(
                                         onTap: () {
                                           context.router.push(
-                                            PrayersDetailPageRoute(
-                                                result: duha[index]),
+                                             PrayersDetailPageRoute(
+                                                result: duha[index]
+                                            ),
                                           );
                                         },
                                         child: Container(

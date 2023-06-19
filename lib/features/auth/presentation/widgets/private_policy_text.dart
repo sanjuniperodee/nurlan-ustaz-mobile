@@ -1,0 +1,41 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+import '../../../../core/common/app_styles.dart';
+import '../../../../core/common/colors.dart';
+
+class PrivatePolicyText extends StatelessWidget {
+  const PrivatePolicyText({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: 275.w,
+      child: RichText(
+          textDirection: TextDirection.ltr,
+          text: TextSpan(
+            style: getTextStyle(CustomTextStyles.s14w400)
+                .copyWith(fontFamily: FontTypes.SF_Pro.name),
+            children: [
+              TextSpan(
+                  text: "Пайдалану шарттарымен ",
+                  style: getTextStyle(CustomTextStyles.s14w400).copyWith(
+                      fontFamily: FontTypes.SF_Pro.name,
+                      color: AppColors.blue),
+                  recognizer: TapGestureRecognizer()..onTap = () {}),
+              TextSpan(
+                  text: "келісу және ",
+                  style: getTextStyle(CustomTextStyles.s14w400)
+                      .copyWith(fontFamily: FontTypes.SF_Pro.name)),
+              TextSpan(
+                  text: 'Құпиялылық саясаты',
+                  style: getTextStyle(CustomTextStyles.s14w400).copyWith(
+                      fontFamily: FontTypes.SF_Pro.name,
+                      color: AppColors.blue),
+                  recognizer: TapGestureRecognizer()..onTap = () {})
+            ],
+          )),
+    );
+  }
+}

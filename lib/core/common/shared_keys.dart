@@ -5,6 +5,9 @@ mixin SharedKeys {
   static const IS_ONBOARDING = 'IS_ONBOARDING';
   static const DEVICE_TOKEN = 'DEVICE_TOKEN';
   static const APP_LOCALE = 'APP_LOCALE';
-  
-  
+  static const ACCESS_TOKEN = 'ACCESS_TOKEN';
+
+
+
+
 }

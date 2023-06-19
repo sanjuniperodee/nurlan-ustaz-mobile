@@ -139,8 +139,9 @@ class _DutyPageState extends State<DutyPage> {
                                         .r,
                                     child: InkWell(
                                       onTap: () {
-                                        context.router.push(DutyDetailPageRoute(
-                                            pillarsDTO: pillars[index]));
+                                         context.router.push(DutyDetailPageRoute(
+                                           pillarsDTO: pillars[index]
+                                             ));
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(

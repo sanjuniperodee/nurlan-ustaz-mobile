@@ -109,8 +109,9 @@ class _DhikrPageState extends State<DhikrPage> {
                                       child: GestureDetector(
                                         onTap: () {
                                           context.router.push(
-                                            DhikrDetailPageRoute(
-                                                result: dhikrs[index]),
+                                             DhikrDetailPageRoute(
+                                                result: dhikrs[index]
+                                            ),
                                           );
                                         },
                                         child: Container(

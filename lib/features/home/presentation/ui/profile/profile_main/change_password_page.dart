@@ -33,7 +33,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 24.w),
             child: Column(
-              children: const [
+              children:  [
                 SizedBox(height: 80,),
                 CustomAppBar(
                   color: AppColors.black,
@@ -41,11 +41,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                 ),
                 SizedBox(height: 44),
                 CustomTextFormProfile(
-                    hintText: 'Ағымдағы құпия сөз', labelText: 'Ағымдағы құпия сөз'),
+                    hintText: 'Ағымдағы құпия сөз', labelText: 'Ағымдағы құпия сөз',onChanged: (value){}),
                 SizedBox(
                   height: 24,
                 ),
-                CustomTextFormProfile(hintText: 'Жаңа құпия сөз', labelText: 'Жаңа құпия сөз'),
+                CustomTextFormProfile(hintText: 'Жаңа құпия сөз', labelText: 'Жаңа құпия сөз',onChanged: (value){}),
               ],
             ),
           ),

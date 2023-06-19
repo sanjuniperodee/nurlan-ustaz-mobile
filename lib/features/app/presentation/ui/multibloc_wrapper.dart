@@ -14,6 +14,10 @@ import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/s
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/surah_favorite_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/app_bloc.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/auth_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/code_verification_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/login_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/registration_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.dart';
 
 import '../../../../core/services/locator_service.dart';
@@ -44,6 +48,11 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
           create: (context) => getIt<LanguageCubit>(),
         ),
         //AUTH
+        BlocProvider<AuthCubit>(create: (context)=> getIt<AuthCubit>()),
+        BlocProvider<RegistrationCubit>(create: (context)=>getIt<RegistrationCubit>()),
+        BlocProvider<LoginCubit>(create: (context)=>getIt<LoginCubit>()),
+        BlocProvider<CodeVerificationCubit>(create: (context)=>getIt<CodeVerificationCubit>()),
+
         //
         //HOME
         //
