@@ -9,6 +9,7 @@ class MediaDTO with _$MediaDTO {
   const factory MediaDTO({
     required int id,
     String? file,
+    String? title,
   }) = _MediaDTO;
 
   factory MediaDTO.fromJson(Map<String, dynamic> json) =>

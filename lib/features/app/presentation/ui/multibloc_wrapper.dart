@@ -14,7 +14,27 @@ import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/s
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/surah_favorite_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/app_bloc.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/charities_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_like_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_post_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem_like_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem_post_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/lives_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/lives_fav_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_detail_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_fav_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_like_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/partners_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/post_service_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_detail_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_fav_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_like_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/services_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/bloc/tandaulilar_cubit.dart';
 
 import '../../../../core/services/locator_service.dart';
 
@@ -50,7 +70,63 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         BlocProvider<NewsCubit>(
           create: (context) => getIt<NewsCubit>(),
         ),
-
+        BlocProvider<SeminarCubit>(
+          create: (context) => getIt<SeminarCubit>(),
+        ),
+        BlocProvider<ServicesCubit>(
+          create: (context) => getIt<ServicesCubit>(),
+        ),
+        BlocProvider<CharitiesCubit>(
+          create: (context) => getIt<CharitiesCubit>(),
+        ),
+        BlocProvider<CommentNewsCubit>(
+          create: (context) => getIt<CommentNewsCubit>(),
+        ),
+        BlocProvider<CommentNewsLikeCubit>(
+          create: (context) => getIt<CommentNewsLikeCubit>(),
+        ),
+        BlocProvider<CommentNewsPostCubit>(
+          create: (context) => getIt<CommentNewsPostCubit>(),
+        ),
+        BlocProvider<CommentSemCubit>(
+          create: (context) => getIt<CommentSemCubit>(),
+        ),
+        BlocProvider<CommentSemPostCubit>(
+          create: (context) => getIt<CommentSemPostCubit>(),
+        ),
+        BlocProvider<LivesCubit>(
+          create: (context) => getIt<LivesCubit>(),
+        ),
+        BlocProvider<PartnersCubit>(
+          create: (context) => getIt<PartnersCubit>(),
+        ),
+        BlocProvider<PostServiceCubit>(
+          create: (context) => getIt<PostServiceCubit>(),
+        ),
+        BlocProvider<SeminarFavCubit>(
+          create: (context) => getIt<SeminarFavCubit>(),
+        ),
+        BlocProvider<LivesFavCubit>(
+          create: (context) => getIt<LivesFavCubit>(),
+        ),
+        BlocProvider<SeminarLikeCubit>(
+          create: (context) => getIt<SeminarLikeCubit>(),
+        ),
+        BlocProvider<CommentSemLikeCubit>(
+          create: (context) => getIt<CommentSemLikeCubit>(),
+        ),
+        BlocProvider<NewsFavCubit>(
+          create: (context) => getIt<NewsFavCubit>(),
+        ),
+        BlocProvider<NewsDetailCubit>(
+          create: (context) => getIt<NewsDetailCubit>(),
+        ),
+        BlocProvider<SeminarDetailCubit>(
+          create: (context) => getIt<SeminarDetailCubit>(),
+        ),
+        BlocProvider<NewsLikeCubit>(
+          create: (context) => getIt<NewsLikeCubit>(),
+        ),
         //ISlAM TEACHING
         //
         BlocProvider<DhikrsCubit>(
@@ -85,6 +161,11 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         ),
         BlocProvider<DuasFavoriteCubit>(
           create: (context) => getIt<DuasFavoriteCubit>(),
+        ),
+        //TANDAULILAR
+        //
+        BlocProvider<TandaulilarCubit>(
+          create: (context) => getIt<TandaulilarCubit>(),
         ),
       ],
       child: ScreenUtilInit(

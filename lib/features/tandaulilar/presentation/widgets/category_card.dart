@@ -1,18 +1,23 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 
 import '../../../../core/common/app_styles.dart';
 import '../../../../core/common/colors.dart';
 
 class CategoryCard extends StatelessWidget {
   final String title;
-  final List<String> imageList;
+  final List<ResultHomeDTO> imageList;
   final Color? titleColor;
   final void Function() onTap;
 
   const CategoryCard(
-      {Key? key, required this.title, required this.imageList, this.titleColor, required this.onTap})
+      {Key? key,
+      required this.title,
+      required this.imageList,
+      this.titleColor,
+      required this.onTap})
       : super(key: key);
 
   @override
@@ -40,7 +45,13 @@ class CategoryCard extends StatelessWidget {
                               (e) => Container(
                                 height: 82,
                                 width: 82,
-                                child: Image.asset(e),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(8.r),
+                                  child: Image.network(
+                                    e.cover!,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                               ),
                             )
                             .toList() +
@@ -49,18 +60,23 @@ class CategoryCard extends StatelessWidget {
                             (index) => Container(
                                   height: 82,
                                   width: 82,
-                              decoration: BoxDecoration(
-                                color: AppColors.grey1,
-
-                                borderRadius: BorderRadius.circular(8.r),
-                              ),
+                                  decoration: BoxDecoration(
+                                    color: AppColors.grey1,
+                                    borderRadius: BorderRadius.circular(8.r),
+                                  ),
                                 ))
                     : imageList
                         .map(
                           (e) => Container(
                             height: 82,
                             width: 82,
-                            child: Image.asset(e),
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(8.r),
+                              child: Image.network(
+                                e.cover!,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
                           ),
                         )
                         .toList()),

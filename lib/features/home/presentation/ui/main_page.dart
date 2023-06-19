@@ -47,17 +47,17 @@ class _MainPageState extends State<MainPage> {
     ),
   ];
 
-  final myRouteHome = [
-    const SeminarPageRoute(),
+  final List<PageRouteInfo<dynamic>> myRouteHome = [
+    SeminarPageRoute(),
     const CharityPageRoute(),
     const ServicesPageRoute(),
-    const LiveBroadcastsPageRoute(),
+    LiveBroadcastsPageRoute(),
     const ShopPageRoute(),
   ];
   @override
   void initState() {
     // TODO: implement initState
-    BlocProvider.of<NewsCubit>(context).news(page: 1);
+    BlocProvider.of<NewsCubit>(context).news(page: 1, isFirstCall: true);
 
     super.initState();
   }
@@ -325,7 +325,7 @@ class _MainPageState extends State<MainPage> {
                                 InkWell(
                                   onTap: () {
                                     context.router.push(
-                                      const NewsPageRoute(),
+                                      NewsPageRoute(),
                                     );
                                   },
                                   child: const MainButton(
@@ -351,7 +351,9 @@ class _MainPageState extends State<MainPage> {
                                 child: GestureDetector(
                                   onTap: () {
                                     context.router.push(
-                                      const NewsDetailPageRoute(),
+                                      NewsDetailPageRoute(
+                                          result: news[index],
+                                          isFav: news[index].isSaved!),
                                     );
                                   },
                                   child: Container(
@@ -403,7 +405,10 @@ class _MainPageState extends State<MainPage> {
                                                           color: Colors.black)),
                                               SizedBox(height: 2.h),
                                               Text(
-                                                '10.02.2023',
+                                                DateFormat('dd.MM.yyyy').format(
+                                                    DateTime.parse(news[index]
+                                                        .createdAt
+                                                        .toString())),
                                                 style: getTextStyle(
                                                         CustomTextStyles
                                                             .s14w400)

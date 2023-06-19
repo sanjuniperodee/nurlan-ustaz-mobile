@@ -18,12 +18,13 @@ class NewsCubit extends Cubit<NewsState> {
     String? search,
     bool? isSaved,
     required int page,
+    bool? isFirstCall,
   }) async {
     page > 1
         ? emit(const NewsState.loadingMoreState())
         : emit(const NewsState.loadingState());
     final failureOrUser = await _homeRepository.news(
-        search: search, isSaved: isSaved, page: page);
+        search: search, isSaved: isSaved, page: page, isFirstCall: isFirstCall);
     failureOrUser.fold(
       (l) {
         emit(NewsState.errorState(message: mapFailureToMessageBack(l)));

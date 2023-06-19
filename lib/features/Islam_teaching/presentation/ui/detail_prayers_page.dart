@@ -71,7 +71,7 @@ class _PrayersDetailPageState extends State<PrayersDetailPage> {
                           title: widget.result.name ?? 'ERROR',
                           onTap: () {
                             BlocProvider.of<DuasCubit>(context)
-                                .duas()
+                                .duas(page: 1)
                                 .then((value) => Navigator.pop(context));
                           },
                         ),

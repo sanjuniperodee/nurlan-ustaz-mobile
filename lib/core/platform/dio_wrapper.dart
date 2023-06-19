@@ -73,7 +73,7 @@ class _KausarDioInterceptor extends Interceptor {
 
     // if (tokenModel?.access != null) {
     options.headers['Authorization'] =
-        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg2MTk2NjU0LCJpYXQiOjE2ODYxMTAyNTQsImp0aSI6ImYyZjAwNjdlNzcxNjRmMTJiNzhkYjI5OWRmNmI0YTFiIiwidXNlcl9pZCI6M30.7ck995o1z_ET7VEKf5eHDxIWguzrszNHQAVYgqDu9rU';
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg2OTgyNTU3LCJpYXQiOjE2ODY4OTYxNTcsImp0aSI6IjcyMDRhZjdhMDJlZjRiYTg4YWE0YWY1ZmE2ZTYyM2U2IiwidXNlcl9pZCI6M30.PYVhLwpWxg_kInoQmX-ziNwf0R1jUND11P5gbyUm9Qc';
     // }
     options.headers['Accept'] = "application/json";
     // options.headers['Content-Language'] = locale.replaceAll('kk', 'kz');
