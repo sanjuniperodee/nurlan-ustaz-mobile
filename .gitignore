@@ -77,3 +77,9 @@ app.*.map.json
 **/ios/Runner/GeneratedPluginRegistrant.*
 **/ios/**/Podfile.lock
 lib/core/router/app_router.gr.dart
+*.gr.dart
+*.freezed.dart
+*.g.dart
+lib/core/services/locator_service.config.dart
+linux/
+windows/
