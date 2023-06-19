@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -226,8 +224,8 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                       setState(() {});
                                     },
                                     child: SvgPicture.asset(isFavorite
-                                        ? Assets.bookMarkSvg
-                                        : Assets.bookMark1Svg))
+                                        ? Assets.bookMark1Svg
+                                        : Assets.bookMarkSvg))
                               ],
                             ),
                             SizedBox(

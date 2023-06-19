@@ -13,7 +13,8 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_sn
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_widget.dart';
 
 class DhikrPage extends StatefulWidget {
-  const DhikrPage({super.key});
+  final String? type;
+  const DhikrPage({super.key, this.type});
 
   @override
   State<DhikrPage> createState() => _DhikrPageState();
@@ -28,7 +29,11 @@ class _DhikrPageState extends State<DhikrPage> {
   @override
   void initState() {
     // TODO: implement initState
-    BlocProvider.of<DhikrsCubit>(context).dhikrs(page: 1, isFirstCall: true);
+    widget.type == 'isSave'
+        ? BlocProvider.of<DhikrsCubit>(context)
+            .dhikrs(page: 1, isFirstCall: true, isSaved: true)
+        : BlocProvider.of<DhikrsCubit>(context)
+            .dhikrs(page: 1, isFirstCall: true);
     _scrollController.addListener(_scrollListener);
     super.initState();
   }
@@ -98,8 +103,10 @@ class _DhikrPageState extends State<DhikrPage> {
                                 SizedBox(
                                   height: 56.h,
                                 ),
-                                const CustomAppBar(
-                                  title: 'Зікірлер',
+                                CustomAppBar(
+                                  title: widget.type == 'isSave'
+                                      ? 'Таңдаулы зікірлер'
+                                      : 'Зікірлер',
                                 ),
                                 SizedBox(
                                   height: 36.h,
@@ -173,7 +180,10 @@ class _DhikrPageState extends State<DhikrPage> {
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
       page++;
-      BlocProvider.of<DhikrsCubit>(context).dhikrs(page: page);
+      widget.type == 'isSave'
+          ? BlocProvider.of<DhikrsCubit>(context)
+              .dhikrs(page: page, isSaved: true)
+          : BlocProvider.of<DhikrsCubit>(context).dhikrs(page: page);
     }
   }
 }

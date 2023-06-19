@@ -187,8 +187,8 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                       setState(() {});
                                     },
                                     child: SvgPicture.asset(isFavorite
-                                        ? Assets.bookMarkSvg
-                                        : Assets.bookMark1Svg))
+                                        ? Assets.bookMark1Svg
+                                        : Assets.bookMarkSvg))
                               ],
                             ),
                             SizedBox(

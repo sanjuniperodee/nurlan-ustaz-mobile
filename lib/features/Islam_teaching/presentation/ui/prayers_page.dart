@@ -13,7 +13,8 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_sn
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_widget.dart';
 
 class PrayersPage extends StatefulWidget {
-  const PrayersPage({super.key});
+  final String? type;
+  const PrayersPage({super.key, this.type});
 
   @override
   State<PrayersPage> createState() => _PrayersPageState();
@@ -28,7 +29,10 @@ class _PrayersPageState extends State<PrayersPage> {
   @override
   void initState() {
     // TODO: implement initState
-    BlocProvider.of<DuasCubit>(context).duas(page: 1, isFirstCall: true);
+    widget.type == 'isSave'
+        ? BlocProvider.of<DuasCubit>(context)
+            .duas(page: 1, isFirstCall: true, isSaved: true)
+        : BlocProvider.of<DuasCubit>(context).duas(page: 1, isFirstCall: true);
     _scrollController.addListener(_scrollListener);
     super.initState();
   }
@@ -98,8 +102,10 @@ class _PrayersPageState extends State<PrayersPage> {
                                 SizedBox(
                                   height: 56.h,
                                 ),
-                                const CustomAppBar(
-                                  title: 'Дұғалар',
+                                CustomAppBar(
+                                  title: widget.type == 'isSave'
+                                      ? 'Таңдаулы дұғалар'
+                                      : 'Дұғалар',
                                 ),
                                 SizedBox(
                                   height: 36.h,
@@ -189,7 +195,9 @@ class _PrayersPageState extends State<PrayersPage> {
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
       page++;
-      BlocProvider.of<DuasCubit>(context).duas(page: page);
+      widget.type == 'isSave'
+          ? BlocProvider.of<DuasCubit>(context).duas(page: page, isSaved: true)
+          : BlocProvider.of<DuasCubit>(context).duas(page: page);
     }
   }
 }

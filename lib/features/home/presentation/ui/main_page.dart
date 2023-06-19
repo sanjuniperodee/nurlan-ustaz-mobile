@@ -47,11 +47,11 @@ class _MainPageState extends State<MainPage> {
     ),
   ];
 
-  final myRouteHome = [
-    const SeminarPageRoute(),
+  final List<PageRouteInfo<dynamic>> myRouteHome = [
+    SeminarPageRoute(),
     const CharityPageRoute(),
     const ServicesPageRoute(),
-    const LiveBroadcastsPageRoute(),
+    LiveBroadcastsPageRoute(),
     const ShopPageRoute(),
   ];
   @override
@@ -325,7 +325,7 @@ class _MainPageState extends State<MainPage> {
                                 InkWell(
                                   onTap: () {
                                     context.router.push(
-                                      const NewsPageRoute(),
+                                      NewsPageRoute(),
                                     );
                                   },
                                   child: const MainButton(

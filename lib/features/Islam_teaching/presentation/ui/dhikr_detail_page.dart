@@ -112,8 +112,8 @@ class _DhikrDetailPageState extends State<DhikrDetailPage> {
                                         setState(() {});
                                       },
                                       child: SvgPicture.asset(isFavorite
-                                          ? Assets.bookMarkSvg
-                                          : Assets.bookMark1Svg))),
+                                          ? Assets.bookMark1Svg
+                                          : Assets.bookMarkSvg))),
                               SizedBox(
                                 height: 60.h,
                               ),

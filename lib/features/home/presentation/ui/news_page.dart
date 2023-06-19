@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -21,7 +19,8 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_fav_cubit.dart';
 
 class NewsPage extends StatefulWidget {
-  const NewsPage({Key? key}) : super(key: key);
+  final String? type;
+  const NewsPage({Key? key, this.type}) : super(key: key);
 
   @override
   State<NewsPage> createState() => _NewsPageState();
@@ -38,7 +37,10 @@ class _NewsPageState extends State<NewsPage> {
   @override
   void initState() {
     // TODO: implement initState
-    BlocProvider.of<NewsCubit>(context).news(page: 1, isFirstCall: true);
+    widget.type == 'isSave'
+        ? BlocProvider.of<NewsCubit>(context)
+            .news(page: 1, isFirstCall: true, isSaved: true)
+        : BlocProvider.of<NewsCubit>(context).news(page: 1, isFirstCall: true);
     _scrollController.addListener(_scrollListener);
     super.initState();
   }
@@ -90,8 +92,8 @@ class _NewsPageState extends State<NewsPage> {
                     physics: const BouncingScrollPhysics(),
                     child: Column(
                       children: [
-                        const CustomAppBar(
-                          title: 'Жаңалықтар',
+                         CustomAppBar(
+                          title: widget.type =='isSave'? 'Таңдаулы жаңалықтар': 'Жаңалықтар',
                         ),
                         SizedBox(
                           height: 36.h,
@@ -169,11 +171,11 @@ class _NewsPageState extends State<NewsPage> {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                   DateFormat('dd.MM.yyyy').format(
-                                                    DateTime.parse(
-                                                        listOfNews[index]
-                                                            .createdAt
-                                                            .toString())),
+                                                  DateFormat('dd.MM.yyyy')
+                                                      .format(DateTime.parse(
+                                                          listOfNews[index]
+                                                              .createdAt
+                                                              .toString())),
                                                   style: getTextStyle(
                                                           CustomTextStyles
                                                               .s12w400)
@@ -211,9 +213,9 @@ class _NewsPageState extends State<NewsPage> {
                                                 },
                                                 child: listOfFav[index]
                                                     ? SvgPicture.asset(
-                                                        Assets.bookMarkSvg)
+                                                        Assets.bookMark1Svg)
                                                     : SvgPicture.asset(
-                                                        Assets.bookMark1Svg)),
+                                                        Assets.bookMarkSvg)),
                                           ],
                                         ),
                                       ),
@@ -249,7 +251,9 @@ class _NewsPageState extends State<NewsPage> {
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
       page++;
-      BlocProvider.of<NewsCubit>(context).news(page: page);
+      widget.type == 'isSave'
+          ? BlocProvider.of<NewsCubit>(context).news(page: page, isSaved: true)
+          : BlocProvider.of<NewsCubit>(context).news(page: page);
     }
   }
 }

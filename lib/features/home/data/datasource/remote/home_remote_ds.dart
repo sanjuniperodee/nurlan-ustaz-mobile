@@ -555,6 +555,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
           if (search != null) 'search': search,
         },
       );
+
       if (response.statusCode == 200) {
         if (search != null && search.isNotEmpty) {
           seminarPage.clear();
@@ -565,8 +566,10 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
             ((response.data as Map<String, dynamic>)['results'] as List)
                 .map((e) => ResultHomeDTO.fromJson(e as Map<String, dynamic>))
                 .toList());
+        log(seminarPage.toString());
         return seminarPage;
       }
+
       // log('PAGE${response.data['meta']['pagination']['page']}');
       throw 'ERROR';
     } on DioError catch (e) {

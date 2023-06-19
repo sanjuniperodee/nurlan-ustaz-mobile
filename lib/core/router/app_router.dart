@@ -40,11 +40,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_page.
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/services_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/shop_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/ui/tandaulilar_main_page.dart';
-import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/ui/tandaulir_dugalar_page.dart';
-import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/ui/tandauly_dhikr_page.dart';
-import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/ui/tandauly_live_broadcast.dart';
-import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/ui/tandauly_seminar_page.dart';
-import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/ui/tandauly_zhanalyktar.dart';
+
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/question_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/tus_zhoru_details_page.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/ui/zhosparym_page.dart';
@@ -59,7 +55,7 @@ import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/tus_zhor
 import '../../features/home/presentation/ui/namaz_page.dart';
 import '../../features/home/presentation/ui/news_detail_page.dart';
 import '../../features/home/presentation/ui/profile/profile_main/faq_page.dart';
-import '../../features/tandaulilar/presentation/ui/tandauly_name_page.dart';
+
 import '../../features/tandaulilar/presentation/ui/tandauly_tus_zhoru.dart';
 import '../../features/zhosparlar/presentation/ui/ramazan_checklist.dart';
 
@@ -154,13 +150,8 @@ part 'app_router.gr.dart';
     AutoRoute(page: NameDetailPage),
     AutoRoute(page: NamePage),
     //Tandaulilar
-    AutoRoute(page: TandaulyNewsPage),
-    AutoRoute(page: TandaulyLiveBroadcastsPage),
-    AutoRoute(page: TandaulySeminarPage),
+
     AutoRoute(page: TandaulyTusZhoruPage),
-    AutoRoute(page: TandaulyDugalarPage),
-    AutoRoute(page: TandaulyNamePage),
-    AutoRoute(page: TandaulyDhikrPage),
     //Islam teaching// 5 duty
     AutoRoute(page: DutyDetailPage),
     AutoRoute(page: NamazReadPage),

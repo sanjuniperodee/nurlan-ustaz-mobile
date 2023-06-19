@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -21,7 +19,8 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_cub
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_fav_cubit.dart';
 
 class SeminarPage extends StatefulWidget {
-  const SeminarPage({Key? key}) : super(key: key);
+  final String? type;
+  const SeminarPage({Key? key, this.type}) : super(key: key);
 
   @override
   State<SeminarPage> createState() => _SeminarPageState();
@@ -39,7 +38,11 @@ class _SeminarPageState extends State<SeminarPage> {
   @override
   void initState() {
     // TODO: implement initState
-    BlocProvider.of<SeminarCubit>(context).seminar(page: 1, isFirstCall: true);
+    widget.type == 'isSave'
+        ? BlocProvider.of<SeminarCubit>(context)
+            .seminar(page: 1, isFirstCall: true, isSaved: true)
+        : BlocProvider.of<SeminarCubit>(context)
+            .seminar(page: 1, isFirstCall: true);
     _scrollController.addListener(_scrollListener);
     super.initState();
   }
@@ -92,7 +95,9 @@ class _SeminarPageState extends State<SeminarPage> {
                     children: [
                       CustomAppBar(
                         onTap: () {},
-                        title: 'Семинар',
+                        title: widget.type == 'isSave'
+                            ? 'Таңдаулы семинар'
+                            : 'Семинар',
                       ),
                       SizedBox(
                         height: 36.h,
@@ -211,9 +216,9 @@ class _SeminarPageState extends State<SeminarPage> {
                                               },
                                               child: listOfFav[index]
                                                   ? SvgPicture.asset(
-                                                      Assets.bookMarkSvg)
+                                                      Assets.bookMark1Svg)
                                                   : SvgPicture.asset(
-                                                      Assets.bookMark1Svg)),
+                                                      Assets.bookMarkSvg)),
                                         ],
                                       ),
                                     ),
@@ -248,7 +253,10 @@ class _SeminarPageState extends State<SeminarPage> {
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
       page++;
-      BlocProvider.of<SeminarCubit>(context).seminar(page: page);
+      widget.type == 'isSave'
+          ? BlocProvider.of<SeminarCubit>(context)
+              .seminar(page: page, isSaved: true)
+          : BlocProvider.of<SeminarCubit>(context).seminar(page: page);
     }
   }
 }

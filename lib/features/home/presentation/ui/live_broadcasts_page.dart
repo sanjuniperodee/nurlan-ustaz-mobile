@@ -16,7 +16,8 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/lives_fav_c
 import '../../../../core/common/assets.dart';
 
 class LiveBroadcastsPage extends StatefulWidget {
-  const LiveBroadcastsPage({Key? key}) : super(key: key);
+  final String? type;
+  const LiveBroadcastsPage({Key? key, this.type}) : super(key: key);
 
   @override
   State<LiveBroadcastsPage> createState() => _LiveBroadcastsPageState();
@@ -33,7 +34,11 @@ class _LiveBroadcastsPageState extends State<LiveBroadcastsPage> {
   @override
   void initState() {
     // TODO: implement initState
-    BlocProvider.of<LivesCubit>(context).lives(page: 1, isFirstCall: true);
+    widget.type == 'isSave'
+        ? BlocProvider.of<LivesCubit>(context)
+            .lives(page: 1, isFirstCall: true, isSaved: true)
+        : BlocProvider.of<LivesCubit>(context)
+            .lives(page: 1, isFirstCall: true);
     _scrollController.addListener(_scrollListener);
     super.initState();
   }
@@ -84,8 +89,10 @@ class _LiveBroadcastsPageState extends State<LiveBroadcastsPage> {
                   physics: const BouncingScrollPhysics(),
                   child: Column(
                     children: [
-                      const CustomAppBar(
-                        title: 'Тікелей эфирлер',
+                      CustomAppBar(
+                        title: widget.type == 'isSave'
+                            ? 'Таңдаулы тікелей эфирлер'
+                            : 'Тікелей эфирлер',
                       ),
                       SizedBox(
                         height: 36.h,
@@ -273,9 +280,9 @@ class _LiveBroadcastsPageState extends State<LiveBroadcastsPage> {
                                               },
                                               child: listOfFav[index]
                                                   ? SvgPicture.asset(
-                                                      Assets.bookMarkSvg)
+                                                      Assets.bookMark1Svg)
                                                   : SvgPicture.asset(
-                                                      Assets.bookMark1Svg)),
+                                                      Assets.bookMarkSvg)),
                                         ],
                                       ),
                                     ),
@@ -302,7 +309,10 @@ class _LiveBroadcastsPageState extends State<LiveBroadcastsPage> {
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
       page++;
-      BlocProvider.of<LivesCubit>(context).lives(page: page);
+      widget.type == 'isSave'
+          ? BlocProvider.of<LivesCubit>(context)
+              .lives(page: page, isSaved: true)
+          : BlocProvider.of<LivesCubit>(context).lives(page: page);
     }
   }
 }

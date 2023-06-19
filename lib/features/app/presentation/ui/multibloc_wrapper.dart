@@ -34,6 +34,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_det
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_fav_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_like_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/services_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/bloc/tandaulilar_cubit.dart';
 
 import '../../../../core/services/locator_service.dart';
 
@@ -160,6 +161,11 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         ),
         BlocProvider<DuasFavoriteCubit>(
           create: (context) => getIt<DuasFavoriteCubit>(),
+        ),
+        //TANDAULILAR
+        //
+        BlocProvider<TandaulilarCubit>(
+          create: (context) => getIt<TandaulilarCubit>(),
         ),
       ],
       child: ScreenUtilInit(

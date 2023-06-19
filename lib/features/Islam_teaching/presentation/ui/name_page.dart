@@ -17,7 +17,8 @@ import '../../../app/presentation/widgets/custom_snackbars.dart';
 import '../../../app/presentation/widgets/custom_tab_bar.dart';
 
 class NamePage extends StatefulWidget {
-  const NamePage({super.key});
+  final String? type;
+  const NamePage({super.key, this.type});
 
   @override
   State<NamePage> createState() => _NamePageState();
@@ -33,8 +34,11 @@ class _NamePageState extends State<NamePage> {
   @override
   void initState() {
     // TODO: implement initState
-    BlocProvider.of<IslamNamesCubit>(context)
-        .islamNamesMan(page: 1, isFirstCall: true);
+    widget.type == 'isSave'
+        ? BlocProvider.of<IslamNamesCubit>(context)
+            .islamNamesMan(page: 1, isFirstCall: true, isSaved: true)
+        : BlocProvider.of<IslamNamesCubit>(context)
+            .islamNamesMan(page: 1, isFirstCall: true);
     _scrollController.addListener(_scrollListener);
     super.initState();
   }
@@ -105,8 +109,10 @@ class _NamePageState extends State<NamePage> {
                                 SizedBox(
                                   height: 56.h,
                                 ),
-                                const CustomAppBar(
-                                  title: 'Есімдер мағынасы',
+                                CustomAppBar(
+                                  title: widget.type == 'isSave'
+                                      ? 'Таңдаулы eсімдер мағынасы'
+                                      : 'Есімдер мағынасы',
                                 ),
                                 SizedBox(
                                   height: 36.h,
@@ -257,11 +263,17 @@ class _NamePageState extends State<NamePage> {
         _scrollController.position.maxScrollExtent) {
       page++;
       if (currentIndex == 0) {
-        log(1.toString());
-        BlocProvider.of<IslamNamesCubit>(context).islamNamesMan(page: page);
+        widget.type == 'isSave'
+            ? BlocProvider.of<IslamNamesCubit>(context)
+                .islamNamesMan(page: page, isSaved: true)
+            : BlocProvider.of<IslamNamesCubit>(context)
+                .islamNamesMan(page: page);
       } else {
         log(2.toString());
-        BlocProvider.of<IslamNamesCubit>(context).islamWoman(page: page);
+        widget.type == 'isSave'
+            ? BlocProvider.of<IslamNamesCubit>(context)
+                .islamWoman(page: page, isSaved: true)
+            : BlocProvider.of<IslamNamesCubit>(context).islamWoman(page: page);
       }
     }
   }
