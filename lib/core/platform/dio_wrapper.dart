@@ -79,8 +79,13 @@ class _KausarDioInterceptor extends Interceptor {
     if (accessToken != null) {
       print('------------------------------$accessToken');
     options.headers['Authorization'] =
+
         'Bearer $accessToken';
     }
+
+     
+    // }
+
     options.headers['Accept'] = "application/json";
     // options.headers['Content-Language'] = locale.replaceAll('kk', 'kz');
     super.onRequest(options, handler);

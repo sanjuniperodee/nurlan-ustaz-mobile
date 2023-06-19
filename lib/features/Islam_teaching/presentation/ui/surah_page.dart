@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/result_teaching_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/surah_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
@@ -20,11 +21,23 @@ class SurahPage extends StatefulWidget {
 }
 
 class _SurahPageState extends State<SurahPage> {
+  final ScrollController _scrollController = ScrollController();
+  int page = 1;
+  String searchText = '';
+  List<ResultTeachingDTO> listOfSurah = [];
+  bool isLoadingMore = false;
   @override
   void initState() {
     // TODO: implement initState
-    BlocProvider.of<SurahCubit>(context).sura();
+    BlocProvider.of<SurahCubit>(context).sura(page: 1, isFirstCall: true);
+    _scrollController.addListener(_scrollListener);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -34,9 +47,19 @@ class _SurahPageState extends State<SurahPage> {
       body: BlocConsumer<SurahCubit, SurahState>(
         listener: (context, state) {
           state.maybeWhen(
-            orElse: () {},
+            orElse: () {
+              isLoadingMore = false;
+            },
             errorState: (message) {
+              isLoadingMore = false;
               buildErrorCustomSnackBar(context, message);
+            },
+            loadingMoreState: () {
+              isLoadingMore = true;
+            },
+            loaded: (news) {
+              isLoadingMore = false;
+              listOfSurah = news;
             },
           ); //
           // TODO: implement listener
@@ -44,20 +67,6 @@ class _SurahPageState extends State<SurahPage> {
         builder: (context, state) {
           return state.maybeWhen(
             orElse: () {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.red,
-                ),
-              );
-            },
-            loadingState: () {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.yellow,
-                ),
-              );
-            },
-            loaded: (sura) {
               return SizedBox(
                 height: 1.sh,
                 child: Stack(
@@ -97,11 +106,18 @@ class _SurahPageState extends State<SurahPage> {
                                   height: 36.h,
                                 ),
                                 SearchWidget(onChanged: (string) {
-                                  BlocProvider.of<SurahCubit>(context)
-                                      .sura(search: string);
+                                  searchText = string;
+                                  if (string.isEmpty) {
+                                    BlocProvider.of<SurahCubit>(context).sura(
+                                      page: 1,
+                                    );
+                                  } else {
+                                    BlocProvider.of<SurahCubit>(context)
+                                        .sura(page: 1, search: searchText);
+                                  }
                                 }),
                                 ListView.builder(
-                                  itemCount: sura.length,
+                                  itemCount: listOfSurah.length,
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
@@ -110,9 +126,9 @@ class _SurahPageState extends State<SurahPage> {
                                       child: GestureDetector(
                                         onTap: () {
                                           context.router.push(
-                                             SurahDetailPageRoute(
-                                                result: sura[index]
-                                            ),
+
+                                            SurahDetailPageRoute(
+                                                result: listOfSurah[index]),
                                           );
                                         },
                                         child: Container(
@@ -123,7 +139,8 @@ class _SurahPageState extends State<SurahPage> {
                                           child: ListTile(
                                             iconColor: AppColors.black,
                                             title: Text(
-                                              sura[index].name ?? 'ERROR',
+                                              listOfSurah[index].name ??
+                                                  'ERROR',
                                               style: getTextStyle(
                                                   CustomTextStyles.s16w400),
                                             ),
@@ -136,7 +153,15 @@ class _SurahPageState extends State<SurahPage> {
                                       ),
                                     );
                                   },
-                                )
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                isLoadingMore
+                                    ? const Align(
+                                        alignment: Alignment.center,
+                                        child: CircularProgressIndicator())
+                                    : const SizedBox(),
                               ],
                             ),
                           )),
@@ -149,5 +174,14 @@ class _SurahPageState extends State<SurahPage> {
         },
       ),
     );
+  }
+
+  void _scrollListener() {
+    if (isLoadingMore) return;
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      page++;
+      BlocProvider.of<SurahCubit>(context).sura(page: page);
+    }
   }
 }

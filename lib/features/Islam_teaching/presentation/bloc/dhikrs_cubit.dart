@@ -14,9 +14,20 @@ class DhikrsCubit extends Cubit<DhikrsState> {
     this._islamTeachingRepository,
   ) : super(const DhikrsState.initialState());
 
-  Future<void> dhikrs({String? search, bool? isSaved}) async {
-    final failureOrUser =
-        await _islamTeachingRepository.dhikrs(search: search, isSaved: isSaved);
+  Future<void> dhikrs({
+    String? search,
+    bool? isSaved,
+    required int page,
+    bool? isFirstCall,
+  }) async {
+    page > 1
+        ? emit(const DhikrsState.loadingMoreState())
+        : emit(const DhikrsState.loadingState());
+    final failureOrUser = await _islamTeachingRepository.dhikrs(
+        search: search,
+        isSaved: isSaved,
+        currentPage: page,
+        isFirstCall: isFirstCall);
     failureOrUser.fold(
       (l) {
         emit(DhikrsState.errorState(message: mapFailureToMessageBack(l)));
@@ -33,7 +44,7 @@ class DhikrsState with _$DhikrsState {
   const factory DhikrsState.initialState() = _InitialPage;
 
   const factory DhikrsState.loadingState() = _LoadingState;
-
+  const factory DhikrsState.loadingMoreState() = _LoadingMoreState;
   const factory DhikrsState.loaded({
     required List<ResultTeachingDTO> dhikrs,
   }) = _LoadedState;

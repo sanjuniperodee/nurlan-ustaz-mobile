@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'colors.dart';
 
 enum CustomTextStyles {
+  s8w700,
   s12w200,
   s12w400,
   s12w500,
@@ -36,6 +37,12 @@ TextStyle getTextStyle(
   FontTypes fontFamily = FontTypes.Philosopher,
 }) {
   switch (textStyle) {
+    case CustomTextStyles.s8w700:
+      return TextStyle(
+          fontWeight: FontWeight.w700,
+          fontSize: 8.sp,
+          fontFamily: fontFamily.name,
+          color: color);
     case CustomTextStyles.s36w700:
       return TextStyle(
           fontWeight: FontWeight.w700,

@@ -55,8 +55,8 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
     const AllahNamesPageRoute(),
     const AllahNamesPageRoute(),
     const SurahPageRoute(),
-    const PrayersPageRoute(),
-    const DhikrPageRoute(),
+    PrayersPageRoute(),
+    DhikrPageRoute(),
   ];
   @override
   void initState() {
@@ -228,8 +228,7 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
                                 ),
                                 AppButton(
                                     onTap: () {
-                                      context.router
-                                          .push(const NamePageRoute());
+                                      context.router.push(NamePageRoute());
                                     },
                                     text: 'Есімдер мағынасы'),
                                 SizedBox(

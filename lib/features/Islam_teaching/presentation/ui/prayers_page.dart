@@ -6,24 +6,41 @@ import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/result_teaching_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/duas_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_widget.dart';
 
 class PrayersPage extends StatefulWidget {
-  const PrayersPage({super.key});
+  final String? type;
+  const PrayersPage({super.key, this.type});
 
   @override
   State<PrayersPage> createState() => _PrayersPageState();
 }
 
 class _PrayersPageState extends State<PrayersPage> {
+  final ScrollController _scrollController = ScrollController();
+  int page = 1;
+  String searchText = '';
+  List<ResultTeachingDTO> listOfPrayer = [];
+  bool isLoadingMore = false;
   @override
   void initState() {
     // TODO: implement initState
-    BlocProvider.of<DuasCubit>(context).duas();
+    widget.type == 'isSave'
+        ? BlocProvider.of<DuasCubit>(context)
+            .duas(page: 1, isFirstCall: true, isSaved: true)
+        : BlocProvider.of<DuasCubit>(context).duas(page: 1, isFirstCall: true);
+    _scrollController.addListener(_scrollListener);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
   }
 
   @override
@@ -33,9 +50,19 @@ class _PrayersPageState extends State<PrayersPage> {
       body: BlocConsumer<DuasCubit, DuasState>(
         listener: (context, state) {
           state.maybeWhen(
-            orElse: () {},
+            orElse: () {
+              isLoadingMore = false;
+            },
             errorState: (message) {
+              isLoadingMore = false;
               buildErrorCustomSnackBar(context, message);
+            },
+            loadingMoreState: () {
+              isLoadingMore = true;
+            },
+            loaded: (news) {
+              isLoadingMore = false;
+              listOfPrayer = news;
             },
           );
           // TODO: implement listener
@@ -43,20 +70,6 @@ class _PrayersPageState extends State<PrayersPage> {
         builder: (context, state) {
           return state.maybeWhen(
             orElse: () {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.red,
-                ),
-              );
-            },
-            loadingState: () {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.yellow,
-                ),
-              );
-            },
-            loaded: (duha) {
               return SizedBox(
                 height: 1.sh,
                 child: Stack(
@@ -89,18 +102,27 @@ class _PrayersPageState extends State<PrayersPage> {
                                 SizedBox(
                                   height: 56.h,
                                 ),
-                                const CustomAppBar(
-                                  title: 'Дұғалар',
+                                CustomAppBar(
+                                  title: widget.type == 'isSave'
+                                      ? 'Таңдаулы дұғалар'
+                                      : 'Дұғалар',
                                 ),
                                 SizedBox(
                                   height: 36.h,
                                 ),
                                 SearchWidget(onChanged: (string) {
-                                  BlocProvider.of<DuasCubit>(context)
-                                      .duas(search: string);
+                                  searchText = string;
+                                  if (string.isEmpty) {
+                                    BlocProvider.of<DuasCubit>(context).duas(
+                                      page: 1,
+                                    );
+                                  } else {
+                                    BlocProvider.of<DuasCubit>(context)
+                                        .duas(page: 1, search: searchText);
+                                  }
                                 }),
                                 ListView.builder(
-                                  itemCount: duha.length,
+                                  itemCount: listOfPrayer.length,
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
                                   itemBuilder: (context, index) {
@@ -109,9 +131,10 @@ class _PrayersPageState extends State<PrayersPage> {
                                       child: GestureDetector(
                                         onTap: () {
                                           context.router.push(
-                                             PrayersDetailPageRoute(
-                                                result: duha[index]
-                                            ),
+
+                                            PrayersDetailPageRoute(
+                                                result: listOfPrayer[index]),
+
                                           );
                                         },
                                         child: Container(
@@ -122,12 +145,13 @@ class _PrayersPageState extends State<PrayersPage> {
                                           child: ListTile(
                                             iconColor: AppColors.black,
                                             title: Text(
-                                              duha[index].name ?? 'ERROR',
+                                              listOfPrayer[index].name ??
+                                                  'ERROR',
                                               style: getTextStyle(
                                                   CustomTextStyles.s16w500),
                                             ),
                                             subtitle: Text(
-                                              duha[index].translation ??
+                                              listOfPrayer[index].translation ??
                                                   'ERROR',
                                               style: getTextStyle(
                                                       CustomTextStyles.s14w400)
@@ -145,7 +169,15 @@ class _PrayersPageState extends State<PrayersPage> {
                                       ),
                                     );
                                   },
-                                )
+                                ),
+                                SizedBox(
+                                  height: 10.h,
+                                ),
+                                isLoadingMore
+                                    ? const Align(
+                                        alignment: Alignment.center,
+                                        child: CircularProgressIndicator())
+                                    : const SizedBox(),
                               ],
                             ),
                           )),
@@ -158,5 +190,16 @@ class _PrayersPageState extends State<PrayersPage> {
         },
       ),
     );
+  }
+
+  void _scrollListener() {
+    if (isLoadingMore) return;
+    if (_scrollController.position.pixels ==
+        _scrollController.position.maxScrollExtent) {
+      page++;
+      widget.type == 'isSave'
+          ? BlocProvider.of<DuasCubit>(context).duas(page: page, isSaved: true)
+          : BlocProvider.of<DuasCubit>(context).duas(page: page);
+    }
   }
 }

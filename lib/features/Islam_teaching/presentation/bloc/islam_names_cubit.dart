@@ -14,17 +14,38 @@ class IslamNamesCubit extends Cubit<IslamNamesState> {
     this._islamTeachingRepository,
   ) : super(const IslamNamesState.initialState());
 
-  Future<void> islamNames({
+  Future<void> islamNamesMan({
     String? search,
     bool? isSaved,
-    String? gender,
     required int page,
+    bool? isFirstCall,
   }) async {
     page > 1
         ? emit(const IslamNamesState.loadingMoreState())
         : emit(const IslamNamesState.loadingState());
-    final failureOrUser = await _islamTeachingRepository.islamNames(
-        search: search, isSaved: isSaved, gender: gender, page: page);
+    final failureOrUser = await _islamTeachingRepository.islamNamesMan(
+        search: search, isSaved: isSaved, page: page, isFirstCall: isFirstCall);
+    failureOrUser.fold(
+      (l) {
+        emit(IslamNamesState.errorState(message: mapFailureToMessageBack(l)));
+      },
+      (r) {
+        emit(IslamNamesState.loaded(islam: r));
+      },
+    );
+  }
+
+  Future<void> islamWoman({
+    String? search,
+    bool? isSaved,
+    required int page,
+    bool? isFirstCall,
+  }) async {
+    page > 1
+        ? emit(const IslamNamesState.loadingMoreState())
+        : emit(const IslamNamesState.loadingState());
+    final failureOrUser = await _islamTeachingRepository.islamWoman(
+        search: search, isSaved: isSaved, page: page, isFirstCall: isFirstCall);
     failureOrUser.fold(
       (l) {
         emit(IslamNamesState.errorState(message: mapFailureToMessageBack(l)));
