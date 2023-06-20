@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -31,6 +33,7 @@ class _ProfileMainPage extends State<ProfileMainPage> {
   void initState() {
     // TODO: implement initState
     BlocProvider.of<GetProfileCubit>(context).getUser();
+
     super.initState();
   }
 
@@ -40,6 +43,7 @@ class _ProfileMainPage extends State<ProfileMainPage> {
       backgroundColor: AppColors.lightBlue,
       body: BlocBuilder<GetProfileCubit, GetProfileState>(
         builder: (context, state) {
+          log(state.toString());
           return state.maybeWhen(
             orElse: () {
               return const Center(
@@ -148,7 +152,12 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                                     );
                                   }),
                               ProfileMenuItem(
-                                  title: 'Техникалық қолдау', onTap: () {}),
+                                  title: 'Техникалық қолдау',
+                                  onTap: () {
+                                    context.router.push(
+                                      const TechnicalSupportPageRoute(),
+                                    );
+                                  }),
                             ],
                           ),
                         ),

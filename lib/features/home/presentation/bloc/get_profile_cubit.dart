@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_payload.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/repositories/auth_repository.dart';
 
 part 'get_profile_cubit.freezed.dart';
@@ -34,7 +37,7 @@ class GetProfileState with _$GetProfileState {
   const factory GetProfileState.loadingState() = _LoadingState;
 
   const factory GetProfileState.loaded({
-    required UserDTO user,
+    required UserDto user,
   }) = _LoadedState;
 
   const factory GetProfileState.errorState({

@@ -19,6 +19,7 @@ import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/auth_cubit.
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/code_verification_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/login_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/registration_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/rename_user_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/change_pass_cubit.dart';
 
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/charities_cubit.dart';
@@ -87,6 +88,8 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         BlocProvider<ChangePassCubit>(
           create: (context) => getIt<ChangePassCubit>(),
         ),
+        BlocProvider<RenameUserCubit>(
+            create: (context) => getIt<RenameUserCubit>()),
         //
         //HOME
         //

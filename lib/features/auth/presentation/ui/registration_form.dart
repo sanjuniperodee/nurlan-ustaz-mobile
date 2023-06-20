@@ -9,7 +9,7 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/validators.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/enums/gender.dart';
-import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_payload.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/auth_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/registration_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/widgets/private_policy_text.dart';
@@ -29,7 +29,7 @@ class RegistrationForm extends StatefulWidget {
 
   final bool isPrivacyAccept;
   final AuthCubit authCubit;
-  final UserDTO user;
+  final UserPayload user;
 
   @override
   State<RegistrationForm> createState() => _RegistrationFormState();
@@ -247,11 +247,11 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 }
 
                 isPrivacyAccept
-                    ? context.read<RegistrationCubit>().postUser(UserDTO(
+                    ? context.read<RegistrationCubit>().postUser(UserPayload(
                         fullName: nameController.text,
                         email: emailController.text,
                         phoneNumber: numberController.text,
-                        birthday: dateController.text,
+                        birthday: dateController.text.toString(),
                         password: passwordController.text,
                         rePassword: passwordRepeatController.text,
                         gender: gender))
