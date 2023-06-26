@@ -1,13 +1,19 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/common/constants.dart';
 import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_info.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/datasource/local/home_local_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/datasource/remote/home_remote_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/faq_model_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/models/geonames_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/media_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/models/notification_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/models/timings_dto.dart';
 
 const _tag = 'HomeRepository';
 
@@ -65,6 +71,10 @@ abstract class HomeRepository {
   });
   Future<Either<Failure, ResultHomeDTO>> newsDetail({required int id});
   Future<Either<Failure, List<FaqModelDTO>>> faq();
+  Future<Either<Failure, List<GeonamesDTO>>> geoNames({required String name});
+  Future<Either<Failure, NotificationDTO>> setCity({required GeonamesDTO geo});
+  Future<Either<Failure, TimingsDTO>> timings(
+      {required double lat, required double long});
   Future<Either<Failure, List<ResultHomeDTO>>> projectInfo();
   Future<Either<Failure, ResultHomeDTO>> seminarDetail({required int id});
   Future<Either<Failure, bool>> newsFavorite({required int id});
@@ -75,8 +85,10 @@ abstract class HomeRepository {
 @Singleton(as: HomeRepository)
 class HomeRepositoryImpl extends HomeRepository {
   final HomeRemoteDs remoteDS;
+  final HomeLocalDs localDS;
   final NetworkInfo networkInfo;
-  HomeRepositoryImpl({
+  HomeRepositoryImpl(
+    this.localDS, {
     required this.remoteDS,
     required this.networkInfo,
   });
@@ -100,6 +112,53 @@ class HomeRepositoryImpl extends HomeRepository {
     if (await networkInfo.isConnected) {
       try {
         final List<ResultHomeDTO> res = await remoteDS.projectInfo();
+        return Right(res);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<GeonamesDTO>>> geoNames(
+      {required String name}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final List<GeonamesDTO> res = await remoteDS.geoNames(name: name);
+        return Right(res);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, NotificationDTO>> setCity(
+      {required GeonamesDTO geo}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final NotificationDTO res = await remoteDS.setCity(geo: geo);
+        localDS.saveGeoToCache(geo: geo);
+
+        return Right(res);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, TimingsDTO>> timings(
+      {required double lat, required double long}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final TimingsDTO res = await remoteDS.timings(lat: lat, long: long);
         return Right(res);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));

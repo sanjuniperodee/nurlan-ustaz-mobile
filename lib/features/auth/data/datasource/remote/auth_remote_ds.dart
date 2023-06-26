@@ -85,7 +85,7 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       final response = await dio.get(
         '${EndPoints.createUser}/me/',
       );
-      
+
       return UserDto.fromJson(response.data);
     } catch (e) {
       throw ServerException(message: e.toString());

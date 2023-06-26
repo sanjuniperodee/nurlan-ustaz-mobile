@@ -8,8 +8,10 @@ import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 
 class NamazContainerWidget extends StatelessWidget {
+  final String name;
   const NamazContainerWidget({
     Key? key,
+    required this.name,
   }) : super(key: key);
 
   @override
@@ -65,18 +67,25 @@ class NamazContainerWidget extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        children: [
-                          SvgPicture.asset(Assets.locationSvg),
-                          SizedBox(
-                            width: 4.w,
-                          ),
-                          Text(
-                            'Алматы',
-                            style: getTextStyle(CustomTextStyles.s16w400)
-                                .apply(color: AppColors.black),
-                          )
-                        ],
+                      GestureDetector(
+                        onTap: () {
+                          context.router.push(
+                            GeonamesPageRoute(),
+                          );
+                        },
+                        child: Row(
+                          children: [
+                            SvgPicture.asset(Assets.locationSvg),
+                            SizedBox(
+                              width: 4.w,
+                            ),
+                            Text(
+                              name,
+                              style: getTextStyle(CustomTextStyles.s16w400)
+                                  .apply(color: AppColors.black),
+                            )
+                          ],
+                        ),
                       ),
                       GestureDetector(
                         onTap: () {

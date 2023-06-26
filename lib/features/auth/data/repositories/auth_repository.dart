@@ -163,7 +163,6 @@ class AuthRepositoryImpl extends AuthRepository {
 
         return Right(result);
       } on ServerException catch (e) {
-        log('madi');
         return Left(ServerFailure(message: e.message));
       }
     } else {

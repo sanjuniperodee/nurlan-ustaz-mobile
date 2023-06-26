@@ -30,6 +30,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem_like_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem_post_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/faq_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/geonames_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/get_profile_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/lives_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/lives_fav_cubit.dart';
@@ -46,6 +47,9 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_det
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_fav_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_like_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/services_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/set_city_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/times_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/timings_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/bloc/tandaulilar_cubit.dart';
 
 import '../../../../core/services/locator_service.dart';
@@ -93,6 +97,15 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         //
         //HOME
         //
+        BlocProvider<TimingsCubit>(
+          create: (context) => getIt<TimingsCubit>(),
+        ),
+        BlocProvider<SetCityCubit>(
+          create: (context) => getIt<SetCityCubit>(),
+        ),
+        BlocProvider<GeonamesCubit>(
+          create: (context) => getIt<GeonamesCubit>(),
+        ),
         BlocProvider<FaqCubit>(
           create: (context) => getIt<FaqCubit>(),
         ),

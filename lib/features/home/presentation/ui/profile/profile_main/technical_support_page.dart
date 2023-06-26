@@ -62,12 +62,13 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
               ListView.builder(
                 itemCount: messages.length,
                 shrinkWrap: true,
-                padding: EdgeInsets.only(top: 10, bottom: 10),
-                physics: NeverScrollableScrollPhysics(),
+                padding: const EdgeInsets.only(top: 10, bottom: 10).r,
+                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) {
                   return Container(
-                    padding: EdgeInsets.only(
-                        left: 14, right: 14, top: 10, bottom: 10),
+                    padding: const EdgeInsets.only(
+                            left: 14, right: 14, top: 10, bottom: 10)
+                        .r,
                     child: Align(
                       alignment: (messages[index].messageType == "receiver"
                           ? Alignment.topLeft
@@ -79,16 +80,18 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
                               ? Colors.grey.shade200
                               : Colors.blue[200]),
                         ),
-                        padding: EdgeInsets.all(16),
+                        padding: const EdgeInsets.all(16).r,
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
                               messages[index].messageContent,
-                              style: TextStyle(fontSize: 15),
+                              style: const TextStyle(fontSize: 15),
                             ),
-                            SizedBox(height: 4,),
-                            Text('12:25')
+                            const SizedBox(
+                              height: 4,
+                            ),
+                            const Text('12:25')
                           ],
                         ),
                       ),
@@ -134,7 +137,7 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
                 ),
               ],
             ),
-            Divider(
+            const Divider(
               height: 13,
               thickness: 3,
               color: AppColors.background2,

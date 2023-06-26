@@ -25,6 +25,9 @@ mixin EndPoints {
   static const String changeNumberPost = '/api/v1/changeNumberPost';
 
   //HOME
+  static const String timings = '/api/islam/prayer-times/timings/';
+  static const String geoNames = '/api/notifications/devices/geo_names/';
+  static const String setCity = '/api/notifications/devices/';
   static const String banner = '/api/v1/banners';
   static const String faq = '/api/support/faq/';
   static const String prjInfo = '/api/support/project-info/';

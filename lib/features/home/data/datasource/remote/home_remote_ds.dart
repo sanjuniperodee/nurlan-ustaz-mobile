@@ -3,11 +3,16 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
+import 'package:nurlan_ustaz_flutter/core/platform/cache_helper/prefs.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/dio_wrapper.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
+import 'package:nurlan_ustaz_flutter/core/services/notification_service.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/faq_model_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/models/geonames_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/media_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/models/notification_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/models/timings_dto.dart';
 
 const _tag = 'HomeRemoteDS';
 
@@ -31,6 +36,9 @@ abstract class HomeRemoteDs {
   Future<bool> livesFavorite({required int id});
   Future<ResultHomeDTO> newsDetail({required int id});
   Future<List<FaqModelDTO>> faq();
+  Future<List<GeonamesDTO>> geoNames({required String name});
+  Future<NotificationDTO> setCity({required GeonamesDTO geo});
+  Future<TimingsDTO> timings({required double lat, required double long});
   Future<List<ResultHomeDTO>> projectInfo();
   Future<ResultHomeDTO> seminarDetail({required int id});
   Future<List<ResultHomeDTO>> news(
@@ -137,7 +145,6 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       return ((response.data as List<dynamic>))
           .map((e) => ResultHomeDTO.fromJson(e))
           .toList();
-
     } on DioError catch (e) {
       throw ServerException(
         message:
@@ -155,6 +162,64 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       return ((response.data as Map<String, dynamic>)['results'] as List)
           .map((x) => FaqModelDTO.fromJson(x as Map<String, dynamic>))
           .toList();
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<List<GeonamesDTO>> geoNames({required String name}) async {
+    try {
+      final response = await dio.post(EndPoints.geoNames, data: {'name': name});
+      return ((response.data as Map<String, dynamic>)['geonames'] as List)
+          .map((x) => GeonamesDTO.fromJson(x as Map<String, dynamic>))
+          .toList();
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<TimingsDTO> timings(
+      {required double lat, required double long}) async {
+    try {
+      final response = await dio.post(EndPoints.timings, data: {
+        'latitude': lat,
+        'longitude': long,
+      });
+
+      return TimingsDTO.fromJson(
+        (response.data['data']['timings'] as Map<String, dynamic>),
+      );
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<NotificationDTO> setCity({required GeonamesDTO geo}) async {
+    try {
+      final String? deviceToken = await NotificationService().getDeviceToken();
+
+      final response =
+          await dio.post('${EndPoints.setCity}$deviceToken/set_city/', data: {
+        'city_name': geo.name,
+        'country_name': geo.countryName,
+        'latitude': geo.lat,
+        'longitude': geo.lng,
+      });
+      return NotificationDTO.fromJson(
+        (response.data as Map<String, dynamic>),
+      );
     } on DioError catch (e) {
       throw ServerException(
         message:
