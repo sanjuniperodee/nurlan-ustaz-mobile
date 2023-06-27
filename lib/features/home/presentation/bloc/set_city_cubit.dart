@@ -16,6 +16,7 @@ class SetCityCubit extends Cubit<SetCityState> {
   ) : super(const SetCityState.initialState());
 
   Future<void> setCity({required GeonamesDTO geo}) async {
+    emit(const SetCityState.loadingState());
     final failureOrUser = await _homeRepository.setCity(geo: geo);
     failureOrUser.fold(
       (l) {

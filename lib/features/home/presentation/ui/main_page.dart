@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -16,6 +18,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/main_butt
 import 'package:nurlan_ustaz_flutter/features/home/data/models/banner_local_model.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/timings_cubit.dart';
+import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -60,14 +63,18 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     // TODO: implement initState
+
     BlocProvider.of<NewsCubit>(context).news(page: 1, isFirstCall: true);
     BlocProvider.of<TimingsCubit>(context).timings(
       43.25,
       76.91667,
     );
+
     super.initState();
   }
 
+  final now = DateTime.now();
+  List times = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -81,6 +88,9 @@ class _MainPageState extends State<MainPage> {
               );
             },
             loaded: (not, geo) {
+              final namaz = not.toJson();
+              times = namaz.values.toList();
+              log(times.toString());
               return BlocConsumer<NewsCubit, NewsState>(
                 listener: (context, state) {
                   state.maybeWhen(
@@ -278,7 +288,7 @@ class _MainPageState extends State<MainPage> {
                                                   CrossAxisAlignment.end,
                                               children: [
                                                 Text(
-                                                  '05 : 11',
+                                                  namasTimestoSend(),
                                                   style: getTextStyle(
                                                           CustomTextStyles
                                                               .s16w200)
@@ -292,21 +302,8 @@ class _MainPageState extends State<MainPage> {
                                                           color:
                                                               AppColors.blue),
                                                 ),
-                                                Text(
-                                                  '– 00 : 53 : 29',
-                                                  style: getTextStyle(
-                                                          CustomTextStyles
-                                                              .s16w200)
-                                                      .apply(
-                                                          fontFamily: FontTypes
-                                                              .SF_Pro.name)
-                                                      .copyWith(
-                                                          fontWeight:
-                                                              FontWeight.w400,
-                                                          fontSize: 14.sp)
-                                                      .apply(
-                                                          color:
-                                                              AppColors.black),
+                                                TimesStateWidget(
+                                                  time: timesToSend(),
                                                 )
                                               ],
                                             )
@@ -514,5 +511,122 @@ class _MainPageState extends State<MainPage> {
         },
       ),
     );
+  }
+
+  String beforeFormatter(List time) {
+    late String test;
+    try {
+      test = time.lastWhere((element) => DateTime.now()
+          .copyWith(
+              hour: int.parse(element.toString().substring(0, 2)),
+              minute: int.parse(element.toString().substring(3, 5)))
+          .isBefore(DateTime.now()));
+    } catch (e) {
+      log(time.toString());
+      log(e.toString());
+      return time.last;
+    }
+    log(' TEST:::${test}');
+    return test;
+  }
+
+  String namasTimestoSend() {
+    String beforeTime = beforeFormatter(times);
+    String nextTime = '';
+    for (int i = 0; i < times.length; i++) {
+      if (times[i] == beforeTime) {
+        if (times[i] == times.length - 1) {
+          nextTime = times[0];
+          break;
+        } else {
+          nextTime = times[i + 1];
+        }
+        break;
+      }
+    }
+    return nextTime;
+  }
+
+  String timesToSend() {
+    String beforeTime = beforeFormatter(times);
+    String nextTime = '';
+    for (int i = 0; i < times.length; i++) {
+      if (times[i] == beforeTime) {
+        if (times[i] == times.length - 1) {
+          nextTime = times[0];
+          break;
+        } else {
+          nextTime = times[i + 1];
+        }
+        break;
+      }
+    }
+    DateTime now = DateTime.now();
+    String formattedTime = DateFormat.Hms().format(now);
+    String timeH = ((int.parse(nextTime.substring(0, 2))) -
+            (int.parse(formattedTime.substring(0, 2))))
+        .toString();
+    String timeM = ((int.parse(nextTime.substring(3, 5))) -
+            (int.parse(formattedTime.substring(3, 5))))
+        .toString();
+
+    if (timeM.length < 2) {
+      timeM = "0$timeM";
+    }
+    if (timeH.length < 2) {
+      timeH = "0$timeH";
+    }
+    return "$timeH$timeM";
+  }
+}
+
+class TimesStateWidget extends StatefulWidget {
+  final String time;
+  const TimesStateWidget({
+    super.key,
+    required this.time,
+  });
+
+  @override
+  State<TimesStateWidget> createState() => _TimesStateWidgetState();
+}
+
+class _TimesStateWidgetState extends State<TimesStateWidget> {
+  final StopWatchTimer _stopWatchTimer = StopWatchTimer(
+    mode: StopWatchMode.countDown,
+    presetMillisecond: StopWatchTimer.getMilliSecFromMinute(1),
+  ); // Create instance.
+
+  @override
+  void initState() {
+    log(' NEXT${widget.time.toString()}');
+    _stopWatchTimer.setPresetHoursTime(int.parse(widget.time.substring(0, 2)));
+    _stopWatchTimer.setPresetMinuteTime(int.parse(widget.time.substring(2, 4)));
+    _stopWatchTimer.onStartTimer();
+    super.initState();
+  }
+
+  @override
+  void dispose() async {
+    super.dispose();
+    await _stopWatchTimer.dispose(); // Need to call dispose function.
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return StreamBuilder<int>(
+        stream: _stopWatchTimer.rawTime,
+        initialData: 0,
+        builder: (context, snap) {
+          final value = snap.data;
+          final displayTime = StopWatchTimer.getDisplayTime(value!);
+          return Text(
+            '-${displayTime}',
+            style: getTextStyle(CustomTextStyles.s16w200)
+                .apply(fontFamily: FontTypes.SF_Pro.name)
+                .copyWith(fontWeight: FontWeight.w400, fontSize: 14.sp)
+                .apply(color: AppColors.black),
+          );
+        });
   }
 }

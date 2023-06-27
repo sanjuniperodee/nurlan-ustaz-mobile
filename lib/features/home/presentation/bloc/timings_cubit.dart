@@ -1,10 +1,12 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/datasource/local/home_local_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/geonames_dto.dart';
-import 'package:nurlan_ustaz_flutter/features/home/data/models/notification_dto.dart';
+
 import 'package:nurlan_ustaz_flutter/features/home/data/models/timings_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/repositories/home_repository.dart';
 
@@ -18,13 +20,14 @@ class TimingsCubit extends Cubit<TimingsState> {
     this._homeRepository,
     this._homeLocalDs,
   ) : super(const TimingsState.initialState());
-  final now = DateTime.now();
 
   Future<void> timings(double? lat, double? long) async {
+    emit(const TimingsState.loadingState());
     final geo = _homeLocalDs.getGeoFromCache();
     final failureOrUser = await _homeRepository.timings(
         lat: double.parse(geo.lat ?? lat.toString()),
         long: double.parse(geo.lng ?? long.toString()));
+
     failureOrUser.fold(
       (l) {
         emit(TimingsState.errorState(message: mapFailureToMessageBack(l)));

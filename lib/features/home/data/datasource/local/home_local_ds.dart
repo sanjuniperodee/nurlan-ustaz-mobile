@@ -28,7 +28,7 @@ class HomeLocalDsImpl extends HomeLocalDs {
   Future<void> saveGeoToCache({
     required GeonamesDTO geo,
   }) async {
-    sharedPreferences.setString(
+    await sharedPreferences.setString(
       SharedKeys.GEOOO_TOKEN,
       jsonEncode(geo.toJson()),
     );
@@ -39,6 +39,7 @@ class HomeLocalDsImpl extends HomeLocalDs {
     try {
       final user = sharedPreferences.get(SharedKeys.GEOOO_TOKEN);
       if (user != null) {
+        log('____________GEOO${user.toString()}');
         return GeonamesDTO.fromJson(
           jsonDecode(user.toString()) as Map<String, dynamic>,
         );

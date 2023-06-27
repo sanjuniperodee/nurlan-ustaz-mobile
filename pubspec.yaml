@@ -75,7 +75,7 @@ dependencies:
   dots_indicator: ^3.0.0
   flutter_qiblah: ^2.1.0
   fluttertoast: ^8.2.1
-
+  stop_watch_timer: ^2.0.0
   json_annotation: ^4.7.0
   json_serializable: ^6.5.4
 

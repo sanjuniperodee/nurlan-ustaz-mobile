@@ -78,8 +78,7 @@ class _KausarDioInterceptor extends Interceptor {
 
     if (accessToken != null) {
       print('------------------------------$accessToken');
-      options.headers['Authorization'] =
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg3ODYwMzEzLCJpYXQiOjE2ODc3NzM5MTMsImp0aSI6IjZhMjZmN2JmYzYyMzRjMGRiZGM3ODUwY2Y3M2MxNzNkIiwidXNlcl9pZCI6M30.tEy-yag2BFajJZ4B6YVE8XouI55Vz8GGMl-mJj-2xcc';
+      options.headers['Authorization'] = 'Bearer $accessToken';
     }
 
     // }

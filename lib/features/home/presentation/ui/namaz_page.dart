@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -40,9 +38,11 @@ class _NamazPageState extends State<NamazPage> {
       43.25,
       76.91667,
     );
+
     super.initState();
   }
 
+  List times = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,8 +57,8 @@ class _NamazPageState extends State<NamazPage> {
             },
             loaded: (not, geo) {
               final namaz = not.toJson();
-              final times = namaz.values.toList();
-              log(times.toString());
+              times = namaz.values.toList();
+
               return SizedBox(
                 height: 1.sh,
                 child: Stack(
@@ -81,6 +81,9 @@ class _NamazPageState extends State<NamazPage> {
                           ),
                           NamazContainerWidget(
                             name: geo.name ?? 'Алматы',
+                            time: timesToSend(),
+                            namazName: namasNamestoSend(),
+                            namazTime: namasTimestoSend(),
                           ),
                           SizedBox(
                             child: ListView.builder(
@@ -111,11 +114,84 @@ class _NamazPageState extends State<NamazPage> {
   }
 
   String beforeFormatter(List time) {
-    return time.lastWhere((element) => DateTime.now()
-        .copyWith(
-            hour: int.parse(element.toString().substring(0, 2)),
-            minute: int.parse(element.toString().substring(3, 5)))
-        .isBefore(DateTime.now()));
+    late String test;
+    try {
+      test = time.lastWhere((element) => DateTime.now()
+          .copyWith(
+              hour: int.parse(element.toString().substring(0, 2)),
+              minute: int.parse(element.toString().substring(3, 5)))
+          .isBefore(DateTime.now()));
+    } catch (e) {
+      log(e.toString());
+      return time.last;
+    }
+    return test;
+  }
+
+  String namasNamestoSend() {
+    String beforeTime = beforeFormatter(namasNames);
+    String nextTime = '';
+    for (int i = 0; i < namasNames.length; i++) {
+      if (times[i] == beforeTime) {
+        if (times[i] == times.length - 1) {
+          nextTime = times[0];
+          break;
+        } else {
+          nextTime = times[i + 1];
+        }
+        break;
+      }
+    }
+    return nextTime;
+  }
+
+  String namasTimestoSend() {
+    String beforeTime = beforeFormatter(times);
+    String nextTime = '';
+    for (int i = 0; i < times.length; i++) {
+      if (times[i] == beforeTime) {
+        if (times[i] == times.length - 1) {
+          nextTime = times[0];
+          break;
+        } else {
+          nextTime = times[i + 1];
+        }
+        break;
+      }
+    }
+    return nextTime;
+  }
+
+  String timesToSend() {
+    String beforeTime = beforeFormatter(times);
+    String nextTime = '';
+    for (int i = 0; i < times.length; i++) {
+      if (times[i] == beforeTime) {
+        if (times[i] == times.length - 1) {
+          nextTime = times[0];
+          break;
+        } else {
+          nextTime = times[i + 1];
+        }
+        break;
+      }
+    }
+    DateTime now = DateTime.now();
+    String formattedTime = DateFormat.Hm().format(now);
+    String timeH = ((int.parse(nextTime.substring(0, 2))) -
+            (int.parse(formattedTime.substring(0, 2))))
+        .toString();
+    String timeM = ((int.parse(nextTime.substring(3, 5))) -
+            (int.parse(formattedTime.substring(3, 5))))
+        .toString();
+
+    if (timeM.length < 2) {
+      timeM = "0$timeM";
+    }
+    if (timeH.length < 2) {
+      timeH = "0$timeH";
+    }
+    return "$timeH$timeM";
   }
 }
 

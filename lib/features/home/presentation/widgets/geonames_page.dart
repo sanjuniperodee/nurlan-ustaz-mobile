@@ -8,7 +8,6 @@ import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/cache_helper/prefs.dart';
-import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
@@ -16,6 +15,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_wi
 import 'package:nurlan_ustaz_flutter/features/home/data/models/geonames_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/geonames_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/set_city_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/timings_cubit.dart';
 
 class GeonamesPage extends StatefulWidget {
   final void Function()? callback;
@@ -94,10 +94,14 @@ class _GeonamesPageState extends State<GeonamesPage> {
                                       state.maybeWhen(
                                         orElse: () {},
                                         loaded: (not) {
-                                          context.router.pop(geoa[index]);
+                                          BlocProvider.of<TimingsCubit>(context)
+                                              .timings(
+                                            double.parse(geoa[index].lat!),
+                                            double.parse(geoa[index].lng!),
+                                          );
+                                          context.router.pop();
                                         },
                                       );
-                                      // TODO: implement listener
                                     },
                                     child: InkWell(
                                       onTap: widget.callback ??

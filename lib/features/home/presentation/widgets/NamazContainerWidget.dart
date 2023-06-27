@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -6,13 +8,44 @@ import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
+import 'package:stop_watch_timer/stop_watch_timer.dart';
 
-class NamazContainerWidget extends StatelessWidget {
+class NamazContainerWidget extends StatefulWidget {
   final String name;
+  final String time;
+  final String namazName;
+  final String namazTime;
   const NamazContainerWidget({
     Key? key,
     required this.name,
+    required this.time,
+    required this.namazName,
+    required this.namazTime,
   }) : super(key: key);
+
+  @override
+  State<NamazContainerWidget> createState() => _NamazContainerWidgetState();
+}
+
+class _NamazContainerWidgetState extends State<NamazContainerWidget> {
+  final StopWatchTimer _stopWatchTimer = StopWatchTimer(
+    mode: StopWatchMode.countDown,
+    presetMillisecond: StopWatchTimer.getMilliSecFromMinute(1),
+  ); // Create instance.
+
+  @override
+  void initState() {
+    _stopWatchTimer.setPresetHoursTime(int.parse(widget.time.substring(0, 2)));
+    _stopWatchTimer.setPresetMinuteTime(int.parse(widget.time.substring(2, 4)));
+    _stopWatchTimer.onStartTimer();
+    super.initState();
+  }
+
+  @override
+  void dispose() async {
+    super.dispose();
+    await _stopWatchTimer.dispose(); // Need to call dispose function.
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +71,7 @@ class NamazContainerWidget extends StatelessWidget {
                 height: 24.h,
               ),
               Text(
-                'Таң намазы',
+                widget.namazName,
                 style: getTextStyle(CustomTextStyles.s20w700)
                     .apply(color: AppColors.black),
               ),
@@ -46,18 +79,25 @@ class NamazContainerWidget extends StatelessWidget {
                 height: 16.h,
               ),
               Text(
-                '05 : 11',
+                widget.namazTime,
                 style: getTextStyle(CustomTextStyles.s36w700)
                     .apply(color: AppColors.black),
               ),
               SizedBox(
                 height: 4.h,
               ),
-              Text(
-                '-00: 53 : 29',
-                style: getTextStyle(CustomTextStyles.s16w400)
-                    .apply(color: AppColors.black),
-              ),
+              StreamBuilder<int>(
+                  stream: _stopWatchTimer.rawTime,
+                  initialData: 0,
+                  builder: (context, snap) {
+                    final value = snap.data;
+                    final displayTime = StopWatchTimer.getDisplayTime(value!);
+                    return Text(
+                      '-${displayTime}',
+                      style: getTextStyle(CustomTextStyles.s16w400)
+                          .apply(color: AppColors.black),
+                    );
+                  }),
               Expanded(
                 flex: 4,
                 child: Padding(
@@ -80,7 +120,7 @@ class NamazContainerWidget extends StatelessWidget {
                               width: 4.w,
                             ),
                             Text(
-                              name,
+                              widget.name,
                               style: getTextStyle(CustomTextStyles.s16w400)
                                   .apply(color: AppColors.black),
                             )
