@@ -48,7 +48,6 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_fav
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_like_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/services_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/set_city_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/times_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/timings_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/bloc/tandaulilar_cubit.dart';
 
