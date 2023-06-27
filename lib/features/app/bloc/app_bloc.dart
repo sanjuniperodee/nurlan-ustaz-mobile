@@ -3,6 +3,12 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+
+
+import 'package:nurlan_ustaz_flutter/core/common/shared_keys.dart';
+import 'package:nurlan_ustaz_flutter/core/platform/cache_helper/prefs.dart';
+
+
 import 'package:nurlan_ustaz_flutter/features/app/logic/not_auth_logic.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/token_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/repositories/auth_repository.dart';
@@ -30,10 +36,14 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     _notAuthLogic.statusSubject.listen(
       (value) async {
         log('_startListenDio message from stream :: $value');
+
         if (value == 401)  {
           final TokenDTO? token = _authLocalDs.getTokenFromCache();
           await _authRepository
               .refreshToken(refreshToken: token?.refresh ?? '')
+
+
+
               .whenComplete(() {
             add(const AppEvent.checkAuth());
             // }
@@ -67,7 +77,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       if (r) {
         log('AppBloc authChecking: $r');
         // emit(const AppState.notAuthorizedState());
-         //await _authChecking();
+        //await _authChecking();
         await _tokenCheck(emit);
         // emit.isDone;
       } else {
@@ -104,7 +114,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       (l) => emit(const AppState.notAuthorizedState()),
       (r) {
         emit(const AppState.inAppState());
-
       },
     );
   }
@@ -113,7 +122,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     _Exiting event,
     Emitter<AppState> emit,
   ) async {
-     final result = await _authRepository.logOut();
+    final result = await _authRepository.logOut();
 
     result.fold(
       (l) {

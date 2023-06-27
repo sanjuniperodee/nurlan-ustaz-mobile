@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_text_form_profile.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/change_pass_cubit.dart';
 
 import '../../../../../../core/common/colors.dart';
 import '../../../../../app/presentation/widgets/custom_app_bar.dart';
@@ -14,42 +17,89 @@ class ChangePasswordPage extends StatefulWidget {
 }
 
 class _ChangePasswordPageState extends State<ChangePasswordPage> {
+  TextEditingController curPasController = TextEditingController();
+  TextEditingController newPasController = TextEditingController();
+  TextEditingController pasController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: 24.w),
+        padding: EdgeInsets.symmetric(horizontal: 24.w),
         child: AppButton(
             onTap: () {
-              Navigator.of(context).pop();
+              if (newPasController.text != pasController.text) {
+                return buildErrorCustomSnackBar(context, 'Пароли не совпадают');
+              }
+              if (curPasController.text.isEmpty ||
+                  newPasController.text.isEmpty ||
+                  pasController.text.isEmpty) {
+                return buildErrorCustomSnackBar(context, 'Заполните все поля');
+              }
+              BlocProvider.of<ChangePassCubit>(context).changePass(
+                  newPass: newPasController.text,
+                  curPass: curPasController.text,
+                  pass: pasController.text);
             },
             text: 'Дайын'),
       ),
-      body: SizedBox(
-        height: 1.1.sh,
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 24.w),
-            child: Column(
-              children:  [
-                SizedBox(height: 80,),
-                CustomAppBar(
-                  color: AppColors.black,
-                  title: 'Құпия сөзді өзгерту',
+      body: BlocConsumer<ChangePassCubit, ChangePassState>(
+        listener: (context, state) {
+          state.maybeWhen(
+            loaded: (status) {
+              buildSuccessCustomSnackBar(context, 'SUCCESS');
+            },
+            errorState: (message) {
+              buildErrorCustomSnackBar(context, message);
+            },
+            orElse: () {},
+          );
+          // TODO: implement listener
+        },
+        builder: (context, state) {
+          return SizedBox(
+            height: 1.1.sh,
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 24.w),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 80.h,
+                    ),
+                    const CustomAppBar(
+                      color: AppColors.black,
+                      title: 'Құпия сөзді өзгерту',
+                    ),
+                    SizedBox(height: 44.h),
+                    CustomTextFormProfile(
+                        controller: curPasController,
+                        hintText: 'Ағымдағы құпия сөз',
+                        labelText: 'Ағымдағы құпия сөз',
+                        onChanged: (value) {}),
+                    SizedBox(
+                      height: 24.h,
+                    ),
+                    CustomTextFormProfile(
+                        controller: newPasController,
+                        hintText: 'Жаңа құпия сөз',
+                        labelText: 'Жаңа құпия сөз',
+                        onChanged: (value) {}),
+                    SizedBox(
+                      height: 24.h,
+                    ),
+                    CustomTextFormProfile(
+                        controller: pasController,
+                        hintText: 'Жаңа құпия сөз қайталау',
+                        labelText: 'Жаңа құпия сөз қайталау',
+                        onChanged: (value) {}),
+                  ],
                 ),
-                SizedBox(height: 44),
-                CustomTextFormProfile(
-                    hintText: 'Ағымдағы құпия сөз', labelText: 'Ағымдағы құпия сөз',onChanged: (value){}),
-                SizedBox(
-                  height: 24,
-                ),
-                CustomTextFormProfile(hintText: 'Жаңа құпия сөз', labelText: 'Жаңа құпия сөз',onChanged: (value){}),
-              ],
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
   }

@@ -43,6 +43,9 @@ _$_ResultHomeDTO _$$_ResultHomeDTOFromJson(Map<String, dynamic> json) =>
       children: (json['children'] as List<dynamic>?)
           ?.map((e) => ResultHomeDTO.fromJson(e as Map<String, dynamic>))
           .toList(),
+      statistics: (json['statistics'] as List<dynamic>?)
+          ?.map((e) => StatisticsDTO.fromJson(e as Map<String, dynamic>))
+          .toList(),
       address: json['address'] as String?,
     );
 
@@ -71,5 +74,6 @@ Map<String, dynamic> _$$_ResultHomeDTOToJson(_$_ResultHomeDTO instance) =>
       'media': instance.media,
       'requisites': instance.requisites,
       'children': instance.children,
+      'statistics': instance.statistics,
       'address': instance.address,
     };

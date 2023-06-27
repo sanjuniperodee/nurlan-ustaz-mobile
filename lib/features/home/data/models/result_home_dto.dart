@@ -2,6 +2,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/media_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/requisites_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/models/statistics_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/user_comment_dto.dart';
 
 part 'result_home_dto.freezed.dart';
@@ -33,6 +34,7 @@ class ResultHomeDTO with _$ResultHomeDTO {
       List<MediaDTO>? media,
       List<RequisitesDTO>? requisites,
       List<ResultHomeDTO>? children,
+      List<StatisticsDTO>? statistics,
       String? address}) = _ResultHomeDTO;
 
   factory ResultHomeDTO.fromJson(Map<String, dynamic> json) =>
