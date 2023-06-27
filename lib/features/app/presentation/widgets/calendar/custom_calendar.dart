@@ -2,8 +2,8 @@ library flutter_clean_calendar;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_clean_calendar/clean_calendar_event.dart';
-import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 
 import 'custom_calendar_tile.dart';
 import 'custom_date_utils.dart';
@@ -96,6 +96,7 @@ class CustomCalendar extends StatefulWidget {
   final Color? bottomBarColor;
   final String? expandableDateFormat;
 
+
   CustomCalendar({
     this.onMonthChanged,
     this.onDateSelected,
@@ -171,14 +172,15 @@ class _CustomCalendarState extends State<CustomCalendar> {
         onPressed: isExpanded ? previousMonth : previousWeek,
         icon: Icon(
           Icons.chevron_left,
-          color: Color(0xFF8F8CF7),
-        ),
+          color:
+          Color(0xFF8F8CF7),)
       );
       rightArrow = IconButton(
         onPressed: isExpanded ? nextMonth : nextWeek,
         icon: Icon(
           Icons.chevron_right,
-          color: Color(0xFF8F8CF7),
+          color:
+          Color(0xFF8F8CF7),
         ),
       );
     } else {

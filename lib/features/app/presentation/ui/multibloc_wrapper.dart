@@ -14,12 +14,10 @@ import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/s
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/surah_favorite_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/app_bloc.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
-
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/auth_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/code_verification_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/login_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/registration_cubit.dart';
-
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/charities_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_like_cubit.dart';
@@ -29,7 +27,6 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem_post_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/lives_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/lives_fav_cubit.dart';
-
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_fav_cubit.dart';
@@ -41,9 +38,15 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_det
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_fav_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_like_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/services_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/presentation/bloc/calendar_chats_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/presentation/bloc/today_chat_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/bloc/tandaulilar_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/create_tus_zhoru_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_details_cubit.dart';
 
 import '../../../../core/services/locator_service.dart';
+import '../../../tus_zhoru/presentation/bloc/custom_tus_zhoru_details_cubit.dart';
 
 class MultiblocWrapper extends StatefulWidget {
   final Widget child;
@@ -179,6 +182,19 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         BlocProvider<TandaulilarCubit>(
           create: (context) => getIt<TandaulilarCubit>(),
         ),
+        //USTAZ AITNIZH
+        BlocProvider<CalendarChatsCubit>(create:(context)=>getIt<CalendarChatsCubit>()),
+        BlocProvider<TodayChatCubit>(create:(context)=>getIt<TodayChatCubit>()),
+        //TUS ZHORU
+        BlocProvider<TusZhoruCubit>(create: (context)=>getIt<TusZhoruCubit>()),
+        BlocProvider<CreateTusZhoruCubit>(create: (context)=>getIt<CreateTusZhoruCubit>()),
+        BlocProvider<TusZhoruDetailsCubit>(create: (context)=>getIt<TusZhoruDetailsCubit>()),
+        BlocProvider<CustomTusZhoruDetailsCubit>(create: (context)=>getIt<CustomTusZhoruDetailsCubit>())
+
+
+
+
+
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),

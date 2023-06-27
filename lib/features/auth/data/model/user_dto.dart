@@ -17,6 +17,9 @@ class UserDTO with _$UserDTO {
     @JsonKey(name: "gender") Gender? gender,
     @JsonKey(name: "birthday") String? birthday,
     @JsonKey(name: "re_password") String? rePassword,
+    @JsonKey(name: "avatar") String? avatar,
+
+
   }) = _UserDTO;
 
   factory UserDTO.fromJson(Map<String, dynamic> json) =>

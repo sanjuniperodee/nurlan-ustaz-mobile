@@ -11,7 +11,6 @@ mixin EndPoints {
   static const String createToken = '/api/jwt/create/';
   static const String refreshToken = '/api/jwt/refresh/';
 
-
   static const String register = '/api/v1/register';
   static const String registerVerify = '/api/v1/verifyUserPhone';
   static const String resetPassword = '/api/v1/reset-password';
@@ -32,6 +31,11 @@ mixin EndPoints {
   static const String lives = '/api/blog/lives/';
   static const String partners = '/api/additional-services/partners/';
   static const String news = '/api/banner/news/';
+  static const String chats = '/api/tell-me-ustaz/chats/';
+
+// TUS ZHORU
+  static const String tusZhoru = '/api/dream-book/interpretations/';
+  static const String customTusZhoru = '/api/dream-book/custom-interpretations/';
 
   //ISLAM TEACHING
 

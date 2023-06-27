@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nurlan_ustaz_flutter/core/utils/succes_pay_dialog.dart';
+import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/create_tus_zhoru_cubit.dart';
 
 import '../common/app_styles.dart';
 import '../common/colors.dart';
 
 class PayDialog extends StatelessWidget {
-  const PayDialog({Key? key}) : super(key: key);
-
+  const PayDialog({Key? key, required this.price, required this.id, required this.isCustom}) : super(key: key);
+  final String price;
+  final int id;
+  final bool isCustom;
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -55,10 +60,21 @@ class PayDialog extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(27)),
                 height: 44,
-                onPressed: () {},
+                onPressed: () async {
+
+                  await BlocProvider.of<CreateTusZhoruCubit>(context)
+                      .createCustomTusZhoruPayment(id,isCustom);
+                   Navigator.of(context).pop();
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return SuccesPayDialog(price: '', id: id, isCustom: isCustom,);
+                      });
+                   
+                },
                 color: AppColors.orange,
                 child: Center(
-                  child: Text('10 000 тг төлеу',
+                  child: Text('${price} тг төлеу',
                       style:
                       getTextStyle(CustomTextStyles.s14w400)
                           .copyWith(

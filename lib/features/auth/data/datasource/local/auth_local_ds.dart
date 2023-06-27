@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/common/shared_keys.dart';
 import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
-import 'package:nurlan_ustaz_flutter/core/platform/cache_helper/prefs.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/data/model/token_dto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class AuthLocalDs {
@@ -19,13 +19,14 @@ abstract class AuthLocalDs {
   });
 
   Future<void> saveToken({
-    required String token
+    required TokenDTO token,
   });
 
   String getLocale();
 
-  String? getToken();
+  TokenDTO? getTokenFromCache();
   Future<void> removeUserFromCache();
+
 
 
 }
@@ -84,15 +85,17 @@ class AuthLocalDsImpl extends AuthLocalDs {
   }
 
   @override
-  Future<void> saveToken({required String token}) async {
+  Future<void> saveToken({required  TokenDTO token}) async {
     sharedPreferences.setString(
-        SharedKeys.ACCESS_TOKEN, token);
+        SharedKeys.TOKEN, jsonEncode(token.toJson()));
   }
 
   @override
-  String? getToken() {
+  TokenDTO? getTokenFromCache() {
     try {
-      final  token = sharedPreferences.getString(SharedKeys.ACCESS_TOKEN);
+     final TokenDTO token =  TokenDTO.fromJson(
+        jsonDecode(sharedPreferences.getString(SharedKeys.TOKEN) ?? '') as Map<String, dynamic>,
+      );
       if (token != null) {
         return token;
       }
@@ -105,7 +108,7 @@ class AuthLocalDsImpl extends AuthLocalDs {
 
   @override
   Future<void> removeUserFromCache() async {
-    sharedPreferences.remove(SharedKeys.ACCESS_TOKEN);
+    sharedPreferences.remove(SharedKeys.TOKEN);
 
   }
 }

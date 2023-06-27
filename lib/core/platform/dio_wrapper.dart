@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -6,8 +5,6 @@ import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
 import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/features/app/logic/not_auth_logic.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/datasource/local/auth_local_ds.dart';
-import 'package:nurlan_ustaz_flutter/features/auth/data/model/token_dto.dart';
-
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import 'cache_helper/prefs.dart';
@@ -76,14 +73,12 @@ class _KausarDioInterceptor extends Interceptor {
     final String? accessToken = await prefs.getToken();
     final String locale = _authLocalDS.getLocale();
 
-    if (accessToken != null) {
-      print('------------------------------$accessToken');
+    //if (accessToken != null) {
+    print('------------------------------$accessToken');
     options.headers['Authorization'] =
+        'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg3ODkwNTU0LCJpYXQiOjE2ODc4MDQxNDMsImp0aSI6ImI4YmZmOGQ3NDJhYTQwZGE4NjA2MDM1OTM5OTQ4ODhkIiwidXNlcl9pZCI6MTJ9.jjnIGZLX2ZxCT0yxkvY9QHM2lJVO14JNrEJWn-xS5K8';
+    //}
 
-        'Bearer $accessToken';
-    }
-
-     
     // }
 
     options.headers['Accept'] = "application/json";
@@ -91,28 +86,29 @@ class _KausarDioInterceptor extends Interceptor {
     super.onRequest(options, handler);
   }
 
-    @override
-    Future onError(DioError err,
-        ErrorInterceptorHandler handler,) async {
-      getIt<NotAuthLogic>().statusSubject.add(err.response?.statusCode ?? 0);
-      if ((err.response?.statusCode ?? 0) == HttpStatus.unauthorized) {
-        getIt<NotAuthLogic>().statusSubject.add(401);
-        // try {
-        //   // await refreshToken();
-        // } on DioError {
-        //   rethrow;
-        // }
-      } else if ((err.response?.statusCode ?? 0) ==
-          HttpStatus.unprocessableEntity) {
-        // try {
-        //   await refreshToken();
-        // } on DioError catch (e) {
-        //   throw e;
-        // }
-      } else if ((err.response?.statusCode ?? 0) == HttpStatus.notFound) {
-        // getIt<NotFoundLogic>().statusSubject.add(404);
-      }
-      return super.onError(err, handler);
+  @override
+  Future onError(
+    DioError err,
+    ErrorInterceptorHandler handler,
+  ) async {
+    getIt<NotAuthLogic>().statusSubject.add(err.response?.statusCode ?? 0);
+    if ((err.response?.statusCode ?? 0) == HttpStatus.unauthorized) {
+      getIt<NotAuthLogic>().statusSubject.add(401);
+      // try {
+      //   // await refreshToken();
+      // } on DioError {
+      //   rethrow;
+      // }
+    } else if ((err.response?.statusCode ?? 0) ==
+        HttpStatus.unprocessableEntity) {
+      // try {
+      //   await refreshToken();
+      // } on DioError catch (e) {
+      //   throw e;
+      // }
+    } else if ((err.response?.statusCode ?? 0) == HttpStatus.notFound) {
+      // getIt<NotFoundLogic>().statusSubject.add(404);
     }
+    return super.onError(err, handler);
   }
-
+}

@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/base.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/token_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/login_cubit.dart';
 
@@ -91,7 +90,6 @@ class _LoginFormState extends State<LoginForm> {
         state.maybeWhen(
           loadingState: () {},
           loadedState: () async {
-            print('success');
             context.router.push(const LauncherAppRoute());
           },
           errorState: (message) {

@@ -7,6 +7,8 @@ import 'package:nurlan_ustaz_flutter/core/platform/network_info.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/datasource/remote/home_remote_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/media_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/data/models/chat_model.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/data/models/question_model.dart';
 
 const _tag = 'HomeRepository';
 
@@ -67,6 +69,9 @@ abstract class HomeRepository {
   Future<Either<Failure, bool>> newsFavorite({required int id});
   Future<Either<Failure, bool>> newsLike({required int id});
   Future<Either<Failure, bool>> livesFavorite({required int id});
+  Future<Either<Failure,List<ChatDTO>>> chats({required String startTime,required String endTime});
+  Future<Either<Failure, List<QuestionDTO>>> questions({required int id,String? search,int? page, bool? isFirstCall});
+
 }
 
 @Singleton(as: HomeRepository)
@@ -431,4 +436,39 @@ class HomeRepositoryImpl extends HomeRepository {
       return Left(ServerFailure(message: NO_INTERNET_TEXT));
     }
   }
+
+  @override
+  Future<Either<Failure, List<ChatDTO>>> chats({required String startTime, required String endTime}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final List<ChatDTO> chats = await remoteDS.chats(
+          startTime: startTime,endTime: endTime
+        );
+        return Right(chats);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure,  List<QuestionDTO>>> questions({required int id, String? search, int? page, bool? isFirstCall}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final List<QuestionDTO> questions = await remoteDS.questions(
+            search: search,
+            currentPage: page,
+            isFirstCall: isFirstCall, id: id);
+        return Right(questions);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+
 }
