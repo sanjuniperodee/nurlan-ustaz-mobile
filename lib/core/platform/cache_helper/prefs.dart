@@ -39,7 +39,7 @@ class Prefs {
 
   Future<String?> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString(SharedKeys.ACCESS_TOKEN);
+    return prefs.getString(SharedKeys.TOKEN);
   }
 
   void setToken(String? token) async {

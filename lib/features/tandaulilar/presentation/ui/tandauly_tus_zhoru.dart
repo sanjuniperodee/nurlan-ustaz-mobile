@@ -86,11 +86,10 @@ class _TandaulyTusZhoruPageState extends State<TandaulyTusZhoruPage> {
                       padding: EdgeInsets.symmetric(horizontal: 1.sp),
                       child: GestureDetector(
                         onTap: () {
-                          context.router.push(
-                            TusZhoruDetailPageRoute(
-                                text: _mockList[index].textInfo,
-                                title: _mockList[index].title),
-                          );
+                          // context.router.push(
+                          //   TusZhoruDetailPageRoute(
+                          //       tusZhoruModel: _mockList[index]),
+                          // );
                         },
                         child: Container(
                           height: 71,

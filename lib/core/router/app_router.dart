@@ -8,17 +8,20 @@ import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/Isl
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/ayat_day_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/dhikr_detail_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/dhikr_page.dart';
-import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_5/duty_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_5/duty_detail_page.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_5/duty_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_5/namaz_duty_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_5/namaz_pattern_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_5/namaz_read_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_5/wudhu_page.dart';
-
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/name_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/prayers_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/surah_page.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/launcher.dart';
+
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/code_verification_page.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/login_page.dart';
+
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/code_verification_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/geonames_dto.dart';
@@ -44,13 +47,17 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_detai
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/services_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/shop_page.dart';
+
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/presentation/ui/ustaz_aitinizhi.dart';
+
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/login_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/widgets/geonames_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/ui/tandaulilar_main_page.dart';
-
+import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/custom_tus_zhoru_details_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/question_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/tus_zhoru_details_page.dart';
+import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/tus_zhoru_page.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/ui/zhosparym_page.dart';
 
 import '../../features/Islam_teaching/presentation/ui/detail_prayers_page.dart';
@@ -58,12 +65,9 @@ import '../../features/Islam_teaching/presentation/ui/name_detail_page.dart';
 import '../../features/Islam_teaching/presentation/ui/surah_detail_page.dart';
 import '../../features/home/presentation/ui/comment_page_news.dart';
 import '../../features/home/presentation/ui/live_broadcasts_page.dart';
-import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/tus_zhoru_page.dart';
-
 import '../../features/home/presentation/ui/namaz_page.dart';
 import '../../features/home/presentation/ui/news_detail_page.dart';
 import '../../features/home/presentation/ui/profile/profile_main/faq_page.dart';
-
 import '../../features/tandaulilar/presentation/ui/tandauly_tus_zhoru.dart';
 import '../../features/zhosparlar/presentation/ui/ramazan_checklist.dart';
 
@@ -146,6 +150,8 @@ part 'app_router.gr.dart';
     ),
     //TosZhoru
     AutoRoute(page: TusZhoruDetailPage),
+    AutoRoute(page: CustomTusZhoruDetailPage),
+
     AutoRoute(page: QuestionPage),
     AutoRoute(page: ProfileMainPage),
     AutoRoute(page: PaymentsPage),

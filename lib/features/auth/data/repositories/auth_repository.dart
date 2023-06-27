@@ -44,7 +44,7 @@ abstract class AuthRepository {
 
   Future<Either<Failure, String>> refreshToken({required String refreshToken});
 
-  Either<Failure, String> authCheck();
+  Either<Failure, TokenDTO> authCheck();
   Either<Failure, String> logOut();
 }
 
@@ -159,10 +159,12 @@ class AuthRepositoryImpl extends AuthRepository {
       try {
         final TokenDTO result =
             await remoteDS.createJwt(tokenCreateDTO: createTokenDTO);
-        localDS.saveToken(token: result.access ?? '');
+        localDS.saveToken(token: result);
 
         return Right(result);
       } on ServerException catch (e) {
+
+
         return Left(ServerFailure(message: e.message));
       }
     } else {
@@ -181,6 +183,7 @@ class AuthRepositoryImpl extends AuthRepository {
             curPass: curPass, newPass: newPass, pass: pass);
         return const Right(true);
       } on ServerException catch (e) {
+
         return Left(ServerFailure(message: e.message));
       }
     } else {
@@ -206,13 +209,12 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<Either<Failure, String>> refreshToken(
       {required String refreshToken}) async {
-    if (await networkInfo.isConnected) {
-      print('refresh idet');
+    if (await networkInfo.isConnected) { //access: ... , refresh: null
       try {
         final TokenDTO result = await remoteDS.refreshJwt(
           refreshToken: refreshToken,
         );
-        localDS.saveToken(token: result.access!);
+        localDS.saveToken(token: result);
         return Right(result.access!);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -223,16 +225,15 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Either<Failure, String> authCheck() {
+  Either<Failure,TokenDTO > authCheck() {
     try {
-      final token = localDS.getToken();
+      final TokenDTO? token = localDS.getTokenFromCache();
       log(
         'AuthRepositoryImpl authCheck:: ${token}',
         name: _tag,
       );
       if (token == null) {
         log('пустой токен');
-        // && user.verifyStatus != 'wait') {
         return Left(CacheFailure(message: 'Пустой токен!'));
       }
       return Right(token);

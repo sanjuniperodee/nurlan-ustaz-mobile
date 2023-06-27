@@ -42,6 +42,8 @@ class CalendarTile extends StatelessWidget {
   final Color? todayColor;
   final Color? eventColor;
   final Color? eventDoneColor;
+  final bool? isChat;
+  final List<DateTime>? daysWithChat;
 
   CalendarTile({
     this.onDateSelected,
@@ -58,6 +60,8 @@ class CalendarTile extends StatelessWidget {
     this.todayColor,
     this.eventColor,
     this.eventDoneColor,
+    this.isChat,
+    this.daysWithChat = const [],
   });
 
   /// This function [renderDateOrDayOfWeek] renders the week view or the month view. It is
@@ -88,14 +92,21 @@ class CalendarTile extends StatelessWidget {
           child: Container(
             // If this tile is the selected date, draw a colored circle on it. The circle is filled with
             // the color passed with the selectedColor parameter or red color.
-            decoration: isSelected && date != null
-                ? BoxDecoration(
-              shape: BoxShape.circle,
-              gradient:
-                  LinearGradient(colors: AppColors.gradientPrimaryActiveButton.colors)
+            decoration: isChat == true
+                ?
+            isSelected && date != null ? BoxDecoration(color: AppColors.orange,shape: BoxShape.circle) : BoxDecoration()
 
-            )
-                : BoxDecoration(), // no decoration when not selected
+
+
+
+
+                : isSelected && date != null //если выбран или сегодня
+                    ? BoxDecoration(
+                        shape: BoxShape.circle,
+                        gradient: LinearGradient(
+                            colors:
+                                AppColors.gradientPrimaryActiveButton.colors))
+                    : BoxDecoration(), // no decoration when not selected
             alignment: Alignment.center,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -109,43 +120,43 @@ class CalendarTile extends StatelessWidget {
                       color: isSelected && this.date != null
                           ? Colors.white
                           : Utils.isSameDay(this.date!, DateTime.now())
-                          ? todayColor
-                          : inMonth
-                          ? Colors.black
-                          : Colors
-                          .grey), // Grey color for previous or next months dates
+                              ? todayColor
+                              : inMonth
+                                  ? Colors.black
+                                  : Colors
+                                      .grey), // Grey color for previous or next months dates
                 ),
                 // Dots for the events
                 events != null && events!.length > 0
                     ? Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: events!.map((event) {
-                      eventCount++;
-                      // Show a maximum of 3 dots.
-                      if (eventCount > 3) return Container();
-                      return Container(
-                        margin: EdgeInsets.only(
-                            left: 2.0, right: 2.0, top: 1.0),
-                        width: 5.0,
-                        height: 5.0,
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            // If event is done (isDone == true) set the color of the dots to
-                            // the eventDoneColor (if given) otherwise use the primary color of
-                            // the theme
-                            // If the event is now donw yet, we use the given eventColor or the
-                            // color property of the CleanCalendarEvent. If both aren't set, then
-                            // the accent color of the theme get used.
-                            color: (() {
-                              if (event.isDone)
-                                return eventDoneColor ??
-                                    Theme.of(context).primaryColor;
-                              if (isSelected) return Colors.white;
-                              return eventColor ??
-                                  Theme.of(context).accentColor;
-                            }())),
-                      );
-                    }).toList())
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: events!.map((event) {
+                          eventCount++;
+                          // Show a maximum of 3 dots.
+                          if (eventCount > 3) return Container();
+                          return Container(
+                            margin: EdgeInsets.only(
+                                left: 2.0, right: 2.0, top: 1.0),
+                            width: 5.0,
+                            height: 5.0,
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                // If event is done (isDone == true) set the color of the dots to
+                                // the eventDoneColor (if given) otherwise use the primary color of
+                                // the theme
+                                // If the event is now donw yet, we use the given eventColor or the
+                                // color property of the CleanCalendarEvent. If both aren't set, then
+                                // the accent color of the theme get used.
+                                color: (() {
+                                  if (event.isDone)
+                                    return eventDoneColor ??
+                                        Theme.of(context).primaryColor;
+                                  if (isSelected) return Colors.white;
+                                  return eventColor ??
+                                      Theme.of(context).accentColor;
+                                }())),
+                          );
+                        }).toList())
                     : Container(),
               ],
             ),

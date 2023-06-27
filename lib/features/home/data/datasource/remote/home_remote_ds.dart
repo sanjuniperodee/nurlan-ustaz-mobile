@@ -12,70 +12,104 @@ import 'package:nurlan_ustaz_flutter/features/home/data/models/geonames_dto.dart
 import 'package:nurlan_ustaz_flutter/features/home/data/models/media_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/notification_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
+
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/data/models/chat_model.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/data/models/question_model.dart';
+
 import 'package:nurlan_ustaz_flutter/features/home/data/models/timings_dto.dart';
+
 
 const _tag = 'HomeRemoteDS';
 
 abstract class HomeRemoteDs {
   Future<bool> seminarFavorite({required int id});
+
   Future<bool> seminarLike({required int id});
+
   Future<bool> newsFavorite({required int id});
+
   Future<bool> newsLike({required int id});
+
   Future<bool> commentSemPost({
     required int id,
     int? commentId,
     required String body,
   });
+
   Future<bool> commentNewsPost({
     required int id,
     int? commentId,
     required String body,
   });
+
   Future<bool> commentSemLike({required int id, required int commentId});
+
   Future<bool> commentNewsLike({required int id, required int commentId});
+
   Future<bool> livesFavorite({required int id});
+
   Future<ResultHomeDTO> newsDetail({required int id});
+
   Future<List<FaqModelDTO>> faq();
   Future<List<GeonamesDTO>> geoNames({required String name});
   Future<NotificationDTO> setCity({required GeonamesDTO geo});
   Future<TimingsDTO> timings({required double lat, required double long});
   Future<List<ResultHomeDTO>> projectInfo();
   Future<ResultHomeDTO> seminarDetail({required int id});
+
   Future<List<ResultHomeDTO>> news(
       {String? search,
       bool? isSaved,
       int? currentPage,
       bool? isFirstCall = false});
+
   Future<List<ResultHomeDTO>> seminar(
       {String? search,
       bool? isSaved,
       int? currentPage,
       bool? isFirstCall = false});
+
   Future<List<ResultHomeDTO>> lives(
       {String? search,
       bool? isSaved,
       int? currentPage,
       bool? isFirstCall = false});
+
   Future<List<ResultHomeDTO>> charities(
       {int? currentPage, bool? isFirstCall = false});
+
   Future<List<ResultHomeDTO>> commentSeminar(
       {int? currentPage, bool? isFirstCall = false, int? id});
+
   Future<List<ResultHomeDTO>> commentNews(
       {int? currentPage, bool? isFirstCall = false, int? id});
+
   Future<bool> postImamService({required List<int> id});
+
   Future<List<MediaDTO>> services(
       {int? currentPage, bool? isFirstCall = false});
+
   Future<List<ResultHomeDTO>> partners();
+
+  Future<List<ChatDTO>> chats(
+      {required String startTime, required String endTime});
+
+  Future<List<QuestionDTO>> questions(
+      {int? currentPage,String? search,
+      required int id,
+      bool? isFirstCall = false});
 }
 
 @Injectable(as: HomeRemoteDs)
 class HomeRemoteDsImpl extends HomeRemoteDs {
   late final Dio dio;
   final DioWrapper dioWrapper;
+
   HomeRemoteDsImpl(this.dioWrapper) {
     dioWrapper.path('');
     dio = dioWrapper.dio;
   }
+
   List<ResultHomeDTO> newsPage = [];
   int? lpn;
   List<ResultHomeDTO> seminarPage = [];
@@ -90,6 +124,9 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   int? lpComSem;
   List<ResultHomeDTO> commentNewsPage = [];
   int? lpComNews;
+  List<QuestionDTO> question = [];
+  int? lpQuestions;
+
 
   @override
   Future<bool> livesFavorite({required int id}) async {
@@ -671,6 +708,72 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
                 .toList());
         log(seminarPage.toString());
         return seminarPage;
+      }
+
+      // log('PAGE${response.data['meta']['pagination']['page']}');
+      throw 'ERROR';
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<List<ChatDTO>> chats(
+      {required String startTime, required String endTime}) async {
+    try {
+      final response = await dio.get(
+        '${EndPoints.chats}/?start_date=$startTime&end_date=$endTime',
+      );
+      if (response.statusCode == 200) {
+        var chatList = ((response.data as List)
+            .map((e) => ChatDTO.fromJson(e as Map<String, dynamic>))
+            .toList());
+        print(chatList.map((e) => e.id).toList());
+
+        return chatList;
+      }
+      throw 'ERROR';
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<List<QuestionDTO>> questions(
+      {int? currentPage,String? search,
+      required int id,
+      bool? isFirstCall = false}) async {
+    try {
+      if (isFirstCall ?? false) {
+        question.clear();
+      }
+      if (lps != null && currentPage! >= lps! && currentPage != 1) {
+        return question;
+      }
+      final response = await dio.get(
+        '${EndPoints.chats}/$id/questions/',
+        queryParameters: {
+          if (search != null) 'search': search,
+        },
+      );
+
+      if (response.statusCode == 200) {
+        if (search != null && search.isNotEmpty) {
+          question.clear();
+        }
+        lpQuestions = response.data['meta']['pagination']['pages'];
+
+        question.addAll(
+            ((response.data as Map<String, dynamic>)['results'] as List)
+                .map((e) => QuestionDTO.fromJson(e as Map<String, dynamic>))
+                .toList());
+        return question;
       }
 
       // log('PAGE${response.data['meta']['pagination']['page']}');
