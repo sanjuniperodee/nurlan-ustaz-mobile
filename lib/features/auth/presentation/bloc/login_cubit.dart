@@ -5,7 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data/model/token_dto.dart';
-import '../../data/model/user_dto.dart';
+import '../../data/model/user_payload.dart';
 import '../../data/repositories/auth_repository.dart';
 
 part 'login_cubit.freezed.dart';

@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../data/model/enums/gender.dart';
-import '../../data/model/user_dto.dart';
+import '../../data/model/user_payload.dart';
 import '../../data/repositories/auth_repository.dart';
 
 part 'registration_cubit.freezed.dart';
@@ -19,10 +19,10 @@ class RegistrationCubit extends Cubit<RegistrationState> {
   void changeGender(Gender gender) {
     print(gender.name);
     emit(RegistrationState.initialState(
-        userDTO: const UserDTO().copyWith(gender: gender)));
+        userDTO: const UserPayload().copyWith(gender: gender)));
   }
 
-  Future<void> postUser(UserDTO userDTO) async {
+  Future<void> postUser(UserPayload userDTO) async {
     final result = await _authRepository.postUser(userDTO: userDTO);
     return result.fold(
       (l) {
@@ -44,7 +44,7 @@ class RegistrationState with _$RegistrationState {
       {@Default(false)
           bool isPolicyAccept,
       @Default(
-          UserDTO(
+          UserPayload(
               fullName: '',
               email: '',
               phoneNumber: '',
@@ -52,10 +52,10 @@ class RegistrationState with _$RegistrationState {
               rePassword: '',
               birthday: '',
               gender: Gender.male))
-          UserDTO userDTO}) = _InitialState;
+          UserPayload userDTO}) = _InitialState;
 
   const factory RegistrationState.loadedState({
-    required UserDTO user,
+    required UserPayload user,
   }) = _LoadedState;
 
   const factory RegistrationState.loadingState() = _LoadingState;

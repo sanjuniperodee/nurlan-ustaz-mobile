@@ -18,6 +18,11 @@ import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/auth_cubit.
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/code_verification_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/login_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/registration_cubit.dart';
+
+
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/rename_user_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/change_pass_cubit.dart';
+
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/charities_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_like_cubit.dart';
@@ -25,6 +30,9 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_new
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem_like_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem_post_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/faq_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/geonames_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/get_profile_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/lives_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/lives_fav_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.dart';
@@ -33,13 +41,19 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_fav_cu
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_like_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/partners_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/post_service_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/prj_info_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_fav_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_like_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/services_cubit.dart';
+
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/presentation/bloc/calendar_chats_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/presentation/bloc/today_chat_cubit.dart';
+
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/set_city_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/timings_cubit.dart';
+
 import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/bloc/tandaulilar_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/create_tus_zhoru_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_cubit.dart';
@@ -74,14 +88,35 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
           create: (context) => getIt<LanguageCubit>(),
         ),
         //AUTH
-        BlocProvider<AuthCubit>(create: (context)=> getIt<AuthCubit>()),
-        BlocProvider<RegistrationCubit>(create: (context)=>getIt<RegistrationCubit>()),
-        BlocProvider<LoginCubit>(create: (context)=>getIt<LoginCubit>()),
-        BlocProvider<CodeVerificationCubit>(create: (context)=>getIt<CodeVerificationCubit>()),
-
+        BlocProvider<AuthCubit>(create: (context) => getIt<AuthCubit>()),
+        BlocProvider<RegistrationCubit>(
+            create: (context) => getIt<RegistrationCubit>()),
+        BlocProvider<LoginCubit>(create: (context) => getIt<LoginCubit>()),
+        BlocProvider<CodeVerificationCubit>(
+            create: (context) => getIt<CodeVerificationCubit>()),
+        BlocProvider<GetProfileCubit>(
+          create: (context) => getIt<GetProfileCubit>(),
+        ),
+        BlocProvider<ChangePassCubit>(
+          create: (context) => getIt<ChangePassCubit>(),
+        ),
+        BlocProvider<RenameUserCubit>(
+            create: (context) => getIt<RenameUserCubit>()),
         //
         //HOME
         //
+        BlocProvider<TimingsCubit>(
+          create: (context) => getIt<TimingsCubit>(),
+        ),
+        BlocProvider<SetCityCubit>(
+          create: (context) => getIt<SetCityCubit>(),
+        ),
+        BlocProvider<GeonamesCubit>(
+          create: (context) => getIt<GeonamesCubit>(),
+        ),
+        BlocProvider<FaqCubit>(
+          create: (context) => getIt<FaqCubit>(),
+        ),
         BlocProvider<NewsCubit>(
           create: (context) => getIt<NewsCubit>(),
         ),
@@ -117,6 +152,9 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         ),
         BlocProvider<PostServiceCubit>(
           create: (context) => getIt<PostServiceCubit>(),
+        ),
+        BlocProvider<PrjInfoCubit>(
+          create: (context) => getIt<PrjInfoCubit>(),
         ),
         BlocProvider<SeminarFavCubit>(
           create: (context) => getIt<SeminarFavCubit>(),
