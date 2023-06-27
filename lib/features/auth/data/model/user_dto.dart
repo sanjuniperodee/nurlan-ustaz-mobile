@@ -19,8 +19,6 @@ class UserDto with _$UserDto {
     @JsonKey(name: "birthday") DateTime? birthday,
     @JsonKey(name: "re_password") String? rePassword,
 
-    @JsonKey(name: "avatar") String? avatar,
-
 
 
 
