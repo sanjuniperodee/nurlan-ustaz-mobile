@@ -7,7 +7,6 @@ import 'package:nurlan_ustaz_flutter/core/platform/dio_wrapper.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/ayat_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/names_of_Allah_dto.dart';
-import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/pagination_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/pillars_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/result_teaching_dto.dart';
 

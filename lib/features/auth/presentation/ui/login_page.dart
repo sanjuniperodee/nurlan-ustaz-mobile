@@ -11,7 +11,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_ta
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_text_form_profile.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/enums/gender.dart';
-import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_payload.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/auth_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/login_form.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/registration_form.dart';

@@ -78,12 +78,9 @@ class _KausarDioInterceptor extends Interceptor {
 
     if (accessToken != null) {
       print('------------------------------$accessToken');
-    options.headers['Authorization'] =
-
-        'Bearer $accessToken';
+      options.headers['Authorization'] = 'Bearer $accessToken';
     }
 
-     
     // }
 
     options.headers['Accept'] = "application/json";
@@ -91,28 +88,29 @@ class _KausarDioInterceptor extends Interceptor {
     super.onRequest(options, handler);
   }
 
-    @override
-    Future onError(DioError err,
-        ErrorInterceptorHandler handler,) async {
-      getIt<NotAuthLogic>().statusSubject.add(err.response?.statusCode ?? 0);
-      if ((err.response?.statusCode ?? 0) == HttpStatus.unauthorized) {
-        getIt<NotAuthLogic>().statusSubject.add(401);
-        // try {
-        //   // await refreshToken();
-        // } on DioError {
-        //   rethrow;
-        // }
-      } else if ((err.response?.statusCode ?? 0) ==
-          HttpStatus.unprocessableEntity) {
-        // try {
-        //   await refreshToken();
-        // } on DioError catch (e) {
-        //   throw e;
-        // }
-      } else if ((err.response?.statusCode ?? 0) == HttpStatus.notFound) {
-        // getIt<NotFoundLogic>().statusSubject.add(404);
-      }
-      return super.onError(err, handler);
+  @override
+  Future onError(
+    DioError err,
+    ErrorInterceptorHandler handler,
+  ) async {
+    getIt<NotAuthLogic>().statusSubject.add(err.response?.statusCode ?? 0);
+    if ((err.response?.statusCode ?? 0) == HttpStatus.unauthorized) {
+      getIt<NotAuthLogic>().statusSubject.add(401);
+      // try {
+      //   // await refreshToken();
+      // } on DioError {
+      //   rethrow;
+      // }
+    } else if ((err.response?.statusCode ?? 0) ==
+        HttpStatus.unprocessableEntity) {
+      // try {
+      //   await refreshToken();
+      // } on DioError catch (e) {
+      //   throw e;
+      // }
+    } else if ((err.response?.statusCode ?? 0) == HttpStatus.notFound) {
+      // getIt<NotFoundLogic>().statusSubject.add(404);
     }
+    return super.onError(err, handler);
   }
-
+}

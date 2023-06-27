@@ -28,9 +28,8 @@ class CustomAppBar extends StatelessWidget {
                 child: Text(
                   title,
                   textAlign: TextAlign.center,
-                  style: getTextStyle(CustomTextStyles.s20w700).copyWith(
-                      color: color == null ? AppColors.white : color,
-                      fontSize: 36),
+                  style: getTextStyle(CustomTextStyles.s20w700)
+                      .copyWith(color: color ?? AppColors.white, fontSize: 36),
                 ),
               ),
             ]
@@ -41,7 +40,7 @@ class CustomAppBar extends StatelessWidget {
                   },
                   child: SvgPicture.asset(
                     Assets.backButtonSvg,
-                    color: color == null ? AppColors.white : color,
+                    color: color ?? AppColors.white,
                   )),
               Expanded(
                 child: Align(
@@ -50,7 +49,7 @@ class CustomAppBar extends StatelessWidget {
                     title,
                     textAlign: TextAlign.center,
                     style: getTextStyle(CustomTextStyles.s20w700)
-                        .apply(color: color == null ? AppColors.white : color),
+                        .apply(color: color ?? AppColors.white),
                   ),
                 ),
               )

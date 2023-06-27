@@ -1,10 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/card_model.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/prj_info_cubit.dart';
 
 import '../../../../../../core/common/assets.dart';
 import '../../../../../../core/common/colors.dart';
@@ -21,137 +21,123 @@ int selectedIndex = -1;
 
 class _AboutAppPageState extends State<AboutAppPage> {
   @override
+  void initState() {
+    // TODO: implement initState
+    BlocProvider.of<PrjInfoCubit>(context).prjInfo();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: GlobalCustomBody(
-      child: SizedBox(
-        height: 1.1.sh,
-        child: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(children: [
-            SizedBox(
-              height: 15.h,
-            ),
-            CustomAppBar(
-              title: 'Жоба туралы',
-            ),
-            SizedBox(
-              height: 36.h,
-            ),
-            Container(
-              height: 180,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  gradient: LinearGradient(colors: [
-                    AppColors.white.withOpacity(0.58),
-                    AppColors.white.withOpacity(0.74)
-                  ], begin: Alignment.topCenter, end: Alignment.bottomCenter)),
-              child: Center(
-                child: Container(
-                  width: 163.w,
-                  height: 44.h,
-                  child: Image.asset(
-                    Assets.logoNurlan,
-                    color: AppColors.blue,
-                  ),
+    return Scaffold(body: BlocBuilder<PrjInfoCubit, PrjInfoState>(
+      builder: (context, state) {
+        return state.maybeWhen(
+          orElse: () {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: AppColors.red,
+              ),
+            );
+          },
+          loaded: (res) {
+            return GlobalCustomBody(
+              child: SizedBox(
+                height: 1.1.sh,
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(children: [
+                    SizedBox(
+                      height: 15.h,
+                    ),
+                    CustomAppBar(
+                      title: 'Жоба туралы',
+                    ),
+                    SizedBox(
+                      height: 36.h,
+                    ),
+                    Container(
+                      height: 180,
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          gradient: LinearGradient(
+                              colors: [
+                                AppColors.white.withOpacity(0.58),
+                                AppColors.white.withOpacity(0.74)
+                              ],
+                              begin: Alignment.topCenter,
+                              end: Alignment.bottomCenter)),
+                      child: Center(
+                        child: Container(
+                          width: 163.w,
+                          height: 44.h,
+                          child: Image.asset(
+                            Assets.logoNurlan,
+                            color: AppColors.blue,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    Text(
+                      res.first.description ?? 'ERROR',
+                      style: getTextStyle(CustomTextStyles.s16w400)
+                          .copyWith(fontFamily: FontTypes.SF_Pro.name),
+                      textAlign: TextAlign.center,
+                    ),
+                    ListView.builder(
+                      itemCount: res.first.statistics!.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 20.0),
+                          child: Container(
+                            height: 96.h,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                                color: AppColors.orange,
+                                borderRadius: BorderRadius.circular(28.r)),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text(
+                                  res.first.statistics![index].value ?? 'ERROR',
+                                  style: getTextStyle(CustomTextStyles.s20w700)
+                                      .copyWith(
+                                          fontSize: 28,
+                                          fontWeight: FontWeight.w700,
+                                          fontFamily:
+                                              FontTypes.Philosopher.name,
+                                          color: AppColors.white),
+                                ),
+                                SizedBox(
+                                  height: 4.h,
+                                ),
+                                Text(
+                                  res.first.statistics![index].title ?? 'ERROR',
+                                  style: getTextStyle(CustomTextStyles.s16w400)
+                                      .copyWith(
+                                          fontFamily:
+                                              FontTypes.Philosopher.name,
+                                          color: AppColors.white),
+                                )
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                  ]),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            Text(
-              'Жоба туралы жазылады. Жоба туралы жазылады. Жоба туралы жазылады. Жоба туралы жазылады. Жоба туралы жазы лады. Жоба туралы жазылады. Жоба туралы жазылады. Жоба туралы жазыла ды. Жоба туралы жазылады. Жоба туралы жазылады. Жоба туралы жазылады. Жоба туралы жазылады. Жоба туралы.',
-              style: getTextStyle(CustomTextStyles.s16w400)
-                  .copyWith(fontFamily: FontTypes.SF_Pro.name),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: 20.h,
-            ),
-            Container(
-              height: 96.h,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  color: AppColors.orange,
-                  borderRadius: BorderRadius.circular(28.r)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    '200+',
-                    style: getTextStyle(CustomTextStyles.s20w700).copyWith(
-                        fontSize: 28,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: FontTypes.Philosopher.name,color: AppColors.white),
-                  ),
-                  SizedBox(height: 4.h,),
-                  Text('Түс жору',
-                    style: getTextStyle(CustomTextStyles.s16w400).copyWith(
-
-                        fontFamily: FontTypes.Philosopher.name,color: AppColors.white),)
-                ],
-              ),
-            ),
-            SizedBox(height: 16.h,),
-
-            Container(
-              height: 96.h,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  color: AppColors.orange,
-                  borderRadius: BorderRadius.circular(28.r)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    '500+',
-                    style: getTextStyle(CustomTextStyles.s20w700).copyWith(
-                        fontSize: 28,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: FontTypes.Philosopher.name,color: AppColors.white),
-                  ),
-                  SizedBox(height: 4.h,),
-                  Text('Мұсылман есімдернің мағынасы',
-                    style: getTextStyle(CustomTextStyles.s16w400).copyWith(
-
-                        fontFamily: FontTypes.Philosopher.name,color: AppColors.white),)
-                ],
-              ),
-            ),
-            SizedBox(height: 16.h,),
-            Container(
-              height: 96.h,
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  color: AppColors.orange,
-                  borderRadius: BorderRadius.circular(28.r)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    '100+',
-                    style: getTextStyle(CustomTextStyles.s20w700).copyWith(
-                        fontSize: 28,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: FontTypes.Philosopher.name,color: AppColors.white),
-                  ),
-                  SizedBox(height: 4.h,),
-                  Text('Күнделікті дұғалар мен зікрлер',
-                    style: getTextStyle(CustomTextStyles.s16w400).copyWith(
-
-                        fontFamily: FontTypes.Philosopher.name,color: AppColors.white),)
-                ],
-              ),
-            ),
-            SizedBox(height: 200.h,)
-          ]),
-        ),
-      ),
+            );
+          },
+        );
+      },
     ));
   }
 
