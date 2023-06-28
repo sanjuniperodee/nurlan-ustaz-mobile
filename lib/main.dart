@@ -1,12 +1,8 @@
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'package:flutter/cupertino.dart';
-
 import 'package:nurlan_ustaz_flutter/core/model/async_app_dependecies.dart';
 import 'package:nurlan_ustaz_flutter/features/app/logic/main_runner.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/nurlan_ustaz_app.dart';
@@ -21,16 +17,12 @@ Future<void> firebaseInit() async {
     }
     if (event.link.queryParameters['type'] == 'customTusZhoru') {
       navigateToCustomTusZhoru(event.link);
-    } if (event.link.queryParameters['type'] == 'seminar') {
-    navigateToTusZhoru(event.link);
+    }
+    if (event.link.queryParameters['type'] == 'seminar') {
+      navigateToTusZhoru(event.link);
     }
   }).onError((e) {
     print(e);
-
-
-
-
-
   });
 }
 
@@ -55,11 +47,9 @@ Future<void> navigateToTusZhoru(Uri link) async {
   if (queryParams.length > 0) {
     var id = queryParams['id'];
     if (id != null) {
-
       Navigator.push(
         rootNavigatorKey.currentContext!,
-
-        MaterialPageRoute(builder: (context)  {
+        MaterialPageRoute(builder: (context) {
           return TusZhoruDetailPage(
             id: int.parse(id),
           );
@@ -69,9 +59,6 @@ Future<void> navigateToTusZhoru(Uri link) async {
   }
 }
 
-
-
-
 Future<void> navigateToCustomTusZhoru(Uri link) async {
   print("event.link.queryParameters ${link.queryParameters}");
 
@@ -80,11 +67,9 @@ Future<void> navigateToCustomTusZhoru(Uri link) async {
   if (queryParams.length > 0) {
     var id = queryParams['id'];
     if (id != null) {
-
       Navigator.push(
         rootNavigatorKey.currentContext!,
-
-        MaterialPageRoute(builder: (context)  {
+        MaterialPageRoute(builder: (context) {
           return CustomTusZhoruDetailPage(
             id: int.parse(id),
           );
@@ -93,4 +78,3 @@ Future<void> navigateToCustomTusZhoru(Uri link) async {
     }
   }
 }
-

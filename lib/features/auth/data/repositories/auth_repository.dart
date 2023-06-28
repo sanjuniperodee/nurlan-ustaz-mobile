@@ -163,8 +163,6 @@ class AuthRepositoryImpl extends AuthRepository {
 
         return Right(result);
       } on ServerException catch (e) {
-
-
         return Left(ServerFailure(message: e.message));
       }
     } else {
@@ -183,7 +181,6 @@ class AuthRepositoryImpl extends AuthRepository {
             curPass: curPass, newPass: newPass, pass: pass);
         return const Right(true);
       } on ServerException catch (e) {
-
         return Left(ServerFailure(message: e.message));
       }
     } else {
@@ -209,7 +206,8 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<Either<Failure, String>> refreshToken(
       {required String refreshToken}) async {
-    if (await networkInfo.isConnected) { //access: ... , refresh: null
+    if (await networkInfo.isConnected) {
+      //access: ... , refresh: null
       try {
         final TokenDTO result = await remoteDS.refreshJwt(
           refreshToken: refreshToken,
@@ -225,7 +223,7 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Either<Failure,TokenDTO > authCheck() {
+  Either<Failure, TokenDTO> authCheck() {
     try {
       final TokenDTO? token = localDS.getTokenFromCache();
       log(
