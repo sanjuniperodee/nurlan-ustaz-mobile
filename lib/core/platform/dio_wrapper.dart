@@ -73,10 +73,10 @@ class _KausarDioInterceptor extends Interceptor {
     final String? accessToken = await prefs.getToken();
     final String locale = _authLocalDS.getLocale();
 
-
     if (accessToken != null) {
       print('------------------------------$accessToken');
-      options.headers['Authorization'] = 'Bearer $accessToken';
+      options.headers['Authorization'] =
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg4MDMyMjc4LCJpYXQiOjE2ODc5NDU4NzgsImp0aSI6IjllYjQ2NGU2ZDE5NTQ0ZWE5MGU5ZjA1YjhiOWRhNzQ2IiwidXNlcl9pZCI6M30.UB4H9kBrU6-AZm4aY86LfpwWASUL6I6OtHGbwHhbF9g';
     }
 
     // }

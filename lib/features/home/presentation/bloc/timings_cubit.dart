@@ -23,19 +23,37 @@ class TimingsCubit extends Cubit<TimingsState> {
 
   Future<void> timings(double? lat, double? long) async {
     emit(const TimingsState.loadingState());
-    final geo = _homeLocalDs.getGeoFromCache();
-    final failureOrUser = await _homeRepository.timings(
-        lat: double.parse(geo.lat ?? lat.toString()),
-        long: double.parse(geo.lng ?? long.toString()));
-
-    failureOrUser.fold(
-      (l) {
-        emit(TimingsState.errorState(message: mapFailureToMessageBack(l)));
-      },
-      (r) {
-        emit(TimingsState.loaded(not: r, geo: geo));
-      },
-    );
+    // final geo = _homeLocalDs.getGeoFromCache();
+    final GeonamesDTO? geo = _homeLocalDs.getGeoFromCacheNull();
+    if (geo != null) {
+      final failureOrUser = await _homeRepository.timings(
+          lat: double.parse(geo.lat ?? lat.toString()),
+          long: double.parse(geo.lng ?? long.toString()));
+      failureOrUser.fold(
+        (l) {
+          emit(TimingsState.errorState(message: mapFailureToMessageBack(l)));
+        },
+        (r) {
+          emit(TimingsState.loaded(not: r, geo: geo));
+        },
+      );
+    } else {
+      final failureOrUser = await _homeRepository.timings(
+          lat: double.parse(geo?.lat ?? lat.toString()),
+          long: double.parse(geo?.lng ?? long.toString()));
+      failureOrUser.fold(
+        (l) {
+          emit(TimingsState.errorState(message: mapFailureToMessageBack(l)));
+        },
+        (r) {
+          emit(TimingsState.loaded(
+              not: r,
+              geo: geo ??
+                  const GeonamesDTO(
+                      name: 'Алматы', lat: '43.25', lng: '76.91667')));
+        },
+      );
+    }
   }
 }
 
