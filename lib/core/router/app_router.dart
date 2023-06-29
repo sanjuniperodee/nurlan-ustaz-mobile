@@ -44,6 +44,12 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_page.
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/services_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/shop_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/presentation/ui/ustaz_aitinizhi.dart';
+
+
+
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/login_page.dart';
+
+
 import 'package:nurlan_ustaz_flutter/features/home/presentation/widgets/geonames_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/ui/tandaulilar_main_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/custom_tus_zhoru_details_page.dart';

@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
+import 'package:nurlan_ustaz_flutter/core/model/freedom_payment_dto.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/cache_helper/prefs.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/dio_wrapper.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
@@ -17,7 +18,6 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitiniz
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/data/models/question_model.dart';
 
 import 'package:nurlan_ustaz_flutter/features/home/data/models/timings_dto.dart';
-
 
 const _tag = 'HomeRemoteDS';
 
@@ -93,9 +93,11 @@ abstract class HomeRemoteDs {
 
   Future<List<ChatDTO>> chats(
       {required String startTime, required String endTime});
-
+  Future<FreedomPaymentDTO> createSeminarPayment(
+      {required int id, required String userIp, required String backUrl});
   Future<List<QuestionDTO>> questions(
-      {int? currentPage,String? search,
+      {int? currentPage,
+      String? search,
       required int id,
       bool? isFirstCall = false});
 }
@@ -127,6 +129,27 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   List<QuestionDTO> question = [];
   int? lpQuestions;
 
+  @override
+  Future<FreedomPaymentDTO> createSeminarPayment(
+      {required int id,
+      required String userIp,
+      required String backUrl}) async {
+    try {
+      final response = await dio.post(
+        '${EndPoints.seminar}/$id/init_purchase/',
+        data: {
+          'user_ip': userIp,
+          'back_url': backUrl,
+        },
+      );
+      return FreedomPaymentDTO.fromJson(response.data);
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'].toString(),
+      );
+    }
+  }
 
   @override
   Future<bool> livesFavorite({required int id}) async {
@@ -288,6 +311,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       final response = await dio.get(
         '${EndPoints.seminar}/$id/',
       );
+      log(response.data.toString());
       return ResultHomeDTO.fromJson(
         (response.data as Map<String, dynamic>),
       );
@@ -746,7 +770,8 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
 
   @override
   Future<List<QuestionDTO>> questions(
-      {int? currentPage,String? search,
+      {int? currentPage,
+      String? search,
       required int id,
       bool? isFirstCall = false}) async {
     try {

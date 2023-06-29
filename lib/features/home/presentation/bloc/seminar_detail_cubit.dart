@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -13,10 +15,11 @@ class SeminarDetailCubit extends Cubit<SeminarDetailState> {
   SeminarDetailCubit(
     this._homeRepository,
   ) : super(const SeminarDetailState.initialState());
-
+  late ResultHomeDTO res;
   Future<void> seminarDetail({
     required int id,
   }) async {
+    // emit(const SeminarDetailState.loadingState());
     final failureOrUser = await _homeRepository.seminarDetail(
       id: id,
     );
@@ -26,7 +29,35 @@ class SeminarDetailCubit extends Cubit<SeminarDetailState> {
             SeminarDetailState.errorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
+        res = r;
         emit(SeminarDetailState.loaded(res: r));
+      },
+    );
+  }
+
+  Future<void> seminarLike({required int id}) async {
+    // emit(const SeminarDetailState.loadingState());
+    final failureOrUser = await _homeRepository.seminarLike(id: id);
+    failureOrUser.fold(
+      (l) {
+        emit(
+            SeminarDetailState.errorState(message: mapFailureToMessageBack(l)));
+      },
+      (r) {
+        seminarDetail(id: id);
+      },
+    );
+  }
+
+  Future<void> seminarFavorite({required int id}) async {
+    final failureOrUser = await _homeRepository.seminarFavorite(id: id);
+    failureOrUser.fold(
+      (l) {
+        emit(
+            SeminarDetailState.errorState(message: mapFailureToMessageBack(l)));
+      },
+      (r) {
+        seminarDetail(id: id);
       },
     );
   }

@@ -26,6 +26,8 @@ mixin _$ResultHomeDTO {
   bool? get isSaved => throw _privateConstructorUsedError;
   @JsonKey(name: "is_live")
   bool? get isLive => throw _privateConstructorUsedError;
+  @JsonKey(name: "is_purchased")
+  bool? get isPurchased => throw _privateConstructorUsedError;
   @JsonKey(name: "is_top")
   bool? get isTop => throw _privateConstructorUsedError;
   @JsonKey(name: "likes_count")
@@ -71,6 +73,7 @@ abstract class $ResultHomeDTOCopyWith<$Res> {
       {@JsonKey(name: "is_liked") bool? isLiked,
       @JsonKey(name: "is_saved") bool? isSaved,
       @JsonKey(name: "is_live") bool? isLive,
+      @JsonKey(name: "is_purchased") bool? isPurchased,
       @JsonKey(name: "is_top") bool? isTop,
       @JsonKey(name: "likes_count") int? likesCount,
       @JsonKey(name: "comments_count") int? comentCount,
@@ -113,6 +116,7 @@ class _$ResultHomeDTOCopyWithImpl<$Res, $Val extends ResultHomeDTO>
     Object? isLiked = freezed,
     Object? isSaved = freezed,
     Object? isLive = freezed,
+    Object? isPurchased = freezed,
     Object? isTop = freezed,
     Object? likesCount = freezed,
     Object? comentCount = freezed,
@@ -148,6 +152,10 @@ class _$ResultHomeDTOCopyWithImpl<$Res, $Val extends ResultHomeDTO>
       isLive: freezed == isLive
           ? _value.isLive
           : isLive // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isPurchased: freezed == isPurchased
+          ? _value.isPurchased
+          : isPurchased // ignore: cast_nullable_to_non_nullable
               as bool?,
       isTop: freezed == isTop
           ? _value.isTop
@@ -265,6 +273,7 @@ abstract class _$$_ResultHomeDTOCopyWith<$Res>
       {@JsonKey(name: "is_liked") bool? isLiked,
       @JsonKey(name: "is_saved") bool? isSaved,
       @JsonKey(name: "is_live") bool? isLive,
+      @JsonKey(name: "is_purchased") bool? isPurchased,
       @JsonKey(name: "is_top") bool? isTop,
       @JsonKey(name: "likes_count") int? likesCount,
       @JsonKey(name: "comments_count") int? comentCount,
@@ -306,6 +315,7 @@ class __$$_ResultHomeDTOCopyWithImpl<$Res>
     Object? isLiked = freezed,
     Object? isSaved = freezed,
     Object? isLive = freezed,
+    Object? isPurchased = freezed,
     Object? isTop = freezed,
     Object? likesCount = freezed,
     Object? comentCount = freezed,
@@ -341,6 +351,10 @@ class __$$_ResultHomeDTOCopyWithImpl<$Res>
       isLive: freezed == isLive
           ? _value.isLive
           : isLive // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isPurchased: freezed == isPurchased
+          ? _value.isPurchased
+          : isPurchased // ignore: cast_nullable_to_non_nullable
               as bool?,
       isTop: freezed == isTop
           ? _value.isTop
@@ -441,6 +455,7 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
       {@JsonKey(name: "is_liked") this.isLiked = false,
       @JsonKey(name: "is_saved") this.isSaved = false,
       @JsonKey(name: "is_live") this.isLive,
+      @JsonKey(name: "is_purchased") this.isPurchased,
       @JsonKey(name: "is_top") this.isTop,
       @JsonKey(name: "likes_count") this.likesCount,
       @JsonKey(name: "comments_count") this.comentCount,
@@ -480,6 +495,9 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
   @override
   @JsonKey(name: "is_live")
   final bool? isLive;
+  @override
+  @JsonKey(name: "is_purchased")
+  final bool? isPurchased;
   @override
   @JsonKey(name: "is_top")
   final bool? isTop;
@@ -565,7 +583,7 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
 
   @override
   String toString() {
-    return 'ResultHomeDTO(isLiked: $isLiked, isSaved: $isSaved, isLive: $isLive, isTop: $isTop, likesCount: $likesCount, comentCount: $comentCount, id: $id, parent: $parent, body: $body, name: $name, logo: $logo, title: $title, description: $description, text: $text, cover: $cover, link: $link, user: $user, startTime: $startTime, createdAt: $createdAt, isActive: $isActive, media: $media, requisites: $requisites, children: $children, statistics: $statistics, address: $address)';
+    return 'ResultHomeDTO(isLiked: $isLiked, isSaved: $isSaved, isLive: $isLive, isPurchased: $isPurchased, isTop: $isTop, likesCount: $likesCount, comentCount: $comentCount, id: $id, parent: $parent, body: $body, name: $name, logo: $logo, title: $title, description: $description, text: $text, cover: $cover, link: $link, user: $user, startTime: $startTime, createdAt: $createdAt, isActive: $isActive, media: $media, requisites: $requisites, children: $children, statistics: $statistics, address: $address)';
   }
 
   @override
@@ -576,6 +594,8 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
             (identical(other.isLiked, isLiked) || other.isLiked == isLiked) &&
             (identical(other.isSaved, isSaved) || other.isSaved == isSaved) &&
             (identical(other.isLive, isLive) || other.isLive == isLive) &&
+            (identical(other.isPurchased, isPurchased) ||
+                other.isPurchased == isPurchased) &&
             (identical(other.isTop, isTop) || other.isTop == isTop) &&
             (identical(other.likesCount, likesCount) ||
                 other.likesCount == likesCount) &&
@@ -615,6 +635,7 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
         isLiked,
         isSaved,
         isLive,
+        isPurchased,
         isTop,
         likesCount,
         comentCount,
@@ -658,6 +679,7 @@ abstract class _ResultHomeDTO implements ResultHomeDTO {
       {@JsonKey(name: "is_liked") final bool? isLiked,
       @JsonKey(name: "is_saved") final bool? isSaved,
       @JsonKey(name: "is_live") final bool? isLive,
+      @JsonKey(name: "is_purchased") final bool? isPurchased,
       @JsonKey(name: "is_top") final bool? isTop,
       @JsonKey(name: "likes_count") final int? likesCount,
       @JsonKey(name: "comments_count") final int? comentCount,
@@ -693,6 +715,9 @@ abstract class _ResultHomeDTO implements ResultHomeDTO {
   @override
   @JsonKey(name: "is_live")
   bool? get isLive;
+  @override
+  @JsonKey(name: "is_purchased")
+  bool? get isPurchased;
   @override
   @JsonKey(name: "is_top")
   bool? get isTop;

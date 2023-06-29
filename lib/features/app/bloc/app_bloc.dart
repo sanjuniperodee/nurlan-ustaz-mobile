@@ -3,6 +3,12 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+
+
+
+import 'package:nurlan_ustaz_flutter/core/common/shared_keys.dart';
+import 'package:nurlan_ustaz_flutter/core/platform/cache_helper/prefs.dart';
+
 import 'package:nurlan_ustaz_flutter/features/app/logic/not_auth_logic.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/token_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/repositories/auth_repository.dart';
@@ -21,20 +27,18 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   final NotAuthLogic _notAuthLogic;
   final AuthLocalDs _authLocalDs;
 
-  AppBloc(
-    this._authRepository,
-    this._notAuthLogic,
-    this._authLocalDs
-
-  ) : super(const AppState.loadingState()) {
+  AppBloc(this._authRepository, this._notAuthLogic, this._authLocalDs)
+      : super(const AppState.loadingState()) {
     _notAuthLogic.statusSubject.listen(
       (value) async {
         log('_startListenDio message from stream :: $value');
 
-        if (value == 401)  {
+        if (value == 401) {
           final TokenDTO? token = _authLocalDs.getTokenFromCache();
+          log(token!.refresh.toString());
           await _authRepository
               .refreshToken(refreshToken: token?.refresh ?? '')
+
               .whenComplete(() {
             add(const AppEvent.checkAuth());
             // }

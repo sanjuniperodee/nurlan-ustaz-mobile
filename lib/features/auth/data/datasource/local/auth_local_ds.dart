@@ -26,9 +26,6 @@ abstract class AuthLocalDs {
 
   TokenDTO? getTokenFromCache();
   Future<void> removeUserFromCache();
-
-
-
 }
 
 @Injectable(as: AuthLocalDs)
@@ -40,9 +37,8 @@ class AuthLocalDsImpl extends AuthLocalDs {
   @override
   Future<bool> getOnboardingStatusFromCache() async {
     final bool? isOnboarding =
-    sharedPreferences.getBool(SharedKeys.IS_ONBOARDING);
+        sharedPreferences.getBool(SharedKeys.IS_ONBOARDING);
     try {
-
       if (isOnboarding == null) {
         throw CacheException(
           message: 'В кэше нет запрашиваемые данные: isOnboarding',
@@ -85,25 +81,29 @@ class AuthLocalDsImpl extends AuthLocalDs {
   }
 
   @override
-  Future<void> saveToken({required  TokenDTO token}) async {
-    sharedPreferences.setString(
+  Future<void> saveToken({required TokenDTO token}) async {
+    await sharedPreferences.setString(
         SharedKeys.TOKEN, jsonEncode(token.toJson()));
     log(jsonEncode(token.toJson()));
 
   }
 
   @override
-  TokenDTO? getTokenFromCache() {
+  TokenDTO getTokenFromCache() {
     try {
       final token = sharedPreferences.get(SharedKeys.TOKEN);
       if (token != null) {
+
+        log('____________TOKEN${token.toString()}');
         return TokenDTO.fromJson(
           jsonDecode(token.toString()) as Map<String, dynamic>,
         );
+      } else {
+        throw CacheException(message: 'В кэше нет запрашиваемые данные');
+
       }
-      return null;
     } catch (e) {
-      log('AuthLocalDSImpl getUserFromCacheNull:: $e');
+      log('AuthLocalDSImpl:: ${e.runtimeType == CacheException ? (e as CacheException).message : e}');
       throw CacheException(message: 'В кэше нет запрашиваемые данные');
     }
   }
@@ -111,6 +111,5 @@ class AuthLocalDsImpl extends AuthLocalDs {
   @override
   Future<void> removeUserFromCache() async {
     sharedPreferences.remove(SharedKeys.TOKEN);
-
   }
 }

@@ -79,6 +79,7 @@ class _KausarDioInterceptor extends Interceptor {
 
       print('------------------------------${tokenDto.access}');
       options.headers['Authorization'] = 'Bearer ${tokenDto.access}';
+
     }
     // }
     options.headers['Accept'] = "application/json";

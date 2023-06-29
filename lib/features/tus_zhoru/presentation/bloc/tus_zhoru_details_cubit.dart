@@ -12,11 +12,12 @@ class TusZhoruDetailsCubit extends Cubit<TusZhoruDetailsState> {
   final TusZhoruRepository _repository;
 
   TusZhoruDetailsCubit(
-      this._repository,
-      ) : super(const TusZhoruDetailsState.initialState());
+    this._repository,
+  ) : super(const TusZhoruDetailsState.initialState());
 
   late List<TusZhoruDTO> tosZhoruList;
   late List<TusZhoruDTO> customTusZhoruList;
+
 
 
 
@@ -31,19 +32,16 @@ class TusZhoruDetailsCubit extends Cubit<TusZhoruDetailsState> {
   }
 
 
+
   Future<TusZhoruDTO?> getTusZhoruById(int id) async {
 
     final result = await _repository.getTusZhoruById(id: id);
     return result.fold((l) {
       return null;
     }, (r) {
-      emit( _LoadedState(r));
+      emit(_LoadedState(r));
     });
   }
-
-
-
-
 }
 
 @freezed
@@ -57,8 +55,8 @@ class TusZhoruDetailsState with _$TusZhoruDetailsState {
   const factory TusZhoruDetailsState.loadingState() = _LoadingState;
 
   const factory TusZhoruDetailsState.loaded(
-      final TusZhoruDTO? tusZhoru,
-      ) = _LoadedState;
+    final TusZhoruDTO? tusZhoru,
+  ) = _LoadedState;
 
   const factory TusZhoruDetailsState.errorState({
     required String message,

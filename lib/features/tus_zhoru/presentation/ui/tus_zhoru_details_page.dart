@@ -27,8 +27,13 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
 
   @override
   void initState() {
+
     //BlocProvider.of<TusZhoruCubit>(context).secureScreen();
     BlocProvider.of<TusZhoruDetailsCubit>(context).getTusZhoruById(widget.id);
+
+    BlocProvider.of<TusZhoruCubit>(context).secureScreen();
+
+    isFav = false;
 
     super.initState();
   }
@@ -60,27 +65,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                   ? null
                   : isPaid
                       ? null
-                      :
-
-                      // :Container(
-                      //   width: double.infinity,
-                      //   height: 100,
-                      //   decoration: BoxDecoration(
-                      //       border: Border(
-                      //           top: BorderSide(
-                      //               color: AppColors.grey1.withOpacity(0.1)))),
-                      //   child: Center(
-                      //     child: Padding(
-                      //       padding: EdgeInsets.symmetric(horizontal: 25.w),
-                      //       child: const Text(
-                      //         'Өтінішіңіз қабылданды. 24 сағат ішінде  жауап ала аласыз',
-                      //         textAlign: TextAlign.center,
-                      //       ),
-                      //     ),
-                      //   ),
-                      // )
-
-                      AppButton(
+                      : AppButton(
                           onTap: () {
                             showDialog(
                                 context: context,
@@ -185,7 +170,11 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                             onTap: () {
                                               BlocProvider.of<TusZhoruDetailsCubit>(
                                                       context)
+
                                                   .likeTusZhoru(tusZhoruModel.id!);
+
+
+
 
                                             },
                                             child: Container(

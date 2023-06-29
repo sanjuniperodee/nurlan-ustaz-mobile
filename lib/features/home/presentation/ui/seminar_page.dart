@@ -126,8 +126,8 @@ class _SeminarPageState extends State<SeminarPage> {
                               onTap: () {
                                 context.router.push(
                                   SeminarDetailPageRoute(
-                                      result: listOfSeminars[index],
-                                      isFav: listOfFav[index]),
+                                    id: listOfSeminars[index].id!,
+                                  ),
                                 );
                               },
                               child: Container(

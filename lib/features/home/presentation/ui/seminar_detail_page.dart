@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -11,20 +13,19 @@ import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
-import 'package:nurlan_ustaz_flutter/core/utils/alert_utilrs.dart';
+
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
-import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/create_seminar_payment_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_detail_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_fav_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_like_cubit.dart';
+
 import 'package:share_plus/share_plus.dart';
 
 class SeminarDetailPage extends StatefulWidget {
-  final ResultHomeDTO result;
-  final bool isFav;
-  const SeminarDetailPage(
-      {super.key, required this.result, required this.isFav});
+  // final ResultHomeDTO result;
+  // final bool isFav;
+  final int id;
+  const SeminarDetailPage({super.key, required this.id});
 
   @override
   State<SeminarDetailPage> createState() => _SeminarDetailPageState();
@@ -39,12 +40,10 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
   @override
   void initState() {
     // TODO: implement initState
-    BlocProvider.of<SeminarDetailCubit>(context)
-        .seminarDetail(id: widget.result.id!);
-    isFavorite = widget.isFav;
-    isLiked = widget.result.isLiked!;
-    likeCount = widget.result.likesCount!;
-
+    BlocProvider.of<SeminarDetailCubit>(context).seminarDetail(id: widget.id);
+    // isFavorite = widget.isFav;
+    // isLiked = widget.result.isLiked!;
+    // likeCount = widget.result.likesCount!;
     super.initState();
   }
 
@@ -57,7 +56,11 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
             orElse: () {
               return const Center();
             },
-            loaded: (res) {
+            loaded: (result) {
+              isFavorite = result.isSaved!;
+              isLiked = result.isLiked!;
+              likeCount = result.likesCount!;
+              final bool isPaid = result.isPurchased == true;
               return Stack(children: [
                 CarouselSlider(
                   options: CarouselOptions(
@@ -72,7 +75,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                       });
                     },
                   ),
-                  items: widget.result.media!.map((i) {
+                  items: result.media!.map((i) {
                     return Builder(
                       builder: (BuildContext context) {
                         return CachedNetworkImage(
@@ -88,7 +91,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                     );
                   }).toList(),
                 ),
-                if (widget.result.media != null)
+                if (result.media != null)
                   Positioned.fill(
                     top: 210.r,
                     child: Align(
@@ -124,7 +127,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              widget.result.title ?? 'ERROR',
+                              result.title ?? 'ERROR',
                               style: getTextStyle(CustomTextStyles.s20w700)
                                   .apply(color: AppColors.black),
                             ),
@@ -140,7 +143,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                       width: 10.w,
                                     ),
                                     Text(
-                                      '${DateFormat('d').format(DateTime.parse(widget.result.startTime.toString()))}  ${DateFormat('MMMM').format(DateTime.parse(widget.result.startTime.toString()))}, ${DateFormat('HH:MM').format(DateTime.parse(widget.result.startTime.toString()))}',
+                                      '${DateFormat('d').format(DateTime.parse(result.startTime.toString()))}  ${DateFormat('MMMM').format(DateTime.parse(result.startTime.toString()))}, ${DateFormat('HH:MM').format(DateTime.parse(result.startTime.toString()))}',
                                       style:
                                           getTextStyle(CustomTextStyles.s14w400)
                                               .apply(color: AppColors.grey2),
@@ -153,7 +156,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                       width: 10.w,
                                     ),
                                     Text(
-                                      widget.result.address ?? 'ERROR',
+                                      result.address ?? 'ERROR',
                                       style:
                                           getTextStyle(CustomTextStyles.s14w400)
                                               .apply(color: AppColors.grey2),
@@ -172,18 +175,18 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                     children: [
                                       InkWell(
                                           onTap: () {
-                                            BlocProvider.of<SeminarLikeCubit>(
+                                            log(result.isLiked.toString());
+                                            BlocProvider.of<SeminarDetailCubit>(
                                                     context)
                                                 .seminarLike(
-                                                    id: widget.result.id ?? 0);
+                                                    id: result.id ?? 0);
+
                                             isLiked = !isLiked;
                                             if (isLiked == true) {
                                               likeCount += 1;
                                             } else {
                                               likeCount -= 1;
                                             }
-
-                                            setState(() {});
                                           },
                                           child: SvgPicture.asset(isLiked
                                               ? Assets.heartSvg
@@ -198,7 +201,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                       ),
                                       SvgPicture.asset(Assets.commentSvg),
                                       Text(
-                                        res.comentCount.toString(),
+                                        result.comentCount.toString(),
                                         style: getTextStyle(
                                             CustomTextStyles.s14w400),
                                       ),
@@ -217,11 +220,10 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                 ),
                                 GestureDetector(
                                     onTap: () {
-                                      BlocProvider.of<SeminarFavCubit>(context)
-                                          .seminarFavorite(
-                                              id: widget.result.id ?? 0);
+                                      BlocProvider.of<SeminarDetailCubit>(
+                                              context)
+                                          .seminarFavorite(id: result.id ?? 0);
                                       isFavorite = !isFavorite;
-                                      setState(() {});
                                     },
                                     child: SvgPicture.asset(isFavorite
                                         ? Assets.bookMark1Svg
@@ -233,14 +235,105 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                             ),
                             AppButton(
                               onTap: () {
-                                Alert.dialogBuilder(
+                                showDialog(
                                     context: context,
-                                    message: 'Төлем сәтті аяқталды',
-                                    gradientColors: [
-                                      const Color(0xFF1151C2),
-                                      const Color(0xFF2941F4).withOpacity(0.1),
-                                      const Color(0xFF4E5BF3).withOpacity(0.1),
-                                    ]);
+                                    builder: (context) {
+                                      return Dialog(
+                                        shape: const RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(30))),
+                                        child: Container(
+                                          height: 289,
+                                          width: 311,
+                                          decoration: const BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(30)),
+                                              gradient: LinearGradient(
+                                                  colors: [
+                                                    AppColors.blue,
+                                                    AppColors.white
+                                                  ],
+                                                  begin: Alignment.topCenter,
+                                                  end: Alignment.bottomCenter)),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: [
+                                              Container(
+                                                height: 64,
+                                                width: 64,
+                                                decoration: const BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: AppColors.white),
+                                                child: Center(
+                                                  child: SvgPicture.asset(
+                                                      'assets/icons/money_transfer.svg'),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 31.h,
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 25),
+                                                child: Text(
+                                                  'Түс жорылуын алу үшін төлем жасауыңызды сұраймыз',
+                                                  style: getTextStyle(
+                                                          CustomTextStyles
+                                                              .s16w400)
+                                                      .copyWith(
+                                                          fontFamily: FontTypes
+                                                              .SF_Pro.name),
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              ),
+                                              SizedBox(height: 27.h),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.symmetric(
+                                                        horizontal: 16),
+                                                child: MaterialButton(
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              27)),
+                                                  height: 44,
+                                                  onPressed: () async {
+                                                    await BlocProvider.of<
+                                                                CreateSeminarPaymentCubit>(
+                                                            context)
+                                                        .createSeminarPayment(
+                                                          result.id!,
+                                                        )
+                                                        .then((value) =>
+                                                            Navigator.of(
+                                                                    context)
+                                                                .pop());
+                                                  },
+                                                  color: AppColors.orange,
+                                                  child: Center(
+                                                    child: Text(' тг төлеу',
+                                                        style: getTextStyle(
+                                                                CustomTextStyles
+                                                                    .s14w400)
+                                                            .copyWith(
+                                                                fontFamily:
+                                                                    FontTypes
+                                                                        .SF_Pro
+                                                                        .name,
+                                                                color: AppColors
+                                                                    .white)),
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    });
                               },
                               text: 'Сатып алу',
                               color: AppColors.blue,
@@ -249,7 +342,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                               height: 20.h,
                             ),
                             Text(
-                              widget.result.text ?? 'ERROR',
+                              result.text ?? 'ERROR',
                               style: getTextStyle(CustomTextStyles.s16w400)
                                   .apply(color: AppColors.black),
                             ),
@@ -259,11 +352,11 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                             GestureDetector(
                               onTap: () {
                                 context.router.push(
-                                  CommentPageSemRoute(id: widget.result.id!),
+                                  CommentPageSemRoute(id: result.id!),
                                 );
                               },
                               child: Text(
-                                'Пікірлерді көру (${res.comentCount})',
+                                'Пікірлерді көру (${result.comentCount})',
                                 style: getTextStyle(CustomTextStyles.s16w400)
                                     .apply(color: AppColors.grey1),
                               ),
