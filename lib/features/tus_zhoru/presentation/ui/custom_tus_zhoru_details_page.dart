@@ -7,7 +7,6 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_cu
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/custom_tus_zhoru_details_cubit.dart';
 
 import '../../../app/presentation/widgets/custom_app_bar.dart';
-import '../bloc/tus_zhoru_cubit.dart';
 
 class CustomTusZhoruDetailPage extends StatefulWidget {
   const CustomTusZhoruDetailPage({super.key, required this.id});
@@ -26,7 +25,7 @@ class _TusZhoruDetailPage extends State<CustomTusZhoruDetailPage> {
 
   @override
   void initState() {
-    BlocProvider.of<TusZhoruCubit>(context).secureScreen();
+    //BlocProvider.of<TusZhoruCubit>(context).secureScreen();
     BlocProvider.of<CustomTusZhoruDetailsCubit>(context).getCustomTusZhoruById(widget.id);
     super.initState();
   }

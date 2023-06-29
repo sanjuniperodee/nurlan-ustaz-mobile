@@ -4,6 +4,8 @@ import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
+
+
 import 'package:nurlan_ustaz_flutter/core/common/shared_keys.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/cache_helper/prefs.dart';
 
@@ -35,7 +37,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           final TokenDTO? token = _authLocalDs.getTokenFromCache();
           log(token!.refresh.toString());
           await _authRepository
-              .refreshToken(refreshToken: token.refresh ?? '')
+              .refreshToken(refreshToken: token?.refresh ?? '')
+
               .whenComplete(() {
             add(const AppEvent.checkAuth());
             // }

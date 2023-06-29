@@ -84,6 +84,8 @@ class AuthLocalDsImpl extends AuthLocalDs {
   Future<void> saveToken({required TokenDTO token}) async {
     await sharedPreferences.setString(
         SharedKeys.TOKEN, jsonEncode(token.toJson()));
+    log(jsonEncode(token.toJson()));
+
   }
 
   @override
@@ -91,12 +93,14 @@ class AuthLocalDsImpl extends AuthLocalDs {
     try {
       final token = sharedPreferences.get(SharedKeys.TOKEN);
       if (token != null) {
+
         log('____________TOKEN${token.toString()}');
         return TokenDTO.fromJson(
           jsonDecode(token.toString()) as Map<String, dynamic>,
         );
       } else {
         throw CacheException(message: 'В кэше нет запрашиваемые данные');
+
       }
     } catch (e) {
       log('AuthLocalDSImpl:: ${e.runtimeType == CacheException ? (e as CacheException).message : e}');

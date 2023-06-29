@@ -55,7 +55,7 @@ class _CustomTusZhoruListState extends State<CustomTusZhoruList> {
                   child: Stack(
                     children: [
                       Container(
-                        height: 87,
+                        height: 90,
                         decoration: BoxDecoration(
                             color: AppColors.white,
                             borderRadius: BorderRadius.circular(20),
@@ -86,7 +86,7 @@ class _CustomTusZhoruListState extends State<CustomTusZhoruList> {
                                 Container(
                                   width: 200,
                                   child: Text(
-                                    list[index].description.toString(),
+                                    list[index].description ?? '',
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style:
@@ -115,7 +115,7 @@ class _CustomTusZhoruListState extends State<CustomTusZhoruList> {
                       list[index].explanation == null &&
                               list[index].isPaid! == true
                           ? Container(
-                              height: 87,
+                              height: 90,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
                                   color: AppColors.white.withOpacity(0.4)),

@@ -1,7 +1,6 @@
 // ignore_for_file: invalid_annotation_target
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:nurlan_ustaz_flutter/features/auth/data/model/enums/gender.dart';
 
 part 'user_dto.freezed.dart';
 part 'user_dto.g.dart';
@@ -13,7 +12,6 @@ class UserDto with _$UserDto {
     @JsonKey(name: "full_name") String? fullName,
     @JsonKey(name: "email") String? email,
     @JsonKey(name: "password") String? password,
-    String? avatar,
     @JsonKey(name: "phone_number") String? phoneNumber,
     // @JsonKey(name: "gender") Gender? gender,
     @JsonKey(name: "birthday") DateTime? birthday,

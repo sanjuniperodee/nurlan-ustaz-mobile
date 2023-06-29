@@ -15,6 +15,7 @@ class QuestionDTO with _$QuestionDTO {
     @JsonKey(name: "body") String? body,
     @JsonKey(name: "is_allowed") bool? is_allowed,
     @JsonKey(name: "user") UserDto? user,
+
   }) = _QuestionDTO;
 
   factory QuestionDTO.fromJson(Map<String, dynamic> json) =>

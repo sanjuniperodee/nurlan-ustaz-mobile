@@ -48,10 +48,10 @@ class AuthCubit extends Cubit<AuthState> {
         await authRepository.createJTW(createTokenDTO: tokenCreateDTO);
     result.fold(
       (l) {
-        log('error 2');
+        log('тонен не создан');
       },
       (r) {
-        log('uspex');
+        log('токен создан');
       },
     );
   }

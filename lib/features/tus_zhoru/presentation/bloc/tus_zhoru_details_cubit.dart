@@ -18,8 +18,22 @@ class TusZhoruDetailsCubit extends Cubit<TusZhoruDetailsState> {
   late List<TusZhoruDTO> tosZhoruList;
   late List<TusZhoruDTO> customTusZhoruList;
 
+
+
+
+  Future<TusZhoruDTO?> likeTusZhoru(int id) async {
+
+    final result = await _repository.tusZhoruFavorite(id: id);
+    return result.fold((l) {
+      return null;
+    }, (r) {
+      getTusZhoruById( id);
+    });
+  }
+
+
+
   Future<TusZhoruDTO?> getTusZhoruById(int id) async {
-    emit(_LoadingState());
 
     final result = await _repository.getTusZhoruById(id: id);
     return result.fold((l) {

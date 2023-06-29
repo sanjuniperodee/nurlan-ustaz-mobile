@@ -5,6 +5,7 @@ import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
 import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/features/app/logic/not_auth_logic.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/datasource/local/auth_local_ds.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/data/model/token_dto.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import 'cache_helper/prefs.dart';
@@ -70,22 +71,21 @@ class _KausarDioInterceptor extends Interceptor {
   Future<void> onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     Prefs prefs = Prefs();
-    final String? accessToken = await prefs.getToken();
+    final TokenDTO? tokenDto = await _authLocalDS.getTokenFromCache();
+
     final String locale = _authLocalDS.getLocale();
 
-    if (accessToken != null) {
-      print('------------------------------$accessToken');
-      options.headers['Authorization'] =
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjg4MDMyMjc4LCJpYXQiOjE2ODc5NDU4NzgsImp0aSI6IjllYjQ2NGU2ZDE5NTQ0ZWE5MGU5ZjA1YjhiOWRhNzQ2IiwidXNlcl9pZCI6M30.UB4H9kBrU6-AZm4aY86LfpwWASUL6I6OtHGbwHhbF9g';
+    if (tokenDto != null && tokenDto.access != null ) {
+
+      print('------------------------------${tokenDto.access}');
+      options.headers['Authorization'] = 'Bearer ${tokenDto.access}';
+
     }
-
     // }
-
     options.headers['Accept'] = "application/json";
     // options.headers['Content-Language'] = locale.replaceAll('kk', 'kz');
     super.onRequest(options, handler);
   }
-
   @override
   Future onError(
     DioError err,

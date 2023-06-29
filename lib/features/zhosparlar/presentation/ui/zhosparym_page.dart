@@ -249,7 +249,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(30),
                                       gradient:
-                                          (gradients.toList()..shuffle()).first,
+                                          gradients.toList()[days.indexOf(e)],
                                       image: DecorationImage(
                                         opacity: 0.3,
                                         image:

@@ -18,14 +18,10 @@ import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/nam
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/prayers_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/surah_page.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/launcher.dart';
-
-import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/code_verification_page.dart';
-import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/login_page.dart';
-
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/code_verification_page.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/login_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/geonames_dto.dart';
-
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/charity_detail_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/charity_page.dart';
@@ -47,10 +43,12 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_detai
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/services_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/shop_page.dart';
-
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/presentation/ui/ustaz_aitinizhi.dart';
 
+
+
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/login_page.dart';
+
 
 import 'package:nurlan_ustaz_flutter/features/home/presentation/widgets/geonames_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/ui/tandaulilar_main_page.dart';

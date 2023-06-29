@@ -6,7 +6,6 @@ import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
-import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_details_cubit.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -28,8 +27,12 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
 
   @override
   void initState() {
-    BlocProvider.of<TusZhoruCubit>(context).secureScreen();
+
+    //BlocProvider.of<TusZhoruCubit>(context).secureScreen();
     BlocProvider.of<TusZhoruDetailsCubit>(context).getTusZhoruById(widget.id);
+
+    BlocProvider.of<TusZhoruCubit>(context).secureScreen();
+
     isFav = false;
 
     super.initState();
@@ -165,23 +168,25 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                         children: [
                                           InkWell(
                                             onTap: () {
-                                              BlocProvider.of<TusZhoruCubit>(
+                                              BlocProvider.of<TusZhoruDetailsCubit>(
                                                       context)
-                                                  .toggleFav(tusZhoruModel.id!);
-                                              isFav = !isFav;
 
-                                              setState(() {});
+                                                  .likeTusZhoru(tusZhoruModel.id!);
+
+
+
+
                                             },
                                             child: Container(
                                               width: 150.w,
                                               decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(12),
-                                                color: Color(0xFF8F8CF7)
+                                                color: const Color(0xFF8F8CF7)
                                                     .withOpacity(0.13),
                                               ),
                                               padding: EdgeInsets.symmetric(
-                                                  horizontal: 14, vertical: 13),
+                                                  horizontal: 14.w, vertical: 13.h),
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
@@ -197,7 +202,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                                                 FontTypes.SF_Pro
                                                                     .name),
                                                   ),
-                                                  isFav == false
+                                                  tusZhoruModel.isSaved == false
                                                       ? SvgPicture.asset(
                                                           'assets/icons/bookmark.svg',
                                                           color:
