@@ -42,7 +42,7 @@ abstract class AuthRepository {
   Future<Either<Failure, bool>> newPass(
       {required String curPass, required String newPass, required String pass});
 
-  Future<Either<Failure, String>> refreshToken({required String refreshToken});
+  Future<Either<Failure, TokenDTO>> refreshToken({required String refreshToken});
 
   Either<Failure, TokenDTO> authCheck();
   Either<Failure, String> logOut();
@@ -207,15 +207,15 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<Either<Failure, String>> refreshToken(
+  Future<Either<Failure, TokenDTO>> refreshToken(
       {required String refreshToken}) async {
-    if (await networkInfo.isConnected) { //access: ... , refresh: null
+    if (await networkInfo.isConnected) {
       try {
-        final TokenDTO result = await remoteDS.refreshJwt(
+        final TokenDTO tokenDto = await remoteDS.refreshJwt(
           refreshToken: refreshToken,
         );
-        localDS.saveToken(token: result);
-        return Right(result.access!);
+        localDS.saveToken(token: tokenDto);
+        return Right(tokenDto);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
       }
@@ -236,6 +236,7 @@ class AuthRepositoryImpl extends AuthRepository {
         log('пустой токен');
         return Left(CacheFailure(message: 'Пустой токен!'));
       }
+      log('mmmmmmmmmmmmmmmmmmmmmm$token');
       return Right(token);
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));

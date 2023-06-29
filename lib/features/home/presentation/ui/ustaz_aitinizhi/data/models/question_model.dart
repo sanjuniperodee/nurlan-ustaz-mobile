@@ -14,7 +14,7 @@ class QuestionDTO with _$QuestionDTO {
     @JsonKey(name: "created_at") String? createdAt,
     @JsonKey(name: "body") String? body,
     @JsonKey(name: "is_allowed") bool? is_allowed,
-    @JsonKey(name: "user") UserDTO? user,
+    @JsonKey(name: "user") UserDto? user,
 
   }) = _QuestionDTO;
 

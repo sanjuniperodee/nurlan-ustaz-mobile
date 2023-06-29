@@ -27,7 +27,7 @@ int currentIndex = 0;
 class _TusZhoruPageState extends State<TusZhoruPage> {
   void initState() {
     BlocProvider.of<TusZhoruCubit>(context)
-        .tusZhoruT(page: 1, isFirstCall: false);
+        .tusZhoruT(page: 1, isFirstCall: true);
 
     super.initState();
   }
@@ -90,11 +90,11 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                     onChanged: (value) {
                       if (tusZhoruList.currentIndex == 0) {
                         context.read<TusZhoruCubit>().tusZhoruT(
-                            search: value, page: 1, isFirstCall: false);
+                            search: value, page: 1, isFirstCall: true);
                       }
                       if (tusZhoruList.currentIndex == 1) {
                         context.read<TusZhoruCubit>().getCustomTusZhoruT(
-                            search: value, page: 1, isFirstCall: false);
+                            search: value, page: 1, isFirstCall: true);
                       }
                     },
                   ),

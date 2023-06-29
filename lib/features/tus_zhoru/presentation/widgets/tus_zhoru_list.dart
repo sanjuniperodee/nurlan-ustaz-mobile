@@ -17,16 +17,12 @@ class TusZhoruList extends StatefulWidget {
 }
 
 class _TusZhoruListState extends State<TusZhoruList> {
-
-
-
   @override
   Widget build(BuildContext context) {
     final list = widget.tusZhoruList;
 
     return ListView.separated(
       padding: EdgeInsets.only(bottom: 100, top: 20.h),
-
       itemCount: list.length,
       shrinkWrap: true,
       physics: const BouncingScrollPhysics(),
@@ -35,52 +31,51 @@ class _TusZhoruListState extends State<TusZhoruList> {
           padding: EdgeInsets.symmetric(horizontal: 1.sp),
           child: GestureDetector(
             onTap: () {
-              context.router.push(
-                TusZhoruDetailPageRoute(id: list[index].id!,)
-              );
+              context.router.push(TusZhoruDetailPageRoute(
+                id: list[index].id!,
+              ));
             },
             child: Container(
-              height: 82,
+              height: 90,
               decoration: BoxDecoration(
-                color: list[index].isPurchased! ? AppColors.orange :AppColors.white,
+                color: list[index].isPurchased!
+                    ? AppColors.orange
+                    : AppColors.white,
                 borderRadius: BorderRadius.circular(20),
               ),
-              padding: EdgeInsets.symmetric(
-                  vertical: 15.h, horizontal: 16.w),
+              padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 16.w),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment:
-                MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
-                    mainAxisAlignment:
-                    MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment:
-                    CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         list[index].title ?? '',
-                        style: getTextStyle(
-                            CustomTextStyles.s16w500)
-                            .apply(
-                            fontFamily:
-                            FontTypes.SF_Pro.name, color: list[index].isPurchased! ? AppColors.white : null ),
+                        style: getTextStyle(CustomTextStyles.s16w500).apply(
+                            fontFamily: FontTypes.SF_Pro.name,
+                            color: list[index].isPurchased!
+                                ? AppColors.white
+                                : null),
                       ),
                       SizedBox(
                         height: 4.h,
                       ),
                       Text(
-                        list[index].isFree! ? list[index].fullExplanation ?? '' :
-                        list[index].isPurchased! ? list[index].fullExplanation ?? '' : list[index].partialExplanation ?? '',
+                        list[index].isFree!
+                            ? list[index].fullExplanation ?? ''
+                            : list[index].isPurchased!
+                                ? list[index].fullExplanation ?? ''
+                                : list[index].partialExplanation ?? '',
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
-                        style: getTextStyle(
-                            CustomTextStyles.s14w400)
-                            .apply(
-                            fontFamily:
-                            FontTypes.SF_Pro.name,
-                            color: list[index].isPurchased! ? AppColors.white : AppColors.grey1
-                                .withOpacity(0.55)),
+                        style: getTextStyle(CustomTextStyles.s14w400).apply(
+                            fontFamily: FontTypes.SF_Pro.name,
+                            color: list[index].isPurchased!
+                                ? AppColors.white
+                                : AppColors.grey1.withOpacity(0.55)),
                       )
                     ],
                   ),
@@ -90,7 +85,9 @@ class _TusZhoruListState extends State<TusZhoruList> {
                   Center(
                     child: SvgPicture.asset(
                       'assets/icons/chevronDown.svg',
-                      color: list[index].isPurchased! ? AppColors.white :AppColors.primaryColor,
+                      color: list[index].isPurchased!
+                          ? AppColors.white
+                          : AppColors.primaryColor,
                     ),
                   )
                 ],

@@ -36,7 +36,7 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
   Future<void> switchTab(int index) async {
     log(index.toString());
     if (index == 1) {
-      getCustomTusZhoruT(page: 1, isFirstCall: false);
+      getCustomTusZhoruT(page: 1, isFirstCall: true);
     }
     // if(index ==0  ){tusZhoruT(page: 1,isFirstCall: false);}
 

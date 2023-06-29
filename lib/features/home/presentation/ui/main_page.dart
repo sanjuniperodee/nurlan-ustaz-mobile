@@ -313,7 +313,9 @@ class _MainPageState extends State<MainPage> {
                                           height: 15.h,
                                         ),
                                         AppButton(
-                                          onTap: () {},
+                                          onTap: () {
+                                            //tabsRouter.setActiveIndex(1);
+                                          },
                                           text: 'Түс жору',
                                         ),
                                         SizedBox(height: 16.h),

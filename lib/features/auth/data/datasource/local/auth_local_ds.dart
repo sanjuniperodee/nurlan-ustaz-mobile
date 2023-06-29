@@ -88,16 +88,18 @@ class AuthLocalDsImpl extends AuthLocalDs {
   Future<void> saveToken({required  TokenDTO token}) async {
     sharedPreferences.setString(
         SharedKeys.TOKEN, jsonEncode(token.toJson()));
+    log(jsonEncode(token.toJson()));
+
   }
 
   @override
   TokenDTO? getTokenFromCache() {
     try {
-     final TokenDTO token =  TokenDTO.fromJson(
-        jsonDecode(sharedPreferences.getString(SharedKeys.TOKEN) ?? '') as Map<String, dynamic>,
-      );
+      final token = sharedPreferences.get(SharedKeys.TOKEN);
       if (token != null) {
-        return token;
+        return TokenDTO.fromJson(
+          jsonDecode(token.toString()) as Map<String, dynamic>,
+        );
       }
       return null;
     } catch (e) {

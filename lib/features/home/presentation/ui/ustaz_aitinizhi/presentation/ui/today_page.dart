@@ -80,7 +80,7 @@ class _TodayChatPageState extends State<TodayChatPage> {
               ),
               InkWell(
                 onTap: () async {
-                 await  context.read<TodayChatCubit>().connectSocket();
+                 //await  context.read<TodayChatCubit>().connectSocket();
                 },
                 child: Text(
                   'Ескертпе: сұрағыңыз қысқа да нұсқа болуы шарт (70 әріп) Сұрақтар 24 сағаттан соң “Сақталғандар” бөліміне өтеді',

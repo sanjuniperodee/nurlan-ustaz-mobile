@@ -151,6 +151,7 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
           'refresh': refreshToken,
         },
       );
+      log(TokenDTO.fromJson(response.data).toString());
       return TokenDTO.fromJson(response.data);
     } catch (e) {
       throw ServerException(message: e.toString());

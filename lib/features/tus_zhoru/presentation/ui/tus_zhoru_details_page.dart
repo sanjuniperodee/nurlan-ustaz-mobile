@@ -6,7 +6,6 @@ import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
-import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_details_cubit.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -15,8 +14,7 @@ import '../../../app/app_dinamic_link.dart';
 import '../../../app/presentation/widgets/custom_app_bar.dart';
 
 class TusZhoruDetailPage extends StatefulWidget {
-  const TusZhoruDetailPage(
-      {super.key, required this.id});
+  const TusZhoruDetailPage({super.key, required this.id});
 
   final int id;
 
@@ -29,24 +27,18 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
 
   @override
   void initState() {
-    BlocProvider.of<TusZhoruCubit>(context).secureScreen();
-    BlocProvider.of<TusZhoruDetailsCubit>(context)
-        .getTusZhoruById(widget.id);
-    isFav = false;
+    //BlocProvider.of<TusZhoruCubit>(context).secureScreen();
+    BlocProvider.of<TusZhoruDetailsCubit>(context).getTusZhoruById(widget.id);
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
-
-
-
     return BlocBuilder<TusZhoruDetailsCubit, TusZhoruDetailsState>(
         builder: (context, state) {
       return state.maybeWhen(
-        loadingState: (){
+        loadingState: () {
           return Center(
             child: CircularProgressIndicator(
               color: AppColors.danger,
@@ -123,8 +115,8 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(left: 12),
-                            child: CustomAppBar(
-                                title: tusZhoruModel.title ?? ''),
+                            child:
+                                CustomAppBar(title: tusZhoruModel.title ?? ''),
                           ),
                           SizedBox(
                             height: 24,
@@ -167,12 +159,9 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                 Container(
                                   child: Text(
                                     isFree
-                                        ? tusZhoruModel
-                                                .fullExplanation ??
-                                            ''
+                                        ? tusZhoruModel.fullExplanation ?? ''
                                         : isPaid
-                                            ? tusZhoruModel
-                                                    .fullExplanation ??
+                                            ? tusZhoruModel.fullExplanation ??
                                                 ''
                                             : tusZhoruModel
                                                     .partialExplanation ??
@@ -194,24 +183,21 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                         children: [
                                           InkWell(
                                             onTap: () {
-                                              BlocProvider.of<TusZhoruCubit>(
+                                              BlocProvider.of<TusZhoruDetailsCubit>(
                                                       context)
-                                                  .toggleFav(
-                                                  tusZhoruModel.id!);
-                                              isFav = !isFav;
+                                                  .likeTusZhoru(tusZhoruModel.id!);
 
-                                              setState(() {});
                                             },
                                             child: Container(
                                               width: 150.w,
                                               decoration: BoxDecoration(
                                                 borderRadius:
                                                     BorderRadius.circular(12),
-                                                color: Color(0xFF8F8CF7)
+                                                color: const Color(0xFF8F8CF7)
                                                     .withOpacity(0.13),
                                               ),
                                               padding: EdgeInsets.symmetric(
-                                                  horizontal: 14, vertical: 13),
+                                                  horizontal: 14.w, vertical: 13.h),
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment
@@ -227,7 +213,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                                                 FontTypes.SF_Pro
                                                                     .name),
                                                   ),
-                                                  isFav == false
+                                                  tusZhoruModel.isSaved == false
                                                       ? SvgPicture.asset(
                                                           'assets/icons/bookmark.svg',
                                                           color:
@@ -247,7 +233,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                               String unguessableDynamicLink =
                                                   await DynamicLink()
                                                       .createTusZhoruLink(
-                                                      tusZhoruModel.id!);
+                                                          tusZhoruModel.id!);
                                               print(unguessableDynamicLink);
                                               await Share.share(
                                                 unguessableDynamicLink,
