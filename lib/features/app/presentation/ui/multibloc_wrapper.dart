@@ -19,7 +19,6 @@ import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/code_verifi
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/login_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/registration_cubit.dart';
 
-
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/rename_user_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/change_pass_cubit.dart';
 
@@ -30,6 +29,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_new
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem_like_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem_post_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/create_seminar_payment_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/faq_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/geonames_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/get_profile_cubit.dart';
@@ -45,7 +45,6 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/prj_info_cu
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_fav_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_like_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/services_cubit.dart';
 
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/presentation/bloc/calendar_chats_cubit.dart';
@@ -117,6 +116,9 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         BlocProvider<FaqCubit>(
           create: (context) => getIt<FaqCubit>(),
         ),
+        BlocProvider<CreateSeminarPaymentCubit>(
+          create: (context) => getIt<CreateSeminarPaymentCubit>(),
+        ),
         BlocProvider<NewsCubit>(
           create: (context) => getIt<NewsCubit>(),
         ),
@@ -162,9 +164,7 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         BlocProvider<LivesFavCubit>(
           create: (context) => getIt<LivesFavCubit>(),
         ),
-        BlocProvider<SeminarLikeCubit>(
-          create: (context) => getIt<SeminarLikeCubit>(),
-        ),
+
         BlocProvider<CommentSemLikeCubit>(
           create: (context) => getIt<CommentSemLikeCubit>(),
         ),
@@ -221,18 +221,19 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
           create: (context) => getIt<TandaulilarCubit>(),
         ),
         //USTAZ AITNIZH
-        BlocProvider<CalendarChatsCubit>(create:(context)=>getIt<CalendarChatsCubit>()),
-        BlocProvider<TodayChatCubit>(create:(context)=>getIt<TodayChatCubit>()),
+        BlocProvider<CalendarChatsCubit>(
+            create: (context) => getIt<CalendarChatsCubit>()),
+        BlocProvider<TodayChatCubit>(
+            create: (context) => getIt<TodayChatCubit>()),
         //TUS ZHORU
-        BlocProvider<TusZhoruCubit>(create: (context)=>getIt<TusZhoruCubit>()),
-        BlocProvider<CreateTusZhoruCubit>(create: (context)=>getIt<CreateTusZhoruCubit>()),
-        BlocProvider<TusZhoruDetailsCubit>(create: (context)=>getIt<TusZhoruDetailsCubit>()),
-        BlocProvider<CustomTusZhoruDetailsCubit>(create: (context)=>getIt<CustomTusZhoruDetailsCubit>())
-
-
-
-
-
+        BlocProvider<TusZhoruCubit>(
+            create: (context) => getIt<TusZhoruCubit>()),
+        BlocProvider<CreateTusZhoruCubit>(
+            create: (context) => getIt<CreateTusZhoruCubit>()),
+        BlocProvider<TusZhoruDetailsCubit>(
+            create: (context) => getIt<TusZhoruDetailsCubit>()),
+        BlocProvider<CustomTusZhoruDetailsCubit>(
+            create: (context) => getIt<CustomTusZhoruDetailsCubit>())
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),

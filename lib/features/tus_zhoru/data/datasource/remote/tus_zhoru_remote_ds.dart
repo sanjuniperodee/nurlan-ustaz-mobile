@@ -19,14 +19,12 @@ abstract class TusZhoruRemoteDs {
   Future<TusZhoruDTO> createTusZhoru(
       {required String title, required String description});
   Future<FreedomPaymentDTO> createCustomTusZhoruPayment(
-      {required int id,required String userIp,required String backUrl});
+      {required int id, required String userIp, required String backUrl});
   Future<FreedomPaymentDTO> createTusZhoruPayment(
-      {required int id,required String userIp,required String backUrl});
+      {required int id, required String userIp, required String backUrl});
   Future<bool> tusZhoruFavorite({required int id});
   Future<TusZhoruDTO> getTusZhoruById({required int id});
   Future<TusZhoruDTO> getCustomTusZhoruById({required int id});
-
-
 }
 
 @Injectable(as: TusZhoruRemoteDs)
@@ -149,7 +147,10 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
   }
 
   @override
-  Future<FreedomPaymentDTO> createCustomTusZhoruPayment({required int id, required String userIp, required String backUrl}) async {
+  Future<FreedomPaymentDTO> createCustomTusZhoruPayment(
+      {required int id,
+      required String userIp,
+      required String backUrl}) async {
     try {
       final response = await dio.post(
         '${EndPoints.customTusZhoru}/$id/init_purchase/',
@@ -162,13 +163,16 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-        (e.response!.data as Map<String, dynamic>)['message'].toString(),
+            (e.response!.data as Map<String, dynamic>)['message'].toString(),
       );
     }
   }
 
   @override
-  Future<FreedomPaymentDTO> createTusZhoruPayment({required int id, required String userIp, required String backUrl}) async {
+  Future<FreedomPaymentDTO> createTusZhoruPayment(
+      {required int id,
+      required String userIp,
+      required String backUrl}) async {
     try {
       final response = await dio.post(
         '${EndPoints.tusZhoru}/$id/init_purchase/',
@@ -181,7 +185,7 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-        (e.response!.data as Map<String, dynamic>)['message'].toString(),
+            (e.response!.data as Map<String, dynamic>)['message'].toString(),
       );
     }
   }
@@ -196,7 +200,7 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-        (e.response!.data as Map<String, dynamic>)['message'] as String,
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -207,11 +211,11 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
       final response = await dio.get(
         '${EndPoints.tusZhoru}/$id/',
       );
-        return TusZhoruDTO.fromJson(response.data);
+      return TusZhoruDTO.fromJson(response.data);
     } on DioError catch (e) {
       throw ServerException(
         message:
-        (e.response!.data as Map<String, dynamic>)['message'].toString(),
+            (e.response!.data as Map<String, dynamic>)['message'].toString(),
       );
     }
   }
@@ -226,7 +230,7 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-        (e.response!.data as Map<String, dynamic>)['message'].toString(),
+            (e.response!.data as Map<String, dynamic>)['message'].toString(),
       );
     }
   }
