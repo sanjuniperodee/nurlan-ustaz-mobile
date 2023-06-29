@@ -14,6 +14,7 @@ class ResultHomeDTO with _$ResultHomeDTO {
       {@JsonKey(name: "is_liked") @Default(false) bool? isLiked,
       @JsonKey(name: "is_saved") @Default(false) bool? isSaved,
       @JsonKey(name: "is_live") bool? isLive,
+      @JsonKey(name: "is_purchased") bool? isPurchased,
       @JsonKey(name: "is_top") bool? isTop,
       @JsonKey(name: "likes_count") int? likesCount,
       @JsonKey(name: "comments_count") int? comentCount,

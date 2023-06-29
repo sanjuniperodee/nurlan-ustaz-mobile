@@ -9,7 +9,9 @@ import '../common/app_styles.dart';
 import '../common/colors.dart';
 
 class PayDialog extends StatelessWidget {
-  const PayDialog({Key? key, required this.price, required this.id, required this.isCustom}) : super(key: key);
+  const PayDialog(
+      {Key? key, required this.price, required this.id, required this.isCustom})
+      : super(key: key);
   final String price;
   final int id;
   final bool isCustom;
@@ -37,8 +39,7 @@ class PayDialog extends StatelessWidget {
               decoration: const BoxDecoration(
                   shape: BoxShape.circle, color: AppColors.white),
               child: Center(
-                child: SvgPicture.asset(
-                    'assets/icons/money_transfer.svg'),
+                child: SvgPicture.asset('assets/icons/money_transfer.svg'),
               ),
             ),
             SizedBox(
@@ -61,25 +62,24 @@ class PayDialog extends StatelessWidget {
                     borderRadius: BorderRadius.circular(27)),
                 height: 44,
                 onPressed: () async {
-
                   await BlocProvider.of<CreateTusZhoruCubit>(context)
-                      .createCustomTusZhoruPayment(id,isCustom);
-                   Navigator.of(context).pop();
+                      .createCustomTusZhoruPayment(id, isCustom);
+                  Navigator.of(context).pop();
                   showDialog(
                       context: context,
                       builder: (context) {
-                        return SuccesPayDialog(price: '', id: id, isCustom: isCustom,);
+                        return SuccesPayDialog(
+                          price: '',
+                          id: id,
+                          isCustom: isCustom,
+                        );
                       });
-                   
                 },
                 color: AppColors.orange,
                 child: Center(
                   child: Text('${price} тг төлеу',
-                      style:
-                      getTextStyle(CustomTextStyles.s14w400)
-                          .copyWith(
-                          fontFamily:
-                          FontTypes.SF_Pro.name,
+                      style: getTextStyle(CustomTextStyles.s14w400).copyWith(
+                          fontFamily: FontTypes.SF_Pro.name,
                           color: AppColors.white)),
                 ),
               ),

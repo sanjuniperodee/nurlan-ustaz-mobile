@@ -15,8 +15,7 @@ import '../../../app/app_dinamic_link.dart';
 import '../../../app/presentation/widgets/custom_app_bar.dart';
 
 class TusZhoruDetailPage extends StatefulWidget {
-  const TusZhoruDetailPage(
-      {super.key, required this.id});
+  const TusZhoruDetailPage({super.key, required this.id});
 
   final int id;
 
@@ -30,8 +29,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
   @override
   void initState() {
     BlocProvider.of<TusZhoruCubit>(context).secureScreen();
-    BlocProvider.of<TusZhoruDetailsCubit>(context)
-        .getTusZhoruById(widget.id);
+    BlocProvider.of<TusZhoruDetailsCubit>(context).getTusZhoruById(widget.id);
     isFav = false;
 
     super.initState();
@@ -39,14 +37,10 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-
-
-
-
     return BlocBuilder<TusZhoruDetailsCubit, TusZhoruDetailsState>(
         builder: (context, state) {
       return state.maybeWhen(
-        loadingState: (){
+        loadingState: () {
           return Center(
             child: CircularProgressIndicator(
               color: AppColors.danger,
@@ -68,27 +62,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                   ? null
                   : isPaid
                       ? null
-                      :
-
-                      // :Container(
-                      //   width: double.infinity,
-                      //   height: 100,
-                      //   decoration: BoxDecoration(
-                      //       border: Border(
-                      //           top: BorderSide(
-                      //               color: AppColors.grey1.withOpacity(0.1)))),
-                      //   child: Center(
-                      //     child: Padding(
-                      //       padding: EdgeInsets.symmetric(horizontal: 25.w),
-                      //       child: const Text(
-                      //         'Өтінішіңіз қабылданды. 24 сағат ішінде  жауап ала аласыз',
-                      //         textAlign: TextAlign.center,
-                      //       ),
-                      //     ),
-                      //   ),
-                      // )
-
-                      AppButton(
+                      : AppButton(
                           onTap: () {
                             showDialog(
                                 context: context,
@@ -123,8 +97,8 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(left: 12),
-                            child: CustomAppBar(
-                                title: tusZhoruModel.title ?? ''),
+                            child:
+                                CustomAppBar(title: tusZhoruModel.title ?? ''),
                           ),
                           SizedBox(
                             height: 24,
@@ -167,12 +141,9 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                 Container(
                                   child: Text(
                                     isFree
-                                        ? tusZhoruModel
-                                                .fullExplanation ??
-                                            ''
+                                        ? tusZhoruModel.fullExplanation ?? ''
                                         : isPaid
-                                            ? tusZhoruModel
-                                                    .fullExplanation ??
+                                            ? tusZhoruModel.fullExplanation ??
                                                 ''
                                             : tusZhoruModel
                                                     .partialExplanation ??
@@ -196,8 +167,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                             onTap: () {
                                               BlocProvider.of<TusZhoruCubit>(
                                                       context)
-                                                  .toggleFav(
-                                                  tusZhoruModel.id!);
+                                                  .toggleFav(tusZhoruModel.id!);
                                               isFav = !isFav;
 
                                               setState(() {});
@@ -247,7 +217,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                               String unguessableDynamicLink =
                                                   await DynamicLink()
                                                       .createTusZhoruLink(
-                                                      tusZhoruModel.id!);
+                                                          tusZhoruModel.id!);
                                               print(unguessableDynamicLink);
                                               await Share.share(
                                                 unguessableDynamicLink,
