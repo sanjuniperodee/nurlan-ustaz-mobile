@@ -82,7 +82,7 @@ class _NamazPageState extends State<NamazPage> {
                           NamazContainerWidget(
                             name: geo.name ?? 'Алматы',
                             time: timesToSend(),
-                            namazName: namasNamestoSend(),
+                            namazName: namasNames[indexOfNextNames(times)],
                             namazTime: namasTimestoSend(),
                           ),
                           SizedBox(
@@ -113,8 +113,26 @@ class _NamazPageState extends State<NamazPage> {
     );
   }
 
+  int indexOfNextNames(List time) {
+    late String namazName2;
+    late int indexOfNamaz;
+    try {
+      namazName2 = time.firstWhere((element) => DateTime.now()
+          .copyWith(
+              hour: int.parse(element.toString().substring(0, 2)),
+              minute: int.parse(element.toString().substring(3, 5)))
+          .isAfter(DateTime.now()));
+      indexOfNamaz = time.indexOf(namazName2);
+    } catch (e) {
+      log(e.toString());
+      return time.last;
+    }
+    return indexOfNamaz;
+  }
+
   String beforeFormatter(List time) {
     late String test;
+    late String namazName2;
     try {
       test = time.lastWhere((element) => DateTime.now()
           .copyWith(

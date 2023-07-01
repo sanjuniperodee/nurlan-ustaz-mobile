@@ -67,6 +67,9 @@ class _ShopPageState extends State<ShopPage> {
                           style: getTextStyle(CustomTextStyles.s20w700)
                               .apply(color: AppColors.white),
                         ),
+                        SizedBox(
+                          height: 10.h,
+                        ),
                         GridView.builder(
                           itemCount: partners
                               .where((element) => element.isTop!)
@@ -106,6 +109,9 @@ class _ShopPageState extends State<ShopPage> {
                           'Барлығы',
                           style: getTextStyle(CustomTextStyles.s20w700)
                               .apply(color: AppColors.black),
+                        ),
+                        SizedBox(
+                          height: 10.h,
                         ),
                         GridView.builder(
                           itemCount: partners

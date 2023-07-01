@@ -52,7 +52,7 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                 ),
               );
             },
-            loaded: (user) {
+            loaded: (user, geo) {
               return GlobalCustomBody(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
@@ -184,16 +184,11 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                                         });
                                   }),
                               ProfileMenuItem(
-                                  title: 'Абай облысы',
+                                  title: geo.name!,
                                   onTap: () {
-                                    showModalBottomSheet(
-                                        isScrollControlled: true,
-                                        backgroundColor: AppColors.white
-                                            .withOpacity(0.0000000009),
-                                        context: context,
-                                        builder: (context) {
-                                          return const RegionSettingsBottomSheet();
-                                        });
+                                    context.router.push(
+                                      GeonamesPageRoute(),
+                                    );
                                   }),
                               ProfileMenuItem(
                                   title: 'Құпия сөзді өзгерту',

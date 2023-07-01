@@ -67,6 +67,7 @@ abstract class HomeRemoteDs {
       {String? search,
       bool? isSaved,
       int? currentPage,
+      bool? isPurchased,
       bool? isFirstCall = false});
 
   Future<List<ResultHomeDTO>> lives(
@@ -94,7 +95,7 @@ abstract class HomeRemoteDs {
   Future<List<ChatDTO>> chats(
       {required String startTime, required String endTime});
   Future<FreedomPaymentDTO> createSeminarPayment(
-      {required int id, required String userIp, required String backUrl});
+      {required int id, required String backUrl});
   Future<List<QuestionDTO>> questions(
       {int? currentPage,
       String? search,
@@ -131,14 +132,11 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
 
   @override
   Future<FreedomPaymentDTO> createSeminarPayment(
-      {required int id,
-      required String userIp,
-      required String backUrl}) async {
+      {required int id, required String backUrl}) async {
     try {
       final response = await dio.post(
         '${EndPoints.seminar}/$id/init_purchase/',
         data: {
-          'user_ip': userIp,
           'back_url': backUrl,
         },
       );
@@ -701,6 +699,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   Future<List<ResultHomeDTO>> seminar(
       {String? search,
       bool? isSaved,
+      bool? isPurchased,
       int? currentPage,
       bool? isFirstCall = false}) async {
     try {
@@ -715,6 +714,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
         queryParameters: {
           'page[number]': currentPage,
           // 'page[size]': 6,
+          if (isPurchased != null) 'is_purchased': isPurchased,
           if (isSaved != null) 'is_saved': isSaved,
           if (search != null) 'search': search,
         },

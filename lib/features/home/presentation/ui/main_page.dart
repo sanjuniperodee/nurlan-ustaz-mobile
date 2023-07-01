@@ -28,6 +28,14 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  List<String> namasNames = [
+    'Таң намазы',
+    'Күн',
+    'Бесін',
+    'Екінті',
+    'Ақшам',
+    'Құптан'
+  ];
   List<BannerLocalModel> list = [
     BannerLocalModel(
       title: 'Семинар',
@@ -268,7 +276,8 @@ class _MainPageState extends State<MainPage> {
                                                 SizedBox(
                                                   width: 10.r,
                                                 ),
-                                                Text('Таң намазы уақыты',
+                                                Text(
+                                                    '${namasNames[indexOfNextNames(times)]} намаз уақыты',
                                                     style: getTextStyle(
                                                             CustomTextStyles
                                                                 .s16w200)
@@ -314,7 +323,9 @@ class _MainPageState extends State<MainPage> {
                                         ),
                                         AppButton(
                                           onTap: () {
-                                            //tabsRouter.setActiveIndex(1);
+                                            TabsRouterScope.of(context)
+                                                ?.controller
+                                                .setActiveIndex(2);
                                           },
                                           text: 'Түс жору',
                                         ),
@@ -325,47 +336,52 @@ class _MainPageState extends State<MainPage> {
                                           text: 'Ұстаз айтыңызшы...',
                                         ),
                                         SizedBox(height: 16.h),
-                                        Container(
-                                          width: 1.sw,
-                                          decoration: BoxDecoration(
-                                              gradient: const LinearGradient(
-                                                begin: Alignment.topRight,
-                                                end: Alignment.bottomRight,
-                                                colors: [
-                                                  Color(0xFFFAE0AB),
-                                                  Color(0xFFF9A502),
-                                                ],
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(24)),
-                                          padding: EdgeInsets.only(
-                                              top: 19.r,
-                                              bottom: 19.r,
-                                              left: 92.r,
-                                              right: 92.r),
-                                          child: Column(
-                                            children: [
-                                              SvgPicture.asset(
-                                                  Assets.boxStorySvg),
-                                              SizedBox(
-                                                height: 12.h,
-                                              ),
-                                              Text(
-                                                'Бола ма?\nБолмай ма?',
-                                                textAlign: TextAlign.center,
-                                                style: getTextStyle(
-                                                        CustomTextStyles
-                                                            .s16w200)
-                                                    .copyWith(
-                                                        fontFamily: FontTypes
-                                                            .Philosopher.name,
-                                                        fontSize: 24.sp,
-                                                        fontWeight:
-                                                            FontWeight.w700)
-                                                    .apply(
-                                                        color: AppColors.white),
-                                              )
-                                            ],
+                                        InkWell(
+                                          onTap: () => context.router.push(
+                                              const UstazAitinizhiRoute()),
+                                          child: Container(
+                                            width: 1.sw,
+                                            decoration: BoxDecoration(
+                                                gradient: const LinearGradient(
+                                                  begin: Alignment.topRight,
+                                                  end: Alignment.bottomRight,
+                                                  colors: [
+                                                    Color(0xFFFAE0AB),
+                                                    Color(0xFFF9A502),
+                                                  ],
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(24)),
+                                            padding: EdgeInsets.only(
+                                                top: 19.r,
+                                                bottom: 19.r,
+                                                left: 92.r,
+                                                right: 92.r),
+                                            child: Column(
+                                              children: [
+                                                SvgPicture.asset(
+                                                    Assets.boxStorySvg),
+                                                SizedBox(
+                                                  height: 12.h,
+                                                ),
+                                                Text(
+                                                  'Бола ма?\nБолмай ма?',
+                                                  textAlign: TextAlign.center,
+                                                  style: getTextStyle(
+                                                          CustomTextStyles
+                                                              .s16w200)
+                                                      .copyWith(
+                                                          fontFamily: FontTypes
+                                                              .Philosopher.name,
+                                                          fontSize: 24.sp,
+                                                          fontWeight:
+                                                              FontWeight.w700)
+                                                      .apply(
+                                                          color:
+                                                              AppColors.white),
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         ),
                                         SizedBox(height: 16.h),
@@ -515,6 +531,27 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
+  int indexOfNextNames(List time) {
+    late String namazName2;
+    late int indexOfNamaz;
+    try {
+      namazName2 = time.firstWhere((element) => DateTime.now()
+          .copyWith(
+              hour: int.parse(element.toString().substring(0, 2)),
+              minute: int.parse(element.toString().substring(3, 5)))
+          .isAfter(DateTime.now()));
+      indexOfNamaz = time.indexOf(namazName2);
+      if (indexOfNamaz == time.length - 1) {
+        return 0;
+      }
+    } catch (e) {
+      log(e.toString());
+      return 0;
+    }
+
+    return indexOfNamaz;
+  }
+
   String beforeFormatter(List time) {
     late String test;
     try {
@@ -541,7 +578,7 @@ class _MainPageState extends State<MainPage> {
           nextTime = times[0];
           break;
         } else {
-          nextTime = times[i + 1];
+          nextTime = times[i+1];
         }
         break;
       }
@@ -558,13 +595,13 @@ class _MainPageState extends State<MainPage> {
           nextTime = times[0];
           break;
         } else {
-          nextTime = times[i + 1];
+          nextTime = times[i+1];
         }
         break;
       }
     }
     DateTime now = DateTime.now();
-    String formattedTime = DateFormat.Hms().format(now);
+    String formattedTime = DateFormat.Hm().format(now);
     String timeH = ((int.parse(nextTime.substring(0, 2))) -
             (int.parse(formattedTime.substring(0, 2))))
         .toString();
@@ -621,7 +658,8 @@ class _TimesStateWidgetState extends State<TimesStateWidget> {
         initialData: 0,
         builder: (context, snap) {
           final value = snap.data;
-          final displayTime = StopWatchTimer.getDisplayTime(value!);
+          final displayTime =
+              StopWatchTimer.getDisplayTime(value!, milliSecond: false);
           return Text(
             '-${displayTime}',
             style: getTextStyle(CustomTextStyles.s16w200)

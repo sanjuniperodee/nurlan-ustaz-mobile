@@ -246,6 +246,8 @@ class _LiveBroadcastsPageState extends State<LiveBroadcastsPage> {
                                                       .apply(
                                                           color:
                                                               AppColors.black),
+                                                  overflow:
+                                                      TextOverflow.visible,
                                                 ),
                                                 SizedBox(
                                                   height: 5.h,
@@ -261,6 +263,8 @@ class _LiveBroadcastsPageState extends State<LiveBroadcastsPage> {
                                                       .apply(
                                                           color:
                                                               AppColors.grey2),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
                                                 ),
                                               ],
                                             ),

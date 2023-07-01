@@ -19,11 +19,11 @@ abstract class AuthRemoteDs {
 
   Future<UserDto> getUser();
   Future<bool> activateUser({required ActivateUserDTO activateUserDTO});
+
   Future<bool> changePass(
       {required String curPass, required String newPass, required String pass});
 
   Future<TokenDTO> createJwt({required TokenCreateDTO tokenCreateDTO});
-  Future<TokenDTO> refreshJwt({required String refreshToken});
 }
 
 @Injectable(as: AuthRemoteDs)
@@ -85,7 +85,7 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       final response = await dio.get(
         '${EndPoints.createUser}/me/',
       );
-
+      log(response.data.toString());
       return UserDto.fromJson(response.data);
     } catch (e) {
       throw ServerException(message: e.toString());
@@ -137,22 +137,6 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       log(newPass.toString());
       log(pass.toString());
       return true;
-    } catch (e) {
-      throw ServerException(message: e.toString());
-    }
-  }
-
-  @override
-  Future<TokenDTO> refreshJwt({required String refreshToken}) async {
-    try {
-      final response = await dio.post(
-        EndPoints.refreshToken,
-        data: {
-          'refresh': refreshToken,
-        },
-      );
-      log(TokenDTO.fromJson(response.data).toString());
-      return TokenDTO.fromJson(response.data);
     } catch (e) {
       throw ServerException(message: e.toString());
     }

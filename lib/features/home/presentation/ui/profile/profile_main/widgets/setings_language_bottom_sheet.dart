@@ -27,7 +27,7 @@ class _LanguageSettingsBottomSheetState
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 34,
           ),
           Padding(
@@ -65,7 +65,7 @@ class _LanguageSettingsBottomSheetState
                         child: selectedIndex != index
                             ? SvgPicture.asset(Assets.radioCircleSvg)
                             : SvgPicture.asset(Assets.radioOnSvg)),
-                    SizedBox(
+                    const SizedBox(
                       width: 8,
                     ),
                     Text(

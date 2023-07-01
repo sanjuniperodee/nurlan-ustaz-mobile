@@ -91,7 +91,8 @@ class _NamazContainerWidgetState extends State<NamazContainerWidget> {
                   initialData: 0,
                   builder: (context, snap) {
                     final value = snap.data;
-                    final displayTime = StopWatchTimer.getDisplayTime(value!);
+                    final displayTime = StopWatchTimer.getDisplayTime(value!,
+                        milliSecond: false);
                     return Text(
                       '-${displayTime}',
                       style: getTextStyle(CustomTextStyles.s16w400)

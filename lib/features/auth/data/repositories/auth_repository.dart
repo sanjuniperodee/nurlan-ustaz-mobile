@@ -42,7 +42,8 @@ abstract class AuthRepository {
   Future<Either<Failure, bool>> newPass(
       {required String curPass, required String newPass, required String pass});
 
-  Future<Either<Failure, TokenDTO>> refreshToken({required String refreshToken});
+  // Future<Either<Failure, TokenDTO>> refreshToken(
+  //     {required String refreshToken});
 
   Either<Failure, TokenDTO> authCheck();
   Either<Failure, String> logOut();
@@ -203,24 +204,23 @@ class AuthRepositoryImpl extends AuthRepository {
     }
   }
 
-  @override
-  Future<Either<Failure, TokenDTO>> refreshToken(
-      {required String refreshToken}) async {
-    if (await networkInfo.isConnected) {
+  // @override
+  // Future<Either<Failure, TokenDTO>> refreshToken(
+  //     {required String refreshToken}) async {
+  //   if (await networkInfo.isConnected) {
+  //     try {
+  //       final TokenDTO tokenDto = await remoteDS.refreshJwt(
+  //         refreshToken: refreshToken,
+  //       );
 
-      try {
-        final TokenDTO tokenDto = await remoteDS.refreshJwt(
-          refreshToken: refreshToken,
-        );
-        localDS.saveToken(token: tokenDto);
-        return Right(tokenDto);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(message: e.message));
-      }
-    } else {
-      return Left(ServerFailure(message: NO_INTERNET_TEXT));
-    }
-  }
+  //       return Right(tokenDto);
+  //     } on ServerException catch (e) {
+  //       return Left(ServerFailure(message: e.message));
+  //     }
+  //   } else {
+  //     return Left(ServerFailure(message: NO_INTERNET_TEXT));
+  //   }
+  // }
 
   @override
   Either<Failure, TokenDTO> authCheck() {
