@@ -188,14 +188,21 @@ class _SeminarPageState extends State<SeminarPage> {
                                               SizedBox(
                                                 height: 5.h,
                                               ),
-                                              Text(
-                                                listOfSeminars[index].title ??
-                                                    'ERROR',
-                                                style: getTextStyle(
-                                                        CustomTextStyles
-                                                            .s16w500)
-                                                    .apply(
-                                                        color: AppColors.black),
+                                              Flexible(
+                                                child: SizedBox(
+                                                  width: 210.w,
+                                                  child: Text(
+                                                    listOfSeminars[index]
+                                                            .title ??
+                                                        'ERROR',
+                                                    style: getTextStyle(
+                                                            CustomTextStyles
+                                                                .s16w500)
+                                                        .apply(
+                                                            color: AppColors
+                                                                .black),
+                                                  ),
+                                                ),
                                               ),
                                             ],
                                           ),

@@ -40,8 +40,13 @@ abstract class HomeRepository {
 
   Future<Either<Failure, List<ResultHomeDTO>>> partners();
 
-  Future<Either<Failure, List<ResultHomeDTO>>> seminar(
-      {String? search, bool? isSaved, int? page, bool? isFirstCall});
+  Future<Either<Failure, List<ResultHomeDTO>>> seminar({
+    String? search,
+    bool? isSaved,
+    int? page,
+    bool? isFirstCall,
+    bool? isPurchased,
+  });
 
   Future<Either<Failure, List<ResultHomeDTO>>> lives({
     String? search,
@@ -120,11 +125,13 @@ abstract class HomeRepository {
       {required int id, String? search, int? page, bool? isFirstCall});
 
   Future<Either<Failure, FreedomPaymentDTO>> createSeminarPayment(
-      {required int id, required String userIp, required String backUrl});
-
+      {required int id, required String backUrl});
   Future<Either<Failure, NotificationDTO>> notificationDevice({
     required NotificationDeviceDTO notificationDTO,
   });
+
+
+
 }
 
 @Singleton(as: HomeRepository)
@@ -201,13 +208,11 @@ class HomeRepositoryImpl extends HomeRepository {
 
   @override
   Future<Either<Failure, FreedomPaymentDTO>> createSeminarPayment(
-      {required int id,
-      required String userIp,
-      required String backUrl}) async {
+      {required int id, required String backUrl}) async {
     if (await networkInfo.isConnected) {
       try {
-        final FreedomPaymentDTO result = await remoteDS.createSeminarPayment(
-            id: id, userIp: userIp, backUrl: backUrl);
+        final FreedomPaymentDTO result =
+            await remoteDS.createSeminarPayment(id: id, backUrl: backUrl);
 
         return Right(result);
       } on ServerException catch (e) {
@@ -583,6 +588,7 @@ class HomeRepositoryImpl extends HomeRepository {
     bool? isSaved,
     int? page,
     bool? isFirstCall,
+    bool? isPurchased,
   }) async {
     if (await networkInfo.isConnected) {
       try {
@@ -590,6 +596,7 @@ class HomeRepositoryImpl extends HomeRepository {
             search: search,
             isSaved: isSaved,
             currentPage: page,
+            isPurchased: isPurchased,
             isFirstCall: isFirstCall);
         return Right(seminar);
       } on ServerException catch (e) {

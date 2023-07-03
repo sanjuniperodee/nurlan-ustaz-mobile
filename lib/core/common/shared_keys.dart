@@ -9,9 +9,5 @@ mixin SharedKeys {
   static const TOKEN = 'TOKEN';
 
   static const ACCESS_TOKEN = 'ACCESS_TOKEN';
-static const GEOOO_TOKEN = 'GEO_TOKEN';
-
-
-
-
+  static const GEOOO_TOKEN = 'GEO_TOKEN';
 }

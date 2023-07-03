@@ -59,6 +59,7 @@ Future<void> initLocator() async {
   final sharedPreferences = await SharedPreferences.getInstance();
   getIt.registerLazySingleton(() => sharedPreferences);
   getIt.registerLazySingleton(() => Dio());
+  // getIt.registerLazySingleton(() => APIRequester(d));
   getIt.registerLazySingleton(() => DioWrapper(getIt<AuthLocalDs>()));
   getIt.registerLazySingleton(() => InternetConnectionChecker());
   configureDependencies();

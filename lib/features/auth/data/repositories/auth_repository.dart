@@ -45,10 +45,6 @@ abstract class AuthRepository {
   Future<Either<Failure, bool>> newPass(
       {required String curPass, required String newPass, required String pass});
 
-  Future<Either<Failure, TokenDTO>> refreshToken(
-      {required String refreshToken});
-
-  Future<Either<Failure, bool>> verifyToken({required String accessToken});
 
   Either<Failure, TokenDTO> authCheck();
 
@@ -73,22 +69,22 @@ class AuthRepositoryImpl extends AuthRepository {
   });
 
   @override
-  Either<Failure, String> getLocale() {
+  Future<Either<Failure, String>> saveLocale({required String locale}) async {
     try {
-      final String msg = localDS.getLocale();
+      await localDS.saveLocale(locale: locale);
 
-      return Right(msg);
+      return const Right('Success');
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));
     }
   }
 
   @override
-  Future<Either<Failure, String>> saveLocale({required String locale}) async {
+  Either<Failure, String> getLocale() {
     try {
-      await localDS.saveLocale(locale: locale);
+      final String msg = localDS.getLocale();
 
-      return const Right('Success');
+      return Right(msg);
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));
     }
@@ -215,23 +211,6 @@ class AuthRepositoryImpl extends AuthRepository {
     }
   }
 
-  @override
-  Future<Either<Failure, TokenDTO>> refreshToken(
-      {required String refreshToken}) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final TokenDTO tokenDto = await remoteDS.refreshJwt(
-          refreshToken: refreshToken,
-        );
-        localDS.saveToken(token: tokenDto);
-        return Right(tokenDto);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(message: e.message));
-      }
-    } else {
-      return Left(ServerFailure(message: NO_INTERNET_TEXT));
-    }
-  }
 
   @override
   Either<Failure, TokenDTO> authCheck() {
@@ -262,20 +241,6 @@ class AuthRepositoryImpl extends AuthRepository {
     }
   }
 
-  @override
-  Future<Either<Failure, bool>> verifyToken(
-      {required String accessToken}) async {
-    if (await networkInfo.isConnected) {
-      try {
-        await remoteDS.verifyJwt(accessToken: accessToken);
-        return const Right(true);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(message: e.message));
-      }
-    } else {
-      return Left(ServerFailure(message: NO_INTERNET_TEXT));
-    }
-  }
 
   @override
   Future<Either<Failure, int>> resetPassword({required String mail}) async {

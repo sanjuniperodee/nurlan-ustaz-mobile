@@ -1,9 +1,13 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/common/shared_keys.dart';
 import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
+import 'package:nurlan_ustaz_flutter/core/platform/dio_wrapper.dart';
+import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
+import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/token_dto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -24,8 +28,13 @@ abstract class AuthLocalDs {
 
   String getLocale();
 
-  TokenDTO? getTokenFromCache();
+  TokenDTO getTokenFromCache();
+  Future<TokenDTO?> getTokenFromCacheNull();
   Future<void> removeUserFromCache();
+  Future<TokenDTO> refreshJwt({
+    required TokenDTO token,
+  });
+  Future<bool> verifyJwt({required String accessToken});
 }
 
 @Injectable(as: AuthLocalDs)
@@ -33,6 +42,55 @@ class AuthLocalDsImpl extends AuthLocalDs {
   final SharedPreferences sharedPreferences;
 
   AuthLocalDsImpl({required this.sharedPreferences});
+
+  @override
+  Future<TokenDTO> refreshJwt({
+    required TokenDTO token,
+  }) async {
+    try {
+      Dio dio = Dio(
+        BaseOptions(
+          baseUrl: SERVER_.trim() + '',
+        ),
+      );
+
+      final response = await dio.post(
+        EndPoints.refreshToken,
+        data: {
+          'refresh': token.refresh,
+        },
+      );
+      saveToken(token: TokenDTO.fromJson(response.data));
+      log('refreshJwt::::${TokenDTO.fromJson(response.data).toString()}');
+      return TokenDTO.fromJson(response.data);
+    } catch (e) {
+      log('REFRESH EXCEPTION::::${e}');
+      throw ServerException(message: e.toString());
+    }
+  }
+
+  @override
+  Future<bool> verifyJwt({required String accessToken}) async {
+    try {
+      Dio dio = Dio(
+        BaseOptions(
+          baseUrl: SERVER_.trim() + '',
+        ),
+      );
+      // dio.options.headers = {'Authorization': 'Bearer $accessToken'};
+      final response = await dio.post(
+        EndPoints.verifyToken,
+        data: {
+          'token': accessToken,
+        },
+      );
+      log('TESTMADII');
+      return true;
+    } catch (e) {
+      log('TOKEN EXCEPTION::::${e.toString()}');
+      return false;
+    }
+  }
 
   @override
   Future<bool> getOnboardingStatusFromCache() async {
@@ -58,7 +116,7 @@ class AuthLocalDsImpl extends AuthLocalDs {
     try {
       final String? locale = sharedPreferences.getString(SharedKeys.APP_LOCALE);
       if (locale == null) {
-        return 'ru'; // default locale
+        return 'kk'; // default locale
       }
       return locale;
     } catch (e) {
@@ -84,8 +142,7 @@ class AuthLocalDsImpl extends AuthLocalDs {
   Future<void> saveToken({required TokenDTO token}) async {
     await sharedPreferences.setString(
         SharedKeys.TOKEN, jsonEncode(token.toJson()));
-    log(jsonEncode(token.toJson()));
-
+    log('saveToken"""""${jsonEncode(token.toJson())}');
   }
 
   @override
@@ -93,9 +150,51 @@ class AuthLocalDsImpl extends AuthLocalDs {
     try {
       final token = sharedPreferences.get(SharedKeys.TOKEN);
       if (token != null) {
+
+        log('____________TOKEN${token.toString()}');
         return TokenDTO.fromJson(
           jsonDecode(token.toString()) as Map<String, dynamic>,
         );
+      } else {
+        throw CacheException(message: 'В кэше нет запрашиваемые данные');
+      }
+      return null;
+    } catch (e) {
+      log('AuthLocalDSImpl getUserFromCacheNull:: $e');
+      throw CacheException(message: 'В кэше нет запрашиваемые данные');
+    }
+  }
+
+  @override
+  Future<TokenDTO?> getTokenFromCacheNull() async {
+    try {
+      log('TOKEN:::${sharedPreferences.get(SharedKeys.TOKEN).toString()}');
+
+      TokenDTO? token = TokenDTO.fromJson(
+        jsonDecode(sharedPreferences.get(SharedKeys.TOKEN).toString())
+            as Map<String, dynamic>,
+      );
+
+      log(token.access!);
+      if (token != null) {
+        log('TOKEN ECTTTT!');
+        bool verifyJwtBool = false;
+
+        try {
+          verifyJwtBool = await verifyJwt(accessToken: token.access!);
+        } catch (e) {
+          log(' verifyJwtBoolERROR:::${e.toString()}');
+        }
+
+        log('VERBOOLL:::${verifyJwtBool.toString()}');
+        if (verifyJwtBool == true) {
+          // log();
+          return token;
+        } else {
+          token = await refreshJwt(token: token);
+          log('NEWACCESTOK:::::${token.access.toString()}');
+        }
+        return token;
       }
       return null;
     } catch (e) {

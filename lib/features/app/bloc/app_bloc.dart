@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+
 import 'package:nurlan_ustaz_flutter/features/app/logic/not_auth_logic.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/token_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/repositories/auth_repository.dart';
@@ -23,30 +24,28 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   AppBloc(this._authRepository, this._notAuthLogic, this._authLocalDs)
       : super(const AppState.loadingState()) {
-    _notAuthLogic.statusSubject.listen(
-      (value) async {
-        log('_startListenDio message from stream :: $value');
 
-        if (value == 401) {
-          final TokenDTO? token = _authLocalDs.getTokenFromCache();
-          log(token!.refresh.toString());
-          await _authRepository
-              .refreshToken(refreshToken: token.refresh ?? '')
+    // _notAuthLogic.statusSubject.listen(
+    //   (value) async {
+    //     log('_startListenDio message from stream :: $value');
 
-              .whenComplete(() {
-            add(const AppEvent.checkAuth());
-            // }
-          });
-        }
-      },
-    );
+    //     if (value == 401) {
+    //       final TokenDTO token = _authLocalDs.getTokenFromCache();
+
+    //       log(2.toString());
+    //       await _authRepository.refreshToken(refreshToken: token.refresh ?? '');
+    //       return;
+    //     }
+    //   },
+    // );
+
     on<AppEvent>(
       (AppEvent event, Emitter<AppState> emit) async => event.map(
         exiting: (_Exiting event) async => _exit(event, emit),
         deleting: (_Deleting event) async => _deleteUser(event, emit),
         checkAuth: (_CheckAuth event) async => _checkAuth(event, emit),
         logining: (_Logining event) async => _login(event, emit),
-        refreshLocal: (_RefreshLocal event) async => _refreshLocal(event, emit),
+        refreshLocal: (_RefreshLocal event) async => _refreshLocal(emit),
         onboardingSave: (_OnboardingSave event) async =>
             _onboarding(event, emit),
       ),
@@ -77,21 +76,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   }
 
   Future<void> _refreshLocal(
-    _RefreshLocal event,
     Emitter<AppState> emit,
   ) async {
-    await state.maybeWhen(
-      inAppState: () async {
-        emit(const AppState.loadingState());
-        await Future.delayed(const Duration(milliseconds: 100));
-        emit(const AppState.inAppState());
-      },
-      orElse: () async {
-        emit(const AppState.loadingState());
-        await Future.delayed(const Duration(milliseconds: 100));
-        emit(const AppState.notAuthorizedState());
-      },
-    );
+    // final TokenDTO token = _authLocalDs.getTokenFromCache();
+    // // log(token.refresh.toString());
+    // log(2.toString());
+    // await _authRepository.refreshToken(refreshToken: token.refresh ?? '');
   }
 
   Future<void> _tokenCheck(

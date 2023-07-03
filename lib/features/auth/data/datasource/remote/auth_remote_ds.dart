@@ -20,14 +20,15 @@ abstract class AuthRemoteDs {
 
   Future<UserDto> getUser();
   Future<bool> activateUser({required ActivateUserDTO activateUserDTO});
+
   Future<bool> changePass(
       {required String curPass, required String newPass, required String pass});
 
   Future<TokenDTO> createJwt({required TokenCreateDTO tokenCreateDTO});
-  Future<TokenDTO> refreshJwt({required String refreshToken});
-  Future<bool> verifyJwt({required String accessToken});
+
   Future<int> resetPassword({required String mail});
   Future<void> resetPasswordConfirm({required int userId,required String code,required String newPassword,required String reNewPassword});
+
 
 
 }
@@ -93,7 +94,7 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       final response = await dio.get(
         '${EndPoints.createUser}/me/',
       );
-
+      log(response.data.toString());
       return UserDto.fromJson(response.data);
     } catch (e) {
       throw ServerException(message: e.toString());
@@ -150,37 +151,6 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
     }
   }
 
-  @override
-  Future<TokenDTO> refreshJwt({required String refreshToken}) async {
-    try {
-      final response = await dio.post(
-        EndPoints.refreshToken,
-        data: {
-          'refresh': refreshToken,
-        },
-      );
-      log(TokenDTO.fromJson(response.data).toString());
-      return TokenDTO.fromJson(response.data);
-    } catch (e) {
-      throw ServerException(message: e.toString());
-    }
-  }
-
-  @override
-  Future<bool> verifyJwt({required String accessToken}) async {
-    try {
-      final response = await dio.post(
-        EndPoints.verifyToken,
-        data: {
-          'token': accessToken,
-        },
-      );
-      return true;
-    } catch (e) {
-      throw ServerException(message: e.toString());
-
-    }
-  }
 
   @override
   Future<int> resetPassword({required String mail}) async {
@@ -217,4 +187,5 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
 
     }
   }
+
 }
