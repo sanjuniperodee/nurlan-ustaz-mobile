@@ -2,12 +2,15 @@ import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/utils/alert_utilrs.dart';
+import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/get_profile_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/widgets/profile_menu_item.dart';
@@ -37,6 +40,20 @@ class _ProfileMainPage extends State<ProfileMainPage> {
     super.initState();
   }
 
+  Map<String, String> langMap = {
+    '🇷🇺': 'ru',
+    '🇰🇿': 'kk',
+  };
+
+  Map<String, String> localMap = {
+    'ru': '🇷🇺',
+    'kk': '🇰🇿',
+  };
+  Map<String, String> langMapText = {
+    '🇷🇺': 'Русский',
+    '🇰🇿': 'Қазақша',
+  };
+  String? chosenLang;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,8 +78,8 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const CustomAppBar(
-                          title: 'Профиль',
+                        CustomAppBar(
+                          title: 'namaz_time'.tr(),
                         ),
                         SizedBox(height: 44.h),
                         ClipRRect(
@@ -172,17 +189,98 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                               color: Colors.white),
                           child: Column(
                             children: [
-                              ProfileMenuItem(
-                                  title: 'Тіл',
-                                  onTap: () {
-                                    showModalBottomSheet(
-                                        backgroundColor: AppColors.white
-                                            .withOpacity(0.0000000009),
-                                        context: context,
-                                        builder: (context) {
-                                          return const LanguageSettingsBottomSheet();
-                                        });
-                                  }),
+                              DropdownButtonHideUnderline(
+                                child: DropdownButton2(
+                                  itemHeight: 30,
+                                  value: localMap[
+                                      'RU'], //  chosenLang ?? langs.first,
+                                  // dropdownColor: AppColors.kWhite,
+                                  items: langMap.keys
+                                      .map<DropdownMenuItem<String>>(
+                                          (String value) {
+                                    return DropdownMenuItem<String>(
+                                      value: value,
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            langMapText[value] ?? "",
+                                          ),
+                                          const SizedBox(
+                                            width: 8,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                              bottom: 5.0,
+                                            ),
+                                            child: Text(
+                                              value,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  }).toList(),
+                                  dropdownDecoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  // dropdownPadding: const EdgeInsets.only(bottom: 10),
+                                  dropdownWidth:
+                                      MediaQuery.of(context).size.width,
+                                  customButton: Padding(
+                                    padding: const EdgeInsets.only(top: 8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          'Тілді танданыз',
+                                          style: getTextStyle(
+                                                  CustomTextStyles.s16w400)
+                                              .copyWith(
+                                                  fontFamily:
+                                                      FontTypes.SF_Pro.name),
+                                        ),
+                                        SvgPicture.asset(
+                                            'assets/icons/chevron_right.svg'),
+                                      ],
+                                    ),
+                                  ),
+                                  onChanged: (String? value) {
+                                    if (value != null) {
+                                      chosenLang = value;
+
+                                      context.setLocale(
+                                        Locale(langMap[value] ?? 'ru'),
+                                      );
+                                      debugPrint(context.locale.toString());
+                                      final String newLocal =
+                                          (langMap[value] ?? 'ru') == 'kk'
+                                              ? 'kz'
+                                              : (langMap[value] ?? 'ru');
+
+                                      final appState =
+                                          BlocProvider.of<AppBloc>(context)
+                                              .state;
+                                      appState.maybeWhen(
+                                        inAppState: () {
+                                          BlocProvider.of<LanguageCubit>(
+                                            context,
+                                          ).changeLanguage(
+                                            language: newLocal,
+                                          );
+                                        },
+                                        orElse: () {
+                                          BlocProvider.of<LanguageCubit>(
+                                            context,
+                                          ).changeLocal();
+                                        },
+                                      );
+                                    }
+                                  },
+                                  icon: SvgPicture.asset(
+                                      'assets/icons/chevron_right.svg'),
+                                ),
+                              ),
                               ProfileMenuItem(
                                   title: geo.name!,
                                   onTap: () {

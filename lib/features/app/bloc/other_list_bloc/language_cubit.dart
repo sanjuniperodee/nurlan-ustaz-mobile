@@ -6,7 +6,6 @@ import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/repositories/auth_repository.dart';
 
-
 part 'language_cubit.freezed.dart';
 
 const _tag = 'LanguageCubit';
@@ -22,20 +21,6 @@ class LanguageCubit extends Cubit<LanguageState> {
     String? language,
   }) async {
     log('changeLanguage', name: _tag);
-    // emit(const LanguageState.loadingState());
-
-    // final result = await _authRepository.updateLang(language: language);
-
-    // await result.fold(
-    //   (l) async {
-    //     emit(LanguageState.errorState(message: mapFailureToMessageBack(l)));
-    //     await Future.delayed(const Duration(milliseconds: 1000));
-    //   },
-    //   (r) {
-    //     log(r, name: _tag);
-    //   },
-    // );
-    // emit(const LanguageState.loadedState());
 
     saveLocaleToCache(locale: language!);
   }

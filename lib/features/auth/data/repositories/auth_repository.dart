@@ -42,9 +42,6 @@ abstract class AuthRepository {
   Future<Either<Failure, bool>> newPass(
       {required String curPass, required String newPass, required String pass});
 
-  // Future<Either<Failure, TokenDTO>> refreshToken(
-  //     {required String refreshToken});
-
   Either<Failure, TokenDTO> authCheck();
   Either<Failure, String> logOut();
 }
@@ -62,22 +59,22 @@ class AuthRepositoryImpl extends AuthRepository {
   });
 
   @override
-  Either<Failure, String> getLocale() {
+  Future<Either<Failure, String>> saveLocale({required String locale}) async {
     try {
-      final String msg = localDS.getLocale();
+      await localDS.saveLocale(locale: locale);
 
-      return Right(msg);
+      return const Right('Success');
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));
     }
   }
 
   @override
-  Future<Either<Failure, String>> saveLocale({required String locale}) async {
+  Either<Failure, String> getLocale() {
     try {
-      await localDS.saveLocale(locale: locale);
+      final String msg = localDS.getLocale();
 
-      return const Right('Success');
+      return Right(msg);
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));
     }

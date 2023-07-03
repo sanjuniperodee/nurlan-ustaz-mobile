@@ -73,6 +73,7 @@ class _KausarDioInterceptor extends Interceptor {
   @override
   Future<void> onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
+    final String locale = _authLocalDS.getLocale();
     try {
       TokenDTO? tokenDto = await _authLocalDS.getTokenFromCacheNull();
       log('!!1111');
@@ -85,7 +86,7 @@ class _KausarDioInterceptor extends Interceptor {
     } finally {
       log('!!!222');
       options.headers['Accept'] = "application/json";
-      // options.headers['Content-Language'] = locale.replaceAll('kk', 'kz');
+      options.headers['Content-Language'] = locale.replaceAll('kk', 'kz');
       super.onRequest(options, handler);
     }
   }

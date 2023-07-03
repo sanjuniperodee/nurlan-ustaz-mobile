@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/models/language_model.dart';
 
 import '../../../../../../../core/common/app_styles.dart';
 import '../../../../../../../core/common/assets.dart';
@@ -17,6 +18,10 @@ class LanguageSettingsBottomSheet extends StatefulWidget {
 
 class _LanguageSettingsBottomSheetState
     extends State<LanguageSettingsBottomSheet> {
+  List<LanguageModel> list = [
+    LanguageModel(key: 'kz', title: 'Қазақша'),
+    LanguageModel(title: 'Орысша', key: 'ru')
+  ];
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -43,7 +48,7 @@ class _LanguageSettingsBottomSheetState
             height: 15.h,
           ),
           ListView.builder(
-            itemCount: 2,
+            itemCount: list.length,
             shrinkWrap: true,
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
@@ -61,6 +66,7 @@ class _LanguageSettingsBottomSheetState
                           setState(() {
                             selectedIndex = index;
                           });
+                          
                         },
                         child: selectedIndex != index
                             ? SvgPicture.asset(Assets.radioCircleSvg)
@@ -69,7 +75,7 @@ class _LanguageSettingsBottomSheetState
                       width: 8,
                     ),
                     Text(
-                      'Қазақша',
+                      list[index].title,
                       style: getTextStyle(CustomTextStyles.s16w400)
                           .apply(fontFamily: FontTypes.SF_Pro.name),
                     ),

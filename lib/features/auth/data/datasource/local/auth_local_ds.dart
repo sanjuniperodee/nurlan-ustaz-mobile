@@ -116,7 +116,7 @@ class AuthLocalDsImpl extends AuthLocalDs {
     try {
       final String? locale = sharedPreferences.getString(SharedKeys.APP_LOCALE);
       if (locale == null) {
-        return 'ru'; // default locale
+        return 'kk'; // default locale
       }
       return locale;
     } catch (e) {
