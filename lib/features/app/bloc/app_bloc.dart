@@ -24,6 +24,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   AppBloc(this._authRepository, this._notAuthLogic, this._authLocalDs)
       : super(const AppState.loadingState()) {
+
     // _notAuthLogic.statusSubject.listen(
     //   (value) async {
     //     log('_startListenDio message from stream :: $value');
@@ -37,6 +38,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     //     }
     //   },
     // );
+
     on<AppEvent>(
       (AppEvent event, Emitter<AppState> emit) async => event.map(
         exiting: (_Exiting event) async => _exit(event, emit),

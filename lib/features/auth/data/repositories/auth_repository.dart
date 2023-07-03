@@ -33,17 +33,27 @@ abstract class AuthRepository {
       {required TokenCreateDTO createTokenDTO});
 
   Future<Either<Failure, UserPayload>> postUser({required UserPayload userDTO});
+
   Future<Either<Failure, UserDto>> rename(
       {required UserPayload user, XFile? avatar});
+
   Future<Either<Failure, UserDto>> getUser();
 
   Future<Either<Failure, bool>> activateUser(
       {required ActivateUserDTO activateUserDTO});
+
   Future<Either<Failure, bool>> newPass(
       {required String curPass, required String newPass, required String pass});
 
+
   Either<Failure, TokenDTO> authCheck();
+
   Either<Failure, String> logOut();
+
+  Future<Either<Failure, int>> resetPassword(
+      {required String mail});
+  Future<Either<Failure, void>> resetPasswordConfirm({required int userId,required String code,required String newPassword,required String reNewPassword});
+
 }
 
 @Singleton(as: AuthRepository)
@@ -201,23 +211,6 @@ class AuthRepositoryImpl extends AuthRepository {
     }
   }
 
-  // @override
-  // Future<Either<Failure, TokenDTO>> refreshToken(
-  //     {required String refreshToken}) async {
-  //   if (await networkInfo.isConnected) {
-  //     try {
-  //       final TokenDTO tokenDto = await remoteDS.refreshJwt(
-  //         refreshToken: refreshToken,
-  //       );
-
-  //       return Right(tokenDto);
-  //     } on ServerException catch (e) {
-  //       return Left(ServerFailure(message: e.message));
-  //     }
-  //   } else {
-  //     return Left(ServerFailure(message: NO_INTERNET_TEXT));
-  //   }
-  // }
 
   @override
   Either<Failure, TokenDTO> authCheck() {
@@ -231,7 +224,6 @@ class AuthRepositoryImpl extends AuthRepository {
         log('пустой токен');
         return Left(CacheFailure(message: 'Пустой токен!'));
       }
-      log('mmmmmmmmmmmmmmmmmmmmmm$token');
       return Right(token);
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));
@@ -246,6 +238,37 @@ class AuthRepositoryImpl extends AuthRepository {
       return Right('success');
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));
+    }
+  }
+
+
+  @override
+  Future<Either<Failure, int>> resetPassword({required String mail}) async {
+    if (await networkInfo.isConnected) {
+      try {
+       final id =  await remoteDS.resetPassword(mail:
+        mail);
+        return  Right(id);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> resetPasswordConfirm({required int userId, required String code, required String newPassword, required String reNewPassword}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final id =  await remoteDS.resetPasswordConfirm(
+        userId: userId, code: code, newPassword: newPassword, reNewPassword: reNewPassword);
+        return  Right(id);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
     }
   }
 }

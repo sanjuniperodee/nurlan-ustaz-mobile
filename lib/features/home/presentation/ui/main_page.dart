@@ -323,9 +323,11 @@ class _MainPageState extends State<MainPage> {
                                         ),
                                         AppButton(
                                           onTap: () {
+
                                             TabsRouterScope.of(context)
                                                 ?.controller
                                                 .setActiveIndex(2);
+
                                           },
                                           text: 'Түс жору',
                                         ),
@@ -337,8 +339,10 @@ class _MainPageState extends State<MainPage> {
                                         ),
                                         SizedBox(height: 16.h),
                                         InkWell(
-                                          onTap: () => context.router.push(
-                                              const UstazAitinizhiRoute()),
+
+                                            onTap: () => context.router.push(
+                                                const UstazAitinizhiRoute()),
+
                                           child: Container(
                                             width: 1.sw,
                                             decoration: BoxDecoration(
@@ -377,8 +381,9 @@ class _MainPageState extends State<MainPage> {
                                                           fontWeight:
                                                               FontWeight.w700)
                                                       .apply(
-                                                          color:
-                                                              AppColors.white),
+
+                                                          color: AppColors.white),
+
                                                 )
                                               ],
                                             ),

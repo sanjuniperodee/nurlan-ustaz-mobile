@@ -15,8 +15,11 @@ class CalendarChatsCubit extends Cubit<CalendarChatsState> {
     this._homeRepository,
   ) : super(const CalendarChatsState.initialState()) {
     var now = DateTime.now();
-    getChatsMonth(DateTime.now());
-    // getChatByDate(
+    //getChatsMonth(DateTime.now());
+
+
+
+      // getChatByDate(
     //     DateFormat('yyyy-MM-dd')
     //         .format(DateTime.now().copyWith(day: 1))
     //         .toString(),

@@ -74,6 +74,7 @@ class _KausarDioInterceptor extends Interceptor {
   Future<void> onRequest(
       RequestOptions options, RequestInterceptorHandler handler) async {
     final String locale = _authLocalDS.getLocale();
+
     try {
       TokenDTO? tokenDto = await _authLocalDS.getTokenFromCacheNull();
       log('!!1111');

@@ -23,46 +23,47 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: currentIndex == 0
-          ? Container(
-              width: double.infinity,
-              height: 112.h,
-              child: Padding(
-                padding: const EdgeInsets.only(
-                    top: 16, bottom: 44, right: 16, left: 16),
-                child: AppButton(
-                    onTap: () {
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext dialogContext) {
-                          return Center(
-                            child: Stack(
-                              children: [
-                                Container(
-                                  width: 311,
-                                  height: 194,
-                                  decoration:
-                                      BoxDecoration(color: AppColors.white),
-                                ),
-                                Positioned(
-                                  left: 105,
-                                  bottom: 150,
-                                  child: CircleAvatar(
-                                      minRadius: 37,
-                                      maxRadius: 37,
-                                      backgroundColor: AppColors.white,
-                                      child: Image.asset(
-                                        'assets/images/imam_nurlan.png',
-                                      )),
-                                ),
-                              ],
-                            ),
-                          );
-                        },
-                      );
-                    },
-                    text: 'Сұраңыз'),
-              ),
-            )
+      ? null
+          // ? Container(
+          //     width: double.infinity,
+          //     height: 112.h,
+          //     child: Padding(
+          //       padding: const EdgeInsets.only(
+          //           top: 16, bottom: 44, right: 16, left: 16),
+          //       child: AppButton(
+          //           onTap: () {
+          //             showDialog(
+          //               context: context,
+          //               builder: (BuildContext dialogContext) {
+          //                 return Center(
+          //                   child: Stack(
+          //                     children: [
+          //                       Container(
+          //                         width: 311,
+          //                         height: 194,
+          //                         decoration:
+          //                             BoxDecoration(color: AppColors.white),
+          //                       ),
+          //                       Positioned(
+          //                         left: 105,
+          //                         bottom: 150,
+          //                         child: CircleAvatar(
+          //                             minRadius: 37,
+          //                             maxRadius: 37,
+          //                             backgroundColor: AppColors.white,
+          //                             child: Image.asset(
+          //                               'assets/images/imam_nurlan.png',
+          //                             )),
+          //                       ),
+          //                     ],
+          //                   ),
+          //                 );
+          //               },
+          //             );
+          //           },
+          //           text: 'Сұраңыз'),
+          //     ),
+          //   )
           : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,

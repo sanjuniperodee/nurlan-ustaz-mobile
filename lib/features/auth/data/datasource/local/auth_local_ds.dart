@@ -146,10 +146,11 @@ class AuthLocalDsImpl extends AuthLocalDs {
   }
 
   @override
-  TokenDTO getTokenFromCache() {
+  TokenDTO? getTokenFromCache() {
     try {
       final token = sharedPreferences.get(SharedKeys.TOKEN);
       if (token != null) {
+
         log('____________TOKEN${token.toString()}');
         return TokenDTO.fromJson(
           jsonDecode(token.toString()) as Map<String, dynamic>,
@@ -157,8 +158,9 @@ class AuthLocalDsImpl extends AuthLocalDs {
       } else {
         throw CacheException(message: 'В кэше нет запрашиваемые данные');
       }
+      return null;
     } catch (e) {
-      log('AuthLocalDSImpl:: ${e.runtimeType == CacheException ? (e as CacheException).message : e}');
+      log('AuthLocalDSImpl getUserFromCacheNull:: $e');
       throw CacheException(message: 'В кэше нет запрашиваемые данные');
     }
   }

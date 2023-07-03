@@ -63,19 +63,22 @@ class _TusZhoruListState extends State<TusZhoruList> {
                       SizedBox(
                         height: 4.h,
                       ),
-                      Text(
-                        list[index].isFree!
-                            ? list[index].fullExplanation ?? ''
-                            : list[index].isPurchased!
-                                ? list[index].fullExplanation ?? ''
-                                : list[index].partialExplanation ?? '',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: getTextStyle(CustomTextStyles.s14w400).apply(
-                            fontFamily: FontTypes.SF_Pro.name,
-                            color: list[index].isPurchased!
-                                ? AppColors.white
-                                : AppColors.grey1.withOpacity(0.55)),
+                      Container(
+                        width: 250.w,
+                        child: Text(
+                          list[index].isFree!
+                              ? list[index].fullExplanation ?? ''
+                              : list[index].isPurchased!
+                                  ? list[index].fullExplanation ?? ''
+                                  : list[index].partialExplanation ?? '',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: getTextStyle(CustomTextStyles.s14w400).apply(
+                              fontFamily: FontTypes.SF_Pro.name,
+                              color: list[index].isPurchased!
+                                  ? AppColors.white
+                                  : AppColors.grey1.withOpacity(0.55)),
+                        ),
                       )
                     ],
                   ),

@@ -99,7 +99,6 @@ class _TusZhoruDetailPage extends State<CustomTusZhoruDetailPage> {
                       Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                        height: 700,
                         width: double.maxFinite,
                         decoration: BoxDecoration(
                             gradient: LinearGradient(

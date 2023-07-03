@@ -13,6 +13,7 @@ import 'package:share_plus/share_plus.dart';
 import '../../../../core/utils/pay_dialog.dart';
 import '../../../app/app_dinamic_link.dart';
 import '../../../app/presentation/widgets/custom_app_bar.dart';
+import '../bloc/tus_zhoru_cubit.dart';
 
 class TusZhoruDetailPage extends StatefulWidget {
   const TusZhoruDetailPage({super.key, required this.id});
@@ -110,7 +111,6 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                           Container(
                             padding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 20),
-                            height: 700,
                             width: double.maxFinite,
                             decoration: BoxDecoration(
                                 gradient: LinearGradient(

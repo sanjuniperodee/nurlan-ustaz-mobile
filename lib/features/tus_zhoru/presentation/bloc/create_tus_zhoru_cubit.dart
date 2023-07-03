@@ -38,6 +38,7 @@ class CreateTusZhoruCubit extends Cubit<CreateTusZhoruState> {
         : await _repository.createTusZhoruPayment(
             id: id, userIp: userIp, backUrl: tusZhoruDynamicLink);
     result.fold((l) => {}, (r) async {
+      print(r.toString());
       final Uri url = Uri.parse(r.pgRedirectUrl.toString());
       if (!await launchUrl(url)) {
         throw Exception('Could not launch');
