@@ -101,18 +101,15 @@ class _RegistrationFormState extends State<RegistrationForm> {
           ),
           SizedBox(height: 32.h),
           CustomTextFormProfile(
+            keyboardType: TextInputType.name,
             controller: nameController,
             hintText: 'Аты-жөні',
             labelText: 'Аты-жөні',
           ),
           SizedBox(height: 24.h),
           CustomTextFormProfile(
-            validator: (value) {
-              if (value == null || value.isEmpty || value.length < 50) {
-                return 'Введите почту'.tr();
-              }
-              return null;
-            },
+            keyboardType: TextInputType.emailAddress,
+
             controller: emailController,
             hintText: 'E-mail',
             labelText: 'E-mail',
@@ -121,6 +118,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
             height: 24.h,
           ),
           CustomTextFormProfile(
+            keyboardType: const TextInputType.numberWithOptions(decimal: false),
             inputFormatters: [maskFormatter],
             controller: numberController,
             hintText: 'Телефон нөмірі',
@@ -131,7 +129,11 @@ class _RegistrationFormState extends State<RegistrationForm> {
             onTap: () {
               _showDialog(
                   CupertinoDatePicker(
-                    initialDateTime: DateTime.now(),
+                    dateOrder: DatePickerDateOrder.dmy,
+                    minimumYear: DateTime.now().year - 100,
+                    maximumYear: DateTime.now().year - 5,
+
+                    initialDateTime: DateTime.now().subtract(Duration(days: 365*5)),
                     mode: CupertinoDatePickerMode.date,
                     use24hFormat: true,
                     // This is called when the user changes the date.
@@ -151,12 +153,16 @@ class _RegistrationFormState extends State<RegistrationForm> {
           ),
           SizedBox(height: 24.h),
           CustomTextFormProfile(
+            keyboardType: TextInputType.visiblePassword,
+            helperText: 'Пароль должен содержать буквы и цифры ',
             controller: passwordController,
             hintText: 'Құпия сөз',
             labelText: 'Құпия сөз',
           ),
           SizedBox(height: 24.h),
           CustomTextFormProfile(
+            keyboardType: TextInputType.visiblePassword,
+
             controller: passwordRepeatController,
             hintText: 'Құпия сөзді қайталау',
             labelText: 'Құпия сөзді қайталау',

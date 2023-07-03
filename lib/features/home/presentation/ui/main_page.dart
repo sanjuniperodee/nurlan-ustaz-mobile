@@ -314,7 +314,8 @@ class _MainPageState extends State<MainPage> {
                                         ),
                                         AppButton(
                                           onTap: () {
-                                            //tabsRouter.setActiveIndex(1);
+                                            TabsRouterScope.of(context)?.controller.setActiveIndex(2);
+                                                           //tabsRouter.setActiveIndex(1);
                                           },
                                           text: 'Түс жору',
                                         ),
@@ -325,47 +326,51 @@ class _MainPageState extends State<MainPage> {
                                           text: 'Ұстаз айтыңызшы...',
                                         ),
                                         SizedBox(height: 16.h),
-                                        Container(
-                                          width: 1.sw,
-                                          decoration: BoxDecoration(
-                                              gradient: const LinearGradient(
-                                                begin: Alignment.topRight,
-                                                end: Alignment.bottomRight,
-                                                colors: [
-                                                  Color(0xFFFAE0AB),
-                                                  Color(0xFFF9A502),
-                                                ],
-                                              ),
-                                              borderRadius:
-                                                  BorderRadius.circular(24)),
-                                          padding: EdgeInsets.only(
-                                              top: 19.r,
-                                              bottom: 19.r,
-                                              left: 92.r,
-                                              right: 92.r),
-                                          child: Column(
-                                            children: [
-                                              SvgPicture.asset(
-                                                  Assets.boxStorySvg),
-                                              SizedBox(
-                                                height: 12.h,
-                                              ),
-                                              Text(
-                                                'Бола ма?\nБолмай ма?',
-                                                textAlign: TextAlign.center,
-                                                style: getTextStyle(
-                                                        CustomTextStyles
-                                                            .s16w200)
-                                                    .copyWith(
-                                                        fontFamily: FontTypes
-                                                            .Philosopher.name,
-                                                        fontSize: 24.sp,
-                                                        fontWeight:
-                                                            FontWeight.w700)
-                                                    .apply(
-                                                        color: AppColors.white),
-                                              )
-                                            ],
+                                        InkWell(
+                                            onTap: () => context.router.push(
+                                                const UstazAitinizhiRoute()),
+                                          child: Container(
+                                            width: 1.sw,
+                                            decoration: BoxDecoration(
+                                                gradient: const LinearGradient(
+                                                  begin: Alignment.topRight,
+                                                  end: Alignment.bottomRight,
+                                                  colors: [
+                                                    Color(0xFFFAE0AB),
+                                                    Color(0xFFF9A502),
+                                                  ],
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(24)),
+                                            padding: EdgeInsets.only(
+                                                top: 19.r,
+                                                bottom: 19.r,
+                                                left: 92.r,
+                                                right: 92.r),
+                                            child: Column(
+                                              children: [
+                                                SvgPicture.asset(
+                                                    Assets.boxStorySvg),
+                                                SizedBox(
+                                                  height: 12.h,
+                                                ),
+                                                Text(
+                                                  'Бола ма?\nБолмай ма?',
+                                                  textAlign: TextAlign.center,
+                                                  style: getTextStyle(
+                                                          CustomTextStyles
+                                                              .s16w200)
+                                                      .copyWith(
+                                                          fontFamily: FontTypes
+                                                              .Philosopher.name,
+                                                          fontSize: 24.sp,
+                                                          fontWeight:
+                                                              FontWeight.w700)
+                                                      .apply(
+                                                          color: AppColors.white),
+                                                )
+                                              ],
+                                            ),
                                           ),
                                         ),
                                         SizedBox(height: 16.h),

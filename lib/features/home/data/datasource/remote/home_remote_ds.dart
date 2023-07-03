@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -11,6 +12,7 @@ import 'package:nurlan_ustaz_flutter/core/services/notification_service.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/faq_model_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/geonames_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/media_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/models/notification_device_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/notification_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 
@@ -100,6 +102,8 @@ abstract class HomeRemoteDs {
       String? search,
       required int id,
       bool? isFirstCall = false});
+  Future<NotificationDTO> notificationDevice(
+      {required NotificationDeviceDTO notification});
 }
 
 @Injectable(as: HomeRemoteDs)
@@ -641,6 +645,11 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       int? currentPage,
       bool? isFirstCall = false}) async {
     try {
+
+
+
+
+
       if (isFirstCall ?? false) {
         newsPage.clear();
       }
@@ -807,6 +816,23 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<NotificationDTO> notificationDevice({required NotificationDeviceDTO notification}) async {
+    try {
+      final response = await dio.post(
+        EndPoints.notification,
+        data: jsonEncode(notification.toJson()),
+      );
+      return NotificationDTO.fromJson(response.data);
+
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+        (e.response!.data as Map<String, dynamic>)['message'].toString(),
       );
     }
   }

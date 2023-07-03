@@ -11,6 +11,8 @@ class AppButton extends StatelessWidget {
   final Color? textColor;
   final Color? inactiveTextColor;
   final bool isLoading;
+  final bool? isActive;
+  final double? textSize;
 
   const AppButton(
       {super.key,
@@ -19,15 +21,18 @@ class AppButton extends StatelessWidget {
       this.color,
       this.textColor,
       this.inactiveTextColor,
-      this.isLoading = false});
+      this.isLoading = false,this.isActive = true, this.textSize});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: color ?? null,
+          color:
+
+          color ?? null,
           gradient:
-              color != null ? null : AppColors.gradientPrimaryActiveButton,
+          isActive == true  ?
+          color != null ? null : AppColors.gradientPrimaryActiveButton  : AppColors.gradientPrimaryDisabledButton,
           borderRadius: const BorderRadius.all(Radius.circular(30)).r),
       child: MaterialButton(
         onPressed: onTap,
@@ -47,7 +52,7 @@ class AppButton extends StatelessWidget {
                       style: getTextStyle(CustomTextStyles.s16w200)
                           .apply(fontFamily: FontTypes.Philosopher.name)
                           .copyWith(
-                              fontWeight: FontWeight.w700, fontSize: 24.sp)
+                              fontWeight: FontWeight.w700, fontSize: textSize ?? 24.sp)
                           .apply(
                             color: onTap != null
                                 ? textColor ?? AppColors.white

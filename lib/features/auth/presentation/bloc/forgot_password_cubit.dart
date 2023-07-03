@@ -1,0 +1,104 @@
+import 'dart:developer';
+
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
+
+import '../../data/model/token_dto.dart';
+import '../../data/model/user_payload.dart';
+import '../../data/repositories/auth_repository.dart';
+
+part 'forgot_password_cubit.freezed.dart';
+
+@singleton
+class ForgotPasswordCubitCubit extends Cubit<ForgotPasswordState> {
+  ForgotPasswordCubitCubit(
+    this._authRepository,
+  ) : super(const ForgotPasswordState.initialState());
+  final AuthRepository _authRepository;
+  late  int userId;
+
+  Future<void> resetConfirm(
+      {required String code,
+      required String newPassword,
+      required String reNewPassword}) async {
+    final result = await _authRepository.resetPasswordConfirm(
+        userId: userId,
+        code: code,
+        newPassword: newPassword,
+        reNewPassword: reNewPassword);
+    result.fold((l) => {}, (r) => {emit(const _SuccessConfirm())});
+  }
+
+  Future<void> getIdByMail(String mail) async {
+    emit(ForgotPasswordState.loadingState());
+    final id = await _authRepository.resetPassword(mail: mail);
+
+    return id.fold((l) {}, (r) {
+      userId = r;
+      emit(ForgotPasswordState.verificationCodeState(userId: r));
+    });
+  }
+
+  Future<void> toInitialPage() async {
+     emit(const ForgotPasswordState.initialState());
+  }
+
+  Future<void> toCodeVerificationPage() async {
+    emit( ForgotPasswordState.verificationCodeState(userId: userId));
+  }
+
+  Future<void> toNewPasswordPage({required String code}) async {
+    emit(_NewPasswordState(code: code));
+  }
+
+  // void toInitialPage() {
+  //   emit(const _InitialState());
+  // }
+
+  // //Future<void> sendEmail() async {
+  //   emit(const _$_VerificationCodeState());
+  // }
+
+  Future<void> sendCode() async {
+    print('hello');
+    //emit(const _NewPasswordState());
+  }
+
+// Future<void> sendCode(
+//     String? code, int userId, TokenCreateDTO tokenCreateDTO) async {
+//   final result = await _authRepository.activateUser(
+//       activateUserDTO: ActivateUserDTO(user_id: userId, code: code));
+//   result.fold((l) => {result.toString()}, (r) async {
+//     final result =
+//     await _authRepository.createJTW(createTokenDTO: tokenCreateDTO);
+//     result.fold(
+//           (l) {
+//         log('error 2');
+//       },
+//           (r) {
+//         emit(CodeVerificationState.loadedState());
+//       },
+//     );
+//   });
+// }
+}
+
+@freezed
+class ForgotPasswordState with _$ForgotPasswordState {
+  const factory ForgotPasswordState.initialState() = _InitialState;
+
+  const factory ForgotPasswordState.successConfirm() = _SuccessConfirm;
+
+  const factory ForgotPasswordState.verificationCodeState(
+      {required int userId}) = _VerificationCodeState;
+
+  const factory ForgotPasswordState.newPassword({required String code}) =
+      _NewPasswordState;
+
+  const factory ForgotPasswordState.loadingState() = _LoadingState;
+
+  const factory ForgotPasswordState.errorState({
+    required String message,
+  }) = _ErrorState;
+}

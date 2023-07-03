@@ -16,17 +16,20 @@ class CustomTextFormProfile extends StatelessWidget {
   final List<TextInputFormatter>? inputFormatters;
   final String? Function(String?)? validator;
   final String? errorText;
+  final String? helperText;
+  final TextInputType? keyboardType;
 
   const CustomTextFormProfile(
       {Key? key,
       required this.hintText,
       required this.labelText,
-       this.onChanged, this.controller, this.initialValue, this.readOnly, this.onTap, this.inputFormatters, this.validator, this.errorText})
+       this.onChanged, this.controller, this.initialValue, this.readOnly, this.onTap, this.inputFormatters, this.validator, this.errorText, this.helperText, this.keyboardType})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: keyboardType,
       validator: validator,
       inputFormatters: inputFormatters,
       onTap: onTap,
@@ -35,6 +38,7 @@ class CustomTextFormProfile extends StatelessWidget {
       controller: controller,
       onChanged: onChanged,
       decoration: InputDecoration(
+        helperText: helperText,
         errorText: errorText,
         label: Text(
           labelText,

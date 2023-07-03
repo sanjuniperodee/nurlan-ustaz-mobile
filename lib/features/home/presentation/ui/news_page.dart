@@ -186,15 +186,18 @@ class _NewsPageState extends State<NewsPage> {
                                                 SizedBox(
                                                   height: 5.h,
                                                 ),
-                                                Text(
-                                                  listOfNews[index].title ??
-                                                      'ERROR',
-                                                  style: getTextStyle(
-                                                          CustomTextStyles
-                                                              .s16w500)
-                                                      .apply(
-                                                          color:
-                                                              AppColors.black),
+                                                Container(
+                                                  width: 200.w,
+                                                  child: Text(
+                                                    listOfNews[index].title ??
+                                                        'ERROR',
+                                                    style: getTextStyle(
+                                                            CustomTextStyles
+                                                                .s16w500)
+                                                        .apply(
+                                                            color:
+                                                                AppColors.black),
+                                                  ),
                                                 ),
                                               ],
                                             ),

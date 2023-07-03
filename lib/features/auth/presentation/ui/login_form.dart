@@ -2,6 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/validators.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/token_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/login_cubit.dart';
 
@@ -37,12 +38,20 @@ class _LoginFormState extends State<LoginForm> {
             ),
             SizedBox(height: 32.h),
             CustomTextFormProfile(
+              keyboardType: TextInputType.emailAddress,
+              onChanged: (String value) {
+                setState(() {});
+              },
               controller: emailController,
               hintText: 'E-mail',
               labelText: 'E-mail',
             ),
             SizedBox(height: 24.h),
             CustomTextFormProfile(
+              keyboardType: TextInputType.visiblePassword,
+              onChanged: (String value) {
+                setState(() {});
+              },
               controller: passwordController,
               hintText: 'Құпия сөз',
               labelText: 'Құпия сөз',
@@ -51,11 +60,32 @@ class _LoginFormState extends State<LoginForm> {
               height: 42.h,
             ),
             AppButton(
+              textSize: 16.sp,
+                isActive: (isValidEmail(emailController.value.text) &&
+                    passwordController.value.text.isNotEmpty),
                 onTap: () {
-                  context.read<LoginCubit>().createToken(TokenCreateDTO(
-                      email: emailController.text,
-                      password: passwordController.text));
-
+                  if (emailController.value.text.isEmpty &&
+                      passwordController.value.text.isEmpty) {
+                    buildErrorCustomSnackBar(context, 'Введите логин и пароль');
+                    return;
+                  }
+                  if (emailController.value.text.isEmpty) {
+                    buildErrorCustomSnackBar(context, 'Введите логин');
+                    return;
+                  }
+                  if (passwordController.value.text.isEmpty) {
+                    buildErrorCustomSnackBar(context, 'Введите пароль');
+                    return;
+                  }
+                  if (isValidEmail(emailController.value.text) == false) {
+                    buildErrorCustomSnackBar(
+                        context, 'Введите корректный почтовый адрес');
+                    return;
+                  } else {
+                    context.read<LoginCubit>().createToken(TokenCreateDTO(
+                        email: emailController.text,
+                        password: passwordController.text));
+                  }
                 },
                 text: 'Кіру'),
             SizedBox(height: 12.h),
@@ -65,7 +95,9 @@ class _LoginFormState extends State<LoginForm> {
                       colors: AppColors.gradientSecondaryActiveButton.colors),
                   borderRadius: const BorderRadius.all(Radius.circular(30)).r),
               child: MaterialButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.router.push(const ForgotPasswordPageRoute());
+                },
                 child: Container(
                   padding: const EdgeInsets.all(10),
                   width: 339.w,

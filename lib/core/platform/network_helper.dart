@@ -10,10 +10,15 @@ mixin EndPoints {
   static const String activateUser = '/api/users/activation/';
   static const String createToken = '/api/jwt/create/';
   static const String refreshToken = '/api/jwt/refresh/';
+  static const String verifyToken = '/api/jwt/verify/';
+  static const String resetPassword = '/api/users/reset_password/';
+  static const String resetPasswordConfirm = '/api/users/reset_password_confirm/';
+
+
+
 
   static const String register = '/api/v1/register';
   static const String registerVerify = '/api/v1/verifyUserPhone';
-  static const String resetPassword = '/api/v1/reset-password';
   static const String passwordVerify = '/api/v1/password-reset/verify';
   static const String passwordUpdate = '/api/v1/password-reset/update';
   static const String newPass = '/api/users/set_password/';
@@ -27,6 +32,8 @@ mixin EndPoints {
   //HOME
   static const String timings = '/api/islam/prayer-times/timings/';
   static const String geoNames = '/api/notifications/devices/geo_names/';
+  static const String notification = '/api/notifications/devices/';
+
   static const String setCity = '/api/notifications/devices/';
   static const String banner = '/api/v1/banners';
   static const String faq = '/api/support/faq/';

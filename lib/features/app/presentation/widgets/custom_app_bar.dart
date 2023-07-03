@@ -35,7 +35,9 @@ class CustomAppBar extends StatelessWidget {
             ]
           : [
               GestureDetector(
-                  onTap: () {
+                  onTap: onTap != null ? (){
+                    onTap!();
+                  }     :() {
                     Navigator.pop(context);
                   },
                   child: SvgPicture.asset(

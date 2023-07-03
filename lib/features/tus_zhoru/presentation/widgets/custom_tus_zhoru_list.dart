@@ -40,11 +40,16 @@ class _CustomTusZhoruListState extends State<CustomTusZhoruList> {
                 padding: EdgeInsets.symmetric(horizontal: 1.sp),
                 child: GestureDetector(
                   onTap: () {
-                    if(list[index].isPaid == false){
+                    if (list[index].isPaid == false) {
                       showDialog(
                           context: context,
                           builder: (context) {
-                            return PayDialog(price: list[index].price?.toInt().toString() ?? '', id: list[index].id!,isCustom: true,);
+                            return PayDialog(
+                              price:
+                                  list[index].price?.toInt().toString() ?? '',
+                              id: list[index].id!,
+                              isCustom: true,
+                            );
                           });
                       return;
                     }
@@ -55,7 +60,7 @@ class _CustomTusZhoruListState extends State<CustomTusZhoruList> {
                   child: Stack(
                     children: [
                       Container(
-                        height: 90,
+                        height: 91,
                         decoration: BoxDecoration(
                             color: AppColors.white,
                             borderRadius: BorderRadius.circular(20),

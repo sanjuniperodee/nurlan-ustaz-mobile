@@ -20,6 +20,8 @@ import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/sur
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/launcher.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/code_verification_page.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/forgot_passwords_pages/code_verification_forgot.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/forgot_passwords_pages/forgot_password_page.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/login_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/geonames_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
@@ -176,8 +178,11 @@ part 'app_router.gr.dart';
     AutoRoute(page: WudhuPage),
     AutoRoute(page: NamazDutyPage),
     //Auth
+    AutoRoute(page: ForgotPasswordPage),
     AutoRoute(page: LoginPage),
     AutoRoute(page: CodeVerification),
+    AutoRoute(page: CodeVerificationForgot),
+
   ],
 )
 class AppRouter extends _$AppRouter {}

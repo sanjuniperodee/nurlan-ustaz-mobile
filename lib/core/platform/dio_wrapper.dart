@@ -75,7 +75,7 @@ class _KausarDioInterceptor extends Interceptor {
 
     final String locale = _authLocalDS.getLocale();
 
-    if (tokenDto != null && tokenDto.access != null ) {
+    if (tokenDto != null ) {
 
       print('------------------------------${tokenDto.access}');
       options.headers['Authorization'] = 'Bearer ${tokenDto.access}';

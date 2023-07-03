@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
@@ -20,6 +21,9 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitiniz
 
 import 'package:nurlan_ustaz_flutter/features/home/data/models/timings_dto.dart';
 
+import '../../../../core/services/notification_service.dart';
+import '../models/notification_device_dto.dart';
+
 const _tag = 'HomeRepository';
 
 abstract class HomeRepository {
@@ -29,68 +33,98 @@ abstract class HomeRepository {
     int? page,
     bool? isFirstCall,
   });
+
   Future<Either<Failure, bool>> postImamService({
     required List<int> id,
   });
+
   Future<Either<Failure, List<ResultHomeDTO>>> partners();
+
   Future<Either<Failure, List<ResultHomeDTO>>> seminar(
       {String? search, bool? isSaved, int? page, bool? isFirstCall});
+
   Future<Either<Failure, List<ResultHomeDTO>>> lives({
     String? search,
     bool? isSaved,
     int? page,
     bool? isFirstCall,
   });
+
   Future<Either<Failure, List<ResultHomeDTO>>> charities({
     int? page,
     bool? isFirstCall,
   });
+
   Future<Either<Failure, List<ResultHomeDTO>>> commentSem(
       {int? page, bool? isFirstCall, int? id});
+
   Future<Either<Failure, List<ResultHomeDTO>>> commentNews(
       {int? page, bool? isFirstCall, int? id});
+
   Future<Either<Failure, List<MediaDTO>>> services({
     int? page,
     bool? isFirstCall,
   });
 
   Future<Either<Failure, bool>> seminarFavorite({required int id});
+
   Future<Either<Failure, bool>> seminarLike({required int id});
+
   Future<Either<Failure, bool>> commentSemPost({
     required int id,
     int? commentId,
     required String body,
   });
+
   Future<Either<Failure, bool>> commentNewsPost({
     required int id,
     int? commentId,
     required String body,
   });
+
   Future<Either<Failure, bool>> commentSemLike({
     required int id,
     required int commentId,
   });
+
   Future<Either<Failure, bool>> commentNewsLike({
     required int id,
     required int commentId,
   });
+
   Future<Either<Failure, ResultHomeDTO>> newsDetail({required int id});
+
   Future<Either<Failure, List<FaqModelDTO>>> faq();
+
   Future<Either<Failure, List<GeonamesDTO>>> geoNames({required String name});
+
   Future<Either<Failure, NotificationDTO>> setCity({required GeonamesDTO geo});
+
   Future<Either<Failure, TimingsDTO>> timings(
       {required double lat, required double long});
+
   Future<Either<Failure, List<ResultHomeDTO>>> projectInfo();
+
   Future<Either<Failure, ResultHomeDTO>> seminarDetail({required int id});
+
   Future<Either<Failure, bool>> newsFavorite({required int id});
+
   Future<Either<Failure, bool>> newsLike({required int id});
+
   Future<Either<Failure, bool>> livesFavorite({required int id});
+
   Future<Either<Failure, List<ChatDTO>>> chats(
       {required String startTime, required String endTime});
+
   Future<Either<Failure, List<QuestionDTO>>> questions(
       {required int id, String? search, int? page, bool? isFirstCall});
+
   Future<Either<Failure, FreedomPaymentDTO>> createSeminarPayment(
       {required int id, required String userIp, required String backUrl});
+
+  Future<Either<Failure, NotificationDTO>> notificationDevice({
+    required NotificationDeviceDTO notificationDTO,
+  });
 }
 
 @Singleton(as: HomeRepository)
@@ -98,6 +132,7 @@ class HomeRepositoryImpl extends HomeRepository {
   final HomeRemoteDs remoteDS;
   final HomeLocalDs localDS;
   final NetworkInfo networkInfo;
+
   HomeRepositoryImpl(
     this.localDS, {
     required this.remoteDS,
@@ -441,6 +476,19 @@ class HomeRepositoryImpl extends HomeRepository {
   }) async {
     if (await networkInfo.isConnected) {
       try {
+        final String? deviceToken =
+            await NotificationService().getDeviceToken();
+        final String type = Platform.operatingSystem.toString();
+
+        if(Platform.isIOS || Platform.isAndroid){
+          await remoteDS.notificationDevice(
+              notification: NotificationDeviceDTO(
+                registrationId: deviceToken,
+                type: type,
+              ));
+        }
+
+
         final List<ResultHomeDTO> news = await remoteDS.news(
             search: search,
             isSaved: isSaved,
@@ -579,6 +627,22 @@ class HomeRepositoryImpl extends HomeRepository {
             isFirstCall: isFirstCall,
             id: id);
         return Right(questions);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, NotificationDTO>> notificationDevice(
+      {required NotificationDeviceDTO notificationDTO}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final NotificationDTO notification =
+            await remoteDS.notificationDevice(notification: notificationDTO);
+        return Right(notification);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
       }
