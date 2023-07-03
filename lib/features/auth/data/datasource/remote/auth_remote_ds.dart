@@ -29,8 +29,6 @@ abstract class AuthRemoteDs {
   Future<int> resetPassword({required String mail});
   Future<void> resetPasswordConfirm({required int userId,required String code,required String newPassword,required String reNewPassword});
 
-
-
 }
 
 @Injectable(as: AuthRemoteDs)
