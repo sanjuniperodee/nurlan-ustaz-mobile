@@ -80,22 +80,22 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                     );
                   }).toList(),
                 ),
-                Positioned.fill(
-                  top: 210.r,
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    child: DotsIndicator(
-                      dotsCount: widget.result.media?.length ?? 0,
-                      position: _currentIndex,
-                      decorator: DotsDecorator(
-                        color:
-                            AppColors.white, // Color of non-selected indicators
-                        activeColor:
-                            AppColors.grey1, // Color of selected indicator
-                      ),
-                    ),
-                  ),
-                ),
+                // Positioned.fill(
+                //   top: 210.r,
+                //   child: Align(
+                //     alignment: Alignment.topCenter,
+                //     child: DotsIndicator(
+                //       dotsCount: widget.result.media?.length ?? 0,
+                //       position: _currentIndex,
+                //       decorator: DotsDecorator(
+                //         color:
+                //             AppColors.white, // Color of non-selected indicators
+                //         activeColor:
+                //             AppColors.grey1, // Color of selected indicator
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: Padding(

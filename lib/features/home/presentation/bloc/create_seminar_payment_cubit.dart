@@ -2,10 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:get_ip_address/get_ip_address.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/repositories/home_repository.dart';
-import 'package:nurlan_ustaz_flutter/features/tus_zhoru/data/repositories/tus_zhoru_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../app/app_dinamic_link.dart';
@@ -23,15 +21,11 @@ class CreateSeminarPaymentCubit extends Cubit<CreateSeminarPaymentState> {
   Future<void> createSeminarPayment(
     int id,
   ) async {
-    final ipAddress = IpAddress(type: RequestType.json);
-    var ip = await ipAddress.getIpAddress();
-    final userIp = ip['ip'].toString();
-
     String tusZhoruDynamicLink = await DynamicLink().createSeminarLink(id);
 
     log(tusZhoruDynamicLink);
     final result = await _repository.createSeminarPayment(
-        id: id, userIp: userIp, backUrl: tusZhoruDynamicLink);
+        id: id, backUrl: tusZhoruDynamicLink);
     log(tusZhoruDynamicLink);
     result.fold((l) => {}, (r) async {
       final Uri url = Uri.parse(r.pgRedirectUrl.toString());

@@ -92,8 +92,10 @@ class _NewsPageState extends State<NewsPage> {
                     physics: const BouncingScrollPhysics(),
                     child: Column(
                       children: [
-                         CustomAppBar(
-                          title: widget.type =='isSave'? 'Таңдаулы жаңалықтар': 'Жаңалықтар',
+                        CustomAppBar(
+                          title: widget.type == 'isSave'
+                              ? 'Таңдаулы жаңалықтар'
+                              : 'Жаңалықтар',
                         ),
                         SizedBox(
                           height: 36.h,
@@ -186,15 +188,20 @@ class _NewsPageState extends State<NewsPage> {
                                                 SizedBox(
                                                   height: 5.h,
                                                 ),
-                                                Text(
-                                                  listOfNews[index].title ??
-                                                      'ERROR',
-                                                  style: getTextStyle(
-                                                          CustomTextStyles
-                                                              .s16w500)
-                                                      .apply(
-                                                          color:
-                                                              AppColors.black),
+                                                Flexible(
+                                                  child: SizedBox(
+                                                    width: 210.w,
+                                                    child: Text(
+                                                      listOfNews[index].title ??
+                                                          'ERROR',
+                                                      style: getTextStyle(
+                                                              CustomTextStyles
+                                                                  .s16w500)
+                                                          .apply(
+                                                              color: AppColors
+                                                                  .black),
+                                                    ),
+                                                  ),
                                                 ),
                                               ],
                                             ),

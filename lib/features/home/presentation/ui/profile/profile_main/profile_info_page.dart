@@ -115,67 +115,6 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                         ),
                       ],
                     )
-                    // : widget.userDTO.avatar != null
-                    //     ? Column(
-                    //         children: [
-                    //           CircleAvatar(
-                    //             radius: 47,
-                    //             backgroundColor: AppColors.white,
-                    //             child: Center(
-                    //               child: SvgPicture.asset(
-                    //                 Assets.userSvg,
-                    //                 width: 94,
-                    //                 height: 94,
-                    //               ),
-                    //             ),
-                    //           ),
-                    //           SizedBox(
-                    //             height: 12.h,
-                    //           ),
-                    //           InkWell(
-                    //             child: Text(
-                    //               "Сурет таңдау",
-                    //               style:
-                    //                   getTextStyle(CustomTextStyles.s14w400)
-                    //                       .copyWith(
-                    //                           fontFamily:
-                    //                               FontTypes.SF_Pro.name,
-                    //                           color: AppColors.blue),
-                    //             ),
-                    //           ),
-                    //         ],
-                    //       )
-                    //     : Column(
-                    //         children: [
-                    //           CircleAvatar(
-                    //             radius: 47,
-                    //             backgroundImage:
-                    //                 NetworkImage(widget.userDTO.avatar ?? ''),
-                    //             backgroundColor: AppColors.white,
-                    //             child: Center(
-                    //               child: SvgPicture.asset(
-                    //                 Assets.userSvg,
-                    //                 width: 94,
-                    //                 height: 94,
-                    //               ),
-                    //             ),
-                    //           ),
-                    //           SizedBox(
-                    //             height: 12.h,
-                    //           ),
-                    //           InkWell(
-                    //             child: Text(
-                    //               "Сурет таңдау",
-                    //               style:
-                    //                   getTextStyle(CustomTextStyles.s14w400)
-                    //                       .copyWith(
-                    //                           fontFamily:
-                    //                               FontTypes.SF_Pro.name,
-                    //                           color: AppColors.blue),
-                    //             ),
-                    //           ),
-                    //         ],
-                    //       ),
                     ),
                 SizedBox(
                   height: 32.h,

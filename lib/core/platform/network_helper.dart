@@ -10,7 +10,7 @@ mixin EndPoints {
   static const String activateUser = '/api/users/activation/';
   static const String createToken = '/api/jwt/create/';
   static const String refreshToken = '/api/jwt/refresh/';
-
+  static const String verifyToken = '/api/jwt/verify/';
   static const String register = '/api/v1/register';
   static const String registerVerify = '/api/v1/verifyUserPhone';
   static const String resetPassword = '/api/v1/reset-password';
@@ -41,7 +41,8 @@ mixin EndPoints {
 
 // TUS ZHORU
   static const String tusZhoru = '/api/dream-book/interpretations/';
-  static const String customTusZhoru = '/api/dream-book/custom-interpretations/';
+  static const String customTusZhoru =
+      '/api/dream-book/custom-interpretations/';
 
   //ISLAM TEACHING
 

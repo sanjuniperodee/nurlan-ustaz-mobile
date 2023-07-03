@@ -18,6 +18,7 @@ class SeminarCubit extends Cubit<SeminarState> {
     String? search,
     bool? isSaved,
     required int page,
+    bool? isPurchased,
     bool? isFirstCall,
   }) async {
     page > 1
@@ -27,6 +28,7 @@ class SeminarCubit extends Cubit<SeminarState> {
       search: search,
       isSaved: isSaved,
       page: page,
+      isPurchased: isPurchased,
       isFirstCall: isFirstCall,
     );
     failureOrUser.fold(
