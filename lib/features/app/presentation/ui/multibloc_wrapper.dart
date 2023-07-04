@@ -33,6 +33,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/create_seminar_payment_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/faq_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/geonames_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/get_noti_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/get_profile_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/lives_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/lives_fav_cubit.dart';
@@ -40,7 +41,9 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_fav_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_like_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/noti_patch_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/partners_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/payment_tick_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/post_service_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/prj_info_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_cubit.dart';
@@ -102,11 +105,21 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         ),
         BlocProvider<RenameUserCubit>(
             create: (context) => getIt<RenameUserCubit>()),
-        BlocProvider<ForgotPasswordCubitCubit>(create: (context) => getIt<ForgotPasswordCubitCubit>()),
+        BlocProvider<ForgotPasswordCubitCubit>(
+            create: (context) => getIt<ForgotPasswordCubitCubit>()),
 
         //
         //HOME
         //
+        BlocProvider<PaymentTickCubit>(
+          create: (context) => getIt<PaymentTickCubit>(),
+        ),
+        BlocProvider<NotiPatchCubit>(
+          create: (context) => getIt<NotiPatchCubit>(),
+        ),
+        BlocProvider<GetNotiCubit>(
+          create: (context) => getIt<GetNotiCubit>(),
+        ),
         BlocProvider<TimingsCubit>(
           create: (context) => getIt<TimingsCubit>(),
         ),

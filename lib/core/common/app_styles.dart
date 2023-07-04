@@ -27,6 +27,7 @@ enum CustomTextStyles {
   s36w500,
   s36w700,
   s20w700,
+  s24w700,
 }
 
 enum FontTypes { Philosopher, SF_Pro }
@@ -101,6 +102,12 @@ TextStyle getTextStyle(
       return TextStyle(
           fontWeight: FontWeight.w200,
           fontSize: 16.sp,
+          fontFamily: FontTypes.SF_Pro.name,
+          color: color);
+    case CustomTextStyles.s24w700:
+      return TextStyle(
+          fontWeight: FontWeight.w700,
+          fontSize: 24.sp,
           fontFamily: FontTypes.SF_Pro.name,
           color: color);
     case CustomTextStyles.s36w500:

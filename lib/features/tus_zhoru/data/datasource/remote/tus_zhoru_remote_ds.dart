@@ -11,6 +11,7 @@ abstract class TusZhoruRemoteDs {
       {String? search,
       bool? isSaved,
       int? currentPage,
+      bool? isPurchased,
       bool? isFirstCall = false});
 
   Future<List<TusZhoruDTO>> customTusZhoru(
@@ -47,6 +48,7 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
       {String? search,
       bool? isSaved,
       int? currentPage,
+      bool? isPurchased,
       bool? isFirstCall = false}) async {
     try {
       if (isFirstCall ?? false) {
@@ -60,6 +62,7 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
         queryParameters: {
           'page[number]': currentPage,
           'page[size]': 10,
+          if (isPurchased != null) 'is_purchased': isPurchased,
           if (isSaved != null) 'is_saved': isSaved,
           if (search != null) 'search': search,
         },

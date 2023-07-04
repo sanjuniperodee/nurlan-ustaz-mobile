@@ -323,11 +323,9 @@ class _MainPageState extends State<MainPage> {
                                         ),
                                         AppButton(
                                           onTap: () {
-
                                             TabsRouterScope.of(context)
                                                 ?.controller
                                                 .setActiveIndex(2);
-
                                           },
                                           text: 'Түс жору',
                                         ),
@@ -339,10 +337,8 @@ class _MainPageState extends State<MainPage> {
                                         ),
                                         SizedBox(height: 16.h),
                                         InkWell(
-
-                                            onTap: () => context.router.push(
-                                                const UstazAitinizhiRoute()),
-
+                                          onTap: () => context.router.push(
+                                              const UstazAitinizhiRoute()),
                                           child: Container(
                                             width: 1.sw,
                                             decoration: BoxDecoration(
@@ -381,9 +377,8 @@ class _MainPageState extends State<MainPage> {
                                                           fontWeight:
                                                               FontWeight.w700)
                                                       .apply(
-
-                                                          color: AppColors.white),
-
+                                                          color:
+                                                              AppColors.white),
                                                 )
                                               ],
                                             ),
@@ -469,8 +464,12 @@ class _MainPageState extends State<MainPage> {
                                                     children: [
                                                       SizedBox(height: 2.h),
                                                       Text(
-                                                          news[index].title ??
+                                                          news[
+                                                                      index]
+                                                                  .title ??
                                                               'ERROR',
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
                                                           style: getTextStyle(
                                                                   CustomTextStyles
                                                                       .s14w400)
@@ -583,7 +582,7 @@ class _MainPageState extends State<MainPage> {
           nextTime = times[0];
           break;
         } else {
-          nextTime = times[i+1];
+          nextTime = times[i + 1];
         }
         break;
       }
@@ -600,7 +599,7 @@ class _MainPageState extends State<MainPage> {
           nextTime = times[0];
           break;
         } else {
-          nextTime = times[i+1];
+          nextTime = times[i + 1];
         }
         break;
       }

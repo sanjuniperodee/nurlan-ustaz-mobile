@@ -5,7 +5,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
-import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_payload.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/repositories/auth_repository.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/datasource/local/home_local_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/geonames_dto.dart';

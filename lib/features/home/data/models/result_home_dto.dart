@@ -23,6 +23,7 @@ class ResultHomeDTO with _$ResultHomeDTO {
       String? body,
       String? name,
       String? logo,
+      double? price,
       String? title,
       String? description,
       String? text,

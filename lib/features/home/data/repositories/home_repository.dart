@@ -109,6 +109,7 @@ abstract class HomeRepository {
       {required double lat, required double long});
 
   Future<Either<Failure, List<ResultHomeDTO>>> projectInfo();
+  Future<Either<Failure, List<MediaDTO>>> getNotifications();
 
   Future<Either<Failure, ResultHomeDTO>> seminarDetail({required int id});
 
@@ -129,9 +130,9 @@ abstract class HomeRepository {
   Future<Either<Failure, NotificationDTO>> notificationDevice({
     required NotificationDeviceDTO notificationDTO,
   });
-
-
-
+  Future<Either<Failure, NotificationDeviceDTO>> notificationDevicePatch({
+    required NotificationDeviceDTO notificationDTO,
+  });
 }
 
 @Singleton(as: HomeRepository)
@@ -151,6 +152,20 @@ class HomeRepositoryImpl extends HomeRepository {
     if (await networkInfo.isConnected) {
       try {
         final bool res = await remoteDS.livesFavorite(id: id);
+        return Right(res);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<MediaDTO>>> getNotifications() async {
+    if (await networkInfo.isConnected) {
+      try {
+        final List<MediaDTO> res = await remoteDS.getNotifacations();
         return Right(res);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -214,6 +229,7 @@ class HomeRepositoryImpl extends HomeRepository {
         final FreedomPaymentDTO result =
             await remoteDS.createSeminarPayment(id: id, backUrl: backUrl);
 
+        log(result.toString());
         return Right(result);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -485,14 +501,13 @@ class HomeRepositoryImpl extends HomeRepository {
             await NotificationService().getDeviceToken();
         final String type = Platform.operatingSystem.toString();
 
-        if(Platform.isIOS || Platform.isAndroid){
+        if (Platform.isIOS || Platform.isAndroid) {
           await remoteDS.notificationDevice(
               notification: NotificationDeviceDTO(
-                registrationId: deviceToken,
-                type: type,
-              ));
+            registrationId: deviceToken,
+            type: type,
+          ));
         }
-
 
         final List<ResultHomeDTO> news = await remoteDS.news(
             search: search,
@@ -649,6 +664,22 @@ class HomeRepositoryImpl extends HomeRepository {
       try {
         final NotificationDTO notification =
             await remoteDS.notificationDevice(notification: notificationDTO);
+        return Right(notification);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, NotificationDeviceDTO>> notificationDevicePatch(
+      {required NotificationDeviceDTO notificationDTO}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final NotificationDeviceDTO notification = await remoteDS
+            .notificationDevicePatch(notification: notificationDTO);
         return Right(notification);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));

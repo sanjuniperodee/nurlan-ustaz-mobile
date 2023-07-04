@@ -30,7 +30,9 @@ class _ProfileNotificationPage extends State<ProfileNotificationPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: 20.h,),
+                SizedBox(
+                  height: 20.h,
+                ),
                 CustomAppBar(
                   title: 'Хабарлама',
                 ),

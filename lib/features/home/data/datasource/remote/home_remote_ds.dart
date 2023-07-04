@@ -89,6 +89,7 @@ abstract class HomeRemoteDs {
 
   Future<bool> postImamService({required List<int> id});
 
+  Future<List<MediaDTO>> getNotifacations();
   Future<List<MediaDTO>> services(
       {int? currentPage, bool? isFirstCall = false});
 
@@ -104,6 +105,8 @@ abstract class HomeRemoteDs {
       required int id,
       bool? isFirstCall = false});
   Future<NotificationDTO> notificationDevice(
+      {required NotificationDeviceDTO notification});
+  Future<NotificationDeviceDTO> notificationDevicePatch(
       {required NotificationDeviceDTO notification});
 }
 
@@ -190,6 +193,24 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
         '${EndPoints.news}/$id/toggle_like/',
       );
       return true;
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<List<MediaDTO>> getNotifacations() async {
+    try {
+      final String? deviceToken = await NotificationService().getDeviceToken();
+      final response = await dio.get(
+        '${EndPoints.getNotification}$deviceToken/',
+      );
+      return ((response.data as List<dynamic>))
+          .map((e) => MediaDTO.fromJson(e))
+          .toList();
     } on DioError catch (e) {
       throw ServerException(
         message:
@@ -643,11 +664,6 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       int? currentPage,
       bool? isFirstCall = false}) async {
     try {
-
-
-
-
-
       if (isFirstCall ?? false) {
         newsPage.clear();
       }
@@ -821,18 +837,36 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   }
 
   @override
-  Future<NotificationDTO> notificationDevice({required NotificationDeviceDTO notification}) async {
+  Future<NotificationDeviceDTO> notificationDevicePatch(
+      {required NotificationDeviceDTO notification}) async {
+    try {
+      final String? deviceToken = await NotificationService().getDeviceToken();
+      final response = await dio.patch(
+        '${EndPoints.notification}$deviceToken/',
+        data: jsonEncode(notification.toJson()),
+      );
+      return NotificationDeviceDTO.fromJson(response.data);
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'].toString(),
+      );
+    }
+  }
+
+  @override
+  Future<NotificationDTO> notificationDevice(
+      {required NotificationDeviceDTO notification}) async {
     try {
       final response = await dio.post(
         EndPoints.notification,
         data: jsonEncode(notification.toJson()),
       );
       return NotificationDTO.fromJson(response.data);
-
     } on DioError catch (e) {
       throw ServerException(
         message:
-        (e.response!.data as Map<String, dynamic>)['message'].toString(),
+            (e.response!.data as Map<String, dynamic>)['message'].toString(),
       );
     }
   }
