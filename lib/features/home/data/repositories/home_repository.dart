@@ -131,7 +131,7 @@ abstract class HomeRepository {
     required NotificationDeviceDTO notificationDTO,
   });
   Future<Either<Failure, NotificationDeviceDTO>> notificationDevicePatch({
-    required NotificationDeviceDTO notificationDTO,
+    NotificationDeviceDTO? notificationDTO,
   });
 }
 
@@ -675,7 +675,7 @@ class HomeRepositoryImpl extends HomeRepository {
 
   @override
   Future<Either<Failure, NotificationDeviceDTO>> notificationDevicePatch(
-      {required NotificationDeviceDTO notificationDTO}) async {
+      {NotificationDeviceDTO? notificationDTO}) async {
     if (await networkInfo.isConnected) {
       try {
         final NotificationDeviceDTO notification = await remoteDS

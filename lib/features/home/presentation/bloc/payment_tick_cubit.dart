@@ -18,8 +18,6 @@ class PaymentTickCubit extends Cubit<PaymentTickState> {
     this._repository,
   ) : super(const PaymentTickState.initialState());
 
-  List<TusZhoruDTO> tus = [];
-  List<ResultHomeDTO> res = [];
   Future<void> tusZhoruT({
     String? search,
     bool? isSaved,
@@ -27,7 +25,7 @@ class PaymentTickCubit extends Cubit<PaymentTickState> {
     bool? isFirstCall,
     bool? isPurchased,
   }) async {
-    final failureOrUser = await _repository.tusZhoru(
+    final failureOrUser = await _repository.tusZhoruBay(
         page: page,
         isFirstCall: false,
         search: search,
@@ -38,8 +36,9 @@ class PaymentTickCubit extends Cubit<PaymentTickState> {
         emit(PaymentTickState.errorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
-        tus = r;
-        emit(PaymentTickState.loaded(res: res, resT: tus));
+        emit(PaymentTickState.loaded(
+          res: r,
+        ));
       },
     );
   }
@@ -66,8 +65,7 @@ class PaymentTickCubit extends Cubit<PaymentTickState> {
         emit(PaymentTickState.errorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
-        res = r;
-        emit(PaymentTickState.loaded(res: res, resT: tus));
+        emit(PaymentTickState.loaded(res: r));
       },
     );
   }
@@ -82,7 +80,6 @@ class PaymentTickState with _$PaymentTickState {
 
   const factory PaymentTickState.loaded({
     required List<ResultHomeDTO> res,
-    required List<TusZhoruDTO> resT,
   }) = _LoadedState;
 
   const factory PaymentTickState.errorState({

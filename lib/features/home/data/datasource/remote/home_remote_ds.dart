@@ -107,7 +107,7 @@ abstract class HomeRemoteDs {
   Future<NotificationDTO> notificationDevice(
       {required NotificationDeviceDTO notification});
   Future<NotificationDeviceDTO> notificationDevicePatch(
-      {required NotificationDeviceDTO notification});
+      {NotificationDeviceDTO? notification});
 }
 
 @Injectable(as: HomeRemoteDs)
@@ -838,12 +838,12 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
 
   @override
   Future<NotificationDeviceDTO> notificationDevicePatch(
-      {required NotificationDeviceDTO notification}) async {
+      {NotificationDeviceDTO? notification}) async {
     try {
       final String? deviceToken = await NotificationService().getDeviceToken();
       final response = await dio.patch(
         '${EndPoints.notification}$deviceToken/',
-        data: jsonEncode(notification.toJson()),
+        data: notification == null ? {} : jsonEncode(notification.toJson()),
       );
       return NotificationDeviceDTO.fromJson(response.data);
     } on DioError catch (e) {

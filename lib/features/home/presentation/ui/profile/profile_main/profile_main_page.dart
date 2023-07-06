@@ -9,9 +9,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/core/utils/alert_utilrs.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/data/datasource/local/auth_local_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/get_profile_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/widgets/profile_menu_item.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/widgets/setings_language_bottom_sheet.dart';
@@ -36,22 +38,22 @@ class _ProfileMainPage extends State<ProfileMainPage> {
   void initState() {
     // TODO: implement initState
     BlocProvider.of<GetProfileCubit>(context).getUser();
-
+    chosenLang = getIt<AuthLocalDs>().getLocale();
     super.initState();
   }
 
   Map<String, String> langMap = {
-    '🇷🇺': 'ru',
-    '🇰🇿': 'kk',
+    '🇷🇺 Русский': 'ru',
+    '🇰🇿 Қазақша': 'kk',
   };
 
   Map<String, String> localMap = {
-    'ru': '🇷🇺',
-    'kk': '🇰🇿',
+    'ru': '🇷🇺 Русский ',
+    'kk': '🇰🇿 Қазақша',
   };
   Map<String, String> langMapText = {
-    '🇷🇺': 'Русский',
-    '🇰🇿': 'Қазақша',
+    'ru': 'Русский',
+    'kk': 'Қазақша',
   };
   String? chosenLang;
   @override
@@ -60,7 +62,7 @@ class _ProfileMainPage extends State<ProfileMainPage> {
       backgroundColor: AppColors.lightBlue,
       body: BlocBuilder<GetProfileCubit, GetProfileState>(
         builder: (context, state) {
-          log(state.toString());
+          log('STATE:::${state.toString()}');
           return state.maybeWhen(
             orElse: () {
               return const Center(
@@ -192,9 +194,6 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                               DropdownButtonHideUnderline(
                                 child: DropdownButton2(
                                   itemHeight: 30,
-                                  value: localMap[
-                                      'RU'], //  chosenLang ?? langs.first,
-                                  // dropdownColor: AppColors.kWhite,
                                   items: langMap.keys
                                       .map<DropdownMenuItem<String>>(
                                           (String value) {
@@ -233,7 +232,10 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          'Тілді танданыз',
+                                          chosenLang == null
+                                              ? 'Тілді танданыз'
+                                              : langMapText[chosenLang]
+                                                  .toString(),
                                           style: getTextStyle(
                                                   CustomTextStyles.s16w400)
                                               .copyWith(
@@ -247,8 +249,10 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                                   ),
                                   onChanged: (String? value) {
                                     if (value != null) {
-                                      chosenLang = value;
-
+                                      chosenLang = langMap[value];
+                                      log(langMapText[value].toString());
+                                      setState(() {});
+                                      log(chosenLang.toString());
                                       context.setLocale(
                                         Locale(langMap[value] ?? 'ru'),
                                       );

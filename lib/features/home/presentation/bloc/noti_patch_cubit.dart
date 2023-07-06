@@ -16,7 +16,7 @@ class NotiPatchCubit extends Cubit<NotiPatchState> {
     this._homeRepository,
   ) : super(const NotiPatchState.initialState());
 
-  Future<void> notiPatch({required NotificationDeviceDTO noti}) async {
+  Future<void> notiPatch({ NotificationDeviceDTO? noti}) async {
     final failureOrUser =
         await _homeRepository.notificationDevicePatch(notificationDTO: noti);
     failureOrUser.fold(

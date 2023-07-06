@@ -5,10 +5,17 @@ import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 import 'package:nurlan_ustaz_flutter/core/model/freedom_payment_dto.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_info.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/data/datasource/remote/tus_zhoru_remote_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/data/models/tus_zhoru_dto.dart';
 
 abstract class TusZhoruRepository {
+  Future<Either<Failure, List<ResultHomeDTO>>> tusZhoruBay(
+      {String? search,
+      bool? isSaved,
+      int? page,
+      bool? isPurchased,
+      bool? isFirstCall});
   Future<Either<Failure, List<TusZhoruDTO>>> tusZhoru(
       {String? search,
       bool? isSaved,
@@ -37,6 +44,30 @@ class TusZhoruRepositoryImpl extends TusZhoruRepository {
     required this.remoteDS,
     required this.networkInfo,
   });
+
+  @override
+  Future<Either<Failure, List<ResultHomeDTO>>> tusZhoruBay(
+      {String? search,
+      bool? isSaved,
+      int? page,
+      bool? isFirstCall,
+      bool? isPurchased}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final List<ResultHomeDTO> tusZhoruList = await remoteDS.tusZhoruBay(
+            search: search,
+            isSaved: isSaved,
+            currentPage: page,
+            isPurchased: isPurchased,
+            isFirstCall: isFirstCall);
+        return Right(tusZhoruList);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
 
   @override
   Future<Either<Failure, List<TusZhoruDTO>>> tusZhoru(
