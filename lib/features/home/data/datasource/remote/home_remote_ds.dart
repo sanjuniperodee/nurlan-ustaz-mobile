@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
@@ -106,8 +107,7 @@ abstract class HomeRemoteDs {
       bool? isFirstCall = false});
   Future<NotificationDTO> notificationDevice(
       {required NotificationDeviceDTO notification});
-  Future<NotificationDeviceDTO> notificationDevicePatch(
-      {NotificationDeviceDTO? notification});
+  
 }
 
 @Injectable(as: HomeRemoteDs)
@@ -836,23 +836,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     }
   }
 
-  @override
-  Future<NotificationDeviceDTO> notificationDevicePatch(
-      {NotificationDeviceDTO? notification}) async {
-    try {
-      final String? deviceToken = await NotificationService().getDeviceToken();
-      final response = await dio.patch(
-        '${EndPoints.notification}$deviceToken/',
-        data: notification == null ? {} : jsonEncode(notification.toJson()),
-      );
-      return NotificationDeviceDTO.fromJson(response.data);
-    } on DioError catch (e) {
-      throw ServerException(
-        message:
-            (e.response!.data as Map<String, dynamic>)['message'].toString(),
-      );
-    }
-  }
+  
 
   @override
   Future<NotificationDTO> notificationDevice(

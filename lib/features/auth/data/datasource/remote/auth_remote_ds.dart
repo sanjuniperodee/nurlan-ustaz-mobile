@@ -27,8 +27,11 @@ abstract class AuthRemoteDs {
   Future<TokenDTO> createJwt({required TokenCreateDTO tokenCreateDTO});
 
   Future<int> resetPassword({required String mail});
-  Future<void> resetPasswordConfirm({required int userId,required String code,required String newPassword,required String reNewPassword});
-
+  Future<void> resetPasswordConfirm(
+      {required int userId,
+      required String code,
+      required String newPassword,
+      required String reNewPassword});
 }
 
 @Injectable(as: AuthRemoteDs)
@@ -44,12 +47,9 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
   @override
   Future<UserPayload> postUser({required UserPayload userDTO}) async {
     try {
-      final user =  userDTO.toJson();
+      final user = userDTO.toJson();
       user.removeWhere((key, value) => value == null);
-      final response = await dio.post(
-        EndPoints.createUser,
-        data: user
-      );
+      final response = await dio.post(EndPoints.createUser, data: user);
 
       return UserPayload.fromJson(response.data);
     } catch (e) {
@@ -149,7 +149,6 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
     }
   }
 
-
   @override
   Future<int> resetPassword({required String mail}) async {
     try {
@@ -164,12 +163,15 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       return int.parse(body['user_id'].toString());
     } catch (e) {
       throw ServerException(message: e.toString());
-
     }
   }
 
   @override
-  Future<void> resetPasswordConfirm({required int userId, required String code, required String newPassword, required String reNewPassword}) async {
+  Future<void> resetPasswordConfirm(
+      {required int userId,
+      required String code,
+      required String newPassword,
+      required String reNewPassword}) async {
     try {
       await dio.post(
         EndPoints.resetPasswordConfirm,
@@ -182,8 +184,6 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       );
     } catch (e) {
       throw ServerException(message: e.toString());
-
     }
   }
-
 }

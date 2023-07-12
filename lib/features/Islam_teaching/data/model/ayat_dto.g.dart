@@ -7,7 +7,7 @@ part of 'ayat_dto.dart';
 // **************************************************************************
 
 _$_AyatDTO _$$_AyatDTOFromJson(Map<String, dynamic> json) => _$_AyatDTO(
-      id: json['id'] as int,
+      id: json['id'] as int?,
       ayatNumber: json['ayat_number'] as int?,
       name: json['name'] as String?,
       arabic: json['arabic'] as String?,

@@ -135,7 +135,7 @@ class _GeonamesPageState extends State<GeonamesPage> {
                                               height: 10.h,
                                             ),
                                             Text(
-                                              '${geoa[index].name ?? 'ERROR'},${geoa[index].adminName1 ?? 'ERROR'}',
+                                              '${geoa[index].countryName ?? 'ERROR'},${geoa[index].adminName1 ?? 'ERROR'}',
                                               style: getTextStyle(
                                                       CustomTextStyles.s16w700)
                                                   .apply(

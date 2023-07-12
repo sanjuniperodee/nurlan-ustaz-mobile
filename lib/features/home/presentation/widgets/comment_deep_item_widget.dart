@@ -67,7 +67,7 @@ class _CommentDeepItemWidgetState extends State<CommentDeepItemWidget> {
             ),
           ),
           const SizedBox(
-            width: 24,
+            width: 20,
           ),
           Expanded(
             child: Column(

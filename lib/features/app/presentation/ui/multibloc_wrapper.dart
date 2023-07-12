@@ -24,6 +24,7 @@ import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/rename_user
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/change_pass_cubit.dart';
 
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/charities_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/chat_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_like_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_post_cubit.dart';
@@ -41,7 +42,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_fav_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_like_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/noti_patch_cubit.dart';
+
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/partners_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/payment_tick_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/post_service_cubit.dart';
@@ -114,9 +115,10 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         BlocProvider<PaymentTickCubit>(
           create: (context) => getIt<PaymentTickCubit>(),
         ),
-        BlocProvider<NotiPatchCubit>(
-          create: (context) => getIt<NotiPatchCubit>(),
+        BlocProvider<ChatCubit>(
+          create: (context) => getIt<ChatCubit>(),
         ),
+
         BlocProvider<GetNotiCubit>(
           create: (context) => getIt<GetNotiCubit>(),
         ),

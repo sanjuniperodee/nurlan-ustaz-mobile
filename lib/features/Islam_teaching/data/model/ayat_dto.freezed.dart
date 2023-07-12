@@ -20,7 +20,7 @@ AyatDTO _$AyatDTOFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$AyatDTO {
-  int get id => throw _privateConstructorUsedError;
+  int? get id => throw _privateConstructorUsedError;
   @JsonKey(name: "ayat_number")
   int? get ayatNumber => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
@@ -39,7 +39,7 @@ abstract class $AyatDTOCopyWith<$Res> {
       _$AyatDTOCopyWithImpl<$Res, AyatDTO>;
   @useResult
   $Res call(
-      {int id,
+      {int? id,
       @JsonKey(name: "ayat_number") int? ayatNumber,
       String? name,
       String? arabic,
@@ -60,7 +60,7 @@ class _$AyatDTOCopyWithImpl<$Res, $Val extends AyatDTO>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? ayatNumber = freezed,
     Object? name = freezed,
     Object? arabic = freezed,
@@ -68,10 +68,10 @@ class _$AyatDTOCopyWithImpl<$Res, $Val extends AyatDTO>
     Object? translation = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       ayatNumber: freezed == ayatNumber
           ? _value.ayatNumber
           : ayatNumber // ignore: cast_nullable_to_non_nullable
@@ -104,7 +104,7 @@ abstract class _$$_AyatDTOCopyWith<$Res> implements $AyatDTOCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id,
+      {int? id,
       @JsonKey(name: "ayat_number") int? ayatNumber,
       String? name,
       String? arabic,
@@ -122,7 +122,7 @@ class __$$_AyatDTOCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
+    Object? id = freezed,
     Object? ayatNumber = freezed,
     Object? name = freezed,
     Object? arabic = freezed,
@@ -130,10 +130,10 @@ class __$$_AyatDTOCopyWithImpl<$Res>
     Object? translation = freezed,
   }) {
     return _then(_$_AyatDTO(
-      id: null == id
+      id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as int?,
       ayatNumber: freezed == ayatNumber
           ? _value.ayatNumber
           : ayatNumber // ignore: cast_nullable_to_non_nullable
@@ -162,7 +162,7 @@ class __$$_AyatDTOCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_AyatDTO implements _AyatDTO {
   const _$_AyatDTO(
-      {required this.id,
+      {this.id,
       @JsonKey(name: "ayat_number") this.ayatNumber,
       this.name,
       this.arabic,
@@ -173,7 +173,7 @@ class _$_AyatDTO implements _AyatDTO {
       _$$_AyatDTOFromJson(json);
 
   @override
-  final int id;
+  final int? id;
   @override
   @JsonKey(name: "ayat_number")
   final int? ayatNumber;
@@ -228,7 +228,7 @@ class _$_AyatDTO implements _AyatDTO {
 
 abstract class _AyatDTO implements AyatDTO {
   const factory _AyatDTO(
-      {required final int id,
+      {final int? id,
       @JsonKey(name: "ayat_number") final int? ayatNumber,
       final String? name,
       final String? arabic,
@@ -238,7 +238,7 @@ abstract class _AyatDTO implements AyatDTO {
   factory _AyatDTO.fromJson(Map<String, dynamic> json) = _$_AyatDTO.fromJson;
 
   @override
-  int get id;
+  int? get id;
   @override
   @JsonKey(name: "ayat_number")
   int? get ayatNumber;

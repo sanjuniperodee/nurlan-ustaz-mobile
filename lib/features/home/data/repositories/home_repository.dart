@@ -130,9 +130,7 @@ abstract class HomeRepository {
   Future<Either<Failure, NotificationDTO>> notificationDevice({
     required NotificationDeviceDTO notificationDTO,
   });
-  Future<Either<Failure, NotificationDeviceDTO>> notificationDevicePatch({
-    NotificationDeviceDTO? notificationDTO,
-  });
+ 
 }
 
 @Singleton(as: HomeRepository)
@@ -673,19 +671,5 @@ class HomeRepositoryImpl extends HomeRepository {
     }
   }
 
-  @override
-  Future<Either<Failure, NotificationDeviceDTO>> notificationDevicePatch(
-      {NotificationDeviceDTO? notificationDTO}) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final NotificationDeviceDTO notification = await remoteDS
-            .notificationDevicePatch(notification: notificationDTO);
-        return Right(notification);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(message: e.message));
-      }
-    } else {
-      return Left(ServerFailure(message: NO_INTERNET_TEXT));
-    }
-  }
+  
 }

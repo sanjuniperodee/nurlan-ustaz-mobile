@@ -139,9 +139,8 @@ class _DutyPageState extends State<DutyPage> {
                                         .r,
                                     child: InkWell(
                                       onTap: () {
-                                         context.router.push(DutyDetailPageRoute(
-                                           pillarsDTO: pillars[index]
-                                             ));
+                                        context.router.push(DutyDetailPageRoute(
+                                            pillarsDTO: pillars[index]));
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(
@@ -161,6 +160,7 @@ class _DutyPageState extends State<DutyPage> {
                                             ),
                                             Text(
                                               pillars[index].title ?? 'ERROR',
+                                              overflow: TextOverflow.ellipsis,
                                               style: getTextStyle(
                                                       CustomTextStyles.s16w500)
                                                   .apply(
