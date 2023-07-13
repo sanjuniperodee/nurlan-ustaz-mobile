@@ -199,6 +199,7 @@ class _CommentPageSemState extends State<CommentPageSem> {
                               data: ThemeData()
                                   .copyWith(dividerColor: Colors.transparent),
                               child: ExpansionTile(
+                              
                                 title: CommentDeepItemWidget(
                                   resultHomeDTO: listOfComments[index],
                                   id: widget.id,
@@ -206,7 +207,7 @@ class _CommentPageSemState extends State<CommentPageSem> {
                                   ans: false,
                                   callback: () {
                                     _textEditingController.text =
-                                        '@${listOfComments[index].user!.fullName!}';
+                                        '@${listOfComments[index].user!.fullName!} ';
                                     _textEditingController.selection =
                                         TextSelection.fromPosition(TextPosition(
                                             offset: _textEditingController

@@ -20,7 +20,7 @@ abstract class AuthRemoteDs {
 
   Future<UserDto> getUser();
   Future<bool> activateUser({required ActivateUserDTO activateUserDTO});
-
+  Future<bool> deleteUser();
   Future<bool> changePass(
       {required String curPass, required String newPass, required String pass});
 
@@ -143,6 +143,19 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       log(curPass.toString());
       log(newPass.toString());
       log(pass.toString());
+      return true;
+    } catch (e) {
+      throw ServerException(message: e.toString());
+    }
+  }
+
+  @override
+  Future<bool> deleteUser() async {
+    try {
+      final result = await dio.delete(
+        '${EndPoints.createUser}me/',
+      );
+
       return true;
     } catch (e) {
       throw ServerException(message: e.toString());

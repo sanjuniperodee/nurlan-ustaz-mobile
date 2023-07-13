@@ -86,12 +86,15 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
                           children: [
                             Text(
                               messages[index].messageContent,
-                              style: const TextStyle(fontSize: 15),
+                              style: getTextStyle(CustomTextStyles.s14w400)
+                                  .apply(color: AppColors.black),
                             ),
                             const SizedBox(
                               height: 4,
                             ),
-                            const Text('12:25')
+                            Text('12:25',
+                                style: getTextStyle(CustomTextStyles.s12w400)
+                                    .apply(color: AppColors.grey2)),
                           ],
                         ),
                       ),

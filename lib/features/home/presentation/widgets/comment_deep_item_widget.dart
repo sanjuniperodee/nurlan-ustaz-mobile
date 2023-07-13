@@ -55,7 +55,7 @@ class _CommentDeepItemWidgetState extends State<CommentDeepItemWidget> {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(100),
               child: CachedNetworkImage(
-                imageUrl: widget.resultHomeDTO.user!.avatar ??
+                imageUrl: widget.resultHomeDTO.user?.avatar ??
                     'https://i.pinimg.com/originals/6d/f8/bb/6df8bbb26f6cde4d1e2919e1340eeef3.jpg',
                 fit: BoxFit.cover,
                 width: double.infinity,
@@ -76,7 +76,8 @@ class _CommentDeepItemWidgetState extends State<CommentDeepItemWidget> {
                 Row(
                   children: [
                     Text(
-                      widget.resultHomeDTO.user!.fullName ?? 'ERROR',
+                      widget.resultHomeDTO.user?.fullName ??
+                          'Пользователь удален',
                       style: getTextStyle(CustomTextStyles.s14w700)
                           .apply(color: AppColors.black),
                     ),
@@ -84,7 +85,7 @@ class _CommentDeepItemWidgetState extends State<CommentDeepItemWidget> {
                       width: 4.w,
                     ),
                     Text(
-                      DateFormat('dd.MM.yyyy').format(DateTime.parse(
+                      DateFormat('dd.MM').format(DateTime.parse(
                           widget.resultHomeDTO.createdAt.toString())),
                       style: getTextStyle(CustomTextStyles.s12w700)
                           .apply(color: AppColors.grey1),

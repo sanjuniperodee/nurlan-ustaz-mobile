@@ -94,7 +94,7 @@ class _SeminarPageState extends State<SeminarPage> {
                   child: Column(
                     children: [
                       CustomAppBar(
-                        onTap: () {},
+                        // onTap: () {},
                         title: widget.type == 'isSave'
                             ? 'Таңдаулы семинар'
                             : 'Семинар',
@@ -151,10 +151,10 @@ class _SeminarPageState extends State<SeminarPage> {
                                             listOfSeminars[index].cover ?? '',
                                         fit: BoxFit.cover,
                                         height: 100.h,
-                                        width: 80.w,
+                                        width: 100.w,
                                         errorWidget: (a, b, c) => SizedBox(
                                           width: 100.w,
-                                          height: 80.h,
+                                          height: 100.h,
                                         ),
                                       ),
                                     ),
@@ -190,11 +190,13 @@ class _SeminarPageState extends State<SeminarPage> {
                                               ),
                                               Flexible(
                                                 child: SizedBox(
-                                                  width: 210.w,
+                                                  width: 190.w,
                                                   child: Text(
                                                     listOfSeminars[index]
                                                             .title ??
                                                         'ERROR',
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                     style: getTextStyle(
                                                             CustomTextStyles
                                                                 .s16w500)

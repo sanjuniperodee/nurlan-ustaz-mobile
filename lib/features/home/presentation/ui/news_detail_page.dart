@@ -149,9 +149,14 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
 
                                             setState(() {});
                                           },
-                                          child: SvgPicture.asset(isLiked
-                                              ? Assets.heartSvg
-                                              : Assets.heart1Svg)),
+                                          child: isLiked
+                                              ? SvgPicture.asset(
+                                                  Assets.heartSvg,
+                                                )
+                                              : SvgPicture.asset(
+                                                  Assets.heart1Svg,
+                                                  color: AppColors.black,
+                                                )),
                                       Text(
                                         likeCount.toString(),
                                         style: getTextStyle(
@@ -160,7 +165,15 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                       SizedBox(
                                         width: 12.w,
                                       ),
-                                      SvgPicture.asset(Assets.commentSvg),
+                                      InkWell(
+                                          onTap: () {
+                                            context.router.push(
+                                              CommentPageNewsRoute(
+                                                  id: widget.result.id!),
+                                            );
+                                          },
+                                          child: SvgPicture.asset(
+                                              Assets.commentSvg)),
                                       Text(
                                         res.comentCount.toString(),
                                         style: getTextStyle(

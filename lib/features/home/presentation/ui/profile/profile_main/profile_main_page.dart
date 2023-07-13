@@ -285,6 +285,9 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                                       'assets/icons/chevron_right.svg'),
                                 ),
                               ),
+                              SizedBox(
+                                height: 10.h,
+                              ),
                               ProfileMenuItem(
                                   title: geo.name!,
                                   onTap: () {
@@ -327,11 +330,10 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                                   var logout =
                                       await AlertUtils.showTwoOptionDialog(
                                           context: context,
-                                          messageKey:
-                                              'Вы точно хотите выйти из аккаунта',
-                                          title: 'Выход',
-                                          button1Text: "Отмена",
-                                          button2Text: 'Выйти');
+                                          messageKey: 'exit_des'.tr(),
+                                          title: 'exit'.tr(),
+                                          button1Text: 'cancel'.tr(),
+                                          button2Text: 'exit2'.tr());
                                   if (logout) {
                                     BlocProvider.of<AppBloc>(context)
                                         .add(const AppEvent.exiting());

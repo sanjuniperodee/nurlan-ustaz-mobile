@@ -188,9 +188,14 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                               likeCount -= 1;
                                             }
                                           },
-                                          child: SvgPicture.asset(isLiked
-                                              ? Assets.heartSvg
-                                              : Assets.heart1Svg)),
+                                          child: isLiked
+                                              ? SvgPicture.asset(
+                                                  Assets.heartSvg,
+                                                )
+                                              : SvgPicture.asset(
+                                                  Assets.heart1Svg,
+                                                  color: AppColors.black,
+                                                )),
                                       Text(
                                         likeCount.toString(),
                                         style: getTextStyle(

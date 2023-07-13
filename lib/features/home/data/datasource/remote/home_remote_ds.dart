@@ -107,7 +107,6 @@ abstract class HomeRemoteDs {
       bool? isFirstCall = false});
   Future<NotificationDTO> notificationDevice(
       {required NotificationDeviceDTO notification});
-  
 }
 
 @Injectable(as: HomeRemoteDs)
@@ -513,6 +512,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
                 .toList());
         return commentNewsPage;
       }
+
       // log('PAGE${response.data['meta']['pagination']['page']}');
       throw 'ERROR';
     } on DioError catch (e) {
@@ -539,6 +539,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
           'page[number]': currentPage,
         },
       );
+      log('COMMENT:::${response.data.toString()}');
       if (response.statusCode == 200) {
         lpComSem = response.data['meta']['pagination']['pages'];
 
@@ -548,6 +549,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
                 .toList());
         return commentSeminarPage;
       }
+
       // log('PAGE${response.data['meta']['pagination']['page']}');
       throw 'ERROR';
     } on DioError catch (e) {
@@ -835,8 +837,6 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       );
     }
   }
-
-  
 
   @override
   Future<NotificationDTO> notificationDevice(

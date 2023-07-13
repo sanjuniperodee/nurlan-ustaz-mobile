@@ -188,10 +188,9 @@ class _NewsPageState extends State<NewsPage> {
                                                 SizedBox(
                                                   height: 5.h,
                                                 ),
-
                                                 Flexible(
                                                   child: SizedBox(
-                                                    width: 210.w,
+                                                    width: 190.w,
                                                     child: Text(
                                                       listOfNews[index].title ??
                                                           'ERROR',
@@ -202,7 +201,6 @@ class _NewsPageState extends State<NewsPage> {
                                                               color: AppColors
                                                                   .black),
                                                     ),
-
                                                   ),
                                                 ),
                                               ],

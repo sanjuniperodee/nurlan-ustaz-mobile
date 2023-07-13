@@ -41,19 +41,20 @@ abstract class AuthRepository {
 
   Future<Either<Failure, bool>> activateUser(
       {required ActivateUserDTO activateUserDTO});
-
+  Future<Either<Failure, bool>> deleteUser();
   Future<Either<Failure, bool>> newPass(
       {required String curPass, required String newPass, required String pass});
-
 
   Either<Failure, TokenDTO> authCheck();
 
   Either<Failure, String> logOut();
 
-  Future<Either<Failure, int>> resetPassword(
-      {required String mail});
-  Future<Either<Failure, void>> resetPasswordConfirm({required int userId,required String code,required String newPassword,required String reNewPassword});
-
+  Future<Either<Failure, int>> resetPassword({required String mail});
+  Future<Either<Failure, void>> resetPasswordConfirm(
+      {required int userId,
+      required String code,
+      required String newPassword,
+      required String reNewPassword});
 }
 
 @Singleton(as: AuthRepository)
@@ -197,6 +198,20 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
+  Future<Either<Failure, bool>> deleteUser() async {
+    if (await networkInfo.isConnected) {
+      try {
+        await remoteDS.deleteUser();
+        return const Right(true);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
   Future<Either<Failure, bool>> activateUser(
       {required ActivateUserDTO activateUserDTO}) async {
     if (await networkInfo.isConnected) {
@@ -210,7 +225,6 @@ class AuthRepositoryImpl extends AuthRepository {
       return Left(ServerFailure(message: NO_INTERNET_TEXT));
     }
   }
-
 
   @override
   Either<Failure, TokenDTO> authCheck() {
@@ -241,14 +255,12 @@ class AuthRepositoryImpl extends AuthRepository {
     }
   }
 
-
   @override
   Future<Either<Failure, int>> resetPassword({required String mail}) async {
     if (await networkInfo.isConnected) {
       try {
-       final id =  await remoteDS.resetPassword(mail:
-        mail);
-        return  Right(id);
+        final id = await remoteDS.resetPassword(mail: mail);
+        return Right(id);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
       }
@@ -258,12 +270,19 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<Either<Failure, void>> resetPasswordConfirm({required int userId, required String code, required String newPassword, required String reNewPassword}) async {
+  Future<Either<Failure, void>> resetPasswordConfirm(
+      {required int userId,
+      required String code,
+      required String newPassword,
+      required String reNewPassword}) async {
     if (await networkInfo.isConnected) {
       try {
-        final id =  await remoteDS.resetPasswordConfirm(
-        userId: userId, code: code, newPassword: newPassword, reNewPassword: reNewPassword);
-        return  Right(id);
+        final id = await remoteDS.resetPasswordConfirm(
+            userId: userId,
+            code: code,
+            newPassword: newPassword,
+            reNewPassword: reNewPassword);
+        return Right(id);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
       }
