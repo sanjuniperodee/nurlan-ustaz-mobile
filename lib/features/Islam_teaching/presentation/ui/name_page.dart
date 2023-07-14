@@ -188,11 +188,10 @@ class _NamePageState extends State<NamePage> {
                                       child: GestureDetector(
                                         onTap: () {
                                           context.router.push(
-                                             NameDetailPageRoute(
+                                            NameDetailPageRoute(
                                                 index: currentIndex,
                                                 result:
-                                                    listOfIslamNames[index]
-                                            ),
+                                                    listOfIslamNames[index]),
                                           );
                                         },
                                         child: Container(

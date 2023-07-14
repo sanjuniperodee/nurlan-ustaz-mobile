@@ -21,7 +21,7 @@ class PostServiceCubit extends Cubit<PostServiceState> {
         emit(PostServiceState.errorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
-        emit(const PostServiceState.loaded());
+        emit(PostServiceState.loaded(url: r));
       },
     );
   }
@@ -33,7 +33,7 @@ class PostServiceState with _$PostServiceState {
 
   const factory PostServiceState.loadingState() = _LoadingState;
 
-  const factory PostServiceState.loaded() = _LoadedState;
+  const factory PostServiceState.loaded({required String url}) = _LoadedState;
 
   const factory PostServiceState.errorState({
     required String message,

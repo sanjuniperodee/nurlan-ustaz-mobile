@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 
 import 'package:nurlan_ustaz_flutter/features/app/logic/not_auth_logic.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/token_dto.dart';
@@ -24,7 +25,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   AppBloc(this._authRepository, this._notAuthLogic, this._authLocalDs)
       : super(const AppState.loadingState()) {
-
     // _notAuthLogic.statusSubject.listen(
     //   (value) async {
     //     log('_startListenDio message from stream :: $value');
@@ -115,15 +115,15 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     _Deleting event,
     Emitter<AppState> emit,
   ) async {
-    // final result = await _authRepository.deleteUser();
+    final result = await _authRepository.deleteUser();
 
-    // result.fold(
-    //   (l) {
-    //     log('##### _DELETE USER::: ${mapFailureToMessage(l)}');
-    //     emit(const AppState.notAuthorizedState());
-    //   },
-    //   (r) => emit(const AppState.notAuthorizedState()),
-    // );
+    result.fold(
+      (l) {
+        log('##### _DELETE USER::: ${mapFailureToMessage(l)}');
+        emit(const AppState.notAuthorizedState());
+      },
+      (r) => emit(const AppState.notAuthorizedState()),
+    );
   }
 
   Future<void> _login(

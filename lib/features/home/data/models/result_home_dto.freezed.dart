@@ -39,6 +39,7 @@ mixin _$ResultHomeDTO {
   String? get body => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get logo => throw _privateConstructorUsedError;
+  double? get price => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   String? get text => throw _privateConstructorUsedError;
@@ -82,6 +83,7 @@ abstract class $ResultHomeDTOCopyWith<$Res> {
       String? body,
       String? name,
       String? logo,
+      double? price,
       String? title,
       String? description,
       String? text,
@@ -125,6 +127,7 @@ class _$ResultHomeDTOCopyWithImpl<$Res, $Val extends ResultHomeDTO>
     Object? body = freezed,
     Object? name = freezed,
     Object? logo = freezed,
+    Object? price = freezed,
     Object? title = freezed,
     Object? description = freezed,
     Object? text = freezed,
@@ -189,6 +192,10 @@ class _$ResultHomeDTOCopyWithImpl<$Res, $Val extends ResultHomeDTO>
           ? _value.logo
           : logo // ignore: cast_nullable_to_non_nullable
               as String?,
+      price: freezed == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as double?,
       title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -282,6 +289,7 @@ abstract class _$$_ResultHomeDTOCopyWith<$Res>
       String? body,
       String? name,
       String? logo,
+      double? price,
       String? title,
       String? description,
       String? text,
@@ -324,6 +332,7 @@ class __$$_ResultHomeDTOCopyWithImpl<$Res>
     Object? body = freezed,
     Object? name = freezed,
     Object? logo = freezed,
+    Object? price = freezed,
     Object? title = freezed,
     Object? description = freezed,
     Object? text = freezed,
@@ -388,6 +397,10 @@ class __$$_ResultHomeDTOCopyWithImpl<$Res>
           ? _value.logo
           : logo // ignore: cast_nullable_to_non_nullable
               as String?,
+      price: freezed == price
+          ? _value.price
+          : price // ignore: cast_nullable_to_non_nullable
+              as double?,
       title: freezed == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -464,6 +477,7 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
       this.body,
       this.name,
       this.logo,
+      this.price,
       this.title,
       this.description,
       this.text,
@@ -517,6 +531,8 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
   final String? name;
   @override
   final String? logo;
+  @override
+  final double? price;
   @override
   final String? title;
   @override
@@ -583,7 +599,7 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
 
   @override
   String toString() {
-    return 'ResultHomeDTO(isLiked: $isLiked, isSaved: $isSaved, isLive: $isLive, isPurchased: $isPurchased, isTop: $isTop, likesCount: $likesCount, comentCount: $comentCount, id: $id, parent: $parent, body: $body, name: $name, logo: $logo, title: $title, description: $description, text: $text, cover: $cover, link: $link, user: $user, startTime: $startTime, createdAt: $createdAt, isActive: $isActive, media: $media, requisites: $requisites, children: $children, statistics: $statistics, address: $address)';
+    return 'ResultHomeDTO(isLiked: $isLiked, isSaved: $isSaved, isLive: $isLive, isPurchased: $isPurchased, isTop: $isTop, likesCount: $likesCount, comentCount: $comentCount, id: $id, parent: $parent, body: $body, name: $name, logo: $logo, price: $price, title: $title, description: $description, text: $text, cover: $cover, link: $link, user: $user, startTime: $startTime, createdAt: $createdAt, isActive: $isActive, media: $media, requisites: $requisites, children: $children, statistics: $statistics, address: $address)';
   }
 
   @override
@@ -606,6 +622,7 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
             (identical(other.body, body) || other.body == body) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.logo, logo) || other.logo == logo) &&
+            (identical(other.price, price) || other.price == price) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.description, description) ||
                 other.description == description) &&
@@ -644,6 +661,7 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
         body,
         name,
         logo,
+        price,
         title,
         description,
         text,
@@ -688,6 +706,7 @@ abstract class _ResultHomeDTO implements ResultHomeDTO {
       final String? body,
       final String? name,
       final String? logo,
+      final double? price,
       final String? title,
       final String? description,
       final String? text,
@@ -737,6 +756,8 @@ abstract class _ResultHomeDTO implements ResultHomeDTO {
   String? get name;
   @override
   String? get logo;
+  @override
+  double? get price;
   @override
   String? get title;
   @override

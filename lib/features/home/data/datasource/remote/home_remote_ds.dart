@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
@@ -87,8 +88,9 @@ abstract class HomeRemoteDs {
   Future<List<ResultHomeDTO>> commentNews(
       {int? currentPage, bool? isFirstCall = false, int? id});
 
-  Future<bool> postImamService({required List<int> id});
+  Future<String> postImamService({required List<int> id});
 
+  Future<List<MediaDTO>> getNotifacations();
   Future<List<MediaDTO>> services(
       {int? currentPage, bool? isFirstCall = false});
 
@@ -190,6 +192,24 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
         '${EndPoints.news}/$id/toggle_like/',
       );
       return true;
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<List<MediaDTO>> getNotifacations() async {
+    try {
+      final String? deviceToken = await NotificationService().getDeviceToken();
+      final response = await dio.get(
+        '${EndPoints.getNotification}$deviceToken/',
+      );
+      return ((response.data as List<dynamic>))
+          .map((e) => MediaDTO.fromJson(e))
+          .toList();
     } on DioError catch (e) {
       throw ServerException(
         message:
@@ -492,6 +512,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
                 .toList());
         return commentNewsPage;
       }
+
       // log('PAGE${response.data['meta']['pagination']['page']}');
       throw 'ERROR';
     } on DioError catch (e) {
@@ -518,6 +539,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
           'page[number]': currentPage,
         },
       );
+      log('COMMENT:::${response.data.toString()}');
       if (response.statusCode == 200) {
         lpComSem = response.data['meta']['pagination']['pages'];
 
@@ -527,6 +549,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
                 .toList());
         return commentSeminarPage;
       }
+
       // log('PAGE${response.data['meta']['pagination']['page']}');
       throw 'ERROR';
     } on DioError catch (e) {
@@ -643,11 +666,6 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       int? currentPage,
       bool? isFirstCall = false}) async {
     try {
-
-
-
-
-
       if (isFirstCall ?? false) {
         newsPage.clear();
       }
@@ -686,7 +704,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   }
 
   @override
-  Future<bool> postImamService({required List<int> id}) async {
+  Future<String> postImamService({required List<int> id}) async {
     try {
       final response = await dio.post(
         '${EndPoints.imamServices}/google_form/',
@@ -694,8 +712,8 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
           'imam_services': id,
         },
       );
-      log(response.statusCode.toString());
-      return true;
+      log(response.data.toString());
+      return (response.data as Map<String, dynamic>)['url'] as String;
     } on DioError catch (e) {
       throw ServerException(
         message:
@@ -821,18 +839,18 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   }
 
   @override
-  Future<NotificationDTO> notificationDevice({required NotificationDeviceDTO notification}) async {
+  Future<NotificationDTO> notificationDevice(
+      {required NotificationDeviceDTO notification}) async {
     try {
       final response = await dio.post(
         EndPoints.notification,
         data: jsonEncode(notification.toJson()),
       );
       return NotificationDTO.fromJson(response.data);
-
     } on DioError catch (e) {
       throw ServerException(
         message:
-        (e.response!.data as Map<String, dynamic>)['message'].toString(),
+            (e.response!.data as Map<String, dynamic>)['message'].toString(),
       );
     }
   }

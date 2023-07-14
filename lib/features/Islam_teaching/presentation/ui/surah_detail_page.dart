@@ -85,14 +85,11 @@ class _SurahDetailPageState extends State<SurahDetailPage> {
                             Row(
                               children: [
                                 InkWell(
-                                  onTap: () {
-                                    showAlertDialog(context);
-                                  },
-                                  child: const Icon(
-                                    Icons.music_note_outlined,
-                                    color: AppColors.white,
-                                  ),
-                                ),
+                                    onTap: () {
+                                      showAlertDialog(context);
+                                    },
+                                    child: SvgPicture.asset(
+                                        'assets/icons/nota.svg')),
                                 SizedBox(
                                   width: 16.w,
                                 ),

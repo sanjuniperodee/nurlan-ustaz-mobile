@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,9 @@ import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
+import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
+import 'package:nurlan_ustaz_flutter/core/utils/alert_utilrs.dart';
+import 'package:nurlan_ustaz_flutter/features/app/bloc/app_bloc.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_text_form_profile.dart';
@@ -114,8 +118,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                           ),
                         ),
                       ],
-                    )
-                    ),
+                    )),
                 SizedBox(
                   height: 32.h,
                 ),
@@ -222,13 +225,26 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                       height: 20.h,
                     ),
                     ProfileMenuItem(
-                        title: 'Аккаунты жою',
-                        titleStyle: getTextStyle(CustomTextStyles.s16w500)
-                            .copyWith(
-                                fontFamily: FontTypes.SF_Pro.name,
-                                color: AppColors.red,
-                                fontWeight: FontWeight.w600),
-                        onTap: () {}),
+                      title: 'Аккаунты жою',
+                      titleStyle: getTextStyle(CustomTextStyles.s16w500)
+                          .copyWith(
+                              fontFamily: FontTypes.SF_Pro.name,
+                              color: AppColors.red,
+                              fontWeight: FontWeight.w600),
+                      onTap: () async {
+                        var logout = await AlertUtils.showTwoOptionDialog(
+                            context: context,
+                            messageKey: 'delete_des'.tr(),
+                            title: 'delete'.tr(),
+                            button1Text: 'cancel'.tr(),
+                            button2Text: 'delete'.tr());
+                        if (logout) {
+                          BlocProvider.of<AppBloc>(context)
+                              .add(const AppEvent.deleting());
+                          context.router.push(const LoginPageRoute());
+                        }
+                      },
+                    ),
                     SizedBox(
                       height: 36.h,
                     ),

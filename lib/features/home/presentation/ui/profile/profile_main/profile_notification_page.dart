@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/models/notification_device_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/notification_settings_model.dart';
 
 import '../../../../../../core/common/app_styles.dart';
@@ -17,9 +19,17 @@ class ProfileNotificationPage extends StatefulWidget {
 
 class _ProfileNotificationPage extends State<ProfileNotificationPage> {
   bool _switchValue = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+
+    super.initState();
+  }
+
+  NotificationDeviceDTO? noti;
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).copyWith(dividerColor: Colors.transparent);
     return Scaffold(
       backgroundColor: AppColors.lightBlue,
       body: GlobalCustomBody(
@@ -30,87 +40,56 @@ class _ProfileNotificationPage extends State<ProfileNotificationPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(height: 20.h,),
-                CustomAppBar(
+                SizedBox(
+                  height: 20.h,
+                ),
+                const CustomAppBar(
                   title: 'Хабарлама',
                 ),
                 SizedBox(
-                  height: 32,
+                  height: 32.h,
                 ),
-                Container(
-                  padding: EdgeInsets.only(
-                    left: 12,
-                    right: 17,
-                    top: 20,
-                    bottom: 20,
-                  ),
-                  width: double.maxFinite,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Colors.white),
-                  child: Column(
-                      children: notifications
-                          .map(
-                            (e) => Container(
-                              padding: EdgeInsets.symmetric(vertical: 4),
-                              width: double.infinity,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    '${e.title}',
-                                    style:
-                                        getTextStyle(CustomTextStyles.s16w500)
-                                            .copyWith(
-                                      fontFamily: FontTypes.SF_Pro.name,
-                                    ),
-                                  ),
-                                  Transform.scale(
-                                    scale: 0.8,
-                                    child: CupertinoSwitch(
-                                      value: _switchValue,
-                                      onChanged: (value) {
-                                        setState(() {
-                                          _switchValue = value;
-                                        });
-                                      },
-                                      activeColor: AppColors.orange,
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          )
-                          .toList()
+                // Container(
+                //   padding: const EdgeInsets.only(
+                //     left: 12,
+                //     right: 17,
+                //     top: 20,
+                //     bottom: 20,
+                //   ).r,
+                //   width: double.maxFinite,
+                //   decoration: BoxDecoration(
+                //       borderRadius: BorderRadius.circular(20),
+                //       color: Colors.white),
+                //   child: ListView.builder(
+                //     shrinkWrap: true,
+                //     itemCount: noti.,
+                //     itemBuilder: (context, index) {
+                //       return Container(
+                //         color: Colors.black,
+                //         width: double.infinity,
+                //         child: Row(
+                //           mainAxisAlignment:
+                //               MainAxisAlignment.spaceBetween,
+                //           children: [
+                //             Text(
+                //               '${notifications[index].title}',
+                //               style:
+                //                   getTextStyle(CustomTextStyles.s16w500)
+                //                       .copyWith(
+                //                           fontFamily:
+                //                               FontTypes.SF_Pro.name,
+                //                           fontWeight: FontWeight.w600),
+                //             ),
+                //             CupertinoSwitch(
+                //                 value: notifications[index].status,
+                //                 onChanged: (value) {})
+                //           ],
+                //         ),
+                //       );
+                //     },
+                //   ),
 
-                      // [
-                      //   ListView.builder(
-                      //       shrinkWrap: true,
-                      //       itemBuilder: (context, index) {
-                      //         return Container(
-                      //           color: Colors.black,
-                      //           width: double.infinity,
-                      //           child: Row(
-                      //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //             children: [
-                      //               Text(
-                      //                 '${notifications[index].title}',
-                      //                 style: getTextStyle(CustomTextStyles.s16w500)
-                      //                     .copyWith(
-                      //                         fontFamily: FontTypes.SF_Pro.name,fontWeight: FontWeight.w600),
-                      //               ),
-                      //               CupertinoSwitch(
-                      //                   value: notifications[index].status,
-                      //                   onChanged: (value) {})
-                      //             ],
-                      //           ),
-                      //         );
-                      //       },
-                      //       itemCount: notifications.length),
-                      // ],
-                      ),
-                ),
+                // ),
               ],
             ),
           ),

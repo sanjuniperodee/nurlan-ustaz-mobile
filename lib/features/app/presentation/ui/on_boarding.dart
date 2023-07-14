@@ -84,27 +84,28 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                               activeColor: AppColors.white,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5.0)))),
-                      InkWell(
-                        onTap: () {
-                          currentIndex != 2
-                              ? controller.nextPage()
-                              : BlocProvider.of<AppBloc>(context)
-                                  .add(const AppEvent.onboardingSave());
-                        },
-                        child: Text(
-                          'Аумин',
-                          style: getTextStyle(CustomTextStyles.s16w500)
-                              .copyWith(
-                                  fontFamily: FontTypes.SF_Pro.name,
-                                  color: AppColors.white),
-                        ),
-                      )
                     ],
                   ),
                 ],
               ),
             ),
-          )
+          ),
+          Positioned(
+              top: 100,
+              child: InkWell(
+                onTap: () {
+                  currentIndex != 2
+                      ? controller.nextPage()
+                      : BlocProvider.of<AppBloc>(context)
+                          .add(const AppEvent.onboardingSave());
+                },
+                child: Text(
+                  'Аумин',
+                  style: getTextStyle(CustomTextStyles.s16w500).copyWith(
+                      fontFamily: FontTypes.SF_Pro.name,
+                      color: AppColors.white),
+                ),
+              ))
         ],
       ),
     );

@@ -188,9 +188,14 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                               likeCount -= 1;
                                             }
                                           },
-                                          child: SvgPicture.asset(isLiked
-                                              ? Assets.heartSvg
-                                              : Assets.heart1Svg)),
+                                          child: isLiked
+                                              ? SvgPicture.asset(
+                                                  Assets.heartSvg,
+                                                )
+                                              : SvgPicture.asset(
+                                                  Assets.heart1Svg,
+                                                  color: AppColors.black,
+                                                )),
                                       Text(
                                         likeCount.toString(),
                                         style: getTextStyle(
@@ -199,7 +204,15 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                       SizedBox(
                                         width: 12.w,
                                       ),
-                                      SvgPicture.asset(Assets.commentSvg),
+                                      InkWell(
+                                          onTap: () {
+                                            context.router.push(
+                                              CommentPageSemRoute(
+                                                  id: result.id!),
+                                            );
+                                          },
+                                          child: SvgPicture.asset(
+                                              Assets.commentSvg)),
                                       Text(
                                         result.comentCount.toString(),
                                         style: getTextStyle(
@@ -315,7 +328,8 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                                   },
                                                   color: AppColors.orange,
                                                   child: Center(
-                                                    child: Text(' тг төлеу',
+                                                    child: Text(
+                                                        '${result.price} тг төлеу',
                                                         style: getTextStyle(
                                                                 CustomTextStyles
                                                                     .s14w400)

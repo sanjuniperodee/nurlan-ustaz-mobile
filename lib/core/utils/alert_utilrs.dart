@@ -50,6 +50,7 @@ class AlertUtils {
                 padding: const EdgeInsets.symmetric(vertical: 16),
                 child: Text(
                   messageKey,
+                  textAlign: TextAlign.center,
                   style: getTextStyle(CustomTextStyles.s14w400),
                 ),
               ),

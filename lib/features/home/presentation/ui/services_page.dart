@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,6 +15,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_cu
 import 'package:nurlan_ustaz_flutter/features/home/data/models/media_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/post_service_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/services_cubit.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/common/assets.dart';
 
@@ -49,7 +51,58 @@ class _ServicesPageState extends State<ServicesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       backgroundColor: AppColors.lightBlue,
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.only(
+          top: 535.0,
+          left: 16,
+          right: 16,
+        ),
+        child: Container(
+          color: AppColors.lightBlue,
+          child: Column(
+            children: [
+              SizedBox(
+                height: 22.h,
+              ),
+              const Text(
+                'Жоғарыдағы қызметтердің бірін таңдап, батырманы басыңыз',
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 24.h,
+              ),
+              BlocConsumer<PostServiceCubit, PostServiceState>(
+                listener: (context, state) {
+                  state.maybeWhen(
+                    orElse: () {},
+                    loaded: (url) {
+                      _launchUrl(url);
+                    },
+                  );
+                  // TODO: implement listener
+                },
+                builder: (context, state) {
+                  return AppButton(
+                    onTap: () {
+                      if (id.isEmpty) {
+                        buildErrorCustomSnackBar(context, 'ERROR');
+                        return;
+                      }
+                      BlocProvider.of<PostServiceCubit>(context).postService(
+                        id: id,
+                      );
+                    },
+                    text: 'Өтініш қалдыру',
+                    color: AppColors.blue,
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
       body: BlocConsumer<ServicesCubit, ServicesState>(
         listener: (context, state) {
           state.maybeWhen(
@@ -107,9 +160,18 @@ class _ServicesPageState extends State<ServicesPage> {
                                             color: AppColors.orange,
                                             borderRadius:
                                                 BorderRadius.circular(12).r),
-                                        padding: const EdgeInsets.all(15).r,
-                                        child: SvgPicture.asset(
-                                            'assets/icons/marri.svg'),
+                                        padding: const EdgeInsets.all(10).r,
+                                        child: CachedNetworkImage(
+                                          imageUrl:
+                                              listOfServices[index].icon ?? '',
+                                          fit: BoxFit.cover,
+                                          width: 55.w,
+                                          height: 55.h,
+                                          errorWidget: (a, b, c) => SizedBox(
+                                            width: 55.w,
+                                            height: 55.h,
+                                          ),
+                                        ),
                                       ),
                                       SizedBox(
                                         width: 8.w,
@@ -148,30 +210,6 @@ class _ServicesPageState extends State<ServicesPage> {
                       SizedBox(
                         height: 24.h,
                       ),
-                      const Text(
-                        'Жоғарыдағы қызметтердің бірін таңдап, батырманы басыңыз',
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(
-                        height: 24.h,
-                      ),
-                      AppButton(
-                        onTap: () {
-                          if (id.isEmpty) {
-                            buildErrorCustomSnackBar(context, 'ERROR');
-                            return;
-                          }
-                          BlocProvider.of<PostServiceCubit>(context)
-                              .postService(
-                            id: id,
-                          );
-                        },
-                        text: 'Өтініш қалдыру',
-                        color: AppColors.blue,
-                      ),
-                      SizedBox(
-                        height: 12.h,
-                      ),
                     ],
                   ),
                 ),
@@ -195,6 +233,13 @@ class _ServicesPageState extends State<ServicesPage> {
         _scrollController.position.maxScrollExtent) {
       page++;
       BlocProvider.of<ServicesCubit>(context).services(page: page);
+    }
+  }
+
+  Future<void> _launchUrl(String _urll) async {
+    final Uri _url = Uri.parse('${_urll}');
+    if (!await launchUrl(_url)) {
+      throw Exception('Could not launch $_url');
     }
   }
 }
