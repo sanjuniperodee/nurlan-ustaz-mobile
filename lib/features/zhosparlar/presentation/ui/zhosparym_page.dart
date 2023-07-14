@@ -1,8 +1,15 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_clean_calendar/flutter_clean_calendar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
@@ -10,6 +17,19 @@ import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/calendar/custom_calendar.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/atauly_kunder_model.dart';
+import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/checklist_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/event_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/bloc/checklist_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/bloc/zhosparym_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/calendar_description.dart';
+import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/cards/seminar_card.dart';
+import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/cards/service_card.dart';
+import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/events_card.dart';
+import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/dialogs/holiday_type_dialog.dart';
+import 'package:url_launcher/url_launcher.dart';
+
+import '../../../app/presentation/widgets/custom_snackbars.dart';
+import '../../data/models/events_type_enum.dart';
 
 class ZhosparymPage extends StatefulWidget {
   const ZhosparymPage({super.key});
@@ -19,19 +39,75 @@ class ZhosparymPage extends StatefulWidget {
 }
 
 class _ZhosparymPageState extends State<ZhosparymPage> {
-  final days = List.generate(
-      2,
-      (index) => AtaulyKunderModel(
-          title: 'Тарауих намазы туралы эфир',
-          date: DateTime.now(),
-          imageUrl: 'assets/images/ooo.png'));
+  void showEventDialog(
+    BuildContext context,
+    EventDto event,
+  ) {
+    switch (event.type) {
+      case EventsType.seminar:
+        showDialog(
+          context: context,
+          builder: (context) => Dialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.r)),
+            child: SeminarCard(
+              event: event,
+              nextPage: () {},
+              previousPage: () {},
+              isDialog: true,
+            ),
+          ),
+        );
+        break;
+      case EventsType.groupService:
+        showDialog(
+          context: context,
+          builder: (context) => Dialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.r)),
+            child: ServiceCard(
+              event: event,
+              nextPage: () {},
+              previousPage: () {},
+              isDialog: true,
+            ),
+          ),
+        );
+        break;
+      case EventsType.holiday:
+        showDialog(
+            context: context,
+            builder: (context) => HolidayDialog(
+                  event: event,
+                ));
+        break;
+      case EventsType.live:
+        showDialog(
+          context: context,
+          builder: (context) => Dialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.r)),
+            child: SeminarCard(
+              event: event,
+              nextPage: () {},
+              previousPage: () {},
+              isDialog: true,
+            ),
+          ),
+        );
+        break;
+      default:
+        // Handle other event types or display a default dialog
+        break;
+    }
+  }
 
   final gradients = [
-    LinearGradient(colors: [
+    const LinearGradient(colors: [
       Color(0xFF1151C2),
       Color(0xFF8F8CF7),
     ], begin: Alignment.centerLeft, end: Alignment.centerRight),
-    LinearGradient(
+    const LinearGradient(
         colors: [Color(0xFFDD5000), Color(0xFFFEC552)],
         begin: Alignment.centerLeft,
         end: Alignment.centerRight)
@@ -51,250 +127,345 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.lightBlue,
-      body: SizedBox(
-        height: 1.sh,
-        child: Stack(
-          children: [
-            Image.asset(
-              Assets.gradient,
-              fit: BoxFit.cover,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 16, right: 16).r,
-              child: SizedBox(
-                child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(height: 82.h),
-                        Text('Менің \nжоспарым',
-                            style: getTextStyle(CustomTextStyles.s36w700).apply(
-                                fontFamily: FontTypes.Philosopher.name,
-                                color: AppColors.white)),
-                        SizedBox(height: 24.h),
-                        Container(
-                          height: 414,
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: AppColors.white,
-                            borderRadius: BorderRadius.circular(30.r),
-                          ),
-                          child: CustomCalendar(
-                            hideBottomBar: false,
-                            startOnMonday: true,
-                            weekDays: const [
-                              'Дс',
-                              'Сс',
-                              'Ср',
-                              'Бс',
-                              'Жм',
-                              'Сн',
-                              'Жк'
-                            ],
-                            events: _events,
-                            isExpandable: false,
-                            eventDoneColor: Colors.green,
-                            selectedColor: Colors.pink,
-                            todayColor: AppColors.black,
-                            eventColor: Colors.deepPurple,
-                            locale: 'kk_Kz',
-                            todayButtonText: '',
-                            isExpanded: true,
-                            dayOfWeekStyle: TextStyle(
-                                color: AppColors.grey2,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 12,),
-                          ),
-                        ),
-                        SizedBox(height: 20.h),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 26.w),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                height: 24,
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: 10,
-                                      height: 10,
-                                      decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          gradient: LinearGradient(
-                                              colors: [
-                                                Color(0xFFDD5000),
-                                                Color(0xFFFEC552)
-                                              ],
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight)),
-                                    ),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Text(
-                                      'Тікелей эфир',
-                                      style:
-                                          getTextStyle(CustomTextStyles.s12w500)
-                                              .copyWith(
-                                                  fontFamily:
-                                                      FontTypes.SF_Pro.name),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              Container(
-                                height: 24,
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: 10,
-                                      height: 10,
-                                      decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          gradient: LinearGradient(
-                                              colors: [
-                                                Color(0xFF1151C2),
-                                                Color(0xFF8F8CF7)
-                                              ],
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight)),
-                                    ),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Text(
-                                      'Қызметер',
-                                      style:
-                                          getTextStyle(CustomTextStyles.s12w500)
-                                              .copyWith(
-                                                  fontFamily:
-                                                      FontTypes.SF_Pro.name),
-                                    )
-                                  ],
-                                ),
-                              ),
-                              SizedBox(
-                                height: 24,
-                                child: Row(
-                                  children: [
-                                    Container(
-                                      width: 10,
-                                      height: 10,
-                                      decoration: const BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          gradient: LinearGradient(
-                                              colors: [
-                                                Color(0xFF1E8428),
-                                                Color(0xFF61F8EF)
-                                              ],
-                                              begin: Alignment.topLeft,
-                                              end: Alignment.bottomRight)),
-                                    ),
-                                    SizedBox(
-                                      width: 8,
-                                    ),
-                                    Text(
-                                      'Семинар',
-                                      style:
-                                          getTextStyle(CustomTextStyles.s12w500)
-                                              .copyWith(
-                                                  fontFamily:
-                                                      FontTypes.SF_Pro.name),
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          height: 15.h,
-                        ),
-                        AppButton(
-                          onTap: () {
-                            context.router.push(
-                              const RamazanChecklistRoute(),
-                            );
-                          },
-                          text: 'Рамазан чеклисті',
-                          color: AppColors.orange,
-                        ),
-                        SizedBox(
-                          height: 21.h,
-                        ),
-                        Text(
-                          'Атаулы күндер',
-                          style: getTextStyle(CustomTextStyles.s14w500)
-                              .copyWith(fontFamily: FontTypes.SF_Pro.name),
-                        ),
-                        SizedBox(
-                          height: 16.h,
-                        ),
-                        ...days
-                            .map((e) => Padding(
-                                  padding: const EdgeInsets.only(bottom: 31),
-                                  child: Container(
-                                    padding: EdgeInsets.only(
-                                        left: 16,
-                                        right: 16,
-                                        top: 42,
-                                        bottom: 16),
-                                    width: double.infinity,
-                                    height: 130,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(30),
-                                      gradient:
-                                          gradients.toList()[days.indexOf(e)],
-                                      image: DecorationImage(
-                                        opacity: 0.3,
-                                        image:
-                                            AssetImage("assets/images/ooo.png"),
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    child: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '${DateFormat('dd.MM.yyyy').format(e.date)}ж.',
-                                          style: getTextStyle(
-                                                  CustomTextStyles.s16w600)
-                                              .copyWith(
-                                                  fontFamily:
-                                                      FontTypes.SF_Pro.name,
-                                                  color: AppColors.white,
-                                                  fontWeight: FontWeight.w700),
-                                        ),
-                                        Text(
-                                          '${e.title}',
-                                          style: getTextStyle(
-                                                  CustomTextStyles.s16w600)
-                                              .copyWith(
-                                                  fontFamily:
-                                                      FontTypes.SF_Pro.name,
-                                                  color: AppColors.white,
-                                                  fontWeight: FontWeight.w700),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ))
-                            .toList(),
+    List<EventDto> eventik = [];
+    return BlocConsumer<ZhosparymCubit, ZhosparymState>(
+        listener: (context, state) {
+      state.maybeWhen(
+        errorState: (message) {
+          buildErrorCustomSnackBar(context, message);
+        },
+        orElse: () {},
+      );
+    }, builder: (context, state) {
+      return state.maybeWhen(orElse: () {
+        return Container();
+      }, initialState: (events) {
+        final eventsT = events?.map<DateTime, List<EventDto>>(
+          (key, value) => MapEntry(
+            DateTime.parse(key),
+            value,
+          ),
+        );
+
+        eventsT!.forEach((key, value) {
+          eventik.addAll(value); // Using addAll method
+          // Or you can use the spread operator like this:
+          // mergedList = [...mergedList, ...value];
+        });
+
+        return Scaffold(
+          backgroundColor: AppColors.lightBlue,
+          body: SizedBox(
+            height: 1.sh,
+            child: Stack(
+              children: [
+                Image.asset(
+                  Assets.gradient,
+                  fit: BoxFit.cover,
+                ),
+                Positioned(
+                  top: 130,
+                  left: 300,
+                  child: ShaderMask(
+                    shaderCallback: (Rect bounds) => LinearGradient(
+                      colors: [
+                        AppColors.white.withOpacity(0.001),
+                        AppColors.white,
                       ],
-                    )),
-              ),
+                    ).createShader(bounds),
+                    child: SvgPicture.asset(
+                      'assets/icons/calendar_custom_icon_2.svg',
+                      color: AppColors.white.withOpacity(0.5),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 20,
+                  left: 120,
+                  child: ShaderMask(
+                    shaderCallback: (Rect bounds) => LinearGradient(
+                      colors: [
+                        AppColors.white.withOpacity(0.001),
+                        AppColors.white,
+                      ],
+                    ).createShader(bounds),
+                    child: SvgPicture.asset(
+                      'assets/icons/calendar_timer.svg',
+                      color: AppColors.white.withOpacity(0.5),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(left: 16, right: 16).r,
+                  child: SizedBox(
+                    child: SingleChildScrollView(
+                        physics: const BouncingScrollPhysics(),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 82.h),
+                            Text('Менің \nжоспарым',
+                                style: getTextStyle(CustomTextStyles.s36w700)
+                                    .apply(
+                                        fontFamily: FontTypes.Philosopher.name,
+                                        color: AppColors.white)),
+                            SizedBox(height: 24.h),
+                            Container(
+                              height: 414,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: AppColors.white,
+                                borderRadius: BorderRadius.circular(30.r),
+                              ),
+                              child: CustomCalendar(
+                                onDateSelected: (DateTime date) {
+                                  context.read<ZhosparymCubit>().chatPer(
+                                      DateFormat('yyyy-MM-dd')
+                                          .format(date)
+                                          .toString());
+
+                                  if (!eventsT.containsKey(date)) {
+                                    return;
+                                  } else {
+                                    if (eventsT[date]!
+                                            .toList()
+                                            .where((element) =>
+                                                element.type !=
+                                                EventsType.holiday)
+                                            .length >
+                                        1) {
+                                      CarouselController controller =
+                                          CarouselController();
+                                      int currentIndex = 0;
+                                      showDialog(
+                                        context: context,
+                                        builder: (context) => Dialog(
+                                            shape: RoundedRectangleBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        20.r)),
+                                            child: CarouselSlider(
+                                              carouselController: controller,
+                                              items: eventsT![date]!
+                                                  .toList()
+                                                  .where((element) =>
+                                                      element.type !=
+                                                      EventsType.holiday)
+                                                  .toList()
+                                                  .map(
+                                                (e) {
+                                                  log('${eventsT![date]!.toList().where((element) => element.type != EventsType.holiday).toList()}');
+                                                  return EventContainer(
+                                                    e,
+                                                    nextPage: () {
+                                                      controller.nextPage();
+                                                    },
+                                                    previousPage: () {
+                                                      controller.previousPage();
+                                                    },
+                                                  );
+                                                },
+                                              ).toList(),
+                                              options: CarouselOptions(
+                                                aspectRatio: 1.5,
+                                                viewportFraction: 1,
+                                                autoPlay: true,
+                                                autoPlayInterval:
+                                                    const Duration(seconds: 3),
+                                                enlargeCenterPage: true,
+                                                onPageChanged: (index, _) {
+                                                  setState(() {
+                                                    currentIndex = index;
+                                                  });
+                                                },
+                                              ),
+                                            )
+
+                                            //Container(
+                                            //     width: double.maxFinite,
+                                            //     height: 300,
+                                            // )
+
+                                            // ListView.builder(
+                                            //   shrinkWrap: true,
+                                            //   scrollDirection: Axis.horizontal,
+                                            //   itemCount: eventsT![date]!.toList().where((element) => element.type != EventsType.holiday ).toList().length,
+                                            //   itemBuilder: (context, index) {
+                                            //     final item = eventsT![date]!.toList().where((element) => element.type != EventsType.holiday ).toList()[index];
+                                            //
+                                            //     return Slidable(
+                                            //       child: ListTile(
+                                            //         title: Text(item.title ?? ''),
+                                            //       ),
+                                            //     );
+                                            //   },
+                                            // ),
+
+                                            ),
+                                      );
+                                    } else {
+                                      showEventDialog(
+                                          context, eventsT[date]!.first);
+                                    }
+                                  }
+
+                                  // eventsT![date]!.toList().isEmpty ? (){} :
+                                  // showDialog<void>(
+                                  //   context: context,
+                                  //   builder: (BuildContext context) {
+                                  //     return HolidayDialog();
+                                  //   },
+                                  //);
+                                },
+                                hideBottomBar: false,
+                                startOnMonday: true,
+                                weekDays: const [
+                                  'Дс',
+                                  'Сс',
+                                  'Ср',
+                                  'Бс',
+                                  'Жм',
+                                  'Сн',
+                                  'Жк'
+                                ],
+                                events: eventsT,
+                                isExpandable: false,
+                                eventDoneColor: Colors.green,
+                                selectedColor: Colors.pink,
+                                todayColor: AppColors.black,
+                                eventColor: Colors.deepPurple,
+                                locale: 'kk_Kz',
+                                todayButtonText: '',
+                                isExpanded: true,
+                                dayOfWeekStyle: const TextStyle(
+                                  color: AppColors.grey2,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 12,
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: 20.h),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 26.w),
+                              child: const CalendarDescription(),
+                            ),
+                            SizedBox(
+                              height: 15.h,
+                            ),
+                            AppButton(
+                              onTap: () {
+                                context
+                                    .read<ZhosparymCubit>()
+                                    .getCheckList()
+                                    .then((value) async {
+                                  if (value == null) {
+                                    return;
+                                  } else {
+
+                                    await BlocProvider.of<CheckListCubit>(
+                                            context)
+                                        .getDays(checklistId: value.id);
+
+                                    context.router.push(
+                                      RamazanChecklistRoute(checkList: value),
+                                    );
+                                  }
+                                });
+                              },
+                              text: 'Рамазан чеклисті',
+                              color: AppColors.orange,
+                            ),
+                            SizedBox(
+                              height: 21.h,
+                            ),
+                            Text(
+                              'Атаулы күндер',
+                              style: getTextStyle(CustomTextStyles.s14w500)
+                                  .copyWith(fontFamily: FontTypes.SF_Pro.name),
+                            ),
+                            SizedBox(
+                              height: 16.h,
+                            ),
+                            ...eventik
+                                .where((element) =>
+                                    element.type == EventsType.holiday)
+                                .toList()
+                                .map((e) => Padding(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 31),
+                                      child: InkWell(
+                                        onTap: () {
+                                          showEventDialog(context, e);
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.only(
+                                              left: 16,
+                                              right: 16,
+                                              top: 42,
+                                              bottom: 16),
+                                          width: double.infinity,
+                                          height: 130,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            gradient: eventik.indexOf(e).isOdd
+                                                ? gradients[0]
+                                                : gradients[1],
+                                            image: const DecorationImage(
+                                              opacity: 0.3,
+                                              image: AssetImage(
+                                                  "assets/images/ooo.png"),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                '${DateFormat('dd.MM.yyyy').format(DateTime.parse(e.date!))}ж.',
+                                                style: getTextStyle(
+                                                        CustomTextStyles
+                                                            .s16w600)
+                                                    .copyWith(
+                                                        fontFamily: FontTypes
+                                                            .SF_Pro.name,
+                                                        color: AppColors.white,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                              ),
+                                              Text(
+                                                '${e.title}',
+                                                style: getTextStyle(
+                                                        CustomTextStyles
+                                                            .s16w600)
+                                                    .copyWith(
+                                                        fontFamily: FontTypes
+                                                            .SF_Pro.name,
+                                                        color: AppColors.white,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ))
+                                .toList(),
+                          ],
+                        )),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
-    );
+          ),
+        );
+      });
+    });
   }
 }

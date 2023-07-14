@@ -196,7 +196,13 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
         },
       );
     } catch (e) {
+
+      final error = e as Map<String, dynamic>;
+      throw ServerException(message: error.values.first.toString());
+
+
       throw ServerException(message: e.toString());
+
     }
   }
 }

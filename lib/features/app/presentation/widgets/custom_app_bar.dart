@@ -21,6 +21,36 @@ class CustomAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: hideIcon != null
+          ? [
+              Center(
+                child: Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: getTextStyle(CustomTextStyles.s20w700)
+                      .copyWith(color: color ?? AppColors.white, fontSize: 36),
+                ),
+              ),
+            ]
+          : [
+              GestureDetector(
+                  onTap: onTap != null ? (){
+                    onTap!();
+                  }     :() {
+                    Navigator.pop(context);
+                  },
+                  child: SvgPicture.asset(
+                    Assets.backButtonSvg,
+                    color: color ?? AppColors.white,
+                  )),
+
+              Expanded(
+                child: Align(
+                  alignment: Alignment.center,
+
     return Padding(
       padding: const EdgeInsets.only(top: 12.0).r,
       child: Row(

@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../../../core/common/app_styles.dart';
 import '../../../../core/common/colors.dart';
@@ -18,17 +19,31 @@ class CustomTextFormProfile extends StatelessWidget {
   final String? errorText;
   final String? helperText;
   final TextInputType? keyboardType;
+  final bool? obscureText;
+  final void Function()? obscure;
 
   const CustomTextFormProfile(
       {Key? key,
       required this.hintText,
       required this.labelText,
-       this.onChanged, this.controller, this.initialValue, this.readOnly, this.onTap, this.inputFormatters, this.validator, this.errorText, this.helperText, this.keyboardType})
+      this.onChanged,
+      this.controller,
+      this.initialValue,
+      this.readOnly,
+      this.onTap,
+      this.inputFormatters,
+      this.validator,
+      this.errorText,
+      this.helperText,
+      this.keyboardType,
+      this.obscureText,
+      this.obscure})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      obscureText: obscureText ?? false,
       keyboardType: keyboardType,
       validator: validator,
       inputFormatters: inputFormatters,
@@ -38,6 +53,13 @@ class CustomTextFormProfile extends StatelessWidget {
       controller: controller,
       onChanged: onChanged,
       decoration: InputDecoration(
+        suffixIcon: obscureText != null
+            ? IconButton(
+                onPressed: () {
+                  obscure!();
+                },
+                icon: obscureText! ? SvgPicture.asset('assets/icons/obscure-off.svg') :SvgPicture.asset('assets/icons/obscure.svg') )
+            : null,
         helperText: helperText,
         errorText: errorText,
         label: Text(

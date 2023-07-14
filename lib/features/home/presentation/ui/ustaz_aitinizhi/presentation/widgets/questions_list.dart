@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -6,11 +7,14 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 
 import '../../../../../../../core/common/colors.dart';
+import '../../../../../../../core/platform/network_helper.dart';
 import '../../data/models/question_model.dart';
 
 class QuestionsList extends StatelessWidget {
-  const QuestionsList({Key? key, required this.questions}) : super(key: key);
+  const QuestionsList({Key? key, required this.questions, this.isSocket})
+      : super(key: key);
   final List<QuestionDTO> questions;
+  final bool? isSocket;
 
   @override
   Widget build(BuildContext context) {
@@ -29,17 +33,30 @@ class QuestionsList extends StatelessWidget {
                           Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              CircleAvatar(
-                                backgroundColor: AppColors.white,
-                                radius: 20.r,
-                                child: ClipOval(
-                                    child: e.user?.avatar != null
-                                        ? Center(
-                                            child: Image.network(
-                                                e.user?.avatar ?? ''))
-                                        : SvgPicture.asset(
-                                            'assets/icons/user.svg')),
-                              ),
+                              ClipRRect(
+                                  borderRadius: BorderRadius.circular(90),
+                                  child: isSocket != null
+                                      ? e.avatar != null
+                                          ? Center(
+                                              child: CachedNetworkImage(
+                                              imageUrl:
+                                                  '${SERVER_ + e.avatar!}',
+                                              fit: BoxFit.cover,
+                                              height: 40.h,
+                                              width: 40.w,
+                                            ))
+                                          : SvgPicture.asset(
+                                              'assets/icons/user.svg')
+                                      : e.user?.avatar != null
+                                          ? Center(
+                                              child: CachedNetworkImage(
+                                              imageUrl: e.user?.avatar ?? '',
+                                              fit: BoxFit.cover,
+                                              height: 40.h,
+                                              width: 40.w,
+                                            ))
+                                          : SvgPicture.asset(
+                                              'assets/icons/user.svg')),
                               SizedBox(
                                 width: 8.w,
                               ),
@@ -49,7 +66,9 @@ class QuestionsList extends StatelessWidget {
                                   Row(
                                     children: [
                                       Text(
-                                        e.user?.fullName ?? '',
+                                        isSocket != null
+                                            ? e.userName ?? ''
+                                            : e.user?.fullName ?? '',
                                         style: getTextStyle(
                                                 CustomTextStyles.s14w500)
                                             .copyWith(
@@ -61,10 +80,10 @@ class QuestionsList extends StatelessWidget {
                                         width: 8.w,
                                       ),
                                       Text(
+
                                         DateFormat('dd MMMM, hh:mm')
                                             .format(DateTime.parse(
                                                 e.createdAt ?? ''))
-                                            .toLocale()
                                             .toString(),
                                         style: getTextStyle(
                                                 CustomTextStyles.s12w400)
@@ -82,7 +101,9 @@ class QuestionsList extends StatelessWidget {
                                   SizedBox(
                                       width: 245.w,
                                       child: Text(
-                                        e.body ?? '',
+                                        isSocket != null
+                                            ? e.message ?? ''
+                                            : e.body ?? '',
                                       )),
                                 ],
                               )

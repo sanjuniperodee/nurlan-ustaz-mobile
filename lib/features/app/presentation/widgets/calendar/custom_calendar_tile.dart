@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_clean_calendar/clean_calendar_event.dart';
 import "package:intl/intl.dart";
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
+import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/event_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/events_type_enum.dart';
+import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/date_statuses.dart';
 
+import '../../../../zhosparlar/data/models/events_type_enum.dart';
 import 'custom_date_utils.dart';
 
 /// [CalendarTile] is responsible for displaying one calendar event entry below
@@ -34,7 +38,7 @@ class CalendarTile extends StatelessWidget {
   final bool isDayOfWeek;
   final bool isSelected;
   final bool inMonth;
-  final List<CleanCalendarEvent>? events;
+  final List<EventDto>? events;
   final TextStyle? dayOfWeekStyle;
   final TextStyle? dateStyles;
   final Widget? child;
@@ -64,6 +68,12 @@ class CalendarTile extends StatelessWidget {
     this.daysWithChat = const [],
   });
 
+
+
+
+
+
+   Set<EventsType?> statuses= {};
   /// This function [renderDateOrDayOfWeek] renders the week view or the month view. It is
   /// responsible for displaying a calendar tile. This can be a day (i.e. "Mon", "Tue" ...) in
   /// the header row or a date tile for each day of a week or a month. The property [isDayOfWeek]
@@ -82,9 +92,14 @@ class CalendarTile extends StatelessWidget {
         ),
       );
     } else {
+
+
+      statuses = events == null ?  {}   :  events!.where(
+              (element) => element.type != EventsType.holiday)
+          .map((e) => e.type)
+          .toSet() ;
       // Here the date tiles get rendered. Initially eventCount is set to 0.
       // Every date tile can show up to three dots representing an event.
-      int eventCount = 0;
       return InkWell(
         onTap: onDateSelected, // react on tapping
         child: Padding(
@@ -93,13 +108,10 @@ class CalendarTile extends StatelessWidget {
             // If this tile is the selected date, draw a colored circle on it. The circle is filled with
             // the color passed with the selectedColor parameter or red color.
             decoration: isChat == true
-                ?
-            isSelected && date != null ? BoxDecoration(color: AppColors.orange,shape: BoxShape.circle) : BoxDecoration()
-
-
-
-
-
+                ? isSelected && date != null
+                    ? BoxDecoration(
+                        color: AppColors.orange, shape: BoxShape.circle)
+                    : BoxDecoration()
                 : isSelected && date != null //если выбран или сегодня
                     ? BoxDecoration(
                         shape: BoxShape.circle,
@@ -128,35 +140,47 @@ class CalendarTile extends StatelessWidget {
                 ),
                 // Dots for the events
                 events != null && events!.length > 0
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: events!.map((event) {
-                          eventCount++;
-                          // Show a maximum of 3 dots.
-                          if (eventCount > 3) return Container();
-                          return Container(
-                            margin: EdgeInsets.only(
-                                left: 2.0, right: 2.0, top: 1.0),
-                            width: 5.0,
-                            height: 5.0,
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                // If event is done (isDone == true) set the color of the dots to
-                                // the eventDoneColor (if given) otherwise use the primary color of
-                                // the theme
-                                // If the event is now donw yet, we use the given eventColor or the
-                                // color property of the CleanCalendarEvent. If both aren't set, then
-                                // the accent color of the theme get used.
-                                color: (() {
-                                  if (event.isDone)
-                                    return eventDoneColor ??
-                                        Theme.of(context).primaryColor;
-                                  if (isSelected) return Colors.white;
-                                  return eventColor ??
-                                      Theme.of(context).accentColor;
-                                }())),
-                          );
-                        }).toList())
+                ?   DateStatusesWidget(events: statuses.toList() )
+
+
+                    // ? Stack(
+                    //     children:
+                    //     statuses == null ? [] :
+                    //
+                    //     statuses.toSet()
+                    //         .map(
+                    //           (event) => Positioned(
+                    //             left: statuses.toList().indexOf(event) == 0 ? 0 : 10,
+                    //             child: Container(
+                    //               margin: EdgeInsets.only(
+                    //                   left: 2.0, right: 2.0, top: 1.0),
+                    //               width: 7.0,
+                    //               height: 7.0,
+                    //               decoration: BoxDecoration(
+                    //                   shape: BoxShape.circle,
+                    //                   gradient:
+                    //                       getGradientFromEventType(event!)),
+                    //             ),
+                    //           ),
+                    //         )
+                    //         .toList()
+                    //     // events!.map((event) {
+                    //     //         eventCount++;
+                    //     //         // Show a maximum of 3 dots.
+                    //     //         if (eventCount > 3 ||
+                    //     //             event.type == EventsType.holiday)
+                    //     //           return Container();
+                    //     //         return Container(
+                    //     //           margin: EdgeInsets.only(
+                    //     //               left: 2.0, right: 2.0, top: 1.0),
+                    //     //           width: 5.0,
+                    //     //           height: 5.0,
+                    //     //           decoration: BoxDecoration(
+                    //     //               shape: BoxShape.circle,
+                    //     //               gradient: (() ())),
+                    //     //         );
+                    //     //       }).toList()
+                    //     )
                     : Container(),
               ],
             ),

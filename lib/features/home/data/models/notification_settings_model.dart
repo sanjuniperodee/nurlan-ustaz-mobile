@@ -1,6 +1,6 @@
 class NotificationSettingsModel {
-  NotificationSettingsModel({required this.title, required this.status});
+  NotificationSettingsModel({required this.title,  this.status});
 
   final String title;
-  final bool status;
+  final bool? status;
 }

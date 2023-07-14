@@ -41,8 +41,7 @@ class AppButton extends StatelessWidget {
           width: 339.w,
           child: isLoading
               ? Container(
-                  height: 15.h,
-                  width: 15.w,
+                  width: 5.w,
                   padding: const EdgeInsets.all(0.0).r,
                   child: const Center(child: CircularProgressIndicator()),
                 )

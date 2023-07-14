@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -7,7 +6,6 @@ import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/forgot_pass
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/forgot_passwords_pages/new_password_page.dart';
 
 import '../../../../../core/common/colors.dart';
-import '../../../../../core/router/app_router.dart';
 import '../../../../app/presentation/widgets/custom_app_bar.dart';
 import '../../../../app/presentation/widgets/custom_snackbars.dart';
 import '../../../../app/presentation/widgets/custom_text_form_profile.dart';
@@ -38,9 +36,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       builder: (context, state) {
          return state.maybeWhen(
              loadingState: () {
-               return Center(
-                 child: CircularProgressIndicator(
-                   color: AppColors.danger,
+               return const Scaffold(
+                 body: Center(
+                   child: CircularProgressIndicator(
+                     color: AppColors.danger,
+                   ),
                  ),
                );
              },
@@ -103,7 +103,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       SizedBox(
                         height: 36.h,
                       ),
-                      Text(
+                      const Text(
                         'Жүйеге тіркелген почта немес телефон нөмірін енгізіңіз',
                         textAlign: TextAlign.center,
                       ),

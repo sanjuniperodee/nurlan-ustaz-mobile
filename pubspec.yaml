@@ -94,6 +94,7 @@ dependencies:
   equatable: ^2.0.5
   long_press_button_with_timer: ^0.0.2
   timer_button_fork: ^3.0.2
+  calendar_agenda: ^0.0.2+3
 
   # analyzer: ^5.3.1
 

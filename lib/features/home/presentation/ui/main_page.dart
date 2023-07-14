@@ -15,10 +15,13 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_butto
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/main_button.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/banner_local_model.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/timings_cubit.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
+
+import '../../../auth/data/repositories/auth_repository.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -65,7 +68,6 @@ class _MainPageState extends State<MainPage> {
     const ServicesPageRoute(),
     LiveBroadcastsPageRoute(),
     const ShopPageRoute(),
-    const UstazAitinizhiRoute()
   ];
 
   @override
@@ -83,6 +85,7 @@ class _MainPageState extends State<MainPage> {
 
   final now = DateTime.now();
   List times = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -98,7 +101,6 @@ class _MainPageState extends State<MainPage> {
             loaded: (not, geo) {
               final namaz = not.toJson();
               times = namaz.values.toList();
-              log(times.toString());
               return BlocConsumer<NewsCubit, NewsState>(
                 listener: (context, state) {
                   state.maybeWhen(
@@ -276,19 +278,19 @@ class _MainPageState extends State<MainPage> {
                                                 SizedBox(
                                                   width: 10.r,
                                                 ),
-                                                Text(
-                                                    '${namasNames[indexOfNextNames(times)]} намаз уақыты',
-                                                    style: getTextStyle(
-                                                            CustomTextStyles
-                                                                .s16w200)
-                                                        .apply(
-                                                            fontFamily:
-                                                                FontTypes.SF_Pro
-                                                                    .name)
-                                                        .copyWith(
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .w400)),
+                                                // Text(
+                                                //     '${namasNames[indexOfNextNames(times)]} намаз уақыты',
+                                                //     style: getTextStyle(
+                                                //             CustomTextStyles
+                                                //                 .s16w200)
+                                                //         .apply(
+                                                //             fontFamily:
+                                                //                 FontTypes.SF_Pro
+                                                //                     .name)
+                                                //         .copyWith(
+                                                //             fontWeight:
+                                                //                 FontWeight
+                                                //                     .w400)),
                                               ],
                                             ),
                                             Column(
@@ -296,24 +298,24 @@ class _MainPageState extends State<MainPage> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.end,
                                               children: [
-                                                Text(
-                                                  namasTimestoSend(),
-                                                  style: getTextStyle(
-                                                          CustomTextStyles
-                                                              .s16w200)
-                                                      .apply(
-                                                          fontFamily: FontTypes
-                                                              .SF_Pro.name)
-                                                      .copyWith(
-                                                          fontWeight:
-                                                              FontWeight.w500)
-                                                      .apply(
-                                                          color:
-                                                              AppColors.blue),
-                                                ),
-                                                TimesStateWidget(
-                                                  time: timesToSend(),
-                                                )
+                                                // Text(
+                                                //   namasTimestoSend(),
+                                                //   style: getTextStyle(
+                                                //           CustomTextStyles
+                                                //               .s16w200)
+                                                //       .apply(
+                                                //           fontFamily: FontTypes
+                                                //               .SF_Pro.name)
+                                                //       .copyWith(
+                                                //           fontWeight:
+                                                //               FontWeight.w500)
+                                                //       .apply(
+                                                //           color:
+                                                //               AppColors.blue),
+                                                // ),
+                                                // TimesStateWidget(
+                                                //   time: timesToSend(),
+                                                // )
                                               ],
                                             )
                                           ],
@@ -331,14 +333,19 @@ class _MainPageState extends State<MainPage> {
                                         ),
                                         SizedBox(height: 16.h),
                                         MainButton(
-                                          onTap: () => context.router.push(
-                                              const UstazAitinizhiRoute()),
+                                          onTap: () async {
+                                            context.router
+                                                .push(UstazAitinizhiRoute());
+                                          },
                                           text: 'Ұстаз айтыңызшы...',
                                         ),
                                         SizedBox(height: 16.h),
                                         InkWell(
-                                          onTap: () => context.router.push(
-                                              const UstazAitinizhiRoute()),
+
+                                          onTap: () => context.router
+                                              .push(UstazAitinizhiRoute()),
+
+
                                           child: Container(
                                             width: 1.sw,
                                             decoration: BoxDecoration(
@@ -625,6 +632,7 @@ class _MainPageState extends State<MainPage> {
 
 class TimesStateWidget extends StatefulWidget {
   final String time;
+
   const TimesStateWidget({
     super.key,
     required this.time,

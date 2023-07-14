@@ -14,8 +14,7 @@ class CalendarChatsCubit extends Cubit<CalendarChatsState> {
   CalendarChatsCubit(
     this._homeRepository,
   ) : super(const CalendarChatsState.initialState()) {
-    var now = DateTime.now();
-    //getChatsMonth(DateTime.now());
+    getChatsMonth(DateTime.now());
 
 
 
@@ -39,7 +38,6 @@ class CalendarChatsCubit extends Cubit<CalendarChatsState> {
   }
 
   Future<void> getChatsMonth(DateTime date) async {
-    print('hello');
     var lastDayDateTime = (date.month < 12)
         ? DateTime(date.year, date.month + 1, 0)
         : DateTime(date.year + 1, 1, 0);
@@ -52,14 +50,7 @@ class CalendarChatsCubit extends Cubit<CalendarChatsState> {
     });
   }
 
-  Future<void> getChatByDay(String dateTime) async {
-    if (chatsss.isEmpty) {
-      emit(const _InitialState().copyWith(questions: null));
-    } else {
-      final nop = chatsss.map((e) => e.date!).toList();
-      print(nop);
-    }
-  }
+
 
   Future<void> getQuestionByDate(String dateTime) async {
     if (!chatsss.map((e) => e.date).toList().contains(dateTime)) {
@@ -92,19 +83,6 @@ class CalendarChatsCubit extends Cubit<CalendarChatsState> {
     // }
   }
 
-  Future<void> getChatByDate(String startTime, String endTime) async {
-    final result =
-        await _homeRepository.chats(startTime: startTime, endTime: endTime);
-    return result.fold((l) {
-      return;
-    }, (r) async {
-      if (r.isEmpty) {
-        emit(const _InitialState(questions: null, chats: null));
-      } else {
-        getQuestionById(id: r.isEmpty ? null : r.first.id);
-      }
-    });
-  }
 
   Future<void> getQuestionById({int? id}) async {
     if (id == null) {

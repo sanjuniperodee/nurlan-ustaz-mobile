@@ -130,6 +130,16 @@ abstract class HomeRepository {
   Future<Either<Failure, NotificationDTO>> notificationDevice({
     required NotificationDeviceDTO notificationDTO,
   });
+
+  Future<Either<Failure, NotificationDTO>> getNotificationDevice({
+    required String registrationId,
+  });
+  Future<Either<Failure, NotificationDTO>> putNotificationDevice(
+      {required String registrationId,required NotificationDTO notification});
+
+
+
+
 }
 
 @Singleton(as: HomeRepository)
@@ -662,6 +672,36 @@ class HomeRepositoryImpl extends HomeRepository {
         final NotificationDTO notification =
             await remoteDS.notificationDevice(notification: notificationDTO);
         return Right(notification);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, NotificationDTO>> getNotificationDevice({required String registrationId}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final NotificationDTO notification =
+            await remoteDS.getNotificationDevice(registrationId: registrationId);
+        return Right(notification);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, NotificationDTO>> putNotificationDevice({required String registrationId, required NotificationDTO notification}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final NotificationDTO notificationT =
+            await remoteDS.putNotificationDevice(registrationId: registrationId, notification: notification);
+        return Right(notificationT);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
       }

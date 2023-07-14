@@ -95,7 +95,6 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: SizedBox(
-                    height: 1.1.sh,
                     child: Stack(children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,

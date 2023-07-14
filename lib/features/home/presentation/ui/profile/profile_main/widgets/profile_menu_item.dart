@@ -19,15 +19,16 @@ class ProfileMenuItem extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
+        height: 44,
         child: isExit != null
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   SvgPicture.asset('assets/icons/door_arrow.svg'),
-                  SizedBox(width: 10,),
+                  const SizedBox(width: 10,),
                   Text(
                     title,
-                    style: titleStyle == null ?  getTextStyle(CustomTextStyles.s16w400).copyWith(fontFamily: FontTypes.SF_Pro.name) : titleStyle
+                    style: titleStyle ?? getTextStyle(CustomTextStyles.s16w400).copyWith(fontFamily: FontTypes.SF_Pro.name)
                         ,
                   ),
                 ],
@@ -37,12 +38,11 @@ class ProfileMenuItem extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: titleStyle == null ?  getTextStyle(CustomTextStyles.s16w400).copyWith(fontFamily: FontTypes.SF_Pro.name) : titleStyle,
+                    style: titleStyle ?? getTextStyle(CustomTextStyles.s16w400).copyWith(fontFamily: FontTypes.SF_Pro.name),
                   ),
                   SvgPicture.asset('assets/icons/chevron_right.svg'),
                 ],
               ),
-        height: 44,
       ),
     );
   }
