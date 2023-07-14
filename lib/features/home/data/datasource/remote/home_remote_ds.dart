@@ -88,7 +88,7 @@ abstract class HomeRemoteDs {
   Future<List<ResultHomeDTO>> commentNews(
       {int? currentPage, bool? isFirstCall = false, int? id});
 
-  Future<bool> postImamService({required List<int> id});
+  Future<String> postImamService({required List<int> id});
 
   Future<List<MediaDTO>> getNotifacations();
   Future<List<MediaDTO>> services(
@@ -704,7 +704,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   }
 
   @override
-  Future<bool> postImamService({required List<int> id}) async {
+  Future<String> postImamService({required List<int> id}) async {
     try {
       final response = await dio.post(
         '${EndPoints.imamServices}/google_form/',
@@ -712,8 +712,8 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
           'imam_services': id,
         },
       );
-      log(response.statusCode.toString());
-      return true;
+      log(response.data.toString());
+      return (response.data as Map<String, dynamic>)['url'] as String;
     } on DioError catch (e) {
       throw ServerException(
         message:

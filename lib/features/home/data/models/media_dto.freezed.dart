@@ -25,6 +25,7 @@ mixin _$MediaDTO {
   String? get title => throw _privateConstructorUsedError;
   String? get type => throw _privateConstructorUsedError;
   String? get body => throw _privateConstructorUsedError;
+  String? get icon => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,7 +38,13 @@ abstract class $MediaDTOCopyWith<$Res> {
   factory $MediaDTOCopyWith(MediaDTO value, $Res Function(MediaDTO) then) =
       _$MediaDTOCopyWithImpl<$Res, MediaDTO>;
   @useResult
-  $Res call({int id, String? file, String? title, String? type, String? body});
+  $Res call(
+      {int id,
+      String? file,
+      String? title,
+      String? type,
+      String? body,
+      String? icon});
 }
 
 /// @nodoc
@@ -58,6 +65,7 @@ class _$MediaDTOCopyWithImpl<$Res, $Val extends MediaDTO>
     Object? title = freezed,
     Object? type = freezed,
     Object? body = freezed,
+    Object? icon = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -80,6 +88,10 @@ class _$MediaDTOCopyWithImpl<$Res, $Val extends MediaDTO>
           ? _value.body
           : body // ignore: cast_nullable_to_non_nullable
               as String?,
+      icon: freezed == icon
+          ? _value.icon
+          : icon // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -91,7 +103,13 @@ abstract class _$$_MediaDTOCopyWith<$Res> implements $MediaDTOCopyWith<$Res> {
       __$$_MediaDTOCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, String? file, String? title, String? type, String? body});
+  $Res call(
+      {int id,
+      String? file,
+      String? title,
+      String? type,
+      String? body,
+      String? icon});
 }
 
 /// @nodoc
@@ -110,6 +128,7 @@ class __$$_MediaDTOCopyWithImpl<$Res>
     Object? title = freezed,
     Object? type = freezed,
     Object? body = freezed,
+    Object? icon = freezed,
   }) {
     return _then(_$_MediaDTO(
       id: null == id
@@ -132,6 +151,10 @@ class __$$_MediaDTOCopyWithImpl<$Res>
           ? _value.body
           : body // ignore: cast_nullable_to_non_nullable
               as String?,
+      icon: freezed == icon
+          ? _value.icon
+          : icon // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -140,7 +163,12 @@ class __$$_MediaDTOCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_MediaDTO implements _MediaDTO {
   const _$_MediaDTO(
-      {required this.id, this.file, this.title, this.type, this.body});
+      {required this.id,
+      this.file,
+      this.title,
+      this.type,
+      this.body,
+      this.icon});
 
   factory _$_MediaDTO.fromJson(Map<String, dynamic> json) =>
       _$$_MediaDTOFromJson(json);
@@ -155,10 +183,12 @@ class _$_MediaDTO implements _MediaDTO {
   final String? type;
   @override
   final String? body;
+  @override
+  final String? icon;
 
   @override
   String toString() {
-    return 'MediaDTO(id: $id, file: $file, title: $title, type: $type, body: $body)';
+    return 'MediaDTO(id: $id, file: $file, title: $title, type: $type, body: $body, icon: $icon)';
   }
 
   @override
@@ -170,12 +200,14 @@ class _$_MediaDTO implements _MediaDTO {
             (identical(other.file, file) || other.file == file) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.type, type) || other.type == type) &&
-            (identical(other.body, body) || other.body == body));
+            (identical(other.body, body) || other.body == body) &&
+            (identical(other.icon, icon) || other.icon == icon));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, file, title, type, body);
+  int get hashCode =>
+      Object.hash(runtimeType, id, file, title, type, body, icon);
 
   @JsonKey(ignore: true)
   @override
@@ -197,7 +229,8 @@ abstract class _MediaDTO implements MediaDTO {
       final String? file,
       final String? title,
       final String? type,
-      final String? body}) = _$_MediaDTO;
+      final String? body,
+      final String? icon}) = _$_MediaDTO;
 
   factory _MediaDTO.fromJson(Map<String, dynamic> json) = _$_MediaDTO.fromJson;
 
@@ -211,6 +244,8 @@ abstract class _MediaDTO implements MediaDTO {
   String? get type;
   @override
   String? get body;
+  @override
+  String? get icon;
   @override
   @JsonKey(ignore: true)
   _$$_MediaDTOCopyWith<_$_MediaDTO> get copyWith =>

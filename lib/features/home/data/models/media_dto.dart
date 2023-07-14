@@ -12,6 +12,7 @@ class MediaDTO with _$MediaDTO {
     String? title,
     String? type,
     String? body,
+    String? icon,
   }) = _MediaDTO;
 
   factory MediaDTO.fromJson(Map<String, dynamic> json) =>

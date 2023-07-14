@@ -34,7 +34,7 @@ abstract class HomeRepository {
     bool? isFirstCall,
   });
 
-  Future<Either<Failure, bool>> postImamService({
+  Future<Either<Failure, String>> postImamService({
     required List<int> id,
   });
 
@@ -130,7 +130,6 @@ abstract class HomeRepository {
   Future<Either<Failure, NotificationDTO>> notificationDevice({
     required NotificationDeviceDTO notificationDTO,
   });
- 
 }
 
 @Singleton(as: HomeRepository)
@@ -432,12 +431,12 @@ class HomeRepositoryImpl extends HomeRepository {
   }
 
   @override
-  Future<Either<Failure, bool>> postImamService({
+  Future<Either<Failure, String>> postImamService({
     required List<int> id,
   }) async {
     if (await networkInfo.isConnected) {
       try {
-        final bool result = await remoteDS.postImamService(
+        final String result = await remoteDS.postImamService(
           id: id,
         );
         return Right(result);
@@ -670,6 +669,4 @@ class HomeRepositoryImpl extends HomeRepository {
       return Left(ServerFailure(message: NO_INTERNET_TEXT));
     }
   }
-
-  
 }

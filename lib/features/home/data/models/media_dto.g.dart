@@ -12,6 +12,7 @@ _$_MediaDTO _$$_MediaDTOFromJson(Map<String, dynamic> json) => _$_MediaDTO(
       title: json['title'] as String?,
       type: json['type'] as String?,
       body: json['body'] as String?,
+      icon: json['icon'] as String?,
     );
 
 Map<String, dynamic> _$$_MediaDTOToJson(_$_MediaDTO instance) =>
@@ -21,4 +22,5 @@ Map<String, dynamic> _$$_MediaDTOToJson(_$_MediaDTO instance) =>
       'title': instance.title,
       'type': instance.type,
       'body': instance.body,
+      'icon': instance.icon,
     };
