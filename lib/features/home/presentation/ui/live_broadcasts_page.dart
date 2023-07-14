@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -12,6 +13,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_wi
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/lives_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/lives_fav_cubit.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/common/assets.dart';
 
@@ -119,10 +121,7 @@ class _LiveBroadcastsPageState extends State<LiveBroadcastsPage> {
                             padding: EdgeInsets.only(bottom: 20.r),
                             child: GestureDetector(
                               onTap: () {
-                                // context.router.push(
-                                //   SeminarDetailPageRoute(
-                                //       result: listOfLives[index]),
-                                // );
+                                _launchUrl(listOfLives[index].link ?? 'ERROR');
                               },
                               child: Container(
                                 height: 164.h,
@@ -193,6 +192,7 @@ class _LiveBroadcastsPageState extends State<LiveBroadcastsPage> {
                                                 listOfLives[index].isLive!
                                                     ? Container(
                                                         width: 47.w,
+                                                        // height: 20.h,
                                                         decoration: BoxDecoration(
                                                             color:
                                                                 AppColors.red,
@@ -226,7 +226,14 @@ class _LiveBroadcastsPageState extends State<LiveBroadcastsPage> {
                                                         ),
                                                       )
                                                     : Text(
-                                                        '10.02.2023',
+                                                        DateFormat('dd.MM.yyyy')
+                                                            .format(
+                                                          DateTime.parse(
+                                                              listOfLives[index]
+                                                                  .startTime
+                                                                  .toString()),
+                                                        ),
+                                                        // '10.02.2023',
                                                         style: getTextStyle(
                                                                 CustomTextStyles
                                                                     .s12w400)
@@ -235,7 +242,7 @@ class _LiveBroadcastsPageState extends State<LiveBroadcastsPage> {
                                                                     .grey1),
                                                       ),
                                                 SizedBox(
-                                                  height: 5.h,
+                                                  height: 10.h,
                                                 ),
                                                 Text(
                                                   listOfLives[index].title ??
@@ -247,7 +254,7 @@ class _LiveBroadcastsPageState extends State<LiveBroadcastsPage> {
                                                           color:
                                                               AppColors.black),
                                                   overflow:
-                                                      TextOverflow.visible,
+                                                      TextOverflow.ellipsis,
                                                 ),
                                                 SizedBox(
                                                   height: 5.h,
@@ -317,6 +324,13 @@ class _LiveBroadcastsPageState extends State<LiveBroadcastsPage> {
           ? BlocProvider.of<LivesCubit>(context)
               .lives(page: page, isSaved: true)
           : BlocProvider.of<LivesCubit>(context).lives(page: page);
+    }
+  }
+
+  Future<void> _launchUrl(String _urll) async {
+    final Uri _url = Uri.parse('${_urll}');
+    if (!await launchUrl(_url)) {
+      throw Exception('Could not launch $_url');
     }
   }
 }

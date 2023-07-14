@@ -121,7 +121,6 @@ class _RegistrationFormState extends State<RegistrationForm> {
           SizedBox(height: 24.h),
           CustomTextFormProfile(
             keyboardType: TextInputType.emailAddress,
-
             controller: emailController,
             hintText: 'E-mail',
             labelText: 'E-mail',
@@ -146,7 +145,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
                     minimumYear: DateTime.now().year - 100,
                     maximumYear: DateTime.now().year - 5,
 
-                    initialDateTime: DateTime.now().subtract(Duration(days: 365*5)),
+                    initialDateTime:
+                        DateTime.now().subtract(Duration(days: 365 * 5)),
                     mode: CupertinoDatePickerMode.date,
                     use24hFormat: true,
                     // This is called when the user changes the date.
@@ -187,7 +187,6 @@ class _RegistrationFormState extends State<RegistrationForm> {
             },
             obscureText: obscureSecond,
             keyboardType: TextInputType.visiblePassword,
-
             controller: passwordRepeatController,
             hintText: 'Құпия сөзді қайталау',
             labelText: 'Құпия сөзді қайталау',

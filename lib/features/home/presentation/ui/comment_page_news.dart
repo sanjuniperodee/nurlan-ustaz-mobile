@@ -205,7 +205,7 @@ class _CommentPageNewsState extends State<CommentPageNews> {
                                   ans: false,
                                   callback: () {
                                     _textEditingController.text =
-                                        '@${listOfComments[index].user!.fullName!}';
+                                        '@${listOfComments[index].user!.fullName!} ';
                                     _textEditingController.selection =
                                         TextSelection.fromPosition(TextPosition(
                                             offset: _textEditingController

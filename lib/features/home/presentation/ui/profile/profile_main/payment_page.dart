@@ -1,11 +1,19 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
+import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/model/payment_model.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/bottom_sheet.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/payment_tick_cubit.dart';
 
 import '../../../../../../core/common/colors.dart';
 import '../../../../../app/presentation/widgets/custom_app_bar.dart';
@@ -21,6 +29,15 @@ class PaymentsPage extends StatefulWidget {
 int currentIndex = 1;
 
 class _PaymentsPageState extends State<PaymentsPage> {
+  @override
+  void initState() {
+    BlocProvider.of<PaymentTickCubit>(context)
+        .seminar(page: 1, isFirstCall: true, isPurchased: true);
+
+    super.initState();
+  }
+
+  List<ResultHomeDTO> res = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,89 +56,237 @@ class _PaymentsPageState extends State<PaymentsPage> {
             CustomTabBar(
               tabs: const [
                 Tab(
-                  text: 'Түс жорулар',
+                  text: 'Семинарлар',
                 ),
                 Tab(
-                  text: 'Семинарлар',
+                  text: 'Түс жорулар',
                 ),
               ],
               onTap: (int) {
-                setState(() {
-                  currentIndex = int;
-                });
+                log('INDEX:::${currentIndex.toString()}');
+                if (currentIndex != 0) {
+                  log(1.toString());
+                  BlocProvider.of<PaymentTickCubit>(context)
+                      .seminar(page: 1, isFirstCall: true, isPurchased: true);
+                } else {
+                  log(2.toString());
+                  BlocProvider.of<PaymentTickCubit>(context)
+                      .tusZhoruT(page: 1, isFirstCall: true, isPurchased: true);
+                }
+                currentIndex = int;
               },
               length: 2,
             ),
-            ListView.separated(
-                shrinkWrap: true,
-                physics: const BouncingScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return Container(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 12.h, horizontal: 12.w),
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: AppColors.white,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Column(
+            BlocConsumer<PaymentTickCubit, PaymentTickState>(
+                listener: (context, state) {
+              state.maybeWhen(
+                orElse: () {},
+                loaded: (
+                  ress,
+                ) {
+                  res = ress;
+                },
+              );
+            }, builder: (context, state) {
+              state.whenOrNull(
+                loadingState: () {
+                  return const CircularProgressIndicator(
+                    color: AppColors.danger,
+                  );
+                },
+              );
+              return ListView.separated(
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return InkWell(
+                      onTap: () {
+                        bottomSheet(
+                          FractionallySizedBox(
+                            heightFactor: 0.5,
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: SvgPicture.asset(
+                                      Assets.cancelSvg,
+                                      color: AppColors.black,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 15.h,
+                                  ),
+                                  Container(
+                                    width: 343.w,
+                                    height: 156.h,
+                                    decoration: BoxDecoration(
+                                        color: AppColors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: Center(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          SvgPicture.asset(
+                                              'assets/icons/check_circle.svg'),
+                                          Text(
+                                            'Төленген',
+                                            style: getTextStyle(
+                                                CustomTextStyles.s16w400),
+                                          ),
+                                          Text('${res[index].price} ₸',
+                                              style: getTextStyle(
+                                                  CustomTextStyles.s24w700))
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 8.h,
+                                  ),
+                                  Container(
+                                    width: 343.w,
+                                    height: 155.h,
+                                    decoration: BoxDecoration(
+                                        color: AppColors.white,
+                                        borderRadius:
+                                            BorderRadius.circular(20)),
+                                    child: Column(
+                                      children: [
+                                        SizedBox(
+                                          height: 8.h,
+                                        ),
+                                        const TextWidget(
+                                          text1: 'Статус',
+                                          text2: 'Төленген',
+                                        ),
+                                        TextWidget(
+                                          text1: 'Билет бағасы',
+                                          text2: '${res[index].price} ₸',
+                                        ),
+                                        TextWidget(
+                                          text1: 'Төленді',
+                                          text2:
+                                              '${DateFormat('dd.MM.yyyy').format(res[index].createdAt!)}, ${DateFormat.Hm().format(res[index].createdAt!)}',
+                                        ),
+                                        TextWidget(
+                                          text1: 'Өткізілу уақыты',
+                                          text2:
+                                              '${DateFormat.yMMMMd('kk').format(res[index].startTime!)}, ${DateFormat.Hm().format(res[index].startTime!)}',
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          context,
+                        );
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                            vertical: 12.h, horizontal: 12.w),
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          color: AppColors.white,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              '${DateFormat('dd.MM.yyyy').format(payments[index].date)}',
-                              style: getTextStyle(CustomTextStyles.s12w400)
-                                  .copyWith(
-                                      fontFamily: FontTypes.SF_Pro.name,
-                                      color: AppColors.grey1),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  DateFormat('dd.MM.yyyy')
+                                      .format(res[index].createdAt!),
+                                  style: getTextStyle(CustomTextStyles.s12w400)
+                                      .copyWith(
+                                          fontFamily: FontTypes.SF_Pro.name,
+                                          color: AppColors.grey1),
+                                ),
+                                SizedBox(
+                                  height: 2.h,
+                                ),
+                                Text(
+                                  '${res[index].title}',
+                                  style: getTextStyle(CustomTextStyles.s16w600)
+                                      .copyWith(
+                                          fontFamily: FontTypes.SF_Pro.name,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 16),
+                                )
+                              ],
                             ),
-                            SizedBox(
-                              height: 2.h,
-                            ),
-                            Text(
-                              '${payments[index].title}',
-                              style: getTextStyle(CustomTextStyles.s16w600)
-                                  .copyWith(
-                                      fontFamily: FontTypes.SF_Pro.name,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 16),
+                            Row(
+                              children: [
+                                Text(
+                                  '${res[index].price} ₸',
+                                  style: getTextStyle(CustomTextStyles.s16w600)
+                                      .copyWith(color: AppColors.orange),
+                                ),
+                                SizedBox(
+                                  width: 13.w,
+                                ),
+                                SvgPicture.asset(
+                                  'assets/icons/chevron_right.svg',
+                                  color: AppColors.orange,
+                                ),
+                              ],
                             )
                           ],
                         ),
-                        Row(
-                          children: [
-                            Text(
-                              '${payments[index].amount} ₸',
-                              style: getTextStyle(CustomTextStyles.s16w600)
-                                  .copyWith(color: AppColors.orange),
-                            ),
-                            SizedBox(
-                              width: 13,
-                            ),
-                            SvgPicture.asset(
-                              'assets/icons/chevron_right.svg',
-                              color: AppColors.orange,
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  );
-                },
-                separatorBuilder: (BuildContext context, int index) {
-                  return SizedBox(
-                    height: 12.h,
-                  );
-                },
-                itemCount: payments.length)
+                      ),
+                    );
+                  },
+                  separatorBuilder: (BuildContext context, int index) {
+                    return SizedBox(
+                      height: 12.h,
+                    );
+                  },
+                  itemCount: res.length);
+            })
           ]),
         ),
       ),
     ));
   }
+}
 
-  final List<PaymentModel> payments = List.generate(20, (index) {
-    return PaymentModel(title: 'Aдамдар', date: DateTime.now(), amount: 3000);
+class TextWidget extends StatelessWidget {
+  final String text1;
+  final String text2;
+  const TextWidget({
+    super.key,
+    required this.text1,
+    required this.text2,
   });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding:
+          const EdgeInsets.only(left: 16.0, right: 16, top: 8, bottom: 8).r,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            text1,
+            style: getTextStyle(CustomTextStyles.s16w400)
+                .apply(color: AppColors.black),
+          ),
+          Text(text2, style: getTextStyle(CustomTextStyles.s16w400))
+        ],
+      ),
+    );
+  }
 }

@@ -131,17 +131,17 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
                                                     FontTypes.Philosopher.name,
                                                 color: AppColors.white)),
                                 SizedBox(height: 24.h),
-                                GestureDetector(
-                                    onTap: () {
-                                      context.router.push(
-                                          AyatDayPageRoute(
-                                            ayatDTO: ayat
-                                        ),
-                                      );
-                                    },
-                                    child: AyatDayCardWidget(
-                                      ayatDTO: ayat,
-                                    )),
+                                ayat.id == null
+                                    ? const SizedBox()
+                                    : GestureDetector(
+                                        onTap: () {
+                                          context.router.push(
+                                            AyatDayPageRoute(ayatDTO: ayat),
+                                          );
+                                        },
+                                        child: AyatDayCardWidget(
+                                          ayatDTO: ayat,
+                                        )),
                                 SizedBox(height: 20.h),
                                 GridView.builder(
                                   itemCount: list.length,

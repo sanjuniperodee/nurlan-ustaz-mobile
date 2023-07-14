@@ -38,7 +38,7 @@
 			<string>Bundle Id</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.example.nurlanUstazFlutter</string>
+				<string>com.nurlan.ustaz.flutter</string>
 			</array>
 		</dict>
 	</array>
@@ -64,6 +64,8 @@
 	<string>Приложению необходим доступ к вашей фотографии, чтобы загрузить аватар.</string>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>UIBackgroundModes</key>
+	<array/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen.storyboard</string>
 	<key>UIMainStoryboardFile</key>

@@ -62,19 +62,19 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDF8T0zlVedXkzxNT0Ffj-3G6YW_bOokeE',
-    appId: '1:53340493475:ios:8804f542264b1934f1d116',
+    appId: '1:53340493475:ios:b25085d986860f53f1d116',
     messagingSenderId: '53340493475',
     projectId: 'nurlanustazdev0',
     storageBucket: 'nurlanustazdev0.appspot.com',
-    iosBundleId: 'com.example.nurlanUstazFlutter',
+    iosBundleId: 'com.nurlan.ustaz.flutter',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
     apiKey: 'AIzaSyDF8T0zlVedXkzxNT0Ffj-3G6YW_bOokeE',
-    appId: '1:53340493475:ios:8804f542264b1934f1d116',
+    appId: '1:53340493475:ios:b25085d986860f53f1d116',
     messagingSenderId: '53340493475',
     projectId: 'nurlanustazdev0',
     storageBucket: 'nurlanustazdev0.appspot.com',
-    iosBundleId: 'com.example.nurlanUstazFlutter',
+    iosBundleId: 'com.nurlan.ustaz.flutter',
   );
 }

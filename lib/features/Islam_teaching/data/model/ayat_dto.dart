@@ -7,7 +7,7 @@ part 'ayat_dto.g.dart';
 @freezed
 class AyatDTO with _$AyatDTO {
   const factory AyatDTO({
-    required int id,
+    int? id,
     @JsonKey(name: "ayat_number") int? ayatNumber,
     String? name,
     String? arabic,

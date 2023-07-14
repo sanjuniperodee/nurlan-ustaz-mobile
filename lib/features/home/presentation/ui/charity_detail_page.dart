@@ -90,7 +90,9 @@ class _CharityDetailPageState extends State<CharityDetailPage> {
                                     collapsedIconColor: AppColors.orange,
                                     iconColor: AppColors.orange,
                                     title: Text(
-                                      'Каспи (Гүлмира Мұқанқызы)',
+                                      widget.result.requisites![index]
+                                              .legalEntity ??
+                                          'ERROR',
                                       style: getTextStyle(
                                           CustomTextStyles.s14w400),
                                     ),
@@ -123,31 +125,50 @@ class _CharityDetailPageState extends State<CharityDetailPage> {
                                         trailing: InkWell(
                                             onTap: () async {
                                               await Clipboard.setData(
-                                                  const ClipboardData(
-                                                      text: "your text"));
+                                                  ClipboardData(
+                                                      text: widget
+                                                          .result
+                                                          .requisites![index]
+                                                          .phoneNumber));
                                             },
                                             child: SvgPicture.asset(
                                                 Assets.copiedSvg)),
                                       ),
-                                      ListTile(
-                                        minLeadingWidth: 0,
-                                        leading:
-                                            SvgPicture.asset(Assets.dontSvg),
-                                        title: Text(
-                                          widget.result.requisites![index]
-                                                  .cardNumber ??
-                                              'ERROR',
-                                          style: getTextStyle(
-                                              CustomTextStyles.s14w400),
-                                        ),
-                                        trailing: InkWell(
-                                            onTap: () async {
-                                              await Clipboard.setData(
-                                                  const ClipboardData(
-                                                      text: "your text"));
-                                            },
-                                            child: SvgPicture.asset(
-                                                Assets.copiedSvg)),
+                                      CustomListTIle(
+                                        widget: widget,
+                                        text: widget.result.requisites![index]
+                                                .cardNumber ??
+                                            'ERROR',
+                                      ),
+                                      CustomListTIle(
+                                        widget: widget,
+                                        text: widget.result.requisites![index]
+                                                .bin ??
+                                            'ERROR',
+                                      ),
+                                      CustomListTIle(
+                                        widget: widget,
+                                        text: widget.result.requisites![index]
+                                                .iic ??
+                                            'ERROR',
+                                      ),
+                                      CustomListTIle(
+                                        widget: widget,
+                                        text: widget.result.requisites![index]
+                                                .bic ??
+                                            'ERROR',
+                                      ),
+                                      CustomListTIle(
+                                        widget: widget,
+                                        text: widget.result.requisites![index]
+                                                .ppc ??
+                                            'ERROR',
+                                      ),
+                                      CustomListTIle(
+                                        widget: widget,
+                                        text: widget.result.requisites![index]
+                                                .url ??
+                                            'ERROR',
                                       ),
                                     ],
                                   ),
@@ -170,6 +191,34 @@ class _CharityDetailPageState extends State<CharityDetailPage> {
                   child: SvgPicture.asset(Assets.backStackSvg))),
         ],
       ),
+    );
+  }
+}
+
+class CustomListTIle extends StatelessWidget {
+  final String text;
+  const CustomListTIle({
+    super.key,
+    required this.widget,
+    required this.text,
+  });
+
+  final CharityDetailPage widget;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      minLeadingWidth: 0,
+      leading: SvgPicture.asset(Assets.dontSvg),
+      title: Text(
+        text,
+        style: getTextStyle(CustomTextStyles.s14w400),
+      ),
+      trailing: InkWell(
+          onTap: () async {
+            await Clipboard.setData(ClipboardData(text: text));
+          },
+          child: SvgPicture.asset(Assets.copiedSvg)),
     );
   }
 }

@@ -25,8 +25,9 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
 
   Future<void> secureScreen() async {
     final FlutterWindowManager manager = FlutterWindowManager();
-      var bool = await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
-      bool = true;
+    var bool =
+        await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+    bool = true;
   }
 
   Future<void> toggleFav(int id) async {
@@ -51,9 +52,14 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
     bool? isSaved,
     int? page,
     bool? isFirstCall,
+    bool? isPurchased,
   }) async {
     final failureOrUser = await _repository.tusZhoru(
-        page: page, isFirstCall: false, search: search, isSaved: isSaved);
+        page: page,
+        isFirstCall: false,
+        search: search,
+        isPurchased: isPurchased,
+        isSaved: isSaved);
     failureOrUser.fold(
       (l) {
         emit(TusZhoruState.errorState(message: mapFailureToMessageBack(l)));

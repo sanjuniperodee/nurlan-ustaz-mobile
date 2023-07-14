@@ -9,10 +9,8 @@ part 'city_dto.g.dart';
 class CityDTO with _$CityDTO {
   const factory CityDTO({
     @JsonKey(name: "name") String? name,
-    @JsonKey(name: "latitude") int? latitude,
-    @JsonKey(name: "longitude") int? longitude,
-
-
+    @JsonKey(name: "latitude") double? latitude,
+    @JsonKey(name: "longitude") double? longitude,
   }) = _CityDTO;
 
   factory CityDTO.fromJson(Map<String, dynamic> json) =>

@@ -20,7 +20,7 @@ mixin _$PostServiceState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function() loaded,
+    required TResult Function(String url) loaded,
     required TResult Function(String message) errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -28,7 +28,7 @@ mixin _$PostServiceState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialState,
     TResult? Function()? loadingState,
-    TResult? Function()? loaded,
+    TResult? Function(String url)? loaded,
     TResult? Function(String message)? errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -36,7 +36,7 @@ mixin _$PostServiceState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function()? loaded,
+    TResult Function(String url)? loaded,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) =>
@@ -126,7 +126,7 @@ class _$_InitialPage implements _InitialPage {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function() loaded,
+    required TResult Function(String url) loaded,
     required TResult Function(String message) errorState,
   }) {
     return initialState();
@@ -137,7 +137,7 @@ class _$_InitialPage implements _InitialPage {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialState,
     TResult? Function()? loadingState,
-    TResult? Function()? loaded,
+    TResult? Function(String url)? loaded,
     TResult? Function(String message)? errorState,
   }) {
     return initialState?.call();
@@ -148,7 +148,7 @@ class _$_InitialPage implements _InitialPage {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function()? loaded,
+    TResult Function(String url)? loaded,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -240,7 +240,7 @@ class _$_LoadingState implements _LoadingState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function() loaded,
+    required TResult Function(String url) loaded,
     required TResult Function(String message) errorState,
   }) {
     return loadingState();
@@ -251,7 +251,7 @@ class _$_LoadingState implements _LoadingState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialState,
     TResult? Function()? loadingState,
-    TResult? Function()? loaded,
+    TResult? Function(String url)? loaded,
     TResult? Function(String message)? errorState,
   }) {
     return loadingState?.call();
@@ -262,7 +262,7 @@ class _$_LoadingState implements _LoadingState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function()? loaded,
+    TResult Function(String url)? loaded,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -319,6 +319,8 @@ abstract class _$$_LoadedStateCopyWith<$Res> {
   factory _$$_LoadedStateCopyWith(
           _$_LoadedState value, $Res Function(_$_LoadedState) then) =
       __$$_LoadedStateCopyWithImpl<$Res>;
+  @useResult
+  $Res call({String url});
 }
 
 /// @nodoc
@@ -328,36 +330,60 @@ class __$$_LoadedStateCopyWithImpl<$Res>
   __$$_LoadedStateCopyWithImpl(
       _$_LoadedState _value, $Res Function(_$_LoadedState) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? url = null,
+  }) {
+    return _then(_$_LoadedState(
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
 }
 
 /// @nodoc
 
 class _$_LoadedState implements _LoadedState {
-  const _$_LoadedState();
+  const _$_LoadedState({required this.url});
+
+  @override
+  final String url;
 
   @override
   String toString() {
-    return 'PostServiceState.loaded()';
+    return 'PostServiceState.loaded(url: $url)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_LoadedState);
+        (other.runtimeType == runtimeType &&
+            other is _$_LoadedState &&
+            (identical(other.url, url) || other.url == url));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, url);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
+      __$$_LoadedStateCopyWithImpl<_$_LoadedState>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function() loaded,
+    required TResult Function(String url) loaded,
     required TResult Function(String message) errorState,
   }) {
-    return loaded();
+    return loaded(url);
   }
 
   @override
@@ -365,10 +391,10 @@ class _$_LoadedState implements _LoadedState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialState,
     TResult? Function()? loadingState,
-    TResult? Function()? loaded,
+    TResult? Function(String url)? loaded,
     TResult? Function(String message)? errorState,
   }) {
-    return loaded?.call();
+    return loaded?.call(url);
   }
 
   @override
@@ -376,12 +402,12 @@ class _$_LoadedState implements _LoadedState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function()? loaded,
+    TResult Function(String url)? loaded,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
     if (loaded != null) {
-      return loaded();
+      return loaded(url);
     }
     return orElse();
   }
@@ -425,7 +451,12 @@ class _$_LoadedState implements _LoadedState {
 }
 
 abstract class _LoadedState implements PostServiceState {
-  const factory _LoadedState() = _$_LoadedState;
+  const factory _LoadedState({required final String url}) = _$_LoadedState;
+
+  String get url;
+  @JsonKey(ignore: true)
+  _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -494,7 +525,7 @@ class _$_ErrorState implements _ErrorState {
   TResult when<TResult extends Object?>({
     required TResult Function() initialState,
     required TResult Function() loadingState,
-    required TResult Function() loaded,
+    required TResult Function(String url) loaded,
     required TResult Function(String message) errorState,
   }) {
     return errorState(message);
@@ -505,7 +536,7 @@ class _$_ErrorState implements _ErrorState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initialState,
     TResult? Function()? loadingState,
-    TResult? Function()? loaded,
+    TResult? Function(String url)? loaded,
     TResult? Function(String message)? errorState,
   }) {
     return errorState?.call(message);
@@ -516,7 +547,7 @@ class _$_ErrorState implements _ErrorState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initialState,
     TResult Function()? loadingState,
-    TResult Function()? loaded,
+    TResult Function(String url)? loaded,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {

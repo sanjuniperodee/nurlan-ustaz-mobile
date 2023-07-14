@@ -341,8 +341,11 @@ class _MainPageState extends State<MainPage> {
                                         ),
                                         SizedBox(height: 16.h),
                                         InkWell(
+
                                           onTap: () => context.router
                                               .push(UstazAitinizhiRoute()),
+
+
                                           child: Container(
                                             width: 1.sw,
                                             decoration: BoxDecoration(
@@ -468,8 +471,12 @@ class _MainPageState extends State<MainPage> {
                                                     children: [
                                                       SizedBox(height: 2.h),
                                                       Text(
-                                                          news[index].title ??
+                                                          news[
+                                                                      index]
+                                                                  .title ??
                                                               'ERROR',
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
                                                           style: getTextStyle(
                                                                   CustomTextStyles
                                                                       .s14w400)

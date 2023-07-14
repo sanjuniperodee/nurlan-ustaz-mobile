@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
+
 import 'package:nurlan_ustaz_flutter/features/home/data/models/notification_item_dto.dart';
+
 import 'package:nurlan_ustaz_flutter/features/home/data/models/notification_settings_model.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/profile_notification_cubit.dart';
 
@@ -26,6 +28,7 @@ class _ProfileNotificationPage extends State<ProfileNotificationPage> {
 
   @override
   void initState() {
+
     //BlocProvider.of<TusZhoruCubit>(context).secureScreen();
     BlocProvider.of<ProfileNotificationCubit>(context).getNotificationDto();
     super.initState();
@@ -193,6 +196,13 @@ class _ProfileNotificationPage extends State<ProfileNotificationPage> {
                   ),
                 ),
               ),
+=======
+    // TODO: implement initState
+
+    super.initState();
+  }
+
+ 
             ),
           );
         });

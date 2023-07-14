@@ -7,7 +7,6 @@ import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 
-
 class Base extends StatefulWidget {
   const Base({super.key});
 
@@ -21,13 +20,11 @@ class _BaseState extends State<Base> {
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
       backgroundColor: AppColors.lightBlue,
-      routes:     [
+      routes: [
         const MainRouterPage(),
         const IslamTeachingRouterPage(),
         TusZhoruRouterPage(),
@@ -36,7 +33,7 @@ class _BaseState extends State<Base> {
       ],
       bottomNavigationBuilder: (_, tabsRouter) {
         return ClipRRect(
-          borderRadius:  BorderRadius.only(
+          borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(30.0).r,
             topRight: const Radius.circular(30.0).r,
           ),
@@ -83,7 +80,7 @@ class _BaseState extends State<Base> {
                           Assets.moonSvg,
                           height: 55.h,
                         ),
-                         SizedBox(
+                        SizedBox(
                           height: 7.h,
                         ),
                         Padding(
@@ -118,6 +115,4 @@ class _BaseState extends State<Base> {
       },
     );
   }
-
-
 }
