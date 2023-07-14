@@ -146,7 +146,7 @@ class CustomCalendarAgendaState extends State<CustomCalendarAgenda>
                         (5 - _dates.length) /
                         10)
                 : const EdgeInsets.symmetric(horizontal: 10),
-            initialScrollIndex: _daySelectedIndex! - 1 ?? 0,
+            initialScrollIndex: _daySelectedIndex! - 1,
             // initialAlignment: _scrollAlignment,
             initialAlignment:
                 widget.selectedDayPosition == SelectedDayPosition.center
@@ -240,7 +240,13 @@ class CustomCalendarAgendaState extends State<CustomCalendarAgenda>
                                                   : 12),
                                       child: Center(
                                         child: Text(
-                                          (_eventDates.map((e) => DateTime.parse(e).day).toList().indexOf(date.day)+1).toString(),
+                                          (_eventDates
+                                                      .map((e) =>
+                                                          DateTime.parse(e).day)
+                                                      .toList()
+                                                      .indexOf(date.day) +
+                                                  1)
+                                              .toString(),
                                           style: TextStyle(
                                               fontSize: 16.0,
                                               color: _eventDates.contains(date
@@ -331,7 +337,6 @@ class CustomCalendarAgendaState extends State<CustomCalendarAgenda>
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     leading,
-
                   ],
                 ),
               ),

@@ -263,8 +263,6 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
             create: (context) => getIt<ZhosparymCubit>()),
         BlocProvider<CheckListCubit>(
             create: (context) => getIt<CheckListCubit>()),
-
-
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),

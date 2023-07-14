@@ -55,7 +55,7 @@ class _TodayChatPageState extends State<TodayChatPage> {
             ),
           ),
         );
-      }, initialState: (questions, channel,user) {
+      }, initialState: (questions, channel, user) {
         return Column(
           children: [
             SizedBox(
@@ -110,3 +110,19 @@ class _TodayChatPageState extends State<TodayChatPage> {
             SizedBox(
               height: 16.h,
             ),
+
+            QuestionsList(
+              questions: questions.reversed.toList(),
+              isSocket: false,
+            ),
+
+            SizedBox(
+              height: 10,
+            ),
+            //QuestionsList(questions: questions,),
+          ],
+        );
+      });
+    });
+  }
+}

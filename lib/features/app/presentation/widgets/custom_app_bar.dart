@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
@@ -21,7 +20,6 @@ class CustomAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: hideIcon != null
@@ -37,61 +35,29 @@ class CustomAppBar extends StatelessWidget {
             ]
           : [
               GestureDetector(
-                  onTap: onTap != null ? (){
-                    onTap!();
-                  }     :() {
-                    Navigator.pop(context);
-                  },
+                  onTap: onTap != null
+                      ? () {
+                          onTap!();
+                        }
+                      : () {
+                          Navigator.pop(context);
+                        },
                   child: SvgPicture.asset(
                     Assets.backButtonSvg,
                     color: color ?? AppColors.white,
                   )),
-
               Expanded(
                 child: Align(
                   alignment: Alignment.center,
-
-    return Padding(
-      padding: const EdgeInsets.only(top: 12.0).r,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: hideIcon != null
-            ? [
-                Center(
                   child: Text(
                     title,
                     textAlign: TextAlign.center,
-                    style: getTextStyle(CustomTextStyles.s20w700).copyWith(
-                        color: color ?? AppColors.white, fontSize: 36),
+                    style: getTextStyle(CustomTextStyles.s20w700)
+                        .apply(color: color ?? AppColors.white),
                   ),
                 ),
-              ]
-            : [
-                GestureDetector(
-                    onTap: onTap != null
-                        ? () {
-                            onTap!();
-                          }
-                        : () {
-                            Navigator.pop(context);
-                          },
-                    child: SvgPicture.asset(
-                      Assets.backButtonSvg,
-                      color: color ?? AppColors.white,
-                    )),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      title,
-                      textAlign: TextAlign.center,
-                      style: getTextStyle(CustomTextStyles.s20w700)
-                          .apply(color: color ?? AppColors.white),
-                    ),
-                  ),
-                )
-              ],
-      ),
+              )
+            ],
     );
   }
 }

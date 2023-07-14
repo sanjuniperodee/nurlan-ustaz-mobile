@@ -249,7 +249,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                                         20.r)),
                                             child: CarouselSlider(
                                               carouselController: controller,
-                                              items: eventsT![date]!
+                                              items: eventsT[date]!
                                                   .toList()
                                                   .where((element) =>
                                                       element.type !=
@@ -257,7 +257,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                                   .toList()
                                                   .map(
                                                 (e) {
-                                                  log('${eventsT![date]!.toList().where((element) => element.type != EventsType.holiday).toList()}');
+                                                  log('${eventsT[date]!.toList().where((element) => element.type != EventsType.holiday).toList()}');
                                                   return EventContainer(
                                                     e,
                                                     nextPage: () {

@@ -6,9 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
-
 import 'package:nurlan_ustaz_flutter/features/home/data/models/notification_item_dto.dart';
-
 import 'package:nurlan_ustaz_flutter/features/home/data/models/notification_settings_model.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/profile_notification_cubit.dart';
 
@@ -28,52 +26,48 @@ class _ProfileNotificationPage extends State<ProfileNotificationPage> {
 
   @override
   void initState() {
-
     //BlocProvider.of<TusZhoruCubit>(context).secureScreen();
     BlocProvider.of<ProfileNotificationCubit>(context).getNotificationDto();
     super.initState();
   }
 
-
-
-
-
   String handleString(String namazTime) {
     switch (namazTime) {
       case 'custom_dreams':
-        return('Кастомные сны');
+        return ('Кастомные сны');
         // Code for case1
         break;
       case 'prayer_times':
-        return('Намаз');
+        return ('Намаз');
         // Code for case2
         break;
       case 'ayat_of_the_day':
-        return('Аят');
+        return ('Аят');
         // Code for case3
         break;
       case 'live_broadcasts':
-        return('Прямой эфир');
+        return ('Прямой эфир');
         // Code for case3
         break;
       case 'tell_me_ustaz':
-        return('Общение ');
+        return ('Общение ');
         // Code for case3
         break;
       case 'checklist_results':
-        return('Результаты чеклиста');
+        return ('Результаты чеклиста');
         // Code for case3
         break;
       case 'seminar_tickets':
-        return('Билеты семинаров');
+        return ('Билеты семинаров');
         // Code for case3
-        break; case 'new_content':
-      return('Новый контент');
-      // Code for case3
-      break;
+        break;
+      case 'new_content':
+        return ('Новый контент');
+        // Code for case3
+        break;
 
       default:
-        return('Invalid input');
+        return ('Invalid input');
         // Code for default case
         break;
     }
@@ -89,14 +83,11 @@ class _ProfileNotificationPage extends State<ProfileNotificationPage> {
       builder: (context, state) {
         return state.maybeWhen(orElse: () {
           return Container();
-        },
-            loadingState:(){
+        }, loadingState: () {
           return Center(
             child: CircularProgressIndicator(),
           );
-            },initialState: (items, notification) {
-
-
+        }, initialState: (items, notification) {
           return Scaffold(
             backgroundColor: AppColors.lightBlue,
             body: GlobalCustomBody(
@@ -154,7 +145,10 @@ class _ProfileNotificationPage extends State<ProfileNotificationPage> {
                                               child: CupertinoSwitch(
                                                 value: e.status!,
                                                 onChanged: (value) {
-                                                 context.read<ProfileNotificationCubit>().switchNotify(e, value);
+                                                  context
+                                                      .read<
+                                                          ProfileNotificationCubit>()
+                                                      .switchNotify(e, value);
                                                 },
                                                 activeColor: AppColors.orange,
                                               ),
@@ -196,13 +190,6 @@ class _ProfileNotificationPage extends State<ProfileNotificationPage> {
                   ),
                 ),
               ),
-=======
-    // TODO: implement initState
-
-    super.initState();
-  }
-
- 
             ),
           );
         });
