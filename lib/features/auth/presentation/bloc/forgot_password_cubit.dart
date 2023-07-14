@@ -1,11 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../data/model/token_dto.dart';
-import '../../data/model/user_payload.dart';
 import '../../data/repositories/auth_repository.dart';
 
 part 'forgot_password_cubit.freezed.dart';
@@ -22,6 +18,8 @@ class ForgotPasswordCubitCubit extends Cubit<ForgotPasswordState> {
       {required String code,
       required String newPassword,
       required String reNewPassword}) async {
+    emit(ForgotPasswordState.loadingState());
+
     final result = await _authRepository.resetPasswordConfirm(
         userId: userId,
         code: code,

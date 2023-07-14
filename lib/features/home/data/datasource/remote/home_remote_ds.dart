@@ -53,10 +53,15 @@ abstract class HomeRemoteDs {
   Future<ResultHomeDTO> newsDetail({required int id});
 
   Future<List<FaqModelDTO>> faq();
+
   Future<List<GeonamesDTO>> geoNames({required String name});
+
   Future<NotificationDTO> setCity({required GeonamesDTO geo});
+
   Future<TimingsDTO> timings({required double lat, required double long});
+
   Future<List<ResultHomeDTO>> projectInfo();
+
   Future<ResultHomeDTO> seminarDetail({required int id});
 
   Future<List<ResultHomeDTO>> news(
@@ -96,15 +101,24 @@ abstract class HomeRemoteDs {
 
   Future<List<ChatDTO>> chats(
       {required String startTime, required String endTime});
+
   Future<FreedomPaymentDTO> createSeminarPayment(
       {required int id, required String backUrl});
+
   Future<List<QuestionDTO>> questions(
       {int? currentPage,
       String? search,
       required int id,
       bool? isFirstCall = false});
+
   Future<NotificationDTO> notificationDevice(
       {required NotificationDeviceDTO notification});
+
+  Future<NotificationDTO> getNotificationDevice(
+      {required String registrationId});
+
+  Future<NotificationDTO> putNotificationDevice(
+      {required String registrationId, required NotificationDTO notification});
 }
 
 @Injectable(as: HomeRemoteDs)
@@ -643,11 +657,6 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       int? currentPage,
       bool? isFirstCall = false}) async {
     try {
-
-
-
-
-
       if (isFirstCall ?? false) {
         newsPage.clear();
       }
@@ -821,18 +830,53 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   }
 
   @override
-  Future<NotificationDTO> notificationDevice({required NotificationDeviceDTO notification}) async {
+  Future<NotificationDTO> notificationDevice(
+      {required NotificationDeviceDTO notification}) async {
     try {
       final response = await dio.post(
         EndPoints.notification,
         data: jsonEncode(notification.toJson()),
       );
       return NotificationDTO.fromJson(response.data);
-
     } on DioError catch (e) {
       throw ServerException(
         message:
-        (e.response!.data as Map<String, dynamic>)['message'].toString(),
+            (e.response!.data as Map<String, dynamic>)['message'].toString(),
+      );
+    }
+  }
+
+  @override
+  Future<NotificationDTO> getNotificationDevice(
+      {required String registrationId}) async {
+    try {
+      final response = await dio.get(
+        '${EndPoints.notification}/$registrationId',
+        data: {'registration_id': registrationId},
+      );
+      return NotificationDTO.fromJson(response.data);
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'].toString(),
+      );
+    }
+  }
+
+  @override
+  Future<NotificationDTO> putNotificationDevice(
+      {required String registrationId,
+      required NotificationDTO notification}) async {
+    try {
+      final FormData formData = FormData.fromMap(notification.toJson());
+      final response = await dio.patch(
+        '${EndPoints.notification}/$registrationId/',
+        data: formData,
+      );
+      return NotificationDTO.fromJson(response.data);
+    } on DioError catch (e) {
+      throw ServerException(
+        message: e.response?.data.toString() ?? 'error',
       );
     }
   }

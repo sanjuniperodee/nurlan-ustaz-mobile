@@ -2,6 +2,8 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'enums/gender.dart';
+
 part 'user_dto.freezed.dart';
 part 'user_dto.g.dart';
 
@@ -13,7 +15,7 @@ class UserDto with _$UserDto {
     @JsonKey(name: "email") String? email,
     @JsonKey(name: "password") String? password,
     @JsonKey(name: "phone_number") String? phoneNumber,
-    // @JsonKey(name: "gender") Gender? gender,
+     //@JsonKey(name: "gender") Gender? gender,
     @JsonKey(name: "birthday") DateTime? birthday,
     @JsonKey(name: "re_password") String? rePassword,
     String? avatar,

@@ -63,4 +63,12 @@ mixin EndPoints {
   static const String duha = '/api/knowledge/duas/';
   static const String dhikrs = '/api/knowledge/dhikrs/';
   static const String muslimNames = '/api/knowledge/muslim_names/';
+
+  //ZHOSPARYM
+  static const String events = '/api/calendar/events/';
+  static const String checklist = '/api/calendar/checklists/';
+  static const String checklistDays = '/api/calendar/checklist-days/';
+
+
+
 }

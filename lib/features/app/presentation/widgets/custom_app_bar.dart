@@ -44,6 +44,7 @@ class CustomAppBar extends StatelessWidget {
                     Assets.backButtonSvg,
                     color: color ?? AppColors.white,
                   )),
+
               Expanded(
                 child: Align(
                   alignment: Alignment.center,

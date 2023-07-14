@@ -1,0 +1,88 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:injectable/injectable.dart';
+import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/checklist_task_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/repository/zhosparym_repository.dart';
+
+import '../../data/models/checklist_day_dto.dart';
+
+part 'checklist_cubit.freezed.dart';
+
+@singleton
+class CheckListCubit extends Cubit<CheckListState> {
+  CheckListCubit(
+    this._repository,
+  ) : super(const CheckListState.initialState()) {
+    selectedMonth = DateTime.now();
+  }
+
+  final ZhosparymRepository _repository;
+  late List<CheckListDayDto> days;
+  late DateTime selectedMonth;
+
+  Future<void> autoFillDays({required int checklistId}) async {}
+
+  Future<void> getDays({required int checklistId}) async {
+    final result = await _repository.getDays(checklistId: checklistId);
+
+    result.fold((l) => {}, (r) async {
+      days = r.toList();
+      if (days.isEmpty) {
+
+            await _repository.autoFillDays(checklistId: checklistId);
+        final result = await _repository.getDays(checklistId: checklistId);
+        result.fold(
+            (l) => {},
+            (r) => {
+                  emit(_InitialState(
+                      days: r.toList(), selectedDate: selectedMonth))
+                });
+      } else {
+        emit(_InitialState(days: r.toList(), selectedDate: selectedMonth));
+      }
+    });
+  }
+
+  Future<void> postTask(CheckListDayDto checkListDayDto, String title) async {
+    final result = await _repository.postTask(
+        checkListDayId: checkListDayDto.id, title: title);
+    result.fold((l) => {}, (r) => {getDays(checklistId: 2)});
+  }
+
+  Future<void> completeTask(CheckListDayDto checkListDayDto,
+      CheckListTaskDto checkListTaskDto, bool value) async {
+    final result = await _repository.completeTask(
+        checkListDayDto: checkListDayDto,
+        checkListTaskDto: checkListTaskDto,
+        isComplete: value);
+    result.fold((l) => {}, (r) => {getDays(checklistId: 2)});
+  }
+
+  Future<void> deleteTask(CheckListDayDto checkListDayDto,
+      CheckListTaskDto checkListTaskDto) async {
+    await _repository.deleteTask(
+        checkListDayId: checkListDayDto.id,
+        checkListTaskId: checkListTaskDto.id);
+    getDays(checklistId: 2);
+  }
+
+  Future<void> changeDate({required DateTime date}) async {
+    selectedMonth = date;
+    emit(_InitialState().copyWith(selectedDate: date, days: days));
+  }
+}
+
+@freezed
+class CheckListState with _$CheckListState {
+  const factory CheckListState.initialState(
+      {@Default([]) final List<CheckListDayDto> days,
+      final DateTime? selectedDate}) = _InitialState;
+
+  const factory CheckListState.loadedState() = _LoadedState;
+
+  const factory CheckListState.loadingState() = _LoadingState;
+
+  const factory CheckListState.errorState({
+    required String message,
+  }) = _ErrorState;
+}

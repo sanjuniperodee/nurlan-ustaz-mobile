@@ -1,12 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../data/model/token_dto.dart';
-import '../../data/model/user_payload.dart';
 import '../../data/repositories/auth_repository.dart';
 
 part 'login_cubit.freezed.dart';
@@ -19,13 +16,13 @@ class LoginCubit extends Cubit<LoginState> {
   final AuthRepository _authRepository;
 
   Future<void> createToken(TokenCreateDTO tokenCreateDTO) async {
+    emit(_LoadingState());
     final result =
         await _authRepository.createJTW(createTokenDTO: tokenCreateDTO);
     result.fold(
       (l) {
         l as ServerFailure;
-        log( mapFailureToMessageBack(l));
-        //emit(_ErrorState(message: mapFailureToMessageBack(l)));
+        emit(_ErrorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
         print('uspechno');

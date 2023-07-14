@@ -12,6 +12,8 @@ import 'package:nurlan_ustaz_flutter/features/auth/data/model/enums/gender.dart'
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_payload.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/auth_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/registration_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/registration_form.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/registration_form.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/widgets/private_policy_text.dart';
 
 import '../../../../core/common/app_styles.dart';
@@ -68,6 +70,10 @@ TextEditingController passwordRepeatController = TextEditingController();
 final maskFormatter = MaskTextInputFormatter(mask: '+7(###)-###-##-##');
 
 bool isPrivacyAccept = false;
+bool isLoading = false;
+bool obscureFirst = true;
+bool obscureSecond = true;
+
 
 Gender? gender = Gender.male;
 
@@ -77,7 +83,13 @@ class _RegistrationFormState extends State<RegistrationForm> {
     return BlocConsumer<RegistrationCubit, RegistrationState>(
         listener: (context, state) {
       state.maybeWhen(
-        loadingState: () {},
+        loadingState: () {
+          const Center(
+            child: CircularProgressIndicator(
+              color: AppColors.danger,
+            ),
+          );
+        },
         loadedState: (user) {
           context.router.push(CodeVerificationRoute(
               email: emailController.text,
@@ -118,7 +130,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
             height: 24.h,
           ),
           CustomTextFormProfile(
-            keyboardType: const TextInputType.numberWithOptions(decimal: false),
+
+            keyboardType:  TextInputType.phone,
             inputFormatters: [maskFormatter],
             controller: numberController,
             hintText: 'Телефон нөмірі',
@@ -153,6 +166,12 @@ class _RegistrationFormState extends State<RegistrationForm> {
           ),
           SizedBox(height: 24.h),
           CustomTextFormProfile(
+            obscureText: obscureFirst,
+            obscure: (){
+              setState(() {
+                obscureFirst = !obscureFirst;
+              });
+            },
             keyboardType: TextInputType.visiblePassword,
             helperText: 'Пароль должен содержать буквы и цифры ',
             controller: passwordController,
@@ -161,6 +180,12 @@ class _RegistrationFormState extends State<RegistrationForm> {
           ),
           SizedBox(height: 24.h),
           CustomTextFormProfile(
+            obscure: (){
+              setState(() {
+                obscureSecond = !obscureSecond;
+              });
+            },
+            obscureText: obscureSecond,
             keyboardType: TextInputType.visiblePassword,
 
             controller: passwordRepeatController,

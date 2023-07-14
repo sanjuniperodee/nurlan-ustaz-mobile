@@ -49,6 +49,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitiniz
 
 
 
+
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/login_page.dart';
 
 
@@ -69,7 +70,9 @@ import '../../features/home/presentation/ui/namaz_page.dart';
 import '../../features/home/presentation/ui/news_detail_page.dart';
 import '../../features/home/presentation/ui/profile/profile_main/faq_page.dart';
 import '../../features/tandaulilar/presentation/ui/tandauly_tus_zhoru.dart';
+import '../../features/zhosparlar/data/models/checklist_dto.dart';
 import '../../features/zhosparlar/presentation/ui/ramazan_checklist.dart';
+
 
 part 'app_router.gr.dart';
 

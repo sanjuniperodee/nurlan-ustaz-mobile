@@ -25,6 +25,7 @@ class CodeVerification extends StatefulWidget {
   @override
   State<CodeVerification> createState() => _CodeVerificationState();
 }
+bool isLoading = false;
 
 class _CodeVerificationState extends State<CodeVerification> {
   final pinController = TextEditingController();
@@ -79,7 +80,11 @@ class _CodeVerificationState extends State<CodeVerification> {
           floatingActionButton: Padding(
             padding: const EdgeInsets.all(16),
             child: AppButton(
+              isLoading: isLoading,
                 onTap: () {
+                setState(() {
+                  isLoading = true;
+                });
                   context.read<CodeVerificationCubit>().sendCode(pinController.text, widget.userId,TokenCreateDTO(email: widget.email,password: widget.password));
                 },
                 text: 'Дайын'),

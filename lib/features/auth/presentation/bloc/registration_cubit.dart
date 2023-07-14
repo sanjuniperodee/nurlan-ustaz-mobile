@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/error/failure.dart';
 import '../../data/model/enums/gender.dart';
 import '../../data/model/user_payload.dart';
 import '../../data/repositories/auth_repository.dart';
@@ -23,10 +24,11 @@ class RegistrationCubit extends Cubit<RegistrationState> {
   }
 
   Future<void> postUser(UserPayload userDTO) async {
+    emit(_LoadingState());
     final result = await _authRepository.postUser(userDTO: userDTO);
     return result.fold(
       (l) {
-        emit(RegistrationState.errorState(message: 'ошибка регистрации'));
+        emit(RegistrationState.errorState(message: mapFailureToMessageBack(l)));
 
 
       },

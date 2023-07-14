@@ -43,6 +43,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_like_c
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/partners_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/post_service_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/prj_info_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/profile_notification_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_fav_cubit.dart';
@@ -58,6 +59,8 @@ import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/bloc/tand
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/create_tus_zhoru_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_details_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/bloc/checklist_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/bloc/zhosparym_cubit.dart';
 
 import '../../../../core/services/locator_service.dart';
 import '../../../tus_zhoru/presentation/bloc/custom_tus_zhoru_details_cubit.dart';
@@ -183,6 +186,9 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         BlocProvider<NewsLikeCubit>(
           create: (context) => getIt<NewsLikeCubit>(),
         ),
+        BlocProvider<ProfileNotificationCubit>(
+          create: (context) => getIt<ProfileNotificationCubit>(),
+        ),
         //ISlAM TEACHING
         //
         BlocProvider<DhikrsCubit>(
@@ -236,7 +242,14 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         BlocProvider<TusZhoruDetailsCubit>(
             create: (context) => getIt<TusZhoruDetailsCubit>()),
         BlocProvider<CustomTusZhoruDetailsCubit>(
-            create: (context) => getIt<CustomTusZhoruDetailsCubit>())
+            create: (context) => getIt<CustomTusZhoruDetailsCubit>()),
+        //ZHOSPARLARIM
+        BlocProvider<ZhosparymCubit>(
+            create: (context) => getIt<ZhosparymCubit>()),
+        BlocProvider<CheckListCubit>(
+            create: (context) => getIt<CheckListCubit>()),
+
+
       ],
       child: ScreenUtilInit(
         designSize: const Size(375, 812),

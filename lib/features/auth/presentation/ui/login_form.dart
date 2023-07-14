@@ -22,6 +22,8 @@ class LoginForm extends StatefulWidget {
 
 TextEditingController emailController = TextEditingController();
 TextEditingController passwordController = TextEditingController();
+bool obscure = true;
+
 
 class _LoginFormState extends State<LoginForm> {
   @override
@@ -48,9 +50,15 @@ class _LoginFormState extends State<LoginForm> {
             ),
             SizedBox(height: 24.h),
             CustomTextFormProfile(
+              obscureText: obscure,
               keyboardType: TextInputType.visiblePassword,
               onChanged: (String value) {
                 setState(() {});
+              },
+              obscure: (){
+                setState(() {
+                  obscure = !obscure;
+                });
               },
               controller: passwordController,
               hintText: 'Құпия сөз',
@@ -120,7 +128,13 @@ class _LoginFormState extends State<LoginForm> {
       },
       listener: (context, state) {
         state.maybeWhen(
-          loadingState: () {},
+          loadingState: () {
+            Center(
+              child: CircularProgressIndicator(
+                color: AppColors.danger,
+              ),
+            );
+          },
           loadedState: () async {
             context.router.push(const LauncherAppRoute());
           },

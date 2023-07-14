@@ -5,6 +5,7 @@ import 'package:flutter_clean_calendar/clean_calendar_event.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 
+import '../../../../zhosparlar/data/models/event_dto.dart';
 import 'custom_calendar_tile.dart';
 import 'custom_date_utils.dart';
 import 'custom_gesture_detector.dart';
@@ -72,13 +73,13 @@ class CustomCalendar extends StatefulWidget {
   final ValueChanged<DateTime>? onMonthChanged;
   final ValueChanged<bool>? onExpandStateChanged;
   final ValueChanged? onRangeSelected;
-  final ValueChanged<CleanCalendarEvent>? onEventSelected;
+  final ValueChanged<EventDto>? onEventSelected;
   final bool isExpandable;
   final DayBuilder? dayBuilder;
   final EventListBuilder? eventListBuilder;
   final bool hideArrows;
   final bool hideTodayIcon;
-  final Map<DateTime, List<CleanCalendarEvent>>? events;
+  final Map<DateTime, List<EventDto>>? events;
   final Color? selectedColor;
   final Color? todayColor;
   final String todayButtonText;
@@ -141,7 +142,7 @@ class _CustomCalendarState extends State<CustomCalendar> {
   String displayMonth = '';
 
   DateTime get selectedDate => _selectedDate;
-  List<CleanCalendarEvent>? _selectedEvents;
+  List<EventDto>? _selectedEvents;
 
   void initState() {
     super.initState();
@@ -392,89 +393,89 @@ class _CustomCalendarState extends State<CustomCalendar> {
     }
   }
 
-  Widget get eventList {
-    if (widget.eventListBuilder == null) {
-      return Expanded(
-        child: _selectedEvents != null && _selectedEvents!.isNotEmpty
-            ? ListView.builder(
-                padding: EdgeInsets.all(0.0),
-                itemBuilder: (BuildContext context, int index) {
-                  final CleanCalendarEvent event = _selectedEvents![index];
-                  final String start =
-                      DateFormat('HH:mm').format(event.startTime).toString();
-                  final String end =
-                      DateFormat('HH:mm').format(event.endTime).toString();
-                  return Container(
-                    height: 60.0,
-                    child: InkWell(
-                      onTap: () {
-                        if (widget.onEventSelected != null) {
-                          widget.onEventSelected!(event);
-                        }
-                      },
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          Expanded(
-                            flex: 5,
-                            child: Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Container(
-                                color: event.color,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 75,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(event.summary,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .subtitle2),
-                                  Text(event.description)
-                                ],
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            flex: 20,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(start,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1),
-                                  Text(end,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyText1),
-                                ],
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  );
-                },
-                itemCount: _selectedEvents!.length,
-              )
-            : Container(),
-      );
-    } else {
-      // eventLiostBuilder is not null
-      return widget.eventListBuilder!(context, _selectedEvents!);
-    }
-  }
+  // Widget get eventList {
+  //   if (widget.eventListBuilder == null) {
+  //     return Expanded(
+  //       child: _selectedEvents != null && _selectedEvents!.isNotEmpty
+  //           ? ListView.builder(
+  //               padding: EdgeInsets.all(0.0),
+  //               itemBuilder: (BuildContext context, int index) {
+  //                 final EventDto event = _selectedEvents![index];
+  //                 final String start =
+  //                     DateFormat('HH:mm').format(DateTime.now()).toString();
+  //                 final String end =
+  //                     DateFormat('HH:mm').format(DateTime.now()).toString();
+  //                 return Container(
+  //                   height: 60.0,
+  //                   child: InkWell(
+  //                     onTap: () {
+  //                       if (widget.onEventSelected != null) {
+  //                         widget.onEventSelected!(event);
+  //                       }
+  //                     },
+  //                     child: Row(
+  //                       crossAxisAlignment: CrossAxisAlignment.center,
+  //                       children: <Widget>[
+  //                         Expanded(
+  //                           flex: 5,
+  //                           child: Padding(
+  //                             padding: const EdgeInsets.all(4.0),
+  //                             child: Container(
+  //                               color: Colors.white,
+  //                             ),
+  //                           ),
+  //                         ),
+  //                         Expanded(
+  //                           flex: 75,
+  //                           child: Padding(
+  //                             padding: const EdgeInsets.all(8.0),
+  //                             child: Column(
+  //                               crossAxisAlignment: CrossAxisAlignment.start,
+  //                               mainAxisAlignment: MainAxisAlignment.center,
+  //                               children: [
+  //                                 Text(event.title!,
+  //                                     style: Theme.of(context)
+  //                                         .textTheme
+  //                                         .subtitle2),
+  //                                 Text(event.address!)
+  //                               ],
+  //                             ),
+  //                           ),
+  //                         ),
+  //                         Expanded(
+  //                           flex: 20,
+  //                           child: Padding(
+  //                             padding: const EdgeInsets.all(8.0),
+  //                             child: Column(
+  //                               crossAxisAlignment: CrossAxisAlignment.end,
+  //                               mainAxisAlignment: MainAxisAlignment.center,
+  //                               children: [
+  //                                 Text(start,
+  //                                     style: Theme.of(context)
+  //                                         .textTheme
+  //                                         .bodyText1),
+  //                                 Text(end,
+  //                                     style: Theme.of(context)
+  //                                         .textTheme
+  //                                         .bodyText1),
+  //                               ],
+  //                             ),
+  //                           ),
+  //                         )
+  //                       ],
+  //                     ),
+  //                   ),
+  //                 );
+  //               },
+  //               itemCount: _selectedEvents!.length,
+  //             )
+  //           : Container(),
+  //     );
+  //   } else {
+  //     // eventLiostBuilder is not null
+  //     return widget.eventListBuilder!(context, _selectedEvents!);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -489,7 +490,7 @@ class _CustomCalendarState extends State<CustomCalendar> {
             expanded: calendarGridView,
             isExpanded: isExpanded,
           ),
-          expansionButtonRow,
+          //expansionButtonRow,
           //eventList
         ],
       ),
