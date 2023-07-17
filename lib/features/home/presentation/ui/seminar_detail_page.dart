@@ -327,6 +327,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                                             context)
                                                         .createSeminarPayment(
                                                           result.id!,
+                                                          context,
                                                         )
                                                         .then((value) =>
                                                             Navigator.of(
@@ -336,7 +337,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                                   color: AppColors.orange,
                                                   child: Center(
                                                     child: Text(
-                                                        '${result.price} тг төлеу',
+                                                        '${result.price!.toInt()} тг төлеу',
                                                         style: getTextStyle(
                                                                 CustomTextStyles
                                                                     .s14w400)

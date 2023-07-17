@@ -1,8 +1,10 @@
 import 'dart:developer';
 
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/repositories/home_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -20,6 +22,7 @@ class CreateSeminarPaymentCubit extends Cubit<CreateSeminarPaymentState> {
 
   Future<void> createSeminarPayment(
     int id,
+    BuildContext context,
   ) async {
     String tusZhoruDynamicLink = await DynamicLink().createSeminarLink(id);
 
@@ -28,6 +31,7 @@ class CreateSeminarPaymentCubit extends Cubit<CreateSeminarPaymentState> {
         id: id, backUrl: tusZhoruDynamicLink);
     log(tusZhoruDynamicLink);
     result.fold((l) => {}, (r) async {
+      // buildSuccessCustomSnackBar(context, 'Tema');
       final Uri url = Uri.parse(r.pgRedirectUrl.toString());
       if (!await launchUrl(url)) {
         throw Exception('Could not launch');

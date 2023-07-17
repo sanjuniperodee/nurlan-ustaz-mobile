@@ -150,10 +150,10 @@ class _NewsPageState extends State<NewsPage> {
                                               listOfNews[index].cover ?? '',
                                           fit: BoxFit.cover,
                                           height: 100.h,
-                                          width: 80.w,
+                                          width: 100.w,
                                           errorWidget: (a, b, c) => SizedBox(
+                                            height: 100.h,
                                             width: 100.w,
-                                            height: 80.h,
                                           ),
                                         ),
                                       ),

@@ -24,7 +24,6 @@ import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/rename_user
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/change_pass_cubit.dart';
 
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/charities_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/chat_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_like_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_post_cubit.dart';
@@ -52,6 +51,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_cub
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_fav_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/services_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/bloc/technical_support_cubit.dart';
 
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/presentation/bloc/calendar_chats_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/presentation/bloc/today_chat_cubit.dart';
@@ -115,11 +115,13 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         //
         //HOME
         //
+
+        BlocProvider<TechnicalSupportCubit>(
+          create: (context) => getIt<TechnicalSupportCubit>(),
+        ),
+
         BlocProvider<PaymentTickCubit>(
           create: (context) => getIt<PaymentTickCubit>(),
-        ),
-        BlocProvider<ChatCubit>(
-          create: (context) => getIt<ChatCubit>(),
         ),
 
         BlocProvider<GetNotiCubit>(
@@ -268,7 +270,7 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         designSize: const Size(375, 812),
         builder: (context, child) {
           return MaterialApp(
-            debugShowCheckedModeBanner: false,
+            debugShowCheckedModeBanner: true,
             title: 'First Method',
             // You can use the library anywhere in the app even in theme
             theme: ThemeData(
