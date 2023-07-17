@@ -85,9 +85,8 @@ class _KausarDioInterceptor extends Interceptor {
     } catch (e) {
       log('ERROR:::${e.toString()}');
     } finally {
-      log('!!!222');
       options.headers['Accept'] = "application/json";
-      options.headers['Content-Language'] = locale.replaceAll('kk', 'kz');
+      options.headers['Content-Language'] = locale.replaceAll('kz', 'kk');
       super.onRequest(options, handler);
     }
   }

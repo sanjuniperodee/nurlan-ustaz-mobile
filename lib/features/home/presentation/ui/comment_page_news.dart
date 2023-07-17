@@ -3,12 +3,15 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
+import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_post_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/get_profile_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/widgets/comment_deep_item_widget.dart';
 
@@ -33,6 +36,7 @@ class _CommentPageNewsState extends State<CommentPageNews> {
     // TODO: implement initState
     BlocProvider.of<CommentNewsCubit>(context)
         .commentsNews(page: 1, isFirstCall: true, id: widget.id);
+    BlocProvider.of<GetProfileCubit>(context).getUser();
     _scrollController.addListener(_scrollListener);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       FocusScope.of(context).requestFocus(focusNode);
@@ -71,83 +75,101 @@ class _CommentPageNewsState extends State<CommentPageNews> {
               .apply(color: AppColors.black),
         ),
       ),
-      bottomSheet: Container(
-        padding: const EdgeInsets.all(16),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Expanded(
-              flex: 0,
-              child: Container(
-                height: 40,
-                width: 40,
-                decoration:
-                    BoxDecoration(borderRadius: BorderRadius.circular(100)),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(100),
-                  child: Image.network(
-                    'https://i.pinimg.com/originals/6d/f8/bb/6df8bbb26f6cde4d1e2919e1340eeef3.jpg',
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(
-              width: 4.w,
-            ),
-            Expanded(
-              flex: 3,
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    border: Border.all(color: AppColors.grey2)),
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 16,
-                ),
+      bottomSheet: BlocBuilder<GetProfileCubit, GetProfileState>(
+        builder: (context, state) {
+          return state.maybeWhen(
+            orElse: () {
+              return const CircularProgressIndicator(
+                color: AppColors.danger,
+              );
+            },
+            loaded: (user, geo) {
+              return Container(
+                padding: const EdgeInsets.all(16),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Expanded(
-                      child: TextField(
-                        autofocus: true, // Set autofocus to true
-                        focusNode: focusNode,
-                        controller: _textEditingController,
-                        decoration: const InputDecoration(
-                            hintText: 'Пікір білдіру',
-                            border: InputBorder.none),
+                      flex: 0,
+                      child: Container(
+                        height: 40,
+                        width: 40,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(100)),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: user.avatar != null
+                              ? Image.network(
+                                  user.avatar!,
+                                  fit: BoxFit.cover,
+                                )
+                              : SvgPicture.asset(Assets.userSvg),
+                        ),
                       ),
                     ),
-                    BlocListener<CommentNewsPostCubit, CommentNewsPostState>(
-                      listener: (context, state) {
-                        log(state.toString());
-                        state.maybeWhen(orElse: () {
-                          log(state.toString());
-                        }, loaded: () {
-                          BlocProvider.of<CommentNewsCubit>(context)
-                              .commentsNews(
-                                  page: 1, isFirstCall: true, id: widget.id);
-                        });
-                      },
-                      child: IconButton(
-                        icon: const Icon(Icons.send),
-                        onPressed: () {
-                          BlocProvider.of<CommentNewsPostCubit>(context)
-                              .newsCommentPost(
-                            body: _textEditingController.text,
-                            id: widget.id,
-                            commentId: idChildComment,
-                          );
-                          idChildComment = null;
-                          setState(() {});
-                          _textEditingController.clear();
-                        },
+                    SizedBox(
+                      width: 4.w,
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(30),
+                            border: Border.all(color: AppColors.grey2)),
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 16,
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: TextField(
+                                autofocus: true, // Set autofocus to true
+                                focusNode: focusNode,
+                                controller: _textEditingController,
+                                decoration: const InputDecoration(
+                                    hintText: 'Пікір білдіру',
+                                    border: InputBorder.none),
+                              ),
+                            ),
+                            BlocListener<CommentNewsPostCubit,
+                                CommentNewsPostState>(
+                              listener: (context, state) {
+                                log(state.toString());
+                                state.maybeWhen(orElse: () {
+                                  log(state.toString());
+                                }, loaded: () {
+                                  BlocProvider.of<CommentNewsCubit>(context)
+                                      .commentsNews(
+                                          page: 1,
+                                          isFirstCall: true,
+                                          id: widget.id);
+                                });
+                              },
+                              child: IconButton(
+                                icon: const Icon(Icons.send),
+                                onPressed: () {
+                                  BlocProvider.of<CommentNewsPostCubit>(context)
+                                      .newsCommentPost(
+                                    body: _textEditingController.text,
+                                    id: widget.id,
+                                    commentId: idChildComment,
+                                  );
+                                  idChildComment = null;
+                                  setState(() {});
+                                  _textEditingController.clear();
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ),
-            ),
-          ],
-        ),
+              );
+            },
+          );
+        },
       ),
       body: BlocConsumer<CommentNewsCubit, CommentNewsState>(
         listener: (context, state) {
@@ -198,6 +220,13 @@ class _CommentPageNewsState extends State<CommentPageNews> {
                               data: ThemeData()
                                   .copyWith(dividerColor: Colors.transparent),
                               child: ExpansionTile(
+                                trailing:
+                                    listOfComments[index].children!.isEmpty
+                                        ? const SizedBox()
+                                        : const Icon(
+                                            Icons.expand_more,
+                                            color: AppColors.grey2,
+                                          ),
                                 title: CommentDeepItemWidget(
                                   resultHomeDTO: listOfComments[index],
                                   id: widget.id,

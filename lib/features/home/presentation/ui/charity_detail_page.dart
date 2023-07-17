@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:clipboard/clipboard.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -6,6 +7,7 @@ import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:flutter/services.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 
 class CharityDetailPage extends StatefulWidget {
@@ -108,8 +110,18 @@ class _CharityDetailPageState extends State<CharityDetailPage> {
                                           style: getTextStyle(
                                               CustomTextStyles.s14w400),
                                         ),
-                                        trailing:
-                                            SvgPicture.asset(Assets.copiedSvg),
+                                        trailing: InkWell(
+                                            onTap: () async {
+                                              await FlutterClipboard.copy(widget
+                                                      .result
+                                                      .requisites![index]
+                                                      .bankAccountNumber!)
+                                                  .then((value) =>
+                                                      buildSuccessCustomSnackBar(
+                                                          context, 'Сақталды'));
+                                            },
+                                            child: SvgPicture.asset(
+                                                Assets.copiedSvg)),
                                       ),
                                       ListTile(
                                         minLeadingWidth: 0,
@@ -124,12 +136,13 @@ class _CharityDetailPageState extends State<CharityDetailPage> {
                                         ),
                                         trailing: InkWell(
                                             onTap: () async {
-                                              await Clipboard.setData(
-                                                  ClipboardData(
-                                                      text: widget
-                                                          .result
-                                                          .requisites![index]
-                                                          .phoneNumber));
+                                              await FlutterClipboard.copy(widget
+                                                      .result
+                                                      .requisites![index]
+                                                      .phoneNumber!)
+                                                  .then((value) =>
+                                                      buildSuccessCustomSnackBar(
+                                                          context, 'Сақталды'));
                                             },
                                             child: SvgPicture.asset(
                                                 Assets.copiedSvg)),
@@ -216,7 +229,8 @@ class CustomListTIle extends StatelessWidget {
       ),
       trailing: InkWell(
           onTap: () async {
-            await Clipboard.setData(ClipboardData(text: text));
+            await FlutterClipboard.copy(text).then(
+                (value) => buildSuccessCustomSnackBar(context, 'Сақталды'));
           },
           child: SvgPicture.asset(Assets.copiedSvg)),
     );

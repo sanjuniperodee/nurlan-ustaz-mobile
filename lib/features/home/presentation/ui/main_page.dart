@@ -15,13 +15,10 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_butto
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/main_button.dart';
-import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/banner_local_model.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/timings_cubit.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
-
-import '../../../auth/data/repositories/auth_repository.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -341,11 +338,8 @@ class _MainPageState extends State<MainPage> {
                                         ),
                                         SizedBox(height: 16.h),
                                         InkWell(
-
                                           onTap: () => context.router
                                               .push(UstazAitinizhiRoute()),
-
-
                                           child: Container(
                                             width: 1.sw,
                                             decoration: BoxDecoration(

@@ -14,9 +14,11 @@ class GlobalCustomBody extends StatefulWidget {
   State<GlobalCustomBody> createState() => _GlobalCustomBodyState();
 }
 
-class _GlobalCustomBodyState extends State<GlobalCustomBody> with TickerProviderStateMixin {
+class _GlobalCustomBodyState extends State<GlobalCustomBody>
+    with TickerProviderStateMixin {
   late final AnimationController _controller =
-      AnimationController(duration: Duration(seconds: 20), vsync: this)..repeat();
+      AnimationController(duration: Duration(seconds: 20), vsync: this)
+        ..repeat();
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,10 @@ class _GlobalCustomBodyState extends State<GlobalCustomBody> with TickerProvider
                 width: 210,
               ),
               builder: (BuildContext context, Widget? child) {
-                return Transform.rotate(angle: _controller.value * 2 * 3.14,child: child,);
+                return Transform.rotate(
+                  angle: _controller.value * 2 * 3.14,
+                  child: child,
+                );
               },
             ),
           ),
