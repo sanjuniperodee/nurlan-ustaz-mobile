@@ -9,7 +9,7 @@ class DynamicLink {
       androidParameters:
           const AndroidParameters(packageName: "com.nurlan_ustaz_flutter"),
       iosParameters: const IOSParameters(
-          bundleId: "com.nurlan.ustaz.flutter", appStoreId: '6450172719'),
+          bundleId: "com.nurlan.ustaz.flutter", appStoreId: '6451202657'),
     );
     ShortDynamicLink dynamicLink =
         await FirebaseDynamicLinks.instance.buildShortLink(dynamicLinkParams);
@@ -25,7 +25,7 @@ class DynamicLink {
       androidParameters:
           const AndroidParameters(packageName: "com.nurlan_ustaz_flutter"),
       iosParameters: const IOSParameters(
-          bundleId: "com.nurlan.ustaz.flutter", appStoreId: '6450172719'),
+          bundleId: "com.nurlan.ustaz.flutter", appStoreId: '6451202657'),
     );
     ShortDynamicLink dynamicLink =
         await FirebaseDynamicLinks.instance.buildShortLink(dynamicLinkParams);
@@ -41,7 +41,7 @@ class DynamicLink {
       androidParameters:
           const AndroidParameters(packageName: "com.nurlan_ustaz_flutter"),
       iosParameters: const IOSParameters(
-          bundleId: "com.nurlan.ustaz.flutter", appStoreId: '6450172719'),
+          bundleId: "com.nurlan.ustaz.flutter", appStoreId: '6451202657'),
     );
     ShortDynamicLink dynamicLink =
         await FirebaseDynamicLinks.instance.buildShortLink(dynamicLinkParams);

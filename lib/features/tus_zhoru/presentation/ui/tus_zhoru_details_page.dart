@@ -29,7 +29,6 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
 
   @override
   void initState() {
-
     //BlocProvider.of<TusZhoruCubit>(context).secureScreen();
     BlocProvider.of<TusZhoruDetailsCubit>(context).getTusZhoruById(widget.id);
 
@@ -168,14 +167,11 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                         children: [
                                           InkWell(
                                             onTap: () {
-                                              BlocProvider.of<TusZhoruDetailsCubit>(
+                                              BlocProvider.of<
+                                                          TusZhoruDetailsCubit>(
                                                       context)
-
-                                                  .likeTusZhoru(tusZhoruModel.id!);
-
-
-
-
+                                                  .likeTusZhoru(
+                                                      tusZhoruModel.id!);
                                             },
                                             child: Container(
                                               width: 150.w,
@@ -186,7 +182,8 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                                     .withOpacity(0.13),
                                               ),
                                               padding: EdgeInsets.symmetric(
-                                                  horizontal: 14.w, vertical: 13.h),
+                                                  horizontal: 14.w,
+                                                  vertical: 13.h),
                                               child: Row(
                                                 mainAxisAlignment:
                                                     MainAxisAlignment

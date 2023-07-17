@@ -54,16 +54,12 @@ class _CommentDeepItemWidgetState extends State<CommentDeepItemWidget> {
             width: 40.w,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(100),
-              child: CachedNetworkImage(
-                imageUrl: widget.resultHomeDTO.user?.avatar ??
-                    'https://i.pinimg.com/originals/6d/f8/bb/6df8bbb26f6cde4d1e2919e1340eeef3.jpg',
-                fit: BoxFit.cover,
-                width: double.infinity,
-                errorWidget: (a, b, c) => SizedBox(
-                  height: 40.h,
-                  width: 40.w,
-                ),
-              ),
+              child: widget.resultHomeDTO.user?.avatar != null
+                  ? Image.network(
+                      widget.resultHomeDTO.user!.avatar!,
+                      fit: BoxFit.cover,
+                    )
+                  : SvgPicture.asset(Assets.userSvg),
             ),
           ),
           const SizedBox(
