@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/validators.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/token_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/login_cubit.dart';
+import 'package:pinput/pinput.dart';
 
 import '../../../../core/common/app_styles.dart';
 import '../../../../core/common/colors.dart';
@@ -26,8 +27,11 @@ bool obscure = true;
 
 
 class _LoginFormState extends State<LoginForm> {
+
+
   @override
   Widget build(BuildContext context) {
+
     return BlocConsumer<LoginCubit, LoginState>(
       builder: (context, state) {
         return Column(
@@ -50,11 +54,12 @@ class _LoginFormState extends State<LoginForm> {
             ),
             SizedBox(height: 24.h),
             CustomTextFormProfile(
-              obscureText: obscure,
               keyboardType: TextInputType.visiblePassword,
               onChanged: (String value) {
                 setState(() {});
               },
+              obscureText: obscure,
+
               obscure: (){
                 setState(() {
                   obscure = !obscure;
@@ -89,7 +94,12 @@ class _LoginFormState extends State<LoginForm> {
                     buildErrorCustomSnackBar(
                         context, 'Введите корректный почтовый адрес');
                     return;
-                  } else {
+                  }
+                  if (passwordController.length < 8) {
+                    buildErrorCustomSnackBar(context, 'Слишком короткий пароль');
+                    return;
+                  }
+                  else {
                     context.read<LoginCubit>().createToken(TokenCreateDTO(
                         email: emailController.text,
                         password: passwordController.text));
@@ -136,6 +146,8 @@ class _LoginFormState extends State<LoginForm> {
             );
           },
           loadedState: () async {
+            emailController.clear();
+            passwordController.clear();
             context.router.push(const LauncherAppRoute());
           },
           errorState: (message) {

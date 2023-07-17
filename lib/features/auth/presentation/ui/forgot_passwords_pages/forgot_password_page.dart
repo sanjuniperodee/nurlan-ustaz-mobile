@@ -109,6 +109,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                       ),
                       SizedBox(height: 18.h),
                       CustomTextFormProfile(
+                        keyboardType: TextInputType.emailAddress,
                         onChanged: (String) {
                           setState(() {});
                         },
@@ -134,6 +135,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       listener: (context, state) {
         state.maybeWhen(
           successConfirm: (){
+
              Navigator.of(context).pop();
           },
 

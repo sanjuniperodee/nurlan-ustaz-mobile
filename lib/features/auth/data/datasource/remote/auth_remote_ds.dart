@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
@@ -53,7 +54,7 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
 
       return UserPayload.fromJson(response.data);
     } catch (e) {
-      throw ServerException(message: e.toString());
+      throw ServerException(message:(e as Map<String, dynamic>)['message'] as String);
     }
   }
 
@@ -82,7 +83,7 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
 
       return UserDto.fromJson(response.data);
     } catch (e) {
-      throw ServerException(message: e.toString());
+      throw ServerException(message: (e as Map<String, dynamic>)['message'] as String);
     }
   }
 
@@ -95,7 +96,7 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       log(response.data.toString());
       return UserDto.fromJson(response.data);
     } catch (e) {
-      throw ServerException(message: e.toString());
+      throw ServerException(message: (e as Map<String, dynamic>)['message'] as String);
     }
   }
 
@@ -109,20 +110,20 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       );
       return TokenDTO.fromJson(response.data);
     } catch (e) {
-      throw ServerException(message: e.toString());
+      throw ServerException(message: ( e as Map<String, dynamic>)['message'] as String);
     }
   }
 
   @override
   Future<bool> activateUser({required ActivateUserDTO activateUserDTO}) async {
     try {
-      final result = await dio.post(
+       await dio.post(
         EndPoints.activateUser,
         data: activateUserDTO.toJson(),
       );
       return true;
     } catch (e) {
-      throw ServerException(message: e.toString());
+      throw ServerException(message: (e as Map<String, dynamic>)['message'] as String);
     }
   }
 
@@ -145,7 +146,7 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       log(pass.toString());
       return true;
     } catch (e) {
-      throw ServerException(message: e.toString());
+      throw ServerException(message: (e as Map<String, dynamic>)['message'] as String);
     }
   }
 
@@ -158,7 +159,7 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
 
       return true;
     } catch (e) {
-      throw ServerException(message: e.toString());
+      throw ServerException(message: (e as Map<String, dynamic>)['message'] as String);
     }
   }
 
@@ -175,7 +176,7 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       log(body.toString());
       return int.parse(body['user_id'].toString());
     } catch (e) {
-      throw ServerException(message: e.toString());
+      throw ServerException(message: (e as Map<String, dynamic>)['message'] as String);
     }
   }
 
@@ -196,9 +197,7 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
         },
       );
     } catch (e) {
-
-      final error = e as Map<String, dynamic>;
-      throw ServerException(message: error.values.first.toString());
+      throw ServerException(message:  (e as Map<String, dynamic>)['message'] as String);
 
 
       throw ServerException(message: e.toString());

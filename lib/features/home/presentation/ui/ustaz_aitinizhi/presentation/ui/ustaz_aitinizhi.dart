@@ -29,7 +29,7 @@ class UstazAitinizhi extends StatefulWidget {
 }
 
 int currentIndex = 0;
-bool showButton = true;
+bool showButton = false;
 late UserDto userSir;
 late IOWebSocketChannel? _channel;
 
@@ -37,33 +37,40 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<TodayChatCubit, TodayChatState>(
-      listener: (context, state) {
+        listener: (context, state) {
         state.maybeWhen(
             orElse: () {},
             loadingState: () {
-              return Padding(
-                padding: const EdgeInsets.only(top: 600),
-                child: const Center(
+              return const Padding(
+                padding: EdgeInsets.only(top: 600),
+                child: Center(
                   child: CircularProgressIndicator(),
                 ),
               );
             },
             initialState: (questions, channel, user) {
+              userSir = user!;
+              _channel = channel;
+
               if (questions
                   .toList()
-                  .any((element) => element.userName! == user!.email!)) {
+                  .any((element) => element.email == user.email)) {
+                log('est');
                 setState(() {
                   showButton = false;
-                  userSir = user!;
-                  _channel = channel;
                 });
               }
             });
         // TODO: implement listener
       },
       child: Scaffold(
-        floatingActionButton: currentIndex == 0
-            ? showButton
+        floatingActionButton: currentIndex == 0 ?
+
+
+
+
+
+        showButton
                 ? Container(
                     width: double.infinity,
                     height: 112.h,
@@ -101,7 +108,7 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
                                               children: [
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 48,
                                                 ),
                                                 Text(
@@ -114,11 +121,11 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
                                                               .Philosopher
                                                               .name),
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 20,
                                                 ),
                                                 Padding(
-                                                  padding: EdgeInsets.symmetric(
+                                                  padding: const EdgeInsets.symmetric(
                                                       horizontal: 10),
                                                   child: Container(
                                                     height: 32.h,
@@ -176,7 +183,7 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
                                                 ),
                                                 InkWell(
                                                   onTap: () {
-                                                    _channel?.sink.add(jsonEncode({"message": "${_surakController.value.text}"}));
+                                                    _channel?.sink.add(jsonEncode({"message": _surakController.value.text}));
                                                     Navigator.pop(dialogContext);
                                                   },
                                                   child: Container(
@@ -246,7 +253,7 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
                     ),
                   )
                 : null
-            : null,
+            : null ,
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
         backgroundColor: Color(0xFFECF5FF),

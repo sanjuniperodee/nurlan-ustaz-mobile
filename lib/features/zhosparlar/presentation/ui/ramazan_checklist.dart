@@ -73,8 +73,7 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
                       CustomCalendarAgenda(
                         controller: _calendarAgendaControllerNotAppBar,
 
-                        // fullCalendar: false,
-                        locale: 'kk',
+                        locale: context.locale.languageCode,
                         weekDay: WeekDay.long,
                         fullCalendarDay: WeekDay.long,
                         selectedDateColor: Colors.blue.shade900,

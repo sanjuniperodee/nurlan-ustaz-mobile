@@ -67,7 +67,7 @@ class QuestionsList extends StatelessWidget {
                                     children: [
                                       Text(
                                         isSocket != null
-                                            ? e.userName ?? ''
+                                            ? e.fullName ?? ''
                                             : e.user?.fullName ?? '',
                                         style: getTextStyle(
                                                 CustomTextStyles.s14w500)
