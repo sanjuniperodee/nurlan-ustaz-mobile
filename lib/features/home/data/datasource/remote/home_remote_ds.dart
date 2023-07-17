@@ -861,7 +861,6 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
         data: jsonEncode(notification.toJson()),
       );
       return NotificationDTO.fromJson(response.data);
-
     } on DioError catch (e) {
       throw ServerException(
         message:
@@ -879,13 +878,10 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
         data: {'registration_id': registrationId},
       );
       return NotificationDTO.fromJson(response.data);
-
-
     } on DioError catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'].toString(),
-
       );
     }
   }
@@ -904,7 +900,6 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message: e.response?.data.toString() ?? 'error',
-
       );
     }
   }

@@ -13,6 +13,7 @@ import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
+import 'package:nurlan_ustaz_flutter/features/app/app_dinamic_link.dart';
 
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/create_seminar_payment_cubit.dart';
@@ -66,9 +67,9 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                   options: CarouselOptions(
                     viewportFraction: 1,
                     autoPlay: true,
-                    autoPlayInterval: const Duration(seconds: 3),
                     enlargeCenterPage: true,
-                    aspectRatio: 16 / 9,
+                    autoPlayInterval: const Duration(seconds: 3),
+                    aspectRatio: 17 / 13,
                     onPageChanged: (index, _) {
                       setState(() {
                         _currentIndex = index;
@@ -91,27 +92,28 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                     );
                   }).toList(),
                 ),
-                if (result.media != null)
-                  Positioned.fill(
-                    top: 210.r,
-                    child: Align(
-                      alignment: Alignment.topCenter,
-                      child: DotsIndicator(
-                        dotsCount: 1,
-                        position: _currentIndex,
-                        decorator: DotsDecorator(
-                          color: AppColors
-                              .white, // Color of non-selected indicators
-                          activeColor:
-                              AppColors.grey1, // Color of selected indicator
+                result.media == null
+                    ? const SizedBox()
+                    : Positioned.fill(
+                        top: 215.r,
+                        child: Align(
+                          alignment: Alignment.topCenter,
+                          child: DotsIndicator(
+                            dotsCount: result.media?.length ?? 1,
+                            position: _currentIndex,
+                            decorator: const DotsDecorator(
+                              color: AppColors
+                                  .grey2, // Color of non-selected indicators
+                              activeColor: AppColors
+                                  .white, // Color of selected indicator
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  ),
                 SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: Padding(
-                      padding: const EdgeInsets.only(top: 239).r,
+                      padding: const EdgeInsets.only(top: 259).r,
                       child: Container(
                         height: 1.sh,
                         width: 1.sw,
@@ -222,9 +224,14 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                         width: 12.w,
                                       ),
                                       InkWell(
-                                          onTap: () {
-                                            Share.share('Hello',
-                                                subject: 'Nurlan_ustaz');
+                                          onTap: () async {
+                                            String unguessableDynamicLink =
+                                                await DynamicLink()
+                                                    .createSeminarLink(
+                                                        widget.id);
+                                            await Share.share(
+                                              unguessableDynamicLink,
+                                            );
                                           },
                                           child: SvgPicture.asset(
                                               Assets.shareSvg)),

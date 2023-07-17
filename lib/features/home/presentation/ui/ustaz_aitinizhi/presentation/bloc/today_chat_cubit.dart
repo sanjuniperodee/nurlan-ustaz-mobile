@@ -28,64 +28,48 @@ class TodayChatCubit extends Cubit<TodayChatState> {
   final HomeRepository _homeRepository;
   final SharedPreferences sharedPreferences;
 
-  late  UserDto _userDto;
-
+  late UserDto _userDto;
 
   Future<void> connectSocket() async {
     emit(_LoadingState());
 
     var user = await _authRepo.getUser();
-    user.fold((l) => {}, (r) => {
-      _userDto = r
-    });
-
+    user.fold((l) => {}, (r) => {_userDto = r});
 
     final quests = await getQuestions();
 
     quests!.clear();
-     List<QuestionDTO> test = [];
+    List<QuestionDTO> test = [];
 
     TokenDTO? token = TokenDTO.fromJson(
       jsonDecode(sharedPreferences.get(SharedKeys.TOKEN).toString())
           as Map<String, dynamic>,
     );
     final channel = IOWebSocketChannel.connect(
-
-
-
-
         "ws://86.107.45.90:8000/api/tell-me-ustaz/chat/",
         headers: {"Authorization": "Bearer ${token.access}"});
     channel.stream.listen((event) async {
       emit(const _LoadingState());
-
       var questions = json.decode(event);
       log(questions.runtimeType.toString());
       log((questions.runtimeType == List<dynamic>).toString());
       if (questions.runtimeType == List<dynamic>) {
         log('1');
-        try{
-          for( var e in questions ){
+        try {
+          for (var e in questions) {
             log('-------${e.toString()}');
             test.add(QuestionDTO.fromJson(e));
           }
           log(questions[0].toString());
-
-
-        }
-        catch(e){
+        } catch (e) {
           log(e.toString());
         }
-
-      }
-      else{
+      } else {
         test.add(QuestionDTO.fromJson(questions));
       }
       log(test.length.toString());
-      emit(_InitialState(channel: channel, questions: test,user: _userDto ));
-
+      emit(_InitialState(channel: channel, questions: test, user: _userDto));
     });
-
   }
 
   Future<void> change(WebSocketChannel channel) async {
@@ -108,7 +92,6 @@ class TodayChatCubit extends Cubit<TodayChatState> {
       }, (r) async {
         return r.toList().reversed.toList();
       });
-
       //emit(const _InitialState().copyWith(chats: r));
     });
   }
