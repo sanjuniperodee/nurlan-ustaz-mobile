@@ -80,11 +80,8 @@ class _CodeVerificationState extends State<CodeVerification> {
           floatingActionButton: Padding(
             padding: const EdgeInsets.all(16),
             child: AppButton(
-              isLoading: isLoading,
                 onTap: () {
-                setState(() {
-                  isLoading = true;
-                });
+
                   context.read<CodeVerificationCubit>().sendCode(pinController.text, widget.userId,TokenCreateDTO(email: widget.email,password: widget.password));
                 },
                 text: 'Дайын'),

@@ -8,13 +8,21 @@ import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/create
 import '../common/app_styles.dart';
 import '../common/colors.dart';
 
-class PayDialog extends StatelessWidget {
+class PayDialog extends StatefulWidget {
   const PayDialog(
       {Key? key, required this.price, required this.id, required this.isCustom})
       : super(key: key);
   final String price;
   final int id;
   final bool isCustom;
+
+  @override
+  State<PayDialog> createState() => _PayDialogState();
+}
+
+bool isLoading = false;
+
+class _PayDialogState extends State<PayDialog> {
   @override
   Widget build(BuildContext context) {
     return Dialog(
@@ -62,26 +70,39 @@ class PayDialog extends StatelessWidget {
                     borderRadius: BorderRadius.circular(27)),
                 height: 44,
                 onPressed: () async {
-                  await BlocProvider.of<CreateTusZhoruCubit>(context)
-                      .createCustomTusZhoruPayment(id, isCustom);
+                   setState(() {
+                    isLoading = true;
+                  });
+                   BlocProvider.of<CreateTusZhoruCubit>(context)
+                       .createCustomTusZhoruPayment(widget.id, widget.isCustom);
+                   await Future.delayed(Duration(seconds: 7),(){
+
+                     setState(() {
+                       isLoading = false;
+                     });
+                   });
+
                   Navigator.of(context).pop();
                   showDialog(
                       context: context,
                       builder: (context) {
                         return SuccesPayDialog(
                           price: '',
-                          id: id,
-                          isCustom: isCustom,
+                          id: widget.id,
+                          isCustom: widget.isCustom,
                         );
                       });
                 },
                 color: AppColors.orange,
-                child: Center(
-                  child: Text('${price} тг төлеу',
-                      style: getTextStyle(CustomTextStyles.s14w400).copyWith(
-                          fontFamily: FontTypes.SF_Pro.name,
-                          color: AppColors.white)),
-                ),
+                child: isLoading
+                    ? Center(child: CircularProgressIndicator())
+                    : Center(
+                        child: Text('${widget.price} тг төлеу',
+                            style: getTextStyle(CustomTextStyles.s14w400)
+                                .copyWith(
+                                    fontFamily: FontTypes.SF_Pro.name,
+                                    color: AppColors.white)),
+                      ),
               ),
             )
           ],

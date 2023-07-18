@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:pinput/pinput.dart';
 
 import '../../../../../core/common/colors.dart';
 import '../../../../app/presentation/widgets/app_button.dart';
@@ -22,6 +23,8 @@ class NewPasswordPage extends StatefulWidget {
 
 TextEditingController firstPasswordController = TextEditingController();
 TextEditingController secondPasswordController = TextEditingController();
+bool obscureFirst = true;
+bool obscureSecond = true;
 
 class _NewPasswordPageState extends State<NewPasswordPage> {
   @override
@@ -35,13 +38,21 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
             isActive: (firstPasswordController.value.text ==
                     secondPasswordController.value.text &&
                 firstPasswordController.value.text.isNotEmpty &&
-                secondPasswordController.value.text.isNotEmpty),
+                secondPasswordController.value.text.isNotEmpty && firstPasswordController.length > 8),
+
             onTap: () {
+              (firstPasswordController.value.text ==
+                  secondPasswordController.value.text &&
+                  firstPasswordController.value.text.isNotEmpty &&
+                  secondPasswordController.value.text.isNotEmpty && firstPasswordController.length > 8) ?
               context.read<ForgotPasswordCubitCubit>().resetConfirm(
                     code: widget.pinCode,
                     newPassword: firstPasswordController.value.text,
                     reNewPassword: secondPasswordController.value.text,
-                  );
+
+                  ) : (){
+                return;
+              };
             },
             text: 'Дайын'),
       ),
@@ -73,6 +84,13 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                 controller: firstPasswordController,
                 hintText: 'Жаңа құпия сөз',
                 labelText: 'Жаңа құпия сөз',
+                obscureText: obscureFirst,
+
+                obscure: (){
+                  setState(() {
+                    obscureFirst = !obscureFirst;
+                  });
+                },
               ),
               SizedBox(
                 height: 18.h,
@@ -84,6 +102,13 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                 controller: secondPasswordController,
                 hintText: 'Жаңа құпия сөзді қайталаңыз',
                 labelText: 'Жаңа құпия сөзді қайталаңыз',
+                obscureText: obscureSecond,
+
+                obscure: (){
+                  setState(() {
+                    obscureSecond = !obscureSecond;
+                  });
+                },
               ),
             ],
           ),

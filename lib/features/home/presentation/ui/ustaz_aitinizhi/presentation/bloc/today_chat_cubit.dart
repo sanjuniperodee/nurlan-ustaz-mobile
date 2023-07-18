@@ -31,14 +31,14 @@ class TodayChatCubit extends Cubit<TodayChatState> {
   late UserDto _userDto;
 
   Future<void> connectSocket() async {
-    emit(_LoadingState());
-
+    //emit(_LoadingState());
+    late UserDto userP;
     var user = await _authRepo.getUser();
-    user.fold((l) => {}, (r) => {_userDto = r});
+    user.fold((l) => {}, (r) {userP = r;log(userP.toString());});
 
-    final quests = await getQuestions();
+    //final quests = await getQuestions();
 
-    quests!.clear();
+    //quests!.clear();
     List<QuestionDTO> test = [];
 
     TokenDTO? token = TokenDTO.fromJson(
@@ -50,6 +50,7 @@ class TodayChatCubit extends Cubit<TodayChatState> {
         headers: {"Authorization": "Bearer ${token.access}"});
     channel.stream.listen((event) async {
       emit(const _LoadingState());
+
       var questions = json.decode(event);
       log(questions.runtimeType.toString());
       log((questions.runtimeType == List<dynamic>).toString());
@@ -60,15 +61,12 @@ class TodayChatCubit extends Cubit<TodayChatState> {
             log('-------${e.toString()}');
             test.add(QuestionDTO.fromJson(e));
           }
-          log(questions[0].toString());
-        } catch (e) {
-          log(e.toString());
-        }
+        } catch (e) {}
       } else {
         test.add(QuestionDTO.fromJson(questions));
       }
       log(test.length.toString());
-      emit(_InitialState(channel: channel, questions: test, user: _userDto));
+      emit(_InitialState(channel: channel, questions: test, user: userP));
     });
   }
 
@@ -92,6 +90,7 @@ class TodayChatCubit extends Cubit<TodayChatState> {
       }, (r) async {
         return r.toList().reversed.toList();
       });
+
       //emit(const _InitialState().copyWith(chats: r));
     });
   }

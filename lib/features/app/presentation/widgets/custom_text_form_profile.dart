@@ -60,6 +60,7 @@ class CustomTextFormProfile extends StatelessWidget {
                 },
                 icon: obscureText! ? SvgPicture.asset('assets/icons/obscure-off.svg') :SvgPicture.asset('assets/icons/obscure.svg') )
             : null,
+
         helperText: helperText,
         errorText: errorText,
         label: Text(

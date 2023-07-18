@@ -20,13 +20,6 @@ class TusZhoruDTO with _$TusZhoruDTO {
     @JsonKey(name: "is_purchased") bool? isPurchased,
     @JsonKey(name: "is_paid") bool? isPaid,
     @JsonKey(name: "explanation") String? explanation,
-
-
-
-
-
-
-
   }) = _TusZhoruDTO;
 
   factory TusZhoruDTO.fromJson(Map<String, dynamic> json) =>

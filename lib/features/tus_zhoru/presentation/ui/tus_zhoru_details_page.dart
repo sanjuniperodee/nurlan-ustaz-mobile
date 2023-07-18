@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,6 +9,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_butto
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_details_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/widgets/tus_zhoru_detail_body.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/utils/pay_dialog.dart';
@@ -25,17 +27,12 @@ class TusZhoruDetailPage extends StatefulWidget {
 }
 
 class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
-  late bool isFav;
+  late bool _isFav;
 
   @override
   void initState() {
-    //BlocProvider.of<TusZhoruCubit>(context).secureScreen();
     BlocProvider.of<TusZhoruDetailsCubit>(context).getTusZhoruById(widget.id);
-
     BlocProvider.of<TusZhoruCubit>(context).secureScreen();
-
-    isFav = false;
-
     super.initState();
   }
 
@@ -45,9 +42,13 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
         builder: (context, state) {
       return state.maybeWhen(
         loadingState: () {
-          return Center(
-            child: CircularProgressIndicator(
-              color: AppColors.danger,
+          return Scaffold(
+            body: TusZhoruDetailBody(
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.danger,
+                ),
+              ),
             ),
           );
         },
@@ -55,6 +56,8 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
           return const Center();
         },
         loaded: (tusZhoruModel) {
+          _isFav = tusZhoruModel!.isSaved!;
+
           final bool isFree = tusZhoruModel!.isFree == true;
           final bool isPaid = tusZhoruModel.isPurchased == true;
           return Scaffold(
@@ -81,14 +84,13 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                   );
                                 });
                           },
-                          text: 'Өтініш қалдыру',
-                          color: AppColors.blue,
+                          text: 'Толық көрсету',
                         ),
             ),
             backgroundColor: AppColors.white,
             body: BlocBuilder<TusZhoruDetailsCubit, TusZhoruDetailsState>(
                 builder: (context, state) {
-              return GlobalCustomBody(
+              return TusZhoruDetailBody(
                 left: 0,
                 right: 0,
                 child: SingleChildScrollView(
@@ -100,13 +102,22 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(left: 12),
-                            child:
-                                CustomAppBar(title: tusZhoruModel.title ?? ''),
+                            child: CustomAppBar(
+                              title: tusZhoruModel.title ?? '',
+                              onTap: () {
+                                BlocProvider.of<TusZhoruCubit>(context)
+                                    .unSecureScreen();
+                                Navigator.pop(context);
+                              },
+                            ),
                           ),
                           SizedBox(
                             height: 24,
                           ),
                           Container(
+                            constraints: BoxConstraints(
+                              minHeight: 1.0.sh,
+                            ),
                             padding: EdgeInsets.symmetric(
                                 horizontal: 20, vertical: 20),
                             width: double.maxFinite,
@@ -141,128 +152,134 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                   height: 12,
                                 ),
                                 Container(
-                                  child: Text(
-                                    isFree
-                                        ? tusZhoruModel.fullExplanation ?? ''
-                                        : isPaid
+                                  child: Stack(
+                                    children: [
+                                      Text(
+                                        isFree
                                             ? tusZhoruModel.fullExplanation ??
                                                 ''
-                                            : tusZhoruModel
-                                                    .partialExplanation ??
-                                                '',
-                                    style:
-                                        getTextStyle(CustomTextStyles.s16w400)
+                                            : isPaid
+                                                ? tusZhoruModel
+                                                        .fullExplanation ??
+                                                    ''
+                                                : '${tusZhoruModel.partialExplanation}...' ??
+                                                    '',
+                                        style: getTextStyle(
+                                                CustomTextStyles.s16w400)
                                             .copyWith(
                                                 fontFamily:
                                                     FontTypes.SF_Pro.name,
                                                 height: 1.5),
-                                    overflow: TextOverflow.fade,
+                                        overflow: TextOverflow.fade,
+                                      ),
+                                      if (tusZhoruModel.isPurchased! == false &&
+                                          tusZhoruModel.partialExplanation !=
+                                              null)
+                                        Positioned(
+                                            bottom: 0,
+                                            left: 0,
+                                            right: 0,
+                                            height: 20,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  color: AppColors.white
+                                                      .withOpacity(0.7)),
+                                            ))
+                                    ],
                                   ),
                                 ),
                                 SizedBox(height: 28.h),
-                                isFree
-                                    ? Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                              BlocProvider.of<
-                                                          TusZhoruDetailsCubit>(
-                                                      context)
-                                                  .likeTusZhoru(
-                                                      tusZhoruModel.id!);
-                                            },
-                                            child: Container(
-                                              width: 150.w,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                                color: const Color(0xFF8F8CF7)
-                                                    .withOpacity(0.13),
-                                              ),
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: 14.w,
-                                                  vertical: 13.h),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    'Таңдаулы',
-                                                    style: getTextStyle(
-                                                            CustomTextStyles
-                                                                .s16w500)
-                                                        .copyWith(
-                                                            fontFamily:
-                                                                FontTypes.SF_Pro
-                                                                    .name),
-                                                  ),
-                                                  tusZhoruModel.isSaved == false
-                                                      ? SvgPicture.asset(
-                                                          'assets/icons/bookmark.svg',
-                                                          color:
-                                                              AppColors.orange,
-                                                        )
-                                                      : SvgPicture.asset(
-                                                          'assets/icons/bookmark_1.svg',
-                                                          color:
-                                                              AppColors.orange,
-                                                        )
-                                                ],
-                                              ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        setState(() {
+                                          // BlocProvider.of<TusZhoruDetailsCubit>(
+                                          //         context)
+                                          //     .likeTusZhoru(tusZhoruModel.id!);
+                                          _isFav = !_isFav;
+                                        });
+                                      },
+                                      child: Container(
+                                        width: 150.w,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          color: const Color(0xFF8F8CF7)
+                                              .withOpacity(0.13),
+                                        ),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 14.w, vertical: 13.h),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'Таңдаулы',
+                                              style: getTextStyle(
+                                                      CustomTextStyles.s16w500)
+                                                  .copyWith(
+                                                      fontFamily: FontTypes
+                                                          .SF_Pro.name),
                                             ),
-                                          ),
-                                          InkWell(
-                                            onTap: () async {
-                                              String unguessableDynamicLink =
-                                                  await DynamicLink()
-                                                      .createTusZhoruLink(
-                                                          tusZhoruModel.id!);
-                                              print(unguessableDynamicLink);
-                                              await Share.share(
-                                                unguessableDynamicLink,
-                                              );
-                                            },
-                                            child: Container(
-                                              width: 150,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(12),
-                                                color: Color(0xFF8F8CF7)
-                                                    .withOpacity(0.13),
-                                              ),
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      horizontal: 14,
-                                                      vertical: 13),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    'Бөлісу',
-                                                    style: getTextStyle(
-                                                            CustomTextStyles
-                                                                .s16w500)
-                                                        .copyWith(
-                                                            fontFamily:
-                                                                FontTypes.SF_Pro
-                                                                    .name),
-                                                  ),
-                                                  SvgPicture.asset(
-                                                    'assets/icons/share.svg',
+                                            _isFav == false
+                                                ? SvgPicture.asset(
+                                                    'assets/icons/bookmark.svg',
                                                     color: AppColors.orange,
                                                   )
-                                                ],
-                                              ),
+                                                : SvgPicture.asset(
+                                                    'assets/icons/bookmark_1.svg',
+                                                    color: AppColors.orange,
+                                                  )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    InkWell(
+                                      onTap: () async {
+                                        String unguessableDynamicLink =
+                                            await DynamicLink()
+                                                .createTusZhoruLink(
+                                                    tusZhoruModel.id!);
+                                        print(unguessableDynamicLink);
+                                        await Share.share(
+                                          unguessableDynamicLink,
+                                        );
+                                      },
+                                      child: Container(
+                                        width: 150,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(12),
+                                          color: Color(0xFF8F8CF7)
+                                              .withOpacity(0.13),
+                                        ),
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 14, vertical: 13),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              'Бөлісу',
+                                              style: getTextStyle(
+                                                      CustomTextStyles.s16w500)
+                                                  .copyWith(
+                                                      fontFamily: FontTypes
+                                                          .SF_Pro.name),
                                             ),
-                                          ),
-                                        ],
-                                      )
-                                    : Container(),
+                                            SvgPicture.asset(
+                                              'assets/icons/share.svg',
+                                              color: AppColors.orange,
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
                               ],
                             ),
                           ),

@@ -95,8 +95,11 @@ dependencies:
   long_press_button_with_timer: ^0.0.2
   timer_button_fork: ^3.0.2
   calendar_agenda: ^0.0.2+3
+  flutter_pw_validator: ^1.6.0
+  flutter_launcher_icons: ^0.13.1
 
   # analyzer: ^5.3.1
+
 
 dev_dependencies:
   flutter_test:
@@ -117,7 +120,12 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/logo/playstore.png"
+  image_path_ios: "assets/images/logo/appstore.png"
+  adaptive_icon_foreground: "assets/images/logo/playstore.png"
 # The following section is specific to Flutter packages.
 flutter:
   # The following line ensures that the Material Icons font is

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
@@ -13,6 +15,7 @@ import 'features/tus_zhoru/presentation/ui/custom_tus_zhoru_details_page.dart';
 
 Future<void> firebaseInit() async {
   FirebaseDynamicLinks.instance.onLink.listen((event) {
+    log(event.toString());
     if (event.link.queryParameters['type'] == 'tusZhoru') {
       navigateToTusZhoru(event.link);
     }
@@ -45,7 +48,7 @@ Future<void> navigateToTusZhoru(Uri link) async {
 
   var deepLink = link;
   final queryParams = deepLink.queryParameters;
-  if (queryParams.length > 0) {
+  if (queryParams.isNotEmpty) {
     var id = queryParams['id'];
     if (id != null) {
       Navigator.push(

@@ -51,60 +51,56 @@ class _ServicesPageState extends State<ServicesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       backgroundColor: AppColors.lightBlue,
-      bottomSheet: Container(
+      floatingActionButton: Padding(
         padding: const EdgeInsets.only(
-          // top: 35.0,
+          top: 535.0,
           left: 16,
           right: 16,
-        ).r,
-        height: 160.h,
-        color: AppColors.lightBlue,
-        child: Column(
-          children: [
-            SizedBox(
-              height: 22.h,
-            ),
-            Text(
-              'Жоғарыдағы қызметтердің бірін таңдап, батырманы басыңыз',
-              textAlign: TextAlign.center,
-              style: getTextStyle(CustomTextStyles.s16w400)
-                  .copyWith(fontFamily: FontTypes.SF_Pro.name),
-            ),
-            SizedBox(
-              height: 24.h,
-            ),
-            BlocConsumer<PostServiceCubit, PostServiceState>(
-              listener: (context, state) {
-                state.maybeWhen(
-                  orElse: () {},
-                  loaded: (url) {
-                    _launchUrl(url);
-                  },
-                );
-                // TODO: implement listener
-              },
-              builder: (context, state) {
-                return AppButton(
-                  onTap: () {
-                    if (id.isEmpty) {
-                      buildErrorCustomSnackBar(context, 'ERROR');
-                      return;
-                    }
-                    BlocProvider.of<PostServiceCubit>(context).postService(
-                      id: id,
-                    );
-                  },
-                  text: 'Өтініш қалдыру',
-                  // color: AppColors.blue,
-                );
-              },
-            ),
-            SizedBox(
-              height: 22.h,
-            ),
-          ],
+        ),
+        child: Container(
+          color: AppColors.lightBlue,
+          child: Column(
+            children: [
+              SizedBox(
+                height: 22.h,
+              ),
+              const Text(
+                'Жоғарыдағы қызметтердің бірін таңдап, батырманы басыңыз',
+                textAlign: TextAlign.center,
+              ),
+              SizedBox(
+                height: 24.h,
+              ),
+              BlocConsumer<PostServiceCubit, PostServiceState>(
+                listener: (context, state) {
+                  state.maybeWhen(
+                    orElse: () {},
+                    loaded: (url) {
+                      _launchUrl(url);
+                    },
+                  );
+                  // TODO: implement listener
+                },
+                builder: (context, state) {
+                  return AppButton(
+                    onTap: () {
+                      if (id.isEmpty) {
+                        buildErrorCustomSnackBar(context, 'ERROR');
+                        return;
+                      }
+                      BlocProvider.of<PostServiceCubit>(context).postService(
+                        id: id,
+                      );
+                    },
+                    text: 'Өтініш қалдыру',
+                    color: AppColors.blue,
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
       body: BlocConsumer<ServicesCubit, ServicesState>(
@@ -180,16 +176,11 @@ class _ServicesPageState extends State<ServicesPage> {
                                       SizedBox(
                                         width: 8.w,
                                       ),
-                                      SizedBox(
-                                        width: 210.w,
-                                        child: Text(
-                                          listOfServices[index].title ??
-                                              'ERROR',
-                                          overflow: TextOverflow.ellipsis,
-                                          style: getTextStyle(
-                                                  CustomTextStyles.s16w500)
-                                              .apply(color: AppColors.black),
-                                        ),
+                                      Text(
+                                        listOfServices[index].title ?? 'ERROR',
+                                        style: getTextStyle(
+                                                CustomTextStyles.s16w500)
+                                            .apply(color: AppColors.black),
                                       ),
                                     ],
                                   ),
@@ -217,7 +208,7 @@ class _ServicesPageState extends State<ServicesPage> {
                         },
                       ),
                       SizedBox(
-                        height: 144.h,
+                        height: 24.h,
                       ),
                     ],
                   ),

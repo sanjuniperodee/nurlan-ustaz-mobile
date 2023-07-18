@@ -45,6 +45,7 @@ class _NamazPageState extends State<NamazPage> {
   List times = [];
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: AppColors.lightBlue,
       body: BlocBuilder<TimingsCubit, TimingsState>(
@@ -123,6 +124,7 @@ class _NamazPageState extends State<NamazPage> {
               minute: int.parse(element.toString().substring(3, 5)))
           .isAfter(DateTime.now()));
       indexOfNamaz = time.indexOf(namazName2);
+      log(time.toString());
     } catch (e) {
       log(e.toString());
       return time.last;

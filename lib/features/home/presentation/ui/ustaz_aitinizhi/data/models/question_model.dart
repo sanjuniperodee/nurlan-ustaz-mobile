@@ -16,6 +16,10 @@ class QuestionDTO with _$QuestionDTO {
     @JsonKey(name: "is_allowed") bool? is_allowed,
     @JsonKey(name: "user") UserDto? user,
     @JsonKey(name: "avatar") String? avatar,
+    @JsonKey(name: "email") String? email,
+    @JsonKey(name: "full_name") String? fullName,
+
+
 
 
   }) = _QuestionDTO;

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -6,6 +8,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_butto
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/widgets/custom_tus_zhoru_list.dart';
+import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/widgets/tus_zhoru_custom_body.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/widgets/tus_zhoru_list.dart';
 
 import '../../../../core/common/colors.dart';
@@ -74,25 +77,30 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
               FloatingActionButtonLocation.centerFloat,
           floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
           backgroundColor: Color(0xFFECF5FF),
-          body: GlobalCustomBody(
+          body: TusZhoruCustomBody(
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
+                  SizedBox(height: 20.h,),
                   const CustomAppBar(
-                    hideIcon: true,
                     title: 'Түс жору',
+                    hideIcon: true,
                   ),
                   SizedBox(
                     height: 36.h,
                   ),
                   SearchWidget(
                     onChanged: (value) {
+                      log(value);
+
                       if (tusZhoruList.currentIndex == 0) {
+                        value.isEmpty ?    context.read<TusZhoruCubit>().tusZhoruT( page: 1, isFirstCall: true)         :
                         context.read<TusZhoruCubit>().tusZhoruT(
                             search: value, page: 1, isFirstCall: true);
                       }
                       if (tusZhoruList.currentIndex == 1) {
+                        value.isEmpty ? context.read<TusZhoruCubit>().getCustomTusZhoruT( page: 1, isFirstCall: true)     :
                         context.read<TusZhoruCubit>().getCustomTusZhoruT(
                             search: value, page: 1, isFirstCall: true);
                       }

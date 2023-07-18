@@ -17,7 +17,7 @@ class GlobalCustomBody extends StatefulWidget {
 class _GlobalCustomBodyState extends State<GlobalCustomBody>
     with TickerProviderStateMixin {
   late final AnimationController _controller =
-      AnimationController(duration: Duration(seconds: 20), vsync: this)
+      AnimationController(duration: Duration(minutes: 1), vsync: this)
         ..repeat();
 
   @override
@@ -32,7 +32,7 @@ class _GlobalCustomBodyState extends State<GlobalCustomBody>
           ),
           Positioned(
             left: 200.r,
-            top: 10.r,
+            top: 20.r,
             child: AnimatedBuilder(
               animation: _controller,
               child: SvgPicture.asset(

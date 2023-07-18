@@ -67,7 +67,7 @@ class QuestionsList extends StatelessWidget {
                                     children: [
                                       Text(
                                         isSocket != null
-                                            ? e.userName ?? ''
+                                            ? e.fullName ?? ''
                                             : e.user?.fullName ?? '',
                                         style: getTextStyle(
                                                 CustomTextStyles.s14w500)
@@ -80,10 +80,12 @@ class QuestionsList extends StatelessWidget {
                                         width: 8.w,
                                       ),
                                       Text(
-
-                                        DateFormat('dd MMMM, hh:mm')
+                                        DateFormat(
+                                                '${DateTime.now().day == DateTime.parse(e.createdAt ?? '').day ? '${'Бүгін, HH:mm'}' : 'dd MMMM, HH:mm'}',
+                                                context.locale.languageCode)
                                             .format(DateTime.parse(
-                                                e.createdAt ?? ''))
+                                                    e.createdAt ?? '')
+                                                .toLocal())
                                             .toString(),
                                         style: getTextStyle(
                                                 CustomTextStyles.s12w400)

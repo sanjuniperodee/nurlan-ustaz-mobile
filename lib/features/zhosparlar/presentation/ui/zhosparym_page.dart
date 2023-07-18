@@ -337,7 +337,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                 selectedColor: Colors.pink,
                                 todayColor: AppColors.black,
                                 eventColor: Colors.deepPurple,
-                                locale: 'kk_Kz',
+                                locale: context.locale.languageCode,
                                 todayButtonText: '',
                                 isExpanded: true,
                                 dayOfWeekStyle: const TextStyle(

@@ -25,7 +25,6 @@ class LoginCubit extends Cubit<LoginState> {
         emit(_ErrorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
-        print('uspechno');
         emit(const LoginState.loadedState());
       },
     );

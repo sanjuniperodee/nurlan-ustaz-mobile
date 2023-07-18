@@ -20,6 +20,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   TextEditingController curPasController = TextEditingController();
   TextEditingController newPasController = TextEditingController();
   TextEditingController pasController = TextEditingController();
+  bool obscureCurPass = true;
+  bool obscureNewPass = true;
+  bool obscurePass = true;
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -74,6 +79,13 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     ),
                     SizedBox(height: 44.h),
                     CustomTextFormProfile(
+                        obscureText: obscureCurPass,
+
+                        obscure: (){
+                          setState(() {
+                            obscureCurPass = !obscureCurPass;
+                          });
+                        },
                         controller: curPasController,
                         hintText: 'Ағымдағы құпия сөз',
                         labelText: 'Ағымдағы құпия сөз',
@@ -83,6 +95,13 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     ),
                     CustomTextFormProfile(
                         controller: newPasController,
+                        obscureText: obscureNewPass,
+
+                        obscure: (){
+                          setState(() {
+                            obscureNewPass = !obscureNewPass;
+                          });
+                        },
                         hintText: 'Жаңа құпия сөз',
                         labelText: 'Жаңа құпия сөз',
                         onChanged: (value) {}),
@@ -90,6 +109,13 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       height: 24.h,
                     ),
                     CustomTextFormProfile(
+                        obscureText: obscurePass,
+
+                        obscure: (){
+                          setState(() {
+                            obscurePass = !obscurePass;
+                          });
+                        },
                         controller: pasController,
                         hintText: 'Жаңа құпия сөз қайталау',
                         labelText: 'Жаңа құпия сөз қайталау',

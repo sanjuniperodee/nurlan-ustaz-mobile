@@ -23,6 +23,7 @@ class CreateTusZhoruCubit extends Cubit<CreateTusZhoruState> {
   late List<TusZhoruDTO> tosZhoruList;
 
   Future<void> createCustomTusZhoruPayment(int id, bool isCustom) async {
+    emit(_LoadingState());
     final ipAddress = IpAddress(type: RequestType.json);
     var ip = await ipAddress.getIpAddress();
     final userIp = ip['ip'].toString();
@@ -49,7 +50,7 @@ class CreateTusZhoruCubit extends Cubit<CreateTusZhoruState> {
   Future<void> createTusZhoru(String title, String description) async {
     final result = await _repository.createTusZhoru(
         title: title, description: description);
-    result.fold((l) => {}, (r) => {emit(_LoadedState(tusZhoru: r))});
+    return result.fold((l) => {}, (r) => {emit(_LoadedState(tusZhoru: r))});
   }
 }
 
