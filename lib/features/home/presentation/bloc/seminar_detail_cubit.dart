@@ -36,7 +36,7 @@ class SeminarDetailCubit extends Cubit<SeminarDetailState> {
   }
 
   Future<void> seminarLike({required int id}) async {
-    // emit(const SeminarDetailState.loadingState());
+    //emit(const SeminarDetailState.loadingState());
     final failureOrUser = await _homeRepository.seminarLike(id: id);
     failureOrUser.fold(
       (l) {
@@ -44,7 +44,9 @@ class SeminarDetailCubit extends Cubit<SeminarDetailState> {
             SeminarDetailState.errorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
-        seminarDetail(id: id);
+        res = res.copyWith(isLiked: !res.isLiked!, likesCount: res.isLiked! == false ? res.likesCount! +1 : res.likesCount! -1);
+        emit(SeminarDetailState.loaded(res: res));
+        //seminarDetail(id: id);
       },
     );
   }
@@ -57,7 +59,8 @@ class SeminarDetailCubit extends Cubit<SeminarDetailState> {
             SeminarDetailState.errorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
-        seminarDetail(id: id);
+        res = res.copyWith(isSaved: !res.isSaved!);
+        emit(SeminarDetailState.loaded(res: res));
       },
     );
   }

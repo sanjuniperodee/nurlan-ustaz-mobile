@@ -67,15 +67,28 @@ class _AboutAppPageState extends State<AboutAppPage> {
                               ],
                               begin: Alignment.topCenter,
                               end: Alignment.bottomCenter)),
-                      child: Center(
-                        child: Container(
-                          width: 163.w,
-                          height: 44.h,
-                          child: Image.asset(
-                            Assets.logoNurlan,
-                            color: AppColors.blue,
+                      child: Stack(
+                        children: [
+                          Center(
+                            child: Container(
+                              width: 163.w,
+                              height: 44.h,
+                              child: Image.asset(
+                                Assets.logoNurlan,
+                                color: AppColors.blue,
+                              ),
+                            ),
                           ),
-                        ),
+                          Image.asset(
+                            'assets/images/export.png',
+                          ),
+                          Align(
+                            alignment: Alignment.bottomRight,
+                            child: Image.asset(
+                              'assets/images/export2.png',
+                            ),
+                          ),
+                        ],
                       ),
                     ),
                     SizedBox(
@@ -100,31 +113,55 @@ class _AboutAppPageState extends State<AboutAppPage> {
                             decoration: BoxDecoration(
                                 color: AppColors.orange,
                                 borderRadius: BorderRadius.circular(28.r)),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                            child: Stack(
                               children: [
-                                Text(
-                                  res.first.statistics![index].value ?? 'ERROR',
-                                  style: getTextStyle(CustomTextStyles.s20w700)
-                                      .copyWith(
-                                          fontSize: 28,
-                                          fontWeight: FontWeight.w700,
-                                          fontFamily:
-                                              FontTypes.Philosopher.name,
-                                          color: AppColors.white),
+                                Positioned.fill(
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        res.first.statistics![index].value ??
+                                            'ERROR',
+                                        style: getTextStyle(
+                                                CustomTextStyles.s20w700)
+                                            .copyWith(
+                                                fontSize: 28,
+                                                fontWeight: FontWeight.w700,
+                                                fontFamily:
+                                                    FontTypes.Philosopher.name,
+                                                color: AppColors.white),
+                                      ),
+                                      SizedBox(
+                                        height: 4.h,
+                                      ),
+                                      Text(
+                                        res.first.statistics![index].title ??
+                                            'ERROR',
+                                        style: getTextStyle(
+                                                CustomTextStyles.s16w400)
+                                            .copyWith(
+                                                fontFamily:
+                                                    FontTypes.Philosopher.name,
+                                                color: AppColors.white),
+                                      )
+                                    ],
+                                  ),
                                 ),
-                                SizedBox(
-                                  height: 4.h,
-                                ),
-                                Text(
-                                  res.first.statistics![index].title ?? 'ERROR',
-                                  style: getTextStyle(CustomTextStyles.s16w400)
-                                      .copyWith(
-                                          fontFamily:
-                                              FontTypes.Philosopher.name,
-                                          color: AppColors.white),
-                                )
+                                index.isEven
+                                    ? Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Image.asset(
+                                          'assets/images/export4.png',
+                                        ),
+                                      )
+                                    : Align(
+                                        alignment: Alignment.topLeft,
+                                        child: Image.asset(
+                                          'assets/images/export3.png',
+                                        ),
+                                      ),
                               ],
                             ),
                           ),
