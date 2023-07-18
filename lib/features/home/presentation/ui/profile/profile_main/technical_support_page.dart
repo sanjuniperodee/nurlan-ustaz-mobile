@@ -1,10 +1,17 @@
+import 'dart:convert';
+
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
-import 'package:nurlan_ustaz_flutter/features/web_socket/presentation/cubit/model/chat_model.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/bloc/technical_support_cubit.dart';
+import 'package:web_socket_channel/io.dart';
 
 class TechnicalSupportPage extends StatefulWidget {
   const TechnicalSupportPage({Key? key}) : super(key: key);
@@ -16,11 +23,18 @@ class TechnicalSupportPage extends StatefulWidget {
 class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
   final TextEditingController _textEditingController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
+  late IOWebSocketChannel? _channel;
 
   FocusNode focusNode = FocusNode();
+  final ScrollController _controller = ScrollController();
+  void _scrollDown() {
+    _controller.jumpTo(_controller.position.maxScrollExtent);
+  }
+
   @override
   void initState() {
     // TODO: implement initState
+    BlocProvider.of<TechnicalSupportCubit>(context).connectSocket();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       FocusScope.of(context).requestFocus(focusNode);
     });
@@ -34,80 +48,120 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
     super.dispose();
   }
 
-  List<ChatMessage> messages = [
-    ChatMessage(messageContent: "Hello, Will", messageType: "receiver"),
-    ChatMessage(messageContent: "How have you been?", messageType: "receiver"),
-    ChatMessage(
-        messageContent: "Hey Kriss, I am doing fine dude. wbu?",
-        messageType: "sender"),
-    ChatMessage(messageContent: "ehhhh, doing OK.", messageType: "receiver"),
-    ChatMessage(
-        messageContent: "Is there any thing wrong?", messageType: "sender"),
-  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GlobalCustomBody(
-        child: SizedBox(
-          height: 1.1.sh,
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(children: [
-              SizedBox(
-                height: 20.h,
-              ),
-              const CustomAppBar(
-                title: 'Техникалық қолдау',
-              ),
-              ListView.builder(
-                itemCount: messages.length,
-                shrinkWrap: true,
-                padding: const EdgeInsets.only(top: 10, bottom: 10).r,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return Container(
-                    padding: const EdgeInsets.only(
-                            left: 14, right: 14, top: 10, bottom: 10)
-                        .r,
-                    child: Align(
-                      alignment: (messages[index].messageType == "receiver"
-                          ? Alignment.topLeft
-                          : Alignment.topRight),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: (messages[index].messageType == "receiver"
-                              ? Colors.grey.shade200
-                              : Colors.blue[200]),
-                        ),
-                        padding: const EdgeInsets.all(16).r,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              messages[index].messageContent,
-                              style: getTextStyle(CustomTextStyles.s14w400)
-                                  .apply(color: AppColors.black),
-                            ),
-                            const SizedBox(
-                              height: 4,
-                            ),
-                            Text('12:25',
-                                style: getTextStyle(CustomTextStyles.s12w400)
-                                    .apply(color: AppColors.grey2)),
-                          ],
-                        ),
+      body: BlocConsumer<TechnicalSupportCubit, TechnicalSupportState>(
+        listener: (context, state) {
+          state.maybeWhen(
+              orElse: () {},
+              errorState: (message) {
+                buildErrorCustomSnackBar(context, message);
+              });
+          // TODO: implement listener
+        },
+        builder: (context, state) {
+          return state.maybeWhen(
+            orElse: () {
+              return Container();
+            },
+            errorState: (message) {
+              return Container();
+            },
+            loadingState: () {
+              return const Padding(
+                padding: EdgeInsets.only(top: 300),
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.danger,
+                  ),
+                ),
+              );
+            },
+            initialState: (questions, channel, user) {
+              // _controller.jumpTo(_controller.position.maxScrollExtent);
+              _channel = channel;
+              return GlobalCustomBody(
+                child: SizedBox(
+                  height: 1.1.sh,
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(),
+                    child: Column(children: [
+                      SizedBox(
+                        height: 20.h,
                       ),
-                    ),
-                  );
-                },
-              ),
-              SizedBox(
-                height: 200.h,
-              )
-            ]),
-          ),
-        ),
+                      const CustomAppBar(
+                        title: 'Техникалық қолдау',
+                      ),
+                      if (questions != [])
+                        ListView.builder(
+                          itemCount: questions.length,
+                          shrinkWrap: true,
+                          controller: _controller,
+                          padding: const EdgeInsets.only(top: 10, bottom: 10).r,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return Container(
+                              padding: const EdgeInsets.only(
+                                      left: 14, right: 14, top: 10, bottom: 10)
+                                  .r,
+                              child: Align(
+                                alignment:
+                                    (questions[index].userName != user!.email
+                                        ? Alignment.topLeft
+                                        : Alignment.topRight),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: questions[index].userName !=
+                                              user.email
+                                          ? Colors.grey.shade200
+                                          : Colors.blue[100]),
+                                  padding: const EdgeInsets.all(16).r,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        questions[index].message ?? 'ERROR',
+                                        style: getTextStyle(
+                                                CustomTextStyles.s14w400)
+                                            .apply(color: AppColors.black),
+                                      ),
+                                      const SizedBox(
+                                        height: 4,
+                                      ),
+                                      Text(
+                                          DateFormat('HH.mm').format(
+                                              DateTime.parse(questions[index]
+                                                      .createdAt
+                                                      .toString())
+                                                  .toLocal()),
+                                          style: getTextStyle(
+                                                  CustomTextStyles.s12w400)
+                                              .apply(
+                                                  color: questions[index]
+                                                              .userName !=
+                                                          user.email
+                                                      ? AppColors.grey2
+                                                      : Colors.blue[900])),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      SizedBox(
+                        height: 120.h,
+                      )
+                    ]),
+                  ),
+                ),
+              );
+            },
+          );
+        },
       ),
       bottomSheet: Container(
         padding: const EdgeInsets.all(16),
@@ -134,6 +188,8 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
                 IconButton(
                   icon: const Icon(Icons.send),
                   onPressed: () {
+                    _channel?.sink.add(jsonEncode(
+                        {"message": _textEditingController.value.text}));
                     setState(() {});
                     _textEditingController.clear();
                   },

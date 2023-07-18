@@ -1,12 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:clipboard/clipboard.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
-import 'package:flutter/services.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 
@@ -149,35 +149,49 @@ class _CharityDetailPageState extends State<CharityDetailPage> {
                                       ),
                                       CustomListTIle(
                                         widget: widget,
+                                        text1: widget.result.requisites![index]
+                                                .cardNumber ??
+                                            'ERROR',
                                         text: widget.result.requisites![index]
                                                 .cardNumber ??
                                             'ERROR',
                                       ),
                                       CustomListTIle(
                                         widget: widget,
-                                        text: widget.result.requisites![index]
+                                        text1: widget.result.requisites![index]
                                                 .bin ??
                                             'ERROR',
+                                        text:
+                                            '${'bin'.tr()}: ${widget.result.requisites![index].bin} ',
                                       ),
                                       CustomListTIle(
                                         widget: widget,
-                                        text: widget.result.requisites![index]
+                                        text1: widget.result.requisites![index]
                                                 .iic ??
                                             'ERROR',
+                                        text:
+                                            '${'iin'.tr()}: ${widget.result.requisites![index].iic} ',
                                       ),
                                       CustomListTIle(
                                         widget: widget,
-                                        text: widget.result.requisites![index]
+                                        text1: widget.result.requisites![index]
                                                 .bic ??
                                             'ERROR',
+                                        text:
+                                            'БИК: ${widget.result.requisites![index].bic}',
                                       ),
                                       CustomListTIle(
-                                        widget: widget,
-                                        text: widget.result.requisites![index]
+                                        text1: widget.result.requisites![index]
                                                 .ppc ??
                                             'ERROR',
+                                        widget: widget,
+                                        text:
+                                            '${'cnp'.tr()}: ${widget.result.requisites![index].ppc}',
                                       ),
                                       CustomListTIle(
+                                        text1: widget.result.requisites![index]
+                                                .url ??
+                                            'ERROR',
                                         widget: widget,
                                         text: widget.result.requisites![index]
                                                 .url ??
@@ -210,10 +224,12 @@ class _CharityDetailPageState extends State<CharityDetailPage> {
 
 class CustomListTIle extends StatelessWidget {
   final String text;
+  final String text1;
   const CustomListTIle({
     super.key,
     required this.widget,
     required this.text,
+    required this.text1,
   });
 
   final CharityDetailPage widget;
@@ -229,7 +245,7 @@ class CustomListTIle extends StatelessWidget {
       ),
       trailing: InkWell(
           onTap: () async {
-            await FlutterClipboard.copy(text).then(
+            await FlutterClipboard.copy(text1).then(
                 (value) => buildSuccessCustomSnackBar(context, 'Сақталды'));
           },
           child: SvgPicture.asset(Assets.copiedSvg)),

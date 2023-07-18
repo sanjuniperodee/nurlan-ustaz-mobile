@@ -105,11 +105,11 @@ class _NewsPageState extends State<NewsPage> {
                             searchText = string;
                             if (string.isEmpty) {
                               BlocProvider.of<NewsCubit>(context).news(
-                                page: 1,
+                                page: 1,isFirstCall: true
                               );
                             } else {
                               BlocProvider.of<NewsCubit>(context)
-                                  .news(page: 1, search: searchText);
+                                  .news(page: 1, search: searchText,isFirstCall: true);
                             }
                           },
                         ),
@@ -150,10 +150,10 @@ class _NewsPageState extends State<NewsPage> {
                                               listOfNews[index].cover ?? '',
                                           fit: BoxFit.cover,
                                           height: 100.h,
-                                          width: 80.w,
+                                          width: 100.w,
                                           errorWidget: (a, b, c) => SizedBox(
+                                            height: 100.h,
                                             width: 100.w,
-                                            height: 80.h,
                                           ),
                                         ),
                                       ),

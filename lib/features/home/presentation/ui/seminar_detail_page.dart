@@ -25,8 +25,9 @@ import 'package:share_plus/share_plus.dart';
 class SeminarDetailPage extends StatefulWidget {
   // final ResultHomeDTO result;
   // final bool isFav;
+  final String? search;
   final int id;
-  const SeminarDetailPage({super.key, required this.id});
+  const SeminarDetailPage({super.key, this.search, required this.id});
 
   @override
   State<SeminarDetailPage> createState() => _SeminarDetailPageState();
@@ -177,13 +178,17 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                     children: [
                                       InkWell(
                                           onTap: () {
-                                            log(result.isLiked.toString());
-                                            BlocProvider.of<SeminarDetailCubit>(
-                                                    context)
-                                                .seminarLike(
-                                                    id: result.id ?? 0);
+                                            setState(() {
+                                              isLiked = !isLiked;
 
-                                            isLiked = !isLiked;
+                                              BlocProvider.of<
+                                                          SeminarDetailCubit>(
+                                                      context)
+                                                  .seminarLike(
+                                                      id: result.id ?? 0);
+                                            });
+                                            log(isLiked.toString());
+
                                             if (isLiked == true) {
                                               likeCount += 1;
                                             } else {
@@ -240,10 +245,13 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                 ),
                                 GestureDetector(
                                     onTap: () {
-                                      BlocProvider.of<SeminarDetailCubit>(
-                                              context)
-                                          .seminarFavorite(id: result.id ?? 0);
-                                      isFavorite = !isFavorite;
+                                      setState(() {
+                                        isFavorite = !isFavorite;
+                                        BlocProvider.of<SeminarDetailCubit>(
+                                                context)
+                                            .seminarFavorite(
+                                                id: result.id ?? 0);
+                                      });
                                     },
                                     child: SvgPicture.asset(isFavorite
                                         ? Assets.bookMark1Svg
@@ -300,7 +308,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                                     const EdgeInsets.symmetric(
                                                         horizontal: 25),
                                                 child: Text(
-                                                  'Түс жорылуын алу үшін төлем жасауыңызды сұраймыз',
+                                                  'Семинар билет алу үшін төлем жасауыңызды сұраймыз',
                                                   style: getTextStyle(
                                                           CustomTextStyles
                                                               .s16w400)
@@ -327,6 +335,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                                             context)
                                                         .createSeminarPayment(
                                                           result.id!,
+                                                          context,
                                                         )
                                                         .then((value) =>
                                                             Navigator.of(
@@ -336,7 +345,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                                   color: AppColors.orange,
                                                   child: Center(
                                                     child: Text(
-                                                        '${result.price} тг төлеу',
+                                                        '${result.price!.toInt()} тг төлеу',
                                                         style: getTextStyle(
                                                                 CustomTextStyles
                                                                     .s14w400)
@@ -392,7 +401,11 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                     child: GestureDetector(
                         onTap: () {
                           BlocProvider.of<SeminarCubit>(context)
-                              .seminar(page: 1, isFirstCall: true)
+                              .seminar(
+                                page: 1,
+                                isFirstCall: true,
+                                search: widget.search ?? '',
+                              )
                               .then((value) => Navigator.pop(context));
                         },
                         child: SvgPicture.asset(Assets.backStackSvg))),

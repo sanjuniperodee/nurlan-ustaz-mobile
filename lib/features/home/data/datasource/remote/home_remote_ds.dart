@@ -592,6 +592,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
           'page[number]': currentPage,
         },
       );
+      log(response.data.toString());
       if (response.statusCode == 200) {
         lpServices = response.data['meta']['pagination']['pages'];
 
@@ -651,6 +652,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
           if (search != null) 'search': search,
         },
       );
+      log(response.data.toString());
       if (response.statusCode == 200) {
         if (search != null && search.isNotEmpty) {
           livesPage.clear();

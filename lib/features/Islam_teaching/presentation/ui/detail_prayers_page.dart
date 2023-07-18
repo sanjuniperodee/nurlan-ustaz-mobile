@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/duas_favorite_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/app/app_dinamic_link.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
@@ -135,9 +136,13 @@ class _PrayersDetailPageState extends State<PrayersDetailPage> {
                                           : Assets.bookMarkSvg,
                                     ),
                                     FloatinContainerWidget(
-                                      onTap: () {
-                                        Share.share('Hello',
-                                            subject: 'Nurlan_ustaz');
+                                      onTap: () async {
+                                        String unguessableDynamicLink =
+                                            await DynamicLink().createDuhasLink(
+                                                widget.result.id!);
+                                        await Share.share(
+                                          unguessableDynamicLink,
+                                        );
                                       },
                                       text: 'Бөлісу',
                                       url: Assets.shareSvg,

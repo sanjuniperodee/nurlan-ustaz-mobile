@@ -227,178 +227,186 @@ class _MainPageState extends State<MainPage> {
                                 SizedBox(height: 20.h),
                                 Padding(
                                   padding: const EdgeInsets.only(right: 16.0),
-                                  child: InkWell(
-                                    onTap: () {
-                                      context.router.push(
-                                        NamazPageRoute(),
-                                      );
-                                    },
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Align(
-                                          alignment: Alignment.centerLeft,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                  '${geo.name ?? 'Алматы'}, ${DateFormat.yMMMd().format(DateTime.now())}',
-                                                  style: getTextStyle(
-                                                          CustomTextStyles
-                                                              .s14w400)
-                                                      .apply(
-                                                          fontFamily: FontTypes
-                                                              .SF_Pro.name)),
-                                              // SizedBox(
-                                              //   width: 175.w,
-                                              // ),
-                                              SvgPicture.asset(
-                                                  Assets.arrowUpOutlineSvg),
-                                            ],
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 16.h,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      InkWell(
+                                        onTap: () {
+                                          context.router.push(
+                                            NamazPageRoute(),
+                                          );
+                                        },
+                                        child: Column(
                                           children: [
-                                            Row(
-                                              children: [
-                                                SvgPicture.asset(
-                                                    Assets.shalatSvg),
-                                                SizedBox(
-                                                  width: 10.r,
-                                                ),
-                                                // Text(
-                                                //     '${namasNames[indexOfNextNames(times)]} намаз уақыты',
-                                                //     style: getTextStyle(
-                                                //             CustomTextStyles
-                                                //                 .s16w200)
-                                                //         .apply(
-                                                //             fontFamily:
-                                                //                 FontTypes.SF_Pro
-                                                //                     .name)
-                                                //         .copyWith(
-                                                //             fontWeight:
-                                                //                 FontWeight
-                                                //                     .w400)),
-                                              ],
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                      '${geo.name ?? 'Алматы'}, ${DateFormat.yMMMd().format(DateTime.now())}',
+                                                      style: getTextStyle(
+                                                              CustomTextStyles
+                                                                  .s14w400)
+                                                          .apply(
+                                                              fontFamily:
+                                                                  FontTypes
+                                                                      .SF_Pro
+                                                                      .name)),
+                                                  // SizedBox(
+                                                  //   width: 175.w,
+                                                  // ),
+                                                  SvgPicture.asset(
+                                                      Assets.arrowUpOutlineSvg),
+                                                ],
+                                              ),
                                             ),
-                                            Column(
-                                              mainAxisSize: MainAxisSize.max,
+                                            SizedBox(
+                                              height: 16.h,
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.end,
+                                                  CrossAxisAlignment.start,
                                               children: [
-                                                // Text(
-                                                //   namasTimestoSend(),
-                                                //   style: getTextStyle(
-                                                //           CustomTextStyles
-                                                //               .s16w200)
-                                                //       .apply(
-                                                //           fontFamily: FontTypes
-                                                //               .SF_Pro.name)
-                                                //       .copyWith(
-                                                //           fontWeight:
-                                                //               FontWeight.w500)
-                                                //       .apply(
-                                                //           color:
-                                                //               AppColors.blue),
-                                                // ),
-                                                // TimesStateWidget(
-                                                //   time: timesToSend(),
-                                                // )
-                                              ],
-                                            )
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 15.h,
-                                        ),
-                                        AppButton(
-                                          onTap: () {
-                                            TabsRouterScope.of(context)
-                                                ?.controller
-                                                .setActiveIndex(2);
-                                          },
-                                          text: 'Түс жору',
-                                        ),
-                                        SizedBox(height: 16.h),
-                                        MainButton(
-                                          onTap: () async {
-                                            context.router
-                                                .push(UstazAitinizhiRoute());
-                                          },
-                                          text: 'Ұстаз айтыңызшы...',
-                                        ),
-                                        SizedBox(height: 16.h),
-                                        InkWell(
-                                          onTap: () => context.router
-                                              .push(UstazAitinizhiRoute()),
-                                          child: Container(
-                                            width: 1.sw,
-                                            decoration: BoxDecoration(
-                                                gradient: const LinearGradient(
-                                                  begin: Alignment.topRight,
-                                                  end: Alignment.bottomRight,
-                                                  colors: [
-                                                    Color(0xFFFAE0AB),
-                                                    Color(0xFFF9A502),
+                                                Row(
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                        Assets.shalatSvg),
+                                                    SizedBox(
+                                                      width: 10.r,
+                                                    ),
+                                                    // Text(
+                                                    //     '${namasNames[indexOfNextNames(times)]} намаз уақыты',
+                                                    //     style: getTextStyle(
+                                                    //             CustomTextStyles
+                                                    //                 .s16w200)
+                                                    //         .apply(
+                                                    //             fontFamily:
+                                                    //                 FontTypes.SF_Pro
+                                                    //                     .name)
+                                                    //         .copyWith(
+                                                    //             fontWeight:
+                                                    //                 FontWeight
+                                                    //                     .w400)),
                                                   ],
                                                 ),
-                                                borderRadius:
-                                                    BorderRadius.circular(24)),
-                                            padding: EdgeInsets.only(
-                                                top: 19.r,
-                                                bottom: 19.r,
-                                                left: 92.r,
-                                                right: 92.r),
-                                            child: Column(
-                                              children: [
-                                                SvgPicture.asset(
-                                                    Assets.boxStorySvg),
-                                                SizedBox(
-                                                  height: 12.h,
-                                                ),
-                                                Text(
-                                                  'Бола ма?\nБолмай ма?',
-                                                  textAlign: TextAlign.center,
-                                                  style: getTextStyle(
-                                                          CustomTextStyles
-                                                              .s16w200)
-                                                      .copyWith(
-                                                          fontFamily: FontTypes
-                                                              .Philosopher.name,
-                                                          fontSize: 24.sp,
-                                                          fontWeight:
-                                                              FontWeight.w700)
-                                                      .apply(
-                                                          color:
-                                                              AppColors.white),
+                                                Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
+                                                  children: [
+                                                    // Text(
+                                                    //   namasTimestoSend(),
+                                                    //   style: getTextStyle(
+                                                    //           CustomTextStyles
+                                                    //               .s16w200)
+                                                    //       .apply(
+                                                    //           fontFamily: FontTypes
+                                                    //               .SF_Pro.name)
+                                                    //       .copyWith(
+                                                    //           fontWeight:
+                                                    //               FontWeight.w500)
+                                                    //       .apply(
+                                                    //           color:
+                                                    //               AppColors.blue),
+                                                    // ),
+                                                    // TimesStateWidget(
+                                                    //   time: timesToSend(),
+                                                    // )
+                                                  ],
                                                 )
                                               ],
                                             ),
+                                          ],
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        height: 15.h,
+                                      ),
+                                      AppButton(
+                                        onTap: () {
+                                          TabsRouterScope.of(context)
+                                              ?.controller
+                                              .setActiveIndex(2);
+                                        },
+                                        text: 'Түс жору',
+                                      ),
+                                      SizedBox(height: 16.h),
+                                      MainButton(
+                                        onTap: () async {
+                                          context.router
+                                              .push(UstazAitinizhiRoute());
+                                        },
+                                        text: 'Ұстаз айтыңызшы...',
+                                      ),
+                                      SizedBox(height: 16.h),
+                                      InkWell(
+                                        onTap: () => context.router
+                                            .push(UstazAitinizhiRoute()),
+                                        child: Container(
+                                          width: 1.sw,
+                                          decoration: BoxDecoration(
+                                              gradient: const LinearGradient(
+                                                begin: Alignment.topRight,
+                                                end: Alignment.bottomRight,
+                                                colors: [
+                                                  Color(0xFFFAE0AB),
+                                                  Color(0xFFF9A502),
+                                                ],
+                                              ),
+                                              borderRadius:
+                                                  BorderRadius.circular(24)),
+                                          padding: EdgeInsets.only(
+                                              top: 19.r,
+                                              bottom: 19.r,
+                                              left: 92.r,
+                                              right: 92.r),
+                                          child: Column(
+                                            children: [
+                                              SvgPicture.asset(
+                                                  Assets.boxStorySvg),
+                                              SizedBox(
+                                                height: 12.h,
+                                              ),
+                                              Text(
+                                                'Бола ма?\nБолмай ма?',
+                                                textAlign: TextAlign.center,
+                                                style: getTextStyle(
+                                                        CustomTextStyles
+                                                            .s16w200)
+                                                    .copyWith(
+                                                        fontFamily: FontTypes
+                                                            .Philosopher.name,
+                                                        fontSize: 24.sp,
+                                                        fontWeight:
+                                                            FontWeight.w700)
+                                                    .apply(
+                                                        color: AppColors.white),
+                                              )
+                                            ],
                                           ),
                                         ),
-                                        SizedBox(height: 16.h),
-                                        InkWell(
-                                          onTap: () {
-                                            context.router.push(
-                                              NewsPageRoute(),
-                                            );
-                                          },
-                                          child: const MainButton(
-                                            text: 'Жаңалықтар',
-                                          ),
+                                      ),
+                                      SizedBox(height: 16.h),
+                                      InkWell(
+                                        onTap: () {
+                                          context.router.push(
+                                            NewsPageRoute(),
+                                          );
+                                        },
+                                        child: const MainButton(
+                                          text: 'Жаңалықтар',
                                         ),
-                                        SizedBox(height: 16.h),
-                                      ],
-                                    ),
+                                      ),
+                                      SizedBox(height: 16.h),
+                                    ],
                                   ),
                                 ),
                                 SizedBox(

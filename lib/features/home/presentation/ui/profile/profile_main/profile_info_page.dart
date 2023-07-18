@@ -50,7 +50,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
 
   TextEditingController dateController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-  TextEditingController numberController = TextEditingController();
+  TextEditingController numberController = TextEditingController(text: '+7');
   TextEditingController emailController = TextEditingController();
 
   final maskFormatter = MaskTextInputFormatter(mask: '+7(###)-###-##-##');
@@ -64,7 +64,8 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
     super.initState();
     nameController.text = widget.userDTO.fullName ?? "";
     numberController.text = widget.userDTO.phoneNumber ?? "";
-    dateController.text = DateFormat('yyyy-MM-dd').format(DateTime.now());
+    dateController.text =
+        DateFormat('yyyy-MM-dd').format(widget.userDTO.birthday!);
     emailController.text = widget.userDTO.email ?? "";
   }
 
@@ -151,7 +152,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                     onTap: () {
                       _showDialog(
                           CupertinoDatePicker(
-                            initialDateTime: DateTime.now(),
+                            initialDateTime: widget.userDTO.birthday!,
                             mode: CupertinoDatePickerMode.date,
                             use24hFormat: true,
                             // This is called when the user changes the date.

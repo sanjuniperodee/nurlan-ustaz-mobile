@@ -221,11 +221,13 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
           're_new_password': reNewPassword,
         },
       );
+
     }on DioError catch (e) {
       throw ServerException(
         message:
         (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
+
 
       throw ServerException(message: e.toString());
     }
