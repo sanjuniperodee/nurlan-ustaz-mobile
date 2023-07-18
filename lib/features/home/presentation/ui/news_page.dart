@@ -105,11 +105,11 @@ class _NewsPageState extends State<NewsPage> {
                             searchText = string;
                             if (string.isEmpty) {
                               BlocProvider.of<NewsCubit>(context).news(
-                                page: 1,
+                                page: 1,isFirstCall: true
                               );
                             } else {
                               BlocProvider.of<NewsCubit>(context)
-                                  .news(page: 1, search: searchText);
+                                  .news(page: 1, search: searchText,isFirstCall: true);
                             }
                           },
                         ),

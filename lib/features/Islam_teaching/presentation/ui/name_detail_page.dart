@@ -9,6 +9,7 @@ import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/result_teaching_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/islam_names_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/islam_names_favorite_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/app/app_dinamic_link.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
 import 'package:share_plus/share_plus.dart';
 import '../widgets/floating_container_widget.dart';
@@ -129,10 +130,13 @@ class _NameDetailPageState extends State<NameDetailPage> {
                                         : Assets.bookMarkSvg,
                                   ),
                                   FloatinContainerWidget(
-                                    onTap: () {
-                                      Share.share(
-                                          widget.result.description ?? 'ERROR',
-                                          subject: 'Nurlan_ustaz');
+                                    onTap: () async {
+                                      String unguessableDynamicLink =
+                                          await DynamicLink().createNamesLink(
+                                              widget.result.id!);
+                                      await Share.share(
+                                        unguessableDynamicLink,
+                                      );
                                     },
                                     text: 'Бөлісу',
                                     url: Assets.shareSvg,

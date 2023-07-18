@@ -106,12 +106,11 @@ class _SeminarPageState extends State<SeminarPage> {
                         onChanged: (string) {
                           searchText = string;
                           if (string.isEmpty) {
-                            BlocProvider.of<SeminarCubit>(context).seminar(
-                              page: 1,
-                            );
-                          } else {
                             BlocProvider.of<SeminarCubit>(context)
-                                .seminar(page: 1, search: searchText);
+                                .seminar(page: 1, isFirstCall: true);
+                          } else {
+                            BlocProvider.of<SeminarCubit>(context).seminar(
+                                page: 1, search: searchText, isFirstCall: true);
                           }
                         },
                       ),
@@ -127,6 +126,7 @@ class _SeminarPageState extends State<SeminarPage> {
                                 context.router.push(
                                   SeminarDetailPageRoute(
                                     id: listOfSeminars[index].id!,
+                                    search: searchText,
                                   ),
                                 );
                               },

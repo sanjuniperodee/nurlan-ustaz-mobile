@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nurlan_ustaz_flutter/core/common/enums.dart';
 import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/core/utils/alert_utilrs.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
@@ -16,8 +17,6 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_cu
 import 'package:nurlan_ustaz_flutter/features/auth/data/datasource/local/auth_local_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/get_profile_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/widgets/profile_menu_item.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/widgets/setings_language_bottom_sheet.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/widgets/settings_region_bottom_sheet.dart';
 
 import '../../../../../../core/common/app_styles.dart';
 import '../../../../../../core/common/assets.dart';
@@ -72,6 +71,7 @@ class _ProfileMainPage extends State<ProfileMainPage> {
               );
             },
             loaded: (user, geo) {
+              log('chosenLang::::${chosenLang.toString()}');
               return GlobalCustomBody(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
@@ -232,8 +232,8 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          chosenLang == null
-                                              ? 'Тілді танданыз'
+                                          chosenLang == 'kz'
+                                              ? 'Қазақша'
                                               : langMapText[chosenLang]
                                                   .toString(),
                                           style: getTextStyle(
@@ -250,17 +250,17 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                                   onChanged: (String? value) {
                                     if (value != null) {
                                       chosenLang = langMap[value];
-                                      log(langMapText[value].toString());
+
                                       setState(() {});
                                       log(chosenLang.toString());
                                       context.setLocale(
-                                        Locale(langMap[value] ?? 'ru'),
+                                        Locale(langMap[value] ?? 'kk'),
                                       );
                                       debugPrint(context.locale.toString());
                                       final String newLocal =
                                           (langMap[value] ?? 'ru') == 'kk'
                                               ? 'kz'
-                                              : (langMap[value] ?? 'ru');
+                                              : (langMap[value] ?? 'kk');
 
                                       final appState =
                                           BlocProvider.of<AppBloc>(context)

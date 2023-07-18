@@ -31,7 +31,6 @@ class CreateSeminarPaymentCubit extends Cubit<CreateSeminarPaymentState> {
         id: id, backUrl: tusZhoruDynamicLink);
     log(tusZhoruDynamicLink);
     result.fold((l) => {}, (r) async {
-      // buildSuccessCustomSnackBar(context, 'Tema');
       final Uri url = Uri.parse(r.pgRedirectUrl.toString());
       if (!await launchUrl(url)) {
         throw Exception('Could not launch');

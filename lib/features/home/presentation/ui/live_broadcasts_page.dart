@@ -104,11 +104,11 @@ class _LiveBroadcastsPageState extends State<LiveBroadcastsPage> {
                           searchText = string;
                           if (string.isEmpty) {
                             BlocProvider.of<LivesCubit>(context).lives(
-                              page: 1,
+                              page: 1,isFirstCall: true
                             );
                           } else {
                             BlocProvider.of<LivesCubit>(context)
-                                .lives(page: 1, search: searchText);
+                                .lives(page: 1, search: searchText,isFirstCall: true);
                           }
                         },
                       ),
