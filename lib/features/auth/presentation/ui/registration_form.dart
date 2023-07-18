@@ -28,11 +28,12 @@ class RegistrationForm extends StatefulWidget {
       {super.key,
       required this.authCubit,
       required this.user,
-      required this.isPrivacyAccept});
+      required this.isPrivacyAccept, required this.changeIndex});
 
   final bool isPrivacyAccept;
   final AuthCubit authCubit;
   final UserPayload user;
+  final dynamic Function() changeIndex;
 
   @override
   State<RegistrationForm> createState() => _RegistrationFormState();
@@ -311,7 +312,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                         birthday: _dateController.text.toString(),
                         password: _passwordController.text,
                         rePassword: _passwordRepeatController.text,
-                        gender: gender))
+                        gender: gender)).then((value) => widget.changeIndex())
                     : buildErrorCustomSnackBar(
                         context, 'Примите правила соглашения');
               },

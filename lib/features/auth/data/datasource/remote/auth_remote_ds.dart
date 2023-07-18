@@ -17,17 +17,22 @@ const _tag = 'AuthRemoteDS';
 
 abstract class AuthRemoteDs {
   Future<UserPayload> postUser({required UserPayload userDTO});
+
   Future<UserDto> rename({required UserPayload user, XFile? avatar});
 
   Future<UserDto> getUser();
+
   Future<bool> activateUser({required ActivateUserDTO activateUserDTO});
+
   Future<bool> deleteUser();
+
   Future<bool> changePass(
       {required String curPass, required String newPass, required String pass});
 
   Future<TokenDTO> createJwt({required TokenCreateDTO tokenCreateDTO});
 
   Future<int> resetPassword({required String mail});
+
   Future<void> resetPasswordConfirm(
       {required int userId,
       required String code,
@@ -53,8 +58,11 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       final response = await dio.post(EndPoints.createUser, data: user);
 
       return UserPayload.fromJson(response.data);
-    } catch (e) {
-      throw ServerException(message:(e as Map<String, dynamic>)['message'] as String);
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
     }
   }
 
@@ -82,8 +90,11 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       );
 
       return UserDto.fromJson(response.data);
-    } catch (e) {
-      throw ServerException(message: (e as Map<String, dynamic>)['message'] as String);
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
     }
   }
 
@@ -95,35 +106,41 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       );
       log(response.data.toString());
       return UserDto.fromJson(response.data);
-    } catch (e) {
-      throw ServerException(message: (e as Map<String, dynamic>)['message'] as String);
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
     }
   }
 
   @override
   Future<TokenDTO> createJwt({required TokenCreateDTO tokenCreateDTO}) async {
     try {
-      print('hello');
       final response = await dio.post(
         EndPoints.createToken,
         data: tokenCreateDTO.toJson(),
       );
       return TokenDTO.fromJson(response.data);
-    } catch (e) {
-      throw ServerException(message: ( e as Map<String, dynamic>)['message'] as String);
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
     }
   }
 
   @override
   Future<bool> activateUser({required ActivateUserDTO activateUserDTO}) async {
     try {
-       await dio.post(
+      await dio.post(
         EndPoints.activateUser,
         data: activateUserDTO.toJson(),
       );
       return true;
-    } catch (e) {
-      throw ServerException(message: (e as Map<String, dynamic>)['message'] as String);
+    } on DioError catch (e) {
+      throw ServerException(
+          message: (e as Map<String, dynamic>)['message'] as String);
     }
   }
 
@@ -145,8 +162,11 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       log(newPass.toString());
       log(pass.toString());
       return true;
-    } catch (e) {
-      throw ServerException(message: (e as Map<String, dynamic>)['message'] as String);
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
     }
   }
 
@@ -158,8 +178,11 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       );
 
       return true;
-    } catch (e) {
-      throw ServerException(message: (e as Map<String, dynamic>)['message'] as String);
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
     }
   }
 
@@ -175,8 +198,10 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       final body = response.data as Map<String, dynamic>;
       log(body.toString());
       return int.parse(body['user_id'].toString());
-    } catch (e) {
-      throw ServerException(message: (e as Map<String, dynamic>)['message'] as String);
+    }  catch (e) {
+      throw ServerException(
+        message:'пользователь не зарегестрирован',
+      );
     }
   }
 
@@ -196,12 +221,13 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
           're_new_password': reNewPassword,
         },
       );
-    } catch (e) {
-      throw ServerException(message:  (e as Map<String, dynamic>)['message'] as String);
-
+    }on DioError catch (e) {
+      throw ServerException(
+        message:
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
 
       throw ServerException(message: e.toString());
-
     }
   }
 }

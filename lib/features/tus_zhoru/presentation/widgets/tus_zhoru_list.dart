@@ -36,14 +36,14 @@ class _TusZhoruListState extends State<TusZhoruList> {
               ));
             },
             child: Container(
-              height: 90,
+              height: 65.h,
               decoration: BoxDecoration(
                 color: list[index].isPurchased!
                     ? AppColors.orange
                     : AppColors.white,
                 borderRadius: BorderRadius.circular(20),
               ),
-              padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 16.w),
+              padding: EdgeInsets.symmetric(vertical: 13.h, horizontal: 16.w),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -52,16 +52,19 @@ class _TusZhoruListState extends State<TusZhoruList> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        list[index].title ?? '',
-                        style: getTextStyle(CustomTextStyles.s16w500).apply(
-                            fontFamily: FontTypes.SF_Pro.name,
-                            color: list[index].isPurchased!
-                                ? AppColors.white
-                                : null),
-                      ),
-                      SizedBox(
-                        height: 4.h,
+                      Container(
+                        width: 200.w,
+                        child: Text(
+                          list[index].title ?? '',
+                          style: getTextStyle(CustomTextStyles.s16w500).copyWith(
+                            fontWeight: FontWeight.w600,
+                              fontFamily: FontTypes.SF_Pro.name,
+                              color: list[index].isPurchased!
+                                  ? AppColors.white
+                                  : null),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
                       ),
                       Container(
                         width: 250.w,

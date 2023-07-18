@@ -104,7 +104,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                         height: 36.h,
                       ),
                       const Text(
-                        'Жүйеге тіркелген почта немес телефон нөмірін енгізіңіз',
+                        'Жүйеге тіркелген почта ',
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(height: 18.h),
@@ -137,10 +137,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           successConfirm: (){
 
              Navigator.of(context).pop();
+             buildSuccessCustomSnackBar(context, 'Сәтті ауысты');
           },
 
 
           errorState: (message) {
+            // Navigator.pop(context);
             buildErrorCustomSnackBar(context, message);
           },
           orElse: () {},

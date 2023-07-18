@@ -74,7 +74,13 @@ class _PayDialogState extends State<PayDialog> {
                     isLoading = true;
                   });
                    BlocProvider.of<CreateTusZhoruCubit>(context)
-                      .createCustomTusZhoruPayment(widget.id, widget.isCustom);
+                       .createCustomTusZhoruPayment(widget.id, widget.isCustom);
+                   await Future.delayed(Duration(seconds: 7),(){
+
+                     setState(() {
+                       isLoading = false;
+                     });
+                   });
 
                   Navigator.of(context).pop();
                   showDialog(
@@ -89,7 +95,7 @@ class _PayDialogState extends State<PayDialog> {
                 },
                 color: AppColors.orange,
                 child: isLoading
-                    ? CircularProgressIndicator()
+                    ? Center(child: CircularProgressIndicator())
                     : Center(
                         child: Text('${widget.price} тг төлеу',
                             style: getTextStyle(CustomTextStyles.s14w400)

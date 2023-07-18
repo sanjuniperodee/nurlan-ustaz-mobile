@@ -25,9 +25,12 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
 
   Future<void> secureScreen() async {
     final FlutterWindowManager manager = FlutterWindowManager();
-    var bool =
-        await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
-    bool = true;
+         await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+  }
+  Future<void> unSecureScreen() async {
+    final FlutterWindowManager manager = FlutterWindowManager();
+
+    await FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
   }
 
   Future<void> toggleFav(int id) async {
@@ -67,7 +70,7 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
       (r) {
         tosZhoruList = r.toList();
         emit(TusZhoruState.initialState(
-            tusZhoruList: r.toList(), currentIndex: 0));
+            tusZhoruList: r.toSet().toList(), currentIndex: 0));
       },
     );
   }
@@ -87,7 +90,7 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
       (r) {
         customTusZhoruList = r;
         emit(TusZhoruState.initialState(
-            customTusZhoru: r.toList(), currentIndex: 1));
+            customTusZhoru: r.toSet().toList(), currentIndex: 1));
       },
     );
   }

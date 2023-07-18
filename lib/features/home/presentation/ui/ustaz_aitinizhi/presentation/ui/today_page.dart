@@ -45,8 +45,8 @@ class _TodayChatPageState extends State<TodayChatPage> {
       }, errorState: (message) {
         return Container();
       }, loadingState: () {
-        return Padding(
-          padding: const EdgeInsets.only(top: 300),
+        return const Padding(
+          padding: EdgeInsets.only(top: 300),
           child: Center(
             child: CircularProgressIndicator(
               color: AppColors.danger,
@@ -100,7 +100,7 @@ class _TodayChatPageState extends State<TodayChatPage> {
                 await context.read<TodayChatCubit>().connectSocket();
               },
               child: Text(
-                'Ескертпе: сұрағыңыз қысқа да нұсқа болуы шарт (70 әріп) Сұрақтар 24 сағаттан соң “Сақталғандар” бөліміне өтеді',
+                'Ескертпе: сұрағыңыз қысқа да нұсқа болуы шарт (90 әріп) Сұрақтар 24 сағаттан соң “Сақталғандар” бөліміне өтеді',
                 style: getTextStyle(CustomTextStyles.s12w600)
                     .copyWith(fontFamily: FontTypes.SF_Pro.name),
               ),

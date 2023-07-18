@@ -17,6 +17,7 @@ class CustomTabBar extends StatelessWidget {
     return DefaultTabController(
       length: length,
       child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 2,vertical: 2),
         height: 40,
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(24),
@@ -34,7 +35,7 @@ class CustomTabBar extends StatelessWidget {
             // controller: _tabController,
             unselectedLabelColor: Color(0xFF444343),
             onTap: onTap,
-            tabs: tabs),
+            tabs: tabs,),
       ),
     );
   }

@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/error/failure.dart';
 import '../../data/repositories/auth_repository.dart';
 
 part 'forgot_password_cubit.freezed.dart';
@@ -12,7 +13,7 @@ class ForgotPasswordCubitCubit extends Cubit<ForgotPasswordState> {
     this._authRepository,
   ) : super(const ForgotPasswordState.initialState());
   final AuthRepository _authRepository;
-  late  int userId;
+  late int userId;
 
   Future<void> resetConfirm(
       {required String code,
@@ -25,25 +26,35 @@ class ForgotPasswordCubitCubit extends Cubit<ForgotPasswordState> {
         code: code,
         newPassword: newPassword,
         reNewPassword: reNewPassword);
-    result.fold((l) => {}, (r) => {emit(const _SuccessConfirm())});
+    result.fold((l) {
+      emit(_ErrorState(message: mapFailureToMessageBack(l)));
+      emit(ForgotPasswordState.verificationCodeState(userId: userId));
+    }, (r) {
+      emit(const _SuccessConfirm());
+      emit(_InitialState());
+
+    });
   }
 
   Future<void> getIdByMail(String mail) async {
     emit(ForgotPasswordState.loadingState());
     final id = await _authRepository.resetPassword(mail: mail);
 
-    return id.fold((l) {}, (r) {
+    return id.fold((l) {
+      emit(_ErrorState(message: mapFailureToMessageBack(l)));
+      emit(_InitialState());
+    }, (r) {
       userId = r;
       emit(ForgotPasswordState.verificationCodeState(userId: r));
     });
   }
 
   Future<void> toInitialPage() async {
-     emit(const ForgotPasswordState.initialState());
+    emit(const ForgotPasswordState.initialState());
   }
 
   Future<void> toCodeVerificationPage() async {
-    emit( ForgotPasswordState.verificationCodeState(userId: userId));
+    emit(ForgotPasswordState.verificationCodeState(userId: userId));
   }
 
   Future<void> toNewPasswordPage({required String code}) async {

@@ -60,24 +60,25 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
                   showButton = false;
                 });
               }
+              else{
+                setState(() {
+                  showButton = true;
+                });
+              }
             });
         // TODO: implement listener
       },
       child: Scaffold(
         floatingActionButton: currentIndex == 0 ?
-
-
-
-
-
         showButton
                 ? Container(
                     width: double.infinity,
-                    height: 112.h,
+                    height: 80.h,
                     child: Padding(
-                      padding: const EdgeInsets.only(
-                          top: 16, bottom: 44, right: 16, left: 16),
+                      padding:  EdgeInsets.only(
+                          top: 16.h, bottom: 14.h, right: 16.w, left: 16.w),
                       child: AppButton(
+                          textSize: 16.sp,
                           onTap: () {
                             showDialog(
                               context: context,
@@ -89,27 +90,26 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
                                   backgroundColor: AppColors.white
                                       .withOpacity(0.000000000000000001),
                                   content: Container(
-                                    width: 320,
-                                    height: 300,
+                                    width: 320.w,
+                                    height: 300.h,
                                     child: Stack(
                                       children: [
                                         Positioned(
-                                          top: 50,
+                                          top: 50.h,
                                           child: Container(
                                             decoration: BoxDecoration(
                                                 color: AppColors.white,
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(20))),
-                                            height: 194,
-                                            width: 320,
+                                            width: 300.w,
                                             child: Column(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.start,
+                                                  MainAxisAlignment.end,
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
                                               children: [
-                                                const SizedBox(
-                                                  height: 48,
+                                                 SizedBox(
+                                                  height: 48.h,
                                                 ),
                                                 Text(
                                                   'Сұрағыңыз',
@@ -121,20 +121,22 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
                                                               .Philosopher
                                                               .name),
                                                 ),
-                                                const SizedBox(
-                                                  height: 20,
+                                                 SizedBox(
+                                                  height: 20.h,
                                                 ),
                                                 Padding(
-                                                  padding: const EdgeInsets.symmetric(
-                                                      horizontal: 10),
+                                                  padding:  EdgeInsets.symmetric(
+                                                      horizontal: 16.w),
                                                   child: Container(
-                                                    height: 32.h,
                                                     width: 279.w,
+                                                    constraints: BoxConstraints(minHeight: 32.h),
                                                     child: TextFormField(
+                                                      minLines: 1,
+                                                      maxLines: 10,
                                                       controller: _surakController,
                                                       inputFormatters: [
                                                         LengthLimitingTextInputFormatter(
-                                                            40),
+                                                            90),
                                                       ],
                                                       decoration:
                                                           InputDecoration(
@@ -143,7 +145,8 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
                                                             FloatingLabelBehavior
                                                                 .never,
                                                         enabled: true,
-                                                        labelText: "Текст",
+                                                        labelText: "Ұстаз айтыңызшы...",
+                                                        labelStyle: getTextStyle(CustomTextStyles.s14w600).copyWith(fontFamily: FontTypes.SF_Pro.name),
                                                         enabledBorder:
                                                             OutlineInputBorder(
                                                           borderRadius:
@@ -172,14 +175,14 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
                                                         fillColor: AppColors
                                                             .blue
                                                             .withOpacity(0.05),
-                                                            contentPadding: EdgeInsets.all(10.0),
+                                                            contentPadding: EdgeInsets.all(10),
                                                         //fillColor: Colors.green
                                                       ),
                                                     ),
                                                   ),
                                                 ),
                                                 SizedBox(
-                                                  height: 16,
+                                                  height: 16.h,
                                                 ),
                                                 InkWell(
                                                   onTap: () {
@@ -187,7 +190,7 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
                                                     Navigator.pop(dialogContext);
                                                   },
                                                   child: Container(
-                                                    height: 52,
+                                                    height: 52.h,
                                                     width: double.infinity,
                                                     decoration: const BoxDecoration(
                                                         gradient: AppColors
@@ -222,21 +225,31 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
                                           ),
                                         ),
                                         Positioned(
-                                          left: 115,
-                                          bottom: 210,
-                                          child: ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(90),
-                                            child: CachedNetworkImage(
-                                              imageUrl: userSir.avatar ?? '',
-                                              fit: BoxFit.cover,
-                                              height: 74.h,
-                                              width: 74.w,
-                                              errorWidget: (a, b, c) => Center(
-                                                child: SvgPicture.asset(
-                                                  Assets.userSvg,
-                                                  width: 74,
-                                                  height: 74,
+                                          left: 115.w,
+                                          bottom: 210.h,
+                                          child: Container(
+                                            height: 74.h,
+                                            width: 74.w,
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: AppColors.white, // Specify the border color here
+                                                width: 1.0, // Specify the border width here
+                                              ),
+                                              borderRadius: BorderRadius.circular(90.r)),
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(90.r),
+                                              child: CachedNetworkImage(
+                                                imageUrl: userSir.avatar ?? '',
+                                                fit: BoxFit.cover,
+                                                height: 74.h,
+                                                width: 74.w,
+                                                errorWidget: (a, b, c) => Center(
+                                                  child: SvgPicture.asset(
+                                                    Assets.userSvg,
+                                                    width: 74.w,
+                                                    height: 74.h,
+                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -249,7 +262,7 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
                               },
                             );
                           },
-                          text: 'Сұраңыз'),
+                          text: 'Сұраңыз',),
                     ),
                   )
                 : null

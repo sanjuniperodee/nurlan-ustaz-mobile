@@ -51,24 +51,27 @@ class _ServicesPageState extends State<ServicesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       backgroundColor: AppColors.lightBlue,
-      floatingActionButton: Padding(
+      bottomSheet: Padding(
         padding: const EdgeInsets.only(
-          top: 535.0,
+          // top: 35.0,
           left: 16,
           right: 16,
-        ),
+        ).r,
         child: Container(
+          height: 160.h,
           color: AppColors.lightBlue,
           child: Column(
             children: [
               SizedBox(
                 height: 22.h,
               ),
-              const Text(
+              Text(
                 'Жоғарыдағы қызметтердің бірін таңдап, батырманы басыңыз',
                 textAlign: TextAlign.center,
+                style: getTextStyle(CustomTextStyles.s16w400)
+                    .copyWith(fontFamily: FontTypes.SF_Pro.name),
               ),
               SizedBox(
                 height: 24.h,
@@ -95,9 +98,12 @@ class _ServicesPageState extends State<ServicesPage> {
                       );
                     },
                     text: 'Өтініш қалдыру',
-                    color: AppColors.blue,
+                    // color: AppColors.blue,
                   );
                 },
+              ),
+              SizedBox(
+                height: 22.h,
               ),
             ],
           ),
@@ -146,12 +152,12 @@ class _ServicesPageState extends State<ServicesPage> {
                                   color: AppColors.white,
                                   borderRadius: BorderRadius.circular(20).r),
                               padding: const EdgeInsets.symmetric(
-                                      vertical: 12, horizontal: 12)
+                                  vertical: 12, horizontal: 12)
                                   .r
                                   .r,
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
@@ -159,11 +165,11 @@ class _ServicesPageState extends State<ServicesPage> {
                                         decoration: BoxDecoration(
                                             color: AppColors.orange,
                                             borderRadius:
-                                                BorderRadius.circular(12).r),
+                                            BorderRadius.circular(12).r),
                                         padding: const EdgeInsets.all(10).r,
                                         child: CachedNetworkImage(
                                           imageUrl:
-                                              listOfServices[index].icon ?? '',
+                                          listOfServices[index].icon ?? '',
                                           fit: BoxFit.cover,
                                           width: 55.w,
                                           height: 55.h,
@@ -176,11 +182,16 @@ class _ServicesPageState extends State<ServicesPage> {
                                       SizedBox(
                                         width: 8.w,
                                       ),
-                                      Text(
-                                        listOfServices[index].title ?? 'ERROR',
-                                        style: getTextStyle(
-                                                CustomTextStyles.s16w500)
-                                            .apply(color: AppColors.black),
+                                      SizedBox(
+                                        width: 210.w,
+                                        child: Text(
+                                          listOfServices[index].title ??
+                                              'ERROR',
+                                          overflow: TextOverflow.ellipsis,
+                                          style: getTextStyle(
+                                              CustomTextStyles.s16w500)
+                                              .apply(color: AppColors.black),
+                                        ),
                                       ),
                                     ],
                                   ),
@@ -200,7 +211,7 @@ class _ServicesPageState extends State<ServicesPage> {
                                       )
                                           ? SvgPicture.asset(Assets.radioOnSvg)
                                           : SvgPicture.asset(
-                                              Assets.radioCircleSvg))
+                                          Assets.radioCircleSvg))
                                 ],
                               ),
                             ),
@@ -208,7 +219,7 @@ class _ServicesPageState extends State<ServicesPage> {
                         },
                       ),
                       SizedBox(
-                        height: 24.h,
+                        height: 144.h,
                       ),
                     ],
                   ),

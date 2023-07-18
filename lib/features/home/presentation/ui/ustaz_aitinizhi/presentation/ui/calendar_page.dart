@@ -18,17 +18,7 @@ class CalendarChatsPage extends StatefulWidget {
 }
 
 class _CalendarChatsPageState extends State<CalendarChatsPage> {
-  final Map<DateTime, List<CleanCalendarEvent>> _events = {
-    DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day): [
-      CleanCalendarEvent('Event A',
-          startTime: DateTime(DateTime.now().year, DateTime.now().month,
-              DateTime.now().day, 10, 0),
-          endTime: DateTime(DateTime.now().year, DateTime.now().month,
-              DateTime.now().day, 12, 0),
-          description: 'A special event',
-          color: Colors.red),
-    ],
-  };
+
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +30,9 @@ class _CalendarChatsPageState extends State<CalendarChatsPage> {
               buildErrorCustomSnackBar(context, message);
             },
         loadingState: (){
-          return Align(
+          return const Align(
             alignment: Alignment.center,
-            child: const Center(
+            child: Center(
               child: CircularProgressIndicator(
                 color: AppColors.danger,
               ),
@@ -104,7 +94,7 @@ class _CalendarChatsPageState extends State<CalendarChatsPage> {
                       selectedColor: Colors.pink,
                       todayColor: AppColors.orange,
                       eventColor: Colors.deepPurple,
-                      locale: 'kk_Kz',
+                      locale: '${context.locale.languageCode},${context.locale.countryCode}',
                       todayButtonText: '',
                       isExpanded: true,
                       dayOfWeekStyle: TextStyle(
@@ -115,7 +105,7 @@ class _CalendarChatsPageState extends State<CalendarChatsPage> {
                     ),
                   ),
                 ),
-                if (questions != null) QuestionsList(questions: questions)
+                if (questions != null) QuestionsList(questions: questions.reversed.toList())
               ],
             );
           },

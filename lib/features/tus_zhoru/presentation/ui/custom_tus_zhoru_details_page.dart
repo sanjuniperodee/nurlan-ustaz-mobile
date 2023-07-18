@@ -5,8 +5,10 @@ import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/custom_tus_zhoru_details_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/widgets/tus_zhoru_custom_body.dart';
 
 import '../../../app/presentation/widgets/custom_app_bar.dart';
+import '../bloc/tus_zhoru_cubit.dart';
 
 class CustomTusZhoruDetailPage extends StatefulWidget {
   const CustomTusZhoruDetailPage({super.key, required this.id});
@@ -25,7 +27,7 @@ class _TusZhoruDetailPage extends State<CustomTusZhoruDetailPage> {
 
   @override
   void initState() {
-    //BlocProvider.of<TusZhoruCubit>(context).secureScreen();
+    BlocProvider.of<TusZhoruCubit>(context).secureScreen();
     BlocProvider.of<CustomTusZhoruDetailsCubit>(context).getCustomTusZhoruById(widget.id);
     super.initState();
   }
@@ -38,9 +40,13 @@ class _TusZhoruDetailPage extends State<CustomTusZhoruDetailPage> {
 
       return state.maybeWhen(
           loadingState: (){
-            return Center(
-              child: CircularProgressIndicator(
-                color: AppColors.danger,
+            return Scaffold(
+              body: TusZhoruCustomBody(
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.danger,
+                  ),
+                ),
               ),
             );
           },
@@ -91,12 +97,17 @@ class _TusZhoruDetailPage extends State<CustomTusZhoruDetailPage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 12),
                         child: CustomAppBar(
-                            title: tusZhoruModel?.title ?? ''),
+                            title: tusZhoruModel?.title ?? '',onTap: (){
+                          BlocProvider.of<TusZhoruCubit>(context).unSecureScreen();
+                          Navigator.pop(context);
+
+                        },),
                       ),
                       SizedBox(
                         height: 24,
                       ),
                       Container(
+                        height: 1.0.sh,
                         padding:
                             EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                         width: double.maxFinite,

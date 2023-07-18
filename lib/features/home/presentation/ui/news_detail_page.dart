@@ -58,7 +58,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                     autoPlay: true,
                     autoPlayInterval: const Duration(seconds: 3),
                     enlargeCenterPage: true,
-                    aspectRatio: 16 / 9,
+                    aspectRatio: 17 / 13,
                     onPageChanged: (index, _) {
                       setState(() {
                         _currentIndex = index;
@@ -80,26 +80,28 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                     );
                   }).toList(),
                 ),
-                // Positioned.fill(
-                //   top: 210.r,
-                //   child: Align(
-                //     alignment: Alignment.topCenter,
-                //     child: DotsIndicator(
-                //       dotsCount: widget.result.media?.length ?? 0,
-                //       position: _currentIndex,
-                //       decorator: DotsDecorator(
-                //         color:
-                //             AppColors.white, // Color of non-selected indicators
-                //         activeColor:
-                //             AppColors.grey1, // Color of selected indicator
-                //       ),
-                //     ),
-                //   ),
-                // ),
+                widget.result.media != null
+                    ? const SizedBox()
+                    : Positioned.fill(
+                        top: 215.r,
+                        child: Align(
+                          alignment: Alignment.topCenter,
+                          child: DotsIndicator(
+                            dotsCount: widget.result.media?.length ?? 0,
+                            position: _currentIndex,
+                            decorator: DotsDecorator(
+                              color: AppColors
+                                  .white, // Color of non-selected indicators
+                              activeColor: AppColors
+                                  .grey1, // Color of selected indicator
+                            ),
+                          ),
+                        ),
+                      ),
                 SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: Padding(
-                      padding: const EdgeInsets.only(top: 239).r,
+                      padding: const EdgeInsets.only(top: 259).r,
                       child: Container(
                         width: 1.sw,
                         decoration: BoxDecoration(

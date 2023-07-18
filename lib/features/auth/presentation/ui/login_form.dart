@@ -35,6 +35,7 @@ class _LoginFormState extends State<LoginForm> {
     return BlocConsumer<LoginCubit, LoginState>(
       builder: (context, state) {
         return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               'Қош келдіңіз',
@@ -93,10 +94,6 @@ class _LoginFormState extends State<LoginForm> {
                   if (isValidEmail(emailController.value.text) == false) {
                     buildErrorCustomSnackBar(
                         context, 'Введите корректный почтовый адрес');
-                    return;
-                  }
-                  if (passwordController.length < 8) {
-                    buildErrorCustomSnackBar(context, 'Слишком короткий пароль');
                     return;
                   }
                   else {

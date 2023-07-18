@@ -17,6 +17,8 @@ class TusZhoruDetailsCubit extends Cubit<TusZhoruDetailsState> {
 
   late List<TusZhoruDTO> tosZhoruList;
   late List<TusZhoruDTO> customTusZhoruList;
+  late TusZhoruDTO tusZhoru;
+
 
 
 
@@ -27,18 +29,22 @@ class TusZhoruDetailsCubit extends Cubit<TusZhoruDetailsState> {
     return result.fold((l) {
       return null;
     }, (r) {
-      getTusZhoruById( id);
+
+      tusZhoru = tusZhoru.copyWith(isSaved: !(tusZhoru.isSaved!));
+      emit(_LoadedState(tusZhoru));
     });
   }
 
 
 
   Future<TusZhoruDTO?> getTusZhoruById(int id) async {
+    emit(_LoadingState());
 
     final result = await _repository.getTusZhoruById(id: id);
     return result.fold((l) {
       return null;
     }, (r) {
+      tusZhoru = r;
       emit(_LoadedState(r));
     });
   }
