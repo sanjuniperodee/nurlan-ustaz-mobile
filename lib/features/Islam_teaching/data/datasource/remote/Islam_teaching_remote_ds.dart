@@ -18,6 +18,8 @@ abstract class IslamTeachingRemoteDs {
   Future<bool> duasFavorite({required int id});
   Future<bool> dhikrsFavorite({required int id});
   Future<bool> islamNamesFavorite({required int id});
+  Future<List<PillarsDTO>> ablutions({required String gender});
+  Future<List<PillarsDTO>> prayerTimes({required String gender});
   Future<List<PillarsDTO>> pillars();
   Future<List<PillarsDTO>> fatwas();
   Future<List<ResultTeachingDTO>> sura(
@@ -138,6 +140,38 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
         '${EndPoints.duha}/$id/toggle_save/',
       );
       return true;
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<List<PillarsDTO>> prayerTimes({required String gender}) async {
+    try {
+      final response =
+          await dio.get(EndPoints.prayerTimes, queryParameters: {'gender': gender});
+      return ((response.data as List<dynamic>))
+          .map((e) => PillarsDTO.fromJson(e))
+          .toList();
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<List<PillarsDTO>> ablutions({required String gender}) async {
+    try {
+      final response =
+          await dio.get(EndPoints.ablutions, queryParameters: {'gender': gender});
+      return ((response.data as List<dynamic>))
+          .map((e) => PillarsDTO.fromJson(e))
+          .toList();
     } on DioError catch (e) {
       throw ServerException(
         message:

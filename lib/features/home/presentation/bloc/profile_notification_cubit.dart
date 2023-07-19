@@ -24,7 +24,7 @@ class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
 
   Future<void> saveChanges() async {
     final result = await _homeRepository.putNotificationDevice(
-        registrationId: token ?? '', notification: notificationDeviceDTO);
+        registrationId: token, notification: notificationDeviceDTO);
 
     result.fold((l) => {emit(_ErrorState(message: mapFailureToMessage(l)))},
         (r) => {getNotificationDto()});

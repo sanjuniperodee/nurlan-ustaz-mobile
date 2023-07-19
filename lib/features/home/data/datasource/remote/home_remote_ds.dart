@@ -876,7 +876,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       {required String registrationId}) async {
     try {
       final response = await dio.get(
-        '${EndPoints.notification}/$registrationId',
+        '${EndPoints.notification}/$registrationId/',
         data: {'registration_id': registrationId},
       );
       log('NOTI::::${response.data.toString()}');

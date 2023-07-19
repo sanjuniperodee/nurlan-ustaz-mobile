@@ -29,6 +29,7 @@ class ResultHomeDTO with _$ResultHomeDTO {
       String? text,
       String? cover,
       String? link,
+      String? url,
       UserCommentDTO? user,
       @JsonKey(name: "start_time") DateTime? startTime,
       @JsonKey(name: "created_at") DateTime? createdAt,

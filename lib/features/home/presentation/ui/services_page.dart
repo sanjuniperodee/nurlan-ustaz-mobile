@@ -81,6 +81,7 @@ class _ServicesPageState extends State<ServicesPage> {
                   orElse: () {},
                   loaded: (url) {
                     _launchUrl(url);
+                    Navigator.pop(context);
                   },
                 );
                 // TODO: implement listener

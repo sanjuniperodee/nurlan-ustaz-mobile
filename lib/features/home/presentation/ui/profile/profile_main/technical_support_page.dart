@@ -165,7 +165,7 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
       ),
       bottomSheet: Container(
         padding: const EdgeInsets.all(16),
-        height: 102.h,
+        height: 132.h,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

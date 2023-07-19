@@ -1,86 +1,100 @@
-import 'dart:developer';
-
-import 'package:audioplayers/audioplayers.dart';
+import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 
 class AudioItemWidget extends StatefulWidget {
   final String audioUrl;
-  const AudioItemWidget({Key? key, required this.audioUrl}) : super(key: key);
+  const AudioItemWidget({super.key, required this.audioUrl});
 
   @override
   State<AudioItemWidget> createState() => _AudioItemWidgetState();
 }
 
 class _AudioItemWidgetState extends State<AudioItemWidget> {
-  AudioPlayer audioPlayer = AudioPlayer();
-  PlayerState audioPlayerState = PlayerState.paused;
-  String url =
-      'http://86.107.45.90:8000/api/media/knowledge/names_of_allah/аттахият_uZxzPO7.mp3';
+  final progressNotifier = ValueNotifier<ProgressBarState>(
+    ProgressBarState(
+      current: Duration.zero,
+      buffered: Duration.zero,
+      total: Duration.zero,
+    ),
+  );
+  final buttonNotifier = ValueNotifier<ButtonState>(ButtonState.paused);
 
-  /// Optional
-  int timeProgress = 0;
-  int audioDuration = 0;
+  // static const url1 = widget.url;
 
+  late AudioPlayer _audioPlayer;
   @override
   void initState() {
     super.initState();
+    _init();
+  }
 
-    /// Compulsory
-    audioPlayer.onPlayerStateChanged.listen((PlayerState state) {
-      setState(() {
-        audioPlayerState = state;
-      });
+  void _init() async {
+    _audioPlayer = AudioPlayer();
+    await _audioPlayer.setUrl(widget.audioUrl);
+
+    _audioPlayer.playerStateStream.listen((playerState) {
+      final isPlaying = playerState.playing;
+      final processingState = playerState.processingState;
+      if (processingState == ProcessingState.loading ||
+          processingState == ProcessingState.buffering) {
+        buttonNotifier.value = ButtonState.loading;
+      } else if (!isPlaying) {
+        buttonNotifier.value = ButtonState.paused;
+      } else if (processingState != ProcessingState.completed) {
+        buttonNotifier.value = ButtonState.playing;
+      } else {
+        _audioPlayer.seek(Duration.zero);
+        _audioPlayer.pause();
+      }
     });
 
-    /// Optional
-    audioPlayer.setSource(UrlSource(
-        url)); // Triggers the onDurationChanged listener and sets the max duration string
-    audioPlayer.onDurationChanged.listen((Duration duration) {
-      setState(() {
-        audioDuration = duration.inSeconds;
-      });
+    _audioPlayer.positionStream.listen((position) {
+      final oldState = progressNotifier.value;
+      progressNotifier.value = ProgressBarState(
+        current: position,
+        buffered: oldState.buffered,
+        total: oldState.total,
+      );
     });
-    audioPlayer.onPositionChanged.listen((Duration position) async {
-      setState(() {
-        timeProgress = position.inSeconds;
-      });
+
+    _audioPlayer.bufferedPositionStream.listen((bufferedPosition) {
+      final oldState = progressNotifier.value;
+      progressNotifier.value = ProgressBarState(
+        current: oldState.current,
+        buffered: bufferedPosition,
+        total: oldState.total,
+      );
+    });
+
+    _audioPlayer.durationStream.listen((totalDuration) {
+      final oldState = progressNotifier.value;
+      progressNotifier.value = ProgressBarState(
+        current: oldState.current,
+        buffered: oldState.buffered,
+        total: totalDuration ?? Duration.zero,
+      );
     });
   }
 
-  /// Compulsory
+  void play() {
+    _audioPlayer.play();
+  }
+
+  void pause() {
+    _audioPlayer.pause();
+  }
+
+  void seek(Duration position) {
+    _audioPlayer.seek(position);
+  }
+
   @override
   void dispose() {
-    audioPlayer.release();
-    audioPlayer.dispose();
+    _audioPlayer.dispose();
     super.dispose();
-  }
-
-  /// Compulsory
-  playMusic() async {
-    // Add the parameter "isLocal: true" if you want to access a local file
-    await audioPlayer.play(UrlSource(url));
-  }
-
-  /// Compulsory
-  pauseMusic() async {
-    await audioPlayer.pause();
-  }
-
-  /// Optional
-  void seekToSec(int sec) {
-    Duration newPos = Duration(seconds: sec);
-    audioPlayer
-        .seek(newPos); // Jumps to the given position within the audio file
-  }
-
-  /// Optional
-  String getTimeString(int seconds) {
-    String minuteString =
-        '${(seconds / 60).floor() < 10 ? 0 : ''}${(seconds / 60).floor()}';
-    String secondString = '${seconds % 60 < 10 ? 0 : ''}${seconds % 60}';
-    return '$minuteString:$secondString'; // Returns a string with the format mm:ss
   }
 
   @override
@@ -90,33 +104,75 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
         color: AppColors.orange.withOpacity(0.20),
         borderRadius: BorderRadius.circular(20),
       ),
+      padding: const EdgeInsets.symmetric(
+        vertical: 12,
+      ).r,
+      // height: 100,
       child: Row(
         children: [
-          GestureDetector(
-            onTap: () async {
-              audioPlayerState == PlayerState.playing
-                  ? pauseMusic()
-                  : playMusic();
+          ValueListenableBuilder<ButtonState>(
+            valueListenable: buttonNotifier,
+            builder: (_, value, __) {
+              switch (value) {
+                case ButtonState.loading:
+                  return Container(
+                    margin: const EdgeInsets.all(8.0),
+                    width: 40.h,
+                    height: 40.h,
+                    child: const CircularProgressIndicator(),
+                  );
+                case ButtonState.paused:
+                  return IconButton(
+                    icon: const Icon(Icons.play_arrow),
+                    iconSize: 40.h,
+                    onPressed: play,
+                    color: AppColors.orange,
+                  );
+                case ButtonState.playing:
+                  return IconButton(
+                    icon: const Icon(Icons.pause),
+                    iconSize: 40.h,
+                    onPressed: pause,
+                    color: AppColors.orange,
+                  );
+              }
             },
-            child: Icon(
-              audioPlayerState == PlayerState.playing
-                  ? Icons.pause
-                  : Icons.play_arrow,
-              color: AppColors.orange,
-              size: 40.h,
-            ),
           ),
-          Slider(
-            value: timeProgress.toDouble(),
-            max: audioDuration.toDouble(),
-            onChanged: (value) {
-              seekToSec(value.toInt());
-            },
-            activeColor: AppColors.orange,
-            inactiveColor: AppColors.orange,
+          Expanded(
+            child: ValueListenableBuilder<ProgressBarState>(
+              valueListenable: progressNotifier,
+              builder: (_, value, __) {
+                return Padding(
+                  padding: const EdgeInsets.only(top: 13.0, left: 8, right: 8),
+                  child: ProgressBar(
+                    baseBarColor: AppColors.orange,
+                    progressBarColor: AppColors.orange,
+                    bufferedBarColor: AppColors.orange,
+                    thumbColor: AppColors.orange,
+                    progress: value.current,
+                    buffered: value.buffered,
+                    total: value.total,
+                    onSeek: seek,
+                  ),
+                );
+              },
+            ),
           ),
         ],
       ),
     );
   }
 }
+
+class ProgressBarState {
+  ProgressBarState({
+    required this.current,
+    required this.buffered,
+    required this.total,
+  });
+  final Duration current;
+  final Duration buffered;
+  final Duration total;
+}
+
+enum ButtonState { paused, playing, loading }

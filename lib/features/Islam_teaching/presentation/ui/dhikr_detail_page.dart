@@ -9,6 +9,7 @@ import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/result_t
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/dhikrs_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/dhikrs_favorite_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/widgets/audioItem_widget.dart';
+
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/bottom_sheet.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
 
@@ -141,8 +142,9 @@ class _DhikrDetailPageState extends State<DhikrDetailPage> {
                               SizedBox(
                                 height: 90.h,
                               ),
+                             
                               AudioItemWidget(
-                                audioUrl: widget.result.audio ?? '',
+                              audioUrl: widget.result.audio ?? '',
                               ),
                             ],
                           ),

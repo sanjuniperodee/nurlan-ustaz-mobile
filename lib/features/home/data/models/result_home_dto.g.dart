@@ -26,6 +26,7 @@ _$_ResultHomeDTO _$$_ResultHomeDTOFromJson(Map<String, dynamic> json) =>
       text: json['text'] as String?,
       cover: json['cover'] as String?,
       link: json['link'] as String?,
+      url: json['url'] as String?,
       user: json['user'] == null
           ? null
           : UserCommentDTO.fromJson(json['user'] as Map<String, dynamic>),
@@ -71,6 +72,7 @@ Map<String, dynamic> _$$_ResultHomeDTOToJson(_$_ResultHomeDTO instance) =>
       'text': instance.text,
       'cover': instance.cover,
       'link': instance.link,
+      'url': instance.url,
       'user': instance.user,
       'start_time': instance.startTime?.toIso8601String(),
       'created_at': instance.createdAt?.toIso8601String(),

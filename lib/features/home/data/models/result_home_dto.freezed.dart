@@ -45,6 +45,7 @@ mixin _$ResultHomeDTO {
   String? get text => throw _privateConstructorUsedError;
   String? get cover => throw _privateConstructorUsedError;
   String? get link => throw _privateConstructorUsedError;
+  String? get url => throw _privateConstructorUsedError;
   UserCommentDTO? get user => throw _privateConstructorUsedError;
   @JsonKey(name: "start_time")
   DateTime? get startTime => throw _privateConstructorUsedError;
@@ -89,6 +90,7 @@ abstract class $ResultHomeDTOCopyWith<$Res> {
       String? text,
       String? cover,
       String? link,
+      String? url,
       UserCommentDTO? user,
       @JsonKey(name: "start_time") DateTime? startTime,
       @JsonKey(name: "created_at") DateTime? createdAt,
@@ -133,6 +135,7 @@ class _$ResultHomeDTOCopyWithImpl<$Res, $Val extends ResultHomeDTO>
     Object? text = freezed,
     Object? cover = freezed,
     Object? link = freezed,
+    Object? url = freezed,
     Object? user = freezed,
     Object? startTime = freezed,
     Object? createdAt = freezed,
@@ -216,6 +219,10 @@ class _$ResultHomeDTOCopyWithImpl<$Res, $Val extends ResultHomeDTO>
           ? _value.link
           : link // ignore: cast_nullable_to_non_nullable
               as String?,
+      url: freezed == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String?,
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -295,6 +302,7 @@ abstract class _$$_ResultHomeDTOCopyWith<$Res>
       String? text,
       String? cover,
       String? link,
+      String? url,
       UserCommentDTO? user,
       @JsonKey(name: "start_time") DateTime? startTime,
       @JsonKey(name: "created_at") DateTime? createdAt,
@@ -338,6 +346,7 @@ class __$$_ResultHomeDTOCopyWithImpl<$Res>
     Object? text = freezed,
     Object? cover = freezed,
     Object? link = freezed,
+    Object? url = freezed,
     Object? user = freezed,
     Object? startTime = freezed,
     Object? createdAt = freezed,
@@ -421,6 +430,10 @@ class __$$_ResultHomeDTOCopyWithImpl<$Res>
           ? _value.link
           : link // ignore: cast_nullable_to_non_nullable
               as String?,
+      url: freezed == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String?,
       user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
@@ -483,6 +496,7 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
       this.text,
       this.cover,
       this.link,
+      this.url,
       this.user,
       @JsonKey(name: "start_time") this.startTime,
       @JsonKey(name: "created_at") this.createdAt,
@@ -544,6 +558,8 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
   @override
   final String? link;
   @override
+  final String? url;
+  @override
   final UserCommentDTO? user;
   @override
   @JsonKey(name: "start_time")
@@ -599,7 +615,7 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
 
   @override
   String toString() {
-    return 'ResultHomeDTO(isLiked: $isLiked, isSaved: $isSaved, isLive: $isLive, isPurchased: $isPurchased, isTop: $isTop, likesCount: $likesCount, comentCount: $comentCount, id: $id, parent: $parent, body: $body, name: $name, logo: $logo, price: $price, title: $title, description: $description, text: $text, cover: $cover, link: $link, user: $user, startTime: $startTime, createdAt: $createdAt, isActive: $isActive, media: $media, requisites: $requisites, children: $children, statistics: $statistics, address: $address)';
+    return 'ResultHomeDTO(isLiked: $isLiked, isSaved: $isSaved, isLive: $isLive, isPurchased: $isPurchased, isTop: $isTop, likesCount: $likesCount, comentCount: $comentCount, id: $id, parent: $parent, body: $body, name: $name, logo: $logo, price: $price, title: $title, description: $description, text: $text, cover: $cover, link: $link, url: $url, user: $user, startTime: $startTime, createdAt: $createdAt, isActive: $isActive, media: $media, requisites: $requisites, children: $children, statistics: $statistics, address: $address)';
   }
 
   @override
@@ -629,6 +645,7 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
             (identical(other.text, text) || other.text == text) &&
             (identical(other.cover, cover) || other.cover == cover) &&
             (identical(other.link, link) || other.link == link) &&
+            (identical(other.url, url) || other.url == url) &&
             (identical(other.user, user) || other.user == user) &&
             (identical(other.startTime, startTime) ||
                 other.startTime == startTime) &&
@@ -667,6 +684,7 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
         text,
         cover,
         link,
+        url,
         user,
         startTime,
         createdAt,
@@ -712,6 +730,7 @@ abstract class _ResultHomeDTO implements ResultHomeDTO {
       final String? text,
       final String? cover,
       final String? link,
+      final String? url,
       final UserCommentDTO? user,
       @JsonKey(name: "start_time") final DateTime? startTime,
       @JsonKey(name: "created_at") final DateTime? createdAt,
@@ -768,6 +787,8 @@ abstract class _ResultHomeDTO implements ResultHomeDTO {
   String? get cover;
   @override
   String? get link;
+  @override
+  String? get url;
   @override
   UserCommentDTO? get user;
   @override

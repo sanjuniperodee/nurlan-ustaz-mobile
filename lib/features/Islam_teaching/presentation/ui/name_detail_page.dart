@@ -74,11 +74,13 @@ class _NameDetailPageState extends State<NameDetailPage> {
                             if (widget.index == 0) {
                               log(1.toString());
                               BlocProvider.of<IslamNamesCubit>(context)
-                                  .islamNamesMan(page: 1);
+                                  .islamNamesMan(page: 1, isFirstCall: true)
+                                  .then((value) => Navigator.pop(context));
                             } else {
                               log(2.toString());
                               BlocProvider.of<IslamNamesCubit>(context)
-                                  .islamWoman(page: 1);
+                                  .islamWoman(page: 1, isFirstCall: true)
+                                  .then((value) => Navigator.pop(context));
                             }
                             log(widget.index.toString());
                           },
@@ -88,7 +90,7 @@ class _NameDetailPageState extends State<NameDetailPage> {
                         height: 26.h,
                       ),
                       Container(
-                          height: 0.8.sh,
+                          height: 1.sh,
                           decoration: BoxDecoration(
                               color: AppColors.white.withOpacity(0.3),
                               borderRadius: BorderRadius.circular(24)),

@@ -288,7 +288,10 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                                 .renameUser(user: userPayload, avatar: _image);
                           },
                           text: 'Өзгерісті сақтау'),
-                    )
+                    ),
+                    SizedBox(
+                      height: 36.h,
+                    ),
                   ],
                 )
               ],

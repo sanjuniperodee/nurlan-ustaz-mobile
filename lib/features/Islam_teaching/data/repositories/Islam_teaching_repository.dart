@@ -19,6 +19,9 @@ abstract class IslamTeachingRepository {
   Future<Either<Failure, bool>> dhikrsFavorite({required int id});
   Future<Either<Failure, bool>> islamNamesFavorite({required int id});
   Future<Either<Failure, List<PillarsDTO>>> pillars();
+  Future<Either<Failure, List<PillarsDTO>>> ablutions({required String gender});
+  Future<Either<Failure, List<PillarsDTO>>> prayerTimes(
+      {required String gender});
   Future<Either<Failure, List<PillarsDTO>>> fatwas();
   Future<Either<Failure, List<ResultTeachingDTO>>> sura(
       {String? search,
@@ -135,6 +138,38 @@ class IslamTeachingRepositoryImpl extends IslamTeachingRepository {
     if (await networkInfo.isConnected) {
       try {
         final List<PillarsDTO> pillars = await remoteDS.pillars();
+        return Right(pillars);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<PillarsDTO>>> ablutions(
+      {required String gender}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final List<PillarsDTO> pillars =
+            await remoteDS.ablutions(gender: gender);
+        return Right(pillars);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<PillarsDTO>>> prayerTimes(
+      {required String gender}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final List<PillarsDTO> pillars =
+            await remoteDS.prayerTimes(gender: gender);
         return Right(pillars);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
