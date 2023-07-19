@@ -139,7 +139,8 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                                             title: 'Түс жорулар',
                                             onTap: () {
                                               context.router.push(
-                                                TandaulyTusZhoruPageRoute(),
+                                                TusZhoruPageRoute(
+                                                    type: 'isSave'),
                                               );
                                             }),
                                         CategoryTitleCard(

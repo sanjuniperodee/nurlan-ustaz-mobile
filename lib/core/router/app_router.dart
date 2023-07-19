@@ -47,11 +47,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/services_page
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/shop_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/presentation/ui/ustaz_aitinizhi.dart';
 
-
-
-
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/login_page.dart';
-
 
 import 'package:nurlan_ustaz_flutter/features/home/presentation/widgets/geonames_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/ui/tandaulilar_main_page.dart';
@@ -69,10 +65,8 @@ import '../../features/home/presentation/ui/live_broadcasts_page.dart';
 import '../../features/home/presentation/ui/namaz_page.dart';
 import '../../features/home/presentation/ui/news_detail_page.dart';
 import '../../features/home/presentation/ui/profile/profile_main/faq_page.dart';
-import '../../features/tandaulilar/presentation/ui/tandauly_tus_zhoru.dart';
 import '../../features/zhosparlar/data/models/checklist_dto.dart';
 import '../../features/zhosparlar/presentation/ui/ramazan_checklist.dart';
-
 
 part 'app_router.gr.dart';
 
@@ -152,6 +146,9 @@ part 'app_router.gr.dart';
       page: CommentPageNews,
     ),
     //TosZhoru
+    AutoRoute(
+      page: TusZhoruPage,
+    ),
     AutoRoute(page: TusZhoruDetailPage),
     AutoRoute(page: CustomTusZhoruDetailPage),
 
@@ -173,7 +170,6 @@ part 'app_router.gr.dart';
     AutoRoute(page: NamePage),
     //Tandaulilar
 
-    AutoRoute(page: TandaulyTusZhoruPage),
     //Islam teaching// 5 duty
     AutoRoute(page: DutyDetailPage),
     AutoRoute(page: NamazReadPage),
@@ -185,7 +181,6 @@ part 'app_router.gr.dart';
     AutoRoute(page: LoginPage),
     AutoRoute(page: CodeVerification),
     AutoRoute(page: CodeVerificationForgot),
-
   ],
 )
 class AppRouter extends _$AppRouter {}

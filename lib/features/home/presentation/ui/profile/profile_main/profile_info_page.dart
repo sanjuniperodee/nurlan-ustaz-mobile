@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
@@ -18,10 +17,10 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_butto
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_text_form_profile.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
-import 'package:nurlan_ustaz_flutter/features/auth/data/model/enums/gender.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
-import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_payload.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_payload2.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/rename_user_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/get_profile_cubit.dart';
 
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/widgets/profile_menu_item.dart';
 
@@ -50,14 +49,15 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
 
   TextEditingController dateController = TextEditingController();
   TextEditingController nameController = TextEditingController();
-  TextEditingController numberController = TextEditingController(text: '+7');
+  TextEditingController numberController = TextEditingController();
   TextEditingController emailController = TextEditingController();
 
-  final maskFormatter = MaskTextInputFormatter(mask: '+7(###)-###-##-##');
+  final maskFormatter = MaskTextInputFormatter(
+      mask: '+###########', type: MaskAutoCompletionType.lazy);
 
   bool isPrivacyAccept = false;
 
-  Gender? gender = Gender.male;
+  String? gender;
 
   @override
   void initState() {
@@ -67,6 +67,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
     dateController.text =
         DateFormat('yyyy-MM-dd').format(widget.userDTO.birthday!);
     emailController.text = widget.userDTO.email ?? "";
+    gender = widget.userDTO.gender ?? 'F';
   }
 
   @override
@@ -79,8 +80,13 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
             physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
-                const CustomAppBar(
+                CustomAppBar(
                   title: 'Профиль',
+                  onTap: () {
+                    BlocProvider.of<GetProfileCubit>(context)
+                        .getUser()
+                        .then((value) => Navigator.pop(context));
+                  },
                 ),
                 SizedBox(height: 44.h),
                 InkWell(
@@ -186,10 +192,10 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                             IconButton(
                               onPressed: () {
                                 setState(() {
-                                  gender = Gender.female;
+                                  gender = 'F';
                                 });
                               },
-                              icon: SvgPicture.asset(gender == Gender.female
+                              icon: SvgPicture.asset(gender == 'F'
                                   ? 'assets/icons/fill_checkbox.svg'
                                   : 'assets/icons/empty_checkbox.svg'),
                             ),
@@ -207,10 +213,10 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                             IconButton(
                               onPressed: () {
                                 setState(() {
-                                  gender = Gender.male;
+                                  gender = 'M';
                                 });
                               },
-                              icon: SvgPicture.asset(gender == Gender.male
+                              icon: SvgPicture.asset(gender == 'M'
                                   ? 'assets/icons/fill_checkbox.svg'
                                   : 'assets/icons/empty_checkbox.svg'),
                             ),
@@ -264,7 +270,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                       },
                       child: AppButton(
                           onTap: () {
-                            final UserPayload userPayload = UserPayload(
+                            final UserPayload2 userPayload = UserPayload2(
                               fullName: nameController.text.isEmpty
                                   ? widget.userDTO.fullName
                                   : nameController.text,

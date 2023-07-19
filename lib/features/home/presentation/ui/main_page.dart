@@ -11,6 +11,7 @@ import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
+import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
@@ -19,6 +20,8 @@ import 'package:nurlan_ustaz_flutter/features/home/data/models/banner_local_mode
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/timings_cubit.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
+
+import '../../../auth/data/datasource/local/auth_local_ds.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
@@ -70,13 +73,14 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     // TODO: implement initState
-
-    BlocProvider.of<NewsCubit>(context).news(page: 1, isFirstCall: true);
+    String chosenLang = getIt<AuthLocalDs>().getLocale();
+    Intl.defaultLocale = chosenLang.replaceAll('kz', 'kk');
+    BlocProvider.of<NewsCubit>(context)
+        .news(page: 1, isFirstCall: true, search: '');
     BlocProvider.of<TimingsCubit>(context).timings(
       43.25,
       76.91667,
     );
-
     super.initState();
   }
 
@@ -281,19 +285,20 @@ class _MainPageState extends State<MainPage> {
                                                     SizedBox(
                                                       width: 10.r,
                                                     ),
-                                                    // Text(
-                                                    //     '${namasNames[indexOfNextNames(times)]} намаз уақыты',
-                                                    //     style: getTextStyle(
-                                                    //             CustomTextStyles
-                                                    //                 .s16w200)
-                                                    //         .apply(
-                                                    //             fontFamily:
-                                                    //                 FontTypes.SF_Pro
-                                                    //                     .name)
-                                                    //         .copyWith(
-                                                    //             fontWeight:
-                                                    //                 FontWeight
-                                                    //                     .w400)),
+                                                    Text(
+                                                        '${namasNames[indexOfNextNames(times)]} намаз уақыты',
+                                                        style: getTextStyle(
+                                                                CustomTextStyles
+                                                                    .s16w200)
+                                                            .apply(
+                                                                fontFamily:
+                                                                    FontTypes
+                                                                        .SF_Pro
+                                                                        .name)
+                                                            .copyWith(
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .w400)),
                                                   ],
                                                 ),
                                                 Column(
@@ -302,24 +307,27 @@ class _MainPageState extends State<MainPage> {
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.end,
                                                   children: [
-                                                    // Text(
-                                                    //   namasTimestoSend(),
-                                                    //   style: getTextStyle(
-                                                    //           CustomTextStyles
-                                                    //               .s16w200)
-                                                    //       .apply(
-                                                    //           fontFamily: FontTypes
-                                                    //               .SF_Pro.name)
-                                                    //       .copyWith(
-                                                    //           fontWeight:
-                                                    //               FontWeight.w500)
-                                                    //       .apply(
-                                                    //           color:
-                                                    //               AppColors.blue),
-                                                    // ),
-                                                    // TimesStateWidget(
-                                                    //   time: timesToSend(),
-                                                    // )
+                                                    Text(
+                                                      namasTimestoSend(),
+                                                      style: getTextStyle(
+                                                              CustomTextStyles
+                                                                  .s16w200)
+                                                          .apply(
+                                                              fontFamily:
+                                                                  FontTypes
+                                                                      .SF_Pro
+                                                                      .name)
+                                                          .copyWith(
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .w500)
+                                                          .apply(
+                                                              color: AppColors
+                                                                  .blue),
+                                                    ),
+                                                    TimesStateWidget(
+                                                      time: timesToSend(),
+                                                    )
                                                   ],
                                                 )
                                               ],
@@ -410,7 +418,7 @@ class _MainPageState extends State<MainPage> {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 176.h,
+                                  height: 216.h,
                                   width: 1.sw,
                                   child: ListView.builder(
                                     scrollDirection: Axis.horizontal,
@@ -473,12 +481,10 @@ class _MainPageState extends State<MainPage> {
                                                     children: [
                                                       SizedBox(height: 2.h),
                                                       Text(
-                                                          news[
-                                                                      index]
-                                                                  .title ??
+                                                          news[index].title ??
                                                               'ERROR',
                                                           overflow: TextOverflow
-                                                              .ellipsis,
+                                                              .fade,
                                                           style: getTextStyle(
                                                                   CustomTextStyles
                                                                       .s14w400)

@@ -126,8 +126,10 @@ class _CommentPageNewsState extends State<CommentPageNews> {
                                 autofocus: true, // Set autofocus to true
                                 focusNode: focusNode,
                                 controller: _textEditingController,
+                                maxLength: 999,
                                 decoration: const InputDecoration(
                                     hintText: 'Пікір білдіру',
+                                      counterText: '',
                                     border: InputBorder.none),
                               ),
                             ),

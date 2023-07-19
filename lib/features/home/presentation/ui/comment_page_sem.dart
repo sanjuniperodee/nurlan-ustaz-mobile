@@ -127,9 +127,11 @@ class _CommentPageSemState extends State<CommentPageSem> {
                               child: TextField(
                                 autofocus: true, // Set autofocus to true
                                 focusNode: focusNode,
+                                maxLength: 999,
                                 controller: _textEditingController,
                                 decoration: const InputDecoration(
                                     hintText: 'Пікір білдіру',
+                                    counterText: '',
                                     border: InputBorder.none),
                               ),
                             ),

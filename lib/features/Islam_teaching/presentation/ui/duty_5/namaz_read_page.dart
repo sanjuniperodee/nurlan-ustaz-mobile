@@ -22,7 +22,7 @@ class _NamazReadPageState extends State<NamazReadPage> {
     return Scaffold(
       backgroundColor: AppColors.lightBlue,
       bottomSheet: Container(
-          padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 30),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
           decoration: const BoxDecoration(color: AppColors.white),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -160,6 +160,9 @@ class _NamazReadPageState extends State<NamazReadPage> {
                             Align(
                                 alignment: Alignment.center,
                                 child: Image.asset('assets/images/nam1.png')),
+                            SizedBox(
+                              height: 136.h,
+                            ),
                           ],
                         ),
                       ),

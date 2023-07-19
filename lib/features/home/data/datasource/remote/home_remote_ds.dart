@@ -879,6 +879,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
         '${EndPoints.notification}/$registrationId',
         data: {'registration_id': registrationId},
       );
+      log('NOTI::::${response.data.toString()}');
       return NotificationDTO.fromJson(response.data);
     } on DioError catch (e) {
       throw ServerException(
@@ -893,6 +894,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       {required String registrationId,
       required NotificationDTO notification}) async {
     try {
+      log('LOG::::${notification.toString()}');
       final FormData formData = FormData.fromMap(notification.toJson());
       final response = await dio.patch(
         '${EndPoints.notification}/$registrationId/',

@@ -71,10 +71,7 @@ class _NamazPatternPageState extends State<NamazPatternPage> {
                         SizedBox(
                           height: 36.h,
                         ),
-                        SearchWidget(onChanged: (string) {}),
-                        SizedBox(
-                          height: 22.h,
-                        ),
+                        
                         CustomTabBar(
                           tabs: const [
                             Tab(

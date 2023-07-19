@@ -5,6 +5,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/notification_item_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/notification_settings_model.dart';
@@ -145,6 +147,7 @@ class _ProfileNotificationPage extends State<ProfileNotificationPage> {
                                               child: CupertinoSwitch(
                                                 value: e.status!,
                                                 onChanged: (value) {
+                                                  log(value.toString());
                                                   context
                                                       .read<
                                                           ProfileNotificationCubit>()
@@ -184,8 +187,21 @@ class _ProfileNotificationPage extends State<ProfileNotificationPage> {
                             //       },
                             //       itemCount: notifications.length),
                             // ],
+
                             ),
                       ),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      AppButton(
+                          onTap: () {
+                            context
+                                .read<ProfileNotificationCubit>()
+                                .saveChanges()
+                                .then((value) => buildSuccessCustomSnackBar(
+                                    context, 'Cәтті сақталды'));
+                          },
+                          text: 'Сақтау')
                     ],
                   ),
                 ),

@@ -11,26 +11,26 @@ class FloatinContainerWidget extends StatelessWidget {
   const FloatinContainerWidget({
     Key? key,
     required this.text,
-    required this.url, this.onTap,
+    required this.url,
+    this.onTap,
   }) : super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
       child: Container(
+        width: 150.w,
         decoration: BoxDecoration(
-            color: AppColors.lightGreen, borderRadius: BorderRadius.circular(6)),
-        padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 20),
+            color: const Color(0xFF8F8CF7).withOpacity(0.13),
+            borderRadius: BorderRadius.circular(12)),
+        padding: EdgeInsets.symmetric(horizontal: 14.w, vertical: 13.h),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Text(
               text,
               style: getTextStyle(CustomTextStyles.s16w600),
-            ),
-            SizedBox(
-              width: 50.w,
             ),
             SvgPicture.asset(url)
           ],

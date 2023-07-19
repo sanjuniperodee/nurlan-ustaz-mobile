@@ -10,6 +10,7 @@ import 'package:nurlan_ustaz_flutter/features/auth/data/datasource/remote/auth_r
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/token_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_payload.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_payload2.dart';
 
 import '../../../../core/common/constants.dart';
 import '../../../../core/platform/network_info.dart';
@@ -35,7 +36,7 @@ abstract class AuthRepository {
   Future<Either<Failure, UserPayload>> postUser({required UserPayload userDTO});
 
   Future<Either<Failure, UserDto>> rename(
-      {required UserPayload user, XFile? avatar});
+      {required UserPayload2 user, XFile? avatar});
 
   Future<Either<Failure, UserDto>> getUser();
 
@@ -131,7 +132,7 @@ class AuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<Either<Failure, UserDto>> rename(
-      {required UserPayload user, XFile? avatar}) async {
+      {required UserPayload2 user, XFile? avatar}) async {
     if (await networkInfo.isConnected) {
       try {
         final UserDto result =

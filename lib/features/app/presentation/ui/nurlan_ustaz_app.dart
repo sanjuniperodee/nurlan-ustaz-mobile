@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
@@ -18,6 +20,7 @@ class NurlanUstazApp extends StatelessWidget {
         // title: 'Flutter Demo',
         debugShowCheckedModeBanner: false,
         locale: EasyLocalization.of(context)?.locale,
+
         localizationsDelegates: [
           ...context.localizationDelegates,
           // CountryLocalizat
