@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +10,7 @@ import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/namaz_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/pillars_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/ablutions_cubit.dart';
 
@@ -32,7 +35,7 @@ class _NamazPatternPageState extends State<NamazPatternPage> {
     super.initState();
   }
 
-  List<PillarsDTO> abl = [];
+  List<NamazDTO> abl = [];
   List<PillarsDTO> pre = [];
   final List<String> list = [
     Assets.wudhuSvg,
@@ -130,6 +133,7 @@ class _NamazPatternPageState extends State<NamazPatternPage> {
                               padding: const EdgeInsets.only(top: 16.0),
                               child: GestureDetector(
                                 onTap: () {
+                                  log(abl.toString());
                                   context.router
                                       .push(WudhuPageRoute(wudhu: abl));
                                 },
@@ -176,9 +180,23 @@ class _NamazPatternPageState extends State<NamazPatternPage> {
                                   padding: const EdgeInsets.only(top: 8.0),
                                   child: GestureDetector(
                                     onTap: () {
-                                      context.router.push(
-                                        NamazReadPageRoute(pre: pre),
-                                      );
+                                      if (currentIndex != 0) {
+                                        context.router.push(
+                                          NamazReadPageRoute(
+                                              id: pre[index].id,
+                                              gender: 'F',
+                                              type:
+                                                  pre[index].title ?? 'ERROR'),
+                                        );
+                                      } else {
+                                        context.router.push(
+                                          NamazReadPageRoute(
+                                              id: pre[index].id,
+                                              gender: 'M',
+                                              type:
+                                                  pre[index].title ?? 'ERROR'),
+                                        );
+                                      }
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(

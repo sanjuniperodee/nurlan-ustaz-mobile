@@ -79,7 +79,7 @@ class _DhikrDetailPageState extends State<DhikrDetailPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: 56.h,
+                          height: 36.h,
                         ),
                         CustomAppBar(
                           title: widget.result.name ?? 'ERROR',
@@ -90,7 +90,7 @@ class _DhikrDetailPageState extends State<DhikrDetailPage> {
                           },
                         ),
                         SizedBox(
-                          height: 76.h,
+                          height: 56.h,
                         ),
                         Container(
                           decoration: BoxDecoration(
@@ -142,9 +142,8 @@ class _DhikrDetailPageState extends State<DhikrDetailPage> {
                               SizedBox(
                                 height: 90.h,
                               ),
-                             
                               AudioItemWidget(
-                              audioUrl: widget.result.audio ?? '',
+                                audioUrl: widget.result.audio ?? '',
                               ),
                             ],
                           ),

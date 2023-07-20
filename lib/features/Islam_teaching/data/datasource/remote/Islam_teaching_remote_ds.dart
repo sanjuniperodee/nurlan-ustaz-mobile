@@ -6,6 +6,7 @@ import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/dio_wrapper.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/ayat_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/namaz_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/names_of_Allah_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/pillars_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/result_teaching_dto.dart';
@@ -18,7 +19,8 @@ abstract class IslamTeachingRemoteDs {
   Future<bool> duasFavorite({required int id});
   Future<bool> dhikrsFavorite({required int id});
   Future<bool> islamNamesFavorite({required int id});
-  Future<List<PillarsDTO>> ablutions({required String gender});
+  Future<List<NamazDTO>> ablutions({required String gender});
+  Future<List<NamazDTO>> namazDetail({required String gender, required int id});
   Future<List<PillarsDTO>> prayerTimes({required String gender});
   Future<List<PillarsDTO>> pillars();
   Future<List<PillarsDTO>> fatwas();
@@ -151,8 +153,8 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
   @override
   Future<List<PillarsDTO>> prayerTimes({required String gender}) async {
     try {
-      final response =
-          await dio.get(EndPoints.prayerTimes, queryParameters: {'gender': gender});
+      final response = await dio
+          .get(EndPoints.prayerTimes, queryParameters: {'gender': gender});
       return ((response.data as List<dynamic>))
           .map((e) => PillarsDTO.fromJson(e))
           .toList();
@@ -165,12 +167,29 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
   }
 
   @override
-  Future<List<PillarsDTO>> ablutions({required String gender}) async {
+  Future<List<NamazDTO>> namazDetail(
+      {required String gender, required int id}) async {
     try {
-      final response =
-          await dio.get(EndPoints.ablutions, queryParameters: {'gender': gender});
+      final response = await dio.get('${EndPoints.prayerTimes}$id/prayers/',
+          queryParameters: {'gender': gender});
       return ((response.data as List<dynamic>))
-          .map((e) => PillarsDTO.fromJson(e))
+          .map((e) => NamazDTO.fromJson(e))
+          .toList();
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<List<NamazDTO>> ablutions({required String gender}) async {
+    try {
+      final response = await dio
+          .get(EndPoints.ablutions, queryParameters: {'gender': gender});
+      return ((response.data as List<dynamic>))
+          .map((e) => NamazDTO.fromJson(e))
           .toList();
     } on DioError catch (e) {
       throw ServerException(

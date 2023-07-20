@@ -1,3 +1,7 @@
+
+
+import 'dart:developer';
+
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,6 +32,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
   @override
   void initState() {
     super.initState();
+    log(widget.audioUrl.toString());
     _init();
   }
 

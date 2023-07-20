@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/namaz_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/pillars_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/repositories/Islam_teaching_repository.dart';
 
@@ -14,7 +15,7 @@ class AblutionsCubit extends Cubit<AblutionsState> {
     this._islamTeachingRepository,
   ) : super(const AblutionsState.initialState());
 
-  List<PillarsDTO> abl = [];
+  List<NamazDTO> abl = [];
   List<PillarsDTO> pre = [];
   Future<void> ablutions({required String gender}) async {
     emit(const AblutionsState.loadingState());
@@ -58,7 +59,7 @@ class AblutionsState with _$AblutionsState {
   const factory AblutionsState.loadingState() = _LoadingState;
 
   const factory AblutionsState.loaded({
-    required List<PillarsDTO> abl,
+    required List<NamazDTO> abl,
     required List<PillarsDTO> pre,
   }) = _LoadedState;
 
