@@ -30,7 +30,7 @@ class NewsCubit extends Cubit<NewsState> {
         emit(NewsState.errorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
-        emit(NewsState.loaded(news: r));
+        emit(NewsState.loaded(news: r.toSet().toList()));
       },
     );
   }

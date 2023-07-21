@@ -116,13 +116,13 @@ class _BaseState extends State<Base> {
                   icon: tabsRouter.activeIndex != 3
                       ? SvgPicture.asset(Assets.book2Svg)
                       : SvgPicture.asset(Assets.book_2Svg),
-                  label: "Таңдаулылар",
+                  label: "Таңдаулы",
                 ),
                 BottomNavigationBarItem(
                   icon: tabsRouter.activeIndex != 4
                       ? SvgPicture.asset(Assets.calendarSvg)
                       : SvgPicture.asset(Assets.calendar_1Svg),
-                  label: "Жоспарлар",
+                  label: "Жоспар",
                 ),
               ]),
         );

@@ -33,7 +33,7 @@ class DhikrsCubit extends Cubit<DhikrsState> {
         emit(DhikrsState.errorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
-        emit(DhikrsState.loaded(dhikrs: r));
+        emit(DhikrsState.loaded(dhikrs: r.toSet().toList()));
       },
     );
   }

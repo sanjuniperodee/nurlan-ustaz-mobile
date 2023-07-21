@@ -24,7 +24,7 @@ class NamesOfAllahCubit extends Cubit<NamesOfAllahState> {
         emit(NamesOfAllahState.errorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
-        emit(NamesOfAllahState.loaded(names: r));
+        emit(NamesOfAllahState.loaded(names: r.toSet().toList()));
       },
     );
   }

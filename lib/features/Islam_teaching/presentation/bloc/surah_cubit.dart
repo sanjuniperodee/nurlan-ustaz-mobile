@@ -33,7 +33,7 @@ class SurahCubit extends Cubit<SurahState> {
         emit(SurahState.errorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
-        emit(SurahState.loaded(sura: r));
+        emit(SurahState.loaded(sura: r.toSet().toList()));
       },
     );
   }

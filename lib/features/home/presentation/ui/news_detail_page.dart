@@ -81,7 +81,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                     );
                   }).toList(),
                 ),
-                widget.result.media != null
+                widget.result.media == null
                     ? const SizedBox()
                     : Positioned.fill(
                         top: 215.r,
@@ -90,11 +90,11 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                           child: DotsIndicator(
                             dotsCount: widget.result.media?.length ?? 0,
                             position: _currentIndex,
-                            decorator: DotsDecorator(
+                            decorator: const DotsDecorator(
                               color: AppColors
-                                  .white, // Color of non-selected indicators
+                                  .grey2, // Color of non-selected indicators
                               activeColor: AppColors
-                                  .grey1, // Color of selected indicator
+                                  .white, // Color of selected indicator
                             ),
                           ),
                         ),

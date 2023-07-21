@@ -38,8 +38,7 @@ class SeminarCubit extends Cubit<SeminarState> {
         emit(SeminarState.errorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
-        emit(const SeminarState.loadingState());
-        emit(SeminarState.loaded(news: r));
+        emit(SeminarState.loaded(news: r.toSet().toList()));
       },
     );
   }

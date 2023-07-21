@@ -37,7 +37,7 @@ class PaymentTickCubit extends Cubit<PaymentTickState> {
       },
       (r) {
         emit(PaymentTickState.loaded(
-          res: r,
+          res: r.toSet().toList(),
         ));
       },
     );
@@ -65,7 +65,7 @@ class PaymentTickCubit extends Cubit<PaymentTickState> {
         emit(PaymentTickState.errorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
-        emit(PaymentTickState.loaded(res: r));
+        emit(PaymentTickState.loaded(res: r.toSet().toList()));
       },
     );
   }

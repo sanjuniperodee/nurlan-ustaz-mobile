@@ -24,7 +24,7 @@ class PillarsCubit extends Cubit<PillarsState> {
         emit(PillarsState.errorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
-        emit(PillarsState.loaded(pillars: r));
+        emit(PillarsState.loaded(pillars: r.toSet().toList()));
       },
     );
   }
