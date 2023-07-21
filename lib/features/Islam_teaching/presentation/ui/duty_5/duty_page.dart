@@ -127,7 +127,7 @@ class _DutyPageState extends State<DutyPage> {
                                 physics: const NeverScrollableScrollPhysics(),
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
-                                  childAspectRatio: (60 / 53).r,
+                                  childAspectRatio: (60 / 54).r,
                                   // crossAxisSpacing: 1.0,
                                   mainAxisSpacing: 16.0,
                                   crossAxisCount: 2,
@@ -144,39 +144,58 @@ class _DutyPageState extends State<DutyPage> {
                                       },
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(
-                                            vertical: 24, horizontal: 20),
+                                            vertical: 34, horizontal: 24),
                                         decoration: BoxDecoration(
                                           color: AppColors.white,
                                           borderRadius:
-                                              BorderRadius.circular(12.0),
+                                              BorderRadius.circular(42.0),
                                         ),
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            SvgPicture.asset(list[index].url),
+                                            SvgPicture.asset(
+                                              list[index].url,
+                                              height: 50,
+                                            ),
                                             SizedBox(
                                               height: 12.h,
                                             ),
-                                            Text(
-                                              pillars[index].title ?? 'ERROR',
-                                              overflow: TextOverflow.ellipsis,
-                                              style: getTextStyle(
-                                                      CustomTextStyles.s16w500)
-                                                  .apply(
-                                                      color: AppColors.black),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  pillars[index].title ??
+                                                      'ERROR',
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: getTextStyle(
+                                                          CustomTextStyles
+                                                              .s16w500)
+                                                      .apply(
+                                                          color:
+                                                              AppColors.black),
+                                                ),
+                                                Icon(
+                                                  Icons
+                                                      .arrow_forward_ios_outlined,
+                                                  color: AppColors.orange,
+                                                ),
+                                              ],
                                             ),
                                             const SizedBox(
                                               height: 10,
                                             ),
-                                            const Align(
-                                              alignment: Alignment.bottomRight,
-                                              child: Icon(
-                                                Icons
-                                                    .arrow_forward_ios_outlined,
-                                                color: AppColors.orange,
-                                              ),
-                                            )
+                                            // const Align(
+                                            //   alignment: Alignment.centerRight,
+                                            //   child: Icon(
+                                            //     Icons
+                                            //         .arrow_forward_ios_outlined,
+                                            //     color: AppColors.orange,
+                                            //   ),
+                                            // )
                                           ],
                                         ),
                                       ),

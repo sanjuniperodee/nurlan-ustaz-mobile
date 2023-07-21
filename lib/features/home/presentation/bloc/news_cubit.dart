@@ -34,6 +34,8 @@ class NewsCubit extends Cubit<NewsState> {
       },
     );
   }
+
+  
 }
 
 @freezed

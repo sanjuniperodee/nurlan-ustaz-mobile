@@ -139,7 +139,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
           ),
           SizedBox(height: 24.h),
           CustomTextFormProfile(
-            inputAction: TextInputAction.next,
+
+
             onChanged: (value) {
               log(_numberController.value.text);
             },
@@ -194,8 +195,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
             labelText: 'Құпия сөз',
           ),
           SizedBox(height: 24.h),
-          CustomTextFormProfile( 
-            inputAction: TextInputAction.done,
+
+          CustomTextFormProfile(
+
             obscure: () {
               setState(() {
                 obscureSecond = !obscureSecond;
@@ -305,6 +307,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 }
 
                 isPrivacyAccept
+
                     ? context.read<RegistrationCubit>().postUser(UserPayload(
                         fullName: _nameController.text,
                         email: _emailController.text,
@@ -313,6 +316,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                         password: _passwordController.text,
                         rePassword: _passwordRepeatController.text,
                         gender: gender))
+
                     : buildErrorCustomSnackBar(
                         context, 'Примите правила соглашения');
               },

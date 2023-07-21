@@ -102,7 +102,8 @@ class _CharityDetailPageState extends State<CharityDetailPage> {
                                       ListTile(
                                         minLeadingWidth: 0,
                                         leading: SvgPicture.asset(
-                                            Assets.paymentCardSvg),
+                                            'assets/icons/chari.svg'),
+                                        // Assets.paymentCardSvg
                                         title: Text(
                                           widget.result.requisites![index]
                                                   .bankAccountNumber ??
@@ -149,6 +150,7 @@ class _CharityDetailPageState extends State<CharityDetailPage> {
                                       ),
                                       CustomListTIle(
                                         widget: widget,
+                                        svg: Assets.paymentCardSvg,
                                         text1: widget.result.requisites![index]
                                                 .cardNumber ??
                                             'ERROR',
@@ -225,11 +227,13 @@ class _CharityDetailPageState extends State<CharityDetailPage> {
 class CustomListTIle extends StatelessWidget {
   final String text;
   final String text1;
+  final String? svg;
   const CustomListTIle({
     super.key,
     required this.widget,
     required this.text,
     required this.text1,
+    this.svg,
   });
 
   final CharityDetailPage widget;
@@ -238,7 +242,9 @@ class CustomListTIle extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       minLeadingWidth: 0,
-      leading: SvgPicture.asset(Assets.dontSvg),
+      leading: svg == null
+          ? SvgPicture.asset(Assets.dontSvg)
+          : SvgPicture.asset(svg!),
       title: Text(
         text,
         style: getTextStyle(CustomTextStyles.s14w400),

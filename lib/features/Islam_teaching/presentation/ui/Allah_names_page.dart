@@ -141,8 +141,8 @@ class _AllahNamesPageState extends State<AllahNamesPage> {
                                                 height: 12.h,
                                               ),
                                               AudioItemWidget(
-                                                audioUrl: names[index].audio ??
-                                                    'ERROR',
+                                                audioUrl:
+                                                    names[index].audio ?? '',
                                               ),
                                               SizedBox(
                                                 height: 12.h,

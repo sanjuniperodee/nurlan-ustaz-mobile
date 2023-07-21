@@ -85,7 +85,10 @@ class _DutyDetailPageState extends State<DutyDetailPage> {
                       ContainerDutyWidget(
                         title: widget.pillarsDTO.title ?? 'ERROR',
                         body: widget.pillarsDTO.text ?? 'ERROR',
-                      )
+                      ),
+                      SizedBox(
+                        height: 126.h,
+                      ),
                     ],
                   )),
             ),

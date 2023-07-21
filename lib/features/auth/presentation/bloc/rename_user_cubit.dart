@@ -7,6 +7,7 @@ import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_payload.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_payload2.dart';
 
 import '../../data/repositories/auth_repository.dart';
 
@@ -19,7 +20,7 @@ class RenameUserCubit extends Cubit<RenameUserState> {
   ) : super(const RenameUserState.loadingState());
   final AuthRepository _authRepository;
 
-  Future<void> renameUser({required UserPayload user, XFile? avatar}) async {
+  Future<void> renameUser({required UserPayload2 user, XFile? avatar}) async {
     final result = await _authRepository.rename(user: user, avatar: avatar);
     result.fold(
       (l) {

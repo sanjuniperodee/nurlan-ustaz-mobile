@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -36,6 +38,7 @@ class SeminarCubit extends Cubit<SeminarState> {
         emit(SeminarState.errorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
+        emit(const SeminarState.loadingState());
         emit(SeminarState.loaded(news: r));
       },
     );

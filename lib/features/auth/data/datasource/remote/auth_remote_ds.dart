@@ -9,6 +9,7 @@ import 'package:nurlan_ustaz_flutter/core/platform/dio_wrapper.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/token_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_payload.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_payload2.dart';
 
 import '../../../../../core/error/excepteion.dart';
 import '../../../../../core/platform/network_helper.dart';
@@ -18,7 +19,7 @@ const _tag = 'AuthRemoteDS';
 abstract class AuthRemoteDs {
   Future<UserPayload> postUser({required UserPayload userDTO});
 
-  Future<UserDto> rename({required UserPayload user, XFile? avatar});
+  Future<UserDto> rename({required UserPayload2 user, XFile? avatar});
 
   Future<UserDto> getUser();
 
@@ -61,14 +62,14 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-        (e.response!.data as Map<String, dynamic>)['message'] as String,
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
 
   @override
   Future<UserDto> rename({
-    required UserPayload user,
+    required UserPayload2 user,
     XFile? avatar,
   }) async {
     try {
@@ -93,7 +94,7 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-        (e.response!.data as Map<String, dynamic>)['message'] as String,
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -109,7 +110,7 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-        (e.response!.data as Map<String, dynamic>)['message'] as String,
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -167,7 +168,7 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-        (e.response!.data as Map<String, dynamic>)['message'] as String,
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -183,7 +184,7 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-        (e.response!.data as Map<String, dynamic>)['message'] as String,
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -200,9 +201,9 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       final body = response.data as Map<String, dynamic>;
       log(body.toString());
       return int.parse(body['user_id'].toString());
-    }  catch (e) {
+    } catch (e) {
       throw ServerException(
-        message:'пользователь не зарегестрирован',
+        message: 'пользователь не зарегестрирован',
       );
     }
   }
@@ -221,12 +222,12 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
           're_new_password': reNewPassword,
         },
       );
-
-    }on DioError catch (e) {
+    } on DioError catch (e) {
       throw ServerException(
         message:
-        (e.response!.data as Map<String, dynamic>)['message'] as String,
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
+
 
 
     }
@@ -248,6 +249,7 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       throw ServerException(
       message:
           (e.response!.data as Map<String, dynamic>)['message'] as String,);
+
 
     }
   }

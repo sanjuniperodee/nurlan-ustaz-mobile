@@ -81,6 +81,9 @@ class _ServicesPageState extends State<ServicesPage> {
                   orElse: () {},
                   loaded: (url) {
                     _launchUrl(url);
+
+                    Navigator.pop(context);
+
                   },
                 );
                 // TODO: implement listener
@@ -187,7 +190,9 @@ class _ServicesPageState extends State<ServicesPage> {
                                               'ERROR',
                                           overflow: TextOverflow.ellipsis,
                                           style: getTextStyle(
+
                                               CustomTextStyles.s16w500)
+
                                               .apply(color: AppColors.black),
                                         ),
                                       ),

@@ -23,8 +23,12 @@ mixin _$PillarsDTO {
   int get id => throw _privateConstructorUsedError;
   int? get type => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
+  String? get gender => throw _privateConstructorUsedError;
   String? get text => throw _privateConstructorUsedError;
   String? get url => throw _privateConstructorUsedError;
+  int? get time => throw _privateConstructorUsedError;
+  String? get rakats => throw _privateConstructorUsedError;
+  String? get cover => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -38,7 +42,16 @@ abstract class $PillarsDTOCopyWith<$Res> {
           PillarsDTO value, $Res Function(PillarsDTO) then) =
       _$PillarsDTOCopyWithImpl<$Res, PillarsDTO>;
   @useResult
-  $Res call({int id, int? type, String? title, String? text, String? url});
+  $Res call(
+      {int id,
+      int? type,
+      String? title,
+      String? gender,
+      String? text,
+      String? url,
+      int? time,
+      String? rakats,
+      String? cover});
 }
 
 /// @nodoc
@@ -57,8 +70,12 @@ class _$PillarsDTOCopyWithImpl<$Res, $Val extends PillarsDTO>
     Object? id = null,
     Object? type = freezed,
     Object? title = freezed,
+    Object? gender = freezed,
     Object? text = freezed,
     Object? url = freezed,
+    Object? time = freezed,
+    Object? rakats = freezed,
+    Object? cover = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -73,6 +90,10 @@ class _$PillarsDTOCopyWithImpl<$Res, $Val extends PillarsDTO>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
+      gender: freezed == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as String?,
       text: freezed == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
@@ -80,6 +101,18 @@ class _$PillarsDTOCopyWithImpl<$Res, $Val extends PillarsDTO>
       url: freezed == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
+              as String?,
+      time: freezed == time
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
+              as int?,
+      rakats: freezed == rakats
+          ? _value.rakats
+          : rakats // ignore: cast_nullable_to_non_nullable
+              as String?,
+      cover: freezed == cover
+          ? _value.cover
+          : cover // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -93,7 +126,16 @@ abstract class _$$_PillarsDTOCopyWith<$Res>
       __$$_PillarsDTOCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({int id, int? type, String? title, String? text, String? url});
+  $Res call(
+      {int id,
+      int? type,
+      String? title,
+      String? gender,
+      String? text,
+      String? url,
+      int? time,
+      String? rakats,
+      String? cover});
 }
 
 /// @nodoc
@@ -110,8 +152,12 @@ class __$$_PillarsDTOCopyWithImpl<$Res>
     Object? id = null,
     Object? type = freezed,
     Object? title = freezed,
+    Object? gender = freezed,
     Object? text = freezed,
     Object? url = freezed,
+    Object? time = freezed,
+    Object? rakats = freezed,
+    Object? cover = freezed,
   }) {
     return _then(_$_PillarsDTO(
       id: null == id
@@ -126,6 +172,10 @@ class __$$_PillarsDTOCopyWithImpl<$Res>
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
               as String?,
+      gender: freezed == gender
+          ? _value.gender
+          : gender // ignore: cast_nullable_to_non_nullable
+              as String?,
       text: freezed == text
           ? _value.text
           : text // ignore: cast_nullable_to_non_nullable
@@ -133,6 +183,18 @@ class __$$_PillarsDTOCopyWithImpl<$Res>
       url: freezed == url
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
+              as String?,
+      time: freezed == time
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
+              as int?,
+      rakats: freezed == rakats
+          ? _value.rakats
+          : rakats // ignore: cast_nullable_to_non_nullable
+              as String?,
+      cover: freezed == cover
+          ? _value.cover
+          : cover // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -142,7 +204,15 @@ class __$$_PillarsDTOCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_PillarsDTO implements _PillarsDTO {
   const _$_PillarsDTO(
-      {required this.id, this.type, this.title, this.text, this.url});
+      {required this.id,
+      this.type,
+      this.title,
+      this.gender,
+      this.text,
+      this.url,
+      this.time,
+      this.rakats,
+      this.cover});
 
   factory _$_PillarsDTO.fromJson(Map<String, dynamic> json) =>
       _$$_PillarsDTOFromJson(json);
@@ -154,13 +224,21 @@ class _$_PillarsDTO implements _PillarsDTO {
   @override
   final String? title;
   @override
+  final String? gender;
+  @override
   final String? text;
   @override
   final String? url;
+  @override
+  final int? time;
+  @override
+  final String? rakats;
+  @override
+  final String? cover;
 
   @override
   String toString() {
-    return 'PillarsDTO(id: $id, type: $type, title: $title, text: $text, url: $url)';
+    return 'PillarsDTO(id: $id, type: $type, title: $title, gender: $gender, text: $text, url: $url, time: $time, rakats: $rakats, cover: $cover)';
   }
 
   @override
@@ -171,13 +249,18 @@ class _$_PillarsDTO implements _PillarsDTO {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.title, title) || other.title == title) &&
+            (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.text, text) || other.text == text) &&
-            (identical(other.url, url) || other.url == url));
+            (identical(other.url, url) || other.url == url) &&
+            (identical(other.time, time) || other.time == time) &&
+            (identical(other.rakats, rakats) || other.rakats == rakats) &&
+            (identical(other.cover, cover) || other.cover == cover));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, type, title, text, url);
+  int get hashCode => Object.hash(
+      runtimeType, id, type, title, gender, text, url, time, rakats, cover);
 
   @JsonKey(ignore: true)
   @override
@@ -198,8 +281,12 @@ abstract class _PillarsDTO implements PillarsDTO {
       {required final int id,
       final int? type,
       final String? title,
+      final String? gender,
       final String? text,
-      final String? url}) = _$_PillarsDTO;
+      final String? url,
+      final int? time,
+      final String? rakats,
+      final String? cover}) = _$_PillarsDTO;
 
   factory _PillarsDTO.fromJson(Map<String, dynamic> json) =
       _$_PillarsDTO.fromJson;
@@ -211,9 +298,17 @@ abstract class _PillarsDTO implements PillarsDTO {
   @override
   String? get title;
   @override
+  String? get gender;
+  @override
   String? get text;
   @override
   String? get url;
+  @override
+  int? get time;
+  @override
+  String? get rakats;
+  @override
+  String? get cover;
   @override
   @JsonKey(ignore: true)
   _$$_PillarsDTOCopyWith<_$_PillarsDTO> get copyWith =>

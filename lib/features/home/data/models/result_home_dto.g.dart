@@ -15,6 +15,7 @@ _$_ResultHomeDTO _$$_ResultHomeDTOFromJson(Map<String, dynamic> json) =>
       isTop: json['is_top'] as bool?,
       likesCount: json['likes_count'] as int?,
       comentCount: json['comments_count'] as int?,
+      ticketUrl: json['ticket_url'] as String?,
       id: json['id'] as int?,
       parent: json['parent'] as int?,
       body: json['body'] as String?,
@@ -26,6 +27,7 @@ _$_ResultHomeDTO _$$_ResultHomeDTOFromJson(Map<String, dynamic> json) =>
       text: json['text'] as String?,
       cover: json['cover'] as String?,
       link: json['link'] as String?,
+      url: json['url'] as String?,
       user: json['user'] == null
           ? null
           : UserCommentDTO.fromJson(json['user'] as Map<String, dynamic>),
@@ -60,6 +62,7 @@ Map<String, dynamic> _$$_ResultHomeDTOToJson(_$_ResultHomeDTO instance) =>
       'is_top': instance.isTop,
       'likes_count': instance.likesCount,
       'comments_count': instance.comentCount,
+      'ticket_url': instance.ticketUrl,
       'id': instance.id,
       'parent': instance.parent,
       'body': instance.body,
@@ -71,6 +74,7 @@ Map<String, dynamic> _$$_ResultHomeDTOToJson(_$_ResultHomeDTO instance) =>
       'text': instance.text,
       'cover': instance.cover,
       'link': instance.link,
+      'url': instance.url,
       'user': instance.user,
       'start_time': instance.startTime?.toIso8601String(),
       'created_at': instance.createdAt?.toIso8601String(),

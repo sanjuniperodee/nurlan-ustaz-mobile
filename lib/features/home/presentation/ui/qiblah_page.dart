@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_qiblah/flutter_qiblah.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/widgets/qiblah_widget.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -10,36 +11,27 @@ class QiblahPage extends StatefulWidget {
 }
 
 class _QiblahPageState extends State<QiblahPage> {
-  bool hasPermission = false;
-
-  Future getPermission() async {
-    if (await Permission.location.serviceStatus.isEnabled) {
-      var status = await Permission.location.status;
-      if (status.isGranted) {
-        hasPermission = true;
-      } else {
-        Permission.location.request().then((value) {
-          setState(() {
-            hasPermission = (value == PermissionStatus.granted);
-          });
-        });
-      }
-    }
-  }
+  final _deviceSupport = FlutterQiblah.androidDeviceSensorSupport();
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      builder: (context, snapshot) {
-        if (hasPermission) {
-          return const QiblahWidget();
-        } else {
-          return const Scaffold(
-            backgroundColor: Color.fromARGB(255, 48, 48, 48),
+      future: _deviceSupport,
+      builder: (_, AsyncSnapshot<bool?> snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting)
+          return Center(
+            child: CircularProgressIndicator(),
           );
-        }
+        if (snapshot.hasError)
+          return Center(
+            child: Text("Error: ${snapshot.error.toString()}"),
+          );
+
+        if (snapshot.data!)
+          return const QiblahWidget();
+        else
+          return Container();
       },
-      future: getPermission(),
     );
   }
 }

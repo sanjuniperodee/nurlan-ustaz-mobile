@@ -1,6 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/repositories/home_repository.dart';
 
@@ -18,9 +19,21 @@ class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
     this._homeRepository,
   ) : super(const ProfileNotificationState.initialState());
   late NotificationDTO notificationDeviceDTO;
+  late List<NotificationItemDTO> notifications;
+  late String token;
+
+  Future<void> saveChanges() async {
+    final result = await _homeRepository.putNotificationDevice(
+        registrationId: token, notification: notificationDeviceDTO);
+
+    result.fold((l) => {emit(_ErrorState(message: mapFailureToMessage(l)))},
+        (r) => {getNotificationDto()});
+  }
 
   Future<void> switchNotify(
       NotificationItemDTO notificationItemDTO, bool value) async {
+    emit(_LoadingState());
+
     void handleType(String namazTime) {
       switch (namazTime) {
         case 'custom_dreams':
@@ -69,12 +82,21 @@ class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
           break;
       }
     }
+
     handleType(notificationItemDTO.title!);
 
     final String? deviceToken = await NotificationService().getDeviceToken();
-    final result = await _homeRepository.putNotificationDevice(
-        registrationId: deviceToken ?? '', notification: notificationDeviceDTO);
-    result.fold((l) => {}, (r) => {getNotificationDto()});
+
+    emit(_$_InitialPage().copyWith(
+        notificationDTO: notificationDeviceDTO,
+        items: notificationDeviceDTO
+            .toJson()
+            .entries
+            .toList()
+            .sublist(8, 15)
+            .map((e) =>
+                NotificationItemDTO(title: e.key, status: e.value as bool))
+            .toList()));
   }
 
   Future<void> getNotificationDto() async {
@@ -82,8 +104,17 @@ class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
     final result = await _homeRepository.getNotificationDevice(
         registrationId: deviceToken ?? '');
     result.fold((l) => {}, (r) {
+      notifications = r
+          .toJson()
+          .entries
+          .toList()
+          .sublist(8, 15)
+          .map(
+              (e) => NotificationItemDTO(title: e.key, status: e.value as bool))
+          .toList();
+      token = deviceToken ?? '';
       notificationDeviceDTO = r;
-      emit(_InitialPage().copyWith(
+      emit(const _InitialPage().copyWith(
           notificationDTO: r,
           items: r
               .toJson()

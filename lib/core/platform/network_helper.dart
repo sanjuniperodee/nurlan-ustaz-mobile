@@ -31,6 +31,7 @@ mixin EndPoints {
   static const String changeNumberPost = '/api/v1/changeNumberPost';
 
   //HOME
+  static const String prayerTimes = '/api/islam/prayer-times/';
   static const String timings = '/api/islam/prayer-times/timings/';
   static const String geoNames = '/api/notifications/devices/geo_names/';
   static const String notification = '/api/notifications/devices/';
@@ -57,6 +58,7 @@ mixin EndPoints {
 
   static const String ayatOfDay = '/api/knowledge/surahs/ayat_of_the_day/';
   static const String pillars = '/api/islam/pillars/';
+  static const String ablutions = '/api/islam/ablutions/';
   static const String fatwas = '/api/knowledge/fatwas/';
   static const String namesOfAllah = '/api/knowledge/names_of_allah/';
   static const String surahs = '/api/knowledge/surahs/';
@@ -68,7 +70,4 @@ mixin EndPoints {
   static const String events = '/api/calendar/events/';
   static const String checklist = '/api/calendar/checklists/';
   static const String checklistDays = '/api/calendar/checklist-days/';
-
-
-
 }

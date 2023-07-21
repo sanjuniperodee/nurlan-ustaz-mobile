@@ -1,11 +1,16 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
+
+import '../../../tandaulilar/presentation/bloc/tandaulilar_cubit.dart';
 
 class Base extends StatefulWidget {
   const Base({super.key});
@@ -55,6 +60,15 @@ class _BaseState extends State<Base> {
                   tabsRouter.popTop();
                 } else {
                   tabsRouter.setActiveIndex(index);
+                }
+                if (tabsRouter.activeIndex != 4) {
+                  log('TAPP');
+                  BlocProvider.of<TandaulilarCubit>(context)
+                      .livesT(page: 1, isFirstCall: true);
+                  BlocProvider.of<TandaulilarCubit>(context)
+                      .newsT(page: 1, isFirstCall: true);
+                  BlocProvider.of<TandaulilarCubit>(context)
+                      .seminarT(page: 1, isFirstCall: true);
                 }
               },
               currentIndex: tabsRouter.activeIndex,
