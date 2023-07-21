@@ -1,10 +1,12 @@
 import 'dart:developer';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../core/common/app_styles.dart';
@@ -13,8 +15,10 @@ import '../../../../app/presentation/widgets/app_button.dart';
 import '../../../data/models/event_dto.dart';
 
 class HolidayDialog extends StatelessWidget {
-  const HolidayDialog({Key? key, required this.event}) : super(key: key);
+  const HolidayDialog({Key? key, required this.event, required this.mainContext, required this.gradient}) : super(key: key);
   final EventDto event;
+  final BuildContext mainContext;
+  final LinearGradient gradient;
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +44,8 @@ class HolidayDialog extends StatelessWidget {
                       topRight: Radius.circular(20.r),
                       topLeft: Radius.circular(20.r),
                     ),
-                    // gradient:
-                    // gradients.toList()[0],
+                    gradient:
+                    gradient,
                     image: const DecorationImage(
                       opacity: 0.3,
                       image: AssetImage("assets/images/ooo.png"),
@@ -81,23 +85,31 @@ class HolidayDialog extends StatelessWidget {
             SizedBox(
               height: 14,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SvgPicture.asset(
-                  'assets/icons/calendar_outline.svg',
-                  color: AppColors.blue,
-                ),
-                SizedBox(
-                  width: 8.w,
-                ),
-                Text(
-                  '${DateFormat('dd.MM.yyyy').format(DateTime.parse(event.date ?? ''))}  ${event.title}',
-                  style: getTextStyle(CustomTextStyles.s16w400).copyWith(
-                      fontFamily: FontTypes.SF_Pro.name,
-                      color: AppColors.black),
-                ),
-              ],
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 30.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  SvgPicture.asset(
+                    'assets/icons/calendar_outline.svg',
+                    color: AppColors.blue,
+                  ),
+                  SizedBox(
+                    width: 8.w,
+                  ),
+                  Container(
+
+                    width: 200.w,
+                    child: Text(
+                      '${DateFormat('dd.MM.yyyy').format(DateTime.parse(event.date ?? ''))}  ${event.title}',
+                      style: getTextStyle(CustomTextStyles.s16w400).copyWith(
+                          fontFamily: FontTypes.SF_Pro.name,
+                          color: AppColors.black),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
             ),
             SizedBox(
               height: 18,
@@ -108,12 +120,8 @@ class HolidayDialog extends StatelessWidget {
                   child: AppButton(
                       textSize: 14.sp,
                       onTap: () async {
-                        final Uri url = Uri.parse(
-                            'https://www.youtube.com/watch?v=LH5ay10RTGY');
-                        if (!await launchUrl(url,
-                            mode: LaunchMode.inAppWebView)) {
-                          throw Exception('Could not launch');
-                        }
+                         Navigator.of(context).pop();
+                         mainContext.router.push(HolidayDetailPageRoute(event: event));
                       },
                       text: 'Бетке өту')),
             ),

@@ -16,6 +16,7 @@ class EventDto with _$EventDto {
     final String? date,
     final String? time,
     final String? address,
+    final String? link,
   }) = _EventDto;
 
   factory EventDto.fromJson(Map<String, dynamic> json) =>

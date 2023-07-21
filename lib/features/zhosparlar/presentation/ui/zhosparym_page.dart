@@ -40,13 +40,14 @@ class ZhosparymPage extends StatefulWidget {
 
 class _ZhosparymPageState extends State<ZhosparymPage> {
   void showEventDialog(
-    BuildContext context,
+    BuildContext mainContext,
     EventDto event,
+      LinearGradient gradient
   ) {
     switch (event.type) {
       case EventsType.seminar:
         showDialog(
-          context: context,
+          context: mainContext,
           builder: (context) => Dialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.r)),
@@ -61,7 +62,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
         break;
       case EventsType.groupService:
         showDialog(
-          context: context,
+          context: mainContext,
           builder: (context) => Dialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.r)),
@@ -76,14 +77,14 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
         break;
       case EventsType.holiday:
         showDialog(
-            context: context,
+            context: mainContext,
             builder: (context) => HolidayDialog(
-                  event: event,
+                  event: event, mainContext: mainContext, gradient: gradient,
                 ));
         break;
       case EventsType.live:
         showDialog(
-          context: context,
+          context: mainContext,
           builder: (context) => Dialog(
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(20.r)),
@@ -101,6 +102,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
         break;
     }
   }
+  List<EventDto> eventik = [];
 
   final gradients = [
     const LinearGradient(colors: [
@@ -113,21 +115,11 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
         end: Alignment.centerRight)
   ];
 
-  final Map<DateTime, List<CleanCalendarEvent>> _events = {
-    DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day): [
-      CleanCalendarEvent('Event A',
-          startTime: DateTime(DateTime.now().year, DateTime.now().month,
-              DateTime.now().day, 10, 0),
-          endTime: DateTime(DateTime.now().year, DateTime.now().month,
-              DateTime.now().day, 12, 0),
-          description: 'A special event',
-          color: Colors.red),
-    ],
-  };
+
 
   @override
   Widget build(BuildContext context) {
-    List<EventDto> eventik = [];
+
     return BlocConsumer<ZhosparymCubit, ZhosparymState>(
         listener: (context, state) {
       state.maybeWhen(
@@ -140,6 +132,8 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
       return state.maybeWhen(orElse: () {
         return Container();
       }, initialState: (events) {
+        eventik.clear();
+
         final eventsT = events?.map<DateTime, List<EventDto>>(
           (key, value) => MapEntry(
             DateTime.parse(key),
@@ -147,10 +141,10 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
           ),
         );
 
+
         eventsT!.forEach((key, value) {
           eventik.addAll(value); // Using addAll method
-          // Or you can use the spread operator like this:
-          // mergedList = [...mergedList, ...value];
+
         });
 
         return Scaffold(
@@ -164,8 +158,8 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                   fit: BoxFit.cover,
                 ),
                 Positioned(
-                  top: 130,
-                  left: 300,
+                  top: 130.h,
+                  left: 300.w,
                   child: ShaderMask(
                     shaderCallback: (Rect bounds) => LinearGradient(
                       colors: [
@@ -181,8 +175,8 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                   ),
                 ),
                 Positioned(
-                  top: 20,
-                  left: 120,
+                  top: 50.h,
+                  left: 120.w,
                   child: ShaderMask(
                     shaderCallback: (Rect bounds) => LinearGradient(
                       colors: [
@@ -201,6 +195,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                   padding: const EdgeInsets.only(left: 16, right: 16).r,
                   child: SizedBox(
                     child: SingleChildScrollView(
+                      primary: true,
                         physics: const BouncingScrollPhysics(),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
@@ -270,7 +265,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                                 },
                                               ).toList(),
                                               options: CarouselOptions(
-                                                aspectRatio: 1.5,
+                                                aspectRatio: 1.3,
                                                 viewportFraction: 1,
                                                 autoPlay: true,
                                                 autoPlayInterval:
@@ -308,7 +303,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                       );
                                     } else {
                                       showEventDialog(
-                                          context, eventsT[date]!.first);
+                                          context, eventsT[date]!.first,gradients[0]);
                                     }
                                   }
 
@@ -381,7 +376,10 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                             SizedBox(
                               height: 21.h,
                             ),
-                            Text(
+                            if(eventik
+                                .where((element) =>
+                            element.type == EventsType.holiday)
+                                .toList().toSet().isNotEmpty)Text(
                               'Атаулы күндер',
                               style: getTextStyle(CustomTextStyles.s14w500)
                                   .copyWith(fontFamily: FontTypes.SF_Pro.name),
@@ -392,13 +390,16 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                             ...eventik
                                 .where((element) =>
                                     element.type == EventsType.holiday)
-                                .toList()
+                                .toList().toSet()
                                 .map((e) => Padding(
                                       padding:
                                           const EdgeInsets.only(bottom: 31),
                                       child: InkWell(
                                         onTap: () {
-                                          showEventDialog(context, e);
+                                          showEventDialog(context, e,eventik
+                                              .where((element) =>
+                                          element.type == EventsType.holiday)
+                                              .toList().toSet().toList().indexOf(e).isEven ? gradients[0] : gradients[1]);
                                         },
                                         child: Container(
                                           padding: const EdgeInsets.only(

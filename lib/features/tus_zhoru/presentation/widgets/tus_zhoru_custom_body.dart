@@ -20,14 +20,11 @@ class TusZhoruCustomBody extends StatefulWidget {
 
 class _TusZhoruCustomBodyState extends State<TusZhoruCustomBody>
     with TickerProviderStateMixin {
-  late final AnimationController _controller =
-  AnimationController(duration: Duration(seconds: 20), vsync: this)
-    ..repeat();
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 1.sh,
+      height: 4.sh,
       child: Stack(
         children: [
           Container(

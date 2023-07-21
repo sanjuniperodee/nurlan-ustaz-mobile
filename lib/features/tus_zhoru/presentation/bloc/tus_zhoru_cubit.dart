@@ -38,13 +38,15 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
   }
 
   Future<void> switchTab(int index) async {
-    log(index.toString());
     if (index == 1) {
-      getCustomTusZhoruT(page: 1, isFirstCall: true);
+      await getCustomTusZhoruT(page: 1, isFirstCall: true);
+    }
+    else{
+      await tusZhoruT(page: 1,isFirstCall: true);
     }
     // if(index ==0  ){tusZhoruT(page: 1,isFirstCall: false);}
 
-    emit(_InitialPage().copyWith(
+     emit(_InitialPage().copyWith(
         currentIndex: index,
         tusZhoruList: tosZhoruList,
         customTusZhoru: customTusZhoruList));
@@ -59,7 +61,7 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
   }) async {
     final failureOrUser = await _repository.tusZhoru(
         page: page,
-        isFirstCall: false,
+        isFirstCall: true,
         search: search,
         isPurchased: isPurchased,
         isSaved: isSaved);
