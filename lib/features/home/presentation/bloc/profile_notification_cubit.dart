@@ -82,8 +82,6 @@ class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
           break;
       }
     }
-    // notificationDeviceDTO.toJson()[notificationItemDTO.title!]= value;
-    //  notificationDeviceDTO = notificationDeviceDTO;
 
     handleType(notificationItemDTO.title!);
 

@@ -59,29 +59,29 @@ class _TusZhoruDetailPage extends State<CustomTusZhoruDetailPage> {
 
         return Scaffold(
           floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30),
-            child: isChecked
-                ? null
-                : Container(
-                    width: double.infinity,
-                    height: 100,
-                    decoration: BoxDecoration(
-                        border: Border(
-                            top: BorderSide(
-                                color: AppColors.grey1.withOpacity(0.1)))),
-                    child: Center(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 25.w),
-                        child: const Text(
-                          'Өтінішіңіз қабылданды. 24 сағат ішінде  жауап ала аласыз',
-                          textAlign: TextAlign.center,
-                        ),
+              FloatingActionButtonLocation.centerDocked,
+          floatingActionButton: isChecked
+              ? null
+              : Container(
+            padding: EdgeInsets.symmetric(horizontal: 30.w),
+                  width: double.infinity,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+
+                      border: Border(
+                          top: BorderSide(
+                              color: AppColors.grey1.withOpacity(0.1)))),
+                  child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 25.w),
+                      child: const Text(
+                        'Өтінішіңіз қабылданды. 24 сағат ішінде  жауап ала аласыз',
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),
-          ),
+                ),
           backgroundColor: AppColors.white,
           body: GlobalCustomBody(
             left: 0,
@@ -89,7 +89,6 @@ class _TusZhoruDetailPage extends State<CustomTusZhoruDetailPage> {
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: SizedBox(
-                height: 1.1.sh,
                 child: Stack(children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -97,8 +96,10 @@ class _TusZhoruDetailPage extends State<CustomTusZhoruDetailPage> {
                       Padding(
                         padding: const EdgeInsets.only(left: 12),
                         child: CustomAppBar(
-                            title: tusZhoruModel?.title ?? '',onTap: (){
+                            title: tusZhoruModel?.title ?? '',onTap: () async {
                           BlocProvider.of<TusZhoruCubit>(context).unSecureScreen();
+                          BlocProvider.of<TusZhoruCubit>(context).getCustomTusZhoruT();
+
                           Navigator.pop(context);
 
                         },),
@@ -106,68 +107,71 @@ class _TusZhoruDetailPage extends State<CustomTusZhoruDetailPage> {
                       SizedBox(
                         height: 24,
                       ),
-                      Container(
-                        height: 1.0.sh,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                        width: double.maxFinite,
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                stops: [
-                                  0.0,
-                                  1.0
-                                ],
-                                colors: [
-                                  AppColors.white.withOpacity(0.5),
-                                  AppColors.white
-                                ],
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter),
-                            borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(30),
-                                topRight: Radius.circular(30))),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              tusZhoruModel?.title ?? '',
-                              style: getTextStyle(CustomTextStyles.s20w700)
-                                  .copyWith(
-                                      fontSize: 24,
-                                      fontFamily: FontTypes.Philosopher.name),
-                              textAlign: TextAlign.start,
-                            ),
-                            SizedBox(
-                              height: 12,
-                            ),
-                            Container(
-                              child: Text(
-                               tusZhoruModel?.description ?? '',
-                                style: getTextStyle(CustomTextStyles.s16w400)
+                      Padding(
+                        padding:  EdgeInsets.only(bottom: 50.h),
+                        child: Container(
+                          height: 1.1.sh,
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                          width: double.maxFinite,
+                          decoration: BoxDecoration(
+                              gradient: LinearGradient(
+                                  stops: [
+                                    0.0,
+                                    1.0
+                                  ],
+                                  colors: [
+                                    AppColors.white.withOpacity(0.5),
+                                    AppColors.white
+                                  ],
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter),
+                              borderRadius: const BorderRadius.only(
+                                  topLeft: Radius.circular(30),
+                                  topRight: Radius.circular(30))),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                tusZhoruModel?.title ?? '',
+                                style: getTextStyle(CustomTextStyles.s20w700)
                                     .copyWith(
-                                        fontFamily: FontTypes.SF_Pro.name,
-                                        height: 1.5),
-                                overflow: TextOverflow.fade,
+                                        fontSize: 24,
+                                        fontFamily: FontTypes.Philosopher.name),
+                                textAlign: TextAlign.start,
                               ),
-                            ),
-                            SizedBox(height: 28.h),
-                            if (isChecked)
-                              Column(
-                                children: [
-                                  Text(
-                                    'Түс жору жауабы',
-                                    style:
-                                        getTextStyle(CustomTextStyles.s14w400)
-                                            .copyWith(
-                                                fontFamily:
-                                                    FontTypes.SF_Pro.name,
-                                                color: AppColors.grey1),
-                                  ),
-                                  SizedBox(height: 15.h),
-                                ],
+                              SizedBox(
+                                height: 12,
                               ),
-                            Text(tusZhoruModel?.explanation ?? ''),
-                          ],
+                              Container(
+                                child: Text(
+                                 tusZhoruModel?.description ?? '',
+                                  style: getTextStyle(CustomTextStyles.s16w400)
+                                      .copyWith(
+                                          fontFamily: FontTypes.SF_Pro.name,
+                                          height: 1.5),
+                                  overflow: TextOverflow.fade,
+                                ),
+                              ),
+                              SizedBox(height: 28.h),
+                              if (isChecked)
+                                Column(
+                                  children: [
+                                    Text(
+                                      'Түс жору жауабы',
+                                      style:
+                                          getTextStyle(CustomTextStyles.s14w400)
+                                              .copyWith(
+                                                  fontFamily:
+                                                      FontTypes.SF_Pro.name,
+                                                  color: AppColors.grey1),
+                                    ),
+                                    SizedBox(height: 15.h),
+                                  ],
+                                ),
+                              Text(tusZhoruModel?.explanation ?? ''),
+                            ],
+                          ),
                         ),
                       ),
                     ],

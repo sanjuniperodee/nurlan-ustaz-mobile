@@ -29,7 +29,6 @@ class TusZhoruDetailsCubit extends Cubit<TusZhoruDetailsState> {
     return result.fold((l) {
       return null;
     }, (r) {
-
       tusZhoru = tusZhoru.copyWith(isSaved: !(tusZhoru.isSaved!));
       emit(_LoadedState(tusZhoru));
     });

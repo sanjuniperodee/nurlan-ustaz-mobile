@@ -86,6 +86,8 @@ class _CustomTusZhoruListState extends State<CustomTusZhoruList> {
                                     list[index].title ?? '',
                                     style: getTextStyle(CustomTextStyles.s16w500)
                                         .apply(fontFamily: FontTypes.SF_Pro.name),
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
                                   ),
                                 ),
                                 Container(
@@ -120,7 +122,7 @@ class _CustomTusZhoruListState extends State<CustomTusZhoruList> {
                       list[index].explanation == null &&
                               list[index].isPaid! == true
                           ? Container(
-                              height: 78,
+                              height: 70.h,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
                                   color: AppColors.white.withOpacity(0.4)),

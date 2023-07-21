@@ -81,7 +81,7 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
           floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-          backgroundColor: Color(0xFFECF5FF),
+          backgroundColor: Color(0xFECF5FF),
           body: TusZhoruCustomBody(
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),

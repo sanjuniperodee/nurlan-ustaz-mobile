@@ -34,7 +34,7 @@ class RegistrationForm extends StatefulWidget {
   final bool isPrivacyAccept;
   final AuthCubit authCubit;
   final UserPayload user;
-  final dynamic Function() changeIndex;
+  final void Function() changeIndex;
 
   @override
   State<RegistrationForm> createState() => _RegistrationFormState();
@@ -94,6 +94,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
         },
         loadedState: (user) {
           context.router.push(CodeVerificationRoute(
+              userPayload: user,
               email: _emailController.text,
               password: _passwordController.text,
               userId: user.id ?? 0));
@@ -103,6 +104,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           _dateController.clear();
           _passwordController.clear();
           _passwordRepeatController.clear();
+          widget.changeIndex;
         },
         errorState: (message) {
           buildErrorCustomSnackBar(context, message);
@@ -121,6 +123,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           ),
           SizedBox(height: 32.h),
           CustomTextFormProfile(
+            inputAction: TextInputAction.next,
             keyboardType: TextInputType.name,
             controller: _nameController,
             hintText: 'Аты-жөні',
@@ -128,6 +131,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           ),
           SizedBox(height: 24.h),
           CustomTextFormProfile(
+            inputAction: TextInputAction.next,
             keyboardType: TextInputType.emailAddress,
             controller: _emailController,
             hintText: 'E-mail',
@@ -135,6 +139,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
           ),
           SizedBox(height: 24.h),
           CustomTextFormProfile(
+
+
             onChanged: (value) {
               log(_numberController.value.text);
             },
@@ -146,6 +152,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           ),
           SizedBox(height: 24.h),
           CustomTextFormProfile(
+            inputAction: TextInputAction.next,
             onTap: () {
               _showDialog(
                   CupertinoDatePicker(
@@ -174,6 +181,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           ),
           SizedBox(height: 24.h),
           CustomTextFormProfile(
+            inputAction: TextInputAction.next,
             obscureText: obscureFirst,
             obscure: () {
               setState(() {
@@ -187,7 +195,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
             labelText: 'Құпия сөз',
           ),
           SizedBox(height: 24.h),
+
           CustomTextFormProfile(
+
             obscure: () {
               setState(() {
                 obscureSecond = !obscureSecond;
@@ -297,17 +307,16 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 }
 
                 isPrivacyAccept
-                    ? context
-                        .read<RegistrationCubit>()
-                        .postUser(UserPayload(
-                            fullName: _nameController.text,
-                            email: _emailController.text,
-                            phoneNumber: _numberController.text,
-                            birthday: _dateController.text.toString(),
-                            password: _passwordController.text,
-                            rePassword: _passwordRepeatController.text,
-                            gender: gender))
-                        .then((value) => widget.changeIndex())
+
+                    ? context.read<RegistrationCubit>().postUser(UserPayload(
+                        fullName: _nameController.text,
+                        email: _emailController.text,
+                        phoneNumber: _numberController.text,
+                        birthday: _dateController.text.toString(),
+                        password: _passwordController.text,
+                        rePassword: _passwordRepeatController.text,
+                        gender: gender))
+
                     : buildErrorCustomSnackBar(
                         context, 'Примите правила соглашения');
               },

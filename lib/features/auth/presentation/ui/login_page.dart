@@ -70,10 +70,10 @@ class _LoginPageState extends State<LoginPage> {
                                       BlocProvider.of<AuthCubit>(context),
                                   user: userDTO,
                                   isPrivacyAccept: isPrivacyAccept, changeIndex: () {
-                                    setState(() {
-                                      currentIndex = 0;
-                                    });
-                          },
+                            setState(() {
+                              currentIndex = 1;
+                            });
+                          }
                                 ),
                           SizedBox(height: 24.h),
                         ],

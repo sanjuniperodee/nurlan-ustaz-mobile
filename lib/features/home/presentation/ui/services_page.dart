@@ -81,7 +81,9 @@ class _ServicesPageState extends State<ServicesPage> {
                   orElse: () {},
                   loaded: (url) {
                     _launchUrl(url);
+
                     Navigator.pop(context);
+
                   },
                 );
                 // TODO: implement listener
@@ -151,12 +153,12 @@ class _ServicesPageState extends State<ServicesPage> {
                                   color: AppColors.white,
                                   borderRadius: BorderRadius.circular(20).r),
                               padding: const EdgeInsets.symmetric(
-                                      vertical: 12, horizontal: 12)
+                                  vertical: 12, horizontal: 12)
                                   .r
                                   .r,
                               child: Row(
                                 mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
+                                MainAxisAlignment.spaceBetween,
                                 children: [
                                   Row(
                                     children: [
@@ -164,11 +166,11 @@ class _ServicesPageState extends State<ServicesPage> {
                                         decoration: BoxDecoration(
                                             color: AppColors.orange,
                                             borderRadius:
-                                                BorderRadius.circular(12).r),
+                                            BorderRadius.circular(12).r),
                                         padding: const EdgeInsets.all(10).r,
                                         child: CachedNetworkImage(
                                           imageUrl:
-                                              listOfServices[index].icon ?? '',
+                                          listOfServices[index].icon ?? '',
                                           fit: BoxFit.cover,
                                           width: 55.w,
                                           height: 55.h,
@@ -188,7 +190,9 @@ class _ServicesPageState extends State<ServicesPage> {
                                               'ERROR',
                                           overflow: TextOverflow.ellipsis,
                                           style: getTextStyle(
-                                                  CustomTextStyles.s16w500)
+
+                                              CustomTextStyles.s16w500)
+
                                               .apply(color: AppColors.black),
                                         ),
                                       ),
@@ -210,7 +214,7 @@ class _ServicesPageState extends State<ServicesPage> {
                                       )
                                           ? SvgPicture.asset(Assets.radioOnSvg)
                                           : SvgPicture.asset(
-                                              Assets.radioCircleSvg))
+                                          Assets.radioCircleSvg))
                                 ],
                               ),
                             ),

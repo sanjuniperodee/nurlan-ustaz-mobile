@@ -45,6 +45,7 @@ class _LoginFormState extends State<LoginForm> {
             ),
             SizedBox(height: 32.h),
             CustomTextFormProfile(
+              inputAction: TextInputAction.next,
               keyboardType: TextInputType.emailAddress,
               onChanged: (String value) {
                 setState(() {});
@@ -56,6 +57,7 @@ class _LoginFormState extends State<LoginForm> {
             SizedBox(height: 24.h),
             CustomTextFormProfile(
               keyboardType: TextInputType.visiblePassword,
+              inputAction: TextInputAction.done,
               onChanged: (String value) {
                 setState(() {});
               },

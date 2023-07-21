@@ -14,8 +14,7 @@ import '../../bloc/forgot_password_cubit.dart';
 import '../login_form.dart';
 
 class NewPasswordPage extends StatefulWidget {
-  const NewPasswordPage({Key? key, required this.pinCode}) : super(key: key);
-  final String pinCode;
+  const NewPasswordPage({Key? key}) : super(key: key);
 
   @override
   State<NewPasswordPage> createState() => _NewPasswordPageState();
@@ -26,7 +25,21 @@ TextEditingController secondPasswordController = TextEditingController();
 bool obscureFirst = true;
 bool obscureSecond = true;
 
+
+
+
 class _NewPasswordPageState extends State<NewPasswordPage> {
+
+  @override
+  void dispose() {
+    super.dispose();
+    firstPasswordController.clear();
+    secondPasswordController.clear();
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,7 +59,6 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                   firstPasswordController.value.text.isNotEmpty &&
                   secondPasswordController.value.text.isNotEmpty && firstPasswordController.length > 8) ?
               context.read<ForgotPasswordCubitCubit>().resetConfirm(
-                    code: widget.pinCode,
                     newPassword: firstPasswordController.value.text,
                     reNewPassword: secondPasswordController.value.text,
 

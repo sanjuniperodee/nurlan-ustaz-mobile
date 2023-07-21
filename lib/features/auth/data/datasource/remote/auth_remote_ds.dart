@@ -35,10 +35,10 @@ abstract class AuthRemoteDs {
   Future<int> resetPassword({required String mail});
 
   Future<void> resetPasswordConfirm(
-      {required int userId,
-      required String code,
+      {required String sessionId,
       required String newPassword,
       required String reNewPassword});
+  Future<String> confirmCode({required ActivateUserDTO activateUserDTO});
 }
 
 @Injectable(as: AuthRemoteDs)
@@ -141,7 +141,9 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       return true;
     } on DioError catch (e) {
       throw ServerException(
-          message: (e as Map<String, dynamic>)['message'] as String);
+        message:
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
     }
   }
 
@@ -208,16 +210,14 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
 
   @override
   Future<void> resetPasswordConfirm(
-      {required int userId,
-      required String code,
+      {required String sessionId,
       required String newPassword,
       required String reNewPassword}) async {
     try {
       await dio.post(
         EndPoints.resetPasswordConfirm,
         data: {
-          'user_id': userId,
-          'code': code,
+          'session_id': sessionId,
           'new_password': newPassword,
           're_new_password': reNewPassword,
         },
@@ -228,7 +228,29 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
             (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
 
-      throw ServerException(message: e.toString());
+
+
+    }
+  }
+
+  @override
+  Future<String> confirmCode({required ActivateUserDTO activateUserDTO}) async {
+    try {
+      final response = await dio.post(
+        EndPoints.resetConfirmCode,
+        data: {
+          'user_id': "${activateUserDTO.user_id}",
+          "code": "${activateUserDTO.code}",
+        },
+      );
+      final data = response.data as Map<String, dynamic>;
+      return data['session_id'].toString();
+    } on DioError catch (e) {
+      throw ServerException(
+      message:
+          (e.response!.data as Map<String, dynamic>)['message'] as String,);
+
+
     }
   }
 }

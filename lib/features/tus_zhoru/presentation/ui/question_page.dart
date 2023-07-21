@@ -6,6 +6,7 @@ import 'package:nurlan_ustaz_flutter/core/utils/pay_dialog.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_text_form_field.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/create_tus_zhoru_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_cubit.dart';
 
 import '../../../../core/common/app_styles.dart';
 import '../../../../core/common/colors.dart';
@@ -24,6 +25,12 @@ TextEditingController controllerForAtau = TextEditingController();
 TextEditingController controllerForTusimbde = TextEditingController();
 
 class _QuestionPageState extends State<QuestionPage> {
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CreateTusZhoruCubit, CreateTusZhoruState>(
@@ -66,13 +73,16 @@ class _QuestionPageState extends State<QuestionPage> {
         backgroundColor: Color(0xFFECF5FF),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding:  EdgeInsets.symmetric(horizontal: 20.w),
           child: AppButton(
             onTap: () async {
-              context
+              await context
                   .read<CreateTusZhoruCubit>()
                   .createTusZhoru(
                       controllerForAtau.text, controllerForTusimbde.text);
+              BlocProvider.of<TusZhoruCubit>(context).getCustomTusZhoruT();
+              Navigator.pop(context);
+
 
             },
             text: 'Жіберу',
@@ -92,13 +102,19 @@ class _QuestionPageState extends State<QuestionPage> {
                   child: Column(
                     children: [
                       CustomAppBar(
+                        onTap: ()  {
+                              Navigator.pop(context);
+                              controllerForAtau.clear();
+                              controllerForTusimbde.clear();
+
+                        },
                         title: 'Тапсырыс беру',
                       ),
                     ],
                   ),
                 ),
                 Positioned(
-                    top: 124,
+                    top: 150,
                     left: 0,
                     right: 0,
                     child: Padding(

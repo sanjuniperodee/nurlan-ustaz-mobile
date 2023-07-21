@@ -30,6 +30,7 @@ class ActivateUserDTO with _$ActivateUserDTO {
   const factory ActivateUserDTO({
     @JsonKey(name: "user_id") int? user_id,
     @JsonKey(name: "code") String? code,
+
   }) = _ActivateUserDTO;
 
   factory ActivateUserDTO.fromJson(Map<String, dynamic> json) =>
