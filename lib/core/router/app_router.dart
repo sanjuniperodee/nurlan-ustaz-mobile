@@ -56,6 +56,7 @@ import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/question
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/tus_zhoru_details_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/tus_zhoru_page.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/ui/zhosparym_page.dart';
+import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/holiday_details_page.dart';
 
 import '../../features/Islam_teaching/presentation/ui/detail_prayers_page.dart';
 import '../../features/Islam_teaching/presentation/ui/name_detail_page.dart';
@@ -67,6 +68,7 @@ import '../../features/home/presentation/ui/namaz_page.dart';
 import '../../features/home/presentation/ui/news_detail_page.dart';
 import '../../features/home/presentation/ui/profile/profile_main/faq_page.dart';
 import '../../features/zhosparlar/data/models/checklist_dto.dart';
+import '../../features/zhosparlar/data/models/event_dto.dart';
 import '../../features/zhosparlar/presentation/ui/ramazan_checklist.dart';
 
 part 'app_router.gr.dart';
@@ -182,6 +184,8 @@ part 'app_router.gr.dart';
     AutoRoute(page: LoginPage),
     AutoRoute(page: CodeVerification),
     AutoRoute(page: CodeVerificationForgot),
+    //zhosparlar
+    AutoRoute(page: HolidayDetailPage),
   ],
 )
 class AppRouter extends _$AppRouter {}

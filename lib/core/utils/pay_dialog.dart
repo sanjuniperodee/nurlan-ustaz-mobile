@@ -57,7 +57,7 @@ class _PayDialogState extends State<PayDialog> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Text(
-                'Түс жорылуын алу үшін төлем жасауыңызды сұраймыз',
+                'Толық оқу үшін түс садақасына төлем жасауыңызды сұраймыз',
                 style: getTextStyle(CustomTextStyles.s16w400)
                     .copyWith(fontFamily: FontTypes.SF_Pro.name),
                 textAlign: TextAlign.center,
