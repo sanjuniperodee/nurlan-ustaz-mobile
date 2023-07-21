@@ -43,6 +43,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_fav_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_like_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_main_cubit.dart';
 
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/partners_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/payment_tick_cubit.dart';
@@ -176,6 +177,9 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         ),
         BlocProvider<PartnersCubit>(
           create: (context) => getIt<PartnersCubit>(),
+        ),
+        BlocProvider<NewsMainCubit>(
+          create: (context) => getIt<NewsMainCubit>(),
         ),
         BlocProvider<PostServiceCubit>(
           create: (context) => getIt<PostServiceCubit>(),

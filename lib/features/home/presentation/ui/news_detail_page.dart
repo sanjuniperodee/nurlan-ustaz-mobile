@@ -10,6 +10,7 @@ import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
+import 'package:nurlan_ustaz_flutter/features/app/app_dinamic_link.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_detail_cubit.dart';
@@ -185,9 +186,14 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                         width: 12.w,
                                       ),
                                       InkWell(
-                                          onTap: () {
-                                            Share.share('Hello',
-                                                subject: 'Nurlan_ustaz');
+                                          onTap: () async {
+                                            String unguessableDynamicLink =
+                                                await DynamicLink()
+                                                    .createNewsLink(
+                                                        widget.result.id!);
+                                            await Share.share(
+                                              unguessableDynamicLink,
+                                            );
                                           },
                                           child: SvgPicture.asset(
                                               Assets.shareSvg)),

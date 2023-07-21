@@ -18,6 +18,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_cu
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/main_button.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/banner_local_model.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_main_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/timings_cubit.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
@@ -75,8 +76,10 @@ class _MainPageState extends State<MainPage> {
     // TODO: implement initState
     String chosenLang = getIt<AuthLocalDs>().getLocale();
     Intl.defaultLocale = chosenLang.replaceAll('kz', 'kk');
-    BlocProvider.of<NewsCubit>(context)
-        .news(page: 1, isFirstCall: true, search: '');
+    BlocProvider.of<NewsMainCubit>(context).newsMain(
+      currentPage: 1,
+      // isFirstCall: true,
+    );
     BlocProvider.of<TimingsCubit>(context).timings(
       43.25,
       76.91667,
@@ -102,7 +105,7 @@ class _MainPageState extends State<MainPage> {
             loaded: (not, geo) {
               final namaz = not.toJson();
               times = namaz.values.toList();
-              return BlocConsumer<NewsCubit, NewsState>(
+              return BlocConsumer<NewsMainCubit, NewsMainState>(
                 listener: (context, state) {
                   state.maybeWhen(
                     orElse: () {},

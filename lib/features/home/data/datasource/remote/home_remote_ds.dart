@@ -70,6 +70,10 @@ abstract class HomeRemoteDs {
       bool? isSaved,
       int? currentPage,
       bool? isFirstCall = false});
+  Future<List<ResultHomeDTO>> newsMain({
+    bool? isSaved,
+    int? currentPage,
+  });
 
   Future<List<ResultHomeDTO>> seminar(
       {String? search,
@@ -240,6 +244,31 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       );
       return ((response.data as List<dynamic>))
           .map((e) => ResultHomeDTO.fromJson(e))
+          .toList();
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<List<ResultHomeDTO>> newsMain({
+    bool? isSaved,
+    int? currentPage,
+  }) async {
+    try {
+      final response = await dio.get(
+        EndPoints.news,
+        queryParameters: {
+          'page[number]': currentPage,
+          // 'page[size]': 6,
+          if (isSaved != null) 'is_saved': isSaved,
+        },
+      );
+      return ((response.data as Map<String, dynamic>)['results'] as List)
+          .map((x) => ResultHomeDTO.fromJson(x as Map<String, dynamic>))
           .toList();
     } on DioError catch (e) {
       throw ServerException(
@@ -762,7 +791,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
           if (search != null) 'search': search,
         },
       );
-
+      // log(response.data.toString());
       if (response.statusCode == 200) {
         if (search != null && search.isNotEmpty) {
           seminarPage.clear();

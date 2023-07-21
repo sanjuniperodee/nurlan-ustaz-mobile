@@ -109,6 +109,10 @@ abstract class HomeRepository {
       {required double lat, required double long});
 
   Future<Either<Failure, List<ResultHomeDTO>>> projectInfo();
+  Future<Either<Failure, List<ResultHomeDTO>>> newsMain({
+    bool? isSaved,
+    int? currentPage,
+  });
   Future<Either<Failure, List<MediaDTO>>> getNotifications();
 
   Future<Either<Failure, ResultHomeDTO>> seminarDetail({required int id});
@@ -183,6 +187,24 @@ class HomeRepositoryImpl extends HomeRepository {
     if (await networkInfo.isConnected) {
       try {
         final List<ResultHomeDTO> res = await remoteDS.projectInfo();
+        return Right(res);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, List<ResultHomeDTO>>> newsMain({
+    bool? isSaved,
+    int? currentPage,
+  }) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final List<ResultHomeDTO> res =
+            await remoteDS.newsMain(isSaved: isSaved, currentPage: currentPage);
         return Right(res);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -505,8 +527,21 @@ class HomeRepositoryImpl extends HomeRepository {
         final String type = Platform.operatingSystem.toString();
         final result =
             await getNotificationDevice(registrationId: deviceToken ?? '');
-        result.fold((l) => {}, (r) async {
+        result.fold((l) async {
+          if (Platform.isIOS || Platform.isAndroid) {
+            await remoteDS.notificationDevice(
+                notification: NotificationDeviceDTO(
+              registrationId: deviceToken,
+              type: type,
+            ));
+          }
+        }, (r) async {
+          log('${deviceToken}------/d');
+          log('${r.registrationId}------/r');
+
           if (r.registrationId != deviceToken) {
+            log('madishka');
+
             if (Platform.isIOS || Platform.isAndroid) {
               await remoteDS.notificationDevice(
                   notification: NotificationDeviceDTO(

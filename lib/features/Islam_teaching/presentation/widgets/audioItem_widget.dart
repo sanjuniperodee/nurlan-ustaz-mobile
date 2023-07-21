@@ -1,5 +1,3 @@
-
-
 import 'dart:developer';
 
 import 'package:audio_video_progress_bar/audio_video_progress_bar.dart';
@@ -26,8 +24,10 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
   );
   final buttonNotifier = ValueNotifier<ButtonState>(ButtonState.paused);
 
-  // static const url1 = widget.url;
+  static const url =
+      'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3';
 
+  static const url1 = 'https://samplelib.com/lib/preview/mp3/sample-3s.mp3';
   late AudioPlayer _audioPlayer;
   @override
   void initState() {
@@ -54,9 +54,17 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
         _audioPlayer.seek(Duration.zero);
         _audioPlayer.pause();
       }
+    }, onError: (Object e, StackTrace st) {
+      if (e is PlayerException) {
+        print('Error code: ${e.code}');
+        print('Error message: ${e.message}');
+      } else {
+        print('An error occurred: $e');
+      }
     });
 
     _audioPlayer.positionStream.listen((position) {
+      log('PP::${position.toString()}');
       final oldState = progressNotifier.value;
       progressNotifier.value = ProgressBarState(
         current: position,
@@ -66,6 +74,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
     });
 
     _audioPlayer.bufferedPositionStream.listen((bufferedPosition) {
+      log('BP::${bufferedPosition.toString()}');
       final oldState = progressNotifier.value;
       progressNotifier.value = ProgressBarState(
         current: oldState.current,
@@ -75,6 +84,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
     });
 
     _audioPlayer.durationStream.listen((totalDuration) {
+      log('TP::${totalDuration.toString()}');
       final oldState = progressNotifier.value;
       progressNotifier.value = ProgressBarState(
         current: oldState.current,
@@ -147,6 +157,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
             child: ValueListenableBuilder<ProgressBarState>(
               valueListenable: progressNotifier,
               builder: (_, value, __) {
+                log('VVV:${value}');
                 return Padding(
                   padding: const EdgeInsets.only(top: 13.0, left: 8, right: 8),
                   child: ProgressBar(

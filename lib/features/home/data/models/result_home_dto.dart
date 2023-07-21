@@ -18,6 +18,7 @@ class ResultHomeDTO with _$ResultHomeDTO {
       @JsonKey(name: "is_top") bool? isTop,
       @JsonKey(name: "likes_count") int? likesCount,
       @JsonKey(name: "comments_count") int? comentCount,
+      @JsonKey(name: "ticket_url") String? ticketUrl,
       int? id,
       int? parent,
       String? body,

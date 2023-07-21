@@ -34,6 +34,8 @@ mixin _$ResultHomeDTO {
   int? get likesCount => throw _privateConstructorUsedError;
   @JsonKey(name: "comments_count")
   int? get comentCount => throw _privateConstructorUsedError;
+  @JsonKey(name: "ticket_url")
+  String? get ticketUrl => throw _privateConstructorUsedError;
   int? get id => throw _privateConstructorUsedError;
   int? get parent => throw _privateConstructorUsedError;
   String? get body => throw _privateConstructorUsedError;
@@ -79,6 +81,7 @@ abstract class $ResultHomeDTOCopyWith<$Res> {
       @JsonKey(name: "is_top") bool? isTop,
       @JsonKey(name: "likes_count") int? likesCount,
       @JsonKey(name: "comments_count") int? comentCount,
+      @JsonKey(name: "ticket_url") String? ticketUrl,
       int? id,
       int? parent,
       String? body,
@@ -124,6 +127,7 @@ class _$ResultHomeDTOCopyWithImpl<$Res, $Val extends ResultHomeDTO>
     Object? isTop = freezed,
     Object? likesCount = freezed,
     Object? comentCount = freezed,
+    Object? ticketUrl = freezed,
     Object? id = freezed,
     Object? parent = freezed,
     Object? body = freezed,
@@ -175,6 +179,10 @@ class _$ResultHomeDTOCopyWithImpl<$Res, $Val extends ResultHomeDTO>
           ? _value.comentCount
           : comentCount // ignore: cast_nullable_to_non_nullable
               as int?,
+      ticketUrl: freezed == ticketUrl
+          ? _value.ticketUrl
+          : ticketUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -291,6 +299,7 @@ abstract class _$$_ResultHomeDTOCopyWith<$Res>
       @JsonKey(name: "is_top") bool? isTop,
       @JsonKey(name: "likes_count") int? likesCount,
       @JsonKey(name: "comments_count") int? comentCount,
+      @JsonKey(name: "ticket_url") String? ticketUrl,
       int? id,
       int? parent,
       String? body,
@@ -335,6 +344,7 @@ class __$$_ResultHomeDTOCopyWithImpl<$Res>
     Object? isTop = freezed,
     Object? likesCount = freezed,
     Object? comentCount = freezed,
+    Object? ticketUrl = freezed,
     Object? id = freezed,
     Object? parent = freezed,
     Object? body = freezed,
@@ -386,6 +396,10 @@ class __$$_ResultHomeDTOCopyWithImpl<$Res>
           ? _value.comentCount
           : comentCount // ignore: cast_nullable_to_non_nullable
               as int?,
+      ticketUrl: freezed == ticketUrl
+          ? _value.ticketUrl
+          : ticketUrl // ignore: cast_nullable_to_non_nullable
+              as String?,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -485,6 +499,7 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
       @JsonKey(name: "is_top") this.isTop,
       @JsonKey(name: "likes_count") this.likesCount,
       @JsonKey(name: "comments_count") this.comentCount,
+      @JsonKey(name: "ticket_url") this.ticketUrl,
       this.id,
       this.parent,
       this.body,
@@ -535,6 +550,9 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
   @override
   @JsonKey(name: "comments_count")
   final int? comentCount;
+  @override
+  @JsonKey(name: "ticket_url")
+  final String? ticketUrl;
   @override
   final int? id;
   @override
@@ -615,7 +633,7 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
 
   @override
   String toString() {
-    return 'ResultHomeDTO(isLiked: $isLiked, isSaved: $isSaved, isLive: $isLive, isPurchased: $isPurchased, isTop: $isTop, likesCount: $likesCount, comentCount: $comentCount, id: $id, parent: $parent, body: $body, name: $name, logo: $logo, price: $price, title: $title, description: $description, text: $text, cover: $cover, link: $link, url: $url, user: $user, startTime: $startTime, createdAt: $createdAt, isActive: $isActive, media: $media, requisites: $requisites, children: $children, statistics: $statistics, address: $address)';
+    return 'ResultHomeDTO(isLiked: $isLiked, isSaved: $isSaved, isLive: $isLive, isPurchased: $isPurchased, isTop: $isTop, likesCount: $likesCount, comentCount: $comentCount, ticketUrl: $ticketUrl, id: $id, parent: $parent, body: $body, name: $name, logo: $logo, price: $price, title: $title, description: $description, text: $text, cover: $cover, link: $link, url: $url, user: $user, startTime: $startTime, createdAt: $createdAt, isActive: $isActive, media: $media, requisites: $requisites, children: $children, statistics: $statistics, address: $address)';
   }
 
   @override
@@ -633,6 +651,8 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
                 other.likesCount == likesCount) &&
             (identical(other.comentCount, comentCount) ||
                 other.comentCount == comentCount) &&
+            (identical(other.ticketUrl, ticketUrl) ||
+                other.ticketUrl == ticketUrl) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.parent, parent) || other.parent == parent) &&
             (identical(other.body, body) || other.body == body) &&
@@ -673,6 +693,7 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
         isTop,
         likesCount,
         comentCount,
+        ticketUrl,
         id,
         parent,
         body,
@@ -719,6 +740,7 @@ abstract class _ResultHomeDTO implements ResultHomeDTO {
       @JsonKey(name: "is_top") final bool? isTop,
       @JsonKey(name: "likes_count") final int? likesCount,
       @JsonKey(name: "comments_count") final int? comentCount,
+      @JsonKey(name: "ticket_url") final String? ticketUrl,
       final int? id,
       final int? parent,
       final String? body,
@@ -765,6 +787,9 @@ abstract class _ResultHomeDTO implements ResultHomeDTO {
   @override
   @JsonKey(name: "comments_count")
   int? get comentCount;
+  @override
+  @JsonKey(name: "ticket_url")
+  String? get ticketUrl;
   @override
   int? get id;
   @override

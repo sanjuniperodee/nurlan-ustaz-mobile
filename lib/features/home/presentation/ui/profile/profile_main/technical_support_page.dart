@@ -188,10 +188,12 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
                 IconButton(
                   icon: const Icon(Icons.send),
                   onPressed: () {
-                    _channel?.sink.add(jsonEncode(
-                        {"message": _textEditingController.value.text}));
-                    setState(() {});
-                    _textEditingController.clear();
+                    if (_textEditingController.text.isNotEmpty) {
+                      _channel?.sink.add(jsonEncode(
+                          {"message": _textEditingController.value.text}));
+                      setState(() {});
+                      _textEditingController.clear();
+                    }
                   },
                 ),
               ],

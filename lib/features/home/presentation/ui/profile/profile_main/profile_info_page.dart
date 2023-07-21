@@ -104,7 +104,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                                   ? NetworkImage(widget.userDTO.avatar!)
                                       as ImageProvider
                                   : null,
-                          child: widget.userDTO.avatar == null
+                          child: widget.userDTO.avatar == null && _image == null
                               ? SvgPicture.asset(
                                   Assets.userSvg,
                                   width: 94.r,

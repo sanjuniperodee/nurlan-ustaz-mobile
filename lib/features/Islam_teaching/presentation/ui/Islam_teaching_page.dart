@@ -177,7 +177,7 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
                                             bottom: 10),
                                         decoration: BoxDecoration(
                                             borderRadius:
-                                                BorderRadius.circular(12).r,
+                                                BorderRadius.circular(30).r,
                                             gradient: LinearGradient(
                                               begin: Alignment.topRight,
                                               end: Alignment.bottomLeft,
@@ -192,22 +192,28 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
+                                            SizedBox(
+                                              height: 12.h,
+                                            ),
                                             SvgPicture.asset(list[index].url),
                                             SizedBox(
                                               height: 12.h,
                                             ),
-                                            Text(
-                                              list[index].title,
-                                              style: getTextStyle(
-                                                      CustomTextStyles.s16w500)
-                                                  .apply(
-                                                      color: AppColors.black),
-                                            ),
-                                            Expanded(
-                                              child: Align(
-                                                alignment:
-                                                    Alignment.bottomRight,
-                                                child: GestureDetector(
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  list[index].title,
+                                                  style: getTextStyle(
+                                                          CustomTextStyles
+                                                              .s16w500)
+                                                      .apply(
+                                                          color:
+                                                              AppColors.black),
+                                                ),
+                                                GestureDetector(
                                                   onTap: () {},
                                                   child: const Icon(
                                                     Icons
@@ -215,8 +221,25 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
                                                     color: AppColors.orange,
                                                   ),
                                                 ),
-                                              ),
+                                              ],
                                             ),
+                                            // Expanded(
+                                            //   child: Align(
+                                            //     alignment:
+                                            //         Alignment.bottomRight,
+                                            //     child: GestureDetector(
+                                            //       onTap: () {},
+                                            //       child: const Icon(
+                                            //         Icons
+                                            //             .arrow_forward_ios_rounded,
+                                            //         color: AppColors.orange,
+                                            //       ),
+                                            //     ),
+                                            //   ),
+                                            // ),
+                                            // SizedBox(
+                                            //   height: 12.h,
+                                            // ),
                                           ],
                                         ),
                                       ),
