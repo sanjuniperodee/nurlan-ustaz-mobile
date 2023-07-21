@@ -43,7 +43,6 @@ Future<void> main() async {
       appBuilder: (dependencies) {
         return NurlanUstazApp();
       });
-
 }
 
 Future<void> navigateToTusZhoru(Uri link) async {

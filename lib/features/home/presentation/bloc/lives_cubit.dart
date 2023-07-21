@@ -30,7 +30,7 @@ class LivesCubit extends Cubit<LivesState> {
         emit(LivesState.errorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
-        emit(LivesState.loaded(lives: r));
+        emit(LivesState.loaded(lives: r.toSet().toList()));
       },
     );
   }

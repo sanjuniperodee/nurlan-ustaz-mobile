@@ -33,7 +33,7 @@ class DuasCubit extends Cubit<DuasState> {
         emit(DuasState.errorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
-        emit(DuasState.loaded(duha: r));
+        emit(DuasState.loaded(duha: r.toSet().toList()));
       },
     );
   }

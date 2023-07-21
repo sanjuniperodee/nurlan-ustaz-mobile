@@ -29,7 +29,7 @@ class ServicesCubit extends Cubit<ServicesState> {
         emit(ServicesState.errorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
-        emit(ServicesState.loaded(media: r));
+        emit(ServicesState.loaded(media: r.toSet().toList()));
       },
     );
   }
