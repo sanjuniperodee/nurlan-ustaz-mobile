@@ -51,7 +51,7 @@ class IslamNamesCubit extends Cubit<IslamNamesState> {
         emit(IslamNamesState.errorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
-        emit(IslamNamesState.loaded(islam: r));
+        emit(IslamNamesState.loaded(islam: r.toSet().toList()));
       },
     );
   }
