@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,17 +9,23 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_butto
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/token_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_payload.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/code_verification_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/registration_cubit.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../../../core/common/colors.dart';
 import '../../../../core/router/app_router.dart';
 import '../../../app/presentation/widgets/custom_app_bar.dart';
 import '../../../app/presentation/widgets/custom_snackbars.dart';
+import '../widgets/custom_button_timer.dart';
 
 class CodeVerification extends StatefulWidget {
   const CodeVerification(
-      {Key? key, required this.email, required this.userId, required this.password})
+      {Key? key,
+      required this.email,
+      required this.userId,
+      required this.password, required this.userPayload})
       : super(key: key);
+  final UserPayload userPayload;
   final String email;
   final int userId;
   final String password;
@@ -25,6 +33,7 @@ class CodeVerification extends StatefulWidget {
   @override
   State<CodeVerification> createState() => _CodeVerificationState();
 }
+
 bool isLoading = false;
 
 class _CodeVerificationState extends State<CodeVerification> {
@@ -79,12 +88,14 @@ class _CodeVerificationState extends State<CodeVerification> {
               FloatingActionButtonLocation.centerFloat,
           floatingActionButton: Padding(
             padding: const EdgeInsets.all(16),
-            child: AppButton(
-                onTap: () {
-
-                  context.read<CodeVerificationCubit>().sendCode(pinController.text, widget.userId,TokenCreateDTO(email: widget.email,password: widget.password));
-                },
-                text: 'Дайын'),
+            child:
+            CustomAppButtonTimer(
+              isActive: true,
+              onTap: () async {
+                await BlocProvider.of<RegistrationCubit>(context).postUser(widget.userPayload);
+              },
+              text: 'Қайта жіберу ',
+            )
           ),
           backgroundColor: AppColors.white,
           body: SingleChildScrollView(
@@ -120,6 +131,13 @@ class _CodeVerificationState extends State<CodeVerification> {
                       FilteringTextInputFormatter.allow(RegExp('[0-9.,]+')),
                     ],
                     controller: pinController,
+                    onCompleted: (String value) async {
+                      context.read<CodeVerificationCubit>().sendCode(
+                          pinController.text,
+                          widget.userId,
+                          TokenCreateDTO(
+                              email: widget.email, password: widget.password));
+                    },
                   ),
                 ],
               ),
@@ -129,12 +147,17 @@ class _CodeVerificationState extends State<CodeVerification> {
       },
       listener: (context, state) {
         state.maybeWhen(
-          loadingState: () {},
+          loadingState: () {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          },
           loadedState: () {
             context.router.push(const LauncherAppRoute());
           },
           errorState: (message) {
-            buildErrorCustomSnackBar(context, message);
+            log('oshibka');
+            return buildErrorCustomSnackBar(context, message);
           },
           orElse: () {},
         );

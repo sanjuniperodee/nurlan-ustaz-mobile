@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
@@ -25,11 +26,15 @@ class CustomAppBar extends StatelessWidget {
       children: hideIcon != null
           ? [
               Center(
-                child: Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: getTextStyle(CustomTextStyles.s20w700)
-                      .copyWith(color: color ?? AppColors.white, fontSize: 36),
+                child: Container(
+                  width: 150.w,
+                  child: Text(
+                    title,
+                    textAlign: TextAlign.center,
+                    style: getTextStyle(CustomTextStyles.s20w700)
+                        .copyWith(color: color ?? AppColors.white, fontSize: 36),
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
               ),
             ]
@@ -49,11 +54,15 @@ class CustomAppBar extends StatelessWidget {
               Expanded(
                 child: Align(
                   alignment: Alignment.center,
-                  child: Text(
-                    title,
-                    textAlign: TextAlign.center,
-                    style: getTextStyle(CustomTextStyles.s20w700)
-                        .apply(color: color ?? AppColors.white),
+                  child: Container(
+                    width: 150.w,
+                    child: Text(
+                      title,
+                      textAlign: TextAlign.center,
+                      style: getTextStyle(CustomTextStyles.s20w700)
+                          .apply(color: color ?? AppColors.white),
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
               )

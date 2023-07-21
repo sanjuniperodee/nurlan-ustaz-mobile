@@ -9,6 +9,7 @@ import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/custom_tus_zhoru_details_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_details_cubit.dart';
 
+import '../../features/tus_zhoru/presentation/bloc/tus_zhoru_cubit.dart';
 import '../common/app_styles.dart';
 import '../common/colors.dart';
 
@@ -76,6 +77,8 @@ class SuccesPayDialog extends StatelessWidget {
                     if (customTusZhoru != null) {
                       context.router.push(
                           CustomTusZhoruDetailPageRoute(id: customTusZhoru.id!));
+                      BlocProvider.of<TusZhoruCubit>(context).customTusZhoruList;
+
                     }
                   } else {
                     var tusZhoru = await BlocProvider.of<TusZhoruDetailsCubit>(context)
@@ -86,7 +89,9 @@ class SuccesPayDialog extends StatelessWidget {
                       context.router.push(
                           TusZhoruDetailPageRoute(id: tusZhoru.id!));
                     }
+
                   }
+
 
                 },
                 color: AppColors.orange,

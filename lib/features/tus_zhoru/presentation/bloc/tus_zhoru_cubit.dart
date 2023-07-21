@@ -82,7 +82,7 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
     bool? isFirstCall,
   }) async {
     final result = await _repository.customTusZhoru(
-        page: page, isFirstCall: isFirstCall, search: search);
+        page: 1, isFirstCall: true, search: search);
     result.fold(
       (l) {
         emit(TusZhoruState.errorState(message: mapFailureToMessageBack(l)));

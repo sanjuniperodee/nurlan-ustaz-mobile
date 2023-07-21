@@ -64,6 +64,7 @@ import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/ui/zhospar
 import '../../features/Islam_teaching/presentation/ui/detail_prayers_page.dart';
 import '../../features/Islam_teaching/presentation/ui/name_detail_page.dart';
 import '../../features/Islam_teaching/presentation/ui/surah_detail_page.dart';
+import '../../features/auth/data/model/user_payload.dart';
 import '../../features/home/presentation/ui/comment_page_news.dart';
 import '../../features/home/presentation/ui/live_broadcasts_page.dart';
 import '../../features/home/presentation/ui/namaz_page.dart';

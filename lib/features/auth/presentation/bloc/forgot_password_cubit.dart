@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/data/model/token_dto.dart';
 
 import '../../../../core/error/failure.dart';
 import '../../data/repositories/auth_repository.dart';
@@ -14,16 +17,16 @@ class ForgotPasswordCubitCubit extends Cubit<ForgotPasswordState> {
   ) : super(const ForgotPasswordState.initialState());
   final AuthRepository _authRepository;
   late int userId;
+  late String sessionId;
 
   Future<void> resetConfirm(
-      {required String code,
+      {
       required String newPassword,
       required String reNewPassword}) async {
     emit(ForgotPasswordState.loadingState());
 
     final result = await _authRepository.resetPasswordConfirm(
-        userId: userId,
-        code: code,
+        sessionId:sessionId,
         newPassword: newPassword,
         reNewPassword: reNewPassword);
     result.fold((l) {
@@ -35,6 +38,27 @@ class ForgotPasswordCubitCubit extends Cubit<ForgotPasswordState> {
 
     });
   }
+
+  Future<void> resetConfirmCode(
+      {required String code,
+        }) async {
+    emit(ForgotPasswordState.loadingState());
+
+    final result = await _authRepository.ressetConfirmCode(
+       activateUserDTO: ActivateUserDTO(user_id: userId,code: code));
+    result.fold((l) {
+      emit(_ErrorState(message: mapFailureToMessageBack(l)));
+      emit(ForgotPasswordState.verificationCodeState(userId: userId));
+    }, (r) {
+      log('${r}------sessionID');
+      sessionId = r;
+      emit(const _NewPasswordState());
+
+    });
+  }
+
+
+
 
   Future<void> getIdByMail(String mail) async {
     emit(ForgotPasswordState.loadingState());
@@ -57,8 +81,8 @@ class ForgotPasswordCubitCubit extends Cubit<ForgotPasswordState> {
     emit(ForgotPasswordState.verificationCodeState(userId: userId));
   }
 
-  Future<void> toNewPasswordPage({required String code}) async {
-    emit(_NewPasswordState(code: code));
+  Future<void> toNewPasswordPage() async {
+    emit(_NewPasswordState());
   }
 
   // void toInitialPage() {
@@ -102,7 +126,7 @@ class ForgotPasswordState with _$ForgotPasswordState {
   const factory ForgotPasswordState.verificationCodeState(
       {required int userId}) = _VerificationCodeState;
 
-  const factory ForgotPasswordState.newPassword({required String code}) =
+  const factory ForgotPasswordState.newPassword() =
       _NewPasswordState;
 
   const factory ForgotPasswordState.loadingState() = _LoadingState;

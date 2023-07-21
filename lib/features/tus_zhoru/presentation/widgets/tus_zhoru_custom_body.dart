@@ -30,25 +30,58 @@ class _TusZhoruCustomBodyState extends State<TusZhoruCustomBody>
       height: 1.sh,
       child: Stack(
         children: [
-          Image.asset(
-            Assets.gradient,
-            fit: BoxFit.cover,
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+
+                colors: [
+                  AppColors.white.withOpacity(0.0000000000000001),
+                  Color(0xFFECF5FF).withOpacity(0.9)//Color(0xFFECF5FF),
+
+                  //Color(0xFFECF5FF),
+
+
+                ],
+              ),
+            ),
+            child: Image.asset(
+              Assets.gradient,
+              fit: BoxFit.cover,
+            ),
           ),
           Positioned(
-            child: Opacity(
-              opacity: 0.7,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: FractionalOffset.topCenter,
+                  end: FractionalOffset.bottomCenter,
+                  colors: [
+                    AppColors.white.withOpacity(0.0000000000000001),
+                    Color(0xFECF5FF)//Color(0xFFECF5FF),
+
+                    //Color(0xFFECF5FF),
+
+
+                  ],
+                  stops: [
+                    0.8,0.2
+                  ]
+                ),
+              ),
               child: BackdropFilter(
                 filter: ImageFilter.blur(),
                 blendMode: BlendMode.overlay,
-                child: Image.asset(
-                  // color: AppColors.gradientPrimaryActiveButton.colors.first,
-                  fit:BoxFit.fill,
-                  'assets/images/tus_zhoru_list_background.png',
-                  height: 375.h,
-                  width: 500.w,
-                    colorBlendMode: BlendMode.overlay,
-                  filterQuality: FilterQuality.high,
-                  ),
+                child:
+                  Image.asset(
+                    // color: AppColors.gradientPrimaryActiveButton.colors.first,
+                    fit:BoxFit.fill,
+                    'assets/images/tus_zhoru_list_background.png',
+                    height: 375.h,
+                    width: 500.w,
+                      colorBlendMode: BlendMode.overlay,
+                    filterQuality: FilterQuality.high,
+                    ),
+
               ),
             ),
           ),

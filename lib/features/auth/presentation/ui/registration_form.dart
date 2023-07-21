@@ -28,12 +28,13 @@ class RegistrationForm extends StatefulWidget {
       {super.key,
       required this.authCubit,
       required this.user,
-      required this.isPrivacyAccept, required this.changeIndex});
+      required this.isPrivacyAccept,
+      required this.changeIndex});
 
   final bool isPrivacyAccept;
   final AuthCubit authCubit;
   final UserPayload user;
-  final dynamic Function() changeIndex;
+  final void Function() changeIndex;
 
   @override
   State<RegistrationForm> createState() => _RegistrationFormState();
@@ -76,7 +77,6 @@ bool isLoading = false;
 bool obscureFirst = true;
 bool obscureSecond = true;
 
-
 Gender? gender = Gender.male;
 
 class _RegistrationFormState extends State<RegistrationForm> {
@@ -93,8 +93,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
           );
         },
         loadedState: (user) {
-
           context.router.push(CodeVerificationRoute(
+              userPayload: user,
               email: _emailController.text,
               password: _passwordController.text,
               userId: user.id ?? 0));
@@ -104,6 +104,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           _dateController.clear();
           _passwordController.clear();
           _passwordRepeatController.clear();
+          widget.changeIndex;
         },
         errorState: (message) {
           buildErrorCustomSnackBar(context, message);
@@ -122,6 +123,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           ),
           SizedBox(height: 32.h),
           CustomTextFormProfile(
+            inputAction: TextInputAction.next,
             keyboardType: TextInputType.name,
             controller: _nameController,
             hintText: 'Аты-жөні',
@@ -129,19 +131,19 @@ class _RegistrationFormState extends State<RegistrationForm> {
           ),
           SizedBox(height: 24.h),
           CustomTextFormProfile(
+            inputAction: TextInputAction.next,
             keyboardType: TextInputType.emailAddress,
             controller: _emailController,
             hintText: 'E-mail',
             labelText: 'E-mail',
           ),
-          SizedBox(
-            height: 24.h
-          ),
+          SizedBox(height: 24.h),
           CustomTextFormProfile(
-            onChanged: (value){
+            inputAction: TextInputAction.next,
+            onChanged: (value) {
               log(_numberController.value.text);
             },
-            keyboardType:  TextInputType.phone,
+            keyboardType: TextInputType.phone,
             inputFormatters: [maskFormatter],
             controller: _numberController,
             hintText: 'Телефон нөмірі',
@@ -149,6 +151,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           ),
           SizedBox(height: 24.h),
           CustomTextFormProfile(
+            inputAction: TextInputAction.next,
             onTap: () {
               _showDialog(
                   CupertinoDatePicker(
@@ -177,8 +180,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
           ),
           SizedBox(height: 24.h),
           CustomTextFormProfile(
+            inputAction: TextInputAction.next,
             obscureText: obscureFirst,
-            obscure: (){
+            obscure: () {
               setState(() {
                 obscureFirst = !obscureFirst;
               });
@@ -189,10 +193,10 @@ class _RegistrationFormState extends State<RegistrationForm> {
             hintText: 'Құпия сөз',
             labelText: 'Құпия сөз',
           ),
-
           SizedBox(height: 24.h),
-          CustomTextFormProfile(
-            obscure: (){
+          CustomTextFormProfile( 
+            inputAction: TextInputAction.done,
+            obscure: () {
               setState(() {
                 obscureSecond = !obscureSecond;
               });
@@ -284,7 +288,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   buildErrorCustomSnackBar(context, 'Заполните все поля');
                   return;
                 }
-                if(isValidEmail(_emailController.value.text) == false){
+                if (isValidEmail(_emailController.value.text) == false) {
                   buildErrorCustomSnackBar(
                       context, 'Введите корректный почтовый адрес');
                   return;
@@ -294,15 +298,11 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   buildErrorCustomSnackBar(context, 'Слишком короткий пароль');
                   return;
                 }
-                if (_passwordController.text != _passwordRepeatController.text) {
+                if (_passwordController.text !=
+                    _passwordRepeatController.text) {
                   buildErrorCustomSnackBar(context, 'Пароли не совпадают');
                   return;
                 }
-
-
-
-
-
 
                 isPrivacyAccept
                     ? context.read<RegistrationCubit>().postUser(UserPayload(
@@ -312,7 +312,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                         birthday: _dateController.text.toString(),
                         password: _passwordController.text,
                         rePassword: _passwordRepeatController.text,
-                        gender: gender)).then((value) => widget.changeIndex())
+                        gender: gender))
                     : buildErrorCustomSnackBar(
                         context, 'Примите правила соглашения');
               },

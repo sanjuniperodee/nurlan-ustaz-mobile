@@ -1,11 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../../core/error/failure.dart';
 import '../../data/model/token_dto.dart';
-import '../../data/model/user_payload.dart';
 import '../../data/repositories/auth_repository.dart';
 
 part 'code_verification_cubit.freezed.dart';
@@ -21,15 +19,15 @@ class CodeVerificationCubit extends Cubit<CodeVerificationState> {
       String? code, int userId, TokenCreateDTO tokenCreateDTO) async {
     final result = await _authRepository.activateUser(
         activateUserDTO: ActivateUserDTO(user_id: userId, code: code));
-    result.fold((l) => {result.toString()}, (r) async {
+    result.fold((l) {
+      emit(_ErrorState(message: mapFailureToMessageBack(l)));
+    }, (r) async {
       final result =
           await _authRepository.createJTW(createTokenDTO: tokenCreateDTO);
       result.fold(
-        (l) {
-          log('error 2');
-        },
+        (l) {},
         (r) {
-          emit(CodeVerificationState.loadedState());
+          emit(const CodeVerificationState.loadedState());
         },
       );
     });

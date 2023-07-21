@@ -51,10 +51,11 @@ abstract class AuthRepository {
 
   Future<Either<Failure, int>> resetPassword({required String mail});
   Future<Either<Failure, void>> resetPasswordConfirm(
-      {required int userId,
-      required String code,
+      {required String sessionId,
       required String newPassword,
       required String reNewPassword});
+  Future<Either<Failure, String>> ressetConfirmCode({required ActivateUserDTO activateUserDTO});
+
 }
 
 @Singleton(as: AuthRepository)
@@ -271,17 +272,31 @@ class AuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<Either<Failure, void>> resetPasswordConfirm(
-      {required int userId,
-      required String code,
+      {required String sessionId,
       required String newPassword,
       required String reNewPassword}) async {
     if (await networkInfo.isConnected) {
       try {
         final id = await remoteDS.resetPasswordConfirm(
-            userId: userId,
-            code: code,
+            sessionId: sessionId,
             newPassword: newPassword,
             reNewPassword: reNewPassword);
+        return Right(id);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> ressetConfirmCode({required ActivateUserDTO activateUserDTO}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final id = await remoteDS.confirmCode(
+            activateUserDTO: activateUserDTO,
+            );
         return Right(id);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));

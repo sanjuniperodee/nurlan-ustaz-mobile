@@ -196,9 +196,9 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                     InkWell(
                                       onTap: () {
                                         setState(() {
-                                          // BlocProvider.of<TusZhoruDetailsCubit>(
-                                          //         context)
-                                          //     .likeTusZhoru(tusZhoruModel.id!);
+                                          BlocProvider.of<TusZhoruDetailsCubit>(
+                                                  context)
+                                              .likeTusZhoru(tusZhoruModel.id!);
                                           _isFav = !_isFav;
                                         });
                                       },

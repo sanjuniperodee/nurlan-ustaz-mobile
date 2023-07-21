@@ -41,7 +41,7 @@ class CreateTusZhoruCubit extends Cubit<CreateTusZhoruState> {
     result.fold((l) => {}, (r) async {
       print(r.toString());
       final Uri url = Uri.parse(r.pgRedirectUrl.toString());
-      if (!await launchUrl(url)) {
+      if (!await launchUrl(url,mode: LaunchMode.externalApplication)) {
         throw Exception('Could not launch');
       }
     });
@@ -50,7 +50,7 @@ class CreateTusZhoruCubit extends Cubit<CreateTusZhoruState> {
   Future<void> createTusZhoru(String title, String description) async {
     final result = await _repository.createTusZhoru(
         title: title, description: description);
-    return result.fold((l) => {}, (r) => {emit(_LoadedState(tusZhoru: r))});
+    return result.fold((l) => {}, (r) {emit(_LoadedState(tusZhoru: r));});
   }
 }
 

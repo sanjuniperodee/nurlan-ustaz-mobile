@@ -1,3 +1,4 @@
+import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
@@ -8,6 +9,7 @@ import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/login_page.da
 
 class LauncherApp extends StatefulWidget {
   const LauncherApp({super.key});
+
   @override
   State<LauncherApp> createState() => _LauncherAppState();
 }
@@ -25,56 +27,81 @@ class _LauncherAppState extends State<LauncherApp> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AppBloc, AppState>(
-      builder: (context, state) {
-        return state.maybeWhen(
-          onBoardingState: () {
-            return const OnBoardingPage();
-          },
-          loadingState: () {
-            return const Base();
-            // return const _Scaffold(
-            //   child: Center(
-            //     child: CircularProgressIndicator(
-            //       color: Colors.amber,
-            //     ),
-            //   ),
-            // );
-          },
-          notAuthorizedState: () {
-            // return const SignInPage();
-            return const LoginPage();
-          },
-          // notVerifyed: () {
-          //   return const SizedBox();
-          // },
-          errorState: (String message) {
-            return const _Scaffold(
-              child: Center(
-                child: CircularProgressIndicator(
-                  color: Colors.red,
+    return MaterialApp(
+        home: AnimatedSplashScreen(
+          splashIconSize: double.infinity,
+            duration: 3000,
+            splash:
+            Scaffold(
+              body: Container(
+                child: Image.asset(
+                  'assets/images/on_boarding.jpg',
+                  fit: BoxFit.fill,
+                  height: double.infinity,
+                  width: double.infinity,
                 ),
               ),
-            );
-          },
-          orElse: () {
-            return const Base();
-          },
-        );
-      },
-      listener: (context, state) {
-        state.whenOrNull(
-          inAppState: () {
-            // BlocProvider.of<ProfileCubit>(context).getProfile();
-          },
-        );
-      },
-    );
+            ),
+              // height: MediaQuery.of(context).size.height,
+              // width: MediaQuery.of(context).size.width,
+
+            nextScreen: _salam(),
+            splashTransition: SplashTransition.fadeTransition,
+            ));
   }
+}
+
+Widget _salam() {
+  return BlocConsumer<AppBloc, AppState>(
+    builder: (context, state) {
+      return state.maybeWhen(
+        onBoardingState: () {
+          return const OnBoardingPage();
+        },
+        loadingState: () {
+          return const Base();
+          // return const _Scaffold(
+          //   child: Center(
+          //     child: CircularProgressIndicator(
+          //       color: Colors.amber,
+          //     ),
+          //   ),
+          // );
+        },
+        notAuthorizedState: () {
+          // return const SignInPage();
+          return const LoginPage();
+        },
+        // notVerifyed: () {
+        //   return const SizedBox();
+        // },
+        errorState: (String message) {
+          return const _Scaffold(
+            child: Center(
+              child: CircularProgressIndicator(
+                color: Colors.red,
+              ),
+            ),
+          );
+        },
+        orElse: () {
+          return const Base();
+        },
+      );
+    },
+    listener: (context, state) {
+      state.whenOrNull(
+        inAppState: () {
+          // BlocProvider.of<ProfileCubit>(context).getProfile();
+        },
+      );
+    },
+  );
 }
 
 class _Scaffold extends StatelessWidget {
   final Widget child;
+
   const _Scaffold({
     required this.child,
     // super.key,

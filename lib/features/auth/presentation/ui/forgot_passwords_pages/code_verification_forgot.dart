@@ -119,7 +119,7 @@ class _CodeVerificationForgotState extends State<CodeVerificationForgot> {
                 controller: pinController,
                 onCompleted: (String value) async {
                   await BlocProvider.of<ForgotPasswordCubitCubit>(context)
-                      .toNewPasswordPage(code: value);
+                      .resetConfirmCode(code: value);
                 },
               ),
             ],

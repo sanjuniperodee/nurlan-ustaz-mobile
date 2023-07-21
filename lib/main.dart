@@ -32,15 +32,18 @@ Future<void> firebaseInit() async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await Firebase.initializeApp();
   await firebaseInit();
+
   MainRunner.run<AsyncAppDependencies>(
       asyncDependencies: AsyncAppDependencies.obtain,
       appBuilder: (dependencies) {
         return NurlanUstazApp();
       });
+
 }
 
 Future<void> navigateToTusZhoru(Uri link) async {

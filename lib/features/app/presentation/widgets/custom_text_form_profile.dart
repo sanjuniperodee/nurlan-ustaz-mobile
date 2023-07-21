@@ -21,6 +21,7 @@ class CustomTextFormProfile extends StatelessWidget {
   final TextInputType? keyboardType;
   final bool? obscureText;
   final void Function()? obscure;
+  final TextInputAction? inputAction;
 
   const CustomTextFormProfile(
       {Key? key,
@@ -37,12 +38,13 @@ class CustomTextFormProfile extends StatelessWidget {
       this.helperText,
       this.keyboardType,
       this.obscureText,
-      this.obscure})
+      this.obscure, this.inputAction})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      textInputAction: inputAction,
       obscureText: obscureText ?? false,
       keyboardType: keyboardType,
       validator: validator,
