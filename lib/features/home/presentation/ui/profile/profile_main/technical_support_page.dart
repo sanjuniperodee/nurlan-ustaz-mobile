@@ -165,7 +165,7 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
       ),
       bottomSheet: Container(
         padding: const EdgeInsets.all(16),
-        height: 102.h,
+        height: 132.h,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -188,10 +188,12 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
                 IconButton(
                   icon: const Icon(Icons.send),
                   onPressed: () {
-                    _channel?.sink.add(jsonEncode(
-                        {"message": _textEditingController.value.text}));
-                    setState(() {});
-                    _textEditingController.clear();
+                    if (_textEditingController.text.isNotEmpty) {
+                      _channel?.sink.add(jsonEncode(
+                          {"message": _textEditingController.value.text}));
+                      setState(() {});
+                      _textEditingController.clear();
+                    }
                   },
                 ),
               ],

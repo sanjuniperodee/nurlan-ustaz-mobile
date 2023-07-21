@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -74,47 +76,56 @@ class _SeminarPageState extends State<SeminarPage> {
               isLoadingMore = false;
               listOfSeminars = seminar;
               listOfFav.clear();
+              // listOfSeminars.clear();
               listOfSeminars.forEach(
                 (element) {
                   listOfFav.add(element.isSaved!);
                 },
               );
 
-              setState(() {});
+              // setState(() {});
             },
           );
           // TODO: implement listener
         },
         builder: (context, state) {
-          return state.maybeWhen(orElse: () {
-            return GlobalCustomBody(
-              child: SizedBox(
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    children: [
-                      CustomAppBar(
-                        // onTap: () {},
-                        title: widget.type == 'isSave'
-                            ? 'Таңдаулы семинар'
-                            : 'Семинар',
-                      ),
-                      SizedBox(
-                        height: 36.h,
-                      ),
-                      SearchWidget(
-                        onChanged: (string) {
-                          searchText = string;
-                          if (string.isEmpty) {
-                            BlocProvider.of<SeminarCubit>(context)
-                                .seminar(page: 1, isFirstCall: true);
-                          } else {
+          return GlobalCustomBody(
+            child: SizedBox(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  children: [
+                    CustomAppBar(
+                      // onTap: () {},
+                      title: widget.type == 'isSave'
+                          ? 'Таңдаулы семинар'
+                          : 'Семинар',
+                    ),
+                    SizedBox(
+                      height: 36.h,
+                    ),
+                    SearchWidget(
+                      onChanged: (string) async {
+                        searchText = string;
+                        if (string.isEmpty) {
+                          listOfSeminars = [];
+                          BlocProvider.of<SeminarCubit>(context)
+                              .seminar(page: 1, isFirstCall: true);
+                        } else {
+                          await Future.delayed(
+                              const Duration(milliseconds: 1000), () {
                             BlocProvider.of<SeminarCubit>(context).seminar(
                                 page: 1, search: searchText, isFirstCall: true);
-                          }
-                        },
-                      ),
-                      ListView.builder(
+                          });
+                        }
+                      },
+                    ),
+                    state.maybeWhen(orElse: () {
+                      log('STATE:::${state.toString()}');
+                      return const SizedBox();
+                    }, loaded: (res) {
+                      log('SEARCH::::::${res.toString()}');
+                      return ListView.builder(
                         itemCount: listOfSeminars.length,
                         shrinkWrap: true,
                         physics: const BouncingScrollPhysics(),
@@ -237,21 +248,21 @@ class _SeminarPageState extends State<SeminarPage> {
                             ),
                           );
                         },
-                      ),
-                      SizedBox(
-                        height: 10.h,
-                      ),
-                      isLoadingMore
-                          ? const Align(
-                              alignment: Alignment.center,
-                              child: CircularProgressIndicator())
-                          : const SizedBox(),
-                    ],
-                  ),
+                      );
+                    }),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    isLoadingMore
+                        ? const Align(
+                            alignment: Alignment.center,
+                            child: CircularProgressIndicator())
+                        : const SizedBox(),
+                  ],
                 ),
               ),
-            );
-          });
+            ),
+          );
         },
       ),
     );

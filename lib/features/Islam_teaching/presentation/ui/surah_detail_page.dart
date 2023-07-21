@@ -69,7 +69,7 @@ class _SurahDetailPageState extends State<SurahDetailPage> {
                             GestureDetector(
                                 onTap: () {
                                   BlocProvider.of<SurahCubit>(context)
-                                      .sura(page: 1)
+                                      .sura(page: 1, isFirstCall: true)
                                       .then((value) => Navigator.pop(context));
                                 },
                                 child: SvgPicture.asset(Assets.backButtonSvg)),
@@ -103,9 +103,14 @@ class _SurahDetailPageState extends State<SurahDetailPage> {
                                       isFavorite = !isFavorite;
                                       setState(() {});
                                     },
-                                    child: SvgPicture.asset(isFavorite
-                                        ? Assets.bookMark1Svg
-                                        : Assets.bookMarkSvg))
+                                    child: isFavorite
+                                        ? SvgPicture.asset(
+                                            Assets.bookMark1Svg,
+                                          )
+                                        : SvgPicture.asset(
+                                            Assets.bookMarkSvg,
+                                            color: AppColors.white,
+                                          ))
                               ],
                             )
                           ],

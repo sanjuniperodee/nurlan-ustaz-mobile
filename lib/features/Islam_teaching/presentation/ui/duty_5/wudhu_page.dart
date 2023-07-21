@@ -1,27 +1,64 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
-import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/namaz_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/pillars_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_tab_bar.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_widget.dart';
 
 class WudhuPage extends StatefulWidget {
-  const WudhuPage({super.key});
+  final List<NamazDTO> wudhu;
+  const WudhuPage({super.key, required this.wudhu});
 
   @override
   State<WudhuPage> createState() => _WudhuPageState();
 }
 
 class _WudhuPageState extends State<WudhuPage> {
+  int currentIndex = 0;
+  final PageController _pageController = PageController(initialPage: 0);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightBlue,
+      bottomSheet: Container(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+          decoration: const BoxDecoration(color: AppColors.white),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              InkWell(
+                onTap: () {
+                  if (_pageController.page! > 0) {
+                    _pageController.previousPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeOut,
+                    );
+                  }
+                },
+                child: const Icon(
+                  Icons.arrow_back_ios,
+                  color: AppColors.orange,
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  if (_pageController.page! < widget.wudhu.length - 1) {
+                    _pageController.nextPage(
+                      duration: const Duration(milliseconds: 300),
+                      curve: Curves.easeOut,
+                    );
+                  }
+                },
+                child: const Icon(
+                  Icons.arrow_forward_ios,
+                  color: AppColors.orange,
+                ),
+              )
+            ],
+          )),
       body: SizedBox(
         height: 1.sh,
         child: Stack(
@@ -43,48 +80,48 @@ class _WudhuPageState extends State<WudhuPage> {
                   ),
                 )),
             SizedBox(
-              child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        SizedBox(
-                          height: 56.h,
-                        ),
-                        const CustomAppBar(
-                          title: 'Дәрет алу',
-                        ),
-                        SizedBox(
-                          height: 36.h,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Align(
-                                alignment: Alignment.center,
-                                child: Image.asset('assets/images/nam2.png')),
-                            SizedBox(height: 16.h),
-                            Text(
-                              '1 - қадам',
-                              style: getTextStyle(CustomTextStyles.s16w700)
-                                  .apply(color: AppColors.black),
-                            ),
-                            SizedBox(
-                              height: 8.h,
-                            ),
-                            Text(
-                              'Бисмиллахир-рахманир-рахим (Мейрімді, Рахымды Алланың атымен бастаймын) деп айту.Қолды білекке дейін 3 рет жуу',
-                              style: getTextStyle(CustomTextStyles.s16w400)
-                                  .apply(color: AppColors.black),
-                            )
-                          ],
-                        )
-                      ],
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 56.h,
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: CustomAppBar(
+                      title: 'Дәрет алу',
                     ),
-                  )),
+                  ),
+                  SizedBox(
+                    height: 16.h,
+                  ),
+                  Expanded(
+                    child: PageView.builder(
+                      controller: _pageController,
+                      itemCount: widget.wudhu.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return ListView(
+                          padding: const EdgeInsets.all(16),
+                          shrinkWrap: true,
+                          children: [
+                            Text(widget.wudhu[index].title ?? 'ERROR'),
+                            Center(
+                                child: HtmlWidget(
+                              widget.wudhu[index].text ?? '',
+                              onErrorBuilder: (context, element, error) =>
+                                  Text('$element error: $error'),
+                              onLoadingBuilder:
+                                  (context, element, loadingProgress) =>
+                                      const CircularProgressIndicator(),
+                            )),
+                          ],
+                        );
+                      },
+                    ),
+                  )
+                ],
+              ),
             ),
           ],
         ),

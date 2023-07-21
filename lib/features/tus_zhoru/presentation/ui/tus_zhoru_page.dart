@@ -19,7 +19,8 @@ import '../../../app/presentation/widgets/custom_tab_bar.dart';
 import '../../../app/presentation/widgets/search_widget.dart';
 
 class TusZhoruPage extends StatefulWidget {
-  TusZhoruPage({Key? key}) : super(key: key);
+  final String? type;
+  const TusZhoruPage({Key? key, this.type}) : super(key: key);
 
   @override
   State<TusZhoruPage> createState() => _TusZhoruPageState();
@@ -28,9 +29,13 @@ class TusZhoruPage extends StatefulWidget {
 int currentIndex = 0;
 
 class _TusZhoruPageState extends State<TusZhoruPage> {
+  @override
   void initState() {
-    BlocProvider.of<TusZhoruCubit>(context)
-        .tusZhoruT(page: 1, isFirstCall: true);
+    widget.type == 'isSave'
+        ? BlocProvider.of<TusZhoruCubit>(context)
+            .tusZhoruT(page: 1, isFirstCall: true, isSaved: true)
+        : BlocProvider.of<TusZhoruCubit>(context)
+            .tusZhoruT(page: 1, isFirstCall: true);
 
     super.initState();
   }
@@ -82,10 +87,14 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
               physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
-                  SizedBox(height: 20.h,),
-                  const CustomAppBar(
-                    title: 'Түс жору',
-                    hideIcon: true,
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  CustomAppBar(
+                    title: widget.type == 'isSave'
+                        ? 'Таңдаулы түс жору'
+                        : 'Түс жору',
+                    hideIcon: widget.type == 'isSave' ? false : true,
                   ),
                   SizedBox(
                     height: 36.h,
@@ -95,14 +104,20 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                       log(value);
 
                       if (tusZhoruList.currentIndex == 0) {
-                        value.isEmpty ?    context.read<TusZhoruCubit>().tusZhoruT( page: 1, isFirstCall: true)         :
-                        context.read<TusZhoruCubit>().tusZhoruT(
-                            search: value, page: 1, isFirstCall: true);
+                        value.isEmpty
+                            ? context
+                                .read<TusZhoruCubit>()
+                                .tusZhoruT(page: 1, isFirstCall: true)
+                            : context.read<TusZhoruCubit>().tusZhoruT(
+                                search: value, page: 1, isFirstCall: true);
                       }
                       if (tusZhoruList.currentIndex == 1) {
-                        value.isEmpty ? context.read<TusZhoruCubit>().getCustomTusZhoruT( page: 1, isFirstCall: true)     :
-                        context.read<TusZhoruCubit>().getCustomTusZhoruT(
-                            search: value, page: 1, isFirstCall: true);
+                        value.isEmpty
+                            ? context
+                                .read<TusZhoruCubit>()
+                                .getCustomTusZhoruT(page: 1, isFirstCall: true)
+                            : context.read<TusZhoruCubit>().getCustomTusZhoruT(
+                                search: value, page: 1, isFirstCall: true);
                       }
                     },
                   ),

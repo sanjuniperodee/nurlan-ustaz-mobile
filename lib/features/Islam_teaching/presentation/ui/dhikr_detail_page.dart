@@ -9,6 +9,7 @@ import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/result_t
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/dhikrs_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/dhikrs_favorite_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/widgets/audioItem_widget.dart';
+
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/bottom_sheet.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
 
@@ -78,18 +79,18 @@ class _DhikrDetailPageState extends State<DhikrDetailPage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: 56.h,
+                          height: 36.h,
                         ),
                         CustomAppBar(
                           title: widget.result.name ?? 'ERROR',
                           onTap: () {
                             BlocProvider.of<DhikrsCubit>(context)
-                                .dhikrs(page: 1)
+                                .dhikrs(page: 1,isFirstCall: true)
                                 .then((value) => Navigator.pop(context));
                           },
                         ),
                         SizedBox(
-                          height: 76.h,
+                          height: 56.h,
                         ),
                         Container(
                           decoration: BoxDecoration(

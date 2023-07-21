@@ -88,15 +88,35 @@ class _ShopPageState extends State<ShopPage> {
                             return ClipRRect(
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(12)).r,
-                              child: CachedNetworkImage(
-                                imageUrl: partners[index].logo ?? '',
-                                fit: BoxFit.cover,
-                                height: 55.h,
-                                width: 55.w,
-                                errorWidget: (a, b, c) => Container(
-                                  color: AppColors.danger,
-                                  width: 55.w,
+                              child: InkWell(
+                                onTap: () {
+                                  _launchUrl(partners[index].url ?? '');
+                                },
+                                child: CachedNetworkImage(
+                                  imageUrl: partners[index].logo ?? '',
+                                  fit: BoxFit.cover,
                                   height: 55.h,
+                                  width: 55.w,
+                                  errorWidget: (a, b, c) => Stack(
+                                    children: [
+                                      Container(
+                                        color: const Color(0xFFFEEDCC),
+                                        width: 55.w,
+                                        height: 55.h,
+                                      ),
+                                      Container(
+                                        color: const Color(0xFFFEEDCC),
+                                        child: Center(
+                                          child: Positioned.fill(
+                                            child: Text(
+                                              partners[index].name ?? 'ERROR',
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             );
@@ -133,17 +153,32 @@ class _ShopPageState extends State<ShopPage> {
                                   const BorderRadius.all(Radius.circular(12)).r,
                               child: InkWell(
                                 onTap: () {
-                                  // launchUrl()
+                                  _launchUrl(partners[index].url ?? '');
                                 },
                                 child: CachedNetworkImage(
                                   imageUrl: partners[index].logo ?? '',
                                   fit: BoxFit.cover,
                                   height: 55.h,
                                   width: 55.w,
-                                  errorWidget: (a, b, c) => Container(
-                                    color: AppColors.danger,
-                                    width: 55.w,
-                                    height: 55.h,
+                                  errorWidget: (a, b, c) => Stack(
+                                    children: [
+                                      Container(
+                                        color: const Color(0xFFFEEDCC),
+                                        width: 55.w,
+                                        height: 55.h,
+                                      ),
+                                      Container(
+                                        color: const Color(0xFFFEEDCC),
+                                        child: Center(
+                                          child: Positioned.fill(
+                                            child: Text(
+                                              partners[index].name ?? 'ERROR',
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
                                   ),
                                 ),
                               ),

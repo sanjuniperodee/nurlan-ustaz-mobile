@@ -10,8 +10,12 @@ class PillarsDTO with _$PillarsDTO {
     required int id,
     int? type,
     String? title,
+    String? gender,
     String? text,
     String? url,
+    int? time,
+    String? rakats,
+    String? cover,
   }) = _PillarsDTO;
 
   factory PillarsDTO.fromJson(Map<String, dynamic> json) =>

@@ -36,7 +36,7 @@ class _TusZhoruListState extends State<TusZhoruList> {
               ));
             },
             child: Container(
-              height: 65.h,
+              height: 75.h,
               decoration: BoxDecoration(
                 color: list[index].isPurchased!
                     ? AppColors.orange
@@ -56,12 +56,13 @@ class _TusZhoruListState extends State<TusZhoruList> {
                         width: 200.w,
                         child: Text(
                           list[index].title ?? '',
-                          style: getTextStyle(CustomTextStyles.s16w500).copyWith(
-                            fontWeight: FontWeight.w600,
-                              fontFamily: FontTypes.SF_Pro.name,
-                              color: list[index].isPurchased!
-                                  ? AppColors.white
-                                  : null),
+                          style: getTextStyle(CustomTextStyles.s16w500)
+                              .copyWith(
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: FontTypes.SF_Pro.name,
+                                  color: list[index].isPurchased!
+                                      ? AppColors.white
+                                      : null),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
