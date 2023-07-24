@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -19,9 +21,9 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_like_c
 import 'package:share_plus/share_plus.dart';
 
 class NewsDetailPage extends StatefulWidget {
-  final ResultHomeDTO result;
-  final bool isFav;
-  const NewsDetailPage({super.key, required this.result, required this.isFav});
+  final int id;
+
+  const NewsDetailPage({super.key, required this.id});
 
   @override
   State<NewsDetailPage> createState() => _NewsDetailPageState();
@@ -35,10 +37,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
   @override
   void initState() {
     // TODO: implement initState
-    BlocProvider.of<NewsDetailCubit>(context).newsDetail(id: widget.result.id!);
-    isFavorite = widget.isFav;
-    isLiked = widget.result.isLiked!;
-    likeCount = widget.result.likesCount!;
+    BlocProvider.of<NewsDetailCubit>(context).newsDetail(id: widget.id);
     super.initState();
   }
 
@@ -51,7 +50,10 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
             orElse: () {
               return const Center();
             },
-            loaded: (res) {
+            loaded: (result) {
+              isFavorite = result.isSaved!;
+              isLiked = result.isLiked!;
+              likeCount = result.likesCount!;
               return Stack(children: [
                 CarouselSlider(
                   options: CarouselOptions(
@@ -66,7 +68,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                       });
                     },
                   ),
-                  items: widget.result.media!.map((i) {
+                  items: result.media!.map((i) {
                     return Builder(
                       builder: (BuildContext context) {
                         return CachedNetworkImage(
@@ -81,14 +83,14 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                     );
                   }).toList(),
                 ),
-                widget.result.media == null
+                result.media == null
                     ? const SizedBox()
                     : Positioned.fill(
                         top: 215.r,
                         child: Align(
                           alignment: Alignment.topCenter,
                           child: DotsIndicator(
-                            dotsCount: widget.result.media?.length ?? 0,
+                            dotsCount: result.media?.length ?? 0,
                             position: _currentIndex,
                             decorator: const DotsDecorator(
                               color: AppColors
@@ -117,7 +119,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              widget.result.title ?? 'ERROR',
+                              result.title ?? 'ERROR',
                               style: getTextStyle(CustomTextStyles.s20w700)
                                   .apply(color: AppColors.black),
                             ),
@@ -139,18 +141,19 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                     children: [
                                       InkWell(
                                           onTap: () {
-                                            BlocProvider.of<NewsLikeCubit>(
-                                                    context)
-                                                .newsLike(
-                                                    id: widget.result.id ?? 0);
-                                            isLiked = !isLiked;
+                                            setState(() {
+                                              isLiked = !isLiked;
+
+                                              BlocProvider.of<NewsDetailCubit>(
+                                                      context)
+                                                  .newsLike(id: result.id ?? 0);
+                                            });
+
                                             if (isLiked == true) {
                                               likeCount += 1;
                                             } else {
                                               likeCount -= 1;
                                             }
-
-                                            setState(() {});
                                           },
                                           child: isLiked
                                               ? SvgPicture.asset(
@@ -172,13 +175,13 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                           onTap: () {
                                             context.router.push(
                                               CommentPageNewsRoute(
-                                                  id: widget.result.id!),
+                                                  id: result.id!),
                                             );
                                           },
                                           child: SvgPicture.asset(
                                               Assets.commentSvg)),
                                       Text(
-                                        res.comentCount.toString(),
+                                        result.comentCount.toString(),
                                         style: getTextStyle(
                                             CustomTextStyles.s14w400),
                                       ),
@@ -189,8 +192,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                           onTap: () async {
                                             String unguessableDynamicLink =
                                                 await DynamicLink()
-                                                    .createNewsLink(
-                                                        widget.result.id!);
+                                                    .createNewsLink(result.id!);
                                             await Share.share(
                                               unguessableDynamicLink,
                                             );
@@ -202,10 +204,12 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                 ),
                                 GestureDetector(
                                     onTap: () {
-                                      BlocProvider.of<NewsFavCubit>(context)
-                                          .newsFav(id: widget.result.id ?? 0);
-                                      isFavorite = !isFavorite;
-                                      setState(() {});
+                                      setState(() {
+                                        isFavorite = !isFavorite;
+                                        BlocProvider.of<NewsDetailCubit>(
+                                                context)
+                                            .newsFavorite(id: result.id ?? 0);
+                                      });
                                     },
                                     child: SvgPicture.asset(isFavorite
                                         ? Assets.bookMark1Svg
@@ -216,7 +220,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                               height: 21.h,
                             ),
                             Text(
-                              widget.result.text ?? 'ERROR',
+                              result.text ?? 'ERROR',
                               style: getTextStyle(CustomTextStyles.s16w400)
                                   .apply(color: AppColors.black),
                             ),
@@ -226,11 +230,11 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                             GestureDetector(
                               onTap: () {
                                 context.router.push(
-                                  CommentPageNewsRoute(id: widget.result.id!),
+                                  CommentPageNewsRoute(id: result.id!),
                                 );
                               },
                               child: Text(
-                                'Пікірлерді көру ${res.comentCount}',
+                                'Пікірлерді көру ${result.comentCount}',
                                 style: getTextStyle(CustomTextStyles.s16w400)
                                     .apply(color: AppColors.grey1),
                               ),

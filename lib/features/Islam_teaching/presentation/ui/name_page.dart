@@ -190,8 +190,8 @@ class _NamePageState extends State<NamePage> {
                                           context.router.push(
                                             NameDetailPageRoute(
                                                 index: currentIndex,
-                                                result:
-                                                    listOfIslamNames[index]),
+                                                id: listOfIslamNames[index]
+                                                    .id!),
                                           );
                                         },
                                         child: Container(

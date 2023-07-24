@@ -44,7 +44,11 @@ class SeminarDetailCubit extends Cubit<SeminarDetailState> {
             SeminarDetailState.errorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
-        res = res.copyWith(isLiked: !res.isLiked!, likesCount: res.isLiked! == false ? res.likesCount! +1 : res.likesCount! -1);
+        res = res.copyWith(
+            isLiked: !res.isLiked!,
+            likesCount: res.isLiked! == false
+                ? res.likesCount! + 1
+                : res.likesCount! - 1);
         emit(SeminarDetailState.loaded(res: res));
         //seminarDetail(id: id);
       },

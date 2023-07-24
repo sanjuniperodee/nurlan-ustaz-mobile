@@ -8,8 +8,10 @@ import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:nurlan_ustaz_flutter/core/model/async_app_dependecies.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/detail_prayers_page.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/name_detail_page.dart';
 import 'package:nurlan_ustaz_flutter/features/app/logic/main_runner.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/nurlan_ustaz_app.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/news_detail_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_detail_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/tus_zhoru_details_page.dart';
 
@@ -29,6 +31,12 @@ Future<void> firebaseInit() async {
     }
     if (event.link.queryParameters['type'] == 'duas') {
       navigateToDuas(event.link);
+    }
+    if (event.link.queryParameters['type'] == 'news') {
+      navigateToNews(event.link);
+    }
+    if (event.link.queryParameters['type'] == 'muslim_names') {
+      navigateToName(event.link);
     }
   }).onError((e) {
     print(e);
@@ -139,6 +147,47 @@ Future<void> navigateToDuas(Uri link) async {
         MaterialPageRoute(builder: (context) {
           return PrayersDetailPage(
             id: int.parse(id),
+          );
+        }),
+      );
+    }
+  }
+}
+
+Future<void> navigateToNews(Uri link) async {
+  print("event.link.queryParameters ${link.queryParameters}");
+
+  var deepLink = link;
+  final queryParams = deepLink.queryParameters;
+  if (queryParams.length > 0) {
+    var id = queryParams['id'];
+    if (id != null) {
+      Navigator.push(
+        rootNavigatorKey.currentContext!,
+        MaterialPageRoute(builder: (context) {
+          return NewsDetailPage(
+            id: int.parse(id),
+          );
+        }),
+      );
+    }
+  }
+}
+
+Future<void> navigateToName(Uri link) async {
+  print("event.link.queryParameters ${link.queryParameters}");
+
+  var deepLink = link;
+  final queryParams = deepLink.queryParameters;
+  if (queryParams.length > 0) {
+    var id = queryParams['id'];
+    if (id != null) {
+      Navigator.push(
+        rootNavigatorKey.currentContext!,
+        MaterialPageRoute(builder: (context) {
+          return NameDetailPage(
+            id: int.parse(id),
+            index: 0,
           );
         }),
       );

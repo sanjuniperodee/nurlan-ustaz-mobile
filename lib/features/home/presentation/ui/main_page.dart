@@ -435,8 +435,8 @@ class _MainPageState extends State<MainPage> {
                                           onTap: () {
                                             context.router.push(
                                               NewsDetailPageRoute(
-                                                  result: news[index],
-                                                  isFav: news[index].isSaved!),
+                                                id: news[index].id!,
+                                              ),
                                             );
                                           },
                                           child: Container(

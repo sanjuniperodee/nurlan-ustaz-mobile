@@ -125,8 +125,8 @@ class _NewsPageState extends State<NewsPage> {
                                 onTap: () {
                                   context.router.push(
                                     NewsDetailPageRoute(
-                                        result: listOfNews[index],
-                                        isFav: listOfFav[index]),
+                                      id: listOfNews[index].id!,
+                                    ),
                                   );
                                 },
                                 child: Container(

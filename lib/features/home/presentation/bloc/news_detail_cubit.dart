@@ -13,7 +13,7 @@ class NewsDetailCubit extends Cubit<NewsDetailState> {
   NewsDetailCubit(
     this._homeRepository,
   ) : super(const NewsDetailState.initialState());
-
+  late ResultHomeDTO res;
   Future<void> newsDetail({
     required int id,
   }) async {
@@ -25,7 +25,40 @@ class NewsDetailCubit extends Cubit<NewsDetailState> {
         emit(NewsDetailState.errorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
+        res = r;
         emit(NewsDetailState.loaded(res: r));
+      },
+    );
+  }
+
+  Future<void> newsLike({required int id}) async {
+    //emit(const SeminarDetailState.loadingState());
+    final failureOrUser = await _homeRepository.newsLike(id: id);
+    failureOrUser.fold(
+      (l) {
+        emit(NewsDetailState.errorState(message: mapFailureToMessageBack(l)));
+      },
+      (r) {
+        res = res.copyWith(
+            isLiked: !res.isLiked!,
+            likesCount: res.isLiked! == false
+                ? res.likesCount! + 1
+                : res.likesCount! - 1);
+        emit(NewsDetailState.loaded(res: res));
+        //seminarDetail(id: id);
+      },
+    );
+  }
+
+  Future<void> newsFavorite({required int id}) async {
+    final failureOrUser = await _homeRepository.newsFavorite(id: id);
+    failureOrUser.fold(
+      (l) {
+        emit(NewsDetailState.errorState(message: mapFailureToMessageBack(l)));
+      },
+      (r) {
+        res = res.copyWith(isSaved: !res.isSaved!);
+        emit(NewsDetailState.loaded(res: res));
       },
     );
   }
@@ -35,10 +68,10 @@ class NewsDetailCubit extends Cubit<NewsDetailState> {
 class NewsDetailState with _$NewsDetailState {
   const factory NewsDetailState.initialState() = _InitialPage;
 
-  const factory NewsDetailState.loadingState() =
-      _LoadingState;
+  const factory NewsDetailState.loadingState() = _LoadingState;
 
-  const factory NewsDetailState.loaded({required ResultHomeDTO res}) = _LoadedState;
+  const factory NewsDetailState.loaded({required ResultHomeDTO res}) =
+      _LoadedState;
 
   const factory NewsDetailState.errorState({
     required String message,

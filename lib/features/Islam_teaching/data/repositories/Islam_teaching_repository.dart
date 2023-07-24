@@ -27,6 +27,7 @@ abstract class IslamTeachingRepository {
       {required String gender});
   Future<Either<Failure, List<PillarsDTO>>> fatwas();
   Future<Either<Failure, ResultTeachingDTO>> detailDua({required int id});
+  Future<Either<Failure, ResultTeachingDTO>> detailIslamName({required int id});
   Future<Either<Failure, List<ResultTeachingDTO>>> sura(
       {String? search,
       bool? isSaved,
@@ -82,10 +83,27 @@ class IslamTeachingRepositoryImpl extends IslamTeachingRepository {
   }
 
   @override
-  Future<Either<Failure, ResultTeachingDTO>> detailDua({required int id}) async {
+  Future<Either<Failure, ResultTeachingDTO>> detailDua(
+      {required int id}) async {
     if (await networkInfo.isConnected) {
       try {
         final ResultTeachingDTO profile = await remoteDS.detailDua(id: id);
+        return Right(profile);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, ResultTeachingDTO>> detailIslamName(
+      {required int id}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final ResultTeachingDTO profile =
+            await remoteDS.detailIslamName(id: id);
         return Right(profile);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
