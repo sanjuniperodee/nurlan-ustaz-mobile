@@ -147,7 +147,7 @@ class _LoginFormState extends State<LoginForm> {
           loadedState: () async {
             emailController.clear();
             passwordController.clear();
-            context.router.push(const LauncherAppRoute());
+            context.router.popAndPush(const LauncherAppRoute());
           },
           errorState: (message) {
             buildErrorCustomSnackBar(context, message);

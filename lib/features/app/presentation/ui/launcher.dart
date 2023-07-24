@@ -1,4 +1,6 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
+import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
@@ -28,6 +30,19 @@ class _LauncherAppState extends State<LauncherApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        locale: EasyLocalization.of(context)?.locale,
+
+        localizationsDelegates: [
+          ...context.localizationDelegates,
+          // CountryLocalizat
+          // ions.delegate,
+        ],
+        supportedLocales: context.supportedLocales,
+        theme: ThemeData(
+          fontFamily: 'Poppins',
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+        ),
         home: AnimatedSplashScreen(
           splashIconSize: double.infinity,
             duration: 3000,
@@ -70,7 +85,7 @@ Widget _salam() {
         },
         notAuthorizedState: () {
           // return const SignInPage();
-          return const LoginPage();
+          return LoginPage();
         },
         // notVerifyed: () {
         //   return const SizedBox();

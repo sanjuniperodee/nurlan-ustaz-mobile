@@ -95,16 +95,11 @@ class _RegistrationFormState extends State<RegistrationForm> {
         loadedState: (user) {
           context.router.push(CodeVerificationRoute(
               userPayload: user,
-              email: _emailController.text,
-              password: _passwordController.text,
+              email: user.email!,
+              password: user.password!,
               userId: user.id ?? 0));
-          _emailController.clear();
-          _nameController.clear();
-          _numberController.clear();
-          _dateController.clear();
-          _passwordController.clear();
-          _passwordRepeatController.clear();
-          widget.changeIndex;
+
+
         },
         errorState: (message) {
           buildErrorCustomSnackBar(context, message);
@@ -112,6 +107,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
         orElse: () {},
       );
     }, builder: (context, state) {
+
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -280,7 +276,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
             height: 48.h,
           ),
           AppButton(
-              onTap: () async {
+            isLoading: isLoading,
+              onTap: isLoading == true ? null  :() async {
                 if (_nameController.text.isEmpty ||
                     _emailController.text.isEmpty ||
                     _numberController.text.isEmpty ||
@@ -305,20 +302,41 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   buildErrorCustomSnackBar(context, 'Пароли не совпадают');
                   return;
                 }
+                if(isPrivacyAccept == false){
+                  buildErrorCustomSnackBar(
+                      context, 'Примите правила соглашения');
+                  return;
+                }
+                setState(() {
+                  isLoading = true;
+                });
 
-                isPrivacyAccept
-
-                    ? context.read<RegistrationCubit>().postUser(UserPayload(
+                context.read<RegistrationCubit>().postUser(UserPayload(
                         fullName: _nameController.text,
                         email: _emailController.text,
                         phoneNumber: _numberController.text,
                         birthday: _dateController.text.toString(),
                         password: _passwordController.text,
                         rePassword: _passwordRepeatController.text,
-                        gender: gender))
+                        gender: gender)).then((value) {
+                  _emailController.clear();
+                  _nameController.clear();
+                  _numberController.clear();
+                  _dateController.clear();
+                  _passwordController.clear();
+                  _passwordRepeatController.clear();
+                  isPrivacyAccept = false;
+                });
+                await Future.delayed(Duration(seconds: 7),(){
 
-                    : buildErrorCustomSnackBar(
-                        context, 'Примите правила соглашения');
+
+                  setState(() {
+                    isLoading = false;
+                  });
+
+                });
+
+
               },
               text: 'Кіру')
         ],

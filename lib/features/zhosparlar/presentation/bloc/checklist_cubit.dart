@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -28,8 +30,7 @@ class CheckListCubit extends Cubit<CheckListState> {
     result.fold((l) => {}, (r) async {
       days = r.toList();
       if (days.isEmpty) {
-
-            await _repository.autoFillDays(checklistId: checklistId);
+        await _repository.autoFillDays(checklistId: checklistId);
         final result = await _repository.getDays(checklistId: checklistId);
         result.fold(
             (l) => {},
@@ -44,6 +45,7 @@ class CheckListCubit extends Cubit<CheckListState> {
   }
 
   Future<void> postTask(CheckListDayDto checkListDayDto, String title) async {
+
     final result = await _repository.postTask(
         checkListDayId: checkListDayDto.id, title: title);
     result.fold((l) => {}, (r) => {getDays(checklistId: 2)});
@@ -60,6 +62,8 @@ class CheckListCubit extends Cubit<CheckListState> {
 
   Future<void> deleteTask(CheckListDayDto checkListDayDto,
       CheckListTaskDto checkListTaskDto) async {
+    emit(_LoadingState());
+
     await _repository.deleteTask(
         checkListDayId: checkListDayDto.id,
         checkListTaskId: checkListTaskDto.id);

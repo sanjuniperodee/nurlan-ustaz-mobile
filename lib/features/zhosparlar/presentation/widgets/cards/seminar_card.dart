@@ -22,12 +22,13 @@ class SeminarCard extends StatelessWidget {
       required this.event,
       required this.nextPage,
       required this.previousPage,
-      required this.isDialog})
+      required this.isDialog, required this.mainContext})
       : super(key: key);
   final EventDto event;
   final Function nextPage;
   final Function previousPage;
   final bool isDialog;
+  final BuildContext mainContext;
 
   @override
   Widget build(BuildContext context) {

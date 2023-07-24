@@ -35,7 +35,7 @@ class AppButton extends StatelessWidget {
           color != null ? null : AppColors.gradientPrimaryActiveButton  : AppColors.gradientPrimaryDisabledButton,
           borderRadius: const BorderRadius.all(Radius.circular(30)).r),
       child: MaterialButton(
-        onPressed: onTap,
+        onPressed: isLoading == true ? null : onTap,
         child: Container(
           padding: const EdgeInsets.all(10),
           width: 339.w,

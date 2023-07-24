@@ -56,6 +56,8 @@ abstract class AuthRepository {
       required String newPassword,
       required String reNewPassword});
   Future<Either<Failure, String>> ressetConfirmCode({required ActivateUserDTO activateUserDTO});
+  Future<Either<Failure, String>>  resendActivation({required String email});
+
 
 }
 
@@ -298,6 +300,22 @@ class AuthRepositoryImpl extends AuthRepository {
         final id = await remoteDS.confirmCode(
             activateUserDTO: activateUserDTO,
             );
+        return Right(id);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>>  resendActivation({required String email}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final id = await remoteDS.resendActivation(
+          email: email,
+        );
         return Right(id);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));

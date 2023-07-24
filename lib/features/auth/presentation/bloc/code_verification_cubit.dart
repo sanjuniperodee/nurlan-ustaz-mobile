@@ -15,8 +15,17 @@ class CodeVerificationCubit extends Cubit<CodeVerificationState> {
   ) : super(const CodeVerificationState.loadingState());
   final AuthRepository _authRepository;
 
+  Future<void> resendCode(String email) async {
+    final result = await _authRepository.resendActivation(email: email);
+    result.fold((l) {
+      emit(_ErrorState(message: mapFailureToMessageBack(l)));
+    }, (r) async {});
+  }
+
   Future<void> sendCode(
       String? code, int userId, TokenCreateDTO tokenCreateDTO) async {
+    emit(_LoadingState());
+
     final result = await _authRepository.activateUser(
         activateUserDTO: ActivateUserDTO(user_id: userId, code: code));
     result.fold((l) {
@@ -25,7 +34,7 @@ class CodeVerificationCubit extends Cubit<CodeVerificationState> {
       final result =
           await _authRepository.createJTW(createTokenDTO: tokenCreateDTO);
       result.fold(
-        (l) {},
+        (l) {emit(_ErrorState(message: mapFailureToMessageBack(l)));},
         (r) {
           emit(const CodeVerificationState.loadedState());
         },
