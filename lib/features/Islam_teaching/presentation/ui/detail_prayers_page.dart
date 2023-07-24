@@ -2,14 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/dua_detail_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/duas_favorite_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/app_dinamic_link.dart';
 import 'package:share_plus/share_plus.dart';
 
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
-import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/result_teaching_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/duas_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/widgets/audioItem_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
@@ -151,6 +149,7 @@ class _PrayersDetailPageState extends State<PrayersDetailPage> {
                                                   : Assets.bookMarkSvg,
                                             ),
                                             FloatinContainerWidget(
+                                              color: 'asd',
                                               onTap: () async {
                                                 String unguessableDynamicLink =
                                                     await DynamicLink()

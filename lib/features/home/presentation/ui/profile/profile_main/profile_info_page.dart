@@ -81,13 +81,8 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
             physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
-                CustomAppBar(
+                const CustomAppBar(
                   title: 'Профиль',
-                  onTap: () {
-                    BlocProvider.of<GetProfileCubit>(context)
-                        .getUser()
-                        .then((value) => Navigator.pop(context));
-                  },
                 ),
                 SizedBox(height: 44.h),
                 InkWell(
@@ -269,6 +264,9 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                           },
                           loadedState: (user) {
                             buildSuccessCustomSnackBar(context, 'Сәтті ауысты');
+                            BlocProvider.of<GetProfileCubit>(context)
+                                .getUser()
+                                .then((value) => Navigator.pop(context));
                           },
                         );
                         // TODO: implement listener

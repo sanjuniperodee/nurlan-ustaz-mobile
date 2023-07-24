@@ -146,6 +146,8 @@ class _NamazPatternPageState extends State<NamazPatternPage> {
                                       leading: Container(
                                         width: 55.r,
                                         height: 55.r,
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 14, horizontal: 14),
                                         decoration: BoxDecoration(
                                             gradient: AppColors
                                                 .gradientPrimaryActiveButton,
@@ -153,8 +155,6 @@ class _NamazPatternPageState extends State<NamazPatternPage> {
                                                 BorderRadius.circular(12)),
                                         child: SvgPicture.asset(
                                           Assets.wudhuSvg,
-                                          height: 45.h,
-                                          width: 45.w,
                                         ),
                                       ),
                                       title: Text(

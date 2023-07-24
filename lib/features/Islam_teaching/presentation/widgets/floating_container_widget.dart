@@ -8,11 +8,13 @@ class FloatinContainerWidget extends StatelessWidget {
   final String text;
   final String url;
   final void Function()? onTap;
+  final String? color;
   const FloatinContainerWidget({
     Key? key,
     required this.text,
     required this.url,
     this.onTap,
+    this.color,
   }) : super(key: key);
 
   @override
@@ -32,7 +34,10 @@ class FloatinContainerWidget extends StatelessWidget {
               text,
               style: getTextStyle(CustomTextStyles.s16w600),
             ),
-            SvgPicture.asset(url)
+            SvgPicture.asset(
+              url,
+              color: color != null ? AppColors.primaryColor : AppColors.black,
+            )
           ],
         ),
       ),

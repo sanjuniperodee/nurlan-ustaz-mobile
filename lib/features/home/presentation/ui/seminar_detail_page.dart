@@ -23,12 +23,9 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_det
 import 'package:share_plus/share_plus.dart';
 
 class SeminarDetailPage extends StatefulWidget {
-  // final ResultHomeDTO result;
-  // final bool isFav;
   final String? search;
   final int id;
   const SeminarDetailPage({super.key, this.search, required this.id});
-
   @override
   State<SeminarDetailPage> createState() => _SeminarDetailPageState();
 }
@@ -41,11 +38,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     BlocProvider.of<SeminarDetailCubit>(context).seminarDetail(id: widget.id);
-    // isFavorite = widget.isFav;
-    // isLiked = widget.result.isLiked!;
-    // likeCount = widget.result.likesCount!;
     super.initState();
   }
 
@@ -57,6 +50,11 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
           return state.maybeWhen(
             orElse: () {
               return const Center();
+            },
+            loadingState: () {
+              return const Center(
+                child: CircularProgressIndicator(color: AppColors.danger),
+              );
             },
             loaded: (result) {
               isFavorite = result.isSaved!;

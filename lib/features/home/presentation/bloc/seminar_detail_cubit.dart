@@ -19,7 +19,7 @@ class SeminarDetailCubit extends Cubit<SeminarDetailState> {
   Future<void> seminarDetail({
     required int id,
   }) async {
-    // emit(const SeminarDetailState.loadingState());
+    emit(const SeminarDetailState.loadingState());
     final failureOrUser = await _homeRepository.seminarDetail(
       id: id,
     );

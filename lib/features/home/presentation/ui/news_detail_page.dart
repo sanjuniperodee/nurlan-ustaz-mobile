@@ -16,8 +16,6 @@ import 'package:nurlan_ustaz_flutter/features/app/app_dinamic_link.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_detail_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_fav_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_like_cubit.dart';
 import 'package:share_plus/share_plus.dart';
 
 class NewsDetailPage extends StatefulWidget {

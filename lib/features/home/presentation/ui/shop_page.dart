@@ -68,7 +68,7 @@ class _ShopPageState extends State<ShopPage> {
                               .apply(color: AppColors.white),
                         ),
                         SizedBox(
-                          height: 10.h,
+                          height: 16.h,
                         ),
                         GridView.builder(
                           itemCount: partners
@@ -81,8 +81,8 @@ class _ShopPageState extends State<ShopPage> {
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3,
-                            crossAxisSpacing: 10.0,
-                            mainAxisSpacing: 10.0,
+                            crossAxisSpacing: 20.0,
+                            mainAxisSpacing: 20.0,
                           ),
                           itemBuilder: (BuildContext context, int index) {
                             return ClipRRect(
@@ -131,7 +131,7 @@ class _ShopPageState extends State<ShopPage> {
                               .apply(color: AppColors.black),
                         ),
                         SizedBox(
-                          height: 10.h,
+                          height: 16.h,
                         ),
                         GridView.builder(
                           itemCount: partners
@@ -144,8 +144,8 @@ class _ShopPageState extends State<ShopPage> {
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 3,
-                            crossAxisSpacing: 10.0,
-                            mainAxisSpacing: 10.0,
+                            crossAxisSpacing: 20.0,
+                            mainAxisSpacing: 20.0,
                           ),
                           itemBuilder: (BuildContext context, int index) {
                             return ClipRRect(

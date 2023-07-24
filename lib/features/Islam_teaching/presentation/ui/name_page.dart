@@ -182,6 +182,7 @@ class _NamePageState extends State<NamePage> {
                                   itemCount: listOfIslamNames.length,
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
+                                  padding: const EdgeInsets.only(top:8),
                                   itemBuilder: (context, index) {
                                     return Padding(
                                       padding: const EdgeInsets.only(top: 8.0),

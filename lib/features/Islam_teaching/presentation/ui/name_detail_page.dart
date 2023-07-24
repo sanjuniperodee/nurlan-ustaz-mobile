@@ -148,6 +148,7 @@ class _NameDetailPageState extends State<NameDetailPage> {
                                                 : Assets.bookMarkSvg,
                                           ),
                                           FloatinContainerWidget(
+                                            color: 'asdf',
                                             onTap: () async {
                                               String unguessableDynamicLink =
                                                   await DynamicLink()

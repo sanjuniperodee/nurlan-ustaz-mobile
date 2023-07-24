@@ -49,7 +49,7 @@ class _AboutAppPageState extends State<AboutAppPage> {
                     SizedBox(
                       height: 15.h,
                     ),
-                    CustomAppBar(
+                    const CustomAppBar(
                       title: 'Жоба туралы',
                     ),
                     SizedBox(
@@ -70,7 +70,7 @@ class _AboutAppPageState extends State<AboutAppPage> {
                       child: Stack(
                         children: [
                           Center(
-                            child: Container(
+                            child: SizedBox(
                               width: 163.w,
                               height: 44.h,
                               child: Image.asset(
@@ -79,13 +79,19 @@ class _AboutAppPageState extends State<AboutAppPage> {
                               ),
                             ),
                           ),
-                          Image.asset(
-                            'assets/images/export.png',
-                          ),
-                          Align(
-                            alignment: Alignment.bottomRight,
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(30),
                             child: Image.asset(
-                              'assets/images/export2.png',
+                              'assets/images/export.png',
+                            ),
+                          ),
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(30),
+                            child: Align(
+                              alignment: Alignment.bottomRight,
+                              child: Image.asset(
+                                'assets/images/export2.png',
+                              ),
                             ),
                           ),
                         ],
@@ -124,6 +130,8 @@ class _AboutAppPageState extends State<AboutAppPage> {
                                       Text(
                                         res.first.statistics![index].value ??
                                             'ERROR',
+                                        maxLines: 1,
+                                        textAlign: TextAlign.center,
                                         style: getTextStyle(
                                                 CustomTextStyles.s20w700)
                                             .copyWith(
@@ -139,6 +147,7 @@ class _AboutAppPageState extends State<AboutAppPage> {
                                       Text(
                                         res.first.statistics![index].title ??
                                             'ERROR',
+                                        textAlign: TextAlign.center,
                                         style: getTextStyle(
                                                 CustomTextStyles.s16w400)
                                             .copyWith(
@@ -149,7 +158,7 @@ class _AboutAppPageState extends State<AboutAppPage> {
                                     ],
                                   ),
                                 ),
-                                index.isEven
+                                index.isOdd
                                     ? Align(
                                         alignment: Alignment.topLeft,
                                         child: Image.asset(
@@ -157,7 +166,7 @@ class _AboutAppPageState extends State<AboutAppPage> {
                                         ),
                                       )
                                     : Align(
-                                        alignment: Alignment.topLeft,
+                                        alignment: Alignment.bottomRight,
                                         child: Image.asset(
                                           'assets/images/export3.png',
                                         ),
