@@ -7,10 +7,10 @@ import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/d
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/dhikrs_favorite_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/dua_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/duas_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/duas_favorite_cubit.dart';
+
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/islam_name_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/islam_names_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/islam_names_favorite_cubit.dart';
+
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/namaz_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/names_of_Allah_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/pillars_cubit.dart';
@@ -241,9 +241,7 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         BlocProvider<IslamNamesCubit>(
           create: (context) => getIt<IslamNamesCubit>(),
         ),
-        BlocProvider<IslamNamesFavoriteCubit>(
-          create: (context) => getIt<IslamNamesFavoriteCubit>(),
-        ),
+
         BlocProvider<NamazDetailCubit>(
           create: (context) => getIt<NamazDetailCubit>(),
         ),
@@ -253,9 +251,7 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         BlocProvider<NamesOfAllahCubit>(
           create: (context) => getIt<NamesOfAllahCubit>(),
         ),
-        BlocProvider<DuasFavoriteCubit>(
-          create: (context) => getIt<DuasFavoriteCubit>(),
-        ),
+
         BlocProvider<IslamNameDetailCubit>(
           create: (context) => getIt<IslamNameDetailCubit>(),
         ),
