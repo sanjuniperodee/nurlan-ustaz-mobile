@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
+import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/horizontal_calendar/custom_full_calendar.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
@@ -175,7 +176,7 @@ class CustomCalendarAgendaState extends State<CustomCalendarAgenda>
                       child: Container(
                         padding:
                             EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-                        height: isSelected ? 85 : 65,
+                        height: isSelected ? 90 : 70,
                         width: isSelected ? 125 : 115,
                         decoration: BoxDecoration(
                           borderRadius: isSelected
@@ -249,10 +250,14 @@ class CustomCalendarAgendaState extends State<CustomCalendarAgenda>
                                               .toString(),
                                           style: TextStyle(
                                               fontSize: 16.0,
-                                              color: _eventDates.contains(date
-                                                      .toString()
-                                                      .split(" ")
-                                                      .first)
+                                              color: widget.checklist
+                                                  .firstWhere((element) =>
+                                              DateTime.parse(element.date)
+                                                  .day ==
+                                                  date.day)
+                                                  .percentage
+                                                  .toInt() !=
+                                                  0
                                                   ? AppColors.blue
                                                   : AppColors.grey1,
                                               fontWeight: FontWeight.w600),
@@ -276,11 +281,14 @@ class CustomCalendarAgendaState extends State<CustomCalendarAgenda>
                                                     .toInt() /
                                                 100
                                             : 0,
-                                        backgroundColor: _eventDates.contains(
-                                                date
-                                                    .toString()
-                                                    .split(" ")
-                                                    .first)
+                                        backgroundColor: widget.checklist
+                                            .firstWhere((element) =>
+                                        DateTime.parse(element.date)
+                                            .day ==
+                                            date.day)
+                                            .percentage
+                                            .toInt() !=
+                                            0
                                             ? AppColors.blue.withOpacity(0.4)
                                             : AppColors.grey1.withOpacity(0.3),
                                       ),
@@ -291,14 +299,34 @@ class CustomCalendarAgendaState extends State<CustomCalendarAgenda>
                                   width: 8,
                                 ),
                                 Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Text(date.day == DateTime.now().day
-                                        ? 'Бүгін'
-                                        : date.day.toString()),
-                                    Text(_eventDates.contains(
-                                            date.toString().split(" ").first)
-                                        ? '${widget.checklist.firstWhere((element) => DateTime.parse(element.date).day == date.day).percentage.toInt()}%'
-                                        : DateFormat('MMM').format(date)),
+                                    Text(
+                                      date.day == DateTime.now().day
+                                          ? 'Бүгін'
+                                          : '${DateFormat('dd\nMMM').format(date)}',
+                                      style:
+                                          getTextStyle(CustomTextStyles.s12w400)
+                                              .copyWith(
+                                                  fontFamily:
+                                                      FontTypes.SF_Pro.name,
+                                                  color: AppColors.grey1),
+                                    ),
+                                    if (widget.checklist
+                                            .firstWhere((element) =>
+                                                DateTime.parse(element.date)
+                                                    .day ==
+                                                date.day)
+                                            .percentage
+                                            .toInt() !=
+                                        0)
+                                      Text(
+                                          '${widget.checklist.firstWhere((element) => DateTime.parse(element.date).day == date.day).percentage.toInt()}%',style: getTextStyle(CustomTextStyles.s12w400)
+                                          .copyWith(
+                                          fontFamily:
+                                          FontTypes.SF_Pro.name,
+                                          color: AppColors.blue),),
                                   ],
                                 ),
                               ],

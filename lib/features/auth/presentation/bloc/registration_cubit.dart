@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -16,6 +18,7 @@ class RegistrationCubit extends Cubit<RegistrationState> {
   ) : super(const RegistrationState.loadingState());
   final AuthRepository _authRepository;
   late int userId;
+  late String password;
 
   void changeGender(Gender gender) {
     print(gender.name);
@@ -33,8 +36,9 @@ class RegistrationCubit extends Cubit<RegistrationState> {
 
       },
       (r) {
+        log(r.toString());
         userId = r.id ?? 0;
-        emit(RegistrationState.loadedState(user: r));
+        emit(RegistrationState.loadedState(user: r.copyWith(password: userDTO.password!)));
       },
     );
   }

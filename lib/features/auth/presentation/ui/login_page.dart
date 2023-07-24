@@ -13,6 +13,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_cu
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/enums/gender.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_payload.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/auth_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/registration_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/login_form.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/registration_form.dart';
 
@@ -29,165 +30,182 @@ class LoginPage extends StatefulWidget {
 int currentIndex = 0;
 
 class _LoginPageState extends State<LoginPage> {
+
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       builder: (BuildContext context, Widget? child) {
         return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          locale: EasyLocalization.of(context)?.locale,
           home: Scaffold(
-              body: BlocConsumer<AuthCubit, AuthState>(
-            builder: (context, state) {
-              return state.maybeWhen(initialState: (isPrivacyAccept, userDTO) {
-                return GlobalCustomBody(
-                  child: SizedBox(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 50.h,
-                          ),
-                          CustomTabBar(
-                              tabs: const [
-                                Tab(
-                                  text: 'Кіру',
-                                ),
-                                Tab(
-                                  text: 'Тіркелу',
-                                ),
-                              ],
-                              onTap: (int) {
-                                setState(() {
-                                  currentIndex = int;
-                                });
-                              },
-                              length: 2),
-                          SizedBox(height: 26.h),
-                          (currentIndex == 0)
-                              ? const LoginForm()
-                              : RegistrationForm(
-                                  authCubit:
-                                      BlocProvider.of<AuthCubit>(context),
-                                  user: userDTO,
-                                  isPrivacyAccept: isPrivacyAccept, changeIndex: () {
-                            setState(() {
-                              currentIndex = 1;
-                            });
-                          }
-                                ),
-                          SizedBox(height: 24.h),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              }, loadingState: () {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: Colors.yellow,
-                  ),
-                );
-              }, loaded: () {
-                return GlobalCustomBody(
-                  child: SizedBox(
-                    child: SingleChildScrollView(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 50.h,
-                          ),
-                          CustomTabBar(
-                              tabs: const [
-                                Tab(
-                                  text: 'Кіру',
-                                ),
-                                Tab(
-                                  text: 'Тіркелу',
-                                ),
-                              ],
-                              onTap: (int) {
-                                setState(() {
-                                  currentIndex = int;
-                                });
-                              },
-                              length: 2),
-                          if (currentIndex == 0) ...[
-                            Text(
-                              'Қош келдіңіз',
-                              style: getTextStyle(CustomTextStyles.s36w700)
-                                  .copyWith(
-                                      fontFamily: FontTypes.Philosopher.name,
-                                      fontSize: 32),
-                              textAlign: TextAlign.start,
-                            ),
-                            SizedBox(height: 32.h),
-                            CustomTextFormProfile(
-                                hintText: 'E-mail',
-                                labelText: 'E-mail',
-                                onChanged: (value) {}),
-                            SizedBox(height: 24.h),
-                            CustomTextFormProfile(
-                                hintText: 'Құпия сөз',
-                                labelText: 'Құпия сөз',
-                                onChanged: (value) {}),
-                            SizedBox(
-                              height: 42.h,
-                            ),
-                            AppButton(onTap: () {}, text: 'Кіру'),
-                            SizedBox(height: 12.h),
-                            Container(
-                              decoration: BoxDecoration(
-                                  gradient: LinearGradient(
-                                      colors: AppColors
-                                          .gradientSecondaryActiveButton
-                                          .colors),
-                                  borderRadius: const BorderRadius.all(
-                                          Radius.circular(30))
-                                      .r),
-                              child: MaterialButton(
-                                onPressed: () {},
-                                child: Container(
-                                  padding: const EdgeInsets.all(10),
-                                  width: 339.w,
-                                  child: SizedBox(
-                                    child: Text('Құпия сөзді ұмыттым',
-                                        textAlign: TextAlign.center,
-                                        style: getTextStyle(
-                                                CustomTextStyles.s16w200)
-                                            .apply(
-                                                fontFamily:
-                                                    FontTypes.Philosopher.name)
-                                            .copyWith(
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 16.sp)
-                                            .apply(
-                                              color: AppColors.blue,
-                                            )),
-                                  ),
+              body: BlocListener<RegistrationCubit, RegistrationState>(
+                listener: (context, state) {
+                   state.maybeWhen(orElse: (){},
+                   loadedState: (_){
+                     setState(() {
+                       currentIndex = 0;
+                     });
+                   });
+                },
+                child: BlocConsumer<AuthCubit, AuthState>(
+                  builder: (context, state) {
+                    return state.maybeWhen(
+                        initialState: (isPrivacyAccept, userDTO) {
+                          return GlobalCustomBody(
+                            child: SizedBox(
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      height: 50.h,
+                                    ),
+                                    CustomTabBar(
+                                        tabs: const [
+                                          Tab(
+                                            text: 'Кіру',
+                                          ),
+                                          Tab(
+                                            text: 'Тіркелу',
+                                          ),
+                                        ],
+                                        onTap: (int) {
+                                          setState(() {
+                                            currentIndex = int;
+                                          });
+                                        },
+                                        length: 2),
+                                    SizedBox(height: 26.h),
+                                    (currentIndex == 0)
+                                        ? const LoginForm()
+                                        : RegistrationForm(
+                                        authCubit:
+                                        BlocProvider.of<AuthCubit>(context),
+                                        user: userDTO,
+                                        isPrivacyAccept: isPrivacyAccept,
+                                        changeIndex: () {
+                                          setState(() {
+                                            currentIndex = 1;
+                                          });
+                                        }
+                                    ),
+                                    SizedBox(height: 24.h),
+                                  ],
                                 ),
                               ),
-                            )
-                          ],
-                          SizedBox(height: 24.h),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              }, orElse: () {
-                return Container();
-              });
-            },
-            listener: (context, state) {
-              state.maybeWhen(
-                orElse: () {},
-                errorState: (message) {
-                  buildErrorCustomSnackBar(context, message);
-                },
-              ); //          // TODO: implement listener
-            },
-          )),
+                            ),
+                          );
+                        }, loadingState: () {
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: Colors.yellow,
+                        ),
+                      );
+                    }, loaded: () {
+                      return GlobalCustomBody(
+                        child: SizedBox(
+                          child: SingleChildScrollView(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 50.h,
+                                ),
+                                CustomTabBar(
+                                    tabs: const [
+                                      Tab(
+                                        text: 'Кіру',
+                                      ),
+                                      Tab(
+                                        text: 'Тіркелу',
+                                      ),
+                                    ],
+                                    onTap: (int) {
+                                      setState(() {
+                                        currentIndex = int;
+                                      });
+                                    },
+                                    length: 2),
+                                if (currentIndex == 0) ...[
+                                  Text(
+                                    'Қош келдіңіз',
+                                    style: getTextStyle(
+                                        CustomTextStyles.s36w700)
+                                        .copyWith(
+                                        fontFamily: FontTypes.Philosopher.name,
+                                        fontSize: 32),
+                                    textAlign: TextAlign.start,
+                                  ),
+                                  SizedBox(height: 32.h),
+                                  CustomTextFormProfile(
+                                      hintText: 'E-mail',
+                                      labelText: 'E-mail',
+                                      onChanged: (value) {}),
+                                  SizedBox(height: 24.h),
+                                  CustomTextFormProfile(
+                                      hintText: 'Құпия сөз',
+                                      labelText: 'Құпия сөз',
+                                      onChanged: (value) {}),
+                                  SizedBox(
+                                    height: 42.h,
+                                  ),
+                                  AppButton(onTap: () {}, text: 'Кіру'),
+                                  SizedBox(height: 12.h),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        gradient: LinearGradient(
+                                            colors: AppColors
+                                                .gradientSecondaryActiveButton
+                                                .colors),
+                                        borderRadius: const BorderRadius.all(
+                                            Radius.circular(30))
+                                            .r),
+                                    child: MaterialButton(
+                                      onPressed: () {},
+                                      child: Container(
+                                        padding: const EdgeInsets.all(10),
+                                        width: 339.w,
+                                        child: SizedBox(
+                                          child: Text('Құпия сөзді ұмыттым',
+                                              textAlign: TextAlign.center,
+                                              style: getTextStyle(
+                                                  CustomTextStyles.s16w200)
+                                                  .apply(
+                                                  fontFamily:
+                                                  FontTypes.Philosopher.name)
+                                                  .copyWith(
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 16.sp)
+                                                  .apply(
+                                                color: AppColors.blue,
+                                              )),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                                SizedBox(height: 24.h),
+                              ],
+                            ),
+                          ),
+                        ),
+                      );
+                    }, orElse: () {
+                      return Container();
+                    });
+                  },
+                  listener: (context, state) {
+                    state.maybeWhen(
+                      orElse: () {},
+                      errorState: (message) {
+                        buildErrorCustomSnackBar(context, message);
+                      },
+                    ); //          // TODO: implement listener
+                  },
+                ),
+              )),
         );
       },
     );

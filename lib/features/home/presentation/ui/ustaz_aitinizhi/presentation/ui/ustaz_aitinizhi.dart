@@ -275,7 +275,13 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
             physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
-                const CustomAppBar(
+                 CustomAppBar(
+                  onTap: () async {
+                   Navigator.pop(context);
+                    setState(() {
+                      currentIndex = 0 ;
+                    });
+                  },
                   title: 'Ұстаз айтыңызшы',
                 ),
                 SizedBox(

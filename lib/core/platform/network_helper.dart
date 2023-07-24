@@ -16,6 +16,7 @@ mixin EndPoints {
   static const String resetPasswordConfirm =
       '/api/users/reset_password_confirm/';
   static const String resetConfirmCode = '/api/users/reset_password_confirm_code/';
+  static const String resendActivation = '/api/users/resend_activation/';
 
   static const String register = '/api/v1/register';
   static const String registerVerify = '/api/v1/verifyUserPhone';

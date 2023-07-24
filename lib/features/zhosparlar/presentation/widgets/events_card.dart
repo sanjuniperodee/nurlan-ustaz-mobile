@@ -10,11 +10,12 @@ import '../../../../core/common/app_styles.dart';
 import '../../../../core/common/colors.dart';
 
 class EventContainer extends StatelessWidget {
-  const EventContainer(this.event, {super.key, required this.nextPage, required this.previousPage});
+  const EventContainer(this.event, {super.key, required this.nextPage, required this.previousPage, required this.maincontext});
 
   final EventDto event;
   final Function nextPage;
   final Function previousPage;
+  final BuildContext maincontext;
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +24,10 @@ class EventContainer extends StatelessWidget {
         return  ServiceCard(event: event, nextPage: nextPage, previousPage: previousPage, isDialog: false,);
       case (EventsType.seminar):
         return SeminarCard(event: event, nextPage: nextPage, previousPage:
-          previousPage, isDialog: false,);
+          previousPage, isDialog: false, mainContext: maincontext,);
       case (EventsType.live):
         return SeminarCard(event: event, nextPage: nextPage, previousPage:
-        previousPage, isDialog: false,);
+        previousPage, isDialog: false, mainContext: maincontext,);
       case (EventsType.holiday):
         return Container(
           color: Colors.purple,

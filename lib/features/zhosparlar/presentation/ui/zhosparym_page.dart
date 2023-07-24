@@ -55,7 +55,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
               event: event,
               nextPage: () {},
               previousPage: () {},
-              isDialog: true,
+              isDialog: true, mainContext: mainContext,
             ),
           ),
         );
@@ -92,7 +92,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
               event: event,
               nextPage: () {},
               previousPage: () {},
-              isDialog: true,
+              isDialog: true, mainContext: mainContext,
             ),
           ),
         );
@@ -102,7 +102,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
         break;
     }
   }
-  List<EventDto> eventik = [];
+  List<EventDto> holidays = [];
 
   final gradients = [
     const LinearGradient(colors: [
@@ -132,7 +132,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
       return state.maybeWhen(orElse: () {
         return Container();
       }, initialState: (events) {
-        eventik.clear();
+        holidays.clear();
 
         final eventsT = events?.map<DateTime, List<EventDto>>(
           (key, value) => MapEntry(
@@ -143,7 +143,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
 
 
         eventsT!.forEach((key, value) {
-          eventik.addAll(value); // Using addAll method
+          holidays.addAll(value); // Using addAll method
 
         });
 
@@ -252,7 +252,6 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                                   .toList()
                                                   .map(
                                                 (e) {
-                                                  log('${eventsT[date]!.toList().where((element) => element.type != EventsType.holiday).toList()}');
                                                   return EventContainer(
                                                     e,
                                                     nextPage: () {
@@ -260,7 +259,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                                     },
                                                     previousPage: () {
                                                       controller.previousPage();
-                                                    },
+                                                    }, maincontext: context,
                                                   );
                                                 },
                                               ).toList(),
@@ -279,25 +278,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                               ),
                                             )
 
-                                            //Container(
-                                            //     width: double.maxFinite,
-                                            //     height: 300,
-                                            // )
 
-                                            // ListView.builder(
-                                            //   shrinkWrap: true,
-                                            //   scrollDirection: Axis.horizontal,
-                                            //   itemCount: eventsT![date]!.toList().where((element) => element.type != EventsType.holiday ).toList().length,
-                                            //   itemBuilder: (context, index) {
-                                            //     final item = eventsT![date]!.toList().where((element) => element.type != EventsType.holiday ).toList()[index];
-                                            //
-                                            //     return Slidable(
-                                            //       child: ListTile(
-                                            //         title: Text(item.title ?? ''),
-                                            //       ),
-                                            //     );
-                                            //   },
-                                            // ),
 
                                             ),
                                       );
@@ -376,7 +357,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                             SizedBox(
                               height: 21.h,
                             ),
-                            if(eventik
+                            if(holidays
                                 .where((element) =>
                             element.type == EventsType.holiday)
                                 .toList().toSet().isNotEmpty)Text(
@@ -387,7 +368,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                             SizedBox(
                               height: 16.h,
                             ),
-                            ...eventik
+                            ...holidays
                                 .where((element) =>
                                     element.type == EventsType.holiday)
                                 .toList().toSet()
@@ -396,7 +377,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                           const EdgeInsets.only(bottom: 31),
                                       child: InkWell(
                                         onTap: () {
-                                          showEventDialog(context, e,eventik
+                                          showEventDialog(context, e,holidays
                                               .where((element) =>
                                           element.type == EventsType.holiday)
                                               .toList().toSet().toList().indexOf(e).isEven ? gradients[0] : gradients[1]);
@@ -412,7 +393,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                           decoration: BoxDecoration(
                                             borderRadius:
                                                 BorderRadius.circular(30),
-                                            gradient: eventik.indexOf(e).isOdd
+                                            gradient: holidays.indexOf(e).isOdd
                                                 ? gradients[0]
                                                 : gradients[1],
                                             image: const DecorationImage(

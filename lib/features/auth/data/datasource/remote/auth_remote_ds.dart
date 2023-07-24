@@ -39,6 +39,8 @@ abstract class AuthRemoteDs {
       required String newPassword,
       required String reNewPassword});
   Future<String> confirmCode({required ActivateUserDTO activateUserDTO});
+  Future<String> resendActivation({required String email});
+
 }
 
 @Injectable(as: AuthRemoteDs)
@@ -249,6 +251,25 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       throw ServerException(
       message:
           (e.response!.data as Map<String, dynamic>)['message'] as String,);
+
+
+    }
+  }
+
+  @override
+  Future<String> resendActivation({required String email}) async {
+    try {
+      await dio.post(
+        EndPoints.resendActivation,
+        data: {
+          'email': email,
+        },
+      );
+      return('success');
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+        (e.response!.data as Map<String, dynamic>)['message'] as String,);
 
 
     }

@@ -92,7 +92,7 @@ class _CodeVerificationState extends State<CodeVerification> {
             CustomAppButtonTimer(
               isActive: true,
               onTap: () async {
-                await BlocProvider.of<RegistrationCubit>(context).postUser(widget.userPayload);
+                context.read<CodeVerificationCubit>().resendCode(widget.email);
               },
               text: 'Қайта жіберу ',
             )

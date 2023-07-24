@@ -45,17 +45,18 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
       body: BlocConsumer<CheckListCubit, CheckListState>(
         listener: (context, state) {
           state.maybeWhen(
-            errorState: (message) {
-              buildErrorCustomSnackBar(context, message);
-            },
-            orElse: () {},
-          );
+              errorState: (message) {
+                buildErrorCustomSnackBar(context, message);
+              },
+              orElse: () {},
+             );
         },
         builder: (context, state) {
           return state.maybeWhen(orElse: () {
             return Container();
+          },loadingState: (){
+              return Scaffold(body: Center(child: CircularProgressIndicator()));
           }, initialState: (days, date) {
-
             return GlobalCustomBody(
               left: 0,
               right: 0,
@@ -72,7 +73,6 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
                       ),
                       CustomCalendarAgenda(
                         controller: _calendarAgendaControllerNotAppBar,
-
                         locale: context.locale.languageCode,
                         weekDay: WeekDay.long,
                         fullCalendarDay: WeekDay.long,
@@ -84,7 +84,8 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
                             days.map((e) => DateTime.parse(e.date)).toList(),
                         onDateSelected: (date) {
                           context.read<CheckListCubit>().changeDate(date: date);
-                        }, checklist: days,
+                        },
+                        checklist: days,
                       ),
                       SizedBox(
                         height: 36.h,
@@ -121,10 +122,10 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
                                 onPressed: () {
                                   showDialog(
                                       context: context,
-                                      builder: (context) =>
-                                          TaskDetailsDialog( day: days
-                                              .firstWhere((e) =>
-                                          DateTime.parse(e.date).day == date.day)));
+                                      builder: (context) => TaskDetailsDialog(
+                                          day: days.firstWhere((e) =>
+                                              DateTime.parse(e.date).day ==
+                                              date.day)));
                                 },
                                 icon: SvgPicture.asset(
                                     'assets/icons/add-alt.svg'))
@@ -152,8 +153,8 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
                                 .firstWhere((e) =>
                                     DateTime.parse(e.date).day == date.day)
                                 .tasks[index],
-                            checkListDayDto: days.firstWhere(
-                                (e) => DateTime.parse(e.date).day == date.day),
+                            checkListDayDto: days.firstWhere((e) =>
+                                DateTime.parse(e.date).day == date.day),
                           );
                         },
                       ),
