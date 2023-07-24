@@ -5,10 +5,12 @@ import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/a
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/ayat_of_day_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/dhikrs_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/dhikrs_favorite_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/dua_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/duas_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/duas_favorite_cubit.dart';
+
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/islam_name_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/islam_names_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/islam_names_favorite_cubit.dart';
+
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/namaz_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/names_of_Allah_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/pillars_cubit.dart';
@@ -42,7 +44,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/lives_fav_c
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_fav_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_like_cubit.dart';
+
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_main_cubit.dart';
 
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/partners_cubit.dart';
@@ -206,9 +208,7 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         BlocProvider<SeminarDetailCubit>(
           create: (context) => getIt<SeminarDetailCubit>(),
         ),
-        BlocProvider<NewsLikeCubit>(
-          create: (context) => getIt<NewsLikeCubit>(),
-        ),
+
         BlocProvider<ProfileNotificationCubit>(
           create: (context) => getIt<ProfileNotificationCubit>(),
         ),
@@ -222,6 +222,9 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         ),
         BlocProvider<DhikrsFavoriteCubit>(
           create: (context) => getIt<DhikrsFavoriteCubit>(),
+        ),
+        BlocProvider<DuaDetailCubit>(
+          create: (context) => getIt<DuaDetailCubit>(),
         ),
         BlocProvider<AyatOfDayCubit>(
           create: (context) => getIt<AyatOfDayCubit>(),
@@ -238,9 +241,7 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         BlocProvider<IslamNamesCubit>(
           create: (context) => getIt<IslamNamesCubit>(),
         ),
-        BlocProvider<IslamNamesFavoriteCubit>(
-          create: (context) => getIt<IslamNamesFavoriteCubit>(),
-        ),
+
         BlocProvider<NamazDetailCubit>(
           create: (context) => getIt<NamazDetailCubit>(),
         ),
@@ -250,8 +251,9 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         BlocProvider<NamesOfAllahCubit>(
           create: (context) => getIt<NamesOfAllahCubit>(),
         ),
-        BlocProvider<DuasFavoriteCubit>(
-          create: (context) => getIt<DuasFavoriteCubit>(),
+
+        BlocProvider<IslamNameDetailCubit>(
+          create: (context) => getIt<IslamNameDetailCubit>(),
         ),
         //TANDAULILAR
         //

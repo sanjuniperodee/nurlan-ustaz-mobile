@@ -81,7 +81,7 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
           floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-          backgroundColor: Color(0xFFECF5FF),
+          backgroundColor: const Color(0xFFECF5FF),
           body: TusZhoruCustomBody(
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
@@ -94,7 +94,7 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                     title: widget.type == 'isSave'
                         ? 'Таңдаулы түс жору'
                         : 'Түс жору',
-                    hideIcon: widget.type == 'isSave' ? false : true,
+                    hideIcon: widget.type == 'isSave' ? true : false,
                   ),
                   SizedBox(
                     height: 36.h,

@@ -11,7 +11,7 @@ import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/dhi
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/dhikr_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_5/duty_detail_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_5/duty_page.dart';
-import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_5/namaz_duty_page.dart';
+
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_5/namaz_pattern_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_5/namaz_read_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_5/wudhu_page.dart';
@@ -47,7 +47,6 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_page.
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/services_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/shop_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/presentation/ui/ustaz_aitinizhi.dart';
-
 
 import 'package:nurlan_ustaz_flutter/features/home/presentation/widgets/geonames_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/ui/tandaulilar_main_page.dart';
@@ -178,7 +177,6 @@ part 'app_router.gr.dart';
     AutoRoute(page: NamazReadPage),
     AutoRoute(page: NamazPatternPage),
     AutoRoute(page: WudhuPage),
-    AutoRoute(page: NamazDutyPage),
     //Auth
     AutoRoute(page: ForgotPasswordPage),
     AutoRoute(page: LoginPage),

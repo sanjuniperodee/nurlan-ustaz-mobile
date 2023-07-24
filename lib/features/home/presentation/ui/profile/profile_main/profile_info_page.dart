@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
@@ -80,13 +81,8 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
             physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
-                CustomAppBar(
+                const CustomAppBar(
                   title: 'Профиль',
-                  onTap: () {
-                    BlocProvider.of<GetProfileCubit>(context)
-                        .getUser()
-                        .then((value) => Navigator.pop(context));
-                  },
                 ),
                 SizedBox(height: 44.h),
                 InkWell(
@@ -163,10 +159,12 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                             use24hFormat: true,
                             // This is called when the user changes the date.
                             onDateTimeChanged: (DateTime newDate) {
-                              setState(
-                                () => dateController.text =
-                                    DateFormat('yyyy-MM-dd').format(newDate),
-                              );
+                              dateController.text =
+                                  DateFormat('yyyy-MM-dd').format(newDate);
+                              // setState(
+                              //   () =>
+
+                              // );
                             },
                           ),
                           context);
@@ -192,6 +190,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                             IconButton(
                               onPressed: () {
                                 setState(() {
+                                  log('image${_image.toString()}');
                                   gender = 'F';
                                 });
                               },
@@ -213,6 +212,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                             IconButton(
                               onPressed: () {
                                 setState(() {
+                                  log('image${_image.toString()}');
                                   gender = 'M';
                                 });
                               },
@@ -264,12 +264,16 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                           },
                           loadedState: (user) {
                             buildSuccessCustomSnackBar(context, 'Сәтті ауысты');
+                            BlocProvider.of<GetProfileCubit>(context)
+                                .getUser()
+                                .then((value) => Navigator.pop(context));
                           },
                         );
                         // TODO: implement listener
                       },
                       child: AppButton(
                           onTap: () {
+                            log('image${_image.toString()}');
                             final UserPayload2 userPayload = UserPayload2(
                               fullName: nameController.text.isEmpty
                                   ? widget.userDTO.fullName

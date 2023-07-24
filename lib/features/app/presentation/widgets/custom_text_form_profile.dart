@@ -67,7 +67,7 @@ class CustomTextFormProfile extends StatelessWidget {
         errorText: errorText,
         label: Text(
           labelText,
-          style: getTextStyle(CustomTextStyles.s12w400)
+          style: getTextStyle(CustomTextStyles.s16w400)
               .copyWith(fontFamily: FontTypes.SF_Pro.name),
         ),
         labelStyle: getTextStyle(CustomTextStyles.s12w400)

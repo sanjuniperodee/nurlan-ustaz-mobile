@@ -213,13 +213,10 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
                                                           color:
                                                               AppColors.black),
                                                 ),
-                                                GestureDetector(
-                                                  onTap: () {},
-                                                  child: const Icon(
-                                                    Icons
-                                                        .arrow_forward_ios_rounded,
-                                                    color: AppColors.orange,
-                                                  ),
+                                                const Icon(
+                                                  Icons
+                                                      .arrow_forward_ios_rounded,
+                                                  color: AppColors.orange,
                                                 ),
                                               ],
                                             ),

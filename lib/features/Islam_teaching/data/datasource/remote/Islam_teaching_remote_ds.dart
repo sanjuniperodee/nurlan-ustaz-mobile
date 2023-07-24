@@ -15,6 +15,8 @@ const _tag = 'IslamTeachingRemoteDS';
 
 abstract class IslamTeachingRemoteDs {
   Future<AyatDTO> ayatOfDay();
+  Future<ResultTeachingDTO> detailDua({required int id});
+  Future<ResultTeachingDTO> detailIslamName({required int id});
   Future<bool> surahFavorite({required int id});
   Future<bool> duasFavorite({required int id});
   Future<bool> dhikrsFavorite({required int id});
@@ -80,6 +82,40 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
         EndPoints.ayatOfDay,
       );
       return AyatDTO.fromJson(
+        (response.data as Map<String, dynamic>),
+      );
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<ResultTeachingDTO> detailDua({required int id}) async {
+    try {
+      final response = await dio.get(
+        '${EndPoints.duha}$id/',
+      );
+      return ResultTeachingDTO.fromJson(
+        (response.data as Map<String, dynamic>),
+      );
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<ResultTeachingDTO> detailIslamName({required int id}) async {
+    try {
+      final response = await dio.get(
+        '${EndPoints.muslimNames}$id/',
+      );
+      return ResultTeachingDTO.fromJson(
         (response.data as Map<String, dynamic>),
       );
     } on DioError catch (e) {
