@@ -23,7 +23,7 @@ class CustomAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: hideIcon != null
+      children: hideIcon != null && hideIcon ==false
           ? [
               Center(
                 child: Container(

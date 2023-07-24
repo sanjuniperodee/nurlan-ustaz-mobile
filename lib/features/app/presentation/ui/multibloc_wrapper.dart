@@ -5,6 +5,7 @@ import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/a
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/ayat_of_day_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/dhikrs_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/dhikrs_favorite_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/dua_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/duas_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/duas_favorite_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/islam_names_cubit.dart';
@@ -222,6 +223,9 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         ),
         BlocProvider<DhikrsFavoriteCubit>(
           create: (context) => getIt<DhikrsFavoriteCubit>(),
+        ),
+        BlocProvider<DuaDetailCubit>(
+          create: (context) => getIt<DuaDetailCubit>(),
         ),
         BlocProvider<AyatOfDayCubit>(
           create: (context) => getIt<AyatOfDayCubit>(),

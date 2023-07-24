@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 
 import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/core/services/notification_service.dart';
@@ -42,6 +43,8 @@ mixin MainRunner {
       options: DefaultFirebaseOptions.currentPlatform,
     );
     await NotificationService().init();
+
+   
 
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 

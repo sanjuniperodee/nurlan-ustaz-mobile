@@ -132,7 +132,7 @@ class _PrayersPageState extends State<PrayersPage> {
                                         onTap: () {
                                           context.router.push(
                                             PrayersDetailPageRoute(
-                                                result: listOfPrayer[index]),
+                                                id: listOfPrayer[index].id!),
                                           );
                                         },
                                         child: Container(

@@ -203,6 +203,33 @@ class HomeRepositoryImpl extends HomeRepository {
   }) async {
     if (await networkInfo.isConnected) {
       try {
+        final String? deviceToken =
+            await NotificationService().getDeviceToken();
+        final String type = Platform.operatingSystem.toString();
+        final result =
+            await getNotificationDevice(registrationId: deviceToken ?? '');
+        result.fold((l) async {
+          if (Platform.isIOS || Platform.isAndroid) {
+            await remoteDS.notificationDevice(
+                notification: NotificationDeviceDTO(
+              registrationId: deviceToken,
+              type: type,
+            ));
+          }
+        }, (r) async {
+          log('${deviceToken}------/d');
+          log('${r.registrationId}------/r');
+
+          if (r.registrationId != deviceToken) {
+            if (Platform.isIOS || Platform.isAndroid) {
+              await remoteDS.notificationDevice(
+                  notification: NotificationDeviceDTO(
+                registrationId: deviceToken,
+                type: type,
+              ));
+            }
+          }
+        });
         final List<ResultHomeDTO> res =
             await remoteDS.newsMain(isSaved: isSaved, currentPage: currentPage);
         return Right(res);
@@ -540,8 +567,6 @@ class HomeRepositoryImpl extends HomeRepository {
           log('${r.registrationId}------/r');
 
           if (r.registrationId != deviceToken) {
-            log('madishka');
-
             if (Platform.isIOS || Platform.isAndroid) {
               await remoteDS.notificationDevice(
                   notification: NotificationDeviceDTO(
