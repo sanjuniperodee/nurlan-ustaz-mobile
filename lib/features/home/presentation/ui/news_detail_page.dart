@@ -13,15 +13,14 @@ import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/app/app_dinamic_link.dart';
-import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_detail_cubit.dart';
 import 'package:share_plus/share_plus.dart';
 
 class NewsDetailPage extends StatefulWidget {
   final int id;
-
-  const NewsDetailPage({super.key, required this.id});
+  final String? search;
+  const NewsDetailPage({super.key, required this.id, this.search});
 
   @override
   State<NewsDetailPage> createState() => _NewsDetailPageState();
@@ -247,7 +246,10 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                     child: GestureDetector(
                         onTap: () {
                           BlocProvider.of<NewsCubit>(context)
-                              .news(page: 1, isFirstCall: true)
+                              .news(
+                                  page: 1,
+                                  isFirstCall: true,
+                                  search: widget.search ?? '')
                               .then((value) => Navigator.pop(context));
                         },
                         child: SvgPicture.asset(Assets.backStackSvg))),
