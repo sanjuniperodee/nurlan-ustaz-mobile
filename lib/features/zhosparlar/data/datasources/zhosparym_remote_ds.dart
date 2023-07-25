@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
@@ -33,6 +34,8 @@ abstract class ZhosparymRemoteDs {
   Future<void> postTask({required int checkListDayId, required String title});
 
   Future<void> autoFill({required int checklistId});
+  Future<List<CheckListTaskDto>> getTasksByDate({required int checklistDayId});
+
 }
 
 @Injectable(as: ZhosparymRemoteDs)
@@ -134,8 +137,6 @@ class ZhosparymRemoteDsImpl extends ZhosparymRemoteDs {
       required bool isComplete}) async {
     try {
       final FormData formdat = FormData.fromMap({
-        'checklist_day_id': checkListDayDto.id,
-        'id': checkListTaskDto.id.toString(),
         "checklist_day": checkListDayDto.id,
         "title": checkListTaskDto.title.toString(),
         "is_completed": isComplete,
@@ -204,6 +205,26 @@ class ZhosparymRemoteDsImpl extends ZhosparymRemoteDs {
       });
       if (response.statusCode == 201) {
         return ;
+      }
+      throw 'ERROR';
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+        (e.response?.data as Map<String, dynamic>)['message'].toString(),
+      );
+    }
+  }
+
+  @override
+  Future<List<CheckListTaskDto>> getTasksByDate({required int checklistDayId}) async {
+    try {
+      final response =
+          await dio.get('${EndPoints.checklistDays}/$checklistDayId/tasks/');
+      if (response.statusCode == 200) {
+        log(response.data.toString());
+        return (response.data as List)
+            .map((e) => CheckListTaskDto.fromJson(e as Map <String, dynamic>))
+            .toList();
       }
       throw 'ERROR';
     } on DioError catch (e) {

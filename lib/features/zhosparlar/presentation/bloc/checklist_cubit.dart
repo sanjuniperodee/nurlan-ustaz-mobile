@@ -15,12 +15,13 @@ class CheckListCubit extends Cubit<CheckListState> {
   CheckListCubit(
     this._repository,
   ) : super(const CheckListState.initialState()) {
-    selectedMonth = DateTime.now();
+    selectedDate = DateTime.now();
   }
 
   final ZhosparymRepository _repository;
   late List<CheckListDayDto> days;
-  late DateTime selectedMonth;
+  late DateTime selectedDate;
+  late List<CheckListTaskDto> tasks;
 
   Future<void> autoFillDays({required int checklistId}) async {}
 
@@ -36,16 +37,15 @@ class CheckListCubit extends Cubit<CheckListState> {
             (l) => {},
             (r) => {
                   emit(_InitialState(
-                      days: r.toList(), selectedDate: selectedMonth))
+                      days: r.toList(), selectedDate: selectedDate))
                 });
       } else {
-        emit(_InitialState(days: r.toList(), selectedDate: selectedMonth));
+        emit(_InitialState(days: r.toList(), selectedDate: selectedDate));
       }
     });
   }
 
   Future<void> postTask(CheckListDayDto checkListDayDto, String title) async {
-
     final result = await _repository.postTask(
         checkListDayId: checkListDayDto.id, title: title);
     result.fold((l) => {}, (r) => {getDays(checklistId: 2)});
@@ -71,8 +71,14 @@ class CheckListCubit extends Cubit<CheckListState> {
   }
 
   Future<void> changeDate({required DateTime date}) async {
-    selectedMonth = date;
-    emit(_InitialState().copyWith(selectedDate: date, days: days));
+    final day = days.firstWhere((element) => DateTime.parse(element.date).day == date.day);
+    final result = await _repository.getTasksByDate(checklistDayId: day.id);
+    result.fold((l) => {}, (r) {
+      tasks = r.toList();
+      log(tasks.toList().toString());
+      selectedDate = date;
+      emit(_InitialState().copyWith(selectedDate: date, days: days,tasks: tasks));
+    });
   }
 }
 
@@ -80,7 +86,7 @@ class CheckListCubit extends Cubit<CheckListState> {
 class CheckListState with _$CheckListState {
   const factory CheckListState.initialState(
       {@Default([]) final List<CheckListDayDto> days,
-      final DateTime? selectedDate}) = _InitialState;
+      final DateTime? selectedDate,final List<CheckListTaskDto>? tasks}) = _InitialState;
 
   const factory CheckListState.loadedState() = _LoadedState;
 

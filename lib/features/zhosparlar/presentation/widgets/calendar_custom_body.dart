@@ -22,16 +22,45 @@ class CalendarCustomBody extends StatelessWidget {
       height: 1.sh,
       child: Stack(
         children: [
-          Image.asset(
-            Assets.gradient,
-            fit: BoxFit.cover,
+          Positioned(
+            right: 0,
+            child: Image.asset(
+              'assets/images/calendar_fon.png',
+              fit: BoxFit.cover,
+            ),
           ),
           Positioned(
-            left: 280.r,
-            top: 10.r,
-            child: SvgPicture.asset(
-              'assets/icons/calendar_timer.svg',
-              color: AppColors.white,
+            top: 130.h,
+            left: 300.w,
+            child: ShaderMask(
+              shaderCallback: (Rect bounds) => LinearGradient(
+                colors: [
+                  AppColors.white.withOpacity(0.001),
+                  AppColors.white,
+                ],
+              ).createShader(bounds),
+              child: SvgPicture.asset(
+                'assets/icons/calendar_custom_icon_2.svg',
+                color: AppColors.white.withOpacity(0.5),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          Positioned(
+            top: 50.h,
+            left: 120.w,
+            child: ShaderMask(
+              shaderCallback: (Rect bounds) => LinearGradient(
+                colors: [
+                  AppColors.white.withOpacity(0.001),
+                  AppColors.white,
+                ],
+              ).createShader(bounds),
+              child: SvgPicture.asset(
+                'assets/icons/calendar_timer.svg',
+                color: AppColors.white.withOpacity(0.5),
+                fit: BoxFit.cover,
+              ),
             ),
           ),
           Padding(

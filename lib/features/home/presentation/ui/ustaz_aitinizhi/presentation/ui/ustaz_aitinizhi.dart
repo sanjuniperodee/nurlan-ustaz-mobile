@@ -33,11 +33,34 @@ bool showButton = false;
 late UserDto userSir;
 late IOWebSocketChannel? _channel;
 
+
+
+
+
 class _UstazAitinizhiState extends State<UstazAitinizhi> {
+
+  Future<bool> _onWillPop() async {
+    setState(() {
+      currentIndex = 0;
+    });
+    Navigator.of(context).pop(true);
+    return false; //<-- SEE HERE
+  }
+
+
+
+
+
+
+
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<TodayChatCubit, TodayChatState>(
-        listener: (context, state) {
+      listener: (context, state) {
         state.maybeWhen(
             orElse: () {},
             loadingState: () {
@@ -59,8 +82,7 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
                 setState(() {
                   showButton = false;
                 });
-              }
-              else{
+              } else {
                 setState(() {
                   showButton = true;
                 });
@@ -68,22 +90,25 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
             });
         // TODO: implement listener
       },
-      child: Scaffold(
-        floatingActionButton: currentIndex == 0 ?
-        showButton
-                ? Container(
-                    width: double.infinity,
-                    height: 80.h,
-                    child: Padding(
-                      padding:  EdgeInsets.only(
-                          top: 16.h, bottom: 14.h, right: 16.w, left: 16.w),
-                      child: AppButton(
+      child: WillPopScope(
+        onWillPop: _onWillPop,
+        child: Scaffold(
+          floatingActionButton: currentIndex == 0
+              ? showButton
+                  ? Container(
+                      width: double.infinity,
+                      height: 80.h,
+                      child: Padding(
+                        padding: EdgeInsets.only(
+                            top: 16.h, bottom: 14.h, right: 16.w, left: 16.w),
+                        child: AppButton(
                           textSize: 16.sp,
                           onTap: () {
                             showDialog(
                               context: context,
                               builder: (BuildContext dialogContext) {
-                                TextEditingController _surakController = TextEditingController();
+                                TextEditingController _surakController =
+                                    TextEditingController();
                                 return AlertDialog(
                                   contentPadding: EdgeInsets.all(0),
                                   elevation: 50000,
@@ -95,20 +120,22 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
                                     child: Stack(
                                       children: [
                                         Positioned(
+                                          right: 0,
+                                          left: 0,
                                           top: 50.h,
                                           child: Container(
-                                            decoration: BoxDecoration(
+                                            decoration: const BoxDecoration(
                                                 color: AppColors.white,
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(20))),
-                                            width: 300.w,
+                                            width: 320.w,
                                             child: Column(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.end,
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.center,
                                               children: [
-                                                 SizedBox(
+                                                SizedBox(
                                                   height: 48.h,
                                                 ),
                                                 Text(
@@ -121,32 +148,41 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
                                                               .Philosopher
                                                               .name),
                                                 ),
-                                                 SizedBox(
+                                                SizedBox(
                                                   height: 20.h,
                                                 ),
                                                 Padding(
-                                                  padding:  EdgeInsets.symmetric(
+                                                  padding: EdgeInsets.symmetric(
                                                       horizontal: 16.w),
                                                   child: Container(
                                                     width: 279.w,
-                                                    constraints: BoxConstraints(minHeight: 32.h),
+                                                    constraints: BoxConstraints(
+                                                        minHeight: 32.h),
                                                     child: TextFormField(
                                                       minLines: 1,
                                                       maxLines: 10,
-                                                      controller: _surakController,
+                                                      controller:
+                                                          _surakController,
                                                       inputFormatters: [
                                                         LengthLimitingTextInputFormatter(
                                                             90),
                                                       ],
                                                       decoration:
                                                           InputDecoration(
-
                                                         floatingLabelBehavior:
                                                             FloatingLabelBehavior
                                                                 .never,
                                                         enabled: true,
-                                                        labelText: "Ұстаз айтыңызшы...",
-                                                        labelStyle: getTextStyle(CustomTextStyles.s14w600).copyWith(fontFamily: FontTypes.SF_Pro.name),
+                                                        labelText:
+                                                            "Ұстаз айтыңызшы...",
+                                                        labelStyle: getTextStyle(
+                                                                CustomTextStyles
+                                                                    .s14w600)
+                                                            .copyWith(
+                                                                fontFamily:
+                                                                    FontTypes
+                                                                        .SF_Pro
+                                                                        .name),
                                                         enabledBorder:
                                                             OutlineInputBorder(
                                                           borderRadius:
@@ -175,7 +211,8 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
                                                         fillColor: AppColors
                                                             .blue
                                                             .withOpacity(0.05),
-                                                            contentPadding: EdgeInsets.all(10),
+                                                        contentPadding:
+                                                            EdgeInsets.all(10),
                                                         //fillColor: Colors.green
                                                       ),
                                                     ),
@@ -186,13 +223,19 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
                                                 ),
                                                 InkWell(
                                                   onTap: () {
-                                                    _channel?.sink.add(jsonEncode({"message": _surakController.value.text}));
-                                                    Navigator.pop(dialogContext);
+                                                    _channel?.sink.add(
+                                                        jsonEncode({
+                                                      "message":
+                                                          _surakController
+                                                              .value.text
+                                                    }));
+                                                    Navigator.pop(
+                                                        dialogContext);
                                                   },
                                                   child: Container(
                                                     height: 52.h,
                                                     width: double.infinity,
-                                                    decoration: const BoxDecoration(
+                                                    decoration: BoxDecoration(
                                                         gradient: AppColors
                                                             .gradientPrimaryActiveButton,
                                                         color: AppColors.blue,
@@ -200,10 +243,10 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
                                                             BorderRadius.only(
                                                                 bottomLeft: Radius
                                                                     .circular(
-                                                                        20),
+                                                                        20.r),
                                                                 bottomRight: Radius
                                                                     .circular(
-                                                                        20))),
+                                                                        20.r))),
                                                     child: Center(
                                                         child: Text(
                                                       'Жіберу',
@@ -230,21 +273,16 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
                                           child: Container(
                                             height: 74.h,
                                             width: 74.w,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: AppColors.white, // Specify the border color here
-                                                width: 1.0, // Specify the border width here
-                                              ),
-                                              borderRadius: BorderRadius.circular(90.r)),
                                             child: ClipRRect(
                                               borderRadius:
-                                                  BorderRadius.circular(90.r),
+                                                  BorderRadius.circular(74.r),
                                               child: CachedNetworkImage(
                                                 imageUrl: userSir.avatar ?? '',
                                                 fit: BoxFit.cover,
                                                 height: 74.h,
                                                 width: 74.w,
-                                                errorWidget: (a, b, c) => Center(
+                                                errorWidget: (a, b, c) =>
+                                                    Center(
                                                   child: SvgPicture.asset(
                                                     Assets.userSvg,
                                                     width: 74.w,
@@ -262,51 +300,54 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
                               },
                             );
                           },
-                          text: 'Сұраңыз',),
-                    ),
-                  )
-                : null
-            : null ,
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-        backgroundColor: Color(0xFFECF5FF),
-        body: GlobalCustomBody(
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                 CustomAppBar(
-                  onTap: () async {
-                   Navigator.pop(context);
-                    setState(() {
-                      currentIndex = 0 ;
-                    });
-                  },
-                  title: 'Ұстаз айтыңызшы',
-                ),
-                SizedBox(
-                  height: 36.h,
-                ),
-                CustomTabBar(
-                  tabs: const [
-                    Tab(
-                      text: 'Бүгін',
-                    ),
-                    Tab(
-                      text: 'Барлығы',
-                    ),
-                  ],
-                  onTap: (int index) {
-                    setState(() {
-                      currentIndex = index;
-                    });
-                  },
-                  length: 2,
-                ),
-                currentIndex == 0
-                    ? const TodayChatPage()
-                    : const CalendarChatsPage()
-              ],
+                          text: 'Сұраңыз',
+                        ),
+                      ),
+                    )
+                  : null
+              : null,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
+          floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+          backgroundColor: Color(0xFFECF5FF),
+          body: GlobalCustomBody(
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  CustomAppBar(
+                    onTap: () async {
+                      Navigator.pop(context);
+                      setState(() {
+                        currentIndex = 0;
+                      });
+                    },
+                    title: 'Ұстаз айтыңызшы',
+                  ),
+                  SizedBox(
+                    height: 36.h,
+                  ),
+                  CustomTabBar(
+                    tabs: const [
+                      Tab(
+                        text: 'Бүгін',
+                      ),
+                      Tab(
+                        text: 'Барлығы',
+                      ),
+                    ],
+                    onTap: (int index) {
+                      setState(() {
+                        currentIndex = index;
+                      });
+                    },
+                    length: 2,
+                  ),
+                  currentIndex == 0
+                      ? const TodayChatPage()
+                      : const CalendarChatsPage()
+                ],
+              ),
             ),
           ),
         ),

@@ -98,8 +98,18 @@ class _RegistrationFormState extends State<RegistrationForm> {
               email: user.email!,
               password: user.password!,
               userId: user.id ?? 0));
+        },
+        successState: () {
 
-
+         setState(() {
+           _emailController.clear();
+           _nameController.clear();
+           _numberController.clear();
+           _dateController.clear();
+           _passwordController.clear();
+           _passwordRepeatController.clear();
+           isPrivacyAccept = false;
+         });
         },
         errorState: (message) {
           buildErrorCustomSnackBar(context, message);
@@ -107,7 +117,6 @@ class _RegistrationFormState extends State<RegistrationForm> {
         orElse: () {},
       );
     }, builder: (context, state) {
-
       return Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -135,8 +144,6 @@ class _RegistrationFormState extends State<RegistrationForm> {
           ),
           SizedBox(height: 24.h),
           CustomTextFormProfile(
-
-
             onChanged: (value) {
               log(_numberController.value.text);
             },
@@ -153,11 +160,11 @@ class _RegistrationFormState extends State<RegistrationForm> {
               _showDialog(
                   CupertinoDatePicker(
                     dateOrder: DatePickerDateOrder.dmy,
-                    minimumYear: DateTime.now().year - 100,
-                    maximumYear: DateTime.now().year - 5,
+                    minimumYear: DateTime.now().year - 73,
+                    maximumYear: DateTime.now().year - 10,
 
                     initialDateTime:
-                        DateTime.now().subtract(Duration(days: 365 * 5)),
+                        DateTime.now().subtract(Duration(days: 365 * 10)),
                     mode: CupertinoDatePickerMode.date,
                     use24hFormat: true,
                     // This is called when the user changes the date.
@@ -191,9 +198,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
             labelText: 'Құпия сөз',
           ),
           SizedBox(height: 24.h),
-
           CustomTextFormProfile(
-
             obscure: () {
               setState(() {
                 obscureSecond = !obscureSecond;
@@ -276,68 +281,62 @@ class _RegistrationFormState extends State<RegistrationForm> {
             height: 48.h,
           ),
           AppButton(
-            isLoading: isLoading,
-              onTap: isLoading == true ? null  :() async {
-                if (_nameController.text.isEmpty ||
-                    _emailController.text.isEmpty ||
-                    _numberController.text.isEmpty ||
-                    _dateController.text.isEmpty ||
-                    _passwordController.text.isEmpty ||
-                    _passwordRepeatController.text.isEmpty) {
-                  buildErrorCustomSnackBar(context, 'Заполните все поля');
-                  return;
-                }
-                if (isValidEmail(_emailController.value.text) == false) {
-                  buildErrorCustomSnackBar(
-                      context, 'Введите корректный почтовый адрес');
-                  return;
-                }
+              isLoading: isLoading,
+              onTap: isLoading == true
+                  ? null
+                  : () async {
+                      if (_nameController.text.isEmpty ||
+                          _emailController.text.isEmpty ||
+                          _numberController.text.isEmpty ||
+                          _dateController.text.isEmpty ||
+                          _passwordController.text.isEmpty ||
+                          _passwordRepeatController.text.isEmpty) {
+                        buildErrorCustomSnackBar(context, 'Заполните все поля');
+                        return;
+                      }
+                      if (isValidEmail(_emailController.value.text) == false) {
+                        buildErrorCustomSnackBar(
+                            context, 'Введите корректный почтовый адрес');
+                        return;
+                      }
 
-                if (_passwordController.length < 8) {
-                  buildErrorCustomSnackBar(context, 'Слишком короткий пароль');
-                  return;
-                }
-                if (_passwordController.text !=
-                    _passwordRepeatController.text) {
-                  buildErrorCustomSnackBar(context, 'Пароли не совпадают');
-                  return;
-                }
-                if(isPrivacyAccept == false){
-                  buildErrorCustomSnackBar(
-                      context, 'Примите правила соглашения');
-                  return;
-                }
-                setState(() {
-                  isLoading = true;
-                });
+                      if (_passwordController.length < 8) {
+                        buildErrorCustomSnackBar(
+                            context, 'Слишком короткий пароль');
+                        return;
+                      }
+                      if (_passwordController.text !=
+                          _passwordRepeatController.text) {
+                        buildErrorCustomSnackBar(
+                            context, 'Пароли не совпадают');
+                        return;
+                      }
+                      if (isPrivacyAccept == false) {
+                        buildErrorCustomSnackBar(
+                            context, 'Примите правила соглашения');
+                        return;
+                      }
+                      setState(() {
+                        isLoading = true;
+                      });
 
-                context.read<RegistrationCubit>().postUser(UserPayload(
-                        fullName: _nameController.text,
-                        email: _emailController.text,
-                        phoneNumber: _numberController.text,
-                        birthday: _dateController.text.toString(),
-                        password: _passwordController.text,
-                        rePassword: _passwordRepeatController.text,
-                        gender: gender)).then((value) {
-                  _emailController.clear();
-                  _nameController.clear();
-                  _numberController.clear();
-                  _dateController.clear();
-                  _passwordController.clear();
-                  _passwordRepeatController.clear();
-                  isPrivacyAccept = false;
-                });
-                await Future.delayed(Duration(seconds: 7),(){
+                      context
+                          .read<RegistrationCubit>()
+                          .postUser(UserPayload(
+                              fullName: _nameController.text,
+                              email: _emailController.text,
+                              phoneNumber: _numberController.text,
+                              birthday: _dateController.text.toString(),
+                              password: _passwordController.text,
+                              rePassword: _passwordRepeatController.text,
+                              gender: gender))
+                          .then((value) {
+                        setState(() {
+                          isLoading = false;
+                        });
+                      });
 
-
-                  setState(() {
-                    isLoading = false;
-                  });
-
-                });
-
-
-              },
+                    },
               text: 'Кіру')
         ],
       );

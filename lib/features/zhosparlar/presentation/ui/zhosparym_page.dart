@@ -34,9 +34,11 @@ import '../../data/models/events_type_enum.dart';
 class ZhosparymPage extends StatefulWidget {
   const ZhosparymPage({super.key});
 
+
   @override
   State<ZhosparymPage> createState() => _ZhosparymPageState();
 }
+bool _isLoading = false;
 
 class _ZhosparymPageState extends State<ZhosparymPage> {
   void showEventDialog(
@@ -332,7 +334,11 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                               height: 15.h,
                             ),
                             AppButton(
-                              onTap: () {
+                              isLoading: _isLoading,
+                              onTap: _isLoading == true ? null  : () {
+                                setState(() {
+                                  _isLoading = true;
+                                });
                                 context
                                     .read<ZhosparymCubit>()
                                     .getCheckList()
@@ -347,7 +353,12 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
 
                                     context.router.push(
                                       RamazanChecklistRoute(checkList: value),
-                                    );
+                                    ).then((value) {
+                                      setState(() {
+                                        _isLoading = false;
+                                      });
+
+                                    });
                                   }
                                 });
                               },

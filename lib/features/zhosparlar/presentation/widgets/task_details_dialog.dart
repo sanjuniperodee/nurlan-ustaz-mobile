@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/checklist_day_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/checklist_task_dto.dart';
 
@@ -26,23 +27,25 @@ class TaskDetailsDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (task != null) {
-      _controller.text = task!.title;
+      _controller.text = task!.title!;
     }
 
     return Dialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
       child: Container(
         width: 270.w,
-        height: 170.h,
+        height: 200.h,
+        constraints: BoxConstraints(minHeight: 190.h, maxHeight: 200.h),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: AppColors.white,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
           children: [
             SizedBox(
-              height: 16,
+              height: 16.h,
             ),
             Text(
               'Жаңа тапсырма қосу',
@@ -50,7 +53,7 @@ class TaskDetailsDialog extends StatelessWidget {
                   .copyWith(fontFamily: FontTypes.Philosopher.name),
             ),
             SizedBox(
-              height: 5,
+              height: 5.h,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50),
@@ -63,26 +66,31 @@ class TaskDetailsDialog extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
               child: Container(
-                height: 32,
                 width: double.infinity,
+                constraints: BoxConstraints(minHeight: 32.h, maxHeight: 35.h),
                 child: TextFormField(
+                  showCursor: false,
+                  minLines: 1,
+                  maxLines: 2,
                   controller: _controller,
                   inputFormatters: [
-                    LengthLimitingTextInputFormatter(10),
+                    LengthLimitingTextInputFormatter(30),
                   ],
                   decoration: InputDecoration(
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 3.w, vertical: 2.h),
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     enabled: true,
                     labelText: "Текст",
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25.0),
+                      borderRadius: BorderRadius.circular(25.0.r),
                       borderSide:
                           BorderSide(color: AppColors.grey1.withOpacity(0.2)),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25.0),
+                      borderRadius: BorderRadius.circular(25.0.r),
                       borderSide:
                           BorderSide(color: AppColors.grey1.withOpacity(0.2)),
                     ),
@@ -122,19 +130,31 @@ class TaskDetailsDialog extends StatelessWidget {
                     onPressed: () async {
                       if (task != null) {
                         if (task!.title != _controller.text) {
-                          context.read<CheckListCubit>().completeTask(
-                              day,
-                              task!.copyWith(title: _controller.value.text),
-                              task!.isCompleted!);
+                          context
+                              .read<CheckListCubit>()
+                              .completeTask(
+                                  day,
+                                  task!.copyWith(title: _controller.value.text),
+                                  task!.isCompleted!)
+                              .then((value) {
+                            Navigator.pop(context);
+                            buildSuccessCustomSnackBar(
+                                context, 'успешно изменено');
+                          });
                         } else {
                           Navigator.pop(context);
                         }
                       } else {
-                        if (_controller.value.text.isNotEmpty)
+                        if (_controller.value.text.isNotEmpty) {
                           await context
                               .read<CheckListCubit>()
-                              .postTask(day, _controller.text);
-                        else {
+                              .postTask(day, _controller.text)
+                              .then((value) {
+                            Navigator.pop(context);
+                            buildSuccessCustomSnackBar(
+                                context, 'успешно добавлено');
+                          });
+                        } else {
                           Navigator.pop(context);
                         }
                       }
