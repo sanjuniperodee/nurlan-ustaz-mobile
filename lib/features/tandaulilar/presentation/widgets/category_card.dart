@@ -24,7 +24,7 @@ class CategoryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
+      child: SizedBox(
         width: 167.w,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,

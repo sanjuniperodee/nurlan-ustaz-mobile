@@ -17,12 +17,11 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_sn
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/main_button.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/banner_local_model.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.dart';
+
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_main_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/timings_cubit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
-
 import '../../../auth/data/datasource/local/auth_local_ds.dart';
 
 class MainPage extends StatefulWidget {
