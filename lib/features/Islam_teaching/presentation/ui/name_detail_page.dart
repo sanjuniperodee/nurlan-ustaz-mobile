@@ -146,6 +146,7 @@ class _NameDetailPageState extends State<NameDetailPage> {
                                             url: isFavorite
                                                 ? Assets.bookMark1Svg
                                                 : Assets.bookMarkSvg,
+                                                color: 'sadf',
                                           ),
                                           FloatinContainerWidget(
                                             color: 'asdf',

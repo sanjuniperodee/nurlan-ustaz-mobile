@@ -20,6 +20,7 @@ import 'package:nurlan_ustaz_flutter/features/home/data/models/banner_local_mode
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_main_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/timings_cubit.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 
 import '../../../auth/data/datasource/local/auth_local_ds.dart';
@@ -32,6 +33,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  RefreshController controller = RefreshController();
   List<String> namasNames = [
     'Таң намазы',
     'Күн',
@@ -133,163 +135,206 @@ class _MainPageState extends State<MainPage> {
                     },
                     loaded: (news) {
                       return GlobalCustomBody(
-                        left: 16,
+                        left: 0,
                         right: 0,
                         child: SizedBox(
-                          child: SingleChildScrollView(
-                            physics: const BouncingScrollPhysics(),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 16.0),
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Image.asset(
-                                        Assets.logoNurlan,
-                                        width: 145.w,
-                                        height: 39.h,
-                                      ),
-                                      Row(
-                                        children: [
-                                          GestureDetector(
-                                              onTap: () {
-                                                context.router.push(
-                                                  const NotificationPageRoute(),
-                                                );
-                                              },
-                                              child: SvgPicture.asset(
-                                                  Assets.notiSvg)),
-                                          SizedBox(
-                                            width: 8.r,
-                                          ),
-                                          GestureDetector(
-                                              onTap: () {
-                                                context.router.push(
-                                                  const ProfileMainPageRoute(),
-                                                );
-                                              },
-                                              child: SvgPicture.asset(
-                                                  Assets.userSvg)),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(height: 32.h),
-                                SizedBox(
-                                  height: 56.h,
-                                  width: 1.sw,
-                                  child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    physics: const BouncingScrollPhysics(),
-                                    itemCount: list.length,
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) {
-                                      for (int n = 0;
-                                          n < myRouteHome.length;
-                                          n++) {}
-                                      return InkWell(
-                                        onTap: () {
-                                          context.router.push(
-                                            myRouteHome[index],
-                                          );
-                                        },
-                                        child: Padding(
-                                          padding: EdgeInsets.only(right: 8.r),
-                                          child: Container(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 10.r),
-                                            height: 56,
-                                            decoration: BoxDecoration(
-                                              color: AppColors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(75),
-                                            ),
-                                            child: Row(
-                                              children: [
-                                                SvgPicture.asset(
-                                                    list[index].url),
-                                                SizedBox(width: 8.r),
-                                                Text(list[index].title,
-                                                    style: getTextStyle(
-                                                            CustomTextStyles
-                                                                .s14w400)
-                                                        .apply(
-                                                            fontFamily:
-                                                                FontTypes
-                                                                    .Philosopher
-                                                                    .name)),
-                                              ],
-                                            ),
-                                          ),
+                          child: SmartRefresher(
+                            controller: controller,
+                            onRefresh: () {
+                              String chosenLang =
+                                  getIt<AuthLocalDs>().getLocale();
+                              Intl.defaultLocale =
+                                  chosenLang.replaceAll('kz', 'kk');
+                              BlocProvider.of<NewsMainCubit>(context).newsMain(
+                                currentPage: 1,
+                                // isFirstCall: true,
+                              );
+                              BlocProvider.of<TimingsCubit>(context).timings(
+                                43.25,
+                                76.91667,
+                              );
+                            },
+                            child: SingleChildScrollView(
+                              physics: const BouncingScrollPhysics(),
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                            right: 16.0, left: 16)
+                                        .r,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Image.asset(
+                                          Assets.logoNurlan,
+                                          width: 145.w,
+                                          height: 39.h,
                                         ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                                SizedBox(height: 20.h),
-                                Padding(
-                                  padding: const EdgeInsets.only(right: 16.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      InkWell(
-                                        onTap: () {
-                                          context.router.push(
-                                            NamazPageRoute(),
-                                          );
-                                        },
-                                        child: Column(
+                                        Row(
                                           children: [
-                                            Align(
-                                              alignment: Alignment.centerLeft,
+                                            GestureDetector(
+                                                onTap: () {
+                                                  context.router.push(
+                                                    const NotificationPageRoute(),
+                                                  );
+                                                },
+                                                child: SvgPicture.asset(
+                                                    Assets.notiSvg)),
+                                            SizedBox(
+                                              width: 8.r,
+                                            ),
+                                            GestureDetector(
+                                                onTap: () {
+                                                  context.router.push(
+                                                    const ProfileMainPageRoute(),
+                                                  );
+                                                },
+                                                child: SvgPicture.asset(
+                                                    Assets.userSvg)),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(height: 32.h),
+                                  SizedBox(
+                                    height: 56.h,
+                                    width: 1.sw,
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      physics: const BouncingScrollPhysics(),
+                                      itemCount: list.length,
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, index) {
+                                        for (int n = 0;
+                                            n < myRouteHome.length;
+                                            n++) {}
+                                        return InkWell(
+                                          onTap: () {
+                                            context.router.push(
+                                              myRouteHome[index],
+                                            );
+                                          },
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsets.only(right: 8.r),
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 10.r),
+                                              height: 56,
+                                              decoration: BoxDecoration(
+                                                color: AppColors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(75),
+                                              ),
                                               child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
                                                 children: [
-                                                  Text(
-                                                      '${geo.name ?? 'Алматы'}, ${DateFormat.yMMMd().format(DateTime.now())}',
+                                                  SvgPicture.asset(
+                                                      list[index].url),
+                                                  SizedBox(width: 8.r),
+                                                  Text(list[index].title,
                                                       style: getTextStyle(
                                                               CustomTextStyles
                                                                   .s14w400)
                                                           .apply(
                                                               fontFamily:
                                                                   FontTypes
-                                                                      .SF_Pro
+                                                                      .Philosopher
                                                                       .name)),
-                                                  // SizedBox(
-                                                  //   width: 175.w,
-                                                  // ),
-                                                  SvgPicture.asset(
-                                                      Assets.arrowUpOutlineSvg),
                                                 ],
                                               ),
                                             ),
-                                            SizedBox(
-                                              height: 16.h,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  SizedBox(height: 20.h),
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                            right: 16.0, left: 16)
+                                        .r,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            context.router.push(
+                                              NamazPageRoute(),
+                                            );
+                                          },
+                                          child: Column(
+                                            children: [
+                                              Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
-                                                    SvgPicture.asset(
-                                                        Assets.shalatSvg),
-                                                    SizedBox(
-                                                      width: 10.r,
-                                                    ),
                                                     Text(
-                                                        '${namasNames[indexOfNextNames(times)]} намаз уақыты',
+                                                        '${geo.name ?? 'Алматы'}, ${DateFormat.yMMMd().format(DateTime.now())}',
+                                                        style: getTextStyle(
+                                                                CustomTextStyles
+                                                                    .s14w400)
+                                                            .apply(
+                                                                fontFamily:
+                                                                    FontTypes
+                                                                        .SF_Pro
+                                                                        .name)),
+                                                    // SizedBox(
+                                                    //   width: 175.w,
+                                                    // ),
+                                                    SvgPicture.asset(Assets
+                                                        .arrowUpOutlineSvg),
+                                                  ],
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 16.h,
+                                              ),
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Row(
+                                                    children: [
+                                                      SvgPicture.asset(
+                                                          Assets.shalatSvg),
+                                                      SizedBox(
+                                                        width: 10.r,
+                                                      ),
+                                                      Text(
+                                                          '${namasNames[indexOfNextNames(times)]} намаз уақыты',
+                                                          style: getTextStyle(
+                                                                  CustomTextStyles
+                                                                      .s16w200)
+                                                              .apply(
+                                                                  fontFamily:
+                                                                      FontTypes
+                                                                          .SF_Pro
+                                                                          .name)
+                                                              .copyWith(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w400)),
+                                                    ],
+                                                  ),
+                                                  Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
+                                                    children: [
+                                                      Text(
+                                                        namasTimestoSend(),
                                                         style: getTextStyle(
                                                                 CustomTextStyles
                                                                     .s16w200)
@@ -301,193 +346,198 @@ class _MainPageState extends State<MainPage> {
                                                             .copyWith(
                                                                 fontWeight:
                                                                     FontWeight
-                                                                        .w400)),
-                                                  ],
-                                                ),
-                                                Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
-                                                  children: [
-                                                    Text(
-                                                      namasTimestoSend(),
-                                                      style: getTextStyle(
-                                                              CustomTextStyles
-                                                                  .s16w200)
-                                                          .apply(
-                                                              fontFamily:
-                                                                  FontTypes
-                                                                      .SF_Pro
-                                                                      .name)
-                                                          .copyWith(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500)
-                                                          .apply(
-                                                              color: AppColors
-                                                                  .blue),
-                                                    ),
-                                                    TimesStateWidget(
-                                                      time: timesToSend(),
-                                                    )
-                                                  ],
-                                                )
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 15.h,
-                                      ),
-                                      AppButton(
-                                        onTap: () {
-                                          TabsRouterScope.of(context)
-                                              ?.controller
-                                              .setActiveIndex(2);
-                                        },
-                                        text: 'Түс жору',
-                                      ),
-                                      SizedBox(height: 16.h),
-                                      MainButton(
-                                        onTap: () async {
-                                          context.router
-                                              .push(UstazAitinizhiRoute());
-                                        },
-                                        text: 'Ұстаз айтыңызшы...',
-                                      ),
-                                      SizedBox(height: 16.h),
-                                      InkWell(
-                                        onTap: () => context.router
-                                            .push(UstazAitinizhiRoute()),
-                                        child: Container(
-                                          width: 1.sw,
-                                          decoration: BoxDecoration(
-                                              gradient: const LinearGradient(
-                                                begin: Alignment.topRight,
-                                                end: Alignment.bottomRight,
-                                                colors: [
-                                                  Color(0xFFFAE0AB),
-                                                  Color(0xFFF9A502),
+                                                                        .w500)
+                                                            .apply(
+                                                                color: AppColors
+                                                                    .blue),
+                                                      ),
+                                                      TimesStateWidget(
+                                                        time: timesToSend(),
+                                                      )
+                                                    ],
+                                                  )
                                                 ],
                                               ),
-                                              borderRadius:
-                                                  BorderRadius.circular(24)),
-                                          padding: EdgeInsets.only(
-                                              top: 19.r,
-                                              bottom: 19.r,
-                                              left: 92.r,
-                                              right: 92.r),
-                                          child: Column(
-                                            children: [
-                                              SvgPicture.asset(
-                                                  Assets.boxStorySvg),
-                                              SizedBox(
-                                                height: 12.h,
-                                              ),
-                                              Text(
-                                                'Бола ма?\nБолмай ма?',
-                                                textAlign: TextAlign.center,
-                                                style: getTextStyle(
-                                                        CustomTextStyles
-                                                            .s16w200)
-                                                    .copyWith(
-                                                        fontFamily: FontTypes
-                                                            .Philosopher.name,
-                                                        fontSize: 24.sp,
-                                                        fontWeight:
-                                                            FontWeight.w700)
-                                                    .apply(
-                                                        color: AppColors.white),
-                                              )
                                             ],
                                           ),
                                         ),
-                                      ),
-                                      SizedBox(height: 16.h),
-                                      InkWell(
-                                        onTap: () {
-                                          context.router.push(
-                                            NewsPageRoute(),
-                                          );
-                                        },
-                                        child: const MainButton(
-                                          text: 'Жаңалықтар',
+                                        SizedBox(
+                                          height: 15.h,
                                         ),
-                                      ),
-                                      SizedBox(height: 16.h),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 216.h,
-                                  width: 1.sw,
-                                  child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    physics: const BouncingScrollPhysics(),
-                                    itemCount: news.length,
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) {
-                                      return Padding(
-                                        padding: EdgeInsets.only(right: 12.r),
-                                        child: GestureDetector(
+                                        AppButton(
+                                          onTap: () {
+                                            TabsRouterScope.of(context)
+                                                ?.controller
+                                                .setActiveIndex(2);
+                                          },
+                                          text: 'Түс жору',
+                                        ),
+                                        SizedBox(height: 16.h),
+                                        MainButton(
+                                          onTap: () async {
+                                            context.router
+                                                .push(UstazAitinizhiRoute());
+                                          },
+                                          text: 'Ұстаз айтыңызшы...',
+                                        ),
+                                        SizedBox(height: 16.h),
+                                        InkWell(
+                                          onTap: () => context.router
+                                              .push(UstazAitinizhiRoute()),
+                                          child: Container(
+                                            width: 1.sw,
+                                            decoration: BoxDecoration(
+                                                gradient: const LinearGradient(
+                                                  begin: Alignment.topRight,
+                                                  end: Alignment.bottomRight,
+                                                  colors: [
+                                                    Color(0xFFFAE0AB),
+                                                    Color(0xFFF9A502),
+                                                  ],
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(24)),
+                                            padding: EdgeInsets.only(
+                                                top: 19.r,
+                                                bottom: 19.r,
+                                                left: 92.r,
+                                                right: 92.r),
+                                            child: Column(
+                                              children: [
+                                                SvgPicture.asset(
+                                                    Assets.boxStorySvg),
+                                                SizedBox(
+                                                  height: 12.h,
+                                                ),
+                                                Text(
+                                                  'Бола ма?\nБолмай ма?',
+                                                  textAlign: TextAlign.center,
+                                                  style: getTextStyle(
+                                                          CustomTextStyles
+                                                              .s16w200)
+                                                      .copyWith(
+                                                          fontFamily: FontTypes
+                                                              .Philosopher.name,
+                                                          fontSize: 24.sp,
+                                                          fontWeight:
+                                                              FontWeight.w700)
+                                                      .apply(
+                                                          color:
+                                                              AppColors.white),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        SizedBox(height: 16.h),
+                                        InkWell(
                                           onTap: () {
                                             context.router.push(
-                                              NewsDetailPageRoute(
-                                                id: news[index].id!,
-                                              ),
+                                              NewsPageRoute(),
                                             );
                                           },
-                                          child: Container(
-                                            height: 110.h,
-                                            width: 180.w,
-                                            decoration: BoxDecoration(
-                                              color: AppColors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                            ),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                ClipRRect(
-                                                  borderRadius:
-                                                      const BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(30),
-                                                    topRight:
-                                                        Radius.circular(30),
-                                                  ),
-                                                  child: CachedNetworkImage(
-                                                    imageUrl:
-                                                        news[index].cover ?? '',
-                                                    fit: BoxFit.cover,
-                                                    height: 110.h,
-                                                    width: double.infinity,
-                                                    errorWidget: (a, b, c) =>
-                                                        SizedBox(
+                                          child: const MainButton(
+                                            text: 'Жаңалықтар',
+                                          ),
+                                        ),
+                                        SizedBox(height: 16.h),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 216.h,
+                                    width: 1.sw,
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      physics: const BouncingScrollPhysics(),
+                                      itemCount: news.length,
+                                      shrinkWrap: true,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding: EdgeInsets.only(right: 12.r),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              context.router.push(
+                                                NewsDetailPageRoute(
+                                                  id: news[index].id!,
+                                                ),
+                                              );
+                                            },
+                                            child: Container(
+                                              height: 110.h,
+                                              width: 180.w,
+                                              decoration: BoxDecoration(
+                                                color: AppColors.white,
+                                                borderRadius:
+                                                    BorderRadius.circular(30),
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  ClipRRect(
+                                                    borderRadius:
+                                                        const BorderRadius.only(
+                                                      topLeft:
+                                                          Radius.circular(30),
+                                                      topRight:
+                                                          Radius.circular(30),
+                                                    ),
+                                                    child: CachedNetworkImage(
+                                                      imageUrl:
+                                                          news[index].cover ??
+                                                              '',
+                                                      fit: BoxFit.cover,
                                                       height: 110.h,
+                                                      width: double.infinity,
+                                                      errorWidget: (a, b, c) =>
+                                                          SizedBox(
+                                                        height: 110.h,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                                SizedBox(width: 12.r),
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: 12.r,
-                                                      top: 4.r,
-                                                      bottom: 4.r),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      SizedBox(height: 2.h),
-                                                      Text(
-                                                          news[index].title ??
-                                                              'ERROR',
-                                                          overflow: TextOverflow
-                                                              .fade,
+                                                  SizedBox(width: 12.r),
+                                                  Padding(
+                                                    padding: EdgeInsets.only(
+                                                        left: 12.r,
+                                                        top: 4.r,
+                                                        bottom: 4.r),
+                                                    child: Column(
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
+                                                      children: [
+                                                        SizedBox(height: 2.h),
+                                                        Text(
+                                                            news[
+                                                                        index]
+                                                                    .title ??
+                                                                'ERROR',
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .fade,
+                                                            style: getTextStyle(
+                                                                    CustomTextStyles
+                                                                        .s14w400)
+                                                                .copyWith(
+                                                                    fontFamily:
+                                                                        FontTypes
+                                                                            .SF_Pro
+                                                                            .name,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w500,
+                                                                    color: Colors
+                                                                        .black)),
+                                                        SizedBox(height: 2.h),
+                                                        Text(
+                                                          DateFormat(
+                                                                  'dd.MM.yyyy')
+                                                              .format(DateTime
+                                                                  .parse(news[
+                                                                          index]
+                                                                      .createdAt
+                                                                      .toString())),
                                                           style: getTextStyle(
                                                                   CustomTextStyles
                                                                       .s14w400)
@@ -496,48 +546,29 @@ class _MainPageState extends State<MainPage> {
                                                                       FontTypes
                                                                           .SF_Pro
                                                                           .name,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500,
-                                                                  color: Colors
-                                                                      .black)),
-                                                      SizedBox(height: 2.h),
-                                                      Text(
-                                                        DateFormat('dd.MM.yyyy')
-                                                            .format(DateTime
-                                                                .parse(news[
-                                                                        index]
-                                                                    .createdAt
-                                                                    .toString())),
-                                                        style: getTextStyle(
-                                                                CustomTextStyles
-                                                                    .s14w400)
-                                                            .copyWith(
-                                                                fontFamily:
-                                                                    FontTypes
-                                                                        .SF_Pro
-                                                                        .name,
-                                                                fontSize: 12.sp)
-                                                            .apply(
-                                                                color: AppColors
-                                                                    .grey1),
-                                                      ),
-                                                      SizedBox(height: 4.h),
-                                                    ],
+                                                                  fontSize:
+                                                                      12.sp)
+                                                              .apply(
+                                                                  color: AppColors
+                                                                      .grey1),
+                                                        ),
+                                                        SizedBox(height: 4.h),
+                                                      ],
+                                                    ),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                      );
-                                    },
+                                        );
+                                      },
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 25.h,
-                                )
-                              ],
+                                  SizedBox(
+                                    height: 25.h,
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),

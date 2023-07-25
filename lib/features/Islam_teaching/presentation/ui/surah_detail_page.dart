@@ -218,8 +218,10 @@ class _SurahDetailPageState extends State<SurahDetailPage> {
             ),
           ),
           content: SizedBox(
-              height: 40,
-              child: AudioItemWidget(audioUrl: widget.result.audio ?? '')),
+              height: 85.h,
+              width: 1.sw,
+              child: Center(
+                  child: AudioItemWidget(audioUrl: widget.result.audio ?? ''))),
         );
       },
     );

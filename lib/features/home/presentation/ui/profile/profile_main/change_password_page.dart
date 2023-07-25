@@ -20,10 +20,10 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
   TextEditingController curPasController = TextEditingController();
   TextEditingController newPasController = TextEditingController();
   TextEditingController pasController = TextEditingController();
+  bool isLoading = false;
   bool obscureCurPass = true;
   bool obscureNewPass = true;
   bool obscurePass = true;
-
 
   @override
   Widget build(BuildContext context) {
@@ -31,22 +31,37 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: Padding(
         padding: EdgeInsets.symmetric(horizontal: 24.w),
-        child: AppButton(
-            onTap: () {
-              if (newPasController.text != pasController.text) {
-                return buildErrorCustomSnackBar(context, 'Пароли не совпадают');
-              }
-              if (curPasController.text.isEmpty ||
-                  newPasController.text.isEmpty ||
-                  pasController.text.isEmpty) {
-                return buildErrorCustomSnackBar(context, 'Заполните все поля');
-              }
-              BlocProvider.of<ChangePassCubit>(context).changePass(
-                  newPass: newPasController.text,
-                  curPass: curPasController.text,
-                  pass: pasController.text);
-            },
-            text: 'Дайын'),
+        child: SizedBox(
+          height: 50.h,
+          child: AppButton(
+              isLoading: isLoading,
+              onTap: () {
+                setState(() {
+                  isLoading = true;
+                });
+                if (newPasController.text != pasController.text) {
+                  return buildErrorCustomSnackBar(
+                      context, 'Пароли не совпадают');
+                }
+                if (curPasController.text.isEmpty ||
+                    newPasController.text.isEmpty ||
+                    pasController.text.isEmpty) {
+                  return buildErrorCustomSnackBar(
+                      context, 'Заполните все поля');
+                }
+                BlocProvider.of<ChangePassCubit>(context)
+                    .changePass(
+                        newPass: newPasController.text,
+                        curPass: curPasController.text,
+                        pass: pasController.text)
+                    .then((value) {
+                  setState(() {
+                    isLoading = false;
+                  });
+                });
+              },
+              text: 'Дайын'),
+        ),
       ),
       body: BlocConsumer<ChangePassCubit, ChangePassState>(
         listener: (context, state) {
@@ -80,8 +95,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     SizedBox(height: 44.h),
                     CustomTextFormProfile(
                         obscureText: obscureCurPass,
-
-                        obscure: (){
+                        obscure: () {
                           setState(() {
                             obscureCurPass = !obscureCurPass;
                           });
@@ -96,8 +110,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     CustomTextFormProfile(
                         controller: newPasController,
                         obscureText: obscureNewPass,
-
-                        obscure: (){
+                        obscure: () {
                           setState(() {
                             obscureNewPass = !obscureNewPass;
                           });
@@ -110,8 +123,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     ),
                     CustomTextFormProfile(
                         obscureText: obscurePass,
-
-                        obscure: (){
+                        obscure: () {
                           setState(() {
                             obscurePass = !obscurePass;
                           });

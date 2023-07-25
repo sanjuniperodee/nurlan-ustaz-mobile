@@ -144,6 +144,7 @@ class _PrayersDetailPageState extends State<PrayersDetailPage> {
                                                 isFavorite = !isFavorite;
                                                 setState(() {});
                                               },
+                                              color: 'sadf',
                                               url: isFavorite
                                                   ? Assets.bookMark1Svg
                                                   : Assets.bookMarkSvg,

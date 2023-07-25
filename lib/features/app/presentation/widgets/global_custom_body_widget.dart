@@ -17,7 +17,7 @@ class GlobalCustomBody extends StatefulWidget {
 class _GlobalCustomBodyState extends State<GlobalCustomBody>
     with TickerProviderStateMixin {
   late final AnimationController _controller =
-      AnimationController(duration: Duration(minutes: 1), vsync: this)
+      AnimationController(duration: const Duration(minutes: 1), vsync: this)
         ..repeat();
 
   @override
