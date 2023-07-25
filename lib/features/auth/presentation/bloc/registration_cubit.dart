@@ -27,18 +27,18 @@ class RegistrationCubit extends Cubit<RegistrationState> {
   }
 
   Future<void> postUser(UserPayload userDTO) async {
+
     emit(_LoadingState());
     final result = await _authRepository.postUser(userDTO: userDTO);
     return result.fold(
       (l) {
         emit(RegistrationState.errorState(message: mapFailureToMessageBack(l)));
-
-
       },
-      (r) {
-        log(r.toString());
+      (r)  {
+        emit(const _SuccessState());
         userId = r.id ?? 0;
-        emit(RegistrationState.loadedState(user: r.copyWith(password: userDTO.password!)));
+        emit(RegistrationState.loadedState(
+            user: r.copyWith(password: userDTO.password!)));
       },
     );
   }
@@ -65,6 +65,8 @@ class RegistrationState with _$RegistrationState {
   }) = _LoadedState;
 
   const factory RegistrationState.loadingState() = _LoadingState;
+
+  const factory RegistrationState.successState() = _SuccessState;
 
   const factory RegistrationState.errorState({
     required String message,

@@ -76,12 +76,17 @@ class _QuestionPageState extends State<QuestionPage> {
           padding:  EdgeInsets.symmetric(horizontal: 20.w),
           child: AppButton(
             onTap: () async {
+
               await context
                   .read<CreateTusZhoruCubit>()
                   .createTusZhoru(
                       controllerForAtau.text, controllerForTusimbde.text);
               BlocProvider.of<TusZhoruCubit>(context).getCustomTusZhoruT();
               Navigator.pop(context);
+
+
+              controllerForAtau.clear();
+              controllerForTusimbde.clear();
 
 
             },

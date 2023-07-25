@@ -76,10 +76,7 @@ class CustomCalendarAgenda extends StatefulWidget
           initialDate.difference(firstDate).inDays >= 0,
           'initialDate must be on or after firstDate',
         ),
-        assert(
-          !initialDate.isAfter(lastDate),
-          'initialDate must be on or before lastDate',
-        ),
+
         assert(
           !firstDate.isAfter(lastDate),
           'lastDate must be on or after firstDate',

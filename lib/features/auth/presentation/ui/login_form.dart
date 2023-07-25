@@ -25,13 +25,9 @@ TextEditingController emailController = TextEditingController();
 TextEditingController passwordController = TextEditingController();
 bool obscure = true;
 
-
 class _LoginFormState extends State<LoginForm> {
-
-
   @override
   Widget build(BuildContext context) {
-
     return BlocConsumer<LoginCubit, LoginState>(
       builder: (context, state) {
         return Column(
@@ -62,8 +58,7 @@ class _LoginFormState extends State<LoginForm> {
                 setState(() {});
               },
               obscureText: obscure,
-
-              obscure: (){
+              obscure: () {
                 setState(() {
                   obscure = !obscure;
                 });
@@ -76,7 +71,7 @@ class _LoginFormState extends State<LoginForm> {
               height: 42.h,
             ),
             AppButton(
-              textSize: 16.sp,
+                textSize: 16.sp,
                 isActive: (isValidEmail(emailController.value.text) &&
                     passwordController.value.text.isNotEmpty),
                 onTap: () {
@@ -97,8 +92,7 @@ class _LoginFormState extends State<LoginForm> {
                     buildErrorCustomSnackBar(
                         context, 'Введите корректный почтовый адрес');
                     return;
-                  }
-                  else {
+                  } else {
                     context.read<LoginCubit>().createToken(TokenCreateDTO(
                         email: emailController.text,
                         password: passwordController.text));
@@ -147,7 +141,7 @@ class _LoginFormState extends State<LoginForm> {
           loadedState: () async {
             emailController.clear();
             passwordController.clear();
-            context.router.popAndPush(const LauncherAppRoute());
+            context.router.popAndPush(const LauncherAppRoute(),);
           },
           errorState: (message) {
             buildErrorCustomSnackBar(context, message);

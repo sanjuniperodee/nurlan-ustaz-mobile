@@ -105,7 +105,7 @@ class _CalendarChatsPageState extends State<CalendarChatsPage> {
                     ),
                   ),
                 ),
-                if (questions != null) QuestionsList(questions: questions.reversed.toList())
+                if (questions != null) QuestionsList(questions: questions.reversed.toSet().toList())
               ],
             );
           },

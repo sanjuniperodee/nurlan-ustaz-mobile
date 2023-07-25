@@ -26,43 +26,33 @@ class _LauncherAppState extends State<LauncherApp> {
   Future<void> init() async {
     BlocProvider.of<AppBloc>(context).add(const AppEvent.checkAuth());
   }
+  Future<bool> _onWillPop() async {
+    return false; //<-- SEE HERE
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        locale: EasyLocalization.of(context)?.locale,
 
-        localizationsDelegates: [
-          ...context.localizationDelegates,
-          // CountryLocalizat
-          // ions.delegate,
-        ],
-        supportedLocales: context.supportedLocales,
-        theme: ThemeData(
-          fontFamily: 'Poppins',
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-        ),
-        home: AnimatedSplashScreen(
-          splashIconSize: double.infinity,
-            duration: 3000,
-            splash:
-            Scaffold(
-              body: Container(
-                child: Image.asset(
-                  'assets/images/on_boarding.jpg',
-                  fit: BoxFit.fill,
-                  height: double.infinity,
-                  width: double.infinity,
-                ),
-              ),
-            ),
-              // height: MediaQuery.of(context).size.height,
-              // width: MediaQuery.of(context).size.width,
+    return WillPopScope(
+      onWillPop:_onWillPop,
+      child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          locale: EasyLocalization.of(context)?.locale,
 
-            nextScreen: _salam(),
-            splashTransition: SplashTransition.fadeTransition,
-            ));
+          localizationsDelegates: [
+            ...context.localizationDelegates,
+            // CountryLocalizat
+            // ions.delegate,
+          ],
+          supportedLocales: context.supportedLocales,
+          theme: ThemeData(
+            fontFamily: 'Poppins',
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+          ),
+          home: _salam(),),
+    );
   }
 }
 

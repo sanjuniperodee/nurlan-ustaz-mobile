@@ -20,11 +20,12 @@ class ChecklistTaskItem extends StatefulWidget {
       {Key? key,
       required this.index,
       required this.task,
-      required this.checkListDayDto})
+      required this.checkListDayDto, required this.selectedDate})
       : super(key: key);
   final int index;
   final CheckListTaskDto task;
   final CheckListDayDto checkListDayDto;
+  final DateTime selectedDate;
 
   @override
   State<ChecklistTaskItem> createState() => _ChecklistTaskItemState();
@@ -44,9 +45,12 @@ class _ChecklistTaskItemState extends State<ChecklistTaskItem> {
 
   @override
   Widget build(BuildContext context) {
+    log(widget.task.title!);
+    log(widget.task!.title!.isEmpty.toString());
     return Slidable(
+      closeOnScroll: true,
       endActionPane: ActionPane(
-        extentRatio: 0.33,
+        extentRatio: 0.3.w,
         motion: const ScrollMotion(),
         children: [
           InkWell(
@@ -100,7 +104,8 @@ class _ChecklistTaskItemState extends State<ChecklistTaskItem> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  widget.task.title,
+                  '${widget.task.title}',
+                  // widget.task.title,
                   style: getTextStyle(CustomTextStyles.s16w500)
                       .apply(color: AppColors.black),
                 ),
