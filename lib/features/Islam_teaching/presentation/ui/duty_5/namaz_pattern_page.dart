@@ -138,35 +138,38 @@ class _NamazPatternPageState extends State<NamazPatternPage> {
                                       .push(WudhuPageRoute(wudhu: abl));
                                 },
                                 child: Container(
+                                  height: 75.h,
                                   decoration: BoxDecoration(
                                       color: AppColors.white,
                                       borderRadius: BorderRadius.circular(20)),
-                                  child: ListTile(
-                                      iconColor: AppColors.black,
-                                      leading: Container(
-                                        width: 55.r,
-                                        height: 55.r,
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 14, horizontal: 14),
-                                        decoration: BoxDecoration(
-                                            gradient: AppColors
-                                                .gradientPrimaryActiveButton,
-                                            borderRadius:
-                                                BorderRadius.circular(12)),
-                                        child: SvgPicture.asset(
-                                          Assets.wudhuSvg,
+                                  child: Center(
+                                    child: ListTile(
+                                        iconColor: AppColors.black,
+                                        leading: Container(
+                                          width: 55.r,
+                                          height: 55.r,
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 14, horizontal: 14),
+                                          decoration: BoxDecoration(
+                                              gradient: AppColors
+                                                  .gradientPrimaryActiveButton,
+                                              borderRadius:
+                                                  BorderRadius.circular(12)),
+                                          child: SvgPicture.asset(
+                                            Assets.wudhuSvg,
+                                          ),
                                         ),
-                                      ),
-                                      title: Text(
-                                        'Дәрет алу',
-                                        style: getTextStyle(
-                                                CustomTextStyles.s16w600)
-                                            .apply(color: AppColors.black),
-                                      ),
-                                      trailing: const Icon(
-                                        Icons.arrow_forward_ios_outlined,
-                                        size: 20,
-                                      )),
+                                        title: Text(
+                                          'Дәрет алу',
+                                          style: getTextStyle(
+                                                  CustomTextStyles.s16w600)
+                                              .apply(color: AppColors.black),
+                                        ),
+                                        trailing: const Icon(
+                                          Icons.arrow_forward_ios_outlined,
+                                          size: 20,
+                                        )),
+                                  ),
                                 ),
                               ),
                             ),
@@ -199,53 +202,62 @@ class _NamazPatternPageState extends State<NamazPatternPage> {
                                       }
                                     },
                                     child: Container(
+                                      height: 75.h,
                                       decoration: BoxDecoration(
                                           color: AppColors.white,
                                           borderRadius:
                                               BorderRadius.circular(20)),
-                                      child: ListTile(
-                                          iconColor: AppColors.black,
-                                          leading: Container(
-                                            width: 55.r,
-                                            height: 55.r,
-                                            decoration: BoxDecoration(
-                                                gradient: const LinearGradient(
-                                                    colors: [
-                                                      AppColors.orange,
-                                                      AppColors.orange
-                                                    ],
-                                                    begin: Alignment.topCenter,
-                                                    end:
-                                                        Alignment.bottomCenter),
-                                                borderRadius:
-                                                    BorderRadius.circular(12)),
-                                            child: CachedNetworkImage(
-                                              imageUrl: pre[index].cover ?? '',
-                                              fit: BoxFit.cover,
-                                              width: 45.w,
-                                              errorWidget: (a, b, c) =>
-                                                  SizedBox(
+                                      child: Center(
+                                        child: ListTile(
+                                            iconColor: AppColors.black,
+                                            leading: Container(
+                                              width: 55.r,
+                                              height: 55.r,
+                                              decoration: BoxDecoration(
+                                                  gradient:
+                                                      const LinearGradient(
+                                                          colors: [
+                                                        AppColors.orange,
+                                                        AppColors.orange
+                                                      ],
+                                                          begin: Alignment
+                                                              .topCenter,
+                                                          end: Alignment
+                                                              .bottomCenter),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12)),
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    pre[index].cover ?? '',
+                                                fit: BoxFit.cover,
                                                 width: 45.w,
-                                                height: 45.h,
+                                                errorWidget: (a, b, c) =>
+                                                    SizedBox(
+                                                  width: 45.w,
+                                                  height: 45.h,
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                          title: Text(
-                                            pre[index].title ?? 'ERROR',
-                                            style: getTextStyle(
-                                                    CustomTextStyles.s16w600)
-                                                .apply(color: AppColors.black),
-                                          ),
-                                          subtitle: Text(
-                                            pre[index].rakats ?? 'ERROR',
-                                            style: getTextStyle(
-                                                    CustomTextStyles.s14w400)
-                                                .apply(color: AppColors.black),
-                                          ),
-                                          trailing: const Icon(
-                                            Icons.arrow_forward_ios_outlined,
-                                            size: 20,
-                                          )),
+                                            title: Text(
+                                              pre[index].title ?? 'ERROR',
+                                              style: getTextStyle(
+                                                      CustomTextStyles.s16w600)
+                                                  .apply(
+                                                      color: AppColors.black),
+                                            ),
+                                            subtitle: Text(
+                                              pre[index].rakats ?? 'ERROR',
+                                              style: getTextStyle(
+                                                      CustomTextStyles.s14w400)
+                                                  .apply(
+                                                      color: AppColors.black),
+                                            ),
+                                            trailing: const Icon(
+                                              Icons.arrow_forward_ios_outlined,
+                                              size: 20,
+                                            )),
+                                      ),
                                     ),
                                   ),
                                 );

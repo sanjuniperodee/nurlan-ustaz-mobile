@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/repositories/home_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -25,14 +24,13 @@ class CreateSeminarPaymentCubit extends Cubit<CreateSeminarPaymentState> {
     BuildContext context,
   ) async {
     String tusZhoruDynamicLink = await DynamicLink().createSeminarLink(id);
-
     log(tusZhoruDynamicLink);
     final result = await _repository.createSeminarPayment(
         id: id, backUrl: tusZhoruDynamicLink);
     log(tusZhoruDynamicLink);
     result.fold((l) => {}, (r) async {
       final Uri url = Uri.parse(r.pgRedirectUrl.toString());
-      if (!await launchUrl(url)) {
+      if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
         throw Exception('Could not launch');
       }
     });

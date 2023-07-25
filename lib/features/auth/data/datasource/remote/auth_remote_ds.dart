@@ -144,7 +144,7 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-        (e.response!.data as Map<String, dynamic>)['message'] as String,
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -155,7 +155,7 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       required String newPass,
       required String pass}) async {
     try {
-      final result = await dio.post(
+       await dio.post(
         EndPoints.newPass,
         data: {
           'new_password': newPass,
@@ -166,6 +166,7 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       log(curPass.toString());
       log(newPass.toString());
       log(pass.toString());
+      
       return true;
     } on DioError catch (e) {
       throw ServerException(
@@ -229,9 +230,6 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
-
-
-
     }
   }
 
@@ -249,10 +247,9 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       return data['session_id'].toString();
     } on DioError catch (e) {
       throw ServerException(
-      message:
-          (e.response!.data as Map<String, dynamic>)['message'] as String,);
-
-
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
     }
   }
 

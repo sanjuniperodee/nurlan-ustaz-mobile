@@ -126,6 +126,7 @@ class _NewsPageState extends State<NewsPage> {
                                   context.router.push(
                                     NewsDetailPageRoute(
                                       id: listOfNews[index].id!,
+                                      search: searchText,
                                     ),
                                   );
                                 },
