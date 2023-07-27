@@ -17,10 +17,7 @@ part 'zhosparym_cubit.freezed.dart';
 class ZhosparymCubit extends Cubit<ZhosparymState> {
   ZhosparymCubit(
     this._repository,
-  ) : super(const ZhosparymState.initialState()) {
-    final now = DateTime.now();
-    calendarEvents(now);
-  }
+  ) : super(const ZhosparymState.initialState());
 
   final ZhosparymRepository _repository;
   late List<ChatDTO> chatsss;

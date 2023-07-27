@@ -26,9 +26,9 @@ abstract class TusZhoruRemoteDs {
   Future<TusZhoruDTO> createTusZhoru(
       {required String title, required String description});
   Future<FreedomPaymentDTO> createCustomTusZhoruPayment(
-      {required int id, required String userIp, required String backUrl});
+      {required int id, required String backUrl});
   Future<FreedomPaymentDTO> createTusZhoruPayment(
-      {required int id, required String userIp, required String backUrl});
+      {required int id, required String backUrl});
   Future<bool> tusZhoruFavorite({required int id});
   Future<TusZhoruDTO> getTusZhoruById({required int id});
   Future<TusZhoruDTO> getCustomTusZhoruById({required int id});
@@ -115,7 +115,7 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
         EndPoints.tusZhoru,
         queryParameters: {
           'page[number]': currentPage,
-          'page[size]': 10,
+          'page[size]': 100,
           if (isPurchased != null) 'is_purchased': isPurchased,
           if (isSaved != null) 'is_saved': isSaved,
           if (search != null) 'search': search,
@@ -157,7 +157,7 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
         EndPoints.customTusZhoru,
         queryParameters: {
           'page[number]': 1,
-          'page[size]': 10,
+          'page[size]': 100,
           if (search != null) 'search': search,
         },
       );
@@ -198,7 +198,7 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'].toString(),
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -206,13 +206,11 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
   @override
   Future<FreedomPaymentDTO> createCustomTusZhoruPayment(
       {required int id,
-      required String userIp,
       required String backUrl}) async {
     try {
       final response = await dio.post(
         '${EndPoints.customTusZhoru}/$id/init_purchase/',
         data: {
-          'user_ip': userIp,
           'back_url': backUrl,
         },
       );
@@ -228,13 +226,11 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
   @override
   Future<FreedomPaymentDTO> createTusZhoruPayment(
       {required int id,
-      required String userIp,
       required String backUrl}) async {
     try {
       final response = await dio.post(
         '${EndPoints.tusZhoru}/$id/init_purchase/',
         data: {
-          'user_ip': userIp,
           'back_url': backUrl,
         },
       );

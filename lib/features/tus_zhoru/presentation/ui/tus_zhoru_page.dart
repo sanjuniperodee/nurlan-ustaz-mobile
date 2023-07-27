@@ -141,7 +141,8 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                   tusZhoruList.currentIndex == 0
                       ? TusZhoruList(tusZhoruList: tusZhoruList.tusZhoruList)
                       : CustomTusZhoruList(
-                          tusZhoruList: tusZhoruList.customTusZhoru)
+                          tusZhoruList: tusZhoruList.customTusZhoru),
+
                 ],
               ),
             ),

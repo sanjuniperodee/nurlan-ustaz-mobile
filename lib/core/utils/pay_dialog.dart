@@ -70,37 +70,30 @@ class _PayDialogState extends State<PayDialog> {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(27)),
                 height: 44,
-                onPressed: isLoading == false ? () async {
-                  BlocProvider.of<TusZhoruCubit>(context).getCustomTusZhoruT(page: 1);
+                onPressed: isLoading == false
+                    ? () async {
+                        widget.isCustom
+                            ? BlocProvider.of<TusZhoruCubit>(context)
+                                .getCustomTusZhoruT(page: 1)
+                            : BlocProvider.of<TusZhoruCubit>(context)
+                                .tosZhoruList;
 
-                  setState(() {
-                    isLoading = true;
-                  });
-                   BlocProvider.of<CreateTusZhoruCubit>(context)
-                       .createCustomTusZhoruPayment(widget.id, widget.isCustom);
-                   await Future.delayed(Duration(seconds: 7),(){
+                        setState(() {
+                          isLoading = true;
+                        });
+                        BlocProvider.of<CreateTusZhoruCubit>(context)
+                            .createCustomTusZhoruPayment(
+                                widget.id, widget.isCustom);
+                        await Future.delayed(Duration(seconds: 7), () {
+                          setState(() {
+                            isLoading = false;
+                          });
+                        });
+                        Navigator.of(context).pop();
 
 
-                     setState(() {
-                       isLoading = false;
-                     });
-
-                   });
-
-
-                  Navigator.of(context).pop();
-
-
-                  // showDialog(
-                  //     context: context,
-                  //     builder: (context) {
-                  //       return SuccesPayDialog(
-                  //         price: '',
-                  //         id: widget.id,
-                  //         isCustom: widget.isCustom,
-                  //       );
-                  //     });
-                } : null,
+                      }
+                    : null,
                 color: AppColors.orange,
                 child: isLoading
                     ? Center(child: CircularProgressIndicator())

@@ -1,14 +1,9 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_clean_calendar/flutter_clean_calendar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
@@ -16,17 +11,14 @@ import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/calendar/custom_calendar.dart';
-import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/atauly_kunder_model.dart';
-import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/checklist_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/event_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/bloc/checklist_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/bloc/zhosparym_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/calendar_description.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/cards/seminar_card.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/cards/service_card.dart';
-import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/events_card.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/dialogs/holiday_type_dialog.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/events_card.dart';
 
 import '../../../app/presentation/widgets/custom_snackbars.dart';
 import '../../data/models/events_type_enum.dart';
@@ -34,18 +26,17 @@ import '../../data/models/events_type_enum.dart';
 class ZhosparymPage extends StatefulWidget {
   const ZhosparymPage({super.key});
 
-
   @override
   State<ZhosparymPage> createState() => _ZhosparymPageState();
 }
+
 bool _isLoading = false;
 
 class _ZhosparymPageState extends State<ZhosparymPage> {
+
+
   void showEventDialog(
-    BuildContext mainContext,
-    EventDto event,
-      LinearGradient gradient
-  ) {
+      BuildContext mainContext, EventDto event, LinearGradient gradient) {
     switch (event.type) {
       case EventsType.seminar:
         showDialog(
@@ -57,7 +48,8 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
               event: event,
               nextPage: () {},
               previousPage: () {},
-              isDialog: true, mainContext: mainContext,
+              isDialog: true,
+              mainContext: mainContext,
             ),
           ),
         );
@@ -81,7 +73,9 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
         showDialog(
             context: mainContext,
             builder: (context) => HolidayDialog(
-                  event: event, mainContext: mainContext, gradient: gradient,
+                  event: event,
+                  mainContext: mainContext,
+                  gradient: gradient,
                 ));
         break;
       case EventsType.live:
@@ -94,7 +88,8 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
               event: event,
               nextPage: () {},
               previousPage: () {},
-              isDialog: true, mainContext: mainContext,
+              isDialog: true,
+              mainContext: mainContext,
             ),
           ),
         );
@@ -104,6 +99,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
         break;
     }
   }
+
   List<EventDto> holidays = [];
 
   final gradients = [
@@ -117,11 +113,18 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
         end: Alignment.centerRight)
   ];
 
+  @override
+  void initState() {
+    BlocProvider.of<ZhosparymCubit>(context).calendarEvents(DateTime.now());
+    super.initState();
+  }
+
+
+
 
 
   @override
   Widget build(BuildContext context) {
-
     return BlocConsumer<ZhosparymCubit, ZhosparymState>(
         listener: (context, state) {
       state.maybeWhen(
@@ -136,18 +139,18 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
       }, initialState: (events) {
         holidays.clear();
 
-        final eventsT = events?.map<DateTime, List<EventDto>>(
+        final eventsDays = events?.map<DateTime, List<EventDto>>(
           (key, value) => MapEntry(
             DateTime.parse(key),
             value,
           ),
         );
+        if(eventsDays != null){
+          eventsDays.forEach((key, value) {
+            holidays.addAll(value); // Using addAll method
+          });
+        }
 
-
-        eventsT!.forEach((key, value) {
-          holidays.addAll(value); // Using addAll method
-
-        });
 
         return Scaffold(
           backgroundColor: AppColors.lightBlue,
@@ -197,7 +200,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                   padding: const EdgeInsets.only(left: 16, right: 16).r,
                   child: SizedBox(
                     child: SingleChildScrollView(
-                      primary: true,
+                        primary: true,
                         physics: const BouncingScrollPhysics(),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
@@ -217,17 +220,17 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                 color: AppColors.white,
                                 borderRadius: BorderRadius.circular(30.r),
                               ),
-                              child: CustomCalendar(
+                              child: eventsDays == null ? Center(child: CircularProgressIndicator(),) :CustomCalendar(
                                 onDateSelected: (DateTime date) {
                                   context.read<ZhosparymCubit>().chatPer(
                                       DateFormat('yyyy-MM-dd')
                                           .format(date)
                                           .toString());
 
-                                  if (!eventsT.containsKey(date)) {
+                                  if (!eventsDays.containsKey(date)) {
                                     return;
                                   } else {
-                                    if (eventsT[date]!
+                                    if (eventsDays[date]!
                                             .toList()
                                             .where((element) =>
                                                 element.type !=
@@ -246,7 +249,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                                         20.r)),
                                             child: CarouselSlider(
                                               carouselController: controller,
-                                              items: eventsT[date]!
+                                              items: eventsDays[date]!
                                                   .toList()
                                                   .where((element) =>
                                                       element.type !=
@@ -261,7 +264,8 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                                     },
                                                     previousPage: () {
                                                       controller.previousPage();
-                                                    }, maincontext: context,
+                                                    },
+                                                    maincontext: context,
                                                   );
                                                 },
                                               ).toList(),
@@ -278,15 +282,13 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                                   });
                                                 },
                                               ),
-                                            )
-
-
-
-                                            ),
+                                            )),
                                       );
                                     } else {
                                       showEventDialog(
-                                          context, eventsT[date]!.first,gradients[0]);
+                                          context,
+                                          eventsDays[date]!.first,
+                                          gradients[0]);
                                     }
                                   }
 
@@ -309,7 +311,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                   'Сн',
                                   'Жк'
                                 ],
-                                events: eventsT,
+                                events: eventsDays,
                                 isExpandable: false,
                                 eventDoneColor: Colors.green,
                                 selectedColor: Colors.pink,
@@ -335,63 +337,84 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                             ),
                             AppButton(
                               isLoading: _isLoading,
-                              onTap: _isLoading == true ? null  : () {
-                                setState(() {
-                                  _isLoading = true;
-                                });
-                                context
-                                    .read<ZhosparymCubit>()
-                                    .getCheckList()
-                                    .then((value) async {
-                                  if (value == null) {
-                                    return;
-                                  } else {
-
-                                    await BlocProvider.of<CheckListCubit>(
-                                            context)
-                                        .getDays(checklistId: value.id);
-
-                                    context.router.push(
-                                      RamazanChecklistRoute(checkList: value),
-                                    ).then((value) {
+                              onTap: _isLoading == true
+                                  ? null
+                                  : () {
                                       setState(() {
-                                        _isLoading = false;
+                                        _isLoading = true;
                                       });
+                                      context
+                                          .read<ZhosparymCubit>()
+                                          .getCheckList()
+                                          .then((value) async {
+                                        if (value == null) {
+                                          setState(() {
+                                            _isLoading = false;
+                                          });
+                                          return;
+                                        } else {
+                                          await BlocProvider.of<CheckListCubit>(
+                                                  context)
+                                              .getDays(checklistId: value.id);
 
-                                    });
-                                  }
-                                });
-                              },
+                                          context.router
+                                              .push(
+                                            RamazanChecklistRoute(
+                                                checkList: value),
+                                          )
+                                              .then((value) {
+                                            setState(() {
+                                              _isLoading = false;
+                                            });
+                                          });
+                                        }
+                                      });
+                                    },
                               text: 'Рамазан чеклисті',
                               color: AppColors.orange,
                             ),
                             SizedBox(
                               height: 21.h,
                             ),
-                            if(holidays
+                            if (holidays
                                 .where((element) =>
-                            element.type == EventsType.holiday)
-                                .toList().toSet().isNotEmpty)Text(
-                              'Атаулы күндер',
-                              style: getTextStyle(CustomTextStyles.s14w500)
-                                  .copyWith(fontFamily: FontTypes.SF_Pro.name),
-                            ),
+                                    element.type == EventsType.holiday)
+                                .toList()
+                                .toSet()
+                                .isNotEmpty)
+                              Text(
+                                'Атаулы күндер',
+                                style: getTextStyle(CustomTextStyles.s14w500)
+                                    .copyWith(
+                                        fontFamily: FontTypes.SF_Pro.name),
+                              ),
                             SizedBox(
                               height: 16.h,
                             ),
                             ...holidays
                                 .where((element) =>
                                     element.type == EventsType.holiday)
-                                .toList().toSet()
+                                .toList()
+                                .toSet()
                                 .map((e) => Padding(
                                       padding:
                                           const EdgeInsets.only(bottom: 31),
                                       child: InkWell(
                                         onTap: () {
-                                          showEventDialog(context, e,holidays
-                                              .where((element) =>
-                                          element.type == EventsType.holiday)
-                                              .toList().toSet().toList().indexOf(e).isEven ? gradients[0] : gradients[1]);
+                                          showEventDialog(
+                                              context,
+                                              e,
+                                              holidays
+                                                      .where((element) =>
+                                                          element.type ==
+                                                          EventsType.holiday)
+                                                      .toList()
+                                                      .toSet()
+                                                      .toList()
+                                                      .indexOf(e)
+                                                      .isEven
+                                                  ? gradients[0]
+                                                  : gradients[1]);
                                         },
                                         child: Container(
                                           padding: const EdgeInsets.only(

@@ -42,8 +42,8 @@ class QuestionsList extends StatelessWidget {
                                               imageUrl:
                                                   '${SERVER_ + e.avatar!}',
                                               fit: BoxFit.cover,
-                                              height: 40.h,
-                                              width: 40.w,
+                                              height: 40.r,
+                                              width: 40.r,
                                             ))
                                           : SvgPicture.asset(
                                               'assets/icons/user.svg')
@@ -52,8 +52,8 @@ class QuestionsList extends StatelessWidget {
                                               child: CachedNetworkImage(
                                               imageUrl: e.user?.avatar ?? '',
                                               fit: BoxFit.cover,
-                                              height: 40.h,
-                                              width: 40.w,
+                                              height: 40.r,
+                                              width: 40.r,
                                             ))
                                           : SvgPicture.asset(
                                               'assets/icons/user.svg')),

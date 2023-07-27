@@ -130,27 +130,32 @@ class TaskDetailsDialog extends StatelessWidget {
                     onPressed: () async {
                       if (task != null) {
                         if (task!.title != _controller.text) {
-                          context
-                              .read<CheckListCubit>()
-                              .completeTask(
-                                  day,
-                                  task!.copyWith(title: _controller.value.text),
-                                  task!.isCompleted!)
-                              .then((value) {
+                          if (_controller.text.isEmpty) {
+                            buildErrorCustomSnackBar(context, 'Заполните поле');
+                          } else {
                             Navigator.pop(context);
-                            buildSuccessCustomSnackBar(
-                                context, 'успешно изменено');
-                          });
+                            context
+                                .read<CheckListCubit>()
+                                .completeTask(
+                                    day,
+                                    task!.copyWith(
+                                        title: _controller.value.text),
+                                    task!.isCompleted!)
+                                .then((value) {
+                              buildSuccessCustomSnackBar(
+                                  context, 'успешно изменено');
+                            });
+                          }
                         } else {
                           Navigator.pop(context);
                         }
                       } else {
-                        if (_controller.value.text.isNotEmpty) {
-                          await context
+                        if (_controller.text.isNotEmpty) {
+                          Navigator.pop(context);
+                          context
                               .read<CheckListCubit>()
                               .postTask(day, _controller.text)
                               .then((value) {
-                            Navigator.pop(context);
                             buildSuccessCustomSnackBar(
                                 context, 'успешно добавлено');
                           });

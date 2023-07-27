@@ -27,9 +27,9 @@ abstract class TusZhoruRepository {
   Future<Either<Failure, TusZhoruDTO>> createTusZhoru(
       {required String title, required String description});
   Future<Either<Failure, FreedomPaymentDTO>> createCustomTusZhoruPayment(
-      {required int id, required String userIp, required String backUrl});
+      {required int id, required String backUrl});
   Future<Either<Failure, FreedomPaymentDTO>> createTusZhoruPayment(
-      {required int id, required String userIp, required String backUrl});
+      {required int id, required String backUrl});
   Future<Either<Failure, bool>> tusZhoruFavorite({required int id});
   Future<Either<Failure, TusZhoruDTO>> getTusZhoruById({required int id});
   Future<Either<Failure, TusZhoruDTO>> getCustomTusZhoru({required int id});
@@ -130,13 +130,12 @@ class TusZhoruRepositoryImpl extends TusZhoruRepository {
   @override
   Future<Either<Failure, FreedomPaymentDTO>> createCustomTusZhoruPayment(
       {required int id,
-      required String userIp,
       required String backUrl}) async {
     if (await networkInfo.isConnected) {
       try {
         final FreedomPaymentDTO result =
             await remoteDS.createCustomTusZhoruPayment(
-                id: id, userIp: userIp, backUrl: backUrl);
+                id: id, backUrl: backUrl);
 
         return Right(result);
       } on ServerException catch (e) {
@@ -150,12 +149,11 @@ class TusZhoruRepositoryImpl extends TusZhoruRepository {
   @override
   Future<Either<Failure, FreedomPaymentDTO>> createTusZhoruPayment(
       {required int id,
-      required String userIp,
       required String backUrl}) async {
     if (await networkInfo.isConnected) {
       try {
         final FreedomPaymentDTO result = await remoteDS.createTusZhoruPayment(
-            id: id, userIp: userIp, backUrl: backUrl);
+            id: id, backUrl: backUrl);
 
         return Right(result);
       } on ServerException catch (e) {

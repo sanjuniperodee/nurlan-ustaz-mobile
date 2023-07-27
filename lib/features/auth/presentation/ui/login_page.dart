@@ -32,12 +32,7 @@ int currentIndex = 0;
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      builder: (BuildContext context, Widget? child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          locale: EasyLocalization.of(context)?.locale,
-          home: Scaffold(
+    return Scaffold(
               body: BlocListener<RegistrationCubit, RegistrationState>(
             listener: (context, state) {
               state.maybeWhen(
@@ -207,9 +202,6 @@ class _LoginPageState extends State<LoginPage> {
                 ); //          // TODO: implement listener
               },
             ),
-          )),
-        );
-      },
-    );
+          ));
   }
 }

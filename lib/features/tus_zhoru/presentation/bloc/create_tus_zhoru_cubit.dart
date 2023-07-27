@@ -24,9 +24,6 @@ class CreateTusZhoruCubit extends Cubit<CreateTusZhoruState> {
 
   Future<void> createCustomTusZhoruPayment(int id, bool isCustom) async {
     emit(_LoadingState());
-    final ipAddress = IpAddress(type: RequestType.json);
-    var ip = await ipAddress.getIpAddress();
-    final userIp = ip['ip'].toString();
 
     String tusZhoruDynamicLink = isCustom
         ? await DynamicLink().createCustomTusZhoruLink(id)
@@ -35,9 +32,9 @@ class CreateTusZhoruCubit extends Cubit<CreateTusZhoruState> {
     log(tusZhoruDynamicLink);
     final result = isCustom
         ? await _repository.createCustomTusZhoruPayment(
-            id: id, userIp: userIp, backUrl: tusZhoruDynamicLink)
+            id: id, backUrl: tusZhoruDynamicLink)
         : await _repository.createTusZhoruPayment(
-            id: id, userIp: userIp, backUrl: tusZhoruDynamicLink);
+            id: id, backUrl: tusZhoruDynamicLink);
     result.fold((l) => {}, (r) async {
       print(r.toString());
       final Uri url = Uri.parse(r.pgRedirectUrl.toString());

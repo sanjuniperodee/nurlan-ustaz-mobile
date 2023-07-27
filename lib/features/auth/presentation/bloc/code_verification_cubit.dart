@@ -34,7 +34,9 @@ class CodeVerificationCubit extends Cubit<CodeVerificationState> {
       final result =
           await _authRepository.createJTW(createTokenDTO: tokenCreateDTO);
       result.fold(
-        (l) {emit(_ErrorState(message: mapFailureToMessageBack(l)));},
+        (l) {
+          emit(_ErrorState(message: mapFailureToMessageBack(l)));
+        },
         (r) {
           emit(const CodeVerificationState.loadedState());
         },

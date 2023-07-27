@@ -58,7 +58,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
         loaded: (tusZhoruModel) {
           _isFav = tusZhoruModel!.isSaved!;
 
-          final bool isFree = tusZhoruModel!.isFree == true;
+          final bool isFree = tusZhoruModel.isFree == true;
           final bool isPaid = tusZhoruModel.isPurchased == true;
           return Scaffold(
             floatingActionButtonLocation:
@@ -71,9 +71,12 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                       ? null
                       : AppButton(
                           onTap: () {
+                            Navigator.pop(context);
+
                             showDialog(
                                 context: context,
                                 builder: (context) {
+
                                   return PayDialog(
                                     price: tusZhoruModel.price
                                             ?.toInt()
@@ -82,7 +85,9 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                     id: tusZhoruModel.id!,
                                     isCustom: false,
                                   );
+
                                 });
+
                           },
                           text: 'Толық көрсету',
                         ),
@@ -104,10 +109,13 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                             padding: const EdgeInsets.only(left: 12),
                             child: CustomAppBar(
                               title: tusZhoruModel.title ?? '',
-                              onTap: () {
-                                BlocProvider.of<TusZhoruCubit>(context)
+                              onTap: () async {
+                                 BlocProvider.of<TusZhoruCubit>(context)
                                     .unSecureScreen();
+                                 BlocProvider.of<TusZhoruCubit>(context)
+                                     .tusZhoruT(page: 1, isFirstCall: true);
                                 Navigator.pop(context);
+
                               },
                             ),
                           ),

@@ -161,7 +161,7 @@ class _MainPageState extends State<MainPage> {
                                 children: [
                                   Padding(
                                     padding: const EdgeInsets.only(
-                                            right: 16.0, left: 16)
+                                            right: 16.0, left: 16, top: 16)
                                         .r,
                                     child: Row(
                                       mainAxisAlignment:

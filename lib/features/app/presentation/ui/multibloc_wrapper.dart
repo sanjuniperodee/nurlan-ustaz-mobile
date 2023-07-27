@@ -280,21 +280,7 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         BlocProvider<CheckListCubit>(
             create: (context) => getIt<CheckListCubit>()),
       ],
-      child: ScreenUtilInit(
-        designSize: const Size(375, 812),
-        builder: (context, child) {
-          return MaterialApp(
-            debugShowCheckedModeBanner: true,
-            title: 'First Method',
-            // You can use the library anywhere in the app even in theme
-            theme: ThemeData(
-              primarySwatch: Colors.blue,
-            ),
-            home: child,
-          );
-        },
-        child: widget.child,
-      ),
+      child: widget.child,
     );
   }
 }
