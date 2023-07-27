@@ -40,11 +40,11 @@ class CategoryCard extends StatelessWidget {
                 runSpacing: 2,
                 spacing: 2,
                 children: imageList.length < 4
-                    ? imageList
+                    ? imageList.take(4)
                             .map(
                               (e) => Container(
-                                height: 82,
-                                width: 82,
+                                height: 82.h,
+                                width: 82.w,
                                 child: ClipRRect(
                                   borderRadius: BorderRadius.circular(8.r),
                                   child: Image.network(
@@ -58,8 +58,8 @@ class CategoryCard extends StatelessWidget {
                         List.generate(
                             4 - imageList.length,
                             (index) => Container(
-                                  height: 82,
-                                  width: 82,
+                                  height: 82.h,
+                                  width: 82.w,
                                   decoration: BoxDecoration(
                                     color: AppColors.grey1,
                                     borderRadius: BorderRadius.circular(8.r),
@@ -68,8 +68,8 @@ class CategoryCard extends StatelessWidget {
                     : imageList
                         .map(
                           (e) => Container(
-                            height: 82,
-                            width: 82,
+                            height: 82.h,
+                            width: 82.w,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(8.r),
                               child: Image.network(

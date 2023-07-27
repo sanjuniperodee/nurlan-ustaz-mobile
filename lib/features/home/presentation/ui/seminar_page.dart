@@ -161,11 +161,11 @@ class _SeminarPageState extends State<SeminarPage> {
                                         imageUrl:
                                             listOfSeminars[index].cover ?? '',
                                         fit: BoxFit.cover,
-                                        height: 100.h,
-                                        width: 100.w,
+                                        height: 100.r,
+                                        width: 100.r,
                                         errorWidget: (a, b, c) => SizedBox(
-                                          width: 100.w,
-                                          height: 100.h,
+                                          width: 100.r,
+                                          height: 100.r,
                                         ),
                                       ),
                                     ),

@@ -35,40 +35,55 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
         child: SizedBox(
           height: 50.h,
           child: AppButton(
+              isActive: !(curPasController.text.isEmpty ||
+                  newPasController.text.isEmpty ||
+                  pasController.text.isEmpty),
               isLoading: isLoading,
-              onTap: () {
-                setState(() {
-                  isLoading = true;
-                });
-                if (newPasController.text != pasController.text) {
-                  return buildErrorCustomSnackBar(
-                      context, 'Пароли не совпадают');
-                }
-                if (curPasController.text.isEmpty ||
-                    newPasController.text.isEmpty ||
-                    pasController.text.isEmpty) {
-                  return buildErrorCustomSnackBar(
-                      context, 'Заполните все поля');
-                }
-                BlocProvider.of<ChangePassCubit>(context)
-                    .changePass(
-                        newPass: newPasController.text,
-                        curPass: curPasController.text,
-                        pass: pasController.text)
-                    .then((value) {
-                  setState(() {
-                    isLoading = false;
-                  });
-                });
-              },
-              text: 'ready'.tr()),
+
+              onTap: (curPasController.text.isEmpty ||
+                          newPasController.text.isEmpty ||
+                          pasController.text.isEmpty) ==
+                      true
+                  ? null
+                  : () {
+
+                      if (newPasController.text != pasController.text) {
+                         buildErrorCustomSnackBar(
+                            context, 'Пароли не совпадают');
+                         return;
+                      }
+                      if (curPasController.text.isEmpty ||
+                          newPasController.text.isEmpty ||
+                          pasController.text.isEmpty) {
+                         buildErrorCustomSnackBar(
+                            context, 'Заполните все поля');
+                         return;
+                      } else {
+                        setState(() {
+                          isLoading = true;
+                        });
+                        BlocProvider.of<ChangePassCubit>(context)
+                            .changePass(
+                                newPass: newPasController.text,
+                                curPass: curPasController.text,
+                                pass: pasController.text)
+                            .then((value) {
+                          setState(() {
+                            isLoading = false;
+                          });
+                        });
+                      }
+                    },
+              text: 'Дайын'),
+
         ),
       ),
       body: BlocConsumer<ChangePassCubit, ChangePassState>(
         listener: (context, state) {
           state.maybeWhen(
             loaded: (status) {
-              buildSuccessCustomSnackBar(context, 'SUCCESS');
+              if(status)
+              buildSuccessCustomSnackBar(context, status == true ? 'SUCCESS' : 'Error');
             },
             errorState: (message) {
               buildErrorCustomSnackBar(context, message);
@@ -102,9 +117,13 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                           });
                         },
                         controller: curPasController,
-                        hintText: 'current_password'.tr(),
-                        labelText: 'current_password'.tr(),
-                        onChanged: (value) {}),
+
+                        hintText: 'Ағымдағы құпия сөз',
+                        labelText: 'Ағымдағы құпия сөз',
+                        onChanged: (value) {
+                          setState(() {});
+                        }),
+
                     SizedBox(
                       height: 24.h,
                     ),
@@ -116,9 +135,13 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                             obscureNewPass = !obscureNewPass;
                           });
                         },
-                        hintText: 'new_password'.tr(),
-                        labelText: 'new_password'.tr(),
-                        onChanged: (value) {}),
+
+                        hintText: 'Жаңа құпия сөз',
+                        labelText: 'Жаңа құпия сөз',
+                        onChanged: (value) {
+                          setState(() {});
+                        }),
+
                     SizedBox(
                       height: 24.h,
                     ),
@@ -130,9 +153,13 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                           });
                         },
                         controller: pasController,
-                        hintText: 'repeat_new_password'.tr(),
-                        labelText: 'repeat_new_password'.tr(),
-                        onChanged: (value) {}),
+
+                        hintText: 'Жаңа құпия сөз қайталау',
+                        labelText: 'Жаңа құпия сөз қайталау',
+                        onChanged: (value) {
+                          setState(() {});
+                        }),
+
                   ],
                 ),
               ),

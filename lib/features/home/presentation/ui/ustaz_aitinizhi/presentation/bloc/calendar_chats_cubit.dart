@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -60,16 +62,19 @@ class CalendarChatsCubit extends Cubit<CalendarChatsState> {
       emit(const _InitialState().copyWith(questions: null,chats: chatsss));
       return;
     } else {
+      emit(const _InitialState().copyWith(questions: null,chats: chatsss,isLoading:true));
+
       final dayChat =
           chatsss.toList().firstWhere((element) => element.date == dateTime);
       final result =
-          await _homeRepository.questions(id: dayChat.id!, isFirstCall: true,page: 1);
+          await _homeRepository.questions(id: dayChat.id!, isFirstCall: false,page: 1);
       return result.fold(
           (l) => {
                 emit(const _InitialState()
-                    .copyWith(questions: null, chats: chatsss))
+                    .copyWith(questions: null, chats: chatsss,isLoading:false))
               }, (r) async {
-        emit(_InitialState().copyWith(questions: r.toList(), chats: chatsss));
+            log(r.toString());
+        emit(_InitialState().copyWith(questions: r.toList(), chats: chatsss,isLoading:false));
       });
     }
 
@@ -107,6 +112,7 @@ class CalendarChatsState with _$CalendarChatsState {
   const factory CalendarChatsState.initialState({
     final List<ChatDTO>? chats,
     final List<QuestionDTO>? questions,
+    @Default(false) bool isLoading,
   }) = _InitialState;
 
   const factory CalendarChatsState.loadedState() = _LoadedState;

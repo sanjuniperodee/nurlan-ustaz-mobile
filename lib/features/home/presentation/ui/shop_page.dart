@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,6 +10,7 @@ import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/partners_cubit.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ShopPage extends StatefulWidget {
@@ -24,6 +27,8 @@ class _ShopPageState extends State<ShopPage> {
 
     super.initState();
   }
+
+  RefreshController controller = RefreshController();
 
   @override
   Widget build(BuildContext context) {
@@ -50,142 +55,144 @@ class _ShopPageState extends State<ShopPage> {
               );
             },
             loaded: (partners) {
+              final topPartners = partners.where((element) => element.isTop == true).toList();
+              final otherPartners = partners.where((element) => element.isTop == false).toList();
+              log(partners.toList().toString());
               return GlobalCustomBody(
                 child: SizedBox(
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: Column(
-                      children: [
-                        const CustomAppBar(
-                          title: 'Дүңгіршек',
-                        ),
-                        SizedBox(
-                          height: 36.h,
-                        ),
-                        Text(
-                          'ТОП',
-                          style: getTextStyle(CustomTextStyles.s20w700)
-                              .apply(color: AppColors.white),
-                        ),
-                        SizedBox(
-                          height: 16.h,
-                        ),
-                        GridView.builder(
-                          itemCount: partners
-                              .where((element) => element.isTop!)
-                              .toList()
-                              .length,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          padding: const EdgeInsets.all(0),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 20.0,
-                            mainAxisSpacing: 20.0,
+                  child: SmartRefresher(
+                    onRefresh: () => context.read<PartnersCubit>().partners(),
+                    controller: controller,
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Column(
+                        children: [
+                          const CustomAppBar(
+                            title: 'Дүңгіршек',
                           ),
-                          itemBuilder: (BuildContext context, int index) {
-                            return ClipRRect(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(12)).r,
-                              child: InkWell(
-                                onTap: () {
-                                  _launchUrl(partners[index].url ?? '');
-                                },
-                                child: CachedNetworkImage(
-                                  imageUrl: partners[index].logo ?? '',
-                                  fit: BoxFit.cover,
-                                  height: 55.h,
-                                  width: 55.w,
-                                  errorWidget: (a, b, c) => Stack(
-                                    children: [
-                                      Container(
-                                        color: const Color(0xFFFEEDCC),
-                                        width: 55.w,
-                                        height: 55.h,
-                                      ),
-                                      Container(
-                                        color: const Color(0xFFFEEDCC),
-                                        child: Center(
-                                          child: Positioned.fill(
-                                            child: Text(
-                                              partners[index].name ?? 'ERROR',
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                    ],
+                          SizedBox(
+                            height: 36.h,
+                          ),
+                          Text(
+                            'ТОП',
+                            style: getTextStyle(CustomTextStyles.s20w700)
+                                .apply(color: AppColors.white),
+                          ),
+                          SizedBox(
+                            height: 16.h,
+                          ),
+                          GridView.builder(
+                            itemCount:topPartners
+                                .length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            padding: const EdgeInsets.all(0),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 20.0,
+                              mainAxisSpacing: 20.0,
+                            ),
+                            itemBuilder: (BuildContext context, int index) {
+                              if (topPartners[index].logo == null) {
+                                return Container(
+                                  height: 100,
+                                  width: 100,
+                                  child: Center(
+                                    child: Text(
+                                      topPartners[index].name ?? 'ERROR',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  decoration: BoxDecoration(
+                                      color: const Color(0xFFFEEDCC),
+
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(12))),
+                                );
+                              }
+
+                              return ClipRRect(
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(12))
+                                        .r,
+                                child: InkWell(
+                                  onTap: () {
+                                    _launchUrl(topPartners[index].url ?? '');
+                                  },
+                                  child: CachedNetworkImage(
+                                    imageUrl: topPartners[index].logo ?? '',
+                                    fit: BoxFit.cover,
+                                    height: 55.h,
+                                    width: 55.w,
                                   ),
                                 ),
-                              ),
-                            );
-                          },
-                        ),
-                        SizedBox(
-                          height: 16.h,
-                        ),
-                        Text(
-                          'Барлығы',
-                          style: getTextStyle(CustomTextStyles.s20w700)
-                              .apply(color: AppColors.black),
-                        ),
-                        SizedBox(
-                          height: 16.h,
-                        ),
-                        GridView.builder(
-                          itemCount: partners
-                              .where((element) => element.isTop! == false)
-                              .toList()
-                              .length,
-                          shrinkWrap: true,
-                          padding: const EdgeInsets.all(0),
-                          physics: const NeverScrollableScrollPhysics(),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            crossAxisSpacing: 20.0,
-                            mainAxisSpacing: 20.0,
+                              );
+                            },
                           ),
-                          itemBuilder: (BuildContext context, int index) {
-                            return ClipRRect(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(12)).r,
-                              child: InkWell(
-                                onTap: () {
-                                  _launchUrl(partners[index].url ?? '');
-                                },
-                                child: CachedNetworkImage(
-                                  imageUrl: partners[index].logo ?? '',
-                                  fit: BoxFit.cover,
-                                  height: 55.h,
-                                  width: 55.w,
-                                  errorWidget: (a, b, c) => Stack(
-                                    children: [
-                                      Container(
-                                        color: const Color(0xFFFEEDCC),
-                                        width: 55.w,
-                                        height: 55.h,
-                                      ),
-                                      Container(
-                                        color: const Color(0xFFFEEDCC),
-                                        child: Center(
-                                          child: Positioned.fill(
-                                            child: Text(
-                                              partners[index].name ?? 'ERROR',
-                                              textAlign: TextAlign.center,
-                                            ),
-                                          ),
-                                        ),
-                                      )
-                                    ],
+                          SizedBox(
+                            height: 16.h,
+                          ),
+                          Text(
+                            'Барлығы',
+                            style: getTextStyle(CustomTextStyles.s20w700)
+                                .apply(color: AppColors.black),
+                          ),
+                          SizedBox(
+                            height: 16.h,
+                          ),
+                          GridView.builder(
+                            itemCount:otherPartners
+                                .length,
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.all(0),
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 3,
+                              crossAxisSpacing: 20.0,
+                              mainAxisSpacing: 20.0,
+                            ),
+                            itemBuilder: (BuildContext context, int index) {
+                              if (otherPartners[index].logo == null) {
+                                return Container(
+                                  height: 100,
+                                  width: 100,
+                                  child: Center(
+                                    child: Text(
+                                      otherPartners[index].name ?? 'ERROR',
+                                      textAlign: TextAlign.center,
+                                    ),
                                   ),
+                                  decoration: BoxDecoration(
+                                      color: const Color(0xFFFEEDCC),
+
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(12))),
+                                );
+                              }
+                              return ClipRRect(
+                                borderRadius:
+                                    const BorderRadius.all(Radius.circular(12))
+                                        .r,
+                                child: InkWell(
+                                  onTap: () {
+                                    _launchUrl(otherPartners[index].url ?? '');
+                                  },
+                                  child:  CachedNetworkImage(
+                                          imageUrl: otherPartners[index].logo ?? '',
+                                          fit: BoxFit.cover,
+                                          height: 55.h,
+                                          width: 55.w,
+
+                                        )
+
                                 ),
-                              ),
-                            );
-                          },
-                        ),
-                      ],
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),

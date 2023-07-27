@@ -29,16 +29,16 @@ class _CalendarChatsPageState extends State<CalendarChatsPage> {
             errorState: (message) {
               buildErrorCustomSnackBar(context, message);
             },
-        loadingState: (){
-          return const Align(
-            alignment: Alignment.center,
-            child: Center(
-              child: CircularProgressIndicator(
-                color: AppColors.danger,
-              ),
-            ),
-          );
-        });
+            loadingState: () {
+              return const Align(
+                alignment: Alignment.center,
+                child: Center(
+                  child: CircularProgressIndicator(
+                    color: AppColors.danger,
+                  ),
+                ),
+              );
+            });
       },
       builder: (context, state) {
         return state.maybeWhen(
@@ -51,10 +51,10 @@ class _CalendarChatsPageState extends State<CalendarChatsPage> {
           errorState: (message) {
             return const Center(
                 child: CircularProgressIndicator(
-                color: AppColors.danger,
-            ));
+                  color: AppColors.danger,
+                ));
           },
-          initialState: (chats, questions) {
+          initialState: (chats, questions, isLoading) {
             final List<DateTime> datesWithChat =
                 chats?.map((e) => DateTime.parse(e.date!)).toList() ?? [];
             print(datesWithChat);
@@ -62,7 +62,7 @@ class _CalendarChatsPageState extends State<CalendarChatsPage> {
               children: [
                 Padding(
                   padding:
-                      EdgeInsets.symmetric(vertical: 27.h, horizontal: 10.w),
+                  EdgeInsets.symmetric(vertical: 27.h, horizontal: 10.w),
                   child: Container(
                     height: 414,
                     width: double.infinity,
@@ -73,8 +73,8 @@ class _CalendarChatsPageState extends State<CalendarChatsPage> {
                     child: CustomCalendarChat(
                       daysWithChat: datesWithChat,
                       onDateSelected: (DateTime date) {
-                        context.read<CalendarChatsCubit>().chatPer(DateFormat('yyyy-MM-dd').format(date).toString());
-
+                        context.read<CalendarChatsCubit>().chatPer(DateFormat(
+                            'yyyy-MM-dd').format(date).toString());
                       },
                       onMonthChanged: (DateTime time) {},
                       hideBottomBar: false,
@@ -94,7 +94,8 @@ class _CalendarChatsPageState extends State<CalendarChatsPage> {
                       selectedColor: Colors.pink,
                       todayColor: AppColors.orange,
                       eventColor: Colors.deepPurple,
-                      locale: '${context.locale.languageCode},${context.locale.countryCode}',
+                      locale: '${context.locale.languageCode},${context.locale
+                          .countryCode}',
                       todayButtonText: '',
                       isExpanded: true,
                       dayOfWeekStyle: TextStyle(
@@ -105,7 +106,14 @@ class _CalendarChatsPageState extends State<CalendarChatsPage> {
                     ),
                   ),
                 ),
-                if (questions != null) QuestionsList(questions: questions.reversed.toSet().toList())
+                isLoading == true ?  Container(
+                  height: 200.h,
+
+                  child: Center(child: CircularProgressIndicator(
+                    color: AppColors.orange,
+                  ),),) :
+                 (questions != null) ? QuestionsList(
+                    questions: questions.reversed.toSet().toList()) : Container()
               ],
             );
           },

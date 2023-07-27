@@ -18,7 +18,7 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
 
   TusZhoruCubit(
     this._repository,
-  ) : super(const TusZhoruState.initialState());
+  ) : super(const TusZhoruState.initialState()){}
 
   late List<TusZhoruDTO> tosZhoruList;
   late List<TusZhoruDTO> customTusZhoruList;

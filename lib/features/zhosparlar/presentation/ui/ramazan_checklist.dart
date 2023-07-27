@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+ 
 import 'package:calendar_agenda/calendar_agenda.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -13,25 +13,25 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_cu
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/bloc/checklist_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/calendar_custom_body.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/checklist_task_item.dart';
-
+ 
 import '../../../app/presentation/widgets/custom_snackbars.dart';
 import '../../data/models/checklist_dto.dart';
 import '../widgets/horizontal_calendar/custom_agenda_controller.dart';
 import '../widgets/horizontal_calendar/custom_horizontal_calendar.dart';
 import '../widgets/task_details_dialog.dart';
-
+ 
 class RamazanChecklist extends StatefulWidget {
   const RamazanChecklist({Key? key, required this.checkList}) : super(key: key);
   final CheckListDto checkList;
-
+ 
   @override
   State<RamazanChecklist> createState() => _RamazanChecklistState();
 }
-
+ 
 class _RamazanChecklistState extends State<RamazanChecklist> {
   CustomCalendarAgendaController _calendarAgendaControllerNotAppBar =
       CustomCalendarAgendaController();
-
+ 
   int selectedIndex = -1;
   final monthList = List.generate(
       31,
@@ -40,7 +40,7 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
             DateTime.now().month,
             index + 1,
           ));
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,7 +59,7 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
             return Container();
           }, loadingState: () {
             return Scaffold(body: Center(child: CircularProgressIndicator()));
-          }, initialState: (days, date, tasks) {
+          }, initialState: (days, date, tasks, isLoading) {
             return CalendarCustomBody(
               left: 0,
               right: 0,
@@ -68,10 +68,10 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
                   physics: const BouncingScrollPhysics(),
                   child: Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                      const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16),
                         child: CustomAppBar(
-                          title: 'Ramadan_checklist'.tr(),
+                          title: 'Рамазан чеклисті',
                         ),
                       ),
                       CustomCalendarAgenda(
@@ -103,7 +103,7 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  '${'today'.tr()}, ${DateFormat('dd MMMM').format(DateTime.now())} ',
+                                  'Бүгін, ${DateFormat('dd MMMM').format(DateTime.now().toLocal())} ',
                                   style: getTextStyle(CustomTextStyles.s14w400)
                                       .copyWith(
                                           fontFamily: FontTypes.SF_Pro.name,
@@ -135,50 +135,60 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
                           ],
                         ),
                       ),
-                      tasks == null
-                          ? ListView.builder(
-                              itemCount: days
-                                      .map((element) =>
-                                          DateTime.parse(element.date).day)
-                                      .toList()
-                                      .contains(date.day)
-                                  ? days
-                                      .firstWhere((e) =>
-                                          DateTime.parse(e.date).day ==
-                                          date.day)
-                                      .tasks
-                                      .length
-                                  : 0,
-                              shrinkWrap: true,
-                              physics: const BouncingScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return ChecklistTaskItem(
-                                  selectedDate: date,
-                                  index: index,
-                                  task: days
-                                      .firstWhere((e) =>
-                                          DateTime.parse(e.date).day ==
-                                          date.day)
-                                      .tasks[index],
-                                  checkListDayDto: days.firstWhere((e) =>
-                                      DateTime.parse(e.date).day == date.day),
-                                );
-                              },
+                      isLoading
+                          ? Container(
+                              height: 200,
+                              child: Center(
+                                  child: CircularProgressIndicator(
+                                color: AppColors.orange,
+                              )),
                             )
-                          : ListView.builder(
-                              itemCount: tasks.length,
-                              shrinkWrap: true,
-                              physics: const BouncingScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return ChecklistTaskItem(
-                                  index: index,
-                                  task: tasks[index],
-                                  checkListDayDto: days.firstWhere((e) =>
-                                      DateTime.parse(e.date).day == date.day),
-                                  selectedDate: date,
-                                );
-                              },
-                            ),
+                          : tasks == null
+                              ? ListView.builder(
+                                  itemCount: days
+                                          .map((element) =>
+                                              DateTime.parse(element.date).day)
+                                          .toList()
+                                          .contains(date.day)
+                                      ? days
+                                          .firstWhere((e) =>
+                                              DateTime.parse(e.date).day ==
+                                              date.day)
+                                          .tasks
+                                          .length
+                                      : 0,
+                                  shrinkWrap: true,
+                                  physics: const BouncingScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return ChecklistTaskItem(
+                                      selectedDate: date,
+                                      index: index,
+                                      task: days
+                                          .firstWhere((e) =>
+                                              DateTime.parse(e.date).day ==
+                                              date.day)
+                                          .tasks[index],
+                                      checkListDayDto: days.firstWhere((e) =>
+                                          DateTime.parse(e.date).day ==
+                                          date.day),
+                                    );
+                                  },
+                                )
+                              : ListView.builder(
+                                  itemCount: tasks.length,
+                                  shrinkWrap: true,
+                                  physics: const BouncingScrollPhysics(),
+                                  itemBuilder: (context, index) {
+                                    return ChecklistTaskItem(
+                                      index: index,
+                                      task: tasks[index],
+                                      checkListDayDto: days.firstWhere((e) =>
+                                          DateTime.parse(e.date).day ==
+                                          date.day),
+                                      selectedDate: date,
+                                    );
+                                  },
+                                ),
                     ],
                   ),
                 ),

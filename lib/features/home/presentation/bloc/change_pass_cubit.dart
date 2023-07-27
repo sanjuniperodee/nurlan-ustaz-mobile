@@ -23,6 +23,9 @@ class ChangePassCubit extends Cubit<ChangePassState> {
     failureOrUser.fold(
       (l) {
         emit(ChangePassState.errorState(message: mapFailureToMessageBack(l)));
+        emit(ChangePassState.initialState());
+
+
       },
       (r) {
         emit(ChangePassState.loaded(status: r));

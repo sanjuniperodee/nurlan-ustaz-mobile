@@ -14,6 +14,11 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/nurlan_ustaz_a
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/news_detail_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_detail_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/tus_zhoru_details_page.dart';
+
+
+import 'core/router/app_router.dart';
+import 'core/services/locator_service.dart';
+
 import 'features/tus_zhoru/presentation/ui/custom_tus_zhoru_details_page.dart';
 
 Future<void> firebaseInit() async {
@@ -48,6 +53,9 @@ Future<void> main() async {
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await Firebase.initializeApp();
+  await FirebaseDynamicLinks.instance.getInitialLink();
+  getIt.registerSingleton<AppRouter>(AppRouter());
+
   await firebaseInit();
   await checkLocationPermission();
   MainRunner.run<AsyncAppDependencies>(
@@ -81,14 +89,14 @@ Future<void> navigateToTusZhoru(Uri link) async {
   if (queryParams.isNotEmpty) {
     var id = queryParams['id'];
     if (id != null) {
-      Navigator.push(
-        rootNavigatorKey.currentContext!,
-        MaterialPageRoute(builder: (context) {
-          return TusZhoruDetailPage(
-            id: int.parse(id),
-          );
-        }),
-      );
+      getIt<AppRouter>().pushAll([
+        LauncherAppRoute(
+          children: [
+            MainRouterPage(),
+          ],
+        ),
+        TusZhoruDetailPageRoute(id: int.parse(id))
+      ]);
     }
   }
 }
@@ -101,14 +109,14 @@ Future<void> navigateToCustomTusZhoru(Uri link) async {
   if (queryParams.length > 0) {
     var id = queryParams['id'];
     if (id != null) {
-      Navigator.push(
-        rootNavigatorKey.currentContext!,
-        MaterialPageRoute(builder: (context) {
-          return CustomTusZhoruDetailPage(
-            id: int.parse(id),
-          );
-        }),
-      );
+      getIt<AppRouter>().pushAll([
+        LauncherAppRoute(
+          children: [
+            MainRouterPage(),
+          ],
+        ),
+        CustomTusZhoruDetailPageRoute(id: int.parse(id))
+      ]);
     }
   }
 }
@@ -121,14 +129,14 @@ Future<void> navigateToSeminar(Uri link) async {
   if (queryParams.length > 0) {
     var id = queryParams['id'];
     if (id != null) {
-      Navigator.push(
-        rootNavigatorKey.currentContext!,
-        MaterialPageRoute(builder: (context) {
-          return SeminarDetailPage(
-            id: int.parse(id),
-          );
-        }),
-      );
+      getIt<AppRouter>().pushAll([
+        LauncherAppRoute(
+          children: [
+            MainRouterPage(),
+          ],
+        ),
+        SeminarDetailPageRoute(id: int.parse(id))
+      ]);
     }
   }
 }
@@ -141,14 +149,14 @@ Future<void> navigateToDuas(Uri link) async {
   if (queryParams.length > 0) {
     var id = queryParams['id'];
     if (id != null) {
-      Navigator.push(
-        rootNavigatorKey.currentContext!,
-        MaterialPageRoute(builder: (context) {
-          return PrayersDetailPage(
-            id: int.parse(id),
-          );
-        }),
-      );
+      getIt<AppRouter>().pushAll([
+        LauncherAppRoute(
+          children: [
+            MainRouterPage(),
+          ],
+        ),
+        PrayersDetailPageRoute(id: int.parse(id))
+      ]);
     }
   }
 }
@@ -161,14 +169,14 @@ Future<void> navigateToNews(Uri link) async {
   if (queryParams.length > 0) {
     var id = queryParams['id'];
     if (id != null) {
-      Navigator.push(
-        rootNavigatorKey.currentContext!,
-        MaterialPageRoute(builder: (context) {
-          return NewsDetailPage(
-            id: int.parse(id),
-          );
-        }),
-      );
+      getIt<AppRouter>().pushAll([
+        LauncherAppRoute(
+          children: [
+            MainRouterPage(),
+          ],
+        ),
+        NewsDetailPageRoute(id: int.parse(id))
+      ]);
     }
   }
 }
@@ -181,15 +189,14 @@ Future<void> navigateToName(Uri link) async {
   if (queryParams.length > 0) {
     var id = queryParams['id'];
     if (id != null) {
-      Navigator.push(
-        rootNavigatorKey.currentContext!,
-        MaterialPageRoute(builder: (context) {
-          return NameDetailPage(
-            id: int.parse(id),
-            index: 0,
-          );
-        }),
-      );
+      getIt<AppRouter>().pushAll([
+        LauncherAppRoute(
+          children: [
+            MainRouterPage(),
+          ],
+        ),
+        NameDetailPageRoute(id: int.parse(id))
+      ]);
     }
   }
 }

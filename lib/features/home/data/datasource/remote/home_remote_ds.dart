@@ -67,28 +67,26 @@ abstract class HomeRemoteDs {
 
   Future<ResultHomeDTO> seminarDetail({required int id});
 
-  Future<List<ResultHomeDTO>> news(
-      {String? search,
-      bool? isSaved,
-      int? currentPage,
-      bool? isFirstCall = false});
+  Future<List<ResultHomeDTO>> news({String? search,
+    bool? isSaved,
+    int? currentPage,
+    bool? isFirstCall = false});
+
   Future<List<ResultHomeDTO>> newsMain({
     bool? isSaved,
     int? currentPage,
   });
 
-  Future<List<ResultHomeDTO>> seminar(
-      {String? search,
-      bool? isSaved,
-      int? currentPage,
-      bool? isPurchased,
-      bool? isFirstCall = false});
+  Future<List<ResultHomeDTO>> seminar({String? search,
+    bool? isSaved,
+    int? currentPage,
+    bool? isPurchased,
+    bool? isFirstCall = false});
 
-  Future<List<ResultHomeDTO>> lives(
-      {String? search,
-      bool? isSaved,
-      int? currentPage,
-      bool? isFirstCall = false});
+  Future<List<ResultHomeDTO>> lives({String? search,
+    bool? isSaved,
+    int? currentPage,
+    bool? isFirstCall = false});
 
   Future<List<ResultHomeDTO>> charities(
       {int? currentPage, bool? isFirstCall = false});
@@ -102,6 +100,7 @@ abstract class HomeRemoteDs {
   Future<String> postImamService({required List<int> id});
 
   Future<GetNotiDTO> getNotifacations();
+
   Future<List<MediaDTO>> services(
       {int? currentPage, bool? isFirstCall = false});
 
@@ -113,11 +112,10 @@ abstract class HomeRemoteDs {
   Future<FreedomPaymentDTO> createSeminarPayment(
       {required int id, required String backUrl});
 
-  Future<List<QuestionDTO>> questions(
-      {int? currentPage,
-      String? search,
-      required int id,
-      bool? isFirstCall = false});
+  Future<List<QuestionDTO>> questions({int? currentPage,
+    String? search,
+    required int id,
+    bool? isFirstCall = false});
 
   Future<NotificationDTO> notificationDevice(
       {required NotificationDeviceDTO notification});
@@ -170,7 +168,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'].toString(),
+        (e.response!.data as Map<String, dynamic>)['message'].toString(),
       );
     }
   }
@@ -185,7 +183,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -200,7 +198,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -215,7 +213,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -233,7 +231,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -250,7 +248,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -275,7 +273,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -292,7 +290,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -307,7 +305,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -327,7 +325,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -339,7 +337,9 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       final String? dev = await prefs.getDeviceToken();
 
       final response =
+
           await dio.post('${EndPoints.setCity}$dev/set_city/', data: {
+
         'city_name': geo.name,
         'country_name': geo.countryName,
         'latitude': geo.lat,
@@ -351,7 +351,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -368,7 +368,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -386,7 +386,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -401,7 +401,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -416,7 +416,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -436,7 +436,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -449,7 +449,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   }) async {
     try {
       final response =
-          await dio.post('${EndPoints.seminar}/$id/comment/', data: {
+      await dio.post('${EndPoints.seminar}/$id/comment/', data: {
         'parent': commentId,
         'body': body,
       });
@@ -458,7 +458,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -468,7 +468,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       {required int id, required int commentId}) async {
     try {
       final response =
-          await dio.post('${EndPoints.news}/$id/toggle_like_comment/', data: {
+      await dio.post('${EndPoints.news}/$id/toggle_like_comment/', data: {
         'comment': commentId,
       });
 
@@ -476,7 +476,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -493,7 +493,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -528,7 +528,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -564,7 +564,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -601,7 +601,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -639,7 +639,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -657,17 +657,16 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
 
   @override
-  Future<List<ResultHomeDTO>> lives(
-      {String? search,
-      bool? isSaved,
-      int? currentPage,
-      bool? isFirstCall = false}) async {
+  Future<List<ResultHomeDTO>> lives({String? search,
+    bool? isSaved,
+    int? currentPage,
+    bool? isFirstCall = false}) async {
     try {
       if (isFirstCall ?? false) {
         livesPage.clear();
@@ -702,17 +701,16 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
 
   @override
-  Future<List<ResultHomeDTO>> news(
-      {String? search,
-      bool? isSaved,
-      int? currentPage,
-      bool? isFirstCall = false}) async {
+  Future<List<ResultHomeDTO>> news({String? search,
+    bool? isSaved,
+    int? currentPage,
+    bool? isFirstCall = false}) async {
     try {
       if (isFirstCall ?? false) {
         newsPage.clear();
@@ -746,7 +744,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -765,18 +763,17 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
 
   @override
-  Future<List<ResultHomeDTO>> seminar(
-      {String? search,
-      bool? isSaved,
-      bool? isPurchased,
-      int? currentPage,
-      bool? isFirstCall = false}) async {
+  Future<List<ResultHomeDTO>> seminar({String? search,
+    bool? isSaved,
+    bool? isPurchased,
+    int? currentPage,
+    bool? isFirstCall = false}) async {
     try {
       if (isFirstCall ?? false) {
         seminarPage.clear();
@@ -814,7 +811,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -838,51 +835,41 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
 
   @override
-  Future<List<QuestionDTO>> questions(
-      {int? currentPage,
-      String? search,
-      required int id,
-      bool? isFirstCall = false}) async {
+  Future<List<QuestionDTO>> questions({int? currentPage,
+    String? search,
+    required int id,
+    bool? isFirstCall = false}) async {
     try {
-      if (isFirstCall ?? false) {
-        question.clear();
-      }
-      if (lps != null && currentPage! >= lps! && currentPage != 1) {
-        return question;
-      }
       final response = await dio.get(
         '${EndPoints.chats}/$id/questions/',
         queryParameters: {
           if (search != null) 'search': search,
+          'page[number]': 1,
+          'page[size]': 100,
         },
       );
 
       if (response.statusCode == 200) {
-        if (search != null && search.isNotEmpty) {
-          question.clear();
-        }
-        lpQuestions = response.data['meta']['pagination']['pages'];
+        final responseBody = response.data as Map<String,
+            dynamic>;
+        final List<QuestionDTO> quests = (responseBody['results'] as List).map((e) => QuestionDTO.fromJson(e as Map<String, dynamic>))
+        .toList();
+    return quests;
+    }
 
-        question.addAll(
-            ((response.data as Map<String, dynamic>)['results'] as List)
-                .map((e) => QuestionDTO.fromJson(e as Map<String, dynamic>))
-                .toList());
-        return question;
-      }
-
-      // log('PAGE${response.data['meta']['pagination']['page']}');
-      throw 'ERROR';
+    // log('PAGE${response.data['meta']['pagination']['page']}');
+    throw 'ERROR';
     } on DioError catch (e) {
-      throw ServerException(
-        message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
-      );
+    throw ServerException(
+    message:
+    (e.response!.data as Map<String, dynamic>)['message'] as String,
+    );
     }
   }
 
@@ -898,7 +885,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'].toString(),
+        (e.response!.data as Map<String, dynamic>)['message'].toString(),
       );
     }
   }
@@ -916,15 +903,14 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'].toString(),
+        (e.response!.data as Map<String, dynamic>)['message'].toString(),
       );
     }
   }
 
   @override
-  Future<NotificationDTO> putNotificationDevice(
-      {required String registrationId,
-      required NotificationDTO notification}) async {
+  Future<NotificationDTO> putNotificationDevice({required String registrationId,
+    required NotificationDTO notification}) async {
     try {
       log('LOG::::${notification.toString()}');
       final FormData formData = FormData.fromMap(notification.toJson());
