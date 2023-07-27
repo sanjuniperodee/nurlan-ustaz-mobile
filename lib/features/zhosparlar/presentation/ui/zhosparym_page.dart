@@ -183,21 +183,22 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                       ),
                     ),
                   ),
-                  Positioned(
-                    top: 50.h,
-                    left: 120.w,
-                    child: ShaderMask(
-                      shaderCallback: (Rect bounds) => LinearGradient(
-                        colors: [
-                          AppColors.white.withOpacity(0.001),
-                          AppColors.white,
-                        ],
-                      ).createShader(bounds),
-                      child: SvgPicture.asset(
-                        'assets/icons/calendar_timer.svg',
-                        color: AppColors.white.withOpacity(0.5),
-                        fit: BoxFit.cover,
-                      ),
+                ),
+                Positioned(
+                  top: 50.h,
+                  left: 120.w,
+                  child: ShaderMask(
+                    shaderCallback: (Rect bounds) => LinearGradient(
+                      colors: [
+                        AppColors.white.withOpacity(0.001),
+                        AppColors.white,
+                      ],
+                    ).createShader(bounds),
+                    child: SvgPicture.asset(
+                      'assets/icons/tumer1.svg',
+                      color: AppColors.white.withOpacity(0.5),
+                      fit: BoxFit.cover,
+
                     ),
                   ),
                   Padding(

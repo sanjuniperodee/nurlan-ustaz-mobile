@@ -59,7 +59,8 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
             return Container();
           }, loadingState: () {
             return Scaffold(body: Center(child: CircularProgressIndicator()));
-          }, initialState: (days, date, tasks, isLoading) {
+          }, initialState: (days, date , tasks, isLoading) {
+
             return CalendarCustomBody(
               left: 0,
               right: 0,
@@ -80,7 +81,7 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
                         weekDay: WeekDay.long,
                         fullCalendarDay: WeekDay.long,
                         selectedDateColor: Colors.blue.shade900,
-                        initialDate: date!,
+                        initialDate: date ?? DateTime.now(),
                         firstDate: DateTime.parse(widget.checkList.startDate!),
                         lastDate: DateTime.parse(widget.checkList.endDate!),
                         events:
@@ -110,7 +111,7 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
                                           color: AppColors.white),
                                 ),
                                 Text(
-                                  ' ${date.difference(DateTime.parse(widget.checkList.startDate!)).inDays + 1}-күні',
+                                  ' ${date!.difference(DateTime.parse(widget.checkList.startDate!)).inDays + 1}-күні',
                                   style: getTextStyle(CustomTextStyles.s14w400)
                                       .copyWith(
                                           fontFamily:
@@ -128,7 +129,7 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
                                       builder: (context) => TaskDetailsDialog(
                                           day: days.firstWhere((e) =>
                                               DateTime.parse(e.date).day ==
-                                              date.day)));
+                                              date?.day)));
                                 },
                                 icon: SvgPicture.asset(
                                     'assets/icons/add-alt.svg'))
@@ -161,7 +162,7 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
                                   physics: const BouncingScrollPhysics(),
                                   itemBuilder: (context, index) {
                                     return ChecklistTaskItem(
-                                      selectedDate: date,
+                                      selectedDate: date ?? DateTime.now(),
                                       index: index,
                                       task: days
                                           .firstWhere((e) =>

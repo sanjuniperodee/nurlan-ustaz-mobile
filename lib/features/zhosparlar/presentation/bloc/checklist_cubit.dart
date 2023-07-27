@@ -26,6 +26,7 @@ class CheckListCubit extends Cubit<CheckListState> {
   Future<void> autoFillDays({required int checklistId}) async {}
 
   Future<void> getDays({required int checklistId}) async {
+    selectedDate = DateTime.now();
     final result = await _repository.getDays(checklistId: checklistId);
 
     result.fold((l) => {}, (r) async {
