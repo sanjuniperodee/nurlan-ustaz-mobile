@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -25,12 +26,6 @@ TextEditingController controllerForAtau = TextEditingController();
 TextEditingController controllerForTusimbde = TextEditingController();
 
 class _QuestionPageState extends State<QuestionPage> {
-
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CreateTusZhoruCubit, CreateTusZhoruState>(
@@ -38,19 +33,21 @@ class _QuestionPageState extends State<QuestionPage> {
       state.maybeWhen(
           orElse: () {},
           loaded: (loaded) {
-
-            if(loaded.id == null){
+            if (loaded.id == null) {
               Navigator.of(context).pop;
 
               return;
             }
             showDialog(
-              useRootNavigator: true,
+                useRootNavigator: true,
                 context: context,
                 builder: (context) {
-                  return PayDialog(price: loaded.price?.toInt().toString() ?? '', id: loaded.id!,isCustom: true, );
+                  return PayDialog(
+                    price: loaded.price?.toInt().toString() ?? '',
+                    id: loaded.id!,
+                    isCustom: true,
+                  );
                 });
-
           },
           errorState: (message) {
             buildErrorCustomSnackBar(context, message);
@@ -66,31 +63,22 @@ class _QuestionPageState extends State<QuestionPage> {
             );
           });
     }, builder: (context, state) {
-
-
-
       return Scaffold(
         backgroundColor: Color(0xFFECF5FF),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Padding(
-          padding:  EdgeInsets.symmetric(horizontal: 20.w),
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
           child: AppButton(
             onTap: () async {
-
-              await context
-                  .read<CreateTusZhoruCubit>()
-                  .createTusZhoru(
-                      controllerForAtau.text, controllerForTusimbde.text);
+              await context.read<CreateTusZhoruCubit>().createTusZhoru(
+                  controllerForAtau.text, controllerForTusimbde.text);
               BlocProvider.of<TusZhoruCubit>(context).getCustomTusZhoruT();
               Navigator.pop(context);
 
-
               controllerForAtau.clear();
               controllerForTusimbde.clear();
-
-
             },
-            text: 'Жіберу',
+            text: 'send'.tr(),
           ),
         ),
         body: SingleChildScrollView(
@@ -107,13 +95,12 @@ class _QuestionPageState extends State<QuestionPage> {
                   child: Column(
                     children: [
                       CustomAppBar(
-                        onTap: ()  {
-                              Navigator.pop(context);
-                              controllerForAtau.clear();
-                              controllerForTusimbde.clear();
-
+                        onTap: () {
+                          Navigator.pop(context);
+                          controllerForAtau.clear();
+                          controllerForTusimbde.clear();
                         },
-                        title: 'Тапсырыс беру',
+                        title: 'order'.tr(),
                       ),
                     ],
                   ),
@@ -164,12 +151,10 @@ class _QuestionPageState extends State<QuestionPage> {
                             inputFormatters: [
                               LengthLimitingTextInputFormatter(999),
                             ],
-                            hintText: 'Түсімде...',
+                            hintText: '${'in_dream'.tr()}...',
                             controller: controllerForTusimbde,
-                            onChanged: (value){
-                              setState(() {
-
-                              });
+                            onChanged: (value) {
+                              setState(() {});
                             },
                           ),
                           SizedBox(

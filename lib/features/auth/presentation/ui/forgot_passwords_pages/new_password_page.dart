@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,7 +67,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                 return;
               };
             },
-            text: 'Дайын'),
+            text: 'ready'.tr()),
       ),
       backgroundColor: AppColors.white,
       body: SingleChildScrollView(
@@ -83,7 +84,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                   BlocProvider.of<ForgotPasswordCubitCubit>(context)
                       .toCodeVerificationPage();
                 },
-                title: 'Құпия сөзді қалпына келтіру',
+                title: 'Password_recovery'.tr(),
                 color: AppColors.black,
               ),
               SizedBox(
@@ -94,8 +95,8 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                   setState(() {});
                 },
                 controller: firstPasswordController,
-                hintText: 'Жаңа құпия сөз',
-                labelText: 'Жаңа құпия сөз',
+                hintText: 'new_password'.tr(),
+                labelText: 'new_password'.tr(),
                 obscureText: obscureFirst,
 
                 obscure: (){
@@ -112,8 +113,8 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                   setState(() {});
                 },
                 controller: secondPasswordController,
-                hintText: 'Жаңа құпия сөзді қайталаңыз',
-                labelText: 'Жаңа құпия сөзді қайталаңыз',
+                hintText: 'repeat_new_password'.tr(),
+                labelText: 'repeat_new_password'.tr(),
                 obscureText: obscureSecond,
 
                 obscure: (){

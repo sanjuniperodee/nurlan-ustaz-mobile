@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -33,7 +34,7 @@ class _ProfileCardsPageState extends State<ProfileCardsPage> {
                   const AddNewCardPageRoute(),
                 );
               },
-              text: 'Жаңа карта'),
+              text: 'new_card'.tr()),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         body: GlobalCustomBody(
@@ -46,7 +47,7 @@ class _ProfileCardsPageState extends State<ProfileCardsPage> {
                   height: 36.h,
                 ),
                 CustomAppBar(
-                  title: 'Менің карталарым',
+                  title: 'my_cards'.tr(),
                 ),
                 SizedBox(
                   height: 20.h,

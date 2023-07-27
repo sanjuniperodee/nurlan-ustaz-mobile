@@ -259,113 +259,128 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                             SizedBox(
                               height: 39.h,
                             ),
-                            AppButton(
-                              onTap: () {
-                                showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return Dialog(
-                                        shape: const RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(30))),
-                                        child: Container(
-                                          height: 289,
-                                          width: 311,
-                                          decoration: const BoxDecoration(
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(30)),
-                                              gradient: LinearGradient(
-                                                  colors: [
-                                                    AppColors.blue,
-                                                    AppColors.white
-                                                  ],
-                                                  begin: Alignment.topCenter,
-                                                  end: Alignment.bottomCenter)),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Container(
-                                                height: 64,
-                                                width: 64,
-                                                decoration: const BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: AppColors.white),
-                                                child: Center(
-                                                  child: SvgPicture.asset(
-                                                      'assets/icons/money_transfer.svg'),
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                height: 31.h,
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 25),
-                                                child: Text(
-                                                  'Семинар билет алу үшін төлем жасауыңызды сұраймыз',
-                                                  style: getTextStyle(
-                                                          CustomTextStyles
-                                                              .s16w400)
-                                                      .copyWith(
-                                                          fontFamily: FontTypes
-                                                              .SF_Pro.name),
-                                                  textAlign: TextAlign.center,
-                                                ),
-                                              ),
-                                              SizedBox(height: 27.h),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 16),
-                                                child: MaterialButton(
-                                                  shape: RoundedRectangleBorder(
+                            result.free == true
+                                ? const SizedBox()
+                                : AppButton(
+                                    onTap: () {
+                                      showDialog(
+                                          context: context,
+                                          builder: (context) {
+                                            return Dialog(
+                                              shape:
+                                                  const RoundedRectangleBorder(
                                                       borderRadius:
-                                                          BorderRadius.circular(
-                                                              27)),
-                                                  height: 44,
-                                                  onPressed: () async {
-                                                    await BlocProvider.of<
-                                                                CreateSeminarPaymentCubit>(
-                                                            context)
-                                                        .createSeminarPayment(
-                                                          result.id!,
-                                                          context,
-                                                        )
-                                                        .then((value) =>
-                                                            Navigator.of(
-                                                                    context)
-                                                                .pop());
-                                                  },
-                                                  color: AppColors.orange,
-                                                  child: Center(
-                                                    child: Text(
-                                                        '${result.price!.toInt()} тг төлеу',
+                                                          BorderRadius.all(
+                                                              Radius.circular(
+                                                                  30))),
+                                              child: Container(
+                                                height: 289,
+                                                width: 311,
+                                                decoration: const BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.all(
+                                                            Radius.circular(
+                                                                30)),
+                                                    gradient: LinearGradient(
+                                                        colors: [
+                                                          AppColors.blue,
+                                                          AppColors.white
+                                                        ],
+                                                        begin:
+                                                            Alignment.topCenter,
+                                                        end: Alignment
+                                                            .bottomCenter)),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Container(
+                                                      height: 64,
+                                                      width: 64,
+                                                      decoration:
+                                                          const BoxDecoration(
+                                                              shape: BoxShape
+                                                                  .circle,
+                                                              color: AppColors
+                                                                  .white),
+                                                      child: Center(
+                                                        child: SvgPicture.asset(
+                                                            'assets/icons/money_transfer.svg'),
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 31.h,
+                                                    ),
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 25),
+                                                      child: Text(
+                                                        'Семинар билет алу үшін төлем жасауыңызды сұраймыз',
                                                         style: getTextStyle(
                                                                 CustomTextStyles
-                                                                    .s14w400)
+                                                                    .s16w400)
                                                             .copyWith(
                                                                 fontFamily:
                                                                     FontTypes
                                                                         .SF_Pro
-                                                                        .name,
-                                                                color: AppColors
-                                                                    .white)),
-                                                  ),
+                                                                        .name),
+                                                        textAlign:
+                                                            TextAlign.center,
+                                                      ),
+                                                    ),
+                                                    SizedBox(height: 27.h),
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                              .symmetric(
+                                                          horizontal: 16),
+                                                      child: MaterialButton(
+                                                        shape: RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        27)),
+                                                        height: 44,
+                                                        onPressed: () async {
+                                                          await BlocProvider.of<
+                                                                      CreateSeminarPaymentCubit>(
+                                                                  context)
+                                                              .createSeminarPayment(
+                                                                result.id!,
+                                                                context,
+                                                              )
+                                                              .then((value) =>
+                                                                  Navigator.of(
+                                                                          context)
+                                                                      .pop());
+                                                        },
+                                                        color: AppColors.orange,
+                                                        child: Center(
+                                                          child: Text(
+                                                              '${result.price!.toInt()} тг төлеу',
+                                                              style: getTextStyle(
+                                                                      CustomTextStyles
+                                                                          .s14w400)
+                                                                  .copyWith(
+                                                                      fontFamily: FontTypes
+                                                                          .SF_Pro
+                                                                          .name,
+                                                                      color: AppColors
+                                                                          .white)),
+                                                        ),
+                                                      ),
+                                                    )
+                                                  ],
                                                 ),
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      );
-                                    });
-                              },
-                              text: 'Сатып алу',
-                              color: AppColors.blue,
-                            ),
+                                              ),
+                                            );
+                                          });
+                                    },
+                                    text: 'Сатып алу',
+                                    color: AppColors.blue,
+                                  ),
                             SizedBox(
                               height: 20.h,
                             ),

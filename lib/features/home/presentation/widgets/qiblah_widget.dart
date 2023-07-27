@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_qiblah/flutter_qiblah.dart';
@@ -76,8 +77,8 @@ class _QiblahWidgetState extends State<QiblahWidget>
                           // mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             // SizedBox(height: 5.h,),
-                            const CustomAppBar(
-                              title: 'Құбыла',
+                             CustomAppBar(
+                              title: 'Qibla'.tr(),
                             ),
                             Expanded(
                               flex: 2,

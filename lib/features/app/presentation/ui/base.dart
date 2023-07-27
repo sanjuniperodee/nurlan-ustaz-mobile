@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -80,13 +81,13 @@ class _BaseState extends State<Base> {
                           Assets.homeSvg,
                         )
                       : SvgPicture.asset(Assets.home_1Svg),
-                  label: "Басты бет",
+                  label: 'main_page'.tr(),
                 ),
                 BottomNavigationBarItem(
                   icon: tabsRouter.activeIndex != 1
                       ? SvgPicture.asset(Assets.bookSvg)
                       : SvgPicture.asset(Assets.book_1Svg),
-                  label: "Ислам ілімі",
+                  label: 'Islam_study'.tr(),
                 ),
                 BottomNavigationBarItem(
                     icon: Column(
@@ -101,7 +102,7 @@ class _BaseState extends State<Base> {
                         Padding(
                           padding: const EdgeInsets.only(bottom: 16.0).r,
                           child: Text(
-                            'Түс жору',
+                            'dream_interpretation'.tr(),
                             style: getTextStyle(CustomTextStyles.s14w400)
                                 .copyWith(
                                     fontFamily: FontTypes.Philosopher.name,
@@ -117,13 +118,13 @@ class _BaseState extends State<Base> {
                   icon: tabsRouter.activeIndex != 3
                       ? SvgPicture.asset(Assets.book2Svg)
                       : SvgPicture.asset(Assets.book_2Svg),
-                  label: "Таңдаулы",
+                  label: 'Favourite'.tr(),
                 ),
                 BottomNavigationBarItem(
                   icon: tabsRouter.activeIndex != 4
                       ? SvgPicture.asset(Assets.calendarSvg)
                       : SvgPicture.asset(Assets.calendar_1Svg),
-                  label: "Жоспар",
+                  label: 'plans'.tr(),
                 ),
               ]),
         );

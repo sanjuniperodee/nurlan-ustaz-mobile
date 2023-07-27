@@ -90,8 +90,8 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
                       SizedBox(
                         height: 20.h,
                       ),
-                      const CustomAppBar(
-                        title: 'Техникалық қолдау',
+                       CustomAppBar(
+                        title: 'tech_support'.tr(),
                       ),
                       if (questions != [])
                         ListView.builder(
@@ -170,7 +170,7 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Сізде мәселе туындады ма?',
+              'need_help'.tr(),
               style: getTextStyle(CustomTextStyles.s12w400)
                   .apply(color: AppColors.black),
             ),

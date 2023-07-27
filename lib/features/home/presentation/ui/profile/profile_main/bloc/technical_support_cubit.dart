@@ -46,28 +46,24 @@ class TechnicalSupportCubit extends Cubit<TechnicalSupportState> {
     final channel = IOWebSocketChannel.connect(
         "ws://86.107.45.90:8000/api/support/chat/",
         headers: {"Authorization": "Bearer ${token.access}"});
-    channel.stream.listen((event) async {
-      emit(const _LoadingState());
-      var questions = json.decode(event);
-      log(questions.runtimeType.toString());
-      log((questions.runtimeType == List<dynamic>).toString());
-      if (questions.runtimeType == List<dynamic>) {
-        log('1');
-        try {
-          for (var e in questions) {
-            log('-------${e.toString()}');
-            test.add(QuestionDTO.fromJson(e));
-          }
-          log(questions[0].toString());
-        } catch (e) {
-          log(e.toString());
+    emit(_InitialState(channel: channel, questions: [], user: _userDto));
+    channel.stream.listen(
+      (event) async {
+        var questions = json.decode(event);
+
+        if (questions.runtimeType == List<dynamic>) {
+          try {
+            for (var e in questions) {
+              test.add(QuestionDTO.fromJson(e));
+            }
+            log(questions[0].toString());
+          } catch (e) {}
+        } else {
+          test.add(QuestionDTO.fromJson(questions));
         }
-      } else {
-        test.add(QuestionDTO.fromJson(questions));
-      }
-      log(test.length.toString());
-      emit(_InitialState(channel: channel, questions: test, user: _userDto));
-    });
+        emit(_InitialState(channel: channel, questions: test, user: _userDto));
+      },
+    );
   }
 
   Future<void> change(WebSocketChannel channel) async {

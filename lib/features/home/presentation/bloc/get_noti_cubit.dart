@@ -2,7 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
-import 'package:nurlan_ustaz_flutter/features/home/data/models/media_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/models/get_noti_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/repositories/home_repository.dart';
 
 part 'get_noti_cubit.freezed.dart';
@@ -35,7 +35,7 @@ class GetNotiState with _$GetNotiState {
   const factory GetNotiState.loadingState() = _LoadingState;
 
   const factory GetNotiState.loaded({
-    required List<MediaDTO> res,
+    required GetNotiDTO res,
   }) = _LoadedState;
 
   const factory GetNotiState.errorState({

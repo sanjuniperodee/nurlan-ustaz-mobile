@@ -2,16 +2,12 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
 import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/features/app/logic/not_auth_logic.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/datasource/local/auth_local_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/token_dto.dart';
-import 'package:nurlan_ustaz_flutter/features/auth/data/repositories/auth_repository.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
-
-import 'cache_helper/prefs.dart';
 
 class DioWrapper {
   final AuthLocalDs _authLocalDS;

@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -99,8 +100,8 @@ class _SurahPageState extends State<SurahPage> {
                                 SizedBox(
                                   height: 56.h,
                                 ),
-                                const CustomAppBar(
-                                  title: 'Сүрелер',
+                                CustomAppBar(
+                                  title: 'Surahs'.tr(),
                                 ),
                                 SizedBox(
                                   height: 36.h,
@@ -126,7 +127,6 @@ class _SurahPageState extends State<SurahPage> {
                                       child: GestureDetector(
                                         onTap: () {
                                           context.router.push(
-
                                             SurahDetailPageRoute(
                                                 result: listOfSurah[index]),
                                           );

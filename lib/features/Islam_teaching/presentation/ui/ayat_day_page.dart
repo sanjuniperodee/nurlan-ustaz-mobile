@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
@@ -50,10 +51,10 @@ class _AyatDayPageState extends State<AyatDayPage> {
                       SizedBox(
                         height: 46.h,
                       ),
-                      const Padding(
-                        padding: EdgeInsets.all(16.0),
+                       Padding(
+                        padding: const EdgeInsets.all(16.0),
                         child: CustomAppBar(
-                          title: 'Күн аяты',
+                          title: 'Ayat_of_the_day'.tr(),
                         ),
                       ),
                       SizedBox(
@@ -76,7 +77,7 @@ class _AyatDayPageState extends State<AyatDayPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Күн аяты ',
+                                  'Ayat_of_the_day'.tr(),
                                   style: getTextStyle(CustomTextStyles.s20w700)
                                       .apply(color: AppColors.black),
                                 ),

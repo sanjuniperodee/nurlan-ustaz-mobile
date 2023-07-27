@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -48,7 +49,7 @@ class TaskDetailsDialog extends StatelessWidget {
               height: 16.h,
             ),
             Text(
-              'Жаңа тапсырма қосу',
+              'New_task'.tr(),
               style: getTextStyle(CustomTextStyles.s16w700)
                   .copyWith(fontFamily: FontTypes.Philosopher.name),
             ),
@@ -83,7 +84,7 @@ class TaskDetailsDialog extends StatelessWidget {
                         EdgeInsets.symmetric(horizontal: 3.w, vertical: 2.h),
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     enabled: true,
-                    labelText: "Текст",
+                    labelText: "Text".tr(),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25.0.r),
                       borderSide:
@@ -115,7 +116,7 @@ class TaskDetailsDialog extends StatelessWidget {
                       Navigator.pop(context);
                     },
                     child: Text(
-                      'Болдырмау',
+                      'Cancel'.tr(),
                       style: getTextStyle(CustomTextStyles.s14w400)
                           .copyWith(fontFamily: FontTypes.SF_Pro.name),
                     ),

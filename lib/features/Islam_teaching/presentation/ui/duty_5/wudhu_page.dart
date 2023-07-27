@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
@@ -87,10 +88,10 @@ class _WudhuPageState extends State<WudhuPage> {
                   SizedBox(
                     height: 56.h,
                   ),
-                  const Padding(
-                    padding: EdgeInsets.all(16.0),
+                   Padding(
+                    padding: const EdgeInsets.all(16.0),
                     child: CustomAppBar(
-                      title: 'Дәрет алу',
+                      title: 'cleaning'.tr(),
                     ),
                   ),
                   SizedBox(

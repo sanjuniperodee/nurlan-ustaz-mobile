@@ -67,12 +67,12 @@ class _LoginPageState extends State<LoginPage> {
                               height: 50.h,
                             ),
                             CustomTabBar(
-                                tabs: const [
+                                tabs:  [
                                   Tab(
-                                    text: 'Кіру',
+                                    text: 'Entry'.tr(),
                                   ),
                                   Tab(
-                                    text: 'Тіркелу',
+                                    text: 'register'.tr(),
                                   ),
                                 ],
                                 onTap: (int) {
@@ -117,12 +117,12 @@ class _LoginPageState extends State<LoginPage> {
                               height: 50.h,
                             ),
                             CustomTabBar(
-                                tabs: const [
+                                tabs:  [
                                   Tab(
-                                    text: 'Кіру',
+                                    text: 'enter'.tr(),
                                   ),
                                   Tab(
-                                    text: 'Тіркелу',
+                                    text: 'register'.tr(),
                                   ),
                                 ],
                                 onTap: (int) {
@@ -133,7 +133,7 @@ class _LoginPageState extends State<LoginPage> {
                                 length: 2),
                             if (currentIndex == 0) ...[
                               Text(
-                                'Қош келдіңіз',
+                                'welcome'.tr(),
                                 style: getTextStyle(CustomTextStyles.s36w700)
                                     .copyWith(
                                         fontFamily: FontTypes.Philosopher.name,
@@ -147,13 +147,13 @@ class _LoginPageState extends State<LoginPage> {
                                   onChanged: (value) {}),
                               SizedBox(height: 24.h),
                               CustomTextFormProfile(
-                                  hintText: 'Құпия сөз',
-                                  labelText: 'Құпия сөз',
+                                  hintText: 'password'.tr(),
+                                  labelText: 'password'.tr(),
                                   onChanged: (value) {}),
                               SizedBox(
                                 height: 42.h,
                               ),
-                              AppButton(onTap: () {}, text: 'Кіру'),
+                              AppButton(onTap: () {}, text: 'Entry'.tr()),
                               SizedBox(height: 12.h),
                               Container(
                                 decoration: BoxDecoration(
@@ -170,7 +170,7 @@ class _LoginPageState extends State<LoginPage> {
                                     padding: const EdgeInsets.all(10),
                                     width: 339.w,
                                     child: SizedBox(
-                                      child: Text('Құпия сөзді ұмыттым',
+                                      child: Text('forgot_password'.tr(),
                                           textAlign: TextAlign.center,
                                           style: getTextStyle(
                                                   CustomTextStyles.s16w200)

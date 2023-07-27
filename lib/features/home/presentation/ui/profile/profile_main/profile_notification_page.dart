@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -36,35 +37,35 @@ class _ProfileNotificationPage extends State<ProfileNotificationPage> {
   String handleString(String namazTime) {
     switch (namazTime) {
       case 'custom_dreams':
-        return ('Кастомные сны');
+        return ('dream_interpretations'.tr());
         // Code for case1
         break;
       case 'prayer_times':
-        return ('Намаз');
+        return ('Namaz'.tr());
         // Code for case2
         break;
       case 'ayat_of_the_day':
-        return ('Аят');
+        return ('Ayat_of_the_day'.tr());
         // Code for case3
         break;
       case 'live_broadcasts':
-        return ('Прямой эфир');
+        return ('live'.tr());
         // Code for case3
         break;
       case 'tell_me_ustaz':
-        return ('Общение ');
+        return ('tell_me_ustaz'.tr());
         // Code for case3
         break;
       case 'checklist_results':
-        return ('Результаты чеклиста');
+        return ('Чек-лист'.tr());
         // Code for case3
         break;
       case 'seminar_tickets':
-        return ('Билеты семинаров');
+        return ('seminar'.tr());
         // Code for case3
         break;
       case 'new_content':
-        return ('Новый контент');
+        return ('news'.tr());
         // Code for case3
         break;
 
@@ -104,7 +105,7 @@ class _ProfileNotificationPage extends State<ProfileNotificationPage> {
                         height: 20.h,
                       ),
                       CustomAppBar(
-                        title: 'Хабарлама',
+                        title: 'notifications'.tr(),
                       ),
                       SizedBox(
                         height: 32,
@@ -215,6 +216,6 @@ class _ProfileNotificationPage extends State<ProfileNotificationPage> {
 
   final List<NotificationSettingsModel> notifications =
       List.generate(5, (index) {
-    return NotificationSettingsModel(title: 'Намаз уақыты', status: true);
+    return NotificationSettingsModel(title: 'Namaz_time'.tr(), status: true);
   });
 }

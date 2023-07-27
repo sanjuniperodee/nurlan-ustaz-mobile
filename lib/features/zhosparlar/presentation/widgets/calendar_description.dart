@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 
 import '../../../../core/common/app_styles.dart';
@@ -31,7 +32,7 @@ class CalendarDescription extends StatelessWidget {
                 width: 8,
               ),
               Text(
-                'Тікелей эфир',
+                'live'.tr(),
                 style:
                 getTextStyle(CustomTextStyles.s12w500)
                     .copyWith(
@@ -62,7 +63,7 @@ class CalendarDescription extends StatelessWidget {
                 width: 8,
               ),
               Text(
-                'Қызметер',
+                'Services'.tr(),
                 style:
                 getTextStyle(CustomTextStyles.s12w500)
                     .copyWith(
@@ -93,7 +94,7 @@ class CalendarDescription extends StatelessWidget {
                 width: 8,
               ),
               Text(
-                'Семинар',
+                'Seminar'.tr(),
                 style:
                 getTextStyle(CustomTextStyles.s12w500)
                     .copyWith(

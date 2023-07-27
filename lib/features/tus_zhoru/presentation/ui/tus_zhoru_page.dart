@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,7 +21,11 @@ import '../../../app/presentation/widgets/search_widget.dart';
 
 class TusZhoruPage extends StatefulWidget {
   final String? type;
-  const TusZhoruPage({Key? key, this.type}) : super(key: key);
+
+  const TusZhoruPage({
+    Key? key,
+    this.type,
+  }) : super(key: key);
 
   @override
   State<TusZhoruPage> createState() => _TusZhoruPageState();
@@ -59,7 +64,7 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
       return state.maybeMap(orElse: () {
         return Container();
       }, loadingState: (loading) {
-        return Center(
+        return const Center(
           child: CircularProgressIndicator(
             color: AppColors.orange,
           ),
@@ -67,16 +72,18 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
       }, initialState: (tusZhoruList) {
         return Scaffold(
           floatingActionButton: tusZhoruList.currentIndex == 1
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: AppButton(
-                      onTap: () {
-                        context.router.push(
-                          const QuestionPageRoute(),
-                        );
-                      },
-                      text: 'Түсіңізді жазыңыз'),
-                )
+              ? widget.type == 'isSave'
+                  ? const SizedBox()
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: AppButton(
+                          onTap: () {
+                            context.router.push(
+                              const QuestionPageRoute(),
+                            );
+                          },
+                          text: 'type_dream'.tr()),
+                    )
               : null,
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,
@@ -92,8 +99,8 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                   ),
                   CustomAppBar(
                     title: widget.type == 'isSave'
-                        ? 'Таңдаулы түс жору'
-                        : 'Түс жору',
+                        ? 'save_dream_interpretation'.tr()
+                        : 'dream_interpretation'.tr(),
                     hideIcon: widget.type == 'isSave' ? true : false,
                   ),
                   SizedBox(
@@ -125,12 +132,12 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                     height: 20.h,
                   ),
                   CustomTabBar(
-                    tabs: const [
+                    tabs:  [
                       Tab(
-                        text: 'Барлығы',
+                        text: 'all'.tr(),
                       ),
                       Tab(
-                        text: 'Өз түсім',
+                        text: 'personal_dream'.tr(),
                       ),
                     ],
                     onTap: (int value) {

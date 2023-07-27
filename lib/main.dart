@@ -14,7 +14,6 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/nurlan_ustaz_a
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/news_detail_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_detail_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/tus_zhoru_details_page.dart';
-
 import 'features/tus_zhoru/presentation/ui/custom_tus_zhoru_details_page.dart';
 
 Future<void> firebaseInit() async {

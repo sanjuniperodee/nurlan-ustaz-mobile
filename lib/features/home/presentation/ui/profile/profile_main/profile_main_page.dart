@@ -80,7 +80,7 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         CustomAppBar(
-                          title: 'namaz_time'.tr(),
+                          title: 'profile'.tr(),
                         ),
                         SizedBox(height: 44.h),
                         ClipRRect(
@@ -121,21 +121,21 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                           child: Column(
                             children: [
                               ProfileMenuItem(
-                                  title: 'Менің деректерім',
+                                  title: 'My_data'.tr(),
                                   onTap: () {
                                     context.router.push(
                                       ProfileInfoPageRoute(userDTO: user),
                                     );
                                   }),
                               ProfileMenuItem(
-                                  title: 'Сатып алынған қызметтер',
+                                  title: 'Purchased_services'.tr(),
                                   onTap: () {
                                     context.router.push(
                                       const PaymentsPageRoute(),
                                     );
                                   }),
                               ProfileMenuItem(
-                                  title: 'Менің карталарым',
+                                  title: 'my_cards'.tr(),
                                   onTap: () {
                                     context.router.push(
                                       const ProfileCardsPageRoute(),
@@ -156,7 +156,7 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                           child: Column(
                             children: [
                               ProfileMenuItem(
-                                  title: 'Жоба туралы',
+                                  title: 'project_info'.tr(),
                                   onTap: () {
                                     context.router.push(
                                       const AboutAppPageRoute(),
@@ -170,7 +170,7 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                                     );
                                   }),
                               ProfileMenuItem(
-                                  title: 'Техникалық қолдау',
+                                  title: 'tech_support'.tr(),
                                   onTap: () {
                                     context.router.push(
                                       const TechnicalSupportPageRoute(),
@@ -295,14 +295,14 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                                     );
                                   }),
                               ProfileMenuItem(
-                                  title: 'Құпия сөзді өзгерту',
+                                  title: 'password_change'.tr(),
                                   onTap: () {
                                     context.router.push(
                                       const ChangePasswordPageRoute(),
                                     );
                                   }),
                               ProfileMenuItem(
-                                  title: 'Хабарлама',
+                                  title: 'notification'.tr(),
                                   onTap: () {
                                     context.router.push(
                                       const ProfileNotificationPageRoute(),
@@ -324,7 +324,7 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                             children: [
                               ProfileMenuItem(
                                 isExit: true,
-                                title: 'Шығу',
+                                title: 'exit'.tr(),
                                 onTap: () async {
                                   var logout =
                                       await AlertUtils.showTwoOptionDialog(
