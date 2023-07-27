@@ -64,19 +64,19 @@ class _PaymentsPageState extends State<PaymentsPage> {
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(children: [
-                const CustomAppBar(
-                  title: 'Сатып алынған қызметтер',
+                 CustomAppBar(
+                  title: 'Purchased_services'.tr(),
                 ),
                 const SizedBox(
                   height: 36,
                 ),
                 CustomTabBar(
-                  tabs: const [
+                  tabs:  [
                     Tab(
-                      text: 'Семинарлар',
+                      text: 'seminars'.tr(),
                     ),
                     Tab(
-                      text: 'Түс жорулар',
+                      text: 'dream_interpretations'.tr(),
                     ),
                   ],
                   onTap: (int) {

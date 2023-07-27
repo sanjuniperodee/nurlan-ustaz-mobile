@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:calendar_agenda/calendar_agenda.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -301,7 +302,7 @@ class CustomCalendarAgendaState extends State<CustomCalendarAgenda>
                                   children: [
                                     Text(
                                       date.day == DateTime.now().day
-                                          ? 'Бүгін'
+                                          ? 'today'.tr()
                                           : '${DateFormat('dd\nMMM').format(date)}',
                                       style:
                                           getTextStyle(CustomTextStyles.s12w400)

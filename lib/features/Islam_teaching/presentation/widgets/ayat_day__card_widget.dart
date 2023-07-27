@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
@@ -24,7 +25,7 @@ class AyatDayCardWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                'Күн аяты ',
+                '${'Ayat_of_the_day'.tr()} ',
                 style: getTextStyle(CustomTextStyles.s20w700)
                     .apply(color: AppColors.black),
               ),

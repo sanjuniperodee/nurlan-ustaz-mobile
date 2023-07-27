@@ -68,10 +68,10 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
                   physics: const BouncingScrollPhysics(),
                   child: Column(
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: CustomAppBar(
-                          title: 'Рамазан чеклисті',
+                          title: 'Ramadan_checklist'.tr(),
                         ),
                       ),
                       CustomCalendarAgenda(
@@ -103,7 +103,7 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Бүгін, ${DateFormat('dd MMMM').format(DateTime.now())} ',
+                                  '${'today'.tr()}, ${DateFormat('dd MMMM').format(DateTime.now())} ',
                                   style: getTextStyle(CustomTextStyles.s14w400)
                                       .copyWith(
                                           fontFamily: FontTypes.SF_Pro.name,
@@ -135,8 +135,8 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
                           ],
                         ),
                       ),
-                       tasks == null ?
-                           ListView.builder(
+                      tasks == null
+                          ? ListView.builder(
                               itemCount: days
                                       .map((element) =>
                                           DateTime.parse(element.date).day)
@@ -174,7 +174,8 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
                                   index: index,
                                   task: tasks[index],
                                   checkListDayDto: days.firstWhere((e) =>
-                                      DateTime.parse(e.date).day == date.day), selectedDate: date,
+                                      DateTime.parse(e.date).day == date.day),
+                                  selectedDate: date,
                                 );
                               },
                             ),

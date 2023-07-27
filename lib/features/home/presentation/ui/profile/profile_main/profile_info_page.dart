@@ -85,8 +85,8 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
             physics: const BouncingScrollPhysics(),
             child: Column(
               children: [
-                const CustomAppBar(
-                  title: 'Профиль',
+                CustomAppBar(
+                  title: 'profile'.tr(),
                 ),
                 SizedBox(height: 44.h),
                 InkWell(
@@ -117,7 +117,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                         ),
                         InkWell(
                           child: Text(
-                            "Сурет таңдау",
+                            "Choose_picture".tr(),
                             style: getTextStyle(CustomTextStyles.s14w400)
                                 .copyWith(
                                     fontFamily: FontTypes.SF_Pro.name,
@@ -130,8 +130,8 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                   height: 32.h,
                 ),
                 CustomTextFormProfile(
-                    hintText: 'Аты-жөні',
-                    labelText: 'Аты-жөні',
+                    hintText: 'name-surname'.tr(),
+                    labelText: 'name-surname'.tr(),
                     controller: nameController,
                     onChanged: (value) {}),
                 SizedBox(
@@ -147,8 +147,8 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                 ),
                 CustomTextFormProfile(
                     inputFormatters: [maskFormatter],
-                    hintText: 'Телефон нөмірі',
-                    labelText: 'Телефон нөмірі',
+                    hintText: 'phone_number'.tr(),
+                    labelText: 'phone_number'.tr(),
                     controller: numberController,
                     onChanged: (value) {}),
                 SizedBox(
@@ -174,8 +174,8 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                           context);
                     },
                     controller: dateController,
-                    hintText: 'Туған күні',
-                    labelText: 'Туған күні',
+                    hintText: 'date_of_birth'.tr(),
+                    labelText: 'date_of_birth'.tr(),
                     onChanged: (value) {}),
                 SizedBox(
                   height: 16.h,
@@ -183,7 +183,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    const Text('Жынысы'),
+                    Text('gender'.tr()),
                     SizedBox(
                       height: 8.h,
                     ),
@@ -205,7 +205,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                             SizedBox(
                               width: 8.h,
                             ),
-                            const Text('Әйел')
+                            Text('female'.tr())
                           ],
                         ),
                         SizedBox(
@@ -227,7 +227,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                             SizedBox(
                               width: 8.h,
                             ),
-                            const Text('Ер')
+                            Text('male'.tr())
                           ],
                         )
                       ],
@@ -236,7 +236,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                       height: 20.h,
                     ),
                     ProfileMenuItem(
-                      title: 'Аккаунты жою',
+                      title: 'Delete_account'.tr(),
                       titleStyle: getTextStyle(CustomTextStyles.s16w500)
                           .copyWith(
                               fontFamily: FontTypes.SF_Pro.name,
@@ -299,7 +299,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                             BlocProvider.of<RenameUserCubit>(context)
                                 .renameUser(user: userPayload, avatar: _image);
                           },
-                          text: 'Өзгерісті сақтау'),
+                          text: 'Save_changes'.tr()),
                     ),
                     SizedBox(
                       height: 36.h,

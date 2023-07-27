@@ -176,7 +176,7 @@ class SeminarCard extends StatelessWidget {
                     }
 
                   },
-                  text: 'Бетке өту',
+                  text: 'next_page'.tr(),
                   textSize: 14.sp,
                 ),
               ),

@@ -123,7 +123,7 @@ class HolidayDialog extends StatelessWidget {
                          Navigator.of(context).pop();
                          mainContext.router.push(HolidayDetailPageRoute(event: event));
                       },
-                      text: 'Бетке өту')),
+                      text: 'next_page'.tr())),
             ),
             SizedBox(
               height: 24,

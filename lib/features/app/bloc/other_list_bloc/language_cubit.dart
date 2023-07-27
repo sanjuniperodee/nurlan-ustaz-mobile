@@ -56,6 +56,8 @@ class LanguageState with _$LanguageState {
 
   const factory LanguageState.loadedState() = _LoadedState;
 
+  const factory LanguageState.restartState() = _RestartState;
+
   const factory LanguageState.loadingState() = _LoadingState;
 
   const factory LanguageState.errorState({

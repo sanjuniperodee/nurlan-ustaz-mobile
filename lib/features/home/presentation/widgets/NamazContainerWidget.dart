@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -141,7 +142,7 @@ class _NamazContainerWidgetState extends State<NamazContainerWidget> {
                               width: 4.w,
                             ),
                             Text(
-                              'Құбыла',
+                              'Qibla'.tr(),
                               style: getTextStyle(CustomTextStyles.s16w400)
                                   .apply(color: AppColors.black),
                             )

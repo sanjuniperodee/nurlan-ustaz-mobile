@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -81,7 +82,7 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                               const QuestionPageRoute(),
                             );
                           },
-                          text: 'Түсіңізді жазыңыз'),
+                          text: 'type_dream'.tr()),
                     )
               : null,
           floatingActionButtonLocation:
@@ -98,8 +99,8 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                   ),
                   CustomAppBar(
                     title: widget.type == 'isSave'
-                        ? 'Таңдаулы түс жору'
-                        : 'Түс жору',
+                        ? 'save_dream_interpretation'.tr()
+                        : 'dream_interpretation'.tr(),
                     hideIcon: widget.type == 'isSave' ? true : false,
                   ),
                   SizedBox(
@@ -131,12 +132,12 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                     height: 20.h,
                   ),
                   CustomTabBar(
-                    tabs: const [
+                    tabs:  [
                       Tab(
-                        text: 'Барлығы',
+                        text: 'all'.tr(),
                       ),
                       Tab(
-                        text: 'Өз түсім',
+                        text: 'personal_dream'.tr(),
                       ),
                     ],
                     onTap: (int value) {

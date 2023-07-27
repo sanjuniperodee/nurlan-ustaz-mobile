@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -133,7 +134,7 @@ class _NameDetailPageState extends State<NameDetailPage> {
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           FloatinContainerWidget(
-                                            text: 'Таңдаулы',
+                                            text: 'Favourite'.tr(),
                                             onTap: () {
                                               BlocProvider.of<
                                                           IslamNameDetailCubit>(
@@ -159,7 +160,7 @@ class _NameDetailPageState extends State<NameDetailPage> {
                                                 unguessableDynamicLink,
                                               );
                                             },
-                                            text: 'Бөлісу',
+                                            text: 'share'.tr(),
                                             url: Assets.shareSvg,
                                           ),
                                         ],

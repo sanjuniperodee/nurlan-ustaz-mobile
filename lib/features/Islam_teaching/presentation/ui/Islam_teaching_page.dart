@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,27 +27,27 @@ class IslamTeachingPage extends StatefulWidget {
 class _IslamTeachingPageState extends State<IslamTeachingPage> {
   List<BannerLocalModel> list = [
     BannerLocalModel(
-      title: '5 парыз',
+      title: 'Pillars'.tr(),
       url: Assets.duty5Svg,
     ),
     BannerLocalModel(
-      title: 'Алланың  99\nесімі',
+      title: 'Allah_names'.tr(),
       url: Assets.allahSvg,
     ),
     BannerLocalModel(
-      title: 'Пәтуә бөлімі',
+      title: 'Fatwa'.tr(),
       url: Assets.scheduleSvg,
     ),
     BannerLocalModel(
-      title: 'Сүрелер',
+      title: 'Surahs'.tr(),
       url: Assets.quranSvg,
     ),
     BannerLocalModel(
-      title: 'Дұғалар',
+      title: 'Duas'.tr(),
       url: Assets.praySvg,
     ),
     BannerLocalModel(
-      title: 'Зікірлер',
+      title: 'Zikrs'.tr(),
       url: Assets.tasbihSvg,
     ),
   ];
@@ -123,7 +124,7 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(height: 82.h),
-                                Text('Ислам\nілімі',
+                                Text('Islam_study'.tr(),
                                     style:
                                         getTextStyle(CustomTextStyles.s36w700)
                                             .apply(
@@ -162,7 +163,7 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
                                         n++) {}
                                     return InkWell(
                                       onTap: () {
-                                        list[index].title == 'Пәтуә бөлімі'
+                                        list[index].title == 'Fatwa'.tr()
                                             ? _launchUrl(
                                                 fatyas.first.url ?? 'ERROR')
                                             : context.router.push(
@@ -250,7 +251,7 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
                                     onTap: () {
                                       context.router.push(NamePageRoute());
                                     },
-                                    text: 'Есімдер мағынасы'),
+                                    text: 'name_meaning'.tr()),
                                 SizedBox(
                                   height: 16.h,
                                 ),

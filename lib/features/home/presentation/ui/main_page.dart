@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -10,7 +11,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
-import 'package:nurlan_ustaz_flutter/core/platform/cache_helper/prefs.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
@@ -35,32 +35,32 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   RefreshController controller = RefreshController();
   List<String> namasNames = [
-    'Таң намазы',
+    'Fajr'.tr(),
     'Күн',
-    'Бесін',
-    'Екінті',
-    'Ақшам',
-    'Құптан'
+    'Zukhr'.tr(),
+    'Asr'.tr(),
+    'Maghrib'.tr(),
+    'Isha'.tr()
   ];
   List<BannerLocalModel> list = [
     BannerLocalModel(
-      title: 'Семинар',
+      title: 'seminar'.tr(),
       url: Assets.banner1Svg,
     ),
     BannerLocalModel(
-      title: 'Қайырымдылық',
+      title: 'Charity'.tr(),
       url: Assets.banner2Svg,
     ),
     BannerLocalModel(
-      title: 'Қызметтер',
+      title: 'Services'.tr(),
       url: Assets.banner3Svg,
     ),
     BannerLocalModel(
-      title: 'Тікелей эфир',
+      title: 'live'.tr(),
       url: Assets.banner4Svg,
     ),
     BannerLocalModel(
-      title: 'Дүңгрішек',
+      title: 'shop'.tr(),
       url: Assets.banner5Svg,
     ),
   ];
@@ -313,7 +313,7 @@ class _MainPageState extends State<MainPage> {
                                                         width: 10.r,
                                                       ),
                                                       Text(
-                                                          '${namasNames[indexOfNextNames(times)]} намаз уақыты',
+                                                          '${namasNames[indexOfNextNames(times)]} ${'Namaz_time'.tr()}',
                                                           style: getTextStyle(
                                                                   CustomTextStyles
                                                                       .s16w200)
@@ -371,7 +371,7 @@ class _MainPageState extends State<MainPage> {
                                                 ?.controller
                                                 .setActiveIndex(2);
                                           },
-                                          text: 'Түс жору',
+                                          text: 'dream_interpretation'.tr(),
                                         ),
                                         SizedBox(height: 16.h),
                                         MainButton(
@@ -379,7 +379,7 @@ class _MainPageState extends State<MainPage> {
                                             context.router
                                                 .push(UstazAitinizhiRoute());
                                           },
-                                          text: 'Ұстаз айтыңызшы...',
+                                          text: '${'tell_me_ustaz'.tr()}...',
                                         ),
                                         SizedBox(height: 16.h),
                                         InkWell(
@@ -411,7 +411,7 @@ class _MainPageState extends State<MainPage> {
                                                   height: 12.h,
                                                 ),
                                                 Text(
-                                                  'Бола ма?\nБолмай ма?',
+                                                  'can_question'.tr(),
                                                   textAlign: TextAlign.center,
                                                   style: getTextStyle(
                                                           CustomTextStyles
@@ -437,8 +437,8 @@ class _MainPageState extends State<MainPage> {
                                               NewsPageRoute(),
                                             );
                                           },
-                                          child: const MainButton(
-                                            text: 'Жаңалықтар',
+                                          child: MainButton(
+                                            text: 'news'.tr(),
                                           ),
                                         ),
                                         SizedBox(height: 16.h),

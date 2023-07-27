@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,15 +12,14 @@ import '../../widgets/custom_button_timer.dart';
 
 class CodeVerificationForgot extends StatefulWidget {
   const CodeVerificationForgot({
-    Key? key, required this.email,
+    Key? key,
+    required this.email,
   }) : super(key: key);
   final String email;
-
 
   @override
   State<CodeVerificationForgot> createState() => _CodeVerificationForgotState();
 }
-
 
 bool isActiveButton = false;
 
@@ -77,7 +77,7 @@ class _CodeVerificationForgotState extends State<CodeVerificationForgot> {
               await BlocProvider.of<ForgotPasswordCubitCubit>(context)
                   .getIdByMail(widget.email);
             },
-            text: 'Қайта жіберу ',
+            text: 'send_again'.tr(),
           )),
       backgroundColor: AppColors.white,
       body: SingleChildScrollView(
@@ -89,20 +89,19 @@ class _CodeVerificationForgotState extends State<CodeVerificationForgot> {
               SizedBox(
                 height: 56.h,
               ),
-               CustomAppBar(
-                onTap: (){
-                  BlocProvider.of<ForgotPasswordCubitCubit>(context).toInitialPage();
+              CustomAppBar(
+                onTap: () {
+                  BlocProvider.of<ForgotPasswordCubitCubit>(context)
+                      .toInitialPage();
                 },
-                title: 'Растау коды',
+                title: 'confirmation_code'.tr(),
                 color: AppColors.black,
               ),
-
               SizedBox(
                 height: 36.h,
               ),
               Text(
-                'Растау кодын енгізіңіз. Код төменде көрсетілген поштаға жіберілді ${widget
-                    .email}',
+                '${'mail_code'.tr()} ${widget.email}',
                 textAlign: TextAlign.center,
               ),
               SizedBox(height: 18.h),

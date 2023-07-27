@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,23 +24,23 @@ class DutyPage extends StatefulWidget {
 class _DutyPageState extends State<DutyPage> {
   List<BannerLocalModel> list = [
     BannerLocalModel(
-      title: 'Иман',
+      title: 'Iman'.tr(),
       url: Assets.mosqueSvg,
     ),
     BannerLocalModel(
-      title: 'Намаз',
+      title: 'Namaz'.tr(),
       url: Assets.prayer_3Svg,
     ),
     BannerLocalModel(
-      title: 'Зекет',
+      title: 'Zakat'.tr(),
       url: Assets.zakatSvg,
     ),
     BannerLocalModel(
-      title: 'Ораза',
+      title: 'Oraza'.tr(),
       url: Assets.pray_5Svg,
     ),
     BannerLocalModel(
-      title: 'Қажылық',
+      title: 'hajj'.tr(),
       url: Assets.kaabaSvg,
     ),
   ];
@@ -111,10 +112,10 @@ class _DutyPageState extends State<DutyPage> {
                               SizedBox(
                                 height: 46.h,
                               ),
-                              const Padding(
-                                padding: EdgeInsets.all(16.0),
+                               Padding(
+                                padding: const EdgeInsets.all(16.0),
                                 child: CustomAppBar(
-                                  title: '5 парыз',
+                                  title: 'Pillars'.tr(),
                                 ),
                               ),
                               SizedBox(
