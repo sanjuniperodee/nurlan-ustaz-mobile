@@ -100,16 +100,15 @@ class _RegistrationFormState extends State<RegistrationForm> {
               userId: user.id ?? 0));
         },
         successState: () {
-
-         setState(() {
-           _emailController.clear();
-           _nameController.clear();
-           _numberController.clear();
-           _dateController.clear();
-           _passwordController.clear();
-           _passwordRepeatController.clear();
-           isPrivacyAccept = false;
-         });
+          setState(() {
+            _emailController.clear();
+            _nameController.clear();
+            _numberController.clear();
+            _dateController.clear();
+            _passwordController.clear();
+            _passwordRepeatController.clear();
+            isPrivacyAccept = false;
+          });
         },
         errorState: (message) {
           buildErrorCustomSnackBar(context, message);
@@ -121,7 +120,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Қош келдіңіз',
+            'welcome'.tr(),
             style: getTextStyle(CustomTextStyles.s36w700)
                 .copyWith(fontFamily: FontTypes.Philosopher.name, fontSize: 32),
             textAlign: TextAlign.start,
@@ -131,8 +130,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
             inputAction: TextInputAction.next,
             keyboardType: TextInputType.name,
             controller: _nameController,
-            hintText: 'Аты-жөні',
-            labelText: 'Аты-жөні',
+            hintText: 'name-surname'.tr(),
+            labelText: 'name-surname'.tr(),
           ),
           SizedBox(height: 24.h),
           CustomTextFormProfile(
@@ -150,8 +149,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
             keyboardType: TextInputType.phone,
             inputFormatters: [maskFormatter],
             controller: _numberController,
-            hintText: 'Телефон нөмірі',
-            labelText: 'Телефон нөмірі',
+            hintText: 'phone_number'.tr(),
+            labelText: 'phone_number'.tr(),
           ),
           SizedBox(height: 24.h),
           CustomTextFormProfile(
@@ -179,8 +178,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
             },
             readOnly: true,
             controller: _dateController,
-            hintText: 'Туған күні',
-            labelText: 'Туған күні',
+            hintText: 'date_of_birth'.tr(),
+            labelText: 'date_of_birth'.tr(),
           ),
           SizedBox(height: 24.h),
           CustomTextFormProfile(
@@ -192,10 +191,10 @@ class _RegistrationFormState extends State<RegistrationForm> {
               });
             },
             keyboardType: TextInputType.visiblePassword,
-            helperText: 'Пароль должен содержать минимум 8 символов ',
+            helperText: 'Пароль должен содержать минимум 8 символов',
             controller: _passwordController,
-            hintText: 'Құпия сөз',
-            labelText: 'Құпия сөз',
+            hintText: 'password'.tr(),
+            labelText: 'password'.tr(),
           ),
           SizedBox(height: 24.h),
           CustomTextFormProfile(
@@ -207,11 +206,11 @@ class _RegistrationFormState extends State<RegistrationForm> {
             obscureText: obscureSecond,
             keyboardType: TextInputType.visiblePassword,
             controller: _passwordRepeatController,
-            hintText: 'Құпия сөзді қайталау',
-            labelText: 'Құпия сөзді қайталау',
+            hintText: 'repeat_password'.tr(),
+            labelText: 'repeat_password'.tr(),
           ),
           SizedBox(height: 24.h),
-          const Text('Жынысы'),
+          Text('gender'.tr()),
           SizedBox(
             height: 8.h,
           ),
@@ -232,7 +231,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   SizedBox(
                     width: 8.h,
                   ),
-                  const Text('Әйел')
+                  Text('female'.tr())
                 ],
               ),
               SizedBox(
@@ -253,7 +252,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   SizedBox(
                     width: 8.w,
                   ),
-                  const Text('Ер')
+                  Text('male'.tr())
                 ],
               )
             ],
@@ -335,9 +334,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
                           isLoading = false;
                         });
                       });
-
                     },
-              text: 'Кіру')
+              text: 'entry'.tr())
         ],
       );
     });

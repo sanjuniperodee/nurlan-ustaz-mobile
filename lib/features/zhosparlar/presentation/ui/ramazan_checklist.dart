@@ -1,5 +1,5 @@
 import 'dart:developer';
-
+ 
 import 'package:calendar_agenda/calendar_agenda.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -13,25 +13,25 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_cu
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/bloc/checklist_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/calendar_custom_body.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/checklist_task_item.dart';
-
+ 
 import '../../../app/presentation/widgets/custom_snackbars.dart';
 import '../../data/models/checklist_dto.dart';
 import '../widgets/horizontal_calendar/custom_agenda_controller.dart';
 import '../widgets/horizontal_calendar/custom_horizontal_calendar.dart';
 import '../widgets/task_details_dialog.dart';
-
+ 
 class RamazanChecklist extends StatefulWidget {
   const RamazanChecklist({Key? key, required this.checkList}) : super(key: key);
   final CheckListDto checkList;
-
+ 
   @override
   State<RamazanChecklist> createState() => _RamazanChecklistState();
 }
-
+ 
 class _RamazanChecklistState extends State<RamazanChecklist> {
   CustomCalendarAgendaController _calendarAgendaControllerNotAppBar =
       CustomCalendarAgendaController();
-
+ 
   int selectedIndex = -1;
   final monthList = List.generate(
       31,
@@ -40,7 +40,7 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
             DateTime.now().month,
             index + 1,
           ));
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -89,7 +90,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                 });
 
                           },
-                          text: 'Толық көрсету',
+                          text: 'show_all'.tr(),
                         ),
             ),
             backgroundColor: AppColors.white,
@@ -225,7 +226,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              'Таңдаулы',
+                                              'Favourite'.tr(),
                                               style: getTextStyle(
                                                       CustomTextStyles.s16w500)
                                                   .copyWith(
@@ -271,7 +272,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                               MainAxisAlignment.spaceBetween,
                                           children: [
                                             Text(
-                                              'Бөлісу',
+                                              'share'.tr(),
                                               style: getTextStyle(
                                                       CustomTextStyles.s16w500)
                                                   .copyWith(

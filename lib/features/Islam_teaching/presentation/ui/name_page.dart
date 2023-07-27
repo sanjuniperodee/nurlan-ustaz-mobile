@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -111,8 +112,8 @@ class _NamePageState extends State<NamePage> {
                                 ),
                                 CustomAppBar(
                                   title: widget.type == 'isSave'
-                                      ? 'Таңдаулы eсімдер мағынасы'
-                                      : 'Есімдер мағынасы',
+                                      ? 'save_name_meaning'.tr()
+                                      : 'name_meaning'.tr(),
                                 ),
                                 SizedBox(
                                   height: 36.h,
@@ -147,12 +148,12 @@ class _NamePageState extends State<NamePage> {
                                   height: 22.h,
                                 ),
                                 CustomTabBar(
-                                  tabs: const [
+                                  tabs: [
                                     Tab(
-                                      text: 'Ер',
+                                      text: 'male'.tr(),
                                     ),
                                     Tab(
-                                      text: 'Әйел',
+                                      text: 'female'.tr(),
                                     ),
                                   ],
                                   onTap: (int) {
@@ -182,7 +183,7 @@ class _NamePageState extends State<NamePage> {
                                   itemCount: listOfIslamNames.length,
                                   shrinkWrap: true,
                                   physics: const NeverScrollableScrollPhysics(),
-                                  padding: const EdgeInsets.only(top:8),
+                                  padding: const EdgeInsets.only(top: 8),
                                   itemBuilder: (context, index) {
                                     return Padding(
                                       padding: const EdgeInsets.only(top: 8.0),

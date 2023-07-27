@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
@@ -24,7 +25,7 @@ class _AddNewCardPageState extends State<AddNewCardPage> {
             onTap: () {
               Navigator.of(context).pop();
             },
-            text: 'Сақтау'),
+            text: 'save'.tr()),
       ),
       body: SizedBox(
         height: 1.1.sh,
@@ -37,13 +38,13 @@ class _AddNewCardPageState extends State<AddNewCardPage> {
                 const SizedBox(
                   height: 80,
                 ),
-                const CustomAppBar(
+                 CustomAppBar(
                   color: AppColors.black,
-                  title: 'Жаңа карта',
+                  title: 'new_card'.tr(),
                 ),
                 const SizedBox(height: 44),
                  CustomTextFormProfile(
-                    hintText: 'Карта нөмірі', labelText: 'Карта нөмірі',onChanged: (value){}),
+                    hintText: 'card_number'.tr(), labelText: 'card_number'.tr(),onChanged: (value){}),
                 const SizedBox(
                   height: 24,
                 ),

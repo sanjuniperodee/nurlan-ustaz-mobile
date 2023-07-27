@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -34,7 +35,7 @@ class _LoginFormState extends State<LoginForm> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Қош келдіңіз',
+              'welcome'.tr(),
               style: getTextStyle(CustomTextStyles.s36w700).copyWith(
                   fontFamily: FontTypes.Philosopher.name, fontSize: 32),
               textAlign: TextAlign.start,
@@ -64,8 +65,8 @@ class _LoginFormState extends State<LoginForm> {
                 });
               },
               controller: passwordController,
-              hintText: 'Құпия сөз',
-              labelText: 'Құпия сөз',
+              hintText: 'password'.tr(),
+              labelText: 'password'.tr(),
             ),
             SizedBox(
               height: 42.h,
@@ -98,7 +99,7 @@ class _LoginFormState extends State<LoginForm> {
                         password: passwordController.text));
                   }
                 },
-                text: 'Кіру'),
+                text: 'enter'.tr()),
             SizedBox(height: 12.h),
             Container(
               decoration: BoxDecoration(
@@ -113,7 +114,7 @@ class _LoginFormState extends State<LoginForm> {
                   padding: const EdgeInsets.all(10),
                   width: 339.w,
                   child: SizedBox(
-                    child: Text('Құпия сөзді ұмыттым',
+                    child: Text('forgot_password'.tr(),
                         textAlign: TextAlign.center,
                         style: getTextStyle(CustomTextStyles.s16w200)
                             .apply(fontFamily: FontTypes.Philosopher.name)

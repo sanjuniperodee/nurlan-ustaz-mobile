@@ -1,7 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
-
-
 class Prefs {
   final SharedPreferences? sharedPreferences;
 
@@ -69,32 +67,4 @@ class Prefs {
     final int? clientID = prefs.getInt('client_iD');
     return clientID;
   }
-
-  Future<String?> getPin() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('pin') ?? 'Null';
-  }
-
-  void setPin(String pin) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString('pin', pin);
-  }
-
-  void removePin() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('pin');
-  }
-
-  void clearAllData() async {
-    removePin();
-    // setIsAuthenticated(false);
-    // setEmail('');
-    // setPassword('');
-    // setIin('');
-    // setIsBiometricsEnabled(false);
-    // setIsNotificationEnabled(false);
-    setUserName('');
-  }
-
-
 }

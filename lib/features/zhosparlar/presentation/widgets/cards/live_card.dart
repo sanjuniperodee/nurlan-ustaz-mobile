@@ -136,7 +136,7 @@ class LiveCard extends StatelessWidget {
                   if (!await launchUrl(url)) {
                   throw Exception('Could not launch $url');
                   }
-                }, text: 'Бетке өту',textSize: 14.sp,),
+                }, text: 'next_page'.tr(),textSize: 14.sp,),
               ),
               isDialog ? Container()   : IconButton(
                   onPressed: () {

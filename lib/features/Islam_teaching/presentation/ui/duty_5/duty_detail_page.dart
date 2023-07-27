@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
@@ -37,10 +38,10 @@ class _DutyDetailPageState extends State<DutyDetailPage> {
                         : _launchUrl(widget.pillarsDTO.url ?? '');
                   },
                   text: widget.pillarsDTO.type == 2
-                      ? 'Намаз оқу үлгісі'
+                      ? 'example_namaz'.tr()
                       : widget.pillarsDTO.type == 3
-                          ? 'Зекет беру'
-                          : 'Қажылық'),
+                          ? 'give_zeket'.tr()
+                          : 'hajj'.tr()),
             )
           : const SizedBox(),
       body: SizedBox(

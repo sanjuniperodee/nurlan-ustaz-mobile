@@ -19,22 +19,22 @@ import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/ca
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/cards/service_card.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/dialogs/holiday_type_dialog.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/events_card.dart';
-
+ 
 import '../../../app/presentation/widgets/custom_snackbars.dart';
 import '../../data/models/events_type_enum.dart';
-
+ 
 class ZhosparymPage extends StatefulWidget {
   const ZhosparymPage({super.key});
-
+ 
   @override
   State<ZhosparymPage> createState() => _ZhosparymPageState();
 }
-
+ 
 bool _isLoading = false;
-
+ 
 class _ZhosparymPageState extends State<ZhosparymPage> {
-
-
+ 
+ 
   void showEventDialog(
       BuildContext mainContext, EventDto event, LinearGradient gradient) {
     switch (event.type) {
@@ -99,9 +99,9 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
         break;
     }
   }
-
+ 
   List<EventDto> holidays = [];
-
+ 
   final gradients = [
     const LinearGradient(colors: [
       Color(0xFF1151C2),
@@ -112,17 +112,17 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
         begin: Alignment.centerLeft,
         end: Alignment.centerRight)
   ];
-
+ 
   @override
   void initState() {
     BlocProvider.of<ZhosparymCubit>(context).calendarEvents(DateTime.now());
     super.initState();
   }
-
-
-
-
-
+ 
+ 
+ 
+ 
+ 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ZhosparymCubit, ZhosparymState>(
@@ -138,7 +138,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
         return Container();
       }, initialState: (events) {
         holidays.clear();
-
+ 
         final eventsDays = events?.map<DateTime, List<EventDto>>(
           (key, value) => MapEntry(
             DateTime.parse(key),
@@ -150,8 +150,8 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
             holidays.addAll(value); // Using addAll method
           });
         }
-
-
+ 
+ 
         return Scaffold(
           backgroundColor: AppColors.lightBlue,
           body: SizedBox(
@@ -226,7 +226,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                       DateFormat('yyyy-MM-dd')
                                           .format(date)
                                           .toString());
-
+ 
                                   if (!eventsDays.containsKey(date)) {
                                     return;
                                   } else {
@@ -291,7 +291,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                           gradients[0]);
                                     }
                                   }
-
+ 
                                   // eventsT![date]!.toList().isEmpty ? (){} :
                                   // showDialog<void>(
                                   //   context: context,
@@ -356,7 +356,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                           await BlocProvider.of<CheckListCubit>(
                                                   context)
                                               .getDays(checklistId: value.id);
-
+ 
                                           context.router
                                               .push(
                                             RamazanChecklistRoute(

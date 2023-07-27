@@ -15,8 +15,10 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/news_detail_p
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_detail_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/tus_zhoru_details_page.dart';
 
+
 import 'core/router/app_router.dart';
 import 'core/services/locator_service.dart';
+
 import 'features/tus_zhoru/presentation/ui/custom_tus_zhoru_details_page.dart';
 
 Future<void> firebaseInit() async {

@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -104,8 +105,8 @@ class _PrayersPageState extends State<PrayersPage> {
                                 ),
                                 CustomAppBar(
                                   title: widget.type == 'isSave'
-                                      ? 'Таңдаулы дұғалар'
-                                      : 'Дұғалар',
+                                      ? 'save_Duas'.tr()
+                                      : 'Duas'.tr(),
                                 ),
                                 SizedBox(
                                   height: 36.h,

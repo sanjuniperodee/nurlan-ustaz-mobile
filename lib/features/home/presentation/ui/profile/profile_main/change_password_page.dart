@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -38,6 +39,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   newPasController.text.isEmpty ||
                   pasController.text.isEmpty),
               isLoading: isLoading,
+
               onTap: (curPasController.text.isEmpty ||
                           newPasController.text.isEmpty ||
                           pasController.text.isEmpty) ==
@@ -73,6 +75,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       }
                     },
               text: 'Дайын'),
+
         ),
       ),
       body: BlocConsumer<ChangePassCubit, ChangePassState>(
@@ -101,9 +104,9 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     SizedBox(
                       height: 80.h,
                     ),
-                    const CustomAppBar(
+                     CustomAppBar(
                       color: AppColors.black,
-                      title: 'Құпия сөзді өзгерту',
+                      title: 'password_change'.tr(),
                     ),
                     SizedBox(height: 44.h),
                     CustomTextFormProfile(
@@ -114,11 +117,13 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                           });
                         },
                         controller: curPasController,
+
                         hintText: 'Ағымдағы құпия сөз',
                         labelText: 'Ағымдағы құпия сөз',
                         onChanged: (value) {
                           setState(() {});
                         }),
+
                     SizedBox(
                       height: 24.h,
                     ),
@@ -130,11 +135,13 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                             obscureNewPass = !obscureNewPass;
                           });
                         },
+
                         hintText: 'Жаңа құпия сөз',
                         labelText: 'Жаңа құпия сөз',
                         onChanged: (value) {
                           setState(() {});
                         }),
+
                     SizedBox(
                       height: 24.h,
                     ),
@@ -146,11 +153,13 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                           });
                         },
                         controller: pasController,
+
                         hintText: 'Жаңа құпия сөз қайталау',
                         labelText: 'Жаңа құпия сөз қайталау',
                         onChanged: (value) {
                           setState(() {});
                         }),
+
                   ],
                 ),
               ),

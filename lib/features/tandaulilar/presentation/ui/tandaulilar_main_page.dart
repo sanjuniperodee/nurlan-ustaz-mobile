@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -79,7 +80,7 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 SizedBox(height: 82.h),
-                                Text('Таңдауым',
+                                Text('MyFavourite'.tr(),
                                     style:
                                         getTextStyle(CustomTextStyles.s36w700)
                                             .apply(
@@ -95,7 +96,7 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         CategoryCard(
-                                          title: 'Жаңалықтар',
+                                          title: 'news'.tr(),
                                           imageList: news,
                                           onTap: () {
                                             context.router.push(
@@ -104,7 +105,7 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                                           },
                                         ),
                                         CategoryCard(
-                                          title: 'Тікелей эфирлер',
+                                          title: 'live'.tr(),
                                           imageList: lives,
                                           onTap: () {
                                             context.router.push(
@@ -119,7 +120,7 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                                       height: 11,
                                     ),
                                     CategoryCard(
-                                      title: 'Семинарлар',
+                                      title: 'seminars'.tr(),
                                       imageList: seminars,
                                       titleColor: AppColors.blue,
                                       onTap: () {
@@ -136,7 +137,7 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         CategoryTitleCard(
-                                            title: 'Түс жорулар',
+                                            title: 'dream_interpretations'.tr(),
                                             onTap: () {
                                               context.router.push(
                                                 TusZhoruPageRoute(
@@ -144,7 +145,7 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                                               );
                                             }),
                                         CategoryTitleCard(
-                                            title: 'Есімдер',
+                                            title: 'name_meaning'.tr(),
                                             onTap: () {
                                               context.router.push(
                                                 NamePageRoute(type: 'isSave'),
@@ -160,7 +161,7 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         CategoryTitleCard(
-                                            title: 'Дұғалар',
+                                            title: 'Duas'.tr(),
                                             onTap: () {
                                               context.router.push(
                                                 PrayersPageRoute(
@@ -168,7 +169,7 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                                               );
                                             }),
                                         CategoryTitleCard(
-                                            title: 'Зікірлер',
+                                            title: 'Zikrs'.tr(),
                                             onTap: () {
                                               context.router.push(
                                                 DhikrPageRoute(type: 'isSave'),

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,8 +29,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   }
 
   final bool isActiveButton = false;
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -81,7 +80,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
 
                     //context.read<CodeVerificationCubit>().sendCode(pinController.text, widget.userId,TokenCreateDTO(email: widget.email,password: widget.password));
                   },
-                  text: 'Келесі'),
+                  text: 'next'.tr()),
             ),
             backgroundColor: AppColors.white,
             body: SingleChildScrollView(
@@ -93,15 +92,15 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     SizedBox(
                       height: 56.h,
                     ),
-                    const CustomAppBar(
-                      title: 'Құпия сөзді ұмыттым',
+                    CustomAppBar(
+                      title: 'forgot_password'.tr(),
                       color: AppColors.black,
                     ),
                     SizedBox(
                       height: 36.h,
                     ),
-                    const Text(
-                      'Жүйеге тіркелген почта ',
+                    Text(
+                      'enter_data'.tr(),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: 18.h),
