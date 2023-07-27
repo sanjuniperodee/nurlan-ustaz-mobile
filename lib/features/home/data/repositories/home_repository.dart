@@ -7,6 +7,7 @@ import 'package:nurlan_ustaz_flutter/core/common/constants.dart';
 import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 import 'package:nurlan_ustaz_flutter/core/model/freedom_payment_dto.dart';
+import 'package:nurlan_ustaz_flutter/core/platform/cache_helper/prefs.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_info.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/datasource/local/home_local_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/datasource/remote/home_remote_ds.dart';
@@ -204,30 +205,30 @@ class HomeRepositoryImpl extends HomeRepository {
   }) async {
     if (await networkInfo.isConnected) {
       try {
+        Prefs prefs = Prefs();
+        final String? dev = await prefs.getDeviceToken();
         final String? deviceToken =
             await NotificationService().getDeviceToken();
         final String type = Platform.operatingSystem.toString();
-        final result =
-            await getNotificationDevice(registrationId: deviceToken ?? '');
-        result.fold((l) async {
+        if (dev == null) {
           if (Platform.isIOS || Platform.isAndroid) {
             await remoteDS.notificationDevice(
                 notification: NotificationDeviceDTO(
               registrationId: deviceToken,
               type: type,
             ));
-          }
-        }, (r) async {
-          if (r.registrationId != deviceToken) {
-            if (Platform.isIOS || Platform.isAndroid) {
-              await remoteDS.notificationDevice(
-                  notification: NotificationDeviceDTO(
-                registrationId: deviceToken,
-                type: type,
-              ));
+          } else {
+            if (dev != deviceToken) {
+              NotificationDTO notificationDeviceDTO =
+                  NotificationDTO(registrationId: deviceToken);
+              await remoteDS
+                  .putNotificationDevice(
+                      registrationId: dev!, notification: notificationDeviceDTO)
+                  .then((value) => prefs.saveDeviceToken(deviceToken!));
             }
           }
-        });
+        }
+
         final List<ResultHomeDTO> res =
             await remoteDS.newsMain(isSaved: isSaved, currentPage: currentPage);
         return Right(res);

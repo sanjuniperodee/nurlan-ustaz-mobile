@@ -10,6 +10,7 @@ import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
+import 'package:nurlan_ustaz_flutter/core/platform/cache_helper/prefs.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
@@ -81,6 +82,7 @@ class _MainPageState extends State<MainPage> {
       currentPage: 1,
       // isFirstCall: true,
     );
+
     BlocProvider.of<TimingsCubit>(context).timings(
       43.25,
       76.91667,

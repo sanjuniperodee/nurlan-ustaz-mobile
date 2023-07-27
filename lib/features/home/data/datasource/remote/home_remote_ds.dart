@@ -223,9 +223,10 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   @override
   Future<GetNotiDTO> getNotifacations() async {
     try {
-      final String? deviceToken = await NotificationService().getDeviceToken();
+      Prefs prefs = Prefs();
+      final String? dev = await prefs.getDeviceToken();
       final response = await dio.get(
-        '${EndPoints.getNotification}$deviceToken/',
+        '${EndPoints.getNotification}$dev/',
       );
 
       return GetNotiDTO.fromJson((response.data as Map<String, dynamic>));
@@ -334,10 +335,11 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   @override
   Future<NotificationDTO> setCity({required GeonamesDTO geo}) async {
     try {
-      final String? deviceToken = await NotificationService().getDeviceToken();
+      Prefs prefs = Prefs();
+      final String? dev = await prefs.getDeviceToken();
 
       final response =
-          await dio.post('${EndPoints.setCity}$deviceToken/set_city/', data: {
+          await dio.post('${EndPoints.setCity}$dev/set_city/', data: {
         'city_name': geo.name,
         'country_name': geo.countryName,
         'latitude': geo.lat,

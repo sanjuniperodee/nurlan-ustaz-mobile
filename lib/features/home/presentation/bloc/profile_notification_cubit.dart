@@ -2,6 +2,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
+import 'package:nurlan_ustaz_flutter/core/platform/cache_helper/prefs.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/repositories/home_repository.dart';
 
@@ -100,9 +101,10 @@ class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
   }
 
   Future<void> getNotificationDto() async {
-    final String? deviceToken = await NotificationService().getDeviceToken();
-    final result = await _homeRepository.getNotificationDevice(
-        registrationId: deviceToken ?? '');
+    Prefs prefs = Prefs();
+    final String? dev = await prefs.getDeviceToken();
+    final result =
+        await _homeRepository.getNotificationDevice(registrationId: dev ?? '');
     result.fold((l) => {}, (r) {
       notifications = r
           .toJson()
@@ -112,7 +114,7 @@ class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
           .map(
               (e) => NotificationItemDTO(title: e.key, status: e.value as bool))
           .toList();
-      token = deviceToken ?? '';
+      token = dev ?? '';
       notificationDeviceDTO = r;
       emit(const _InitialPage().copyWith(
           notificationDTO: r,
