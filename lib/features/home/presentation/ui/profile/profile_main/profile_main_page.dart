@@ -250,11 +250,11 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                                     if (value != null) {
                                       chosenLang = langMap[value];
 
-                                      setState(() {});
                                       log(chosenLang.toString());
                                       context.setLocale(
                                         Locale(langMap[value] ?? 'kk'),
                                       );
+
                                       debugPrint(context.locale.toString());
                                       final String newLocal =
                                           (langMap[value] ?? 'ru') == 'kk'
@@ -278,6 +278,9 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                                           ).changeLocal();
                                         },
                                       );
+                                      setState(() {
+                                        log('QQQQ');
+                                      });
                                     }
                                   },
                                   icon: SvgPicture.asset(

@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_cubit.dart';
@@ -47,116 +48,131 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<TusZhoruCubit, TusZhoruState>(
-        listener: (context, state) {
-      state.maybeWhen(
-        orElse: () {},
-        loaded: () {
-          context.router.push(
-            const QuestionPageRoute(),
-          );
-        },
-        errorState: (message) {
-          buildErrorCustomSnackBar(context, message);
-        },
-      );
-    }, builder: (context, state) {
-      return state.maybeMap(orElse: () {
-        return Container();
-      }, loadingState: (loading) {
-        return const Center(
-          child: CircularProgressIndicator(
-            color: AppColors.orange,
-          ),
+    return BlocListener<LanguageCubit, LanguageState>(
+      listener: (context, state) {
+        state.maybeWhen(
+          orElse: () {},
+          loadedState: () {
+            setState(() {});
+          },
         );
-      }, initialState: (tusZhoruList) {
-        return Scaffold(
-          floatingActionButton: tusZhoruList.currentIndex == 1
-              ? widget.type == 'isSave'
-                  ? const SizedBox()
-                  : Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: AppButton(
-                          onTap: () {
-                            context.router.push(
-                              const QuestionPageRoute(),
-                            );
-                          },
-                          text: 'type_dream'.tr()),
-                    )
-              : null,
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
-          floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-          backgroundColor: const Color(0xFFECF5FF),
-          body: TusZhoruCustomBody(
-            child: SingleChildScrollView(
-              physics: const BouncingScrollPhysics(),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  CustomAppBar(
-                    title: widget.type == 'isSave'
-                        ? 'save_dream_interpretation'.tr()
-                        : 'dream_interpretation'.tr(),
-                    hideIcon: widget.type == 'isSave' ? true : false,
-                  ),
-                  SizedBox(
-                    height: 36.h,
-                  ),
-                  SearchWidget(
-                    onChanged: (value) {
-                      log(value);
+        // TODO: implement listener
+      },
+      child: BlocConsumer<TusZhoruCubit, TusZhoruState>(
+          listener: (context, state) {
+        state.maybeWhen(
+          orElse: () {},
+          loaded: () {
+            context.router.push(
+              const QuestionPageRoute(),
+            );
+          },
+          errorState: (message) {
+            buildErrorCustomSnackBar(context, message);
+          },
+        );
+      }, builder: (context, state) {
+        return state.maybeMap(orElse: () {
+          return Container();
+        }, loadingState: (loading) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: AppColors.orange,
+            ),
+          );
+        }, initialState: (tusZhoruList) {
+          return Scaffold(
+            floatingActionButton: tusZhoruList.currentIndex == 1
+                ? widget.type == 'isSave'
+                    ? const SizedBox()
+                    : Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: AppButton(
+                            onTap: () {
+                              context.router.push(
+                                const QuestionPageRoute(),
+                              );
+                            },
+                            text: 'type_dream'.tr()),
+                      )
+                : null,
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+            floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+            backgroundColor: const Color(0xFFECF5FF),
+            body: TusZhoruCustomBody(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    CustomAppBar(
+                      title: widget.type == 'isSave'
+                          ? 'save_dream_interpretation'.tr()
+                          : 'dream_interpretation'.tr(),
+                      hideIcon: widget.type == 'isSave' ? true : false,
+                    ),
+                    SizedBox(
+                      height: 36.h,
+                    ),
+                    SearchWidget(
+                      onChanged: (value) {
+                        log(value);
 
-                      if (tusZhoruList.currentIndex == 0) {
-                        value.isEmpty
-                            ? context
-                                .read<TusZhoruCubit>()
-                                .tusZhoruT(page: 1, isFirstCall: true)
-                            : context.read<TusZhoruCubit>().tusZhoruT(
-                                search: value, page: 1, isFirstCall: true);
-                      }
-                      if (tusZhoruList.currentIndex == 1) {
-                        value.isEmpty
-                            ? context
-                                .read<TusZhoruCubit>()
-                                .getCustomTusZhoruT(page: 1, isFirstCall: true)
-                            : context.read<TusZhoruCubit>().getCustomTusZhoruT(
-                                search: value, page: 1, isFirstCall: true);
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  CustomTabBar(
-                    tabs:  [
-                      Tab(
-                        text: 'all'.tr(),
-                      ),
-                      Tab(
-                        text: 'personal_dream'.tr(),
-                      ),
-                    ],
-                    onTap: (int value) {
-                      context.read<TusZhoruCubit>().switchTab(value);
-                    },
-                    length: 2,
-                  ),
-                  tusZhoruList.currentIndex == 0
-                      ? TusZhoruList(tusZhoruList: tusZhoruList.tusZhoruList)
-                      : CustomTusZhoruList(
-                          tusZhoruList: tusZhoruList.customTusZhoru),
-
-                ],
+                        if (tusZhoruList.currentIndex == 0) {
+                          value.isEmpty
+                              ? context
+                                  .read<TusZhoruCubit>()
+                                  .tusZhoruT(page: 1, isFirstCall: true)
+                              : context.read<TusZhoruCubit>().tusZhoruT(
+                                  search: value, page: 1, isFirstCall: true);
+                        }
+                        if (tusZhoruList.currentIndex == 1) {
+                          value.isEmpty
+                              ? context
+                                  .read<TusZhoruCubit>()
+                                  .getCustomTusZhoruT(
+                                      page: 1, isFirstCall: true)
+                              : context
+                                  .read<TusZhoruCubit>()
+                                  .getCustomTusZhoruT(
+                                      search: value,
+                                      page: 1,
+                                      isFirstCall: true);
+                        }
+                      },
+                    ),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    CustomTabBar(
+                      tabs: [
+                        Tab(
+                          text: 'all'.tr(),
+                        ),
+                        Tab(
+                          text: 'personal_dream'.tr(),
+                        ),
+                      ],
+                      onTap: (int value) {
+                        context.read<TusZhoruCubit>().switchTab(value);
+                      },
+                      length: 2,
+                    ),
+                    tusZhoruList.currentIndex == 0
+                        ? TusZhoruList(tusZhoruList: tusZhoruList.tusZhoruList)
+                        : CustomTusZhoruList(
+                            tusZhoruList: tusZhoruList.customTusZhoru),
+                  ],
+                ),
               ),
             ),
-          ),
-        );
-      });
-    });
+          );
+        });
+      }),
+    );
   }
 
   int selectedIndex = -1;
