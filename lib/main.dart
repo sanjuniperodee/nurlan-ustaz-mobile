@@ -7,19 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:nurlan_ustaz_flutter/core/model/async_app_dependecies.dart';
-import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/detail_prayers_page.dart';
-import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/name_detail_page.dart';
 import 'package:nurlan_ustaz_flutter/features/app/logic/main_runner.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/nurlan_ustaz_app.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/news_detail_page.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_detail_page.dart';
-import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/tus_zhoru_details_page.dart';
-
 
 import 'core/router/app_router.dart';
 import 'core/services/locator_service.dart';
-
-import 'features/tus_zhoru/presentation/ui/custom_tus_zhoru_details_page.dart';
 
 Future<void> firebaseInit() async {
   FirebaseDynamicLinks.instance.onLink.listen((event) {

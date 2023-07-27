@@ -20,9 +20,10 @@ class LanguageCubit extends Cubit<LanguageState> {
   Future<void> changeLanguage({
     String? language,
   }) async {
+    emit(const LanguageState.loadingState());
     log('changeLanguage', name: _tag);
-
     saveLocaleToCache(locale: language!);
+    emit(const LanguageState.loadedState());
   }
 
   void changeLocal() {
