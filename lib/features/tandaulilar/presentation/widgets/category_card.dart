@@ -40,7 +40,8 @@ class CategoryCard extends StatelessWidget {
                 runSpacing: 2,
                 spacing: 2,
                 children: imageList.length < 4
-                    ? imageList.take(4)
+                    ? imageList
+                            .take(4)
                             .map(
                               (e) => Container(
                                 height: 82.h,
@@ -66,6 +67,7 @@ class CategoryCard extends StatelessWidget {
                                   ),
                                 ))
                     : imageList
+                        .take(4)
                         .map(
                           (e) => Container(
                             height: 82.h,
