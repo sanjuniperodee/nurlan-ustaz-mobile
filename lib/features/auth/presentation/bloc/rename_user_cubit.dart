@@ -21,6 +21,7 @@ class RenameUserCubit extends Cubit<RenameUserState> {
   final AuthRepository _authRepository;
 
   Future<void> renameUser({required UserPayload2 user, XFile? avatar}) async {
+    emit(const RenameUserState.loadingState());
     final result = await _authRepository.rename(user: user, avatar: avatar);
     result.fold(
       (l) {

@@ -20,7 +20,11 @@ import '../../../app/presentation/widgets/search_widget.dart';
 
 class TusZhoruPage extends StatefulWidget {
   final String? type;
-  const TusZhoruPage({Key? key, this.type}) : super(key: key);
+
+  const TusZhoruPage({
+    Key? key,
+    this.type,
+  }) : super(key: key);
 
   @override
   State<TusZhoruPage> createState() => _TusZhoruPageState();
@@ -59,7 +63,7 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
       return state.maybeMap(orElse: () {
         return Container();
       }, loadingState: (loading) {
-        return Center(
+        return const Center(
           child: CircularProgressIndicator(
             color: AppColors.orange,
           ),
@@ -67,16 +71,18 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
       }, initialState: (tusZhoruList) {
         return Scaffold(
           floatingActionButton: tusZhoruList.currentIndex == 1
-              ? Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: AppButton(
-                      onTap: () {
-                        context.router.push(
-                          const QuestionPageRoute(),
-                        );
-                      },
-                      text: 'Түсіңізді жазыңыз'),
-                )
+              ? widget.type == 'isSave'
+                  ? const SizedBox()
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: AppButton(
+                          onTap: () {
+                            context.router.push(
+                              const QuestionPageRoute(),
+                            );
+                          },
+                          text: 'Түсіңізді жазыңыз'),
+                    )
               : null,
           floatingActionButtonLocation:
               FloatingActionButtonLocation.centerFloat,

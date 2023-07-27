@@ -12,6 +12,7 @@ import 'package:nurlan_ustaz_flutter/features/home/data/datasource/local/home_lo
 import 'package:nurlan_ustaz_flutter/features/home/data/datasource/remote/home_remote_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/faq_model_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/geonames_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/models/get_noti_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/media_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/notification_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
@@ -113,7 +114,7 @@ abstract class HomeRepository {
     bool? isSaved,
     int? currentPage,
   });
-  Future<Either<Failure, List<MediaDTO>>> getNotifications();
+  Future<Either<Failure, GetNotiDTO>> getNotifications();
 
   Future<Either<Failure, ResultHomeDTO>> seminarDetail({required int id});
 
@@ -169,10 +170,10 @@ class HomeRepositoryImpl extends HomeRepository {
   }
 
   @override
-  Future<Either<Failure, List<MediaDTO>>> getNotifications() async {
+  Future<Either<Failure, GetNotiDTO>> getNotifications() async {
     if (await networkInfo.isConnected) {
       try {
-        final List<MediaDTO> res = await remoteDS.getNotifacations();
+        final GetNotiDTO res = await remoteDS.getNotifacations();
         return Right(res);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -217,9 +218,6 @@ class HomeRepositoryImpl extends HomeRepository {
             ));
           }
         }, (r) async {
-          log('${deviceToken}------/d');
-          log('${r.registrationId}------/r');
-
           if (r.registrationId != deviceToken) {
             if (Platform.isIOS || Platform.isAndroid) {
               await remoteDS.notificationDevice(

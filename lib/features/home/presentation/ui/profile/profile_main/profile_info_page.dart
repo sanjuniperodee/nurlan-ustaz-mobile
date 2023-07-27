@@ -6,10 +6,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_cache_manager/flutter_cache_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:path/path.dart' as p;
+
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/core/utils/alert_utilrs.dart';
@@ -22,8 +25,8 @@ import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_payload2.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/rename_user_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/get_profile_cubit.dart';
-
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/widgets/profile_menu_item.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../../../../../../core/common/assets.dart';
 import '../../../../../../core/common/colors.dart';
@@ -68,6 +71,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
     dateController.text =
         DateFormat('yyyy-MM-dd').format(widget.userDTO.birthday!);
     emailController.text = widget.userDTO.email ?? "";
+    log(widget.userDTO.avatar.toString());
     gender = widget.userDTO.gender ?? 'F';
   }
 
@@ -257,6 +261,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                     ),
                     BlocListener<RenameUserCubit, RenameUserState>(
                       listener: (context, state) {
+                        log('STATE::::${state.toString()}');
                         state.maybeWhen(
                           orElse: () {},
                           errorState: (message) {
@@ -272,8 +277,12 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                         // TODO: implement listener
                       },
                       child: AppButton(
-                          onTap: () {
+                          onTap: () async {
                             log('image${_image.toString()}');
+
+                            _image = _image ??
+                                await getImageXFileByUrl(widget.userDTO.avatar);
+
                             final UserPayload2 userPayload = UserPayload2(
                               fullName: nameController.text.isEmpty
                                   ? widget.userDTO.fullName
@@ -287,7 +296,6 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                               birthday: dateController.text,
                               gender: gender,
                             );
-
                             BlocProvider.of<RenameUserCubit>(context)
                                 .renameUser(user: userPayload, avatar: _image);
                           },
@@ -329,4 +337,13 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
       ),
     );
   }
+}
+
+Future<XFile?> getImageXFileByUrl(String? url) async {
+  if (url == null) {
+    return null;
+  }
+  var file = await DefaultCacheManager().getSingleFile(url);
+  XFile result = await XFile(file.path);
+  return result;
 }

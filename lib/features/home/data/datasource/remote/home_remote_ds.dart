@@ -22,6 +22,8 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitiniz
 
 import 'package:nurlan_ustaz_flutter/features/home/data/models/timings_dto.dart';
 
+import '../../models/get_noti_dto.dart';
+
 const _tag = 'HomeRemoteDS';
 
 abstract class HomeRemoteDs {
@@ -99,7 +101,7 @@ abstract class HomeRemoteDs {
 
   Future<String> postImamService({required List<int> id});
 
-  Future<List<MediaDTO>> getNotifacations();
+  Future<GetNotiDTO> getNotifacations();
   Future<List<MediaDTO>> services(
       {int? currentPage, bool? isFirstCall = false});
 
@@ -219,15 +221,14 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   }
 
   @override
-  Future<List<MediaDTO>> getNotifacations() async {
+  Future<GetNotiDTO> getNotifacations() async {
     try {
       final String? deviceToken = await NotificationService().getDeviceToken();
       final response = await dio.get(
         '${EndPoints.getNotification}$deviceToken/',
       );
-      return ((response.data as List<dynamic>))
-          .map((e) => MediaDTO.fromJson(e))
-          .toList();
+
+      return GetNotiDTO.fromJson((response.data as Map<String, dynamic>));
     } on DioError catch (e) {
       throw ServerException(
         message:

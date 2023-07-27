@@ -7,10 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
-import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
-import 'package:nurlan_ustaz_flutter/core/model/payment_model.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/bottom_sheet.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/payment_tick_cubit.dart';
@@ -27,7 +23,7 @@ class PaymentsPage extends StatefulWidget {
   State<PaymentsPage> createState() => _PaymentsPageState();
 }
 
-int currentIndex = 1;
+int currentIndex = 0;
 
 class _PaymentsPageState extends State<PaymentsPage> {
   @override
@@ -208,35 +204,40 @@ class _PaymentsPageState extends State<PaymentsPage> {
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(
-                                    DateFormat('dd.MM.yyyy')
-                                        .format(res[index].createdAt!),
-                                    style:
-                                        getTextStyle(CustomTextStyles.s12w400)
-                                            .copyWith(
-                                                fontFamily:
-                                                    FontTypes.SF_Pro.name,
-                                                color: AppColors.grey1),
-                                  ),
+                                  if (res[index].createdAt != null)
+                                    Text(
+                                      DateFormat('dd.MM.yyyy')
+                                          .format(res[index].createdAt!),
+                                      style:
+                                          getTextStyle(CustomTextStyles.s12w400)
+                                              .copyWith(
+                                                  fontFamily:
+                                                      FontTypes.SF_Pro.name,
+                                                  color: AppColors.grey1),
+                                    ),
                                   SizedBox(
                                     height: 2.h,
                                   ),
-                                  Text(
-                                    '${res[index].title}',
-                                    style:
-                                        getTextStyle(CustomTextStyles.s16w600)
-                                            .copyWith(
-                                                fontFamily:
-                                                    FontTypes.SF_Pro.name,
-                                                fontWeight: FontWeight.w600,
-                                                fontSize: 16),
+                                  SizedBox(
+                                    width: 250.w,
+                                    child: Text(
+                                      '${res[index].title}',
+                                      overflow: TextOverflow.ellipsis,
+                                      style:
+                                          getTextStyle(CustomTextStyles.s16w600)
+                                              .copyWith(
+                                                  fontFamily:
+                                                      FontTypes.SF_Pro.name,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 16),
+                                    ),
                                   )
                                 ],
                               ),
                               Row(
                                 children: [
                                   Text(
-                                    '${res[index].price} ₸',
+                                    '${res[index].price!.toInt().toString()} ₸',
                                     style:
                                         getTextStyle(CustomTextStyles.s16w600)
                                             .copyWith(color: AppColors.orange),
@@ -272,7 +273,7 @@ class _PaymentsPageState extends State<PaymentsPage> {
 
 Future<void> _launchUrl(String _urll) async {
   final Uri _url = Uri.parse('${_urll}');
-  if (!await launchUrl(_url)) {
+  if (!await launchUrl(_url, mode: LaunchMode.externalApplication)) {
     throw Exception('Could not launch $_url');
   }
 }
