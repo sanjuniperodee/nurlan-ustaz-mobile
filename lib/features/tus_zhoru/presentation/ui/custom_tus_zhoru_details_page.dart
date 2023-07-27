@@ -27,7 +27,7 @@ class _TusZhoruDetailPage extends State<CustomTusZhoruDetailPage> {
 
   @override
   void initState() {
-    BlocProvider.of<TusZhoruCubit>(context).secureScreen();
+    //BlocProvider.of<TusZhoruCubit>(context).secureScreen();
     BlocProvider.of<CustomTusZhoruDetailsCubit>(context).getCustomTusZhoruById(widget.id);
     super.initState();
   }

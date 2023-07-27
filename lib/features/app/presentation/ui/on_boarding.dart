@@ -28,9 +28,10 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       body: Stack(
         children: [
           Image.asset(
-            'assets/images/on_boarding.jpg',
+            'assets/images/on_boarding_background.png',
             fit: BoxFit.cover,
             width: MediaQuery.of(context).size.width,
+            height: MediaQuery.of(context).size.height,
           ),
           Center(
             child: Padding(
@@ -68,7 +69,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                     ),
                   ),
                   SizedBox(
-                    height: 30,
+                    height: 30.h,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -80,32 +81,31 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                               size: Size(8.w, 8.h),
                               color: AppColors.white.withOpacity(0.1),
                               activeShape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5.0)),
+                                  borderRadius: BorderRadius.circular(5.0.r)),
                               activeColor: AppColors.white,
                               shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(5.0)))),
+                                  borderRadius: BorderRadius.circular(5.0.r)))),
+                      InkWell(
+                        onTap: () {
+                          currentIndex != 2
+                              ? controller.nextPage()
+                              : BlocProvider.of<AppBloc>(context)
+                              .add(const AppEvent.onboardingSave());
+                        },
+                        child: Text(
+                          'Аумин 🤲',
+                          style: getTextStyle(CustomTextStyles.s16w500).copyWith(
+                              fontFamily: FontTypes.SF_Pro.name,
+                              color: AppColors.white),
+                        ),
+                      )
                     ],
                   ),
                 ],
               ),
             ),
           ),
-          Positioned(
-              top: 100,
-              child: InkWell(
-                onTap: () {
-                  currentIndex != 2
-                      ? controller.nextPage()
-                      : BlocProvider.of<AppBloc>(context)
-                          .add(const AppEvent.onboardingSave());
-                },
-                child: Text(
-                  'Аумин',
-                  style: getTextStyle(CustomTextStyles.s16w500).copyWith(
-                      fontFamily: FontTypes.SF_Pro.name,
-                      color: AppColors.white),
-                ),
-              ))
+
         ],
       ),
     );

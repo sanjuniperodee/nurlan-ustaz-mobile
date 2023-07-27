@@ -24,13 +24,13 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
   late List<TusZhoruDTO> customTusZhoruList;
 
   Future<void> secureScreen() async {
-    final FlutterWindowManager manager = FlutterWindowManager();
-         await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+    //final FlutterWindowManager manager = FlutterWindowManager();
+     //    await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   }
   Future<void> unSecureScreen() async {
-    final FlutterWindowManager manager = FlutterWindowManager();
+   // final FlutterWindowManager manager = FlutterWindowManager();
 
-    await FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
+   // await FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
   }
 
   Future<void> toggleFav(int id) async {

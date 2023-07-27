@@ -190,7 +190,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                       ],
                     ).createShader(bounds),
                     child: SvgPicture.asset(
-                      'assets/icons/calendar_timer.svg',
+                      'assets/icons/tumer1.svg',
                       color: AppColors.white.withOpacity(0.5),
                       fit: BoxFit.cover,
                     ),
