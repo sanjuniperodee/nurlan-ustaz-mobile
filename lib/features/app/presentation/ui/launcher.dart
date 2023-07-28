@@ -29,19 +29,14 @@ class _LauncherAppState extends State<LauncherApp> {
   }
 
   Future<bool> _onWillPop() async {
-    return false; //<-- SEE HERE
+    return false;
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
         onWillPop: _onWillPop,
-        child: ScreenUtilInit(
-          designSize:  Size(375, 812),
-          builder: (BuildContext context, Widget? child) {
-            return _salam();
-          },
-        ));
+        child: _salam());
   }
 }
 

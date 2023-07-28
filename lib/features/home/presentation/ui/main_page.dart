@@ -348,28 +348,28 @@ class _MainPageState extends State<MainPage> {
                                                           CrossAxisAlignment
                                                               .end,
                                                       children: [
-                                                        Text(
-                                                          namasTimestoSend(),
-                                                          style: getTextStyle(
-                                                                  CustomTextStyles
-                                                                      .s16w200)
-                                                              .apply(
-                                                                  fontFamily:
-                                                                      FontTypes
-                                                                          .SF_Pro
-                                                                          .name)
-                                                              .copyWith(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500)
-                                                              .apply(
-                                                                  color:
-                                                                      AppColors
-                                                                          .blue),
-                                                        ),
-                                                        TimesStateWidget(
-                                                          time: timesToSend(),
-                                                        )
+                                                        // Text(
+                                                        //   namasTimestoSend(),
+                                                        //   style: getTextStyle(
+                                                        //           CustomTextStyles
+                                                        //               .s16w200)
+                                                        //       .apply(
+                                                        //           fontFamily:
+                                                        //               FontTypes
+                                                        //                   .SF_Pro
+                                                        //                   .name)
+                                                        //       .copyWith(
+                                                        //           fontWeight:
+                                                        //               FontWeight
+                                                        //                   .w500)
+                                                        //       .apply(
+                                                        //           color:
+                                                        //               AppColors
+                                                        //                   .blue),
+                                                        // ),
+                                                        // TimesStateWidget(
+                                                        //   time: timesToSend(),
+                                                        // )
                                                       ],
                                                     )
                                                   ],
