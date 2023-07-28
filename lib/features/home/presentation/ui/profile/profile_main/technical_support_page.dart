@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,19 +25,15 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
   late IOWebSocketChannel? _channel;
 
   FocusNode focusNode = FocusNode();
-  final ScrollController _controller = ScrollController();
-  void _scrollDown() {
-    _controller.jumpTo(_controller.position.maxScrollExtent);
-  }
 
   @override
   void initState() {
     // TODO: implement initState
     BlocProvider.of<TechnicalSupportCubit>(context).connectSocket();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      FocusScope.of(context).requestFocus(focusNode);
-    });
     super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      scrollToTheEnd();
+    });
   }
 
   @override
@@ -79,7 +74,6 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
               );
             },
             initialState: (questions, channel, user) {
-              // _controller.jumpTo(_controller.position.maxScrollExtent);
               _channel = channel;
               return GlobalCustomBody(
                 child: SizedBox(
@@ -94,61 +88,76 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
                         title: 'tech_support'.tr(),
                       ),
                       if (questions != [])
-                        ListView.builder(
-                          itemCount: questions.length,
-                          shrinkWrap: true,
-                          controller: _controller,
-                          padding: const EdgeInsets.only(top: 10, bottom: 10).r,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return Container(
-                              padding: const EdgeInsets.only(
-                                      left: 14, right: 14, top: 10, bottom: 10)
-                                  .r,
-                              child: Align(
-                                alignment:
-                                    (questions[index].userName != user!.email
+                        LayoutBuilder(
+                          builder: (BuildContext context,
+                              BoxConstraints constraints) {
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              scrollToTheEnd();
+                            });
+                            return ListView.builder(
+                              // reverse: true,
+                              itemCount: questions.length,
+                              shrinkWrap: true,
+                              controller: _scrollController,
+                              padding:
+                                  const EdgeInsets.only(top: 10, bottom: 10).r,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  padding: const EdgeInsets.only(
+                                          left: 14,
+                                          right: 14,
+                                          top: 10,
+                                          bottom: 10)
+                                      .r,
+                                  child: Align(
+                                    alignment: (questions[index].userName !=
+                                            user!.email
                                         ? Alignment.topLeft
                                         : Alignment.topRight),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: questions[index].userName !=
-                                              user.email
-                                          ? Colors.grey.shade200
-                                          : Colors.blue[100]),
-                                  padding: const EdgeInsets.all(16).r,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        questions[index].message ?? 'ERROR',
-                                        style: getTextStyle(
-                                                CustomTextStyles.s14w400)
-                                            .apply(color: AppColors.black),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: questions[index].userName !=
+                                                  user.email
+                                              ? Colors.grey.shade200
+                                              : Colors.blue[100]),
+                                      padding: const EdgeInsets.all(16).r,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            questions[index].message ?? 'ERROR',
+                                            style: getTextStyle(
+                                                    CustomTextStyles.s14w400)
+                                                .apply(color: AppColors.black),
+                                          ),
+                                          const SizedBox(
+                                            height: 4,
+                                          ),
+                                          Text(
+                                              DateFormat('HH:mm').format(
+                                                  DateTime.parse(
+                                                          questions[index]
+                                                              .createdAt
+                                                              .toString())
+                                                      .toLocal()),
+                                              style: getTextStyle(
+                                                      CustomTextStyles.s12w400)
+                                                  .apply(
+                                                      color: questions[index]
+                                                                  .userName !=
+                                                              user.email
+                                                          ? AppColors.grey2
+                                                          : Colors.blue[900])),
+                                        ],
                                       ),
-                                      const SizedBox(
-                                        height: 4,
-                                      ),
-                                      Text(
-                                          DateFormat('HH:mm').format(
-                                              DateTime.parse(questions[index]
-                                                      .createdAt
-                                                      .toString())
-                                                  .toLocal()),
-                                          style: getTextStyle(
-                                                  CustomTextStyles.s12w400)
-                                              .apply(
-                                                  color: questions[index]
-                                                              .userName !=
-                                                          user.email
-                                                      ? AppColors.grey2
-                                                      : Colors.blue[900])),
-                                    ],
+                                    ),
                                   ),
-                                ),
-                              ),
+                                );
+                              },
                             );
                           },
                         ),
@@ -206,6 +215,14 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
           ],
         ),
       ),
+    );
+  }
+
+  void scrollToTheEnd() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeOut,
     );
   }
 }

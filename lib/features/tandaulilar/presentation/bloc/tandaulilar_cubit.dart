@@ -23,6 +23,7 @@ class TandaulilarCubit extends Cubit<TandaulilarState> {
     required int page,
     bool? isFirstCall,
   }) async {
+    emit(const TandaulilarState.loadingState());
     final failureOrUser = await _homeRepository.lives(
         search: search, isSaved: true, page: page, isFirstCall: isFirstCall);
     failureOrUser.fold(
@@ -43,6 +44,7 @@ class TandaulilarCubit extends Cubit<TandaulilarState> {
     required int page,
     bool? isFirstCall,
   }) async {
+    emit(const TandaulilarState.loadingState());
     final failureOrUser = await _homeRepository.news(
         search: search, isSaved: true, page: page, isFirstCall: isFirstCall);
     failureOrUser.fold(
@@ -63,6 +65,7 @@ class TandaulilarCubit extends Cubit<TandaulilarState> {
     required int page,
     bool? isFirstCall,
   }) async {
+    emit(const TandaulilarState.loadingState());
     final failureOrUser = await _homeRepository.seminar(
       search: search,
       isSaved: true,

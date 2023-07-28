@@ -205,6 +205,7 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<Either<Failure, bool>> deleteUser() async {
     if (await networkInfo.isConnected) {
       try {
+        localDS.removeUserFromCache();
         await remoteDS.deleteUser();
         return const Right(true);
       } on ServerException catch (e) {
