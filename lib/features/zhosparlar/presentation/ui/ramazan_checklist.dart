@@ -71,10 +71,10 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
                   physics: const BouncingScrollPhysics(),
                   child: Column(
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 16),
+                       Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: CustomAppBar(
-                          title: 'Рамазан чеклисті',
+                          title: 'Ramadan_checklist'.tr(),
                         ),
                       ),
                       CustomCalendarAgenda(
@@ -106,14 +106,16 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  'Бүгін, ${DateFormat('dd MMMM').format(DateTime.now().toLocal())} ',
+                                  '${'today'.tr()}, ${DateFormat('dd MMMM').format(DateTime.now().toLocal())} ',
                                   style: getTextStyle(CustomTextStyles.s14w400)
                                       .copyWith(
                                           fontFamily: FontTypes.SF_Pro.name,
                                           color: AppColors.white),
                                 ),
                                 Text(
-                                  ' ${date.difference(DateTime.parse(widget.checkList.startDate!)).inDays + 1}-күні',
+
+                                  ' ${date.difference(DateTime.parse(widget.checkList.startDate!)).inDays + 1}-${'day'.tr()}',
+
                                   style: getTextStyle(CustomTextStyles.s14w400)
                                       .copyWith(
                                           fontFamily:

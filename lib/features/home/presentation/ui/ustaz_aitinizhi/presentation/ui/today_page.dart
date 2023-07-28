@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -80,7 +81,7 @@ class _TodayChatPageState extends State<TodayChatPage> {
                     height: 12.h,
                   ),
                   Text(
-                    'Бола ма?\nБолмай ма?',
+                    'can_question'.tr(),
                     textAlign: TextAlign.center,
                     style: getTextStyle(CustomTextStyles.s16w200)
                         .copyWith(
@@ -100,7 +101,7 @@ class _TodayChatPageState extends State<TodayChatPage> {
                 await context.read<TodayChatCubit>().connectSocket();
               },
               child: Text(
-                'Ескертпе: сұрағыңыз қысқа да нұсқа болуы шарт (90 әріп) Сұрақтар 24 сағаттан соң “Сақталғандар” бөліміне өтеді',
+                'warning_24'.tr(),
                 style: getTextStyle(CustomTextStyles.s12w600)
                     .copyWith(fontFamily: FontTypes.SF_Pro.name),
               ),

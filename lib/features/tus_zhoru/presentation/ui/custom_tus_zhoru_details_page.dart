@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -75,8 +76,8 @@ class _TusZhoruDetailPage extends State<CustomTusZhoruDetailPage> {
                   child: Center(
                     child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 25.w),
-                      child: const Text(
-                        'Өтінішіңіз қабылданды. 24 сағат ішінде  жауап ала аласыз',
+                      child:  Text(
+                        'req_24'.tr(),
                         textAlign: TextAlign.center,
                       ),
                     ),
@@ -158,7 +159,7 @@ class _TusZhoruDetailPage extends State<CustomTusZhoruDetailPage> {
                                 Column(
                                   children: [
                                     Text(
-                                      'Түс жору жауабы',
+                                      'response_horo'.tr(),
                                       style:
                                           getTextStyle(CustomTextStyles.s14w400)
                                               .copyWith(

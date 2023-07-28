@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -13,23 +14,23 @@ class PrivatePolicyText extends StatelessWidget {
     return SizedBox(
       width: 275.w,
       child: RichText(
-          textDirection: TextDirection.ltr,
+          // textDirection: TextDirection.RTL,
           text: TextSpan(
             style: getTextStyle(CustomTextStyles.s14w400)
                 .copyWith(fontFamily: FontTypes.SF_Pro.name),
             children: [
               TextSpan(
-                  text: "Пайдалану шарттарымен ",
+                  text: 'agree1'.tr(),
                   style: getTextStyle(CustomTextStyles.s14w400).copyWith(
                       fontFamily: FontTypes.SF_Pro.name,
                       color: AppColors.blue),
                   recognizer: TapGestureRecognizer()..onTap = () {}),
               TextSpan(
-                  text: "келісу және ",
+                  text: "agree2".tr(),
                   style: getTextStyle(CustomTextStyles.s14w400)
                       .copyWith(fontFamily: FontTypes.SF_Pro.name)),
               TextSpan(
-                  text: 'Құпиялылық саясаты',
+                  text: 'agree3'.tr(),
                   style: getTextStyle(CustomTextStyles.s14w400).copyWith(
                       fontFamily: FontTypes.SF_Pro.name,
                       color: AppColors.blue),

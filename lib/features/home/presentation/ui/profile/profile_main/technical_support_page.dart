@@ -90,7 +90,7 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
                       SizedBox(
                         height: 20.h,
                       ),
-                       CustomAppBar(
+                      CustomAppBar(
                         title: 'tech_support'.tr(),
                       ),
                       if (questions != [])
@@ -132,7 +132,7 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
                                         height: 4,
                                       ),
                                       Text(
-                                          DateFormat('HH.mm').format(
+                                          DateFormat('HH:mm').format(
                                               DateTime.parse(questions[index]
                                                       .createdAt
                                                       .toString())
@@ -181,8 +181,8 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
                     autofocus: true, // Set autofocus to true
                     focusNode: focusNode,
                     controller: _textEditingController,
-                    decoration: const InputDecoration(
-                        hintText: 'Пікір білдіру', border: InputBorder.none),
+                    decoration: InputDecoration(
+                        hintText: 'write_comm'.tr(), border: InputBorder.none),
                   ),
                 ),
                 IconButton(
