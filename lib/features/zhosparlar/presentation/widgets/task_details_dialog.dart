@@ -59,7 +59,7 @@ class TaskDetailsDialog extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50),
               child: Text(
-                'Төменге тізімге енгізетін тапсырманы жазыңыз',
+                'write_down'.tr(),
                 style: getTextStyle(CustomTextStyles.s14w400)
                     .copyWith(fontFamily: FontTypes.SF_Pro.name)
                     .copyWith(color: AppColors.grey1.withOpacity(0.5)),
@@ -132,7 +132,8 @@ class TaskDetailsDialog extends StatelessWidget {
                       if (task != null) {
                         if (task!.title != _controller.text) {
                           if (_controller.text.isEmpty) {
-                            buildErrorCustomSnackBar(context, 'Заполните поле');
+                            buildErrorCustomSnackBar(
+                                context, 'write_line'.tr());
                           } else {
                             Navigator.pop(context);
                             context
@@ -144,7 +145,7 @@ class TaskDetailsDialog extends StatelessWidget {
                                     task!.isCompleted!)
                                 .then((value) {
                               buildSuccessCustomSnackBar(
-                                  context, 'успешно изменено');
+                                  context, 'success'.tr());
                             });
                           }
                         } else {
@@ -157,8 +158,7 @@ class TaskDetailsDialog extends StatelessWidget {
                               .read<CheckListCubit>()
                               .postTask(day, _controller.text)
                               .then((value) {
-                            buildSuccessCustomSnackBar(
-                                context, 'успешно добавлено');
+                            buildSuccessCustomSnackBar(context, 'saved'.tr());
                           });
                         } else {
                           Navigator.pop(context);

@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -46,6 +47,11 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
           return state.maybeWhen(
             orElse: () {
               return const Center();
+            },
+            loadingState: () {
+              return const Center(
+                child: CircularProgressIndicator(color: AppColors.danger),
+              );
             },
             loaded: (result) {
               isFavorite = result.isSaved!;
@@ -231,7 +237,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                 );
                               },
                               child: Text(
-                                'Пікірлерді көру ${result.comentCount}',
+                                '${'look_opinion'.tr()} ${result.comentCount}',
                                 style: getTextStyle(CustomTextStyles.s16w400)
                                     .apply(color: AppColors.grey1),
                               ),

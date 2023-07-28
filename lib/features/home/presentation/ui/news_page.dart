@@ -94,8 +94,8 @@ class _NewsPageState extends State<NewsPage> {
                       children: [
                         CustomAppBar(
                           title: widget.type == 'isSave'
-                              ? 'Таңдаулы жаңалықтар'
-                              : 'Жаңалықтар',
+                              ? 'Favourite_news'.tr()
+                              : 'news'.tr(),
                         ),
                         SizedBox(
                           height: 36.h,

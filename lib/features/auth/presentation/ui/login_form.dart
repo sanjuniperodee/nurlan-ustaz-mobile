@@ -78,20 +78,20 @@ class _LoginFormState extends State<LoginForm> {
                 onTap: () {
                   if (emailController.value.text.isEmpty &&
                       passwordController.value.text.isEmpty) {
-                    buildErrorCustomSnackBar(context, 'Введите логин и пароль');
+                    buildErrorCustomSnackBar(context, 'write_email_or_password'.tr());
                     return;
                   }
                   if (emailController.value.text.isEmpty) {
-                    buildErrorCustomSnackBar(context, 'Введите логин');
+                    buildErrorCustomSnackBar(context, 'write_email'.tr());
                     return;
                   }
                   if (passwordController.value.text.isEmpty) {
-                    buildErrorCustomSnackBar(context, 'Введите пароль');
+                    buildErrorCustomSnackBar(context, 'write_password'.tr());
                     return;
                   }
                   if (isValidEmail(emailController.value.text) == false) {
                     buildErrorCustomSnackBar(
-                        context, 'Введите корректный почтовый адрес');
+                        context, 'write_correct_email'.tr());
                     return;
                   } else {
                     context.read<LoginCubit>().createToken(TokenCreateDTO(
@@ -133,7 +133,7 @@ class _LoginFormState extends State<LoginForm> {
       listener: (context, state) {
         state.maybeWhen(
           loadingState: () {
-            Center(
+            const Center(
               child: CircularProgressIndicator(
                 color: AppColors.danger,
               ),

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -67,7 +68,7 @@ class _ServicesPageState extends State<ServicesPage> {
               height: 22.h,
             ),
             Text(
-              'Жоғарыдағы қызметтердің бірін таңдап, батырманы басыңыз',
+              'above'.tr(),
               textAlign: TextAlign.center,
               style: getTextStyle(CustomTextStyles.s16w400)
                   .copyWith(fontFamily: FontTypes.SF_Pro.name),
@@ -98,7 +99,7 @@ class _ServicesPageState extends State<ServicesPage> {
                       id: id,
                     );
                   },
-                  text: 'Өтініш қалдыру',
+                  text: 'leave_req'.tr(),
                   // color: AppColors.blue,
                 );
               },
@@ -137,8 +138,8 @@ class _ServicesPageState extends State<ServicesPage> {
                   physics: const BouncingScrollPhysics(),
                   child: Column(
                     children: [
-                      const CustomAppBar(
-                        title: 'Қызметтер',
+                       CustomAppBar(
+                        title: 'Services'.tr(),
                       ),
                       ListView.builder(
                         itemCount: listOfServices.length,

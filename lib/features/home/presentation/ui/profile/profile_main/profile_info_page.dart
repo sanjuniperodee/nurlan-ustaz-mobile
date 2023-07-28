@@ -268,7 +268,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                             return buildErrorCustomSnackBar(context, message);
                           },
                           loadedState: (user) {
-                            buildSuccessCustomSnackBar(context, 'Сәтті ауысты');
+                            buildSuccessCustomSnackBar(context, 'success'.tr());
                             BlocProvider.of<GetProfileCubit>(context)
                                 .getUser()
                                 .then((value) => Navigator.pop(context));

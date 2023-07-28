@@ -200,9 +200,9 @@ class _ProfileNotificationPage extends State<ProfileNotificationPage> {
                                 .read<ProfileNotificationCubit>()
                                 .saveChanges()
                                 .then((value) => buildSuccessCustomSnackBar(
-                                    context, 'Cәтті сақталды'));
+                                    context, 'success'.tr()));
                           },
-                          text: 'Сақтау')
+                          text: 'save'.tr())
                     ],
                   ),
                 ),

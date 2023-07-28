@@ -119,7 +119,7 @@ class _CharityDetailPageState extends State<CharityDetailPage> {
                                                       .bankAccountNumber!)
                                                   .then((value) =>
                                                       buildSuccessCustomSnackBar(
-                                                          context, 'Сақталды'));
+                                                          context, 'saved'.tr()));
                                             },
                                             child: SvgPicture.asset(
                                                 Assets.copiedSvg)),
@@ -143,7 +143,7 @@ class _CharityDetailPageState extends State<CharityDetailPage> {
                                                       .phoneNumber!)
                                                   .then((value) =>
                                                       buildSuccessCustomSnackBar(
-                                                          context, 'Сақталды'));
+                                                          context, 'saved'.tr()));
                                             },
                                             child: SvgPicture.asset(
                                                 Assets.copiedSvg)),
@@ -252,7 +252,7 @@ class CustomListTIle extends StatelessWidget {
       trailing: InkWell(
           onTap: () async {
             await FlutterClipboard.copy(text1).then(
-                (value) => buildSuccessCustomSnackBar(context, 'Сақталды'));
+                (value) => buildSuccessCustomSnackBar(context, 'saved'.tr()));
           },
           child: SvgPicture.asset(Assets.copiedSvg)),
     );

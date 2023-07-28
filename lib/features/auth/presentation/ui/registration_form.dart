@@ -191,7 +191,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
               });
             },
             keyboardType: TextInputType.visiblePassword,
-            helperText: 'Пароль должен содержать минимум 8 символов',
+            helperText: 'password_8'.tr(),
             controller: _passwordController,
             hintText: 'password'.tr(),
             labelText: 'password'.tr(),
@@ -290,29 +290,29 @@ class _RegistrationFormState extends State<RegistrationForm> {
                           _dateController.text.isEmpty ||
                           _passwordController.text.isEmpty ||
                           _passwordRepeatController.text.isEmpty) {
-                        buildErrorCustomSnackBar(context, 'Заполните все поля');
+                        buildErrorCustomSnackBar(
+                            context, 'write_all_line'.tr());
                         return;
                       }
                       if (isValidEmail(_emailController.value.text) == false) {
                         buildErrorCustomSnackBar(
-                            context, 'Введите корректный почтовый адрес');
+                            context, 'write_correct_email'.tr());
                         return;
                       }
 
                       if (_passwordController.length < 8) {
                         buildErrorCustomSnackBar(
-                            context, 'Слишком короткий пароль');
+                            context, 'password_short'.tr());
                         return;
                       }
                       if (_passwordController.text !=
                           _passwordRepeatController.text) {
                         buildErrorCustomSnackBar(
-                            context, 'Пароли не совпадают');
+                            context, 'password_dont_match'.tr());
                         return;
                       }
                       if (isPrivacyAccept == false) {
-                        buildErrorCustomSnackBar(
-                            context, 'Примите правила соглашения');
+                        buildErrorCustomSnackBar(context, 'accept_agree'.tr());
                         return;
                       }
                       setState(() {

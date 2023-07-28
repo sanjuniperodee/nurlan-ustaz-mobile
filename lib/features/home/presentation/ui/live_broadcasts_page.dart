@@ -93,8 +93,8 @@ class _LiveBroadcastsPageState extends State<LiveBroadcastsPage> {
                     children: [
                       CustomAppBar(
                         title: widget.type == 'isSave'
-                            ? 'Таңдаулы тікелей эфирлер'
-                            : 'Тікелей эфирлер',
+                            ? 'Favourite_lives'.tr()
+                            : 'lives'.tr(),
                       ),
                       SizedBox(
                         height: 36.h,

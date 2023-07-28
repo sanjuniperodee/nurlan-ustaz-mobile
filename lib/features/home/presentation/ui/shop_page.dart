@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -67,14 +68,14 @@ class _ShopPageState extends State<ShopPage> {
                       physics: const BouncingScrollPhysics(),
                       child: Column(
                         children: [
-                          const CustomAppBar(
-                            title: 'Дүңгіршек',
+                           CustomAppBar(
+                            title: 'shop'.tr(),
                           ),
                           SizedBox(
                             height: 36.h,
                           ),
                           Text(
-                            'ТОП',
+                            'top'.tr(),
                             style: getTextStyle(CustomTextStyles.s20w700)
                                 .apply(color: AppColors.white),
                           ),
@@ -134,7 +135,7 @@ class _ShopPageState extends State<ShopPage> {
                             height: 16.h,
                           ),
                           Text(
-                            'Барлығы',
+                            'all'.tr(),
                             style: getTextStyle(CustomTextStyles.s20w700)
                                 .apply(color: AppColors.black),
                           ),
