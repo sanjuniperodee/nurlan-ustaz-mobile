@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,12 +34,7 @@ bool showButton = false;
 late UserDto userSir;
 late IOWebSocketChannel? _channel;
 
-
-
-
-
 class _UstazAitinizhiState extends State<UstazAitinizhi> {
-
   Future<bool> _onWillPop() async {
     setState(() {
       currentIndex = 0;
@@ -46,16 +42,6 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
     Navigator.of(context).pop(true);
     return false; //<-- SEE HERE
   }
-
-
-
-
-
-
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -139,7 +125,7 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
                                                   height: 48.h,
                                                 ),
                                                 Text(
-                                                  'Сұрағыңыз',
+                                                  'questions'.tr(),
                                                   style: getTextStyle(
                                                           CustomTextStyles
                                                               .s16w700)
@@ -174,7 +160,7 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
                                                                 .never,
                                                         enabled: true,
                                                         labelText:
-                                                            "Ұстаз айтыңызшы...",
+                                                            "${'tell_me_ustaz'.tr()}...",
                                                         labelStyle: getTextStyle(
                                                                 CustomTextStyles
                                                                     .s14w600)
@@ -249,7 +235,7 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
                                                                         20.r))),
                                                     child: Center(
                                                         child: Text(
-                                                      'Жіберу',
+                                                      'send'.tr(),
                                                       style: getTextStyle(
                                                               CustomTextStyles
                                                                   .s16w500)
@@ -300,7 +286,7 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
                               },
                             );
                           },
-                          text: 'Сұраңыз',
+                          text: 'ask'.tr(),
                         ),
                       ),
                     )
@@ -322,18 +308,18 @@ class _UstazAitinizhiState extends State<UstazAitinizhi> {
                         currentIndex = 0;
                       });
                     },
-                    title: 'Ұстаз айтыңызшы',
+                    title: 'tell_me_ustaz'.tr(),
                   ),
                   SizedBox(
                     height: 36.h,
                   ),
                   CustomTabBar(
-                    tabs: const [
+                    tabs:  [
                       Tab(
-                        text: 'Бүгін',
+                        text: 'today'.tr(),
                       ),
                       Tab(
-                        text: 'Барлығы',
+                        text: 'all'.tr(),
                       ),
                     ],
                     onTap: (int index) {

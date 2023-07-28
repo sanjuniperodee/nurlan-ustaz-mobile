@@ -127,7 +127,7 @@ class QuestionsList extends StatelessWidget {
                                     width: 4.w,
                                   ),
                                   Text(
-                                    'Жауап: ${e.is_allowed! ? 'Болады.' : 'Болмады.'}',
+                                    '${'Answer'.tr()}: ${e.is_allowed! ? 'Will'.tr() : 'was_not'.tr()}',
                                     style:
                                         getTextStyle(CustomTextStyles.s14w600)
                                             .copyWith(

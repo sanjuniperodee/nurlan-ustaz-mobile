@@ -63,7 +63,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   onTap: () {
                     if (emailController.value.text.length <= 5) {
                       buildErrorCustomSnackBar(
-                          context, 'Введите почтовый адрес');
+                          context, 'write_email'.tr());
                     } else {
                       bool isValidEmail() {
                         return RegExp(
@@ -75,7 +75,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                           ? BlocProvider.of<ForgotPasswordCubitCubit>(context)
                               .getIdByMail(emailController.value.text)
                           : buildErrorCustomSnackBar(
-                              context, 'Введите корректный почтовый адрес');
+                              context, 'write_correct_email'.tr());
                     }
 
                     //context.read<CodeVerificationCubit>().sendCode(pinController.text, widget.userId,TokenCreateDTO(email: widget.email,password: widget.password));
@@ -124,7 +124,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         state.maybeWhen(
           successConfirm: () {
             Navigator.of(context).pop();
-            buildSuccessCustomSnackBar(context, 'Сәтті ауысты');
+            buildSuccessCustomSnackBar(context, 'success'.tr());
           },
           errorState: (message) {
             // Navigator.pop(context);

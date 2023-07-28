@@ -54,8 +54,8 @@ class _AddNewCardPageState extends State<AddNewCardPage> {
                     Container(
                       width: 150.w,
                         child: CustomTextFormProfile(
-                            hintText: 'Жарамдылық мерзімі',
-                            labelText: 'Жарамдылық мерзімі',onChanged: (value){})),
+                            hintText: 'shelf_life'.tr(),
+                            labelText: 'shelf_life'.tr(),onChanged: (value){})),
                     Container(
                         width: 150.w,
                         child: CustomTextFormProfile(

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -46,8 +47,8 @@ class _NotificationPageState extends State<NotificationPage> {
                     physics: const BouncingScrollPhysics(),
                     child: Column(
                       children: [
-                        const CustomAppBar(
-                          title: 'Хабарламалар',
+                         CustomAppBar(
+                          title: 'notifications'.tr(),
                         ),
                         if (res.news != null)
                           Padding(
@@ -62,7 +63,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                   collapsedIconColor: AppColors.orange,
                                   iconColor: AppColors.orange,
                                   title: Text(
-                                    'Жаңалықтар',
+                                    'news'.tr(),
                                     style:
                                         getTextStyle(CustomTextStyles.s14w400),
                                   ),
@@ -103,7 +104,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                   collapsedIconColor: AppColors.orange,
                                   iconColor: AppColors.orange,
                                   title: Text(
-                                    'Түс жору',
+                                    'dream_interpretation'.tr(),
                                     style:
                                         getTextStyle(CustomTextStyles.s14w400),
                                   ),
@@ -144,7 +145,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                   collapsedIconColor: AppColors.orange,
                                   iconColor: AppColors.orange,
                                   title: Text(
-                                    'Есімдер мағынасы',
+                                    'name_meaning'.tr(),
                                     style:
                                         getTextStyle(CustomTextStyles.s14w400),
                                   ),
@@ -187,7 +188,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                   collapsedIconColor: AppColors.orange,
                                   iconColor: AppColors.orange,
                                   title: Text(
-                                    'Тікелей эфир',
+                                    'live'.tr(),
                                     style:
                                         getTextStyle(CustomTextStyles.s14w400),
                                   ),
@@ -228,7 +229,7 @@ class _NotificationPageState extends State<NotificationPage> {
                                   collapsedIconColor: AppColors.orange,
                                   iconColor: AppColors.orange,
                                   title: Text(
-                                    'Бола ма, болмай ма?',
+                                    'can_ques'.tr(),
                                     style:
                                         getTextStyle(CustomTextStyles.s14w400),
                                   ),

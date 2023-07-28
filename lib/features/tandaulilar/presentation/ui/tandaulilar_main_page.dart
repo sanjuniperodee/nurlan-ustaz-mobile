@@ -158,7 +158,7 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                                                 );
                                               }),
                                           CategoryTitleCard(
-                                              title: 'name_meaning'.tr(),
+                                              title: 'names'.tr(),
                                               onTap: () {
                                                 context.router.push(
                                                   NamePageRoute(type: 'isSave'),

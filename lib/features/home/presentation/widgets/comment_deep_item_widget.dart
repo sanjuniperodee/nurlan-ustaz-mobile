@@ -73,7 +73,7 @@ class _CommentDeepItemWidgetState extends State<CommentDeepItemWidget> {
                   children: [
                     Text(
                       widget.resultHomeDTO.user?.fullName ??
-                          'Пользователь удален',
+                          'user_delete'.tr(),
                       style: getTextStyle(CustomTextStyles.s14w700)
                           .apply(color: AppColors.black),
                     ),
@@ -144,11 +144,11 @@ class _CommentDeepItemWidgetState extends State<CommentDeepItemWidget> {
                     : InkWell(
                         borderRadius: BorderRadius.circular(8),
                         onTap: widget.callback ?? () {},
-                        child: const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 8),
+                        child:  Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
                             child: Text(
-                              'Жауап беру',
-                              style: TextStyle(
+                              'Answer_send'.tr(),
+                              style: const TextStyle(
                                   decoration: TextDecoration.underline,
                                   fontSize: 12,
                                   color: AppColors.grey2,

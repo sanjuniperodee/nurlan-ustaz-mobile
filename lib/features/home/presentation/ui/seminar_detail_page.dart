@@ -318,7 +318,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                                               .symmetric(
                                                           horizontal: 25),
                                                       child: Text(
-                                                        'Семинар билет алу үшін төлем жасауыңызды сұраймыз',
+                                                        'sem_buy_tick'.tr(),
                                                         style: getTextStyle(
                                                                 CustomTextStyles
                                                                     .s16w400)
@@ -359,7 +359,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                                         color: AppColors.orange,
                                                         child: Center(
                                                           child: Text(
-                                                              '${result.price!.toInt()} тг төлеу',
+                                                              '${result.price!.toInt()} тг ${'dream_pay'.tr()}',
                                                               style: getTextStyle(
                                                                       CustomTextStyles
                                                                           .s14w400)
@@ -378,7 +378,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                             );
                                           });
                                     },
-                                    text: 'Сатып алу',
+                                    text: 'buy'.tr(),
                                     color: AppColors.blue,
                                   ),
                             SizedBox(
@@ -399,7 +399,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                 );
                               },
                               child: Text(
-                                'Пікірлерді көру (${result.comentCount})',
+                                '${'look_opinion'.tr()} (${result.comentCount})',
                                 style: getTextStyle(CustomTextStyles.s16w400)
                                     .apply(color: AppColors.grey1),
                               ),

@@ -151,7 +151,13 @@ class _MainPageState extends State<MainPage> {
                           right: 0,
                           child: SizedBox(
                             child: SmartRefresher(
+                              enablePullDown: true,
                               controller: controller,
+                              header: CustomHeader(
+                                builder: (context, mode) {
+                                  return Container(); // Return an empty container to remove the default text
+                                },
+                              ),
                               onRefresh: () {
                                 String chosenLang =
                                     getIt<AuthLocalDs>().getLocale();

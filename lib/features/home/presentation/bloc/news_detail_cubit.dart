@@ -17,6 +17,7 @@ class NewsDetailCubit extends Cubit<NewsDetailState> {
   Future<void> newsDetail({
     required int id,
   }) async {
+    emit(const NewsDetailState.loadingState());
     final failureOrUser = await _homeRepository.newsDetail(
       id: id,
     );

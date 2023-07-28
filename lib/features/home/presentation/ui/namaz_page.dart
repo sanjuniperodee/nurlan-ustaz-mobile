@@ -24,12 +24,12 @@ class _NamazPageState extends State<NamazPage> {
   final now = DateTime.now();
 
   List<String> namasNames = [
-    'Таң намазы',
-    'Күн',
-    'Бесін',
-    'Екінті',
-    'Ақшам',
-    'Құптан'
+    'Fajr'.tr(),
+      'Күн',
+      'Zukhr'.tr(),
+      'Asr'.tr(),
+      'Maghrib'.tr(),
+      'Isha'.tr()
   ];
   @override
   void initState() {
@@ -74,8 +74,8 @@ class _NamazPageState extends State<NamazPage> {
                       physics: const BouncingScrollPhysics(),
                       child: Column(
                         children: [
-                          const CustomAppBar(
-                            title: 'Намаз уақыттары',
+                           CustomAppBar(
+                            title: 'Namaz_times'.tr(),
                           ),
                           SizedBox(
                             height: 28.h,

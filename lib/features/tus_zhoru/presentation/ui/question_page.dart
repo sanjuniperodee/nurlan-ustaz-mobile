@@ -115,7 +115,7 @@ class _QuestionPageState extends State<QuestionPage> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            'Бұл бөлімде Нұрлан ұстаздан жеке түс жорытуға тапсырыс бере аласыз. Түскен сомадан сіздің атыңыздан түс садақасы беріледі',
+                            'section'.tr(),
                             style: getTextStyle(CustomTextStyles.s14w500),
                             textAlign: TextAlign.center,
                           ),
@@ -129,7 +129,7 @@ class _QuestionPageState extends State<QuestionPage> {
                             onChanged: (value) {
                               setState(() {});
                             },
-                            hintText: 'Aтауы...',
+                            hintText: '${'name1'.tr()}...',
                             controller: controllerForAtau,
                           ),
                           SizedBox(

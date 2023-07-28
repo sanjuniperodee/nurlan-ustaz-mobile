@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -71,7 +72,7 @@ class _CommentPageSemState extends State<CommentPageSem> {
         backgroundColor: AppColors.white,
         elevation: 0,
         title: Text(
-          'Пікірлері',
+          'Reviews'.tr(),
           textAlign: TextAlign.center,
           style: getTextStyle(CustomTextStyles.s20w700)
               .apply(color: AppColors.black),
@@ -129,8 +130,8 @@ class _CommentPageSemState extends State<CommentPageSem> {
                                 focusNode: focusNode,
                                 maxLength: 999,
                                 controller: _textEditingController,
-                                decoration: const InputDecoration(
-                                    hintText: 'Пікір білдіру',
+                                decoration:  InputDecoration(
+                                    hintText: 'write_comm'.tr(),
                                     counterText: '',
                                     border: InputBorder.none),
                               ),
@@ -204,7 +205,7 @@ class _CommentPageSemState extends State<CommentPageSem> {
                         padding: const EdgeInsets.only(top: 200),
                         child: Center(
                           child: Text(
-                            'Әзірше пікірлер жок',
+                            'no_comments_yet'.tr(),
                             style: getTextStyle(CustomTextStyles.s20w700)
                                 .apply(color: AppColors.black),
                           ),

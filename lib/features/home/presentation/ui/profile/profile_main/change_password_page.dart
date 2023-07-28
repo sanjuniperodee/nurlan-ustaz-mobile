@@ -49,14 +49,14 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
 
                       if (newPasController.text != pasController.text) {
                          buildErrorCustomSnackBar(
-                            context, 'Пароли не совпадают');
+                            context, 'password_dont_match'.tr());
                          return;
                       }
                       if (curPasController.text.isEmpty ||
                           newPasController.text.isEmpty ||
                           pasController.text.isEmpty) {
                          buildErrorCustomSnackBar(
-                            context, 'Заполните все поля');
+                            context, 'write_all_line'.tr());
                          return;
                       } else {
                         setState(() {
@@ -74,7 +74,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         });
                       }
                     },
-              text: 'Дайын'),
+              text: 'ready'.tr()),
 
         ),
       ),
@@ -118,8 +118,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         },
                         controller: curPasController,
 
-                        hintText: 'Ағымдағы құпия сөз',
-                        labelText: 'Ағымдағы құпия сөз',
+                        hintText: 'current_password'.tr(),
+                        labelText: 'current_password'.tr(),
                         onChanged: (value) {
                           setState(() {});
                         }),
@@ -136,8 +136,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                           });
                         },
 
-                        hintText: 'Жаңа құпия сөз',
-                        labelText: 'Жаңа құпия сөз',
+                        hintText: 'new_password'.tr(),
+                        labelText: 'new_password'.tr(),
                         onChanged: (value) {
                           setState(() {});
                         }),
@@ -154,8 +154,8 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                         },
                         controller: pasController,
 
-                        hintText: 'Жаңа құпия сөз қайталау',
-                        labelText: 'Жаңа құпия сөз қайталау',
+                        hintText: 'repeat_new_password'.tr(),
+                        labelText: 'repeat_new_password'.tr(),
                         onChanged: (value) {
                           setState(() {});
                         }),

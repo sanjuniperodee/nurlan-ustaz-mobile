@@ -98,8 +98,8 @@ class _SeminarPageState extends State<SeminarPage> {
                     CustomAppBar(
                       // onTap: () {},
                       title: widget.type == 'isSave'
-                          ? 'Таңдаулы семинар'
-                          : 'Семинар',
+                          ? 'Favourite_sev'.tr()
+                          : 'Seminar'.tr(),
                     ),
                     SizedBox(
                       height: 36.h,
