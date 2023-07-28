@@ -59,7 +59,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                       autoPlay: false,
                       enlargeCenterPage: true,
                       viewportFraction: 1,
-                      aspectRatio: 0.529,
+                      aspectRatio: 0.6,
                       initialPage: 0,
                       onPageChanged: (index, reason) {
                         setState(() {

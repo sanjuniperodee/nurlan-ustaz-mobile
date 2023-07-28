@@ -59,7 +59,9 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
             return Container();
           }, loadingState: () {
             return Scaffold(body: Center(child: CircularProgressIndicator()));
-          }, initialState: (days, date , tasks, isLoading) {
+          }, initialState: (days, selectedDate , tasks, isLoading) {
+            final date = selectedDate ?? DateTime.now();
+
 
             return CalendarCustomBody(
               left: 0,
@@ -81,7 +83,7 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
                         weekDay: WeekDay.long,
                         fullCalendarDay: WeekDay.long,
                         selectedDateColor: Colors.blue.shade900,
-                        initialDate: date ?? DateTime.now(),
+                        initialDate: date ,
                         firstDate: DateTime.parse(widget.checkList.startDate!),
                         lastDate: DateTime.parse(widget.checkList.endDate!),
                         events:
@@ -111,7 +113,9 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
                                           color: AppColors.white),
                                 ),
                                 Text(
-                                  ' ${date!.difference(DateTime.parse(widget.checkList.startDate!)).inDays + 1}-${'day'.tr()}',
+
+                                  ' ${date.difference(DateTime.parse(widget.checkList.startDate!)).inDays + 1}-${'day'.tr()}',
+
                                   style: getTextStyle(CustomTextStyles.s14w400)
                                       .copyWith(
                                           fontFamily:
@@ -129,7 +133,7 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
                                       builder: (context) => TaskDetailsDialog(
                                           day: days.firstWhere((e) =>
                                               DateTime.parse(e.date).day ==
-                                              date?.day)));
+                                              date.day)));
                                 },
                                 icon: SvgPicture.asset(
                                     'assets/icons/add-alt.svg'))

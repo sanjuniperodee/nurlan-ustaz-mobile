@@ -73,10 +73,10 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
         showDialog(
             context: mainContext,
             builder: (context) => HolidayDialog(
-                  event: event,
-                  mainContext: mainContext,
-                  gradient: gradient,
-                ));
+              event: event,
+              mainContext: mainContext,
+              gradient: gradient,
+            ));
         break;
       case EventsType.live:
         showDialog(
@@ -95,7 +95,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
         );
         break;
       default:
-        // Handle other event types or display a default dialog
+      // Handle other event types or display a default dialog
         break;
     }
   }
@@ -127,20 +127,20 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
   Widget build(BuildContext context) {
     return BlocConsumer<ZhosparymCubit, ZhosparymState>(
         listener: (context, state) {
-      state.maybeWhen(
-        errorState: (message) {
-          buildErrorCustomSnackBar(context, message);
-        },
-        orElse: () {},
-      );
-    }, builder: (context, state) {
+          state.maybeWhen(
+            errorState: (message) {
+              buildErrorCustomSnackBar(context, message);
+            },
+            orElse: () {},
+          );
+        }, builder: (context, state) {
       return state.maybeWhen(orElse: () {
         return Container();
       }, initialState: (events) {
         holidays.clear();
  
         final eventsDays = events?.map<DateTime, List<EventDto>>(
-          (key, value) => MapEntry(
+              (key, value) => MapEntry(
             DateTime.parse(key),
             value,
           ),
@@ -207,11 +207,11 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             SizedBox(height: 82.h),
-                            Text('my_plans'.tr(),
+                            Text('Менің \nжоспарым',
                                 style: getTextStyle(CustomTextStyles.s36w700)
                                     .apply(
-                                        fontFamily: FontTypes.Philosopher.name,
-                                        color: AppColors.white)),
+                                    fontFamily: FontTypes.Philosopher.name,
+                                    color: AppColors.white)),
                             SizedBox(height: 24.h),
                             Container(
                               height: 414,
@@ -231,32 +231,32 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                     return;
                                   } else {
                                     if (eventsDays[date]!
-                                            .toList()
-                                            .where((element) =>
-                                                element.type !=
-                                                EventsType.holiday)
-                                            .length >
+                                        .toList()
+                                        .where((element) =>
+                                    element.type !=
+                                        EventsType.holiday)
+                                        .length >
                                         1) {
                                       CarouselController controller =
-                                          CarouselController();
+                                      CarouselController();
                                       int currentIndex = 0;
                                       showDialog(
                                         context: context,
                                         builder: (context) => Dialog(
                                             shape: RoundedRectangleBorder(
                                                 borderRadius:
-                                                    BorderRadius.circular(
-                                                        20.r)),
+                                                BorderRadius.circular(
+                                                    20.r)),
                                             child: CarouselSlider(
                                               carouselController: controller,
                                               items: eventsDays[date]!
                                                   .toList()
                                                   .where((element) =>
-                                                      element.type !=
-                                                      EventsType.holiday)
+                                              element.type !=
+                                                  EventsType.holiday)
                                                   .toList()
                                                   .map(
-                                                (e) {
+                                                    (e) {
                                                   return EventContainer(
                                                     e,
                                                     nextPage: () {
@@ -274,7 +274,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                                 viewportFraction: 1,
                                                 autoPlay: true,
                                                 autoPlayInterval:
-                                                    const Duration(seconds: 3),
+                                                const Duration(seconds: 3),
                                                 enlargeCenterPage: true,
                                                 onPageChanged: (index, _) {
                                                   setState(() {
@@ -340,37 +340,37 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                               onTap: _isLoading == true
                                   ? null
                                   : () {
-                                      setState(() {
-                                        _isLoading = true;
-                                      });
-                                      context
-                                          .read<ZhosparymCubit>()
-                                          .getCheckList()
-                                          .then((value) async {
-                                        if (value == null) {
-                                          setState(() {
-                                            _isLoading = false;
-                                          });
-                                          return;
-                                        } else {
-                                          await BlocProvider.of<CheckListCubit>(
-                                                  context)
-                                              .getDays(checklistId: value.id);
+                                setState(() {
+                                  _isLoading = true;
+                                });
+                                context
+                                    .read<ZhosparymCubit>()
+                                    .getCheckList()
+                                    .then((value) async {
+                                  if (value == null) {
+                                    setState(() {
+                                      _isLoading = false;
+                                    });
+                                    return;
+                                  } else {
+                                    await BlocProvider.of<CheckListCubit>(
+                                        context)
+                                        .getDays(checklistId: value.id);
  
-                                          context.router
-                                              .push(
-                                            RamazanChecklistRoute(
-                                                checkList: value),
-                                          )
-                                              .then((value) {
-                                            setState(() {
-                                              _isLoading = false;
-                                            });
-                                          });
-                                        }
+                                    context.router
+                                        .push(
+                                      RamazanChecklistRoute(
+                                          checkList: value),
+                                    )
+                                        .then((value) {
+                                      setState(() {
+                                        _isLoading = false;
                                       });
-                                    },
-                              text: 'Ramadan_checklist'.tr(),
+                                    });
+                                  }
+                                });
+                              },
+                              text: 'Рамазан чеклисті',
                               color: AppColors.orange,
                             ),
                             SizedBox(
@@ -378,100 +378,100 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                             ),
                             if (holidays
                                 .where((element) =>
-                                    element.type == EventsType.holiday)
+                            element.type == EventsType.holiday)
                                 .toList()
                                 .toSet()
                                 .isNotEmpty)
                               Text(
-                                'Important_dates'.tr(),
+                                'Атаулы күндер',
                                 style: getTextStyle(CustomTextStyles.s14w500)
                                     .copyWith(
-                                        fontFamily: FontTypes.SF_Pro.name),
+                                    fontFamily: FontTypes.SF_Pro.name),
                               ),
                             SizedBox(
                               height: 16.h,
                             ),
                             ...holidays
                                 .where((element) =>
-                                    element.type == EventsType.holiday)
+                            element.type == EventsType.holiday)
                                 .toList()
                                 .toSet()
                                 .map((e) => Padding(
-                                      padding:
-                                          const EdgeInsets.only(bottom: 31),
-                                      child: InkWell(
-                                        onTap: () {
-                                          showEventDialog(
-                                              context,
-                                              e,
-                                              holidays
-                                                      .where((element) =>
-                                                          element.type ==
-                                                          EventsType.holiday)
-                                                      .toList()
-                                                      .toSet()
-                                                      .toList()
-                                                      .indexOf(e)
-                                                      .isEven
-                                                  ? gradients[0]
-                                                  : gradients[1]);
-                                        },
-                                        child: Container(
-                                          padding: const EdgeInsets.only(
-                                              left: 16,
-                                              right: 16,
-                                              top: 42,
-                                              bottom: 16),
-                                          width: double.infinity,
-                                          height: 130,
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(30),
-                                            gradient: holidays.indexOf(e).isOdd
-                                                ? gradients[0]
-                                                : gradients[1],
-                                            image: const DecorationImage(
-                                              opacity: 0.3,
-                                              image: AssetImage(
-                                                  "assets/images/ooo.png"),
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                '${DateFormat('dd.MM.yyyy').format(DateTime.parse(e.date!))}ж.',
-                                                style: getTextStyle(
-                                                        CustomTextStyles
-                                                            .s16w600)
-                                                    .copyWith(
-                                                        fontFamily: FontTypes
-                                                            .SF_Pro.name,
-                                                        color: AppColors.white,
-                                                        fontWeight:
-                                                            FontWeight.w700),
-                                              ),
-                                              Text(
-                                                '${e.title}',
-                                                style: getTextStyle(
-                                                        CustomTextStyles
-                                                            .s16w600)
-                                                    .copyWith(
-                                                        fontFamily: FontTypes
-                                                            .SF_Pro.name,
-                                                        color: AppColors.white,
-                                                        fontWeight:
-                                                            FontWeight.w700),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                              padding:
+                              const EdgeInsets.only(bottom: 31),
+                              child: InkWell(
+                                onTap: () {
+                                  showEventDialog(
+                                      context,
+                                      e,
+                                      holidays
+                                          .where((element) =>
+                                      element.type ==
+                                          EventsType.holiday)
+                                          .toList()
+                                          .toSet()
+                                          .toList()
+                                          .indexOf(e)
+                                          .isEven
+                                          ? gradients[0]
+                                          : gradients[1]);
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.only(
+                                      left: 16,
+                                      right: 16,
+                                      top: 42,
+                                      bottom: 16),
+                                  width: double.infinity,
+                                  height: 130,
+                                  decoration: BoxDecoration(
+                                    borderRadius:
+                                    BorderRadius.circular(30),
+                                    gradient: holidays.indexOf(e).isOdd
+                                        ? gradients[0]
+                                        : gradients[1],
+                                    image: const DecorationImage(
+                                      opacity: 0.3,
+                                      image: AssetImage(
+                                          "assets/images/ooo.png"),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '${DateFormat('dd.MM.yyyy').format(DateTime.parse(e.date!))}ж.',
+                                        style: getTextStyle(
+                                            CustomTextStyles
+                                                .s16w600)
+                                            .copyWith(
+                                            fontFamily: FontTypes
+                                                .SF_Pro.name,
+                                            color: AppColors.white,
+                                            fontWeight:
+                                            FontWeight.w700),
                                       ),
-                                    ))
+                                      Text(
+                                        '${e.title}',
+                                        style: getTextStyle(
+                                            CustomTextStyles
+                                                .s16w600)
+                                            .copyWith(
+                                            fontFamily: FontTypes
+                                                .SF_Pro.name,
+                                            color: AppColors.white,
+                                            fontWeight:
+                                            FontWeight.w700),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ))
                                 .toList(),
                           ],
                         )),
