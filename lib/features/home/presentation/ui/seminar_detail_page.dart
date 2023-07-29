@@ -57,6 +57,8 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
               );
             },
             loaded: (result) {
+               bool scroll = true;
+              result.media!.length == 1 ? scroll = false : scroll = true;
               isFavorite = result.isSaved!;
               isLiked = result.isLiked!;
               likeCount = result.likesCount!;
@@ -65,7 +67,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                 CarouselSlider(
                   options: CarouselOptions(
                     viewportFraction: 1,
-                    autoPlay: true,
+                    autoPlay: scroll,
                     enlargeCenterPage: true,
                     autoPlayInterval: const Duration(seconds: 3),
                     aspectRatio: 17 / 13,

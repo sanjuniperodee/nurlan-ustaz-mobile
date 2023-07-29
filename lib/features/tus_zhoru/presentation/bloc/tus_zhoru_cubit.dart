@@ -18,35 +18,38 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
 
   TusZhoruCubit(
     this._repository,
-  ) : super(const TusZhoruState.initialState()){}
+  ) : super(const TusZhoruState.initialState()) {}
 
   late List<TusZhoruDTO> tosZhoruList;
   late List<TusZhoruDTO> customTusZhoruList;
 
   Future<void> secureScreen() async {
     //final FlutterWindowManager manager = FlutterWindowManager();
-     //    await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
+    //    await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
   }
   Future<void> unSecureScreen() async {
-   // final FlutterWindowManager manager = FlutterWindowManager();
+    // final FlutterWindowManager manager = FlutterWindowManager();
 
-   // await FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
+    // await FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
   }
 
   Future<void> toggleFav(int id) async {
     final result = await _repository.tusZhoruFavorite(id: id);
   }
 
-  Future<void> switchTab(int index) async {
+  Future<void> switchTab(int index, String type) async {
     if (index == 1) {
-      await getCustomTusZhoruT(page: 1, isFirstCall: true);
-    }
-    else{
-      await tusZhoruT(page: 1,isFirstCall: true);
+      type == 'save'
+          ? await getCustomTusZhoruT(page: 1, isFirstCall: true, isSaved: true)
+          : await getCustomTusZhoruT(page: 1, isFirstCall: true);
+    } else {
+      type == 'save'
+          ? await tusZhoruT(page: 1, isFirstCall: true, isSaved: true)
+          : await tusZhoruT(page: 1, isFirstCall: true);
     }
     // if(index ==0  ){tusZhoruT(page: 1,isFirstCall: false);}
 
-     emit(_InitialPage().copyWith(
+    emit(_InitialPage().copyWith(
         currentIndex: index,
         tusZhoruList: tosZhoruList,
         customTusZhoru: customTusZhoruList));

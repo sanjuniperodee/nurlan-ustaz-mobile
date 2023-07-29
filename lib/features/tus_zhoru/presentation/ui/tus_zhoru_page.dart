@@ -157,7 +157,8 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                         ),
                       ],
                       onTap: (int value) {
-                        context.read<TusZhoruCubit>().switchTab(value);
+                        context.read<TusZhoruCubit>().switchTab(
+                            value, widget.type == 'isSave' ? 'save' : '');
                       },
                       length: 2,
                     ),
