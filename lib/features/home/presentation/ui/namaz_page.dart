@@ -25,11 +25,11 @@ class _NamazPageState extends State<NamazPage> {
 
   List<String> namasNames = [
     'Fajr'.tr(),
-      'Күн',
-      'Zukhr'.tr(),
-      'Asr'.tr(),
-      'Maghrib'.tr(),
-      'Isha'.tr()
+    'Күн',
+    'Zukhr'.tr(),
+    'Asr'.tr(),
+    'Maghrib'.tr(),
+    'Isha'.tr()
   ];
   @override
   void initState() {
@@ -45,7 +45,6 @@ class _NamazPageState extends State<NamazPage> {
   List times = [];
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: AppColors.lightBlue,
       body: BlocBuilder<TimingsCubit, TimingsState>(
@@ -74,7 +73,7 @@ class _NamazPageState extends State<NamazPage> {
                       physics: const BouncingScrollPhysics(),
                       child: Column(
                         children: [
-                           CustomAppBar(
+                          CustomAppBar(
                             title: 'Namaz_times'.tr(),
                           ),
                           SizedBox(
@@ -170,7 +169,7 @@ class _NamazPageState extends State<NamazPage> {
     String nextTime = '';
     for (int i = 0; i < times.length; i++) {
       if (times[i] == beforeTime) {
-        if (times[i] == times.length - 1) {
+        if (i == times.length - 1) {
           nextTime = times[0];
           break;
         } else {
@@ -187,7 +186,7 @@ class _NamazPageState extends State<NamazPage> {
     String nextTime = '';
     for (int i = 0; i < times.length; i++) {
       if (times[i] == beforeTime) {
-        if (times[i] == times.length - 1) {
+        if (i == times.length - 1) {
           nextTime = times[0];
           break;
         } else {

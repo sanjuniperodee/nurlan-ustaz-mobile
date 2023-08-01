@@ -30,9 +30,9 @@ class TechnicalSupportCubit extends Cubit<TechnicalSupportState> {
   final SharedPreferences sharedPreferences;
 
   late UserDto _userDto;
-
+  late IOWebSocketChannel _channel;
   Future<void> connectSocket() async {
-    emit(_LoadingState());
+    emit(const _LoadingState());
 
     var user = await _authRepo.getUser();
     user.fold((l) => {}, (r) => {_userDto = r});
@@ -43,11 +43,12 @@ class TechnicalSupportCubit extends Cubit<TechnicalSupportState> {
       jsonDecode(sharedPreferences.get(SharedKeys.TOKEN).toString())
           as Map<String, dynamic>,
     );
-    final channel = IOWebSocketChannel.connect(
+    _channel = IOWebSocketChannel.connect(
         "ws://86.107.45.90:8000/api/support/chat/",
         headers: {"Authorization": "Bearer ${token.access}"});
-    emit(_InitialState(channel: channel, questions: [], user: _userDto));
-    channel.stream.listen(
+    // emit(_InitialState(channel: _channel, questions: [], user: _userDto));
+    // emit(const _LoadingState());
+    _channel.stream.listen(
       (event) async {
         var questions = json.decode(event);
 
@@ -61,15 +62,15 @@ class TechnicalSupportCubit extends Cubit<TechnicalSupportState> {
         } else {
           test.add(QuestionDTO.fromJson(questions));
         }
-        emit(_InitialState(channel: channel, questions: test, user: _userDto));
+        emit(const _LoadedState());
+        emit(_InitialState(channel: _channel, questions: test, user: _userDto));
       },
     );
   }
 
-  Future<void> change(WebSocketChannel channel) async {
-    channel.stream.listen((message) {
-      log(message);
-    });
+  Future<void> addMessage(String message) async {
+    // emit(_LoadingState());
+    _channel.sink.add(jsonEncode({"message": message}));
   }
 }
 

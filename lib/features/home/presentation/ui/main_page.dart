@@ -354,28 +354,28 @@ class _MainPageState extends State<MainPage> {
                                                           CrossAxisAlignment
                                                               .end,
                                                       children: [
-                                                        // Text(
-                                                        //   namasTimestoSend(),
-                                                        //   style: getTextStyle(
-                                                        //           CustomTextStyles
-                                                        //               .s16w200)
-                                                        //       .apply(
-                                                        //           fontFamily:
-                                                        //               FontTypes
-                                                        //                   .SF_Pro
-                                                        //                   .name)
-                                                        //       .copyWith(
-                                                        //           fontWeight:
-                                                        //               FontWeight
-                                                        //                   .w500)
-                                                        //       .apply(
-                                                        //           color:
-                                                        //               AppColors
-                                                        //                   .blue),
-                                                        // ),
-                                                        // TimesStateWidget(
-                                                        //   time: timesToSend(),
-                                                        // )
+                                                        Text(
+                                                          namasTimestoSend(),
+                                                          style: getTextStyle(
+                                                                  CustomTextStyles
+                                                                      .s16w200)
+                                                              .apply(
+                                                                  fontFamily:
+                                                                      FontTypes
+                                                                          .SF_Pro
+                                                                          .name)
+                                                              .copyWith(
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .w500)
+                                                              .apply(
+                                                                  color:
+                                                                      AppColors
+                                                                          .blue),
+                                                        ),
+                                                        TimesStateWidget(
+                                                          time: timesToSend(),
+                                                        )
                                                       ],
                                                     )
                                                   ],
@@ -656,7 +656,10 @@ class _MainPageState extends State<MainPage> {
     String nextTime = '';
     for (int i = 0; i < times.length; i++) {
       if (times[i] == beforeTime) {
-        if (times[i] == times.length - 1) {
+        log('TTTTT$i}');
+        log('TTTTT${times.length}}');
+        log('TTTTT${times[i]}fsaf');
+        if (i == times.length - 1) {
           nextTime = times[0];
           break;
         } else {
@@ -673,7 +676,7 @@ class _MainPageState extends State<MainPage> {
     String nextTime = '';
     for (int i = 0; i < times.length; i++) {
       if (times[i] == beforeTime) {
-        if (times[i] == times.length - 1) {
+        if (i == times.length - 1) {
           nextTime = times[0];
           break;
         } else {
