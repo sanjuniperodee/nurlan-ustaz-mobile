@@ -26,10 +26,6 @@ mixin EndPoints {
   static const String newPass = '/api/users/set_password/';
   static const String sendCode = '/api/v1/sendCode';
 
-  static const String logout = '/api/v1/logout';
-  static const String deleteUser = '/api/v1/deleteUser';
-  static const String changeNumber = '/api/v1/changeNumberSend';
-  static const String changeNumberPost = '/api/v1/changeNumberPost';
 
   //HOME
   static const String prayerTimes = '/api/islam/prayer-times/';
