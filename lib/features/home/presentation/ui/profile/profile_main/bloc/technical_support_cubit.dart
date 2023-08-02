@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -11,11 +10,8 @@ import 'package:nurlan_ustaz_flutter/features/home/data/repositories/home_reposi
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/data/models/question_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web_socket_channel/io.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../../../../../../../core/common/shared_keys.dart';
-import '../../../../../../../core/platform/cache_helper/prefs.dart';
-import '../../../../../../auth/data/datasource/local/auth_local_ds.dart';
 import '../../../../../../auth/data/model/token_dto.dart';
 
 part 'technical_support_cubit.freezed.dart';
@@ -46,7 +42,7 @@ class TechnicalSupportCubit extends Cubit<TechnicalSupportState> {
     _channel = IOWebSocketChannel.connect(
         "ws://86.107.45.90:8000/api/support/chat/",
         headers: {"Authorization": "Bearer ${token.access}"});
-    // emit(_InitialState(channel: _channel, questions: [], user: _userDto));
+    emit(_InitialState(channel: _channel, questions: [], user: _userDto));
     // emit(const _LoadingState());
     _channel.stream.listen(
       (event) async {
