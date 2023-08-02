@@ -77,7 +77,7 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
         }, loadingState: (loading) {
           return const Center(
             child: CircularProgressIndicator(
-              color: AppColors.orange,
+              color: AppColors.linearBlue,
             ),
           );
         }, initialState: (tusZhoruList) {
@@ -157,7 +157,8 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                         ),
                       ],
                       onTap: (int value) {
-                        context.read<TusZhoruCubit>().switchTab(value);
+                        context.read<TusZhoruCubit>().switchTab(
+                            value, widget.type == 'isSave' ? 'save' : '');
                       },
                       length: 2,
                     ),

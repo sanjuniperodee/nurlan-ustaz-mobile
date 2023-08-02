@@ -135,7 +135,7 @@ class _LoginFormState extends State<LoginForm> {
           loadingState: () {
             const Center(
               child: CircularProgressIndicator(
-                color: AppColors.danger,
+                color: AppColors.linearBlue,
               ),
             );
           },

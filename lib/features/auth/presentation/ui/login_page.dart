@@ -109,6 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                       SizedBox(
                         height: 50.h,
                       ),
+
                       CustomTabBar(
                           tabs: [
                             Tab(
@@ -116,6 +117,24 @@ class _LoginPageState extends State<LoginPage> {
                             ),
                             Tab(
                               text: 'register'.tr(),
+
+                    ),
+                  );
+                }, loadingState: () {
+                  return const Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.linearBlue,
+                    ),
+                  );
+                }, loaded: () {
+                  return GlobalCustomBody(
+                    child: SizedBox(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 50.h,
                             ),
                           ],
                           onTap: (int) {

@@ -61,7 +61,16 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
             orElse: () {
               return const Center();
             },
+
+            loadingState: () {
+              return const Center(
+                child: CircularProgressIndicator(color: AppColors.linearBlue),
+              );
+            },
+
             loaded: (result) {
+              bool scroll = true;
+              result.media!.length == 1 ? scroll = false : scroll = true;
               isFavorite = result.isSaved!;
               isLiked = result.isLiked!;
               likeCount = result.likesCount!;
@@ -69,7 +78,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                 CarouselSlider(
                   options: CarouselOptions(
                     viewportFraction: 1,
-                    autoPlay: true,
+                    autoPlay: scroll,
                     autoPlayInterval: const Duration(seconds: 3),
                     enlargeCenterPage: true,
                     aspectRatio: 17 / 13,

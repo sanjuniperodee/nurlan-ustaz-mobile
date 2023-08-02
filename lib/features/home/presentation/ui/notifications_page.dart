@@ -36,7 +36,7 @@ class _NotificationPageState extends State<NotificationPage> {
             orElse: () {
               return const Center(
                 child: CircularProgressIndicator(
-                  color: AppColors.red,
+                  color: AppColors.linearBlue,
                 ),
               );
             },

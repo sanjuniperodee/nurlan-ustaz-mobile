@@ -143,9 +143,9 @@ class _RamazanChecklistState extends State<RamazanChecklist> {
                       isLoading
                           ? Container(
                               height: 200,
-                              child: Center(
+                              child: const Center(
                                   child: CircularProgressIndicator(
-                                color: AppColors.orange,
+                                color: AppColors.linearBlue,
                               )),
                             )
                           : tasks == null

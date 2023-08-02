@@ -122,6 +122,8 @@ abstract class HomeRepository {
   Future<Either<Failure, bool>> newsFavorite({required int id});
 
   Future<Either<Failure, bool>> newsLike({required int id});
+  Future<Either<Failure, bool>> commentReport(
+      {required int id, required String reason});
 
   Future<Either<Failure, bool>> livesFavorite({required int id});
 
@@ -367,6 +369,21 @@ class HomeRepositoryImpl extends HomeRepository {
     if (await networkInfo.isConnected) {
       try {
         final bool res = await remoteDS.newsLike(id: id);
+        return Right(res);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> commentReport(
+      {required int id, required String reason}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final bool res = await remoteDS.commentReport(id: id, reason: reason);
         return Right(res);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));

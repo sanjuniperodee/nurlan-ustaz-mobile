@@ -44,8 +44,6 @@ mixin MainRunner {
     );
     await NotificationService().init();
 
-   
-
     FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
     final app = await _initApp(shouldSend, asyncDependencies, appBuilder);
@@ -53,9 +51,10 @@ mixin MainRunner {
       EasyLocalization(
         useFallbackTranslations: true,
         supportedLocales: const [
-          Locale('ru'),
           Locale('kk'),
+          Locale('ru'),
         ],
+        startLocale: const Locale('kk'),
         path: 'assets/translations',
         fallbackLocale: const Locale('kk'),
         child: app,
