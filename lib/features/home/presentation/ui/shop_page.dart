@@ -44,14 +44,14 @@ class _ShopPageState extends State<ShopPage> {
             loadingState: () {
               return const Center(
                 child: CircularProgressIndicator(
-                  color: AppColors.orange,
+                  color: AppColors.linearBlue,
                 ),
               );
             },
             orElse: () {
               return const Center(
                 child: CircularProgressIndicator(
-                  color: Colors.red,
+                  color: AppColors.linearBlue
                 ),
               );
             },

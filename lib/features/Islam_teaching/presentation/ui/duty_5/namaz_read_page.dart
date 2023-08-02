@@ -50,14 +50,14 @@ class _NamazReadPageState extends State<NamazReadPage> {
           loadingState: () {
             return const Center(
               child: CircularProgressIndicator(
-                color: AppColors.orange,
+                color: AppColors.linearBlue,
               ),
             );
           },
           orElse: () {
             return const Center(
               child: CircularProgressIndicator(
-                color: Colors.red,
+                color: AppColors.linearBlue,
               ),
             );
           },

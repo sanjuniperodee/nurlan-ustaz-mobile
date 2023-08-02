@@ -44,6 +44,7 @@ mixin EndPoints {
   static const String lives = '/api/blog/lives/';
   static const String partners = '/api/additional-services/partners/';
   static const String news = '/api/banner/news/';
+  static const String commentReport = '/api/support/reports/';
   static const String chats = '/api/tell-me-ustaz/chats/';
 
 // TUS ZHORU

@@ -52,7 +52,7 @@ class _NamazPageState extends State<NamazPage> {
           return state.maybeWhen(
             orElse: () {
               return const Center(
-                child: CircularProgressIndicator(color: AppColors.blue),
+                child: CircularProgressIndicator(color: AppColors.linearBlue),
               );
             },
             loaded: (not, geo) {

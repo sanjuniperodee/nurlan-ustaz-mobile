@@ -58,7 +58,7 @@ class _PaymentsPageState extends State<PaymentsPage> {
         state.whenOrNull(
           loadingState: () {
             return const CircularProgressIndicator(
-              color: AppColors.danger,
+              color: AppColors.linearBlue,
             );
           },
         );

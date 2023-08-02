@@ -230,7 +230,7 @@ class _ServicesPageState extends State<ServicesPage> {
           }, loadingState: () {
             return const Center(
               child: CircularProgressIndicator(
-                color: Colors.red,
+                color: AppColors.linearBlue,
               ),
             );
           });

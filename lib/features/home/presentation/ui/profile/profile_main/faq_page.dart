@@ -33,7 +33,7 @@ class _FaqPageState extends State<FaqPage> {
           orElse: () {
             return const Center(
               child: CircularProgressIndicator(
-                color: AppColors.red,
+                color: AppColors.linearBlue,
               ),
             );
           },

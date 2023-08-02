@@ -56,7 +56,7 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
           listener: (context, state) {
             state.maybeWhen(orElse: () {
               return const Center(
-                child: CircularProgressIndicator(color: AppColors.blue),
+                child: CircularProgressIndicator(color: AppColors.linearBlue),
               );
             }, errorState: (message) {
               buildErrorCustomSnackBar(context, message);
@@ -68,7 +68,7 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
               orElse: () {
                 return const Center(
                   child: CircularProgressIndicator(
-                    color: AppColors.danger,
+                    color: AppColors.linearBlue,
                   ),
                 );
               },

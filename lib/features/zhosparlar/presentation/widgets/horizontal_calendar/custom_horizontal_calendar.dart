@@ -272,30 +272,28 @@ class CustomCalendarAgendaState extends State<CustomCalendarAgenda>
                                     ),
                                     Center(
                                       child: CircularProgressIndicator(
-                                        color: AppColors.blue,
+                                        color: AppColors.linearBlue,
                                         value: widget.checklist
-                                            .map((e) =>
-                                        DateTime.parse(e.date)
-                                            .day)
-                                            .toList()
-                                            .contains(date.day)?
-
-
-
-                                        _eventDates.contains(date
-                                                .toString()
-                                                .split(" ")
-                                                .first)
-                                            ? widget.checklist
-                                                    .firstWhere((element) =>
-                                                        DateTime.parse(
-                                                                element.date)
-                                                            .day ==
-                                                        date.day)
-                                                    .percentage
-                                                    .toInt() /
-                                                100
-                                            : 0 : 0,
+                                                .map((e) =>
+                                                    DateTime.parse(e.date).day)
+                                                .toList()
+                                                .contains(date.day)
+                                            ? _eventDates.contains(date
+                                                    .toString()
+                                                    .split(" ")
+                                                    .first)
+                                                ? widget.checklist
+                                                        .firstWhere((element) =>
+                                                            DateTime.parse(
+                                                                    element
+                                                                        .date)
+                                                                .day ==
+                                                            date.day)
+                                                        .percentage
+                                                        .toInt() /
+                                                    100
+                                                : 0
+                                            : 0,
                                         backgroundColor: widget.checklist
                                                     .firstWhere((element) =>
                                                         DateTime.parse(

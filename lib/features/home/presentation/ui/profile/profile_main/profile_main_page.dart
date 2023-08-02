@@ -64,7 +64,7 @@ class _ProfileMainPage extends State<ProfileMainPage> {
             orElse: () {
               return const Center(
                 child: CircularProgressIndicator(
-                  color: AppColors.red,
+                  color: AppColors.linearBlue,
                 ),
               );
             },

@@ -75,7 +75,7 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
                 padding: EdgeInsets.only(top: 300),
                 child: Center(
                   child: CircularProgressIndicator(
-                    color: AppColors.danger,
+                    color: AppColors.linearBlue,
                   ),
                 ),
               );

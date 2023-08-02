@@ -77,7 +77,7 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
         }, loadingState: (loading) {
           return const Center(
             child: CircularProgressIndicator(
-              color: AppColors.orange,
+              color: AppColors.linearBlue,
             ),
           );
         }, initialState: (tusZhoruList) {

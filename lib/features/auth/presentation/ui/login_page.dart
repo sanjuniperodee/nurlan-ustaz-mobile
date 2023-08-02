@@ -98,7 +98,7 @@ class _LoginPageState extends State<LoginPage> {
                 }, loadingState: () {
                   return const Center(
                     child: CircularProgressIndicator(
-                      color: Colors.yellow,
+                      color: AppColors.linearBlue,
                     ),
                   );
                 }, loaded: () {

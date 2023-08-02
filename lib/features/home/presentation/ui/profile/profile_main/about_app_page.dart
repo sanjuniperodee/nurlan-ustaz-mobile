@@ -36,7 +36,7 @@ class _AboutAppPageState extends State<AboutAppPage> {
           orElse: () {
             return const Center(
               child: CircularProgressIndicator(
-                color: AppColors.red,
+                color: AppColors.linearBlue,
               ),
             );
           },

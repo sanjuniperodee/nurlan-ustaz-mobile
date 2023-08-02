@@ -70,14 +70,14 @@ class _DutyPageState extends State<DutyPage> {
             orElse: () {
               return const Center(
                 child: CircularProgressIndicator(
-                  color: AppColors.red,
+                  color: AppColors.linearBlue,
                 ),
               );
             },
             loadingState: () {
               return const Center(
                 child: CircularProgressIndicator(
-                  color: Colors.yellow,
+                  color: AppColors.linearBlue,
                 ),
               );
             },

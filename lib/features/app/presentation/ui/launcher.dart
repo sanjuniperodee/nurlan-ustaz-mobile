@@ -68,7 +68,7 @@ Widget _salam() {
           return const _Scaffold(
             child: Center(
               child: CircularProgressIndicator(
-                color: Colors.red,
+                color:AppColors.linearBlue ,
               ),
             ),
           );

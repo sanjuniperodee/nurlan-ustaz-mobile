@@ -50,7 +50,7 @@ class _TodayChatPageState extends State<TodayChatPage> {
           padding: EdgeInsets.only(top: 300),
           child: Center(
             child: CircularProgressIndicator(
-              color: AppColors.danger,
+              color: AppColors.linearBlue,
             ),
           ),
         );

@@ -113,7 +113,7 @@ class _MainPageState extends State<MainPage> {
             return state.maybeWhen(
               orElse: () {
                 return const Center(
-                  child: CircularProgressIndicator(color: AppColors.blue),
+                  child: CircularProgressIndicator(color: AppColors.linearBlue),
                 );
               },
               loaded: (not, geo) {
@@ -134,14 +134,14 @@ class _MainPageState extends State<MainPage> {
                       orElse: () {
                         return const Center(
                           child: CircularProgressIndicator(
-                            color: AppColors.red,
+                            color: AppColors.linearBlue,
                           ),
                         );
                       },
                       loadingState: () {
                         return const Center(
                           child: CircularProgressIndicator(
-                            color: Colors.yellow,
+                            color: AppColors.linearBlue,
                           ),
                         );
                       },

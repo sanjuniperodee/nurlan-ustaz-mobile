@@ -53,7 +53,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
             },
             loadingState: () {
               return const Center(
-                child: CircularProgressIndicator(color: AppColors.danger),
+                child: CircularProgressIndicator(color: AppColors.linearBlue),
               );
             },
             loaded: (result) {

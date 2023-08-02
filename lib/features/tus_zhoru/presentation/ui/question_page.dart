@@ -57,7 +57,7 @@ class _QuestionPageState extends State<QuestionPage> {
               alignment: Alignment.center,
               child: Center(
                 child: CircularProgressIndicator(
-                  color: AppColors.danger,
+                  color: AppColors.linearBlue,
                 ),
               ),
             );

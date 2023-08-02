@@ -38,7 +38,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           return const Scaffold(
             body: Center(
               child: CircularProgressIndicator(
-                color: AppColors.danger,
+                color: AppColors.linearBlue,
               ),
             ),
           );
