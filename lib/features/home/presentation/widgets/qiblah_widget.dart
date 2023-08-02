@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
 
 class QiblahWidget extends StatefulWidget {
@@ -40,7 +41,7 @@ class _QiblahWidgetState extends State<QiblahWidget>
             return Container(
                 alignment: Alignment.center,
                 child: const CircularProgressIndicator(
-                  color: Colors.white,
+                  color: AppColors.linearBlue,
                 ));
           }
           final qiblahDirection = snapshot.data;

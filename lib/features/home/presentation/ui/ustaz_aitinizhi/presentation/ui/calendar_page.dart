@@ -34,7 +34,7 @@ class _CalendarChatsPageState extends State<CalendarChatsPage> {
                 alignment: Alignment.center,
                 child: Center(
                   child: CircularProgressIndicator(
-                    color: AppColors.danger,
+                    color: AppColors.linearBlue,
                   ),
                 ),
               );
@@ -45,13 +45,13 @@ class _CalendarChatsPageState extends State<CalendarChatsPage> {
           orElse: () {
             return const Center(
                 child: CircularProgressIndicator(
-                  color: AppColors.danger,
+                  color: AppColors.linearBlue,
                 ));
           },
           errorState: (message) {
             return const Center(
                 child: CircularProgressIndicator(
-                  color: AppColors.danger,
+                  color: AppColors.linearBlue,
                 ));
           },
           initialState: (chats, questions, isLoading) {
@@ -110,7 +110,7 @@ class _CalendarChatsPageState extends State<CalendarChatsPage> {
                   height: 200.h,
 
                   child: Center(child: CircularProgressIndicator(
-                    color: AppColors.orange,
+                    color: AppColors.linearBlue,
                   ),),) :
                  (questions != null) ? QuestionsList(
                     questions: questions.reversed.toSet().toList()) : Container()

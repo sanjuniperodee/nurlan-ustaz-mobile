@@ -115,9 +115,9 @@ class _ChecklistTaskItemState extends State<ChecklistTaskItem> {
                 ? Container(
                     height: 20,
                     width: 20,
-                    child: Center(
+                    child: const Center(
                         child: CircularProgressIndicator(
-                      color: AppColors.orange,
+                      color: AppColors.linearBlue,
                     )),
                   )
                 : GestureDetector(

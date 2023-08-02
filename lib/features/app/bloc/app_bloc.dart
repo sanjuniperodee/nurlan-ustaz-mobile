@@ -120,7 +120,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     result.fold(
       (l) {
         log('##### _DELETE USER::: ${mapFailureToMessage(l)}');
-        emit(const AppState.notAuthorizedState());
+        emit(const AppState.loadingState());
       },
       (r) => emit(const AppState.notAuthorizedState()),
     );

@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -65,7 +64,7 @@ class _ProfileMainPage extends State<ProfileMainPage> {
             orElse: () {
               return const Center(
                 child: CircularProgressIndicator(
-                  color: AppColors.red,
+                  color: AppColors.linearBlue,
                 ),
               );
             },
@@ -83,22 +82,16 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                           title: 'profile'.tr(),
                         ),
                         SizedBox(height: 44.h),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(90),
-                          child: CachedNetworkImage(
-                            imageUrl: user.avatar ?? '',
-                            fit: BoxFit.cover,
-                            height: 94.h,
-                            width: 94.w,
-                            errorWidget: (a, b, c) => Center(
-                              child: SvgPicture.asset(
+                        user.avatar != null
+                            ? CircleAvatar(
+                                radius: 57.r,
+                                backgroundColor: AppColors.white,
+                                backgroundImage: NetworkImage(user.avatar!))
+                            : SvgPicture.asset(
                                 Assets.userSvg,
                                 width: 94,
                                 height: 94,
                               ),
-                            ),
-                          ),
-                        ),
                         SizedBox(
                           height: 12.h,
                         ),

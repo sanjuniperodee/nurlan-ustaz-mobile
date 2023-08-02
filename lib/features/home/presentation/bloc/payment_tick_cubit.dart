@@ -18,6 +18,8 @@ class PaymentTickCubit extends Cubit<PaymentTickState> {
     this._repository,
   ) : super(const PaymentTickState.initialState());
 
+  late List<TusZhoruDTO> listTus = [];
+  late List<ResultHomeDTO> listHome = [];
   Future<void> tusZhoruT({
     String? search,
     bool? isSaved,
@@ -25,20 +27,44 @@ class PaymentTickCubit extends Cubit<PaymentTickState> {
     bool? isFirstCall,
     bool? isPurchased,
   }) async {
-    final failureOrUser = await _repository.tusZhoruBay(
+    emit(const _LoadingState());
+    final failureOrUser = await _repository.tusZhoru(
         page: page,
-        isFirstCall: false,
+        isFirstCall: true,
         search: search,
         isPurchased: isPurchased,
         isSaved: isSaved);
+
     failureOrUser.fold(
       (l) {
         emit(PaymentTickState.errorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
+        listTus = r;
         emit(PaymentTickState.loaded(
-          res: r.toSet().toList(),
+          res: listHome,
+          res2: listTus,
         ));
+      },
+    );
+  }
+
+  Future<void> getCustomTusZhoruT({
+    String? search,
+    bool? isSaved,
+    int? page,
+    bool? isFirstCall,
+  }) async {
+    emit(const _LoadingState());
+    final result = await _repository.customTusZhoru(
+        page: 1, isFirstCall: true, search: search);
+    result.fold(
+      (l) {
+        emit(PaymentTickState.errorState(message: mapFailureToMessageBack(l)));
+      },
+      (r) {
+        listTus += r;
+        emit(PaymentTickState.loaded(res: listHome, res2: listTus));
       },
     );
   }
@@ -65,7 +91,8 @@ class PaymentTickCubit extends Cubit<PaymentTickState> {
         emit(PaymentTickState.errorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
-        emit(PaymentTickState.loaded(res: r.toSet().toList()));
+        listHome = r;
+        emit(PaymentTickState.loaded(res: listHome, res2: listTus));
       },
     );
   }
@@ -80,6 +107,7 @@ class PaymentTickState with _$PaymentTickState {
 
   const factory PaymentTickState.loaded({
     required List<ResultHomeDTO> res,
+    required List<TusZhoruDTO> res2,
   }) = _LoadedState;
 
   const factory PaymentTickState.errorState({

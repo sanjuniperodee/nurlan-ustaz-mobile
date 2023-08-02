@@ -31,6 +31,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/charities_c
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_like_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_post_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_report_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem_like_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem_post_cubit.dart';
@@ -158,6 +159,9 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         ),
         BlocProvider<CharitiesCubit>(
           create: (context) => getIt<CharitiesCubit>(),
+        ),
+        BlocProvider<CommentReportCubit>(
+          create: (context) => getIt<CommentReportCubit>(),
         ),
         BlocProvider<CommentNewsCubit>(
           create: (context) => getIt<CommentNewsCubit>(),

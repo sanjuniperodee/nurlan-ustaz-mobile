@@ -1,12 +1,13 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
+import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
@@ -21,23 +22,18 @@ class TechnicalSupportPage extends StatefulWidget {
 }
 
 class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
+  TechnicalSupportCubit technicalSupportCubit = getIt<TechnicalSupportCubit>();
   final TextEditingController _textEditingController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
-  late IOWebSocketChannel? _channel;
 
   FocusNode focusNode = FocusNode();
-  final ScrollController _controller = ScrollController();
-  void _scrollDown() {
-    _controller.jumpTo(_controller.position.maxScrollExtent);
-  }
 
   @override
   void initState() {
     // TODO: implement initState
-    BlocProvider.of<TechnicalSupportCubit>(context).connectSocket();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      FocusScope.of(context).requestFocus(focusNode);
-    });
+
+    technicalSupportCubit.connectSocket();
+
     super.initState();
   }
 
@@ -50,14 +46,20 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
 
   @override
   Widget build(BuildContext context) {
+    // scrollToTheEnd();
     return Scaffold(
       body: BlocConsumer<TechnicalSupportCubit, TechnicalSupportState>(
         listener: (context, state) {
           state.maybeWhen(
-              orElse: () {},
-              errorState: (message) {
-                buildErrorCustomSnackBar(context, message);
-              });
+            orElse: () {},
+            errorState: (message) {
+              buildErrorCustomSnackBar(context, message);
+            },
+            initialState: (questions, channel, user) {
+              Future.delayed(const Duration(milliseconds: 300))
+                  .then((value) => scrollToTheEnd());
+            },
+          );
           // TODO: implement listener
         },
         builder: (context, state) {
@@ -73,90 +75,86 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
                 padding: EdgeInsets.only(top: 300),
                 child: Center(
                   child: CircularProgressIndicator(
-                    color: AppColors.danger,
+                    color: AppColors.linearBlue,
                   ),
                 ),
               );
             },
             initialState: (questions, channel, user) {
-              // _controller.jumpTo(_controller.position.maxScrollExtent);
-              _channel = channel;
               return GlobalCustomBody(
-                child: SizedBox(
-                  height: 1.1.sh,
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: Column(children: [
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      CustomAppBar(
-                        title: 'tech_support'.tr(),
-                      ),
-                      if (questions != [])
-                        ListView.builder(
-                          itemCount: questions.length,
-                          shrinkWrap: true,
-                          controller: _controller,
-                          padding: const EdgeInsets.only(top: 10, bottom: 10).r,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return Container(
-                              padding: const EdgeInsets.only(
-                                      left: 14, right: 14, top: 10, bottom: 10)
-                                  .r,
-                              child: Align(
-                                alignment:
-                                    (questions[index].userName != user!.email
-                                        ? Alignment.topLeft
-                                        : Alignment.topRight),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: questions[index].userName !=
-                                              user.email
-                                          ? Colors.grey.shade200
-                                          : Colors.blue[100]),
-                                  padding: const EdgeInsets.all(16).r,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        questions[index].message ?? 'ERROR',
+                child: SingleChildScrollView(
+                  controller: _scrollController,
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(children: [
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    CustomAppBar(
+                      title: 'tech_support'.tr(),
+                    ),
+                    if (questions != [])
+                      ListView.builder(
+                        // reverse: true,
+                        itemCount: questions.length,
+                        shrinkWrap: true,
+                        // controller: _scrollController,
+                        padding: const EdgeInsets.only(top: 10, bottom: 10).r,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return Container(
+                            padding: const EdgeInsets.only(
+                                    left: 14, right: 14, top: 10, bottom: 10)
+                                .r,
+                            child: Align(
+                              alignment:
+                                  (questions[index].userName != user!.email
+                                      ? Alignment.topLeft
+                                      : Alignment.topRight),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color:
+                                        questions[index].userName != user.email
+                                            ? Colors.grey.shade200
+                                            : Colors.blue[100]),
+                                padding: const EdgeInsets.all(16).r,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      questions[index].message ?? 'ERROR',
+                                      style:
+                                          getTextStyle(CustomTextStyles.s14w400)
+                                              .apply(color: AppColors.black),
+                                    ),
+                                    const SizedBox(
+                                      height: 4,
+                                    ),
+                                    Text(
+                                        DateFormat('HH:mm').format(
+                                            DateTime.parse(questions[index]
+                                                    .createdAt
+                                                    .toString())
+                                                .toLocal()),
                                         style: getTextStyle(
-                                                CustomTextStyles.s14w400)
-                                            .apply(color: AppColors.black),
-                                      ),
-                                      const SizedBox(
-                                        height: 4,
-                                      ),
-                                      Text(
-                                          DateFormat('HH:mm').format(
-                                              DateTime.parse(questions[index]
-                                                      .createdAt
-                                                      .toString())
-                                                  .toLocal()),
-                                          style: getTextStyle(
-                                                  CustomTextStyles.s12w400)
-                                              .apply(
-                                                  color: questions[index]
-                                                              .userName !=
-                                                          user.email
-                                                      ? AppColors.grey2
-                                                      : Colors.blue[900])),
-                                    ],
-                                  ),
+                                                CustomTextStyles.s12w400)
+                                            .apply(
+                                                color:
+                                                    questions[index].userName !=
+                                                            user.email
+                                                        ? AppColors.grey2
+                                                        : Colors.blue[900])),
+                                  ],
                                 ),
                               ),
-                            );
-                          },
-                        ),
-                      SizedBox(
-                        height: 120.h,
-                      )
-                    ]),
-                  ),
+                            ),
+                          );
+                        },
+                      ),
+                    SizedBox(
+                      height: 120.h,
+                    )
+                  ]),
                 ),
               );
             },
@@ -188,10 +186,10 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
                 IconButton(
                   icon: const Icon(Icons.send),
                   onPressed: () {
+                    // scrollToTheEnd();
                     if (_textEditingController.text.isNotEmpty) {
-                      _channel?.sink.add(jsonEncode(
-                          {"message": _textEditingController.value.text}));
-                      setState(() {});
+                      technicalSupportCubit
+                          .addMessage(_textEditingController.text);
                       _textEditingController.clear();
                     }
                   },
@@ -206,6 +204,15 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
           ],
         ),
       ),
+    );
+  }
+
+  void scrollToTheEnd() {
+    log('SCROLL${_scrollController.position.maxScrollExtent}');
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent,
+      duration: Duration(milliseconds: 300),
+      curve: Curves.easeOut,
     );
   }
 }

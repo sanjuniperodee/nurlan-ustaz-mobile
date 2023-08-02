@@ -43,11 +43,11 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
         builder: (context, state) {
       return state.maybeWhen(
         loadingState: () {
-          return Scaffold(
+          return const Scaffold(
             body: TusZhoruDetailBody(
               child: Center(
                 child: CircularProgressIndicator(
-                  color: AppColors.danger,
+                  color: AppColors.linearBlue,
                 ),
               ),
             ),

@@ -88,7 +88,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
         loadingState: () {
           const Center(
             child: CircularProgressIndicator(
-              color: AppColors.danger,
+              color: AppColors.linearBlue,
             ),
           );
         },

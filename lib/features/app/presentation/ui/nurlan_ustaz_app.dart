@@ -16,7 +16,6 @@ class NurlanUstazApp extends StatefulWidget {
 
   @override
   State<NurlanUstazApp> createState() => _NurlanUstazAppState();
-  
 }
 
 class _NurlanUstazAppState extends State<NurlanUstazApp> {
@@ -46,6 +45,7 @@ class _NurlanUstazAppState extends State<NurlanUstazApp> {
             );
           },
           builder: (context, state) {
+
             return MaterialApp.router(
               key: rootNavigatorKey,
               // title: 'Flutter Demo',

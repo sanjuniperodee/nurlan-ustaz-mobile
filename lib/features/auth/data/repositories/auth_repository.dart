@@ -55,10 +55,9 @@ abstract class AuthRepository {
       {required String sessionId,
       required String newPassword,
       required String reNewPassword});
-  Future<Either<Failure, String>> ressetConfirmCode({required ActivateUserDTO activateUserDTO});
-  Future<Either<Failure, String>>  resendActivation({required String email});
-
-
+  Future<Either<Failure, String>> ressetConfirmCode(
+      {required ActivateUserDTO activateUserDTO});
+  Future<Either<Failure, String>> resendActivation({required String email});
 }
 
 @Singleton(as: AuthRepository)
@@ -206,6 +205,7 @@ class AuthRepositoryImpl extends AuthRepository {
     if (await networkInfo.isConnected) {
       try {
         await remoteDS.deleteUser();
+        localDS.removeUserFromCache();
         return const Right(true);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -294,12 +294,13 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<Either<Failure, String>> ressetConfirmCode({required ActivateUserDTO activateUserDTO}) async {
+  Future<Either<Failure, String>> ressetConfirmCode(
+      {required ActivateUserDTO activateUserDTO}) async {
     if (await networkInfo.isConnected) {
       try {
         final id = await remoteDS.confirmCode(
-            activateUserDTO: activateUserDTO,
-            );
+          activateUserDTO: activateUserDTO,
+        );
         return Right(id);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -310,7 +311,8 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Future<Either<Failure, String>>  resendActivation({required String email}) async {
+  Future<Either<Failure, String>> resendActivation(
+      {required String email}) async {
     if (await networkInfo.isConnected) {
       try {
         final id = await remoteDS.resendActivation(
