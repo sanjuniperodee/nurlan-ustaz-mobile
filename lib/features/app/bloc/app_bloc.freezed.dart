@@ -24,6 +24,7 @@ mixin _$AppEvent {
     required TResult Function() refreshLocal,
     required TResult Function() exiting,
     required TResult Function() deleting,
+    required TResult Function() nonAuthorizedDialog,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -34,6 +35,7 @@ mixin _$AppEvent {
     TResult? Function()? refreshLocal,
     TResult? Function()? exiting,
     TResult? Function()? deleting,
+    TResult? Function()? nonAuthorizedDialog,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -44,6 +46,7 @@ mixin _$AppEvent {
     TResult Function()? refreshLocal,
     TResult Function()? exiting,
     TResult Function()? deleting,
+    TResult Function()? nonAuthorizedDialog,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -55,6 +58,7 @@ mixin _$AppEvent {
     required TResult Function(_RefreshLocal value) refreshLocal,
     required TResult Function(_Exiting value) exiting,
     required TResult Function(_Deleting value) deleting,
+    required TResult Function(_NonAuthorizedDialog value) nonAuthorizedDialog,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -65,6 +69,7 @@ mixin _$AppEvent {
     TResult? Function(_RefreshLocal value)? refreshLocal,
     TResult? Function(_Exiting value)? exiting,
     TResult? Function(_Deleting value)? deleting,
+    TResult? Function(_NonAuthorizedDialog value)? nonAuthorizedDialog,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -75,6 +80,7 @@ mixin _$AppEvent {
     TResult Function(_RefreshLocal value)? refreshLocal,
     TResult Function(_Exiting value)? exiting,
     TResult Function(_Deleting value)? deleting,
+    TResult Function(_NonAuthorizedDialog value)? nonAuthorizedDialog,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -141,6 +147,7 @@ class _$_CheckAuth implements _CheckAuth {
     required TResult Function() refreshLocal,
     required TResult Function() exiting,
     required TResult Function() deleting,
+    required TResult Function() nonAuthorizedDialog,
   }) {
     return checkAuth();
   }
@@ -154,6 +161,7 @@ class _$_CheckAuth implements _CheckAuth {
     TResult? Function()? refreshLocal,
     TResult? Function()? exiting,
     TResult? Function()? deleting,
+    TResult? Function()? nonAuthorizedDialog,
   }) {
     return checkAuth?.call();
   }
@@ -167,6 +175,7 @@ class _$_CheckAuth implements _CheckAuth {
     TResult Function()? refreshLocal,
     TResult Function()? exiting,
     TResult Function()? deleting,
+    TResult Function()? nonAuthorizedDialog,
     required TResult orElse(),
   }) {
     if (checkAuth != null) {
@@ -184,6 +193,7 @@ class _$_CheckAuth implements _CheckAuth {
     required TResult Function(_RefreshLocal value) refreshLocal,
     required TResult Function(_Exiting value) exiting,
     required TResult Function(_Deleting value) deleting,
+    required TResult Function(_NonAuthorizedDialog value) nonAuthorizedDialog,
   }) {
     return checkAuth(this);
   }
@@ -197,6 +207,7 @@ class _$_CheckAuth implements _CheckAuth {
     TResult? Function(_RefreshLocal value)? refreshLocal,
     TResult? Function(_Exiting value)? exiting,
     TResult? Function(_Deleting value)? deleting,
+    TResult? Function(_NonAuthorizedDialog value)? nonAuthorizedDialog,
   }) {
     return checkAuth?.call(this);
   }
@@ -210,6 +221,7 @@ class _$_CheckAuth implements _CheckAuth {
     TResult Function(_RefreshLocal value)? refreshLocal,
     TResult Function(_Exiting value)? exiting,
     TResult Function(_Deleting value)? deleting,
+    TResult Function(_NonAuthorizedDialog value)? nonAuthorizedDialog,
     required TResult orElse(),
   }) {
     if (checkAuth != null) {
@@ -267,6 +279,7 @@ class _$_OnboardingSave implements _OnboardingSave {
     required TResult Function() refreshLocal,
     required TResult Function() exiting,
     required TResult Function() deleting,
+    required TResult Function() nonAuthorizedDialog,
   }) {
     return onboardingSave();
   }
@@ -280,6 +293,7 @@ class _$_OnboardingSave implements _OnboardingSave {
     TResult? Function()? refreshLocal,
     TResult? Function()? exiting,
     TResult? Function()? deleting,
+    TResult? Function()? nonAuthorizedDialog,
   }) {
     return onboardingSave?.call();
   }
@@ -293,6 +307,7 @@ class _$_OnboardingSave implements _OnboardingSave {
     TResult Function()? refreshLocal,
     TResult Function()? exiting,
     TResult Function()? deleting,
+    TResult Function()? nonAuthorizedDialog,
     required TResult orElse(),
   }) {
     if (onboardingSave != null) {
@@ -310,6 +325,7 @@ class _$_OnboardingSave implements _OnboardingSave {
     required TResult Function(_RefreshLocal value) refreshLocal,
     required TResult Function(_Exiting value) exiting,
     required TResult Function(_Deleting value) deleting,
+    required TResult Function(_NonAuthorizedDialog value) nonAuthorizedDialog,
   }) {
     return onboardingSave(this);
   }
@@ -323,6 +339,7 @@ class _$_OnboardingSave implements _OnboardingSave {
     TResult? Function(_RefreshLocal value)? refreshLocal,
     TResult? Function(_Exiting value)? exiting,
     TResult? Function(_Deleting value)? deleting,
+    TResult? Function(_NonAuthorizedDialog value)? nonAuthorizedDialog,
   }) {
     return onboardingSave?.call(this);
   }
@@ -336,6 +353,7 @@ class _$_OnboardingSave implements _OnboardingSave {
     TResult Function(_RefreshLocal value)? refreshLocal,
     TResult Function(_Exiting value)? exiting,
     TResult Function(_Deleting value)? deleting,
+    TResult Function(_NonAuthorizedDialog value)? nonAuthorizedDialog,
     required TResult orElse(),
   }) {
     if (onboardingSave != null) {
@@ -393,6 +411,7 @@ class _$_Logining implements _Logining {
     required TResult Function() refreshLocal,
     required TResult Function() exiting,
     required TResult Function() deleting,
+    required TResult Function() nonAuthorizedDialog,
   }) {
     return logining();
   }
@@ -406,6 +425,7 @@ class _$_Logining implements _Logining {
     TResult? Function()? refreshLocal,
     TResult? Function()? exiting,
     TResult? Function()? deleting,
+    TResult? Function()? nonAuthorizedDialog,
   }) {
     return logining?.call();
   }
@@ -419,6 +439,7 @@ class _$_Logining implements _Logining {
     TResult Function()? refreshLocal,
     TResult Function()? exiting,
     TResult Function()? deleting,
+    TResult Function()? nonAuthorizedDialog,
     required TResult orElse(),
   }) {
     if (logining != null) {
@@ -436,6 +457,7 @@ class _$_Logining implements _Logining {
     required TResult Function(_RefreshLocal value) refreshLocal,
     required TResult Function(_Exiting value) exiting,
     required TResult Function(_Deleting value) deleting,
+    required TResult Function(_NonAuthorizedDialog value) nonAuthorizedDialog,
   }) {
     return logining(this);
   }
@@ -449,6 +471,7 @@ class _$_Logining implements _Logining {
     TResult? Function(_RefreshLocal value)? refreshLocal,
     TResult? Function(_Exiting value)? exiting,
     TResult? Function(_Deleting value)? deleting,
+    TResult? Function(_NonAuthorizedDialog value)? nonAuthorizedDialog,
   }) {
     return logining?.call(this);
   }
@@ -462,6 +485,7 @@ class _$_Logining implements _Logining {
     TResult Function(_RefreshLocal value)? refreshLocal,
     TResult Function(_Exiting value)? exiting,
     TResult Function(_Deleting value)? deleting,
+    TResult Function(_NonAuthorizedDialog value)? nonAuthorizedDialog,
     required TResult orElse(),
   }) {
     if (logining != null) {
@@ -519,6 +543,7 @@ class _$_RefreshLocal implements _RefreshLocal {
     required TResult Function() refreshLocal,
     required TResult Function() exiting,
     required TResult Function() deleting,
+    required TResult Function() nonAuthorizedDialog,
   }) {
     return refreshLocal();
   }
@@ -532,6 +557,7 @@ class _$_RefreshLocal implements _RefreshLocal {
     TResult? Function()? refreshLocal,
     TResult? Function()? exiting,
     TResult? Function()? deleting,
+    TResult? Function()? nonAuthorizedDialog,
   }) {
     return refreshLocal?.call();
   }
@@ -545,6 +571,7 @@ class _$_RefreshLocal implements _RefreshLocal {
     TResult Function()? refreshLocal,
     TResult Function()? exiting,
     TResult Function()? deleting,
+    TResult Function()? nonAuthorizedDialog,
     required TResult orElse(),
   }) {
     if (refreshLocal != null) {
@@ -562,6 +589,7 @@ class _$_RefreshLocal implements _RefreshLocal {
     required TResult Function(_RefreshLocal value) refreshLocal,
     required TResult Function(_Exiting value) exiting,
     required TResult Function(_Deleting value) deleting,
+    required TResult Function(_NonAuthorizedDialog value) nonAuthorizedDialog,
   }) {
     return refreshLocal(this);
   }
@@ -575,6 +603,7 @@ class _$_RefreshLocal implements _RefreshLocal {
     TResult? Function(_RefreshLocal value)? refreshLocal,
     TResult? Function(_Exiting value)? exiting,
     TResult? Function(_Deleting value)? deleting,
+    TResult? Function(_NonAuthorizedDialog value)? nonAuthorizedDialog,
   }) {
     return refreshLocal?.call(this);
   }
@@ -588,6 +617,7 @@ class _$_RefreshLocal implements _RefreshLocal {
     TResult Function(_RefreshLocal value)? refreshLocal,
     TResult Function(_Exiting value)? exiting,
     TResult Function(_Deleting value)? deleting,
+    TResult Function(_NonAuthorizedDialog value)? nonAuthorizedDialog,
     required TResult orElse(),
   }) {
     if (refreshLocal != null) {
@@ -644,6 +674,7 @@ class _$_Exiting implements _Exiting {
     required TResult Function() refreshLocal,
     required TResult Function() exiting,
     required TResult Function() deleting,
+    required TResult Function() nonAuthorizedDialog,
   }) {
     return exiting();
   }
@@ -657,6 +688,7 @@ class _$_Exiting implements _Exiting {
     TResult? Function()? refreshLocal,
     TResult? Function()? exiting,
     TResult? Function()? deleting,
+    TResult? Function()? nonAuthorizedDialog,
   }) {
     return exiting?.call();
   }
@@ -670,6 +702,7 @@ class _$_Exiting implements _Exiting {
     TResult Function()? refreshLocal,
     TResult Function()? exiting,
     TResult Function()? deleting,
+    TResult Function()? nonAuthorizedDialog,
     required TResult orElse(),
   }) {
     if (exiting != null) {
@@ -687,6 +720,7 @@ class _$_Exiting implements _Exiting {
     required TResult Function(_RefreshLocal value) refreshLocal,
     required TResult Function(_Exiting value) exiting,
     required TResult Function(_Deleting value) deleting,
+    required TResult Function(_NonAuthorizedDialog value) nonAuthorizedDialog,
   }) {
     return exiting(this);
   }
@@ -700,6 +734,7 @@ class _$_Exiting implements _Exiting {
     TResult? Function(_RefreshLocal value)? refreshLocal,
     TResult? Function(_Exiting value)? exiting,
     TResult? Function(_Deleting value)? deleting,
+    TResult? Function(_NonAuthorizedDialog value)? nonAuthorizedDialog,
   }) {
     return exiting?.call(this);
   }
@@ -713,6 +748,7 @@ class _$_Exiting implements _Exiting {
     TResult Function(_RefreshLocal value)? refreshLocal,
     TResult Function(_Exiting value)? exiting,
     TResult Function(_Deleting value)? deleting,
+    TResult Function(_NonAuthorizedDialog value)? nonAuthorizedDialog,
     required TResult orElse(),
   }) {
     if (exiting != null) {
@@ -770,6 +806,7 @@ class _$_Deleting implements _Deleting {
     required TResult Function() refreshLocal,
     required TResult Function() exiting,
     required TResult Function() deleting,
+    required TResult Function() nonAuthorizedDialog,
   }) {
     return deleting();
   }
@@ -783,6 +820,7 @@ class _$_Deleting implements _Deleting {
     TResult? Function()? refreshLocal,
     TResult? Function()? exiting,
     TResult? Function()? deleting,
+    TResult? Function()? nonAuthorizedDialog,
   }) {
     return deleting?.call();
   }
@@ -796,6 +834,7 @@ class _$_Deleting implements _Deleting {
     TResult Function()? refreshLocal,
     TResult Function()? exiting,
     TResult Function()? deleting,
+    TResult Function()? nonAuthorizedDialog,
     required TResult orElse(),
   }) {
     if (deleting != null) {
@@ -813,6 +852,7 @@ class _$_Deleting implements _Deleting {
     required TResult Function(_RefreshLocal value) refreshLocal,
     required TResult Function(_Exiting value) exiting,
     required TResult Function(_Deleting value) deleting,
+    required TResult Function(_NonAuthorizedDialog value) nonAuthorizedDialog,
   }) {
     return deleting(this);
   }
@@ -826,6 +866,7 @@ class _$_Deleting implements _Deleting {
     TResult? Function(_RefreshLocal value)? refreshLocal,
     TResult? Function(_Exiting value)? exiting,
     TResult? Function(_Deleting value)? deleting,
+    TResult? Function(_NonAuthorizedDialog value)? nonAuthorizedDialog,
   }) {
     return deleting?.call(this);
   }
@@ -839,6 +880,7 @@ class _$_Deleting implements _Deleting {
     TResult Function(_RefreshLocal value)? refreshLocal,
     TResult Function(_Exiting value)? exiting,
     TResult Function(_Deleting value)? deleting,
+    TResult Function(_NonAuthorizedDialog value)? nonAuthorizedDialog,
     required TResult orElse(),
   }) {
     if (deleting != null) {
@@ -853,11 +895,144 @@ abstract class _Deleting implements AppEvent {
 }
 
 /// @nodoc
+abstract class _$$_NonAuthorizedDialogCopyWith<$Res> {
+  factory _$$_NonAuthorizedDialogCopyWith(_$_NonAuthorizedDialog value,
+          $Res Function(_$_NonAuthorizedDialog) then) =
+      __$$_NonAuthorizedDialogCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_NonAuthorizedDialogCopyWithImpl<$Res>
+    extends _$AppEventCopyWithImpl<$Res, _$_NonAuthorizedDialog>
+    implements _$$_NonAuthorizedDialogCopyWith<$Res> {
+  __$$_NonAuthorizedDialogCopyWithImpl(_$_NonAuthorizedDialog _value,
+      $Res Function(_$_NonAuthorizedDialog) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_NonAuthorizedDialog implements _NonAuthorizedDialog {
+  const _$_NonAuthorizedDialog();
+
+  @override
+  String toString() {
+    return 'AppEvent.nonAuthorizedDialog()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_NonAuthorizedDialog);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() checkAuth,
+    required TResult Function() onboardingSave,
+    required TResult Function() logining,
+    required TResult Function() refreshLocal,
+    required TResult Function() exiting,
+    required TResult Function() deleting,
+    required TResult Function() nonAuthorizedDialog,
+  }) {
+    return nonAuthorizedDialog();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? checkAuth,
+    TResult? Function()? onboardingSave,
+    TResult? Function()? logining,
+    TResult? Function()? refreshLocal,
+    TResult? Function()? exiting,
+    TResult? Function()? deleting,
+    TResult? Function()? nonAuthorizedDialog,
+  }) {
+    return nonAuthorizedDialog?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? checkAuth,
+    TResult Function()? onboardingSave,
+    TResult Function()? logining,
+    TResult Function()? refreshLocal,
+    TResult Function()? exiting,
+    TResult Function()? deleting,
+    TResult Function()? nonAuthorizedDialog,
+    required TResult orElse(),
+  }) {
+    if (nonAuthorizedDialog != null) {
+      return nonAuthorizedDialog();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_CheckAuth value) checkAuth,
+    required TResult Function(_OnboardingSave value) onboardingSave,
+    required TResult Function(_Logining value) logining,
+    required TResult Function(_RefreshLocal value) refreshLocal,
+    required TResult Function(_Exiting value) exiting,
+    required TResult Function(_Deleting value) deleting,
+    required TResult Function(_NonAuthorizedDialog value) nonAuthorizedDialog,
+  }) {
+    return nonAuthorizedDialog(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_CheckAuth value)? checkAuth,
+    TResult? Function(_OnboardingSave value)? onboardingSave,
+    TResult? Function(_Logining value)? logining,
+    TResult? Function(_RefreshLocal value)? refreshLocal,
+    TResult? Function(_Exiting value)? exiting,
+    TResult? Function(_Deleting value)? deleting,
+    TResult? Function(_NonAuthorizedDialog value)? nonAuthorizedDialog,
+  }) {
+    return nonAuthorizedDialog?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_CheckAuth value)? checkAuth,
+    TResult Function(_OnboardingSave value)? onboardingSave,
+    TResult Function(_Logining value)? logining,
+    TResult Function(_RefreshLocal value)? refreshLocal,
+    TResult Function(_Exiting value)? exiting,
+    TResult Function(_Deleting value)? deleting,
+    TResult Function(_NonAuthorizedDialog value)? nonAuthorizedDialog,
+    required TResult orElse(),
+  }) {
+    if (nonAuthorizedDialog != null) {
+      return nonAuthorizedDialog(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _NonAuthorizedDialog implements AppEvent {
+  const factory _NonAuthorizedDialog() = _$_NonAuthorizedDialog;
+}
+
+/// @nodoc
 mixin _$AppState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() onBoardingState,
     required TResult Function() loadingState,
+    required TResult Function() notAuthorizedDialogState,
     required TResult Function() notAuthorizedState,
     required TResult Function() notVerifyed,
     required TResult Function() inAppState,
@@ -868,6 +1043,7 @@ mixin _$AppState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? onBoardingState,
     TResult? Function()? loadingState,
+    TResult? Function()? notAuthorizedDialogState,
     TResult? Function()? notAuthorizedState,
     TResult? Function()? notVerifyed,
     TResult? Function()? inAppState,
@@ -878,6 +1054,7 @@ mixin _$AppState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? onBoardingState,
     TResult Function()? loadingState,
+    TResult Function()? notAuthorizedDialogState,
     TResult Function()? notAuthorizedState,
     TResult Function()? notVerifyed,
     TResult Function()? inAppState,
@@ -889,6 +1066,8 @@ mixin _$AppState {
   TResult map<TResult extends Object?>({
     required TResult Function(_OnBoardingState value) onBoardingState,
     required TResult Function(_LoadingState value) loadingState,
+    required TResult Function(_NotAuthorizedDialogState value)
+        notAuthorizedDialogState,
     required TResult Function(_NotAuthorizedState value) notAuthorizedState,
     required TResult Function(_NotVerifyed value) notVerifyed,
     required TResult Function(_InAppState value) inAppState,
@@ -899,6 +1078,8 @@ mixin _$AppState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_OnBoardingState value)? onBoardingState,
     TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_NotAuthorizedDialogState value)?
+        notAuthorizedDialogState,
     TResult? Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult? Function(_NotVerifyed value)? notVerifyed,
     TResult? Function(_InAppState value)? inAppState,
@@ -909,6 +1090,7 @@ mixin _$AppState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_OnBoardingState value)? onBoardingState,
     TResult Function(_LoadingState value)? loadingState,
+    TResult Function(_NotAuthorizedDialogState value)? notAuthorizedDialogState,
     TResult Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult Function(_NotVerifyed value)? notVerifyed,
     TResult Function(_InAppState value)? inAppState,
@@ -975,6 +1157,7 @@ class _$_OnBoardingState implements _OnBoardingState {
   TResult when<TResult extends Object?>({
     required TResult Function() onBoardingState,
     required TResult Function() loadingState,
+    required TResult Function() notAuthorizedDialogState,
     required TResult Function() notAuthorizedState,
     required TResult Function() notVerifyed,
     required TResult Function() inAppState,
@@ -988,6 +1171,7 @@ class _$_OnBoardingState implements _OnBoardingState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? onBoardingState,
     TResult? Function()? loadingState,
+    TResult? Function()? notAuthorizedDialogState,
     TResult? Function()? notAuthorizedState,
     TResult? Function()? notVerifyed,
     TResult? Function()? inAppState,
@@ -1001,6 +1185,7 @@ class _$_OnBoardingState implements _OnBoardingState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? onBoardingState,
     TResult Function()? loadingState,
+    TResult Function()? notAuthorizedDialogState,
     TResult Function()? notAuthorizedState,
     TResult Function()? notVerifyed,
     TResult Function()? inAppState,
@@ -1018,6 +1203,8 @@ class _$_OnBoardingState implements _OnBoardingState {
   TResult map<TResult extends Object?>({
     required TResult Function(_OnBoardingState value) onBoardingState,
     required TResult Function(_LoadingState value) loadingState,
+    required TResult Function(_NotAuthorizedDialogState value)
+        notAuthorizedDialogState,
     required TResult Function(_NotAuthorizedState value) notAuthorizedState,
     required TResult Function(_NotVerifyed value) notVerifyed,
     required TResult Function(_InAppState value) inAppState,
@@ -1031,6 +1218,8 @@ class _$_OnBoardingState implements _OnBoardingState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_OnBoardingState value)? onBoardingState,
     TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_NotAuthorizedDialogState value)?
+        notAuthorizedDialogState,
     TResult? Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult? Function(_NotVerifyed value)? notVerifyed,
     TResult? Function(_InAppState value)? inAppState,
@@ -1044,6 +1233,7 @@ class _$_OnBoardingState implements _OnBoardingState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_OnBoardingState value)? onBoardingState,
     TResult Function(_LoadingState value)? loadingState,
+    TResult Function(_NotAuthorizedDialogState value)? notAuthorizedDialogState,
     TResult Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult Function(_NotVerifyed value)? notVerifyed,
     TResult Function(_InAppState value)? inAppState,
@@ -1101,6 +1291,7 @@ class _$_LoadingState implements _LoadingState {
   TResult when<TResult extends Object?>({
     required TResult Function() onBoardingState,
     required TResult Function() loadingState,
+    required TResult Function() notAuthorizedDialogState,
     required TResult Function() notAuthorizedState,
     required TResult Function() notVerifyed,
     required TResult Function() inAppState,
@@ -1114,6 +1305,7 @@ class _$_LoadingState implements _LoadingState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? onBoardingState,
     TResult? Function()? loadingState,
+    TResult? Function()? notAuthorizedDialogState,
     TResult? Function()? notAuthorizedState,
     TResult? Function()? notVerifyed,
     TResult? Function()? inAppState,
@@ -1127,6 +1319,7 @@ class _$_LoadingState implements _LoadingState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? onBoardingState,
     TResult Function()? loadingState,
+    TResult Function()? notAuthorizedDialogState,
     TResult Function()? notAuthorizedState,
     TResult Function()? notVerifyed,
     TResult Function()? inAppState,
@@ -1144,6 +1337,8 @@ class _$_LoadingState implements _LoadingState {
   TResult map<TResult extends Object?>({
     required TResult Function(_OnBoardingState value) onBoardingState,
     required TResult Function(_LoadingState value) loadingState,
+    required TResult Function(_NotAuthorizedDialogState value)
+        notAuthorizedDialogState,
     required TResult Function(_NotAuthorizedState value) notAuthorizedState,
     required TResult Function(_NotVerifyed value) notVerifyed,
     required TResult Function(_InAppState value) inAppState,
@@ -1157,6 +1352,8 @@ class _$_LoadingState implements _LoadingState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_OnBoardingState value)? onBoardingState,
     TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_NotAuthorizedDialogState value)?
+        notAuthorizedDialogState,
     TResult? Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult? Function(_NotVerifyed value)? notVerifyed,
     TResult? Function(_InAppState value)? inAppState,
@@ -1170,6 +1367,7 @@ class _$_LoadingState implements _LoadingState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_OnBoardingState value)? onBoardingState,
     TResult Function(_LoadingState value)? loadingState,
+    TResult Function(_NotAuthorizedDialogState value)? notAuthorizedDialogState,
     TResult Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult Function(_NotVerifyed value)? notVerifyed,
     TResult Function(_InAppState value)? inAppState,
@@ -1185,6 +1383,142 @@ class _$_LoadingState implements _LoadingState {
 
 abstract class _LoadingState implements AppState {
   const factory _LoadingState() = _$_LoadingState;
+}
+
+/// @nodoc
+abstract class _$$_NotAuthorizedDialogStateCopyWith<$Res> {
+  factory _$$_NotAuthorizedDialogStateCopyWith(
+          _$_NotAuthorizedDialogState value,
+          $Res Function(_$_NotAuthorizedDialogState) then) =
+      __$$_NotAuthorizedDialogStateCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_NotAuthorizedDialogStateCopyWithImpl<$Res>
+    extends _$AppStateCopyWithImpl<$Res, _$_NotAuthorizedDialogState>
+    implements _$$_NotAuthorizedDialogStateCopyWith<$Res> {
+  __$$_NotAuthorizedDialogStateCopyWithImpl(_$_NotAuthorizedDialogState _value,
+      $Res Function(_$_NotAuthorizedDialogState) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_NotAuthorizedDialogState implements _NotAuthorizedDialogState {
+  const _$_NotAuthorizedDialogState();
+
+  @override
+  String toString() {
+    return 'AppState.notAuthorizedDialogState()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$_NotAuthorizedDialogState);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() onBoardingState,
+    required TResult Function() loadingState,
+    required TResult Function() notAuthorizedDialogState,
+    required TResult Function() notAuthorizedState,
+    required TResult Function() notVerifyed,
+    required TResult Function() inAppState,
+    required TResult Function(String message) errorState,
+  }) {
+    return notAuthorizedDialogState();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? onBoardingState,
+    TResult? Function()? loadingState,
+    TResult? Function()? notAuthorizedDialogState,
+    TResult? Function()? notAuthorizedState,
+    TResult? Function()? notVerifyed,
+    TResult? Function()? inAppState,
+    TResult? Function(String message)? errorState,
+  }) {
+    return notAuthorizedDialogState?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? onBoardingState,
+    TResult Function()? loadingState,
+    TResult Function()? notAuthorizedDialogState,
+    TResult Function()? notAuthorizedState,
+    TResult Function()? notVerifyed,
+    TResult Function()? inAppState,
+    TResult Function(String message)? errorState,
+    required TResult orElse(),
+  }) {
+    if (notAuthorizedDialogState != null) {
+      return notAuthorizedDialogState();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_OnBoardingState value) onBoardingState,
+    required TResult Function(_LoadingState value) loadingState,
+    required TResult Function(_NotAuthorizedDialogState value)
+        notAuthorizedDialogState,
+    required TResult Function(_NotAuthorizedState value) notAuthorizedState,
+    required TResult Function(_NotVerifyed value) notVerifyed,
+    required TResult Function(_InAppState value) inAppState,
+    required TResult Function(_ErrorState value) errorState,
+  }) {
+    return notAuthorizedDialogState(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_OnBoardingState value)? onBoardingState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_NotAuthorizedDialogState value)?
+        notAuthorizedDialogState,
+    TResult? Function(_NotAuthorizedState value)? notAuthorizedState,
+    TResult? Function(_NotVerifyed value)? notVerifyed,
+    TResult? Function(_InAppState value)? inAppState,
+    TResult? Function(_ErrorState value)? errorState,
+  }) {
+    return notAuthorizedDialogState?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_OnBoardingState value)? onBoardingState,
+    TResult Function(_LoadingState value)? loadingState,
+    TResult Function(_NotAuthorizedDialogState value)? notAuthorizedDialogState,
+    TResult Function(_NotAuthorizedState value)? notAuthorizedState,
+    TResult Function(_NotVerifyed value)? notVerifyed,
+    TResult Function(_InAppState value)? inAppState,
+    TResult Function(_ErrorState value)? errorState,
+    required TResult orElse(),
+  }) {
+    if (notAuthorizedDialogState != null) {
+      return notAuthorizedDialogState(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _NotAuthorizedDialogState implements AppState {
+  const factory _NotAuthorizedDialogState() = _$_NotAuthorizedDialogState;
 }
 
 /// @nodoc
@@ -1227,6 +1561,7 @@ class _$_NotAuthorizedState implements _NotAuthorizedState {
   TResult when<TResult extends Object?>({
     required TResult Function() onBoardingState,
     required TResult Function() loadingState,
+    required TResult Function() notAuthorizedDialogState,
     required TResult Function() notAuthorizedState,
     required TResult Function() notVerifyed,
     required TResult Function() inAppState,
@@ -1240,6 +1575,7 @@ class _$_NotAuthorizedState implements _NotAuthorizedState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? onBoardingState,
     TResult? Function()? loadingState,
+    TResult? Function()? notAuthorizedDialogState,
     TResult? Function()? notAuthorizedState,
     TResult? Function()? notVerifyed,
     TResult? Function()? inAppState,
@@ -1253,6 +1589,7 @@ class _$_NotAuthorizedState implements _NotAuthorizedState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? onBoardingState,
     TResult Function()? loadingState,
+    TResult Function()? notAuthorizedDialogState,
     TResult Function()? notAuthorizedState,
     TResult Function()? notVerifyed,
     TResult Function()? inAppState,
@@ -1270,6 +1607,8 @@ class _$_NotAuthorizedState implements _NotAuthorizedState {
   TResult map<TResult extends Object?>({
     required TResult Function(_OnBoardingState value) onBoardingState,
     required TResult Function(_LoadingState value) loadingState,
+    required TResult Function(_NotAuthorizedDialogState value)
+        notAuthorizedDialogState,
     required TResult Function(_NotAuthorizedState value) notAuthorizedState,
     required TResult Function(_NotVerifyed value) notVerifyed,
     required TResult Function(_InAppState value) inAppState,
@@ -1283,6 +1622,8 @@ class _$_NotAuthorizedState implements _NotAuthorizedState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_OnBoardingState value)? onBoardingState,
     TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_NotAuthorizedDialogState value)?
+        notAuthorizedDialogState,
     TResult? Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult? Function(_NotVerifyed value)? notVerifyed,
     TResult? Function(_InAppState value)? inAppState,
@@ -1296,6 +1637,7 @@ class _$_NotAuthorizedState implements _NotAuthorizedState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_OnBoardingState value)? onBoardingState,
     TResult Function(_LoadingState value)? loadingState,
+    TResult Function(_NotAuthorizedDialogState value)? notAuthorizedDialogState,
     TResult Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult Function(_NotVerifyed value)? notVerifyed,
     TResult Function(_InAppState value)? inAppState,
@@ -1353,6 +1695,7 @@ class _$_NotVerifyed implements _NotVerifyed {
   TResult when<TResult extends Object?>({
     required TResult Function() onBoardingState,
     required TResult Function() loadingState,
+    required TResult Function() notAuthorizedDialogState,
     required TResult Function() notAuthorizedState,
     required TResult Function() notVerifyed,
     required TResult Function() inAppState,
@@ -1366,6 +1709,7 @@ class _$_NotVerifyed implements _NotVerifyed {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? onBoardingState,
     TResult? Function()? loadingState,
+    TResult? Function()? notAuthorizedDialogState,
     TResult? Function()? notAuthorizedState,
     TResult? Function()? notVerifyed,
     TResult? Function()? inAppState,
@@ -1379,6 +1723,7 @@ class _$_NotVerifyed implements _NotVerifyed {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? onBoardingState,
     TResult Function()? loadingState,
+    TResult Function()? notAuthorizedDialogState,
     TResult Function()? notAuthorizedState,
     TResult Function()? notVerifyed,
     TResult Function()? inAppState,
@@ -1396,6 +1741,8 @@ class _$_NotVerifyed implements _NotVerifyed {
   TResult map<TResult extends Object?>({
     required TResult Function(_OnBoardingState value) onBoardingState,
     required TResult Function(_LoadingState value) loadingState,
+    required TResult Function(_NotAuthorizedDialogState value)
+        notAuthorizedDialogState,
     required TResult Function(_NotAuthorizedState value) notAuthorizedState,
     required TResult Function(_NotVerifyed value) notVerifyed,
     required TResult Function(_InAppState value) inAppState,
@@ -1409,6 +1756,8 @@ class _$_NotVerifyed implements _NotVerifyed {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_OnBoardingState value)? onBoardingState,
     TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_NotAuthorizedDialogState value)?
+        notAuthorizedDialogState,
     TResult? Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult? Function(_NotVerifyed value)? notVerifyed,
     TResult? Function(_InAppState value)? inAppState,
@@ -1422,6 +1771,7 @@ class _$_NotVerifyed implements _NotVerifyed {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_OnBoardingState value)? onBoardingState,
     TResult Function(_LoadingState value)? loadingState,
+    TResult Function(_NotAuthorizedDialogState value)? notAuthorizedDialogState,
     TResult Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult Function(_NotVerifyed value)? notVerifyed,
     TResult Function(_InAppState value)? inAppState,
@@ -1479,6 +1829,7 @@ class _$_InAppState implements _InAppState {
   TResult when<TResult extends Object?>({
     required TResult Function() onBoardingState,
     required TResult Function() loadingState,
+    required TResult Function() notAuthorizedDialogState,
     required TResult Function() notAuthorizedState,
     required TResult Function() notVerifyed,
     required TResult Function() inAppState,
@@ -1492,6 +1843,7 @@ class _$_InAppState implements _InAppState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? onBoardingState,
     TResult? Function()? loadingState,
+    TResult? Function()? notAuthorizedDialogState,
     TResult? Function()? notAuthorizedState,
     TResult? Function()? notVerifyed,
     TResult? Function()? inAppState,
@@ -1505,6 +1857,7 @@ class _$_InAppState implements _InAppState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? onBoardingState,
     TResult Function()? loadingState,
+    TResult Function()? notAuthorizedDialogState,
     TResult Function()? notAuthorizedState,
     TResult Function()? notVerifyed,
     TResult Function()? inAppState,
@@ -1522,6 +1875,8 @@ class _$_InAppState implements _InAppState {
   TResult map<TResult extends Object?>({
     required TResult Function(_OnBoardingState value) onBoardingState,
     required TResult Function(_LoadingState value) loadingState,
+    required TResult Function(_NotAuthorizedDialogState value)
+        notAuthorizedDialogState,
     required TResult Function(_NotAuthorizedState value) notAuthorizedState,
     required TResult Function(_NotVerifyed value) notVerifyed,
     required TResult Function(_InAppState value) inAppState,
@@ -1535,6 +1890,8 @@ class _$_InAppState implements _InAppState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_OnBoardingState value)? onBoardingState,
     TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_NotAuthorizedDialogState value)?
+        notAuthorizedDialogState,
     TResult? Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult? Function(_NotVerifyed value)? notVerifyed,
     TResult? Function(_InAppState value)? inAppState,
@@ -1548,6 +1905,7 @@ class _$_InAppState implements _InAppState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_OnBoardingState value)? onBoardingState,
     TResult Function(_LoadingState value)? loadingState,
+    TResult Function(_NotAuthorizedDialogState value)? notAuthorizedDialogState,
     TResult Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult Function(_NotVerifyed value)? notVerifyed,
     TResult Function(_InAppState value)? inAppState,
@@ -1631,6 +1989,7 @@ class _$_ErrorState implements _ErrorState {
   TResult when<TResult extends Object?>({
     required TResult Function() onBoardingState,
     required TResult Function() loadingState,
+    required TResult Function() notAuthorizedDialogState,
     required TResult Function() notAuthorizedState,
     required TResult Function() notVerifyed,
     required TResult Function() inAppState,
@@ -1644,6 +2003,7 @@ class _$_ErrorState implements _ErrorState {
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? onBoardingState,
     TResult? Function()? loadingState,
+    TResult? Function()? notAuthorizedDialogState,
     TResult? Function()? notAuthorizedState,
     TResult? Function()? notVerifyed,
     TResult? Function()? inAppState,
@@ -1657,6 +2017,7 @@ class _$_ErrorState implements _ErrorState {
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? onBoardingState,
     TResult Function()? loadingState,
+    TResult Function()? notAuthorizedDialogState,
     TResult Function()? notAuthorizedState,
     TResult Function()? notVerifyed,
     TResult Function()? inAppState,
@@ -1674,6 +2035,8 @@ class _$_ErrorState implements _ErrorState {
   TResult map<TResult extends Object?>({
     required TResult Function(_OnBoardingState value) onBoardingState,
     required TResult Function(_LoadingState value) loadingState,
+    required TResult Function(_NotAuthorizedDialogState value)
+        notAuthorizedDialogState,
     required TResult Function(_NotAuthorizedState value) notAuthorizedState,
     required TResult Function(_NotVerifyed value) notVerifyed,
     required TResult Function(_InAppState value) inAppState,
@@ -1687,6 +2050,8 @@ class _$_ErrorState implements _ErrorState {
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_OnBoardingState value)? onBoardingState,
     TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_NotAuthorizedDialogState value)?
+        notAuthorizedDialogState,
     TResult? Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult? Function(_NotVerifyed value)? notVerifyed,
     TResult? Function(_InAppState value)? inAppState,
@@ -1700,6 +2065,7 @@ class _$_ErrorState implements _ErrorState {
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_OnBoardingState value)? onBoardingState,
     TResult Function(_LoadingState value)? loadingState,
+    TResult Function(_NotAuthorizedDialogState value)? notAuthorizedDialogState,
     TResult Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult Function(_NotVerifyed value)? notVerifyed,
     TResult Function(_InAppState value)? inAppState,

@@ -22,7 +22,8 @@ class SeminarCard extends StatelessWidget {
       required this.event,
       required this.nextPage,
       required this.previousPage,
-      required this.isDialog, required this.mainContext})
+      required this.isDialog,
+      required this.mainContext})
       : super(key: key);
   final EventDto event;
   final Function nextPage;
@@ -33,8 +34,12 @@ class SeminarCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: isDialog == true ? event.address == null ? 225.h : 248.h : null,
-      padding:  EdgeInsets.symmetric(horizontal: 19.w, vertical: 10.h),
+      height: isDialog == true
+          ? event.address == null
+              ? 225.h
+              : 248.h
+          : null,
+      padding: EdgeInsets.symmetric(horizontal: 19.w, vertical: 10.h),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20.r),
       ),
@@ -65,7 +70,7 @@ class SeminarCard extends StatelessWidget {
                   )),
             ],
           ),
-           SizedBox(
+          SizedBox(
             height: 8.h,
           ),
           Row(
@@ -85,7 +90,7 @@ class SeminarCard extends StatelessWidget {
               ),
             ],
           ),
-           SizedBox(
+          SizedBox(
             height: 8.h,
           ),
           Row(
@@ -106,7 +111,7 @@ class SeminarCard extends StatelessWidget {
               ),
             ],
           ),
-           SizedBox(
+          SizedBox(
             height: 8.h,
           ),
           if (event.address != null)
@@ -163,18 +168,10 @@ class SeminarCard extends StatelessWidget {
                           throw Exception('Could not launch');
                         }
                       }
+                    } else {
+                      mainContext.router
+                          .push(SeminarDetailPageRoute(id: event.id!));
                     }
-                    else{
-                      Navigator.push(
-                        rootNavigatorKey.currentContext!,
-                        MaterialPageRoute(builder: (context) {
-                          return SeminarDetailPage(
-                            id: event.id!,
-                          );
-                        }),
-                      );
-                    }
-
                   },
                   text: 'next_page'.tr(),
                   textSize: 14.sp,

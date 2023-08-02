@@ -86,7 +86,6 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                     id: tusZhoruModel.id!,
                                     isCustom: false,
                                   );
-
                                 });
 
                           },
@@ -106,6 +105,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          SizedBox(height: 20.h,),
                           Padding(
                             padding: const EdgeInsets.only(left: 12),
                             child: CustomAppBar(

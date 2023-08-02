@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/common/shared_keys.dart';
 import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
@@ -62,7 +63,8 @@ class AuthLocalDsImpl extends AuthLocalDs {
       );
       saveToken(token: TokenDTO.fromJson(response.data));
       log('refreshJwt::::${TokenDTO.fromJson(response.data).toString()}');
-      return TokenDTO.fromJson(response.data);
+
+    return TokenDTO.fromJson(response.data);
     } catch (e) {
       log('REFRESH EXCEPTION::::${e}');
       throw ServerException(message: e.toString());
@@ -173,7 +175,7 @@ class AuthLocalDsImpl extends AuthLocalDs {
             as Map<String, dynamic>,
       );
 
-      log(token.access!);
+      log(token.access!.toString());
       if (token != null) {
         log('TOKEN ECTTTT!');
         bool verifyJwtBool = false;

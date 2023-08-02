@@ -21,52 +21,82 @@ class CustomAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: hideIcon != null && hideIcon ==false
-          ? [
-              Center(
-                child: Container(
-                  width: 150.w,
-                  child: Text(
-                    title,
-                    textAlign: TextAlign.center,
-                    style: getTextStyle(CustomTextStyles.s20w700)
-                        .copyWith(color: color ?? AppColors.white, fontSize: 36),
-                    overflow: TextOverflow.ellipsis,
-                  ),
+    return hideIcon != null && hideIcon == false
+        ? Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+            Center(
+              child: Container(
+                width: 200.w,
+                child: Text(
+                  title,
+                  textAlign: TextAlign.center,
+                  style: getTextStyle(CustomTextStyles.s20w700)
+                      .copyWith(color: color ?? AppColors.white, fontSize: 36),
+                  overflow: TextOverflow.ellipsis,
                 ),
               ),
-            ]
-          : [
-              GestureDetector(
-                  onTap: onTap != null
-                      ? () {
-                          onTap!();
-                        }
-                      : () {
-                          Navigator.pop(context);
-                        },
-                  child: SvgPicture.asset(
-                    Assets.backButtonSvg,
-                    color: color ?? AppColors.white,
-                  )),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                    width: 150.w,
-                    child: Text(
-                      title,
-                      textAlign: TextAlign.center,
-                      style: getTextStyle(CustomTextStyles.s20w700)
-                          .apply(color: color ?? AppColors.white),
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ),
+            ),
+          ]
+            // : [
+            //     GestureDetector(
+            //         onTap: onTap != null
+            //             ? () {
+            //                 onTap!();
+            //               }
+            //             : () {
+            //                 Navigator.pop(context);
+            //               },
+            //         child: SvgPicture.asset(
+            //           Assets.backButtonSvg,
+            //           color: color ?? AppColors.white,
+            //         )),
+            //     Expanded(
+            //       flex:10,
+            //       child: Align(
+            //         alignment: Alignment.center,
+            //         child: Container(
+            //           width: 150.w,
+            //           child: Text(
+            //             title,
+            //             textAlign: TextAlign.center,
+            //             style: getTextStyle(CustomTextStyles.s20w700)
+            //                 .apply(color: color ?? AppColors.white),
+            //             overflow: TextOverflow.ellipsis,
+            //           ),
+            //         ),
+            //       ),
+            //     )
+            //   ],
+            )
+        : Stack(
+            children: [
+              Center(
+                child: Container(
+                  width: 200.w,
+                  child: Text(
+                title,
+                textAlign: TextAlign.center,
+                style: getTextStyle(CustomTextStyles.s20w700)
+                    .apply(color: color ?? AppColors.white),
+                overflow: TextOverflow.ellipsis,
+              ),
                 ),
-              )
+              ),
+              Positioned(
+                left: 0,
+                child: GestureDetector(
+                    onTap: onTap != null
+                        ? () {
+                            onTap!();
+                          }
+                        : () {
+                            Navigator.pop(context);
+                          },
+                    child: SvgPicture.asset(
+                      Assets.backButtonSvg,
+                      color: color ?? AppColors.white,
+                    )),
+              ),
             ],
-    );
+          );
   }
 }
