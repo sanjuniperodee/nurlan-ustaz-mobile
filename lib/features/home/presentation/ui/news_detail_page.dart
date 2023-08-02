@@ -14,6 +14,7 @@ import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/app/app_dinamic_link.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_detail_cubit.dart';
 import 'package:share_plus/share_plus.dart';
@@ -21,6 +22,7 @@ import 'package:share_plus/share_plus.dart';
 class NewsDetailPage extends StatefulWidget {
   final int id;
   final String? search;
+
   const NewsDetailPage({super.key, required this.id, this.search});
 
   @override
@@ -32,6 +34,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
   late bool isFavorite;
   late bool isLiked;
   late int likeCount;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -42,16 +45,21 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<NewsDetailCubit, NewsDetailState>(
+      body: BlocConsumer<NewsDetailCubit, NewsDetailState>(
+        listener: (context, state) {
+          state.maybeWhen(orElse: () {}, loadingState: () {
+            return const Center(
+              child: CircularProgressIndicator(color: AppColors.danger),
+            );
+          },
+            errorState: (message) {
+              return buildErrorCustomSnackBar(context, message);
+            },);
+        },
         builder: (context, state) {
           return state.maybeWhen(
             orElse: () {
               return const Center();
-            },
-            loadingState: () {
-              return const Center(
-                child: CircularProgressIndicator(color: AppColors.danger),
-              );
             },
             loaded: (result) {
               isFavorite = result.isSaved!;
@@ -78,9 +86,10 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                           imageUrl: i.file ?? '',
                           fit: BoxFit.cover,
                           width: 1.sw,
-                          errorWidget: (a, b, c) => SizedBox(
-                            height: 80.h,
-                          ),
+                          errorWidget: (a, b, c) =>
+                              SizedBox(
+                                height: 80.h,
+                              ),
                         );
                       },
                     );
@@ -89,21 +98,21 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                 result.media == null
                     ? const SizedBox()
                     : Positioned.fill(
-                        top: 215.r,
-                        child: Align(
-                          alignment: Alignment.topCenter,
-                          child: DotsIndicator(
-                            dotsCount: result.media?.length ?? 0,
-                            position: _currentIndex,
-                            decorator: const DotsDecorator(
-                              color: AppColors
-                                  .grey2, // Color of non-selected indicators
-                              activeColor: AppColors
-                                  .white, // Color of selected indicator
-                            ),
-                          ),
-                        ),
+                  top: 215.r,
+                  child: Align(
+                    alignment: Alignment.topCenter,
+                    child: DotsIndicator(
+                      dotsCount: result.media?.length ?? 0,
+                      position: _currentIndex,
+                      decorator: const DotsDecorator(
+                        color: AppColors
+                            .grey2, // Color of non-selected indicators
+                        activeColor: AppColors
+                            .white, // Color of selected indicator
                       ),
+                    ),
+                  ),
+                ),
                 SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: Padding(
@@ -148,7 +157,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                               isLiked = !isLiked;
 
                                               BlocProvider.of<NewsDetailCubit>(
-                                                      context)
+                                                  context)
                                                   .newsLike(id: result.id ?? 0);
                                             });
 
@@ -160,12 +169,12 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                           },
                                           child: isLiked
                                               ? SvgPicture.asset(
-                                                  Assets.heartSvg,
-                                                )
+                                            Assets.heartSvg,
+                                          )
                                               : SvgPicture.asset(
-                                                  Assets.heart1Svg,
-                                                  color: AppColors.black,
-                                                )),
+                                            Assets.heart1Svg,
+                                            color: AppColors.black,
+                                          )),
                                       Text(
                                         likeCount.toString(),
                                         style: getTextStyle(
@@ -194,8 +203,8 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                       InkWell(
                                           onTap: () async {
                                             String unguessableDynamicLink =
-                                                await DynamicLink()
-                                                    .createNewsLink(result.id!);
+                                            await DynamicLink()
+                                                .createNewsLink(result.id!);
                                             await Share.share(
                                               unguessableDynamicLink,
                                             );
@@ -208,9 +217,10 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                 GestureDetector(
                                     onTap: () {
                                       setState(() {
+                                        log('like news');
                                         isFavorite = !isFavorite;
                                         BlocProvider.of<NewsDetailCubit>(
-                                                context)
+                                            context)
                                             .newsFavorite(id: result.id ?? 0);
                                       });
                                     },
@@ -253,9 +263,9 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                         onTap: () {
                           BlocProvider.of<NewsCubit>(context)
                               .news(
-                                  page: 1,
-                                  isFirstCall: true,
-                                  search: widget.search ?? '')
+                              page: 1,
+                              isFirstCall: true,
+                              search: widget.search ?? '')
                               .then((value) => Navigator.pop(context));
                         },
                         child: SvgPicture.asset(Assets.backStackSvg))),

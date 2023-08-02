@@ -11,4 +11,6 @@ class AppEvent with _$AppEvent {
   // const factory AppEvent.sendDeviceToken() = _SendDeviceToken;
   const factory AppEvent.exiting() = _Exiting;
   const factory AppEvent.deleting() = _Deleting;
+  const factory AppEvent.nonAuthorizedDialog() = _NonAuthorizedDialog;
+
 }

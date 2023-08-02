@@ -9,8 +9,9 @@ abstract class Failure extends Equatable {
 }
 
 class ServerFailure extends Failure {
+  final int? statusCode;
   final String? message;
-  ServerFailure({required this.message});
+  ServerFailure({ this.message,this.statusCode});
 }
 
 class CacheFailure extends Failure {

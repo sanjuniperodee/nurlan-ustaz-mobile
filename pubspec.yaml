@@ -143,7 +143,9 @@ flutter_icons:
   android: "launcher_icon"
   ios: true
   image_path_ios: "assets/images/logo/appstore.png"
-  image_path_android: "assets/images/logo/playstore.png"   # The following section is specific to Flutter packages.
+  image_path: "assets/images/logo/new_playmarket_logo.png"
+
+  # The following section is specific to Flutter packages.
 flutter:
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

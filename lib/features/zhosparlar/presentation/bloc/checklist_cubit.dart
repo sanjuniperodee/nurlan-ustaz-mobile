@@ -25,24 +25,33 @@ class CheckListCubit extends Cubit<CheckListState> {
 
   Future<void> autoFillDays({required int checklistId}) async {}
 
-  Future<void> getDays({required int checklistId}) async {
+  Future<List<CheckListDayDto>> getDays({required int checklistId}) async {
     final result = await _repository.getDays(checklistId: checklistId);
 
-    result.fold((l) => {}, (r) async {
+    result.fold((l) => {
+      log('salamaleikum')
+    }, (r) async {
+      log('${r.toString()}---ooo');
       days = r.toList();
-      if (days.isEmpty) {
+      if (days.isEmpty ) {
         await _repository.autoFillDays(checklistId: checklistId);
         final result = await _repository.getDays(checklistId: checklistId);
         result.fold(
             (l) => {},
-            (r) => {
+            (r) {
+
+
+
+
+              days = r.toList();
                   emit(_InitialState(
-                      days: r.toList(), selectedDate: selectedDate))
+                      days: days, selectedDate: selectedDate));
                 });
       } else {
-        emit(_InitialState(days: r.toList(), selectedDate: selectedDate));
+        emit(_InitialState(days: r.toList(), selectedDate: selectedDate,));
       }
     });
+    return days;
   }
 
   Future<void> postTask(CheckListDayDto checkListDayDto, String title) async {

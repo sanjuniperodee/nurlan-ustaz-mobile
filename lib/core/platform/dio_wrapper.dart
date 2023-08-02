@@ -2,9 +2,12 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:dio/dio.dart';
+import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
+import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
 import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/features/app/logic/not_auth_logic.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/datasource/local/auth_local_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/token_dto.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
@@ -73,7 +76,6 @@ class _KausarDioInterceptor extends Interceptor {
 
     try {
       TokenDTO? tokenDto = await _authLocalDS.getTokenFromCacheNull();
-      log('!!1111');
       if (tokenDto != null) {
         print('------------------------------${tokenDto.access}');
         options.headers['Authorization'] = 'Bearer ${tokenDto.access}';
@@ -93,13 +95,7 @@ class _KausarDioInterceptor extends Interceptor {
     ErrorInterceptorHandler handler,
   ) async {
     getIt<NotAuthLogic>().statusSubject.add(err.response?.statusCode ?? 0);
-    // AuthRepository _authRepository = getIt<AuthRepository>();
-    // final TokenDTO? tokenDto = _authLocalDS.getTokenFromCacheNull();
-    // if (err.response!.statusCode == 401) {
-    //   // log(token.refresh.toString());
-    //   log('TEST2.toString()');
-    //   await _authRepository.refreshToken(refreshToken: tokenDto!.refresh ?? '');
-    // }
+
 
     if ((err.response?.statusCode ?? 0) == HttpStatus.unauthorized) {
       getIt<NotAuthLogic>().statusSubject.add(401);
@@ -119,6 +115,7 @@ class _KausarDioInterceptor extends Interceptor {
     } else if ((err.response?.statusCode ?? 0) == HttpStatus.notFound) {
       // getIt<NotFoundLogic>().statusSubject.add(404);
     }
+
     return super.onError(err, handler);
   }
 }

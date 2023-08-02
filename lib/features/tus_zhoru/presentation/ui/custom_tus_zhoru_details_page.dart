@@ -94,6 +94,8 @@ class _TusZhoruDetailPage extends State<CustomTusZhoruDetailPage> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      SizedBox(height: 20.h,),
+
                       Padding(
                         padding: const EdgeInsets.only(left: 12),
                         child: CustomAppBar(

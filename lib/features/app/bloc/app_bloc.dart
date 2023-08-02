@@ -1,21 +1,29 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
+import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 
 import 'package:nurlan_ustaz_flutter/features/app/logic/not_auth_logic.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/token_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/repositories/auth_repository.dart';
 
+import '../../../core/services/locator_service.dart';
+import '../../../core/utils/alert_utilrs.dart';
 import '../../auth/data/datasource/local/auth_local_ds.dart';
 
 part 'app_bloc.freezed.dart';
+
 part 'app_event.dart';
+
 part 'app_state.dart';
 
 const _tag = 'AppBloc';
+final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
 
 @singleton
 class AppBloc extends Bloc<AppEvent, AppState> {
@@ -25,19 +33,17 @@ class AppBloc extends Bloc<AppEvent, AppState> {
 
   AppBloc(this._authRepository, this._notAuthLogic, this._authLocalDs)
       : super(const AppState.loadingState()) {
-    // _notAuthLogic.statusSubject.listen(
-    //   (value) async {
-    //     log('_startListenDio message from stream :: $value');
+    _notAuthLogic.statusSubject.listen(
+      (value) async {
+        log('_startListenDio message from stream :: $value');
 
-    //     if (value == 401) {
-    //       final TokenDTO token = _authLocalDs.getTokenFromCache();
+        if (value == 401)  {
 
-    //       log(2.toString());
-    //       await _authRepository.refreshToken(refreshToken: token.refresh ?? '');
-    //       return;
-    //     }
-    //   },
-    // );
+           emit(AppState.notAuthorizedDialogState());
+
+        }
+      },
+    );
 
     on<AppEvent>(
       (AppEvent event, Emitter<AppState> emit) async => event.map(
@@ -47,7 +53,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         logining: (_Logining event) async => _login(event, emit),
         refreshLocal: (_RefreshLocal event) async => _refreshLocal(emit),
         onboardingSave: (_OnboardingSave event) async =>
-            _onboarding(event, emit),
+            _onboarding(event, emit), nonAuthorizedDialog: (_NonAuthorizedDialog event) async => _nonAuthorizedDialog(emit),
       ),
     );
   }
@@ -90,12 +96,18 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     final result = _authRepository.authCheck();
 
     result.fold(
-      (l) => emit(const AppState.notAuthorizedState()),
+      (l) => emit(const AppState.inAppState()),
       (r) {
         emit(const AppState.inAppState());
       },
     );
   }
+  Future<void> _nonAuthorizedDialog(
+      Emitter<AppState> emit,
+      ) async {
+        emit(const AppState.notAuthorizedState());
+      }
+
 
   Future<void> _exit(
     _Exiting event,
@@ -151,6 +163,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       },
     );
 
-    emit(const AppState.notAuthorizedState());
+    emit(const AppState.loadingState());
   }
 }
