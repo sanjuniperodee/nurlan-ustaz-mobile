@@ -27,6 +27,7 @@ class PaymentTickCubit extends Cubit<PaymentTickState> {
     bool? isFirstCall,
     bool? isPurchased,
   }) async {
+    emit(const _LoadingState());
     final failureOrUser = await _repository.tusZhoru(
         page: page,
         isFirstCall: true,
@@ -54,6 +55,7 @@ class PaymentTickCubit extends Cubit<PaymentTickState> {
     int? page,
     bool? isFirstCall,
   }) async {
+    emit(const _LoadingState());
     final result = await _repository.customTusZhoru(
         page: 1, isFirstCall: true, search: search);
     result.fold(

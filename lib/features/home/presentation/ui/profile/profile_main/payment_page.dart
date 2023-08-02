@@ -88,6 +88,7 @@ class _PaymentsPageState extends State<PaymentsPage> {
                     if (currentIndex != 0) {
                       BlocProvider.of<PaymentTickCubit>(context).seminar(
                           page: 1, isFirstCall: true, isPurchased: true);
+                          
                     } else {
                       BlocProvider.of<PaymentTickCubit>(context).tusZhoruT(
                           page: 1, isFirstCall: true, isPurchased: true);
