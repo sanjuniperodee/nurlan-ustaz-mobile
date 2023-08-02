@@ -34,9 +34,7 @@ class _LauncherAppState extends State<LauncherApp> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-        onWillPop: _onWillPop,
-        child: _salam());
+    return WillPopScope(onWillPop: _onWillPop, child: _salam());
   }
 }
 
@@ -68,7 +66,7 @@ Widget _salam() {
           return const _Scaffold(
             child: Center(
               child: CircularProgressIndicator(
-                color:AppColors.linearBlue ,
+                color: AppColors.linearBlue,
               ),
             ),
           );
