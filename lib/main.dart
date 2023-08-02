@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -12,6 +13,18 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/nurlan_ustaz_a
 
 import 'core/router/app_router.dart';
 import 'core/services/locator_service.dart';
+
+Future<void> firebaseListen() async {
+  FirebaseMessaging.instance.getInitialMessage();
+  FirebaseMessaging.onMessage.listen((message) {
+    log('MESSAGEEEE ${message.data} : ${message.data}');
+    // if (message.data['order_id'] != '' && message.data['order_id'] != 0) {
+
+    // } else {
+    //   log('NO');
+    // }
+  });
+}
 
 Future<void> firebaseInit() async {
   FirebaseDynamicLinks.instance.onLink.listen((event) {
@@ -47,7 +60,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   await FirebaseDynamicLinks.instance.getInitialLink();
   getIt.registerSingleton<AppRouter>(AppRouter());
-
+  await firebaseListen();
   await firebaseInit();
   await checkLocationPermission();
   MainRunner.run<AsyncAppDependencies>(

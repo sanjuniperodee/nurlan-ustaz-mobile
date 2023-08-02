@@ -86,7 +86,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
             child: Column(
               children: [
                 CustomAppBar(
-                  title: 'profile'.tr(),
+                  title: 'My_data'.tr(),
                 ),
                 SizedBox(height: 44.h),
                 InkWell(

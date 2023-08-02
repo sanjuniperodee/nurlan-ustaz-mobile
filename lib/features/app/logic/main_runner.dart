@@ -54,6 +54,7 @@ mixin MainRunner {
           Locale('kk'),
           Locale('ru'),
         ],
+        startLocale: const Locale('kk'),
         path: 'assets/translations',
         fallbackLocale: const Locale('kk'),
         child: app,
