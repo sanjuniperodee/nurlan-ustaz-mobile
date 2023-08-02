@@ -593,8 +593,8 @@ class _MainPageState extends State<MainPage> {
                                       ),
                                     ),
                                     SizedBox(
-                                      height: 25.h,
-                                    )
+                                      height: 165.h,
+                                    ),
                                   ],
                                 ),
                               ),
