@@ -16,19 +16,19 @@ import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/auth_cubit.
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/registration_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/login_form.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/registration_form.dart';
- 
+
 import '../../../../core/router/app_router.dart';
 import '../../../app/presentation/widgets/custom_snackbars.dart';
- 
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
- 
+
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
- 
+
 int currentIndex = 0;
- 
+
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
@@ -202,4 +202,3 @@ class _LoginPageState extends State<LoginPage> {
     ));
   }
 }
- 
