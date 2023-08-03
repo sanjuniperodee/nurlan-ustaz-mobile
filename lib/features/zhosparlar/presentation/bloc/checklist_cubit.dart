@@ -22,10 +22,12 @@ class CheckListCubit extends Cubit<CheckListState> {
   late List<CheckListDayDto> days;
   late DateTime selectedDate;
   late List<CheckListTaskDto> tasks;
+  late int checklistID;
 
   Future<void> autoFillDays({required int checklistId}) async {}
 
   Future<List<CheckListDayDto>> getDays({required int checklistId}) async {
+    checklistID = checklistId;
     final result = await _repository.getDays(checklistId: checklistId);
 
     result.fold((l) => {
@@ -57,7 +59,7 @@ class CheckListCubit extends Cubit<CheckListState> {
   Future<void> postTask(CheckListDayDto checkListDayDto, String title) async {
     final result = await _repository.postTask(
         checkListDayId: checkListDayDto.id, title: title);
-    result.fold((l) => {}, (r) => {getDays(checklistId: 2)});
+    result.fold((l) => {}, (r) => {getDays(checklistId: checklistID)});
   }
 
   Future<void> completeTask(CheckListDayDto checkListDayDto,
@@ -66,7 +68,7 @@ class CheckListCubit extends Cubit<CheckListState> {
         checkListDayDto: checkListDayDto,
         checkListTaskDto: checkListTaskDto,
         isComplete: value);
-    result.fold((l) => {}, (r) => {getDays(checklistId: 2)});
+    result.fold((l) => {}, (r) => {getDays(checklistId: checklistID)});
   }
 
   Future<void> deleteTask(CheckListDayDto checkListDayDto,
@@ -76,7 +78,7 @@ class CheckListCubit extends Cubit<CheckListState> {
     await _repository.deleteTask(
         checkListDayId: checkListDayDto.id,
         checkListTaskId: checkListTaskDto.id);
-    getDays(checklistId: 2);
+    getDays(checklistId: checklistID);
   }
 
   Future<void> changeDate({required DateTime date}) async {

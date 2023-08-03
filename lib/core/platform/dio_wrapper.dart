@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:dio/dio.dart';
 import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
@@ -66,6 +67,7 @@ class _KausarDioInterceptor extends Interceptor {
   final AuthLocalDs _authLocalDS;
 
   _KausarDioInterceptor(this._authLocalDS);
+  static ChuckerHttpClient? _chuckerHttpClient;
 
   Dio dio = Dio(BaseOptions(baseUrl: SERVER_));
 

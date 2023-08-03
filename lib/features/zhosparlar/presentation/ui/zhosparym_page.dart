@@ -351,6 +351,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                           .read<ZhosparymCubit>()
                                           .getCheckList()
                                           .then((value) async {
+                                            log('checklist-${value}');
                                         if (value == null) {
                                           setState(() {
                                             _isLoading = false;
@@ -361,15 +362,15 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                                   context)
                                               .getDays(checklistId: value.id)
                                               .then((result) {
-                                            if (!result
+                                            if (!(result
                                                 .map((e) => DateFormat(
-                                                        'yyyy-MM-dd')
-                                                    .format(
-                                                        DateTime.parse(e.date)))
+                                                'yyyy-MM-dd')
+                                                .format(
+                                                DateTime.parse(e.date)))
                                                 .toList()
                                                 .contains(DateFormat(
-                                                        'yyyy-MM-dd')
-                                                    .format(DateTime.now()))){
+                                                'yyyy-MM-dd')
+                                                .format(DateTime.now())))){
                                               setState(() {
                                                 _isLoading = false;
                                               });

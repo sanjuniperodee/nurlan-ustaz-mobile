@@ -10,7 +10,6 @@ import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/checklist_t
 
 import '../../../../core/common/app_styles.dart';
 import '../../../../core/common/colors.dart';
-import '../../../app/presentation/ui/on_boarding.dart';
 import '../bloc/checklist_cubit.dart';
 
 class TaskDetailsDialog extends StatelessWidget {

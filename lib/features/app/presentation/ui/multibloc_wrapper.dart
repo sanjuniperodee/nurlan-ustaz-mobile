@@ -18,6 +18,7 @@ import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/s
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/surah_favorite_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/app_bloc.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/app/on_boarding/bloc/on_boarding_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/auth_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/code_verification_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/forgot_password_cubit.dart';
@@ -96,6 +97,10 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
         ///
         BlocProvider<AppBloc>(
           create: (context) => getIt<AppBloc>(),
+        ),
+        //On Boarding
+        BlocProvider<OnBoardingCubit>(
+          create: (context) => getIt<OnBoardingCubit>(),
         ),
         BlocProvider<LanguageCubit>(
           create: (context) => getIt<LanguageCubit>(),

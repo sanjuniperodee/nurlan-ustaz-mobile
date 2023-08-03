@@ -107,6 +107,9 @@ dependencies:
 
   network_to_file_image: ^4.0.1
   flutter_cache_manager: ^3.3.1
+  video_player: ^2.7.0
+  chewie: ^1.5.0
+
 
 
 

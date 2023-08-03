@@ -10,18 +10,23 @@ import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/app_bloc.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/base.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/on_boarding.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/login_page.dart';
 
 import '../../../../core/services/locator_service.dart';
 import '../../../../core/utils/alert_utilrs.dart';
-
+import '../../on_boarding/presentation/ui/on_boarding.dart';
+int _backClickDateTime = 0;
+const int _backClickThreshHold = 3000;
 class LauncherApp extends StatefulWidget {
   const LauncherApp({super.key});
 
   @override
   State<LauncherApp> createState() => _LauncherAppState();
 }
+
+bool isShow = false;
+
+
 
 class _LauncherAppState extends State<LauncherApp> {
   @override
@@ -34,19 +39,11 @@ class _LauncherAppState extends State<LauncherApp> {
     BlocProvider.of<AppBloc>(context).add(const AppEvent.checkAuth());
   }
 
-  Future<bool> _onWillPop() async {
-    var dialog = await AlertUtils.showTwoOptionDialog(
-        context: context,
-        messageKey: 'exit_des'.tr(),
-        title: 'exit'.tr(),
-        button1Text: 'cancel'.tr(),
-        button2Text: 'exit2'.tr());
-    return dialog == true ? true : false;
-  }
+
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(onWillPop: _onWillPop, child: _salam());
+    return _salam();
   }
 }
 
