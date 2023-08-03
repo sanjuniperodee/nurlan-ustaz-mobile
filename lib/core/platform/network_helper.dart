@@ -5,6 +5,8 @@ const SERVER_IP = '86.107.199.205';
 const SERVER_PATH = '/api/v1';
 
 mixin EndPoints {
+  static const String onBoarding = '/api/support/onboarding/';
+
   /// auth
   static const String createUser = '/api/users/';
   static const String activateUser = '/api/users/activation/';

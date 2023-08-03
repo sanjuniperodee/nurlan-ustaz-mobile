@@ -144,7 +144,7 @@ class CustomCalendarAgendaState extends State<CustomCalendarAgenda>
                         (5 - _dates.length) /
                         10)
                 : const EdgeInsets.symmetric(horizontal: 10),
-            initialScrollIndex: _daySelectedIndex! - 1,
+            initialScrollIndex: _daySelectedIndex!,
             // initialAlignment: _scrollAlignment,
             initialAlignment:
                 widget.selectedDayPosition == SelectedDayPosition.center
@@ -158,7 +158,7 @@ class CustomCalendarAgendaState extends State<CustomCalendarAgenda>
             physics: BouncingScrollPhysics(
               parent: AlwaysScrollableScrollPhysics(),
             ),
-            itemCount: _dates.length,
+            itemCount: _dates.length-1,
             itemBuilder: (context, index) {
               DateTime date = _dates[index];
               bool isSelected = _daySelectedIndex == index;
