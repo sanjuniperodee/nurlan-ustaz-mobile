@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
@@ -23,8 +24,15 @@ class _NurlanUstazAppState extends State<NurlanUstazApp> {
 
   @override
   void initState() {
+    initialise();
     _rootRouter = getIt<AppRouter>();
+
     super.initState();
+  }
+
+  void initialise() async {
+    await Future.delayed(const Duration(seconds: 2))
+        .then((value) => FlutterNativeSplash.remove());
   }
 
   @override
@@ -45,7 +53,6 @@ class _NurlanUstazAppState extends State<NurlanUstazApp> {
             );
           },
           builder: (context, state) {
-
             return MaterialApp.router(
               key: rootNavigatorKey,
               // title: 'Flutter Demo',

@@ -86,7 +86,7 @@ class _CommentPageNewsState extends State<CommentPageNews> {
                 color: AppColors.linearBlue,
               );
             },
-            loaded: (user, geo) {
+            loaded: (user, geo,dev) {
               return Container(
                 padding: const EdgeInsets.all(16),
                 child: Row(

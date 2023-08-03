@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -53,6 +54,7 @@ class _ProfileMainPage extends State<ProfileMainPage> {
     'kk': 'Қазақша',
   };
   String? chosenLang;
+  TextEditingController devc = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -68,7 +70,12 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                 ),
               );
             },
-            loaded: (user, geo) {
+            loaded: (
+              user,
+              geo,
+              dev,
+            ) {
+              devc.text = dev!;
               log('chosenLang::::${chosenLang.toString()}');
               return GlobalCustomBody(
                 child: SingleChildScrollView(
@@ -83,10 +90,22 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                         ),
                         SizedBox(height: 44.h),
                         user.avatar != null
-                            ? CircleAvatar(
-                                radius: 57.r,
-                                backgroundColor: AppColors.white,
-                                backgroundImage: NetworkImage(user.avatar!))
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(90),
+                                child: CachedNetworkImage(
+                                  imageUrl: user.avatar ?? '',
+                                  fit: BoxFit.cover,
+                                  height: 94.h,
+                                  width: 94.w,
+                                  errorWidget: (a, b, c) => Center(
+                                    child: SvgPicture.asset(
+                                      Assets.userSvg,
+                                      width: 94,
+                                      height: 94,
+                                    ),
+                                  ),
+                                ),
+                              )
                             : SvgPicture.asset(
                                 Assets.userSvg,
                                 width: 94,
@@ -309,6 +328,9 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                         ),
                         SizedBox(
                           height: 12.h,
+                        ),
+                        TextField(
+                          controller: devc,
                         ),
                         Container(
                           padding: const EdgeInsets.only(left: 12, right: 17).r,

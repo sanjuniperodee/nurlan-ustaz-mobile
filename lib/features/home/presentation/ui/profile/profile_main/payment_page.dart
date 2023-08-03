@@ -56,11 +56,11 @@ class _PaymentsPageState extends State<PaymentsPage> {
       },
       builder: (context, state) {
         state.whenOrNull(
-          loadingState: () {
-            return const CircularProgressIndicator(
-              color: AppColors.linearBlue,
-            );
-          },
+          // loadingState: () {
+          //   return const CircularProgressIndicator(
+          //     color: AppColors.linearBlue,
+          //   );
+          // },
         );
         return GlobalCustomBody(
           child: SizedBox(
@@ -88,7 +88,6 @@ class _PaymentsPageState extends State<PaymentsPage> {
                     if (currentIndex != 0) {
                       BlocProvider.of<PaymentTickCubit>(context).seminar(
                           page: 1, isFirstCall: true, isPurchased: true);
-                          
                     } else {
                       BlocProvider.of<PaymentTickCubit>(context).tusZhoruT(
                           page: 1, isFirstCall: true, isPurchased: true);

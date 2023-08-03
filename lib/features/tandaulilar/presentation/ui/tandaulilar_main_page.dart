@@ -82,7 +82,12 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                       controller: controller,
                       header: CustomHeader(
                         builder: (context, mode) {
-                          return Container(); // Return an empty container to remove the default text
+                          return const Center(
+                            child: CircularProgressIndicator(
+                              color: AppColors.linearBlue,
+                            ),
+                          );
+                          // Return an empty container to remove the default text
                         },
                       ),
                       onRefresh: () {
