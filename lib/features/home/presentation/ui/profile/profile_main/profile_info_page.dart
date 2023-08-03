@@ -11,6 +11,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:nurlan_ustaz_flutter/core/platform/cache_helper/prefs.dart';
 import 'package:path/path.dart' as p;
 
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
@@ -97,12 +98,14 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                       children: [
                         CircleAvatar(
                           radius: 47.r,
-                          backgroundColor: AppColors.white,
+                          backgroundColor: Colors.transparent,
                           backgroundImage: _image != null
                               ? FileImage(File(_image!.path))
                               : widget.userDTO.avatar != null
-                                  ? NetworkImage(widget.userDTO.avatar!)
-                                      as ImageProvider
+                                  ? NetworkImage(
+                                      widget.userDTO.avatar!,
+                                      // fit: BoxFit.cover,
+                                    ) as ImageProvider
                                   : null,
                           child: widget.userDTO.avatar == null && _image == null
                               ? SvgPicture.asset(
@@ -235,6 +238,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                     SizedBox(
                       height: 20.h,
                     ),
+                    
                     ProfileMenuItem(
                       title: 'Delete_account'.tr(),
                       titleStyle: getTextStyle(CustomTextStyles.s16w500)
