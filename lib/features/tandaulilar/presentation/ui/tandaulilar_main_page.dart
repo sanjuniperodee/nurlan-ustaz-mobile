@@ -198,7 +198,10 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                                             );
                                           }),
                                     ],
-                                  )
+                                  ),
+                                  SizedBox(
+                                      height: 165.h,
+                                    ),
                                 ],
                               )
                             ],

@@ -264,9 +264,9 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
                                         context.router.push(NamePageRoute());
                                       },
                                       text: 'name_meaning'.tr()),
-                                  SizedBox(
-                                    height: 16.h,
-                                  ),
+                                 SizedBox(
+                                      height: 165.h,
+                                    ),
                                 ],
                               )),
                         ),

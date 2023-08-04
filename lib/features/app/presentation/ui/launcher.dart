@@ -10,8 +10,10 @@ import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/login_page.da
 
 import '../../../../core/utils/alert_utilrs.dart';
 import '../../on_boarding/presentation/ui/on_boarding.dart';
+
 int _backClickDateTime = 0;
 const int _backClickThreshHold = 3000;
+
 class LauncherApp extends StatefulWidget {
   const LauncherApp({super.key});
 
@@ -20,8 +22,6 @@ class LauncherApp extends StatefulWidget {
 }
 
 bool isShow = false;
-
-
 
 class _LauncherAppState extends State<LauncherApp> {
   @override
@@ -33,8 +33,6 @@ class _LauncherAppState extends State<LauncherApp> {
   Future<void> init() async {
     BlocProvider.of<AppBloc>(context).add(const AppEvent.checkAuth());
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -82,10 +80,10 @@ Widget _salam() {
         notAuthorizedDialogState: () async {
           var dialog = await AlertUtils.showTwoOptionDialog(
               context: context,
-              messageKey: 'exit_des'.tr(),
-              title: 'exit'.tr(),
+              messageKey: 'entry_text'.tr(),
+              title: 'enter'.tr(),
               button1Text: 'cancel'.tr(),
-              button2Text: 'exit2'.tr());
+              button2Text: 'enter'.tr());
           return dialog == true
               ? BlocProvider.of<AppBloc>(context)
                   .add(const AppEvent.nonAuthorizedDialog())
