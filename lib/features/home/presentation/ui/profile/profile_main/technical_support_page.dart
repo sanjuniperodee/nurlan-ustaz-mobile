@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'dart:convert';
 import 'dart:developer';
 
@@ -14,6 +15,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_cu
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/bloc/technical_support_cubit.dart';
 import 'package:web_socket_channel/io.dart';
 
+@RoutePage()
 class TechnicalSupportPage extends StatefulWidget {
   const TechnicalSupportPage({Key? key}) : super(key: key);
 

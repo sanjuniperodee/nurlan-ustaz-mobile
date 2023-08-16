@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/widgets/custom_tus_zhoru_list.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/widgets/tus_zhoru_custom_body.dart';
@@ -20,6 +19,7 @@ import '../../../app/presentation/widgets/custom_snackbars.dart';
 import '../../../app/presentation/widgets/custom_tab_bar.dart';
 import '../../../app/presentation/widgets/search_widget.dart';
 
+@RoutePage(name: 'TusZhoruRouterPage')
 class TusZhoruPage extends StatefulWidget {
   final String? type;
 
@@ -64,7 +64,7 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
           orElse: () {},
           loaded: () {
             context.router.push(
-              const QuestionPageRoute(),
+              const QuestionRoute(),
             );
           },
           errorState: (message) {
@@ -90,7 +90,7 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                         child: AppButton(
                             onTap: () {
                               context.router.push(
-                                const QuestionPageRoute(),
+                                const QuestionRoute(),
                               );
                             },
                             text: 'type_dream'.tr()),
@@ -167,6 +167,7 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                             tusZhoruList: tusZhoruList.tusZhoruList),
                         secondChild: CustomTusZhoruList(
                             tusZhoruList: tusZhoruList.customTusZhoru),
+
                         crossFadeState: tusZhoruList.currentIndex == 0
                             ? CrossFadeState.showFirst
                             : CrossFadeState.showSecond,
@@ -176,6 +177,11 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                     //     ? TusZhoruList(tusZhoruList: tusZhoruList.tusZhoruList)
                     //     : CustomTusZhoruList(
                     //         tusZhoruList: tusZhoruList.customTusZhoru),
+
+                    SizedBox(
+                      height: 105.h,
+                    ),
+
                   ],
                 ),
               ),

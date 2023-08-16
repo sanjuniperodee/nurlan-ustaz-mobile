@@ -1,7 +1,10 @@
 import 'dart:developer';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,11 +27,16 @@ class NurlanUstazApp extends StatefulWidget {
 class _NurlanUstazAppState extends State<NurlanUstazApp> {
   late AppRouter _rootRouter;
 
+
   // checkAppVersion() async {
   //   log('app_version');
   //   await Future.delayed(const Duration(seconds: 4));
   //         AppVersionService.(context);
   // }
+
+  static final FirebaseAnalytics _firebaseAnalytics =
+      FirebaseAnalytics.instance;
+
 
   @override
   void initState() {
@@ -64,11 +72,19 @@ class _NurlanUstazAppState extends State<NurlanUstazApp> {
           builder: (context, state) {
             return MaterialApp.router(
 
-              key: rootNavigatorKey,
+
               // title: 'Flutter Demo',
+
+              // key: rootNavigatorKey,
+              routerConfig: _rootRouter.config(
+                  navigatorObservers: () => [
+                        AutoRouteObserver(),
+                        FirebaseAnalyticsObserver(
+                            analytics: _firebaseAnalytics),
+                      ]),
+
               debugShowCheckedModeBanner: false,
               locale: EasyLocalization.of(context)?.locale,
-
               localizationsDelegates:
                   EasyLocalization.of(context)?.delegates.toList(),
               // ...context.localizationDelegates,
@@ -80,8 +96,8 @@ class _NurlanUstazAppState extends State<NurlanUstazApp> {
                 fontFamily: 'Poppins',
                 visualDensity: VisualDensity.adaptivePlatformDensity,
               ),
-              routerDelegate: _rootRouter.delegate(),
-              routeInformationParser: _rootRouter.defaultRouteParser(),
+              // routerDelegate: _rootRouter.delegate(),
+              // routeInformationParser: _rootRouter.defaultRouteParser(),
             );
           },
         );

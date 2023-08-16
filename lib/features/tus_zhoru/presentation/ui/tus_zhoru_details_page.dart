@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'dart:ui';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,6 @@ import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_details_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/widgets/tus_zhoru_detail_body.dart';
@@ -16,8 +16,8 @@ import 'package:share_plus/share_plus.dart';
 import '../../../../core/utils/pay_dialog.dart';
 import '../../../app/app_dinamic_link.dart';
 import '../../../app/presentation/widgets/custom_app_bar.dart';
-import '../bloc/tus_zhoru_cubit.dart';
 
+@RoutePage()
 class TusZhoruDetailPage extends StatefulWidget {
   const TusZhoruDetailPage({super.key, required this.id});
 

@@ -37,7 +37,7 @@ class _NamazContainerWidgetState extends State<NamazContainerWidget> {
   @override
   void initState() {
     _stopWatchTimer.setPresetHoursTime(int.parse(widget.time.substring(0, 2)));
-    _stopWatchTimer.setPresetMinuteTime(int.parse(widget.time.substring(2, 4)));
+    _stopWatchTimer.setPresetMinuteTime(int.parse(widget.time.substring(3, 5)));
     _stopWatchTimer.onStartTimer();
     super.initState();
   }
@@ -95,7 +95,7 @@ class _NamazContainerWidgetState extends State<NamazContainerWidget> {
                     final displayTime = StopWatchTimer.getDisplayTime(value!,
                         milliSecond: false);
                     return Text(
-                      '-${displayTime}',
+                      displayTime,
                       style: getTextStyle(CustomTextStyles.s16w400)
                           .apply(color: AppColors.black),
                     );
@@ -112,7 +112,7 @@ class _NamazContainerWidgetState extends State<NamazContainerWidget> {
                       GestureDetector(
                         onTap: () {
                           context.router.push(
-                            GeonamesPageRoute(),
+                            GeonamesRoute(),
                           );
                         },
                         child: Row(
@@ -132,7 +132,7 @@ class _NamazContainerWidgetState extends State<NamazContainerWidget> {
                       GestureDetector(
                         onTap: () {
                           context.router.push(
-                            const QiblahPageRoute(),
+                            const QiblahRoute(),
                           );
                         },
                         child: Row(

@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'dart:convert';
 import 'dart:developer';
 
@@ -22,11 +23,12 @@ import '../../../../../../../core/common/colors.dart';
 import '../../../../../../app/presentation/widgets/custom_app_bar.dart';
 import '../../../../../../app/presentation/widgets/custom_tab_bar.dart';
 
-class UstazAitinizhi extends StatefulWidget {
-  const UstazAitinizhi({Key? key}) : super(key: key);
+@RoutePage()
+class UstazAitinizhiPage extends StatefulWidget {
+  const UstazAitinizhiPage({Key? key}) : super(key: key);
 
   @override
-  State<UstazAitinizhi> createState() => _UstazAitinizhiState();
+  State<UstazAitinizhiPage> createState() => _UstazAitinizhiPageState();
 }
 
 int currentIndex = 0;
@@ -34,7 +36,7 @@ bool showButton = false;
 late UserDto userSir;
 late IOWebSocketChannel? _channel;
 
-class _UstazAitinizhiState extends State<UstazAitinizhi> {
+class _UstazAitinizhiPageState extends State<UstazAitinizhiPage> {
   Future<bool> _onWillPop() async {
     setState(() {
       currentIndex = 0;

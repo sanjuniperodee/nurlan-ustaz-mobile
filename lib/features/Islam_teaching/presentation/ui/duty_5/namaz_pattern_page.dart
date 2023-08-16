@@ -19,6 +19,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_ap
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_tab_bar.dart';
 
+@RoutePage()
 class NamazPatternPage extends StatefulWidget {
   const NamazPatternPage({super.key});
 
@@ -136,7 +137,7 @@ class _NamazPatternPageState extends State<NamazPatternPage> {
                                 onTap: () {
                                   log(abl.toString());
                                   context.router
-                                      .push(WudhuPageRoute(wudhu: abl));
+                                      .push(WudhuRoute(wudhu: abl));
                                 },
                                 child: Container(
                                   height: 75.h,
@@ -186,7 +187,7 @@ class _NamazPatternPageState extends State<NamazPatternPage> {
                                     onTap: () {
                                       if (currentIndex != 0) {
                                         context.router.push(
-                                          NamazReadPageRoute(
+                                          NamazReadRoute(
                                               id: pre[index].id,
                                               gender: 'F',
                                               type:
@@ -194,7 +195,7 @@ class _NamazPatternPageState extends State<NamazPatternPage> {
                                         );
                                       } else {
                                         context.router.push(
-                                          NamazReadPageRoute(
+                                          NamazReadRoute(
                                               id: pre[index].id,
                                               gender: 'M',
                                               type:

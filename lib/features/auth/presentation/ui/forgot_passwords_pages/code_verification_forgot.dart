@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,20 +11,21 @@ import '../../../../../core/common/colors.dart';
 import '../../../../app/presentation/widgets/custom_app_bar.dart';
 import '../../widgets/custom_button_timer.dart';
 
-class CodeVerificationForgot extends StatefulWidget {
-  const CodeVerificationForgot({
+@RoutePage()
+class CodeVerificationForgotPage extends StatefulWidget {
+  const CodeVerificationForgotPage({
     Key? key,
     required this.email,
   }) : super(key: key);
   final String email;
 
   @override
-  State<CodeVerificationForgot> createState() => _CodeVerificationForgotState();
+  State<CodeVerificationForgotPage> createState() => _CodeVerificationForgotPageState();
 }
 
 bool isActiveButton = false;
 
-class _CodeVerificationForgotState extends State<CodeVerificationForgot> {
+class _CodeVerificationForgotPageState extends State<CodeVerificationForgotPage> {
   final pinController = TextEditingController();
   final focusNode = FocusNode();
   final formKey = GlobalKey<FormState>();

@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -15,6 +16,7 @@ import '../../../app/presentation/widgets/app_button.dart';
 import '../../../app/presentation/widgets/custom_app_bar.dart';
 import '../../../app/presentation/widgets/custom_snackbars.dart';
 
+@RoutePage()
 class QuestionPage extends StatefulWidget {
   const QuestionPage({Key? key}) : super(key: key);
 

@@ -1,7 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/widgets/pdf_screen.dart';
 
 import '../../../../core/common/app_styles.dart';
 import '../../../../core/common/colors.dart';
@@ -11,32 +12,56 @@ class PrivatePolicyText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 275.w,
-      child: RichText(
-          // textDirection: TextDirection.RTL,
-          text: TextSpan(
-            style: getTextStyle(CustomTextStyles.s14w400)
-                .copyWith(fontFamily: FontTypes.SF_Pro.name),
-            children: [
-              TextSpan(
-                  text: 'agree1'.tr(),
-                  style: getTextStyle(CustomTextStyles.s14w400).copyWith(
-                      fontFamily: FontTypes.SF_Pro.name,
-                      color: AppColors.blue),
-                  recognizer: TapGestureRecognizer()..onTap = () {}),
-              TextSpan(
-                  text: "agree2".tr(),
-                  style: getTextStyle(CustomTextStyles.s14w400)
-                      .copyWith(fontFamily: FontTypes.SF_Pro.name)),
-              TextSpan(
-                  text: 'agree3'.tr(),
-                  style: getTextStyle(CustomTextStyles.s14w400).copyWith(
-                      fontFamily: FontTypes.SF_Pro.name,
-                      color: AppColors.blue),
-                  recognizer: TapGestureRecognizer()..onTap = () {})
-            ],
-          )),
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const MyPdfViewer(),
+          ),
+        );
+      },
+      child: SizedBox(
+        width: 275.w,
+        child: RichText(
+            // textDirection: TextDirection.RTL,
+            text: TextSpan(
+          style: getTextStyle(CustomTextStyles.s14w400)
+              .copyWith(fontFamily: FontTypes.SF_Pro.name),
+          children: [
+            TextSpan(
+                text: 'agree1'.tr(),
+                style: getTextStyle(CustomTextStyles.s14w400).copyWith(
+                    fontFamily: FontTypes.SF_Pro.name, color: AppColors.blue),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MyPdfViewer(),
+                      ),
+                    );
+                  }),
+            TextSpan(
+                text: "agree2".tr(),
+                style: getTextStyle(CustomTextStyles.s14w400)
+                    .copyWith(fontFamily: FontTypes.SF_Pro.name)),
+            TextSpan(
+                text: 'agree3'.tr(),
+                style: getTextStyle(CustomTextStyles.s14w400).copyWith(
+                    fontFamily: FontTypes.SF_Pro.name, color: AppColors.blue),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const MyPdfViewer(),
+                      ),
+                    );
+                  })
+          ],
+        )),
+      ),
     );
   }
 }

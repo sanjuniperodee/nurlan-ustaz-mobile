@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -18,6 +19,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/get_profile
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/widgets/comment_deep_item_widget.dart';
 
+@RoutePage()
 class CommentPageNews extends StatefulWidget {
   final int id;
   const CommentPageNews({super.key, required this.id});

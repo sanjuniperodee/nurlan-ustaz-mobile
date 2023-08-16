@@ -54,7 +54,7 @@ class _CustomTusZhoruListState extends State<CustomTusZhoruList> {
                           });
                       return;
                     }
-                    context.router.push(CustomTusZhoruDetailPageRoute(
+                    context.router.push(CustomTusZhoruDetailRoute(
                       id: list[index].id!,
                     ));
                   },

@@ -31,7 +31,7 @@ class _TusZhoruListState extends State<TusZhoruList> {
           padding: EdgeInsets.symmetric(horizontal: 1.sp),
           child: GestureDetector(
             onTap: () {
-              context.router.push(TusZhoruDetailPageRoute(
+              context.router.push(TusZhoruDetailRoute(
                 id: list[index].id!,
               ));
             },

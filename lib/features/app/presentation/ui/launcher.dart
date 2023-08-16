@@ -7,39 +7,39 @@ import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/app_bloc.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/base.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/login_page.dart';
-
+ 
 import '../../../../core/utils/alert_utilrs.dart';
 import '../../on_boarding/presentation/ui/on_boarding.dart';
-
+ 
 int _backClickDateTime = 0;
 const int _backClickThreshHold = 3000;
-
-class LauncherApp extends StatefulWidget {
-  const LauncherApp({super.key});
-
+ @RoutePage()
+class LauncherAppPage extends StatefulWidget {
+  const LauncherAppPage({super.key});
+ 
   @override
-  State<LauncherApp> createState() => _LauncherAppState();
+  State<LauncherAppPage> createState() => _LauncherAppPageState();
 }
-
+ 
 bool isShow = true;
-
-class _LauncherAppState extends State<LauncherApp> {
+ 
+class _LauncherAppPageState extends State<LauncherAppPage> {
   @override
   void initState() {
     init();
     super.initState();
   }
-
+ 
   Future<void> init() async {
     BlocProvider.of<AppBloc>(context).add(const AppEvent.checkAuth());
   }
-
+ 
   @override
   Widget build(BuildContext context) {
     return _salam();
   }
 }
-
+ 
 Widget _salam() {
   return BlocConsumer<AppBloc, AppState>(
     builder: (context, state) {
@@ -51,7 +51,7 @@ Widget _salam() {
                 title: 'exit'.tr(),
                 button1Text: 'cancel'.tr(),
                 button2Text: 'exit2'.tr());
-
+ 
         },
         child: state.maybeWhen(
           onBoardingState: () {
@@ -85,12 +85,12 @@ Widget _salam() {
     listener: (context, state) {
       state.whenOrNull(
         notAuthorizedState: () {
-
+ 
           AutoRouter.of(context)
               .pushAndPopUntil(LoginPageRoute(), predicate: (route) => false);
         },
         notAuthorizedDialogState: () async {
-
+ 
             var dialog = await AlertUtils.showTwoOptionDialog(
                 context: context,
                 messageKey: 'exit_des'.tr(),
@@ -102,10 +102,10 @@ Widget _salam() {
                 .add(const AppEvent.nonAuthorizedDialog())
                 : BlocProvider.of<AppBloc>(context)
                 .add(const AppEvent.logining());
-
-
-
-
+ 
+ 
+ 
+ 
         },
         inAppState: () {
           //context.router.pop();
@@ -114,15 +114,15 @@ Widget _salam() {
     },
   );
 }
-
+ 
 class _Scaffold extends StatelessWidget {
   final Widget child;
-
+ 
   const _Scaffold({
     required this.child,
     // super.key,
   });
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,3 +131,4 @@ class _Scaffold extends StatelessWidget {
     );
   }
 }
+ 

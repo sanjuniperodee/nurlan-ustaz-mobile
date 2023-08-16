@@ -18,6 +18,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/geonames_cu
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/set_city_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/timings_cubit.dart';
 
+@RoutePage()
 class GeonamesPage extends StatefulWidget {
   final void Function()? callback;
   const GeonamesPage({Key? key, this.callback}) : super(key: key);

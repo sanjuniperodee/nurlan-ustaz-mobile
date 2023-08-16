@@ -33,6 +33,7 @@ import '../../../../../../core/common/assets.dart';
 import '../../../../../../core/common/colors.dart';
 import '../../../../../app/presentation/widgets/custom_app_bar.dart';
 
+@RoutePage()
 class ProfileInfoPage extends StatefulWidget {
   final UserDto userDTO;
   const ProfileInfoPage({Key? key, required this.userDTO}) : super(key: key);
@@ -256,7 +257,7 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                         if (logout) {
                           BlocProvider.of<AppBloc>(context)
                               .add(const AppEvent.deleting());
-                          context.router.push(const LoginPageRoute());
+                          context.router.push(const LoginRoute());
                         }
                       },
                     ),

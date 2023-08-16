@@ -121,7 +121,7 @@ class HolidayDialog extends StatelessWidget {
                       textSize: 14.sp,
                       onTap: () async {
                          Navigator.of(context).pop();
-                         mainContext.router.push(HolidayDetailPageRoute(event: event));
+                         mainContext.router.push(HolidayDetailRoute(event: event));
                       },
                       text: 'next_page'.tr())),
             ),
