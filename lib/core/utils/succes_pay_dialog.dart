@@ -76,7 +76,7 @@ class SuccesPayDialog extends StatelessWidget {
                     Navigator.of(context).pop();
                     if (customTusZhoru != null) {
                       context.router.push(
-                          CustomTusZhoruDetailPageRoute(id: customTusZhoru.id!));
+                          CustomTusZhoruDetailRoute(id: customTusZhoru.id!));
                       BlocProvider.of<TusZhoruCubit>(context).customTusZhoruList;
 
                     }
@@ -87,7 +87,7 @@ class SuccesPayDialog extends StatelessWidget {
                     log(tusZhoru.toString());
                     if (tusZhoru != null) {
                       context.router.push(
-                          TusZhoruDetailPageRoute(id: tusZhoru.id!));
+                          TusZhoruDetailRoute(id: tusZhoru.id!));
                     }
 
                   }

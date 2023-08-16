@@ -20,6 +20,7 @@ import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.d
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_fav_cubit.dart';
 
+@RoutePage()
 class SeminarPage extends StatefulWidget {
   final String? type;
   const SeminarPage({Key? key, this.type}) : super(key: key);
@@ -135,7 +136,7 @@ class _SeminarPageState extends State<SeminarPage> {
                             child: GestureDetector(
                               onTap: () {
                                 context.router.push(
-                                  SeminarDetailPageRoute(
+                                  SeminarDetailRoute(
                                     id: listOfSeminars[index].id!,
                                     search: searchText,
                                   ),

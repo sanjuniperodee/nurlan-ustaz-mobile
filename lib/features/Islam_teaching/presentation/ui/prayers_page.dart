@@ -13,6 +13,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_ap
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_widget.dart';
 
+@RoutePage()
 class PrayersPage extends StatefulWidget {
   final String? type;
   const PrayersPage({super.key, this.type});
@@ -132,7 +133,7 @@ class _PrayersPageState extends State<PrayersPage> {
                                       child: GestureDetector(
                                         onTap: () {
                                           context.router.push(
-                                            PrayersDetailPageRoute(
+                                            PrayersDetailRoute(
                                                 id: listOfPrayer[index].id!),
                                           );
                                         },

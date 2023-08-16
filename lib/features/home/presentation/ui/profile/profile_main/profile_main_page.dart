@@ -24,6 +24,7 @@ import '../../../../../../core/router/app_router.dart';
 import '../../../../../app/bloc/app_bloc.dart';
 import '../../../../../app/presentation/widgets/custom_app_bar.dart';
 
+@RoutePage()
 class ProfileMainPage extends StatefulWidget {
   const ProfileMainPage({Key? key}) : super(key: key);
 
@@ -136,21 +137,21 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                                   title: 'My_data'.tr(),
                                   onTap: () {
                                     context.router.push(
-                                      ProfileInfoPageRoute(userDTO: user),
+                                      ProfileInfoRoute(userDTO: user),
                                     );
                                   }),
                               ProfileMenuItem(
                                   title: 'Purchased_services'.tr(),
                                   onTap: () {
                                     context.router.push(
-                                      const PaymentsPageRoute(),
+                                      const PaymentsRoute(),
                                     );
                                   }),
                               ProfileMenuItem(
                                   title: 'my_cards'.tr(),
                                   onTap: () {
                                     context.router.push(
-                                      const ProfileCardsPageRoute(),
+                                      const ProfileCardsRoute(),
                                     );
                                   }),
                             ],
@@ -171,21 +172,21 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                                   title: 'project_info'.tr(),
                                   onTap: () {
                                     context.router.push(
-                                      const AboutAppPageRoute(),
+                                      const AboutAppRoute(),
                                     );
                                   }),
                               ProfileMenuItem(
                                   title: 'FAQ',
                                   onTap: () {
                                     context.router.push(
-                                      const FaqPageRoute(),
+                                      const FaqRoute(),
                                     );
                                   }),
                               ProfileMenuItem(
                                   title: 'tech_support'.tr(),
                                   onTap: () {
                                     context.router.push(
-                                      const TechnicalSupportPageRoute(),
+                                      const TechnicalSupportRoute(),
                                     );
                                   }),
                             ],
@@ -306,21 +307,21 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                                   title: geo.name!,
                                   onTap: () {
                                     context.router.push(
-                                      GeonamesPageRoute(),
+                                      GeonamesRoute(),
                                     );
                                   }),
                               ProfileMenuItem(
                                   title: 'password_change'.tr(),
                                   onTap: () {
                                     context.router.push(
-                                      const ChangePasswordPageRoute(),
+                                      const ChangePasswordRoute(),
                                     );
                                   }),
                               ProfileMenuItem(
                                   title: 'notification'.tr(),
                                   onTap: () {
                                     context.router.push(
-                                      const ProfileNotificationPageRoute(),
+                                      const ProfileNotificationRoute(),
                                     );
                                   }),
                             ],
@@ -354,7 +355,7 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                                   if (logout) {
                                     BlocProvider.of<AppBloc>(context)
                                         .add(const AppEvent.exiting());
-                                    context.router.push(const LoginPageRoute());
+                                    context.router.push(const LoginRoute());
                                   }
                                 },
                               ),

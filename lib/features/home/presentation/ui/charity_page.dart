@@ -14,6 +14,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_cu
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/charities_cubit.dart';
 
+@RoutePage()
 class CharityPage extends StatefulWidget {
   const CharityPage({Key? key}) : super(key: key);
 
@@ -87,7 +88,7 @@ class _CharityPageState extends State<CharityPage> {
                             child: GestureDetector(
                               onTap: () {
                                 context.router.push(
-                                  CharityDetailPageRoute(
+                                  CharityDetailRoute(
                                       result: listOfCharity[index]),
                                 );
                               },

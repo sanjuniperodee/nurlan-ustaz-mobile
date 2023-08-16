@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,6 +9,7 @@ import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/ayat_dto
 
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
 
+@RoutePage()
 class AyatDayPage extends StatefulWidget {
   final AyatDTO ayatDTO;
   const AyatDayPage({super.key, required this.ayatDTO});

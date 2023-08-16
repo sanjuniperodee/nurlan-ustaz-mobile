@@ -15,18 +15,6 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/nurlan_ustaz_a
 import 'core/router/app_router.dart';
 import 'core/services/locator_service.dart';
 
-Future<void> firebaseListen() async {
-  FirebaseMessaging.instance.getInitialMessage();
-  FirebaseMessaging.onMessage.listen((message) {
-    log('MESSAGEEEE ${message.data} : ${message.data}');
-    // if (message.data['order_id'] != '' && message.data['order_id'] != 0) {
-
-    // } else {
-    //   log('NO');
-    // }
-  });
-}
-
 Future<void> firebaseInit() async {
   FirebaseDynamicLinks.instance.onLink.listen((event) {
     log(event.toString());
@@ -61,7 +49,7 @@ Future<void> main() async {
   await Firebase.initializeApp();
   await FirebaseDynamicLinks.instance.getInitialLink();
   getIt.registerSingleton<AppRouter>(AppRouter());
-  await firebaseListen();
+  // await firebaseListen();
   await firebaseInit();
 
   await checkLocationPermission();
@@ -69,7 +57,7 @@ Future<void> main() async {
   MainRunner.run<AsyncAppDependencies>(
       asyncDependencies: AsyncAppDependencies.obtain,
       appBuilder: (dependencies) {
-        return NurlanUstazApp();
+        return const NurlanUstazApp();
       });
 }
 
@@ -98,12 +86,12 @@ Future<void> navigateToTusZhoru(Uri link) async {
     var id = queryParams['id'];
     if (id != null) {
       getIt<AppRouter>().pushAll([
-        LauncherAppRoute(
+        const LauncherAppRoute(
           children: [
             MainRouterPage(),
           ],
         ),
-        TusZhoruDetailPageRoute(id: int.parse(id))
+        TusZhoruDetailRoute(id: int.parse(id))
       ]);
     }
   }
@@ -118,12 +106,12 @@ Future<void> navigateToCustomTusZhoru(Uri link) async {
     var id = queryParams['id'];
     if (id != null) {
       getIt<AppRouter>().pushAll([
-        LauncherAppRoute(
+        const LauncherAppRoute(
           children: [
             MainRouterPage(),
           ],
         ),
-        CustomTusZhoruDetailPageRoute(id: int.parse(id))
+        CustomTusZhoruDetailRoute(id: int.parse(id))
       ]);
     }
   }
@@ -138,12 +126,12 @@ Future<void> navigateToSeminar(Uri link) async {
     var id = queryParams['id'];
     if (id != null) {
       getIt<AppRouter>().pushAll([
-        LauncherAppRoute(
+        const LauncherAppRoute(
           children: [
             MainRouterPage(),
           ],
         ),
-        SeminarDetailPageRoute(id: int.parse(id))
+        SeminarDetailRoute(id: int.parse(id))
       ]);
     }
   }
@@ -158,12 +146,12 @@ Future<void> navigateToDuas(Uri link) async {
     var id = queryParams['id'];
     if (id != null) {
       getIt<AppRouter>().pushAll([
-        LauncherAppRoute(
+        const LauncherAppRoute(
           children: [
             MainRouterPage(),
           ],
         ),
-        PrayersDetailPageRoute(id: int.parse(id))
+        PrayersDetailRoute(id: int.parse(id))
       ]);
     }
   }
@@ -178,12 +166,12 @@ Future<void> navigateToNews(Uri link) async {
     var id = queryParams['id'];
     if (id != null) {
       getIt<AppRouter>().pushAll([
-        LauncherAppRoute(
+        const LauncherAppRoute(
           children: [
             MainRouterPage(),
           ],
         ),
-        NewsDetailPageRoute(id: int.parse(id))
+        NewsDetailRoute(id: int.parse(id))
       ]);
     }
   }
@@ -198,12 +186,12 @@ Future<void> navigateToName(Uri link) async {
     var id = queryParams['id'];
     if (id != null) {
       getIt<AppRouter>().pushAll([
-        LauncherAppRoute(
+        const LauncherAppRoute(
           children: [
             MainRouterPage(),
           ],
         ),
-        NameDetailPageRoute(id: int.parse(id))
+        NameDetailRoute(id: int.parse(id))
       ]);
     }
   }

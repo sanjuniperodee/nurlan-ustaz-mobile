@@ -1,13 +1,9 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
-import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
@@ -18,6 +14,7 @@ import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/widgets/c
 import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/widgets/category_title_card.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
+@RoutePage(name: 'TandaulilarMainRouterPage')
 class TandaulilarMainPage extends StatefulWidget {
   const TandaulilarMainPage({super.key});
 
@@ -124,7 +121,7 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                                         imageList: news,
                                         onTap: () {
                                           context.router.push(
-                                            NewsPageRoute(type: 'isSave'),
+                                            NewsRoute(type: 'isSave'),
                                           );
                                         },
                                       ),
@@ -133,8 +130,7 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                                         imageList: lives,
                                         onTap: () {
                                           context.router.push(
-                                            LiveBroadcastsPageRoute(
-                                                type: 'isSave'),
+                                            LiveBroadcastsRoute(type: 'isSave'),
                                           );
                                         },
                                       )
@@ -149,7 +145,7 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                                     titleColor: AppColors.blue,
                                     onTap: () {
                                       context.router.push(
-                                        SeminarPageRoute(type: 'isSave'),
+                                        SeminarRoute(type: 'isSave'),
                                       );
                                     },
                                   ),
@@ -164,14 +160,15 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                                           title: 'dream_interpretations'.tr(),
                                           onTap: () {
                                             context.router.push(
-                                              TusZhoruPageRoute(type: 'isSave'),
+                                              TusZhoruRouterPage(
+                                                  type: 'isSave'),
                                             );
                                           }),
                                       CategoryTitleCard(
                                           title: 'names'.tr(),
                                           onTap: () {
                                             context.router.push(
-                                              NamePageRoute(type: 'isSave'),
+                                              NameRoute(type: 'isSave'),
                                             );
                                           }),
                                     ],
@@ -187,21 +184,21 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                                           title: 'Duas'.tr(),
                                           onTap: () {
                                             context.router.push(
-                                              PrayersPageRoute(type: 'isSave'),
+                                              PrayersRoute(type: 'isSave'),
                                             );
                                           }),
                                       CategoryTitleCard(
                                           title: 'Zikrs'.tr(),
                                           onTap: () {
                                             context.router.push(
-                                              DhikrPageRoute(type: 'isSave'),
+                                              DhikrRoute(type: 'isSave'),
                                             );
                                           }),
                                     ],
                                   ),
                                   SizedBox(
-                                      height: 165.h,
-                                    ),
+                                    height: 165.h,
+                                  ),
                                 ],
                               )
                             ],

@@ -22,6 +22,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_det
 
 import 'package:share_plus/share_plus.dart';
 
+@RoutePage()
 class SeminarDetailPage extends StatefulWidget {
   final String? search;
   final int id;
@@ -214,7 +215,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                       InkWell(
                                           onTap: () {
                                             context.router.push(
-                                              CommentPageSemRoute(
+                                              CommentRouteSem(
                                                   id: result.id!),
                                             );
                                           },
@@ -397,7 +398,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                             GestureDetector(
                               onTap: () {
                                 context.router.push(
-                                  CommentPageSemRoute(id: result.id!),
+                                  CommentRouteSem(id: result.id!),
                                 );
                               },
                               child: Text(

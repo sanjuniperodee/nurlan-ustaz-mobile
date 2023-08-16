@@ -14,16 +14,17 @@ import '../../on_boarding/presentation/ui/on_boarding.dart';
 int _backClickDateTime = 0;
 const int _backClickThreshHold = 3000;
 
-class LauncherApp extends StatefulWidget {
-  const LauncherApp({super.key});
+@RoutePage()
+class LauncherAppPage extends StatefulWidget {
+  const LauncherAppPage({super.key});
 
   @override
-  State<LauncherApp> createState() => _LauncherAppState();
+  State<LauncherAppPage> createState() => _LauncherAppPageState();
 }
 
 bool isShow = false;
 
-class _LauncherAppState extends State<LauncherApp> {
+class _LauncherAppPageState extends State<LauncherAppPage> {
   @override
   void initState() {
     init();
@@ -75,7 +76,7 @@ Widget _salam() {
       state.whenOrNull(
         notAuthorizedState: () {
           AutoRouter.of(context)
-              .pushAndPopUntil(LoginPageRoute(), predicate: (route) => false);
+              .pushAndPopUntil(LoginRoute(), predicate: (route) => false);
         },
         notAuthorizedDialogState: () async {
           var dialog = await AlertUtils.showTwoOptionDialog(

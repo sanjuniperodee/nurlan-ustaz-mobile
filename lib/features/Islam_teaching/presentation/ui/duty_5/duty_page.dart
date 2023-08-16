@@ -14,6 +14,7 @@ import 'package:nurlan_ustaz_flutter/features/home/data/models/banner_local_mode
 
 import '../../../../../core/common/app_styles.dart';
 
+@RoutePage()
 class DutyPage extends StatefulWidget {
   const DutyPage({super.key});
 
@@ -140,7 +141,7 @@ class _DutyPageState extends State<DutyPage> {
                                         .r,
                                     child: InkWell(
                                       onTap: () {
-                                        context.router.push(DutyDetailPageRoute(
+                                        context.router.push(DutyDetailRoute(
                                             pillarsDTO: pillars[index]));
                                       },
                                       child: Container(

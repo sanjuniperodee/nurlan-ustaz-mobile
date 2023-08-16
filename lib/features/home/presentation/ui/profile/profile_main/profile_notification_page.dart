@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'dart:convert';
 import 'dart:developer';
 
@@ -17,6 +18,7 @@ import '../../../../../../core/common/app_styles.dart';
 import '../../../../../../core/common/colors.dart';
 import '../../../../../app/presentation/widgets/custom_app_bar.dart';
 
+@RoutePage()
 class ProfileNotificationPage extends StatefulWidget {
   const ProfileNotificationPage({Key? key}) : super(key: key);
 

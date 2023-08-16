@@ -18,6 +18,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_sn
 import 'package:nurlan_ustaz_flutter/features/home/data/models/banner_local_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+@RoutePage(name: 'IslamTeachingRouterPage')
 class IslamTeachingPage extends StatefulWidget {
   const IslamTeachingPage({super.key});
 
@@ -27,12 +28,12 @@ class IslamTeachingPage extends StatefulWidget {
 
 class _IslamTeachingPageState extends State<IslamTeachingPage> {
   final myRouteHome = [
-    const DutyPageRoute(),
-    const AllahNamesPageRoute(),
-    const AllahNamesPageRoute(),
-    const SurahPageRoute(),
-    PrayersPageRoute(),
-    DhikrPageRoute(),
+    const DutyRoute(),
+    const AllahNamesRoute(),
+    const AllahNamesRoute(),
+    const SurahRoute(),
+    PrayersRoute(),
+    DhikrRoute(),
   ];
   @override
   void initState() {
@@ -148,7 +149,7 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
                                       : GestureDetector(
                                           onTap: () {
                                             context.router.push(
-                                              AyatDayPageRoute(ayatDTO: ayat),
+                                              AyatDayRoute(ayatDTO: ayat),
                                             );
                                           },
                                           child: AyatDayCardWidget(
@@ -261,7 +262,7 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
                                   ),
                                   AppButton(
                                       onTap: () {
-                                        context.router.push(NamePageRoute());
+                                        context.router.push(NameRoute());
                                       },
                                       text: 'name_meaning'.tr()),
                                  SizedBox(

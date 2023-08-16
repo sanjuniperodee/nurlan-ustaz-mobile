@@ -13,6 +13,7 @@ import '../../../../../../core/common/assets.dart';
 import '../../../../../../core/common/colors.dart';
 import '../../../../../app/presentation/widgets/custom_app_bar.dart';
 
+@RoutePage()
 class ProfileCardsPage extends StatefulWidget {
   const ProfileCardsPage({Key? key}) : super(key: key);
 
@@ -31,7 +32,7 @@ class _ProfileCardsPageState extends State<ProfileCardsPage> {
           child: AppButton(
               onTap: () {
                 context.router.push(
-                  const AddNewCardPageRoute(),
+                  const AddNewCardRoute(),
                 );
               },
               text: 'new_card'.tr()),

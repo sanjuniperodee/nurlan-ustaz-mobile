@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,6 +11,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/change_pass
 import '../../../../../../core/common/colors.dart';
 import '../../../../../app/presentation/widgets/custom_app_bar.dart';
 
+@RoutePage()
 class ChangePasswordPage extends StatefulWidget {
   const ChangePasswordPage({Key? key}) : super(key: key);
 

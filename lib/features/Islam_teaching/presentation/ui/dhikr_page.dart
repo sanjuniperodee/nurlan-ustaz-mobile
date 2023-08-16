@@ -13,6 +13,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_ap
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_widget.dart';
 
+@RoutePage()
 class DhikrPage extends StatefulWidget {
   final String? type;
   const DhikrPage({super.key, this.type});
@@ -135,7 +136,7 @@ class _DhikrPageState extends State<DhikrPage> {
                                         onTap: () {
                                           context.router.push(
 
-                                            DhikrDetailPageRoute(
+                                            DhikrDetailRoute(
                                                 result: listOfDhikrs[index]),
 
                                           );

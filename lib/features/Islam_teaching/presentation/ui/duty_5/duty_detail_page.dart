@@ -13,6 +13,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_butto
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
 
+@RoutePage()
 class DutyDetailPage extends StatefulWidget {
   final PillarsDTO pillarsDTO;
   const DutyDetailPage({super.key, required this.pillarsDTO});
@@ -34,7 +35,7 @@ class _DutyDetailPageState extends State<DutyDetailPage> {
                   onTap: () {
                     log('URL${widget.pillarsDTO.url}');
                     widget.pillarsDTO.type == 2
-                        ? context.router.push(const NamazPatternPageRoute())
+                        ? context.router.push(const NamazPatternRoute())
                         : _launchUrl(widget.pillarsDTO.url ?? '');
                   },
                   text: widget.pillarsDTO.type == 2

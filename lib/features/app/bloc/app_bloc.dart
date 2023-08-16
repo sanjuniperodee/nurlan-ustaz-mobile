@@ -1,19 +1,14 @@
 import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
-import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 
 import 'package:nurlan_ustaz_flutter/features/app/logic/not_auth_logic.dart';
-import 'package:nurlan_ustaz_flutter/features/auth/data/model/token_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/repositories/auth_repository.dart';
 
-import '../../../core/services/locator_service.dart';
-import '../../../core/utils/alert_utilrs.dart';
 import '../../auth/data/datasource/local/auth_local_ds.dart';
 
 part 'app_bloc.freezed.dart';

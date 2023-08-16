@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -14,6 +15,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_ap
 import 'package:share_plus/share_plus.dart';
 import '../widgets/floating_container_widget.dart';
 
+@RoutePage()
 class NameDetailPage extends StatefulWidget {
   final int id;
   final int? index;

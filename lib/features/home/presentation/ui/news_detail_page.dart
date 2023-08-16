@@ -19,6 +19,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_detail_cubit.dart';
 import 'package:share_plus/share_plus.dart';
 
+@RoutePage()
 class NewsDetailPage extends StatefulWidget {
   final int id;
   final String? search;
@@ -195,7 +196,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                       InkWell(
                                           onTap: () {
                                             context.router.push(
-                                              CommentPageNewsRoute(
+                                              CommentRouteNews(
                                                   id: result.id!),
                                             );
                                           },
@@ -252,7 +253,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                             GestureDetector(
                               onTap: () {
                                 context.router.push(
-                                  CommentPageNewsRoute(id: result.id!),
+                                  CommentRouteNews(id: result.id!),
                                 );
                               },
                               child: Text(

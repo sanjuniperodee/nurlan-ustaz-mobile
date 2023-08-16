@@ -170,7 +170,7 @@ class SeminarCard extends StatelessWidget {
                       }
                     } else {
                       mainContext.router
-                          .push(SeminarDetailPageRoute(id: event.id!));
+                          .push(SeminarDetailRoute(id: event.id!));
                     }
                   },
                   text: 'next_page'.tr(),

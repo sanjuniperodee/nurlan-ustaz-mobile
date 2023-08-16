@@ -17,6 +17,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_wi
 import '../../../app/presentation/widgets/custom_snackbars.dart';
 import '../../../app/presentation/widgets/custom_tab_bar.dart';
 
+@RoutePage()
 class NamePage extends StatefulWidget {
   final String? type;
   const NamePage({super.key, this.type});
@@ -190,7 +191,7 @@ class _NamePageState extends State<NamePage> {
                                       child: GestureDetector(
                                         onTap: () {
                                           context.router.push(
-                                            NameDetailPageRoute(
+                                            NameDetailRoute(
                                                 index: currentIndex,
                                                 id: listOfIslamNames[index]
                                                     .id!),
