@@ -6,7 +6,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/validators.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/token_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/login_cubit.dart';
-import 'package:pinput/pinput.dart';
 
 import '../../../../core/common/app_styles.dart';
 import '../../../../core/common/colors.dart';
@@ -78,7 +77,8 @@ class _LoginFormState extends State<LoginForm> {
                 onTap: () {
                   if (emailController.value.text.isEmpty &&
                       passwordController.value.text.isEmpty) {
-                    buildErrorCustomSnackBar(context, 'write_email_or_password'.tr());
+                    buildErrorCustomSnackBar(
+                        context, 'write_email_or_password'.tr());
                     return;
                   }
                   if (emailController.value.text.isEmpty) {
@@ -142,7 +142,8 @@ class _LoginFormState extends State<LoginForm> {
           loadedState: () async {
             emailController.clear();
             passwordController.clear();
-            context.router.popAndPush(const LauncherAppRoute(),);
+            AutoRouter.of(context).pushAndPopUntil(const LauncherAppRoute(),
+                predicate: (route) => false);
           },
           errorState: (message) {
             buildErrorCustomSnackBar(context, message);

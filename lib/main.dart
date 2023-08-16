@@ -11,6 +11,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:nurlan_ustaz_flutter/core/model/async_app_dependecies.dart';
 import 'package:nurlan_ustaz_flutter/features/app/logic/main_runner.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/nurlan_ustaz_app.dart';
+import 'package:nurlan_ustaz_flutter/update_service/update_service.dart';
 
 import 'core/router/app_router.dart';
 import 'core/services/locator_service.dart';
@@ -26,6 +27,8 @@ Future<void> firebaseListen() async {
     // }
   });
 }
+
+
 
 Future<void> firebaseInit() async {
   FirebaseDynamicLinks.instance.onLink.listen((event) {
@@ -63,7 +66,6 @@ Future<void> main() async {
   getIt.registerSingleton<AppRouter>(AppRouter());
   await firebaseListen();
   await firebaseInit();
-
   await checkLocationPermission();
 
   MainRunner.run<AsyncAppDependencies>(
@@ -71,6 +73,8 @@ Future<void> main() async {
       appBuilder: (dependencies) {
         return NurlanUstazApp();
       });
+  FlutterNativeSplash.remove();
+
 }
 
 Future<void> checkLocationPermission() async {

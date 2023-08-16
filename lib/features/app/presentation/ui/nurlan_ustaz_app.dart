@@ -10,6 +10,8 @@ import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/multibloc_wrapper.dart';
 
+import '../../../../update_service/update_service.dart';
+
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
 
 class NurlanUstazApp extends StatefulWidget {
@@ -22,9 +24,16 @@ class NurlanUstazApp extends StatefulWidget {
 class _NurlanUstazAppState extends State<NurlanUstazApp> {
   late AppRouter _rootRouter;
 
+  // checkAppVersion() async {
+  //   log('app_version');
+  //   await Future.delayed(const Duration(seconds: 4));
+  //         AppVersionService.(context);
+  // }
+
   @override
   void initState() {
     initialise();
+    //checkAppVersion();
     _rootRouter = getIt<AppRouter>();
 
     super.initState();
@@ -54,6 +63,7 @@ class _NurlanUstazAppState extends State<NurlanUstazApp> {
           },
           builder: (context, state) {
             return MaterialApp.router(
+
               key: rootNavigatorKey,
               // title: 'Flutter Demo',
               debugShowCheckedModeBanner: false,

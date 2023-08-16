@@ -109,6 +109,7 @@ dependencies:
   flutter_cache_manager: ^3.3.1
   video_player: ^2.7.0
   chewie: ^1.5.0
+  package_info_plus: ^3.1.2
 
 
   # analyzer: ^5.3.1
@@ -133,10 +134,8 @@ dev_dependencies:
   flutter_lints: ^2.0.0
   share_plus: ^6.3.4
 flutter_native_splash:
-  color: "#F5F5F5"
+  color: "#6771F3"
   image: assets/images/on_boarding_background.png
-  android_12: 
-    image: assets/images/on_boarding_background.png
   android: true
   ios: true
   web: false

@@ -1,0 +1,116 @@
+// import 'dart:developer';
+// import 'dart:io';
+//
+// import 'package:flutter/cupertino.dart';
+// import 'package:flutter/material.dart';
+// import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
+// import 'package:nurlan_ustaz_flutter/features/app/on_boarding/data/datasource/on_boarding_ds.dart';
+// import 'package:nurlan_ustaz_flutter/features/app/on_boarding/data/repositories/on_boarding_repository.dart';
+// import 'package:nurlan_ustaz_flutter/features/home/data/repositories/home_repository.dart';
+// import 'package:package_info_plus/package_info_plus.dart';
+// import 'package:url_launcher/url_launcher.dart';
+//
+// import 'app_version_model.dart';
+//
+// class AppVersionService {
+//
+//   static final AppVersionService _singleton = AppVersionService._internal();
+//   static const playStoreLink =
+//       'https://play.google.com/store/apps/details?id=com.bepro_mobile';
+//   static const appStoreLink =
+//       'https://apps.apple.com/kz/app/bepro/id6443560241';
+//   factory AppVersionService() {
+//     return _singleton;
+//   }
+//
+//   bool wasVersionCompatabilityChecked = false;
+//   final  _onBoardingRepository = getIt<OnBoardingRepository>;
+//
+//   AppVersionService._internal( );
+//
+//
+//   Future<AppVersionsModel> getAppVersion() async {
+//     PackageInfo packageInfo = await PackageInfo.fromPlatform();
+//     String appVersion = packageInfo.version;
+//     log('current - $appVersion');
+//     return AppVersionsModel(version: appVersion,deviceType: Platform.operatingSystem.toString());
+//   }
+//
+//   Future checkAppVersion(BuildContext context) async {
+//     log('idet');
+//     try {
+//       wasVersionCompatabilityChecked = true;
+//       AppVersionsModel currentAppVersion = await getAppVersion();
+//       log('plomba');
+//       final result =  await _onBoardingRepository.appVersionsModel();
+//       log('saaaa-${result?.version!}');
+//       AppVersionsModel serverAppVersion = result ?? AppVersionsModel();
+//
+//       print('appVersion error $serverAppVersion');
+//       if (int.parse(currentAppVersion.version![0]) < int.parse(serverAppVersion.version![0]) ||
+//           int.parse(currentAppVersion.version![2]) < int.parse(serverAppVersion.version![0])) {
+//         _showHardUpdateDialog(context);
+//       } else if (int.parse(currentAppVersion.version![4]) < int.parse(serverAppVersion.version![4])) {
+//         _showSoftUpdateDialog(context);
+//       }
+//     } catch (e) {
+//       log(e.toString());
+//       wasVersionCompatabilityChecked = false;
+//     }
+//   }
+//
+//   void _onUpdateTapped() {
+//     final url = Uri.parse(
+//       Platform.isAndroid ? playStoreLink : appStoreLink,
+//     );
+//     launchUrl(
+//       url,
+//       mode: LaunchMode.externalApplication,
+//     );
+//   }
+//
+//   Future _showHardUpdateDialog(BuildContext context) async {
+//     await showCupertinoDialog(
+//       context: context,
+//       builder: (context) => CupertinoAlertDialog(
+//         title: Text('salam'),
+//         content:Text('salam'),
+//         actions: [
+//           CupertinoDialogAction(
+//             onPressed: _onUpdateTapped,
+//             child: Text(
+//               'salam',
+//               style: const TextStyle(color: Colors.black),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+//
+//   Future _showSoftUpdateDialog(BuildContext context) async {
+//     await showCupertinoDialog(
+//       context: context,
+//       builder: (context) => CupertinoAlertDialog(
+//         title: Text('salam'),
+//         content: Text('salam'),
+//         actions: [
+//           CupertinoDialogAction(
+//               child: Text(
+//                'salam',
+//                 style: const TextStyle(color: Colors.black),
+//               ),
+//               onPressed: () {
+//                 Navigator.of(context).pop();
+//               }),
+//           CupertinoDialogAction(
+//             onPressed: _onUpdateTapped,
+//             child: Text('salam',
+//               style: const TextStyle(color: Colors.black),
+//             ),
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }

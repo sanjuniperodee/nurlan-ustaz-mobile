@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:lottie/lottie.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
@@ -24,6 +25,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_main_c
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/timings_cubit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
+import '../../../../core/utils/alert_utilrs.dart';
 import '../../../auth/data/datasource/local/auth_local_ds.dart';
 
 class MainPage extends StatefulWidget {
@@ -63,6 +65,7 @@ class _MainPageState extends State<MainPage> {
 
   final now = DateTime.now();
   List times = [];
+  bool isShow = false;
 
   @override
   Widget build(BuildContext context) {
@@ -387,18 +390,21 @@ class _MainPageState extends State<MainPage> {
                                               ],
                                             ),
                                           ),
-                                          SizedBox(
-                                            height: 15.h,
-                                          ),
-                                          AppButton(
+                                          InkWell(
                                             onTap: () {
                                               TabsRouterScope.of(context)
                                                   ?.controller
                                                   .setActiveIndex(2);
                                             },
-                                            text: 'dream_interpretation'.tr(),
+                                            child: SizedBox(
+                                              width: double.infinity + 200,
+                                              height: 180.h,
+                                              child: Lottie.asset(
+                                                  'assets/animations/tusZhoru_button.json',
+                                                  height: 180.h,
+                                                  fit: BoxFit.fill),
+                                            ),
                                           ),
-                                          SizedBox(height: 16.h),
                                           MainButton(
                                             onTap: () async {
                                               context.router
