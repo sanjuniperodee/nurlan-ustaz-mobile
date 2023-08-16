@@ -22,13 +22,21 @@ class ZhosparymCubit extends Cubit<ZhosparymState> {
   final ZhosparymRepository _repository;
   late List<ChatDTO> chatsss;
   late DateTime selectedMonth;
-
+  late CheckListDto? checklist;
 
   Future<CheckListDto?> getCheckList() async {
     final result = await _repository.getCheckLists();
     return result.fold((l) {
+      checklist = null;
       return null;
     }, (r) {
+      if (r.isNotEmpty) {
+        log('rrr-${r.first.toString()}');
+        checklist = r.toList().first;
+      }
+      else{
+        checklist = null;
+      }
       return r.first;
     });
   }
@@ -48,7 +56,7 @@ class ZhosparymCubit extends Cubit<ZhosparymState> {
         endTime: DateFormat('yyyy-MM-dd').format(lastDayDateTime));
     events.fold((l) => {}, (r) {
       log('----------------------${r.toString()}');
-      emit(_InitialState().copyWith(events: r));
+      emit(_InitialState().copyWith(events: r,checklist: checklist));
     });
   }
 }
@@ -56,7 +64,7 @@ class ZhosparymCubit extends Cubit<ZhosparymState> {
 @freezed
 class ZhosparymState with _$ZhosparymState {
   const factory ZhosparymState.initialState(
-      {Map<String, List<EventDto>>? events}) = _InitialState;
+      {Map<String, List<EventDto>>? events,final CheckListDto? checklist}) = _InitialState;
 
   const factory ZhosparymState.loadedState() = _LoadedState;
 

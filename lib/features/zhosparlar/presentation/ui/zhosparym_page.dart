@@ -116,6 +116,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
 
   @override
   void initState() {
+    BlocProvider.of<ZhosparymCubit>(context).getCheckList();
     BlocProvider.of<ZhosparymCubit>(context).calendarEvents(DateTime.now());
     super.initState();
   }
@@ -133,7 +134,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
     }, builder: (context, state) {
       return state.maybeWhen(orElse: () {
         return Container();
-      }, initialState: (events) {
+      }, initialState: (events, checklist) {
         holidays.clear();
 
         final eventsDays = events?.map<DateTime, List<EventDto>>(
@@ -226,6 +227,105 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                             //                 DateFormat('yyyy-MM-dd')
                             //                     .format(date)
                             //                     .toString());
+
+
+                                        if (!eventsDays.containsKey(date)) {
+                                          return;
+                                        } else {
+                                          if (eventsDays[date]!
+                                                  .toList()
+                                                  .where((element) =>
+                                                      element.type !=
+                                                      EventsType.holiday)
+                                                  .length >
+                                              1) {
+                                            CarouselController controller =
+                                                CarouselController();
+                                            int currentIndex = 0;
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) => Dialog(
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20.r)),
+                                                  child: CarouselSlider(
+                                                    carouselController:
+                                                        controller,
+                                                    items: eventsDays[date]!
+                                                        .toList()
+                                                        .where((element) =>
+                                                            element.type !=
+                                                            EventsType.holiday)
+                                                        .toList()
+                                                        .map(
+                                                      (e) {
+                                                        return EventContainer(
+                                                          e,
+                                                          nextPage: () {
+                                                            controller
+                                                                .nextPage();
+                                                          },
+                                                          previousPage: () {
+                                                            controller
+                                                                .previousPage();
+                                                          },
+                                                          maincontext: context,
+                                                        );
+                                                      },
+                                                    ).toList(),
+                                                    options: CarouselOptions(
+                                                      aspectRatio: 1.3,
+                                                      viewportFraction: 1,
+                                                      autoPlay: true,
+                                                      autoPlayInterval:
+                                                          const Duration(
+                                                              seconds: 3),
+                                                      enlargeCenterPage: true,
+                                                      onPageChanged:
+                                                          (index, _) {
+                                                        setState(() {
+                                                          currentIndex = index;
+                                                        });
+                                                      },
+                                                    ),
+                                                  )),
+                                            );
+                                          } else {
+                                            showEventDialog(
+                                                context,
+                                                eventsDays[date]!.first,
+                                                gradients[0]);
+                                          }
+                                        }
+                                      },
+                                      hideBottomBar: false,
+                                      startOnMonday: true,
+                                      weekDays: const [
+                                        'Дс',
+                                        'Сс',
+                                        'Ср',
+                                        'Бс',
+                                        'Жм',
+                                        'Сн',
+                                        'Жк'
+                                      ],
+                                      events: eventsDays,
+                                      isExpandable: false,
+                                      eventDoneColor: Colors.green,
+                                      selectedColor: Colors.pink,
+                                      todayColor: AppColors.black,
+                                      eventColor: Colors.deepPurple,
+                                      locale: context.locale.languageCode,
+                                      todayButtonText: '',
+                                      isExpanded: true,
+                                      dayOfWeekStyle: const TextStyle(
+                                        color: AppColors.grey2,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                            ),
 
                             //             if (!eventsDays.containsKey(date)) {
                             //               return;
@@ -333,6 +433,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                             //         ),
                             // ),
                             
+
                             SizedBox(height: 20.h),
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 26.w),
@@ -341,7 +442,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                             SizedBox(
                               height: 15.h,
                             ),
-                            AppButton(
+                            if(checklist != null )AppButton(
                               isLoading: _isLoading,
                               onTap: _isLoading == true
                                   ? null
@@ -353,7 +454,6 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                           .read<ZhosparymCubit>()
                                           .getCheckList()
                                           .then((value) async {
-                                            log('checklist-${value}');
                                         if (value == null) {
                                           setState(() {
                                             _isLoading = false;
@@ -366,29 +466,30 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                               .then((result) {
                                             if (!(result
                                                 .map((e) => DateFormat(
-                                                'yyyy-MM-dd')
-                                                .format(
-                                                DateTime.parse(e.date)))
+                                                        'yyyy-MM-dd')
+                                                    .format(
+                                                        DateTime.parse(e.date)))
                                                 .toList()
                                                 .contains(DateFormat(
-                                                'yyyy-MM-dd')
-                                                .format(DateTime.now())))){
+                                                        'yyyy-MM-dd')
+                                                    .format(DateTime.now())))) {
                                               setState(() {
                                                 _isLoading = false;
                                               });
-                                              buildErrorCustomSnackBar(context, 'чеклист отсутствует');
+                                              buildErrorCustomSnackBar(context,
+                                                  'чеклист отсутствует');
                                               return;
                                             }
-                                              context.router
-                                                  .push(
-                                                RamazanChecklistRoute(
-                                                    checkList: value),
-                                              )
-                                                  .then((value) {
-                                                setState(() {
-                                                  _isLoading = false;
-                                                });
+                                            context.router
+                                                .push(
+                                              RamazanChecklistRoute(
+                                                  checkList: value),
+                                            )
+                                                .then((value) {
+                                              setState(() {
+                                                _isLoading = false;
                                               });
+                                            });
                                           });
                                         }
                                       });

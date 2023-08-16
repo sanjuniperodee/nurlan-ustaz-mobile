@@ -162,13 +162,26 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                       },
                       length: 2,
                     ),
-                    tusZhoruList.currentIndex == 0
-                        ? TusZhoruList(tusZhoruList: tusZhoruList.tusZhoruList)
-                        : CustomTusZhoruList(
+                    AnimatedCrossFade(
+                        firstChild: TusZhoruList(
+                            tusZhoruList: tusZhoruList.tusZhoruList),
+                        secondChild: CustomTusZhoruList(
                             tusZhoruList: tusZhoruList.customTusZhoru),
+
+                        crossFadeState: tusZhoruList.currentIndex == 0
+                            ? CrossFadeState.showFirst
+                            : CrossFadeState.showSecond,
+                        duration: Duration(milliseconds: 100))
+
+                    // tusZhoruList.currentIndex == 0
+                    //     ? TusZhoruList(tusZhoruList: tusZhoruList.tusZhoruList)
+                    //     : CustomTusZhoruList(
+                    //         tusZhoruList: tusZhoruList.customTusZhoru),
+
                     SizedBox(
                       height: 105.h,
                     ),
+
                   ],
                 ),
               ),

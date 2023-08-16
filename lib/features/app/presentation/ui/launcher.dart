@@ -7,106 +7,122 @@ import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/app_bloc.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/base.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/login_page.dart';
-
+ 
 import '../../../../core/utils/alert_utilrs.dart';
 import '../../on_boarding/presentation/ui/on_boarding.dart';
-
+ 
 int _backClickDateTime = 0;
 const int _backClickThreshHold = 3000;
-
-@RoutePage()
+ @RoutePage()
 class LauncherAppPage extends StatefulWidget {
   const LauncherAppPage({super.key});
-
+ 
   @override
   State<LauncherAppPage> createState() => _LauncherAppPageState();
 }
-
-bool isShow = false;
-
+ 
+bool isShow = true;
+ 
 class _LauncherAppPageState extends State<LauncherAppPage> {
   @override
   void initState() {
     init();
     super.initState();
   }
-
+ 
   Future<void> init() async {
     BlocProvider.of<AppBloc>(context).add(const AppEvent.checkAuth());
   }
-
+ 
   @override
   Widget build(BuildContext context) {
     return _salam();
   }
 }
-
+ 
 Widget _salam() {
   return BlocConsumer<AppBloc, AppState>(
     builder: (context, state) {
-      return state.maybeWhen(
-        onBoardingState: () {
-          return const OnBoardingPage();
+      return WillPopScope(
+        onWillPop: () async {
+            return await AlertUtils.showTwoOptionDialog(
+                context: context,
+                messageKey: 'exit_from_app'.tr(),
+                title: 'exit'.tr(),
+                button1Text: 'cancel'.tr(),
+                button2Text: 'exit2'.tr());
+ 
         },
-        loadingState: () {
-          return const Base();
-        },
-        notAuthorizedState: () {
-          // return const SignInPage();
-          return LoginPage();
-        },
-        // notVerifyed: () {
-        //   return const SizedBox();
-        // },
-        errorState: (String message) {
-          return const _Scaffold(
-            child: Center(
-              child: CircularProgressIndicator(
-                color: AppColors.linearBlue,
+        child: state.maybeWhen(
+          onBoardingState: () {
+            return const OnBoardingPage();
+          },
+          loadingState: () {
+            return const Base();
+          },
+          notAuthorizedState: () {
+            // return const SignInPage();
+            return LoginPage();
+          },
+          // notVerifyed: () {
+          //   return const SizedBox();
+          // },
+          errorState: (String message) {
+            return const _Scaffold(
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.linearBlue,
+                ),
               ),
-            ),
-          );
-        },
-        orElse: () {
-          return const Base();
-        },
+            );
+          },
+          orElse: () {
+            return const Base();
+          },
+        ),
       );
     },
     listener: (context, state) {
       state.whenOrNull(
         notAuthorizedState: () {
+ 
           AutoRouter.of(context)
-              .pushAndPopUntil(LoginRoute(), predicate: (route) => false);
+              .pushAndPopUntil(LoginPageRoute(), predicate: (route) => false);
         },
         notAuthorizedDialogState: () async {
-          var dialog = await AlertUtils.showTwoOptionDialog(
-              context: context,
-              messageKey: 'entry_text'.tr(),
-              title: 'enter'.tr(),
-              button1Text: 'cancel'.tr(),
-              button2Text: 'enter'.tr());
-          return dialog == true
-              ? BlocProvider.of<AppBloc>(context)
-                  .add(const AppEvent.nonAuthorizedDialog())
-              : BlocProvider.of<AppBloc>(context)
-                  .add(const AppEvent.logining());
+ 
+            var dialog = await AlertUtils.showTwoOptionDialog(
+                context: context,
+                messageKey: 'exit_des'.tr(),
+                title: 'exit'.tr(),
+                button1Text: 'cancel'.tr(),
+                button2Text: 'exit2'.tr());
+            return dialog == true
+                ? BlocProvider.of<AppBloc>(context)
+                .add(const AppEvent.nonAuthorizedDialog())
+                : BlocProvider.of<AppBloc>(context)
+                .add(const AppEvent.logining());
+ 
+ 
+ 
+ 
         },
         inAppState: () {
-          context.router.pop();
+          //context.router.pop();
         },
       );
     },
   );
 }
-
+ 
 class _Scaffold extends StatelessWidget {
   final Widget child;
-
+ 
   const _Scaffold({
     required this.child,
     // super.key,
   });
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -115,3 +131,4 @@ class _Scaffold extends StatelessWidget {
     );
   }
 }
+ 

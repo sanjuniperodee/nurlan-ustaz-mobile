@@ -1,8 +1,17 @@
 
+
+import 'dart:developer';
+import 'dart:io';
+
+
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/dio_wrapper.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/checklist_dto.dart';
+
+import 'package:nurlan_ustaz_flutter/update_service/app_version_model.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+
 
 import '../../../../../../../core/error/excepteion.dart';
 import '../../../../../../../core/platform/network_helper.dart';
@@ -12,6 +21,8 @@ const _tag = 'AuthRemoteDS';
 
 abstract class OnBoardingDs {
   Future<List<OnBoardingVideoDTO>> onBoardingVideo();
+  Future<AppVersionsModel> appVersionModel();
+
 
 }
 
@@ -40,6 +51,21 @@ class OnBoardingDsImpl extends OnBoardingDs {
             .toList();
       }
       throw 'ERROR';
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+        (e.response?.data as Map<String, dynamic>)['message'].toString(),
+      );
+    }
+  }
+
+  @override
+  Future<AppVersionsModel> appVersionModel() async {
+    try {
+      final String type = Platform.operatingSystem;
+      final response =
+          await dio.get('${EndPoints.appVersions}/${type}/');
+     return AppVersionsModel.fromJson(response as Map<String,dynamic>);
     } on DioError catch (e) {
       throw ServerException(
         message:

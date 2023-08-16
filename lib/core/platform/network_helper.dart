@@ -1,11 +1,16 @@
 // ignore_for_file: constant_identifier_names
+const TEST = 'http://86.107.45.90:8000';
+const PROD = 'https://dev.nurlanustaz.kz/';
+const SERVER_ = TEST;
 
-const SERVER_ = 'http://86.107.45.90:8000';
-const SERVER_IP = '86.107.199.205';
-const SERVER_PATH = '/api/v1';
+
+
+
 
 mixin EndPoints {
   static const String onBoarding = '/api/support/onboarding/';
+  static const String appVersions = '/api/support/app-version/';
+
 
   /// auth
   static const String createUser = '/api/users/';
