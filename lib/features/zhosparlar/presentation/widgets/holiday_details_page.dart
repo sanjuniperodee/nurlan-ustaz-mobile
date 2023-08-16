@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'dart:ui';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,7 @@ import '../../../../core/utils/pay_dialog.dart';
 import '../../../app/app_dinamic_link.dart';
 import '../../../app/presentation/widgets/custom_app_bar.dart';
 
+@RoutePage()
 class HolidayDetailPage extends StatefulWidget {
   const HolidayDetailPage({super.key, required this.event});
 

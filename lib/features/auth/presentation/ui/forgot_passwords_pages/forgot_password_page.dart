@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,6 +13,7 @@ import '../../../../app/presentation/widgets/custom_snackbars.dart';
 import '../../../../app/presentation/widgets/custom_text_form_profile.dart';
 import 'code_verification_forgot.dart';
 
+@RoutePage()
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({Key? key}) : super(key: key);
 
@@ -43,7 +45,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             ),
           );
         }, verificationCodeState: (userId) {
-          return CodeVerificationForgot(
+          return CodeVerificationForgotPage(
             email: emailController.value.text,
           );
         }, newPassword: () {

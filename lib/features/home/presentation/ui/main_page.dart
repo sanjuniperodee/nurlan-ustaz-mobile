@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -26,6 +27,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import '../../../auth/data/datasource/local/auth_local_ds.dart';
 
+@RoutePage(name: 'MainRouterPage')
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
 
@@ -36,12 +38,13 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   RefreshController controller = RefreshController();
 
+  final FirebaseAnalytics _firebaseAnalytics = FirebaseAnalytics.instance;
   final List<PageRouteInfo<dynamic>> myRouteHome = [
-    SeminarPageRoute(),
-    const CharityPageRoute(),
-    const ServicesPageRoute(),
-    LiveBroadcastsPageRoute(),
-    const ShopPageRoute(),
+    SeminarRoute(),
+    const CharityRoute(),
+    const ServicesRoute(),
+    LiveBroadcastsRoute(),
+    const ShopRoute(),
   ];
 
   @override
@@ -54,12 +57,21 @@ class _MainPageState extends State<MainPage> {
       // isFirstCall: true,
     );
 
+    // _logAppOpen();
     BlocProvider.of<TimingsCubit>(context).timings(
       43.25,
       76.91667,
     );
     super.initState();
   }
+
+  // void _logAppOpen() async {
+  //   await _firebaseAnalytics.logEvent(
+  //     name: 'click',
+  //     parameters: {'event_name': 'name'},
+  //   );
+  //   log('ketti');
+  // }
 
   final now = DateTime.now();
   List times = [];
@@ -201,7 +213,7 @@ class _MainPageState extends State<MainPage> {
                                               GestureDetector(
                                                   onTap: () {
                                                     context.router.push(
-                                                      const NotificationPageRoute(),
+                                                      const NotificationRoute(),
                                                     );
                                                   },
                                                   child: SvgPicture.asset(
@@ -212,7 +224,7 @@ class _MainPageState extends State<MainPage> {
                                               GestureDetector(
                                                   onTap: () {
                                                     context.router.push(
-                                                      const ProfileMainPageRoute(),
+                                                      const ProfileMainRoute(),
                                                     );
                                                   },
                                                   child: SvgPicture.asset(
@@ -287,7 +299,7 @@ class _MainPageState extends State<MainPage> {
                                           InkWell(
                                             onTap: () {
                                               context.router.push(
-                                                NamazPageRoute(),
+                                                NamazRoute(),
                                               );
                                             },
                                             child: Column(
@@ -463,7 +475,7 @@ class _MainPageState extends State<MainPage> {
                                           InkWell(
                                             onTap: () {
                                               context.router.push(
-                                                NewsPageRoute(),
+                                                NewsRoute(),
                                               );
                                             },
                                             child: MainButton(
@@ -489,7 +501,7 @@ class _MainPageState extends State<MainPage> {
                                             child: GestureDetector(
                                               onTap: () {
                                                 context.router.push(
-                                                  NewsDetailPageRoute(
+                                                  NewsDetailRoute(
                                                     id: news[index].id!,
                                                   ),
                                                 );
@@ -651,7 +663,7 @@ class _MainPageState extends State<MainPage> {
       log(e.toString());
       return time.last;
     }
-    log(' TEST:::${test}');
+    log(' TEST:::$test');
     return test;
   }
 
@@ -691,12 +703,22 @@ class _MainPageState extends State<MainPage> {
     }
     DateTime now = DateTime.now();
     String formattedTime = DateFormat.Hm().format(now);
-    String timeH = ((int.parse(nextTime.substring(0, 2))) -
-            (int.parse(formattedTime.substring(0, 2))))
-        .toString();
-    String timeM = ((int.parse(nextTime.substring(3, 5))) -
-            (int.parse(formattedTime.substring(3, 5))))
-        .toString();
+
+    int nextHour = int.parse(nextTime.substring(0, 2));
+    int currentHour = int.parse(formattedTime.substring(0, 2));
+    int differenceMinutes = 0;
+    int nextMinute = int.parse(nextTime.substring(3, 5));
+    int currentMinute = int.parse(formattedTime.substring(3, 5));
+    int nextMinutes = nextHour * 60 + nextMinute;
+    int currentMinutes = currentHour * 60 + currentMinute;
+    if (nextMinutes < currentMinutes) {
+      differenceMinutes = 24 * 60 - currentMinutes + nextMinutes;
+    } else {
+      differenceMinutes = nextMinutes - currentMinutes;
+    }
+    int diffetenceHours = differenceMinutes ~/ 60;
+    String timeH = diffetenceHours.toString();
+    String timeM = (differenceMinutes - (diffetenceHours * 60)).toString();
 
     if (timeM.length < 2) {
       timeM = "0$timeM";
@@ -704,7 +726,7 @@ class _MainPageState extends State<MainPage> {
     if (timeH.length < 2) {
       timeH = "0$timeH";
     }
-    return "$timeH$timeM";
+    return "$timeH:$timeM";
   }
 }
 
@@ -730,7 +752,7 @@ class _TimesStateWidgetState extends State<TimesStateWidget> {
   void initState() {
     log(' NEXT${widget.time.toString()}');
     _stopWatchTimer.setPresetHoursTime(int.parse(widget.time.substring(0, 2)));
-    _stopWatchTimer.setPresetMinuteTime(int.parse(widget.time.substring(2, 4)));
+    _stopWatchTimer.setPresetMinuteTime(int.parse(widget.time.substring(3, 5)));
     _stopWatchTimer.onStartTimer();
     super.initState();
   }
@@ -751,7 +773,7 @@ class _TimesStateWidgetState extends State<TimesStateWidget> {
           final displayTime =
               StopWatchTimer.getDisplayTime(value!, milliSecond: false);
           return Text(
-            '-${displayTime}',
+            displayTime,
             style: getTextStyle(CustomTextStyles.s16w200)
                 .apply(fontFamily: FontTypes.SF_Pro.name)
                 .copyWith(fontWeight: FontWeight.w400, fontSize: 14.sp)

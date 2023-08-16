@@ -18,6 +18,7 @@ import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.d
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_fav_cubit.dart';
 
+@RoutePage()
 class NewsPage extends StatefulWidget {
   final String? type;
   const NewsPage({Key? key, this.type}) : super(key: key);
@@ -124,7 +125,7 @@ class _NewsPageState extends State<NewsPage> {
                               child: GestureDetector(
                                 onTap: () {
                                   context.router.push(
-                                    NewsDetailPageRoute(
+                                    NewsDetailRoute(
                                       id: listOfNews[index].id!,
                                       search: searchText,
                                     ),

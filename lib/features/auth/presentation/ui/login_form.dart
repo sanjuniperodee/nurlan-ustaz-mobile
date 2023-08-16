@@ -108,7 +108,7 @@ class _LoginFormState extends State<LoginForm> {
                   borderRadius: const BorderRadius.all(Radius.circular(30)).r),
               child: MaterialButton(
                 onPressed: () {
-                  context.router.push(const ForgotPasswordPageRoute());
+                  context.router.push(const ForgotPasswordRoute());
                 },
                 child: Container(
                   padding: const EdgeInsets.all(10),

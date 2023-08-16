@@ -6,21 +6,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
+import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/token_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_payload.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/code_verification_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/registration_cubit.dart';
 import 'package:pinput/pinput.dart';
 
 import '../../../../core/common/colors.dart';
-import '../../../../core/router/app_router.dart';
 import '../../../app/presentation/widgets/custom_app_bar.dart';
 import '../../../app/presentation/widgets/custom_snackbars.dart';
 import '../widgets/custom_button_timer.dart';
 
-class CodeVerification extends StatefulWidget {
-  const CodeVerification(
+@RoutePage()
+class CodeVerificationPage extends StatefulWidget {
+  const CodeVerificationPage(
       {Key? key,
       required this.email,
       required this.userId,
@@ -33,12 +32,12 @@ class CodeVerification extends StatefulWidget {
   final String password;
 
   @override
-  State<CodeVerification> createState() => _CodeVerificationState();
+  State<CodeVerificationPage> createState() => _CodeVerificationPageState();
 }
 
 bool isLoading = false;
 
-class _CodeVerificationState extends State<CodeVerification> {
+class _CodeVerificationPageState extends State<CodeVerificationPage> {
   final pinController = TextEditingController();
   final focusNode = FocusNode();
   final formKey = GlobalKey<FormState>();

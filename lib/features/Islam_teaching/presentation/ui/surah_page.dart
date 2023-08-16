@@ -14,6 +14,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_wi
 
 import '../../../../core/router/app_router.dart';
 
+@RoutePage()
 class SurahPage extends StatefulWidget {
   const SurahPage({super.key});
 
@@ -127,7 +128,7 @@ class _SurahPageState extends State<SurahPage> {
                                       child: GestureDetector(
                                         onTap: () {
                                           context.router.push(
-                                            SurahDetailPageRoute(
+                                            SurahDetailRoute(
                                                 result: listOfSurah[index]),
                                           );
                                         },

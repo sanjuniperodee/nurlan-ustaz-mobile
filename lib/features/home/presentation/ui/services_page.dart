@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -20,6 +21,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/common/assets.dart';
 
+@RoutePage()
 class ServicesPage extends StatefulWidget {
   const ServicesPage({Key? key}) : super(key: key);
 

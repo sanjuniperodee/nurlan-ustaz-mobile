@@ -17,6 +17,7 @@ import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/registration_
  
 import '../../../app/presentation/widgets/custom_snackbars.dart';
  
+@RoutePage()
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
  

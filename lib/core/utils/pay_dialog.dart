@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:nurlan_ustaz_flutter/core/utils/succes_pay_dialog.dart';
+
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/create_tus_zhoru_cubit.dart';
 
 import '../../features/tus_zhoru/presentation/bloc/tus_zhoru_cubit.dart';

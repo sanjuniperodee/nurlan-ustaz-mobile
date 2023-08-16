@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
-import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/checklist_dto.dart';
+
 
 import '../../../../../../../core/common/constants.dart';
 import '../../../../../../../core/platform/network_info.dart';

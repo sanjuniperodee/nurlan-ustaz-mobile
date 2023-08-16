@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -17,6 +18,7 @@ import '../../../../../../core/common/colors.dart';
 import '../../../../../app/presentation/widgets/custom_app_bar.dart';
 import '../../../../../app/presentation/widgets/custom_tab_bar.dart';
 
+@RoutePage()
 class PaymentsPage extends StatefulWidget {
   const PaymentsPage({Key? key}) : super(key: key);
 
@@ -56,12 +58,12 @@ class _PaymentsPageState extends State<PaymentsPage> {
       },
       builder: (context, state) {
         state.whenOrNull(
-          // loadingState: () {
-          //   return const CircularProgressIndicator(
-          //     color: AppColors.linearBlue,
-          //   );
-          // },
-        );
+            // loadingState: () {
+            //   return const CircularProgressIndicator(
+            //     color: AppColors.linearBlue,
+            //   );
+            // },
+            );
         return GlobalCustomBody(
           child: SizedBox(
             height: 1.1.sh,
@@ -80,6 +82,9 @@ class _PaymentsPageState extends State<PaymentsPage> {
                       text: 'seminars'.tr(),
                     ),
                     Tab(
+                      text: 'all'.tr(),
+                    ),
+                    Tab(
                       text: 'dream_interpretations'.tr(),
                     ),
                   ],
@@ -88,9 +93,10 @@ class _PaymentsPageState extends State<PaymentsPage> {
                     if (currentIndex != 0) {
                       BlocProvider.of<PaymentTickCubit>(context).seminar(
                           page: 1, isFirstCall: true, isPurchased: true);
-                    } else {
+                    } else if (currentIndex != 1) {
                       BlocProvider.of<PaymentTickCubit>(context).tusZhoruT(
                           page: 1, isFirstCall: true, isPurchased: true);
+                    } else {
                       BlocProvider.of<PaymentTickCubit>(context)
                           .getCustomTusZhoruT(
                         page: 1,
@@ -99,182 +105,10 @@ class _PaymentsPageState extends State<PaymentsPage> {
                     }
                     currentIndex = int;
                   },
-                  length: 2,
+                  length: 3,
                 ),
-                currentIndex != 1
+                currentIndex != 0
                     ? ListView.separated(
-                        shrinkWrap: true,
-                        physics: const BouncingScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return InkWell(
-                            onTap: () {
-                              _launchUrl(res[index].ticketUrl ?? "");
-                              // bottomSheet(
-                              //   FractionallySizedBox(
-                              //     heightFactor: 0.5,
-                              //     child: Padding(
-                              //       padding: const EdgeInsets.all(16.0),
-                              //       child: Column(
-                              //         crossAxisAlignment: CrossAxisAlignment.end,
-                              //         children: [
-                              //           InkWell(
-                              //             onTap: () {
-                              //               Navigator.of(context).pop();
-                              //             },
-                              //             child: SvgPicture.asset(
-                              //               Assets.cancelSvg,
-                              //               color: AppColors.black,
-                              //             ),
-                              //           ),
-                              //           SizedBox(
-                              //             height: 15.h,
-                              //           ),
-                              //           Container(
-                              //             width: 343.w,
-                              //             height: 156.h,
-                              //             decoration: BoxDecoration(
-                              //                 color: AppColors.white,
-                              //                 borderRadius:
-                              //                     BorderRadius.circular(20)),
-                              //             child: Center(
-                              //               child: Column(
-                              //                 crossAxisAlignment:
-                              //                     CrossAxisAlignment.center,
-                              //                 mainAxisAlignment:
-                              //                     MainAxisAlignment.spaceEvenly,
-                              //                 children: [
-                              //                   SvgPicture.asset(
-                              //                       'assets/icons/check_circle.svg'),
-                              //                   Text(
-                              //                     'Төленген',
-                              //                     style: getTextStyle(
-                              //                         CustomTextStyles.s16w400),
-                              //                   ),
-                              //                   Text('${res[index].price} ₸',
-                              //                       style: getTextStyle(
-                              //                           CustomTextStyles.s24w700))
-                              //                 ],
-                              //               ),
-                              //             ),
-                              //           ),
-                              //           SizedBox(
-                              //             height: 8.h,
-                              //           ),
-                              //           Container(
-                              //             width: 343.w,
-                              //             height: 155.h,
-                              //             decoration: BoxDecoration(
-                              //                 color: AppColors.white,
-                              //                 borderRadius:
-                              //                     BorderRadius.circular(20)),
-                              //             child: Column(
-                              //               children: [
-                              //                 SizedBox(
-                              //                   height: 8.h,
-                              //                 ),
-                              //                 const TextWidget(
-                              //                   text1: 'Статус',
-                              //                   text2: 'Төленген',
-                              //                 ),
-                              //                 TextWidget(
-                              //                   text1: 'Билет бағасы',
-                              //                   text2: '${res[index].price} ₸',
-                              //                 ),
-                              //                 TextWidget(
-                              //                   text1: 'Төленді',
-                              //                   text2:
-                              //                       '${DateFormat('dd.MM.yyyy').format(res[index].createdAt!)}, ${DateFormat.Hm().format(res[index].createdAt!)}',
-                              //                 ),
-                              //                 TextWidget(
-                              //                   text1: 'Өткізілу уақыты',
-                              //                   text2:
-                              //                       '${DateFormat.yMMMMd('kk').format(res[index].startTime!)}, ${DateFormat.Hm().format(res[index].startTime!)}',
-                              //                 ),
-                              //               ],
-                              //             ),
-                              //           ),
-                              //         ],
-                              //       ),
-                              //     ),
-                              //   ),
-                              //   context,
-                              // );
-                            },
-                            child: Container(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: 12.h, horizontal: 12.w),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(20),
-                                color: AppColors.white,
-                              ),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      if (res[index].createdAt != null)
-                                        Text(
-                                          DateFormat('dd.MM.yyyy')
-                                              .format(res[index].createdAt!),
-                                          style: getTextStyle(
-                                                  CustomTextStyles.s12w400)
-                                              .copyWith(
-                                                  fontFamily:
-                                                      FontTypes.SF_Pro.name,
-                                                  color: AppColors.grey1),
-                                        ),
-                                      SizedBox(
-                                        height: 2.h,
-                                      ),
-                                      SizedBox(
-                                        width: 250.w,
-                                        child: Text(
-                                          '${res[index].title}',
-                                          overflow: TextOverflow.ellipsis,
-                                          style: getTextStyle(
-                                                  CustomTextStyles.s16w600)
-                                              .copyWith(
-                                                  fontFamily:
-                                                      FontTypes.SF_Pro.name,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 16),
-                                        ),
-                                      )
-                                    ],
-                                  ),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        '${res[index].price!.toInt().toString()} ₸',
-                                        style: getTextStyle(
-                                                CustomTextStyles.s16w600)
-                                            .copyWith(color: AppColors.orange),
-                                      ),
-                                      SizedBox(
-                                        width: 13.w,
-                                      ),
-                                      SvgPicture.asset(
-                                        'assets/icons/chevron_right.svg',
-                                        color: AppColors.orange,
-                                      ),
-                                    ],
-                                  )
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                        separatorBuilder: (BuildContext context, int index) {
-                          return SizedBox(
-                            height: 12.h,
-                          );
-                        },
-                        itemCount: res.length)
-                    : ListView.separated(
                         shrinkWrap: true,
                         physics: const BouncingScrollPhysics(),
                         itemBuilder: (context, index) {
@@ -446,6 +280,178 @@ class _PaymentsPageState extends State<PaymentsPage> {
                           );
                         },
                         itemCount: tus.length)
+                    : ListView.separated(
+                        shrinkWrap: true,
+                        physics: const BouncingScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onTap: () {
+                              _launchUrl(res[index].ticketUrl ?? "");
+                              // bottomSheet(
+                              //   FractionallySizedBox(
+                              //     heightFactor: 0.5,
+                              //     child: Padding(
+                              //       padding: const EdgeInsets.all(16.0),
+                              //       child: Column(
+                              //         crossAxisAlignment: CrossAxisAlignment.end,
+                              //         children: [
+                              //           InkWell(
+                              //             onTap: () {
+                              //               Navigator.of(context).pop();
+                              //             },
+                              //             child: SvgPicture.asset(
+                              //               Assets.cancelSvg,
+                              //               color: AppColors.black,
+                              //             ),
+                              //           ),
+                              //           SizedBox(
+                              //             height: 15.h,
+                              //           ),
+                              //           Container(
+                              //             width: 343.w,
+                              //             height: 156.h,
+                              //             decoration: BoxDecoration(
+                              //                 color: AppColors.white,
+                              //                 borderRadius:
+                              //                     BorderRadius.circular(20)),
+                              //             child: Center(
+                              //               child: Column(
+                              //                 crossAxisAlignment:
+                              //                     CrossAxisAlignment.center,
+                              //                 mainAxisAlignment:
+                              //                     MainAxisAlignment.spaceEvenly,
+                              //                 children: [
+                              //                   SvgPicture.asset(
+                              //                       'assets/icons/check_circle.svg'),
+                              //                   Text(
+                              //                     'Төленген',
+                              //                     style: getTextStyle(
+                              //                         CustomTextStyles.s16w400),
+                              //                   ),
+                              //                   Text('${res[index].price} ₸',
+                              //                       style: getTextStyle(
+                              //                           CustomTextStyles.s24w700))
+                              //                 ],
+                              //               ),
+                              //             ),
+                              //           ),
+                              //           SizedBox(
+                              //             height: 8.h,
+                              //           ),
+                              //           Container(
+                              //             width: 343.w,
+                              //             height: 155.h,
+                              //             decoration: BoxDecoration(
+                              //                 color: AppColors.white,
+                              //                 borderRadius:
+                              //                     BorderRadius.circular(20)),
+                              //             child: Column(
+                              //               children: [
+                              //                 SizedBox(
+                              //                   height: 8.h,
+                              //                 ),
+                              //                 const TextWidget(
+                              //                   text1: 'Статус',
+                              //                   text2: 'Төленген',
+                              //                 ),
+                              //                 TextWidget(
+                              //                   text1: 'Билет бағасы',
+                              //                   text2: '${res[index].price} ₸',
+                              //                 ),
+                              //                 TextWidget(
+                              //                   text1: 'Төленді',
+                              //                   text2:
+                              //                       '${DateFormat('dd.MM.yyyy').format(res[index].createdAt!)}, ${DateFormat.Hm().format(res[index].createdAt!)}',
+                              //                 ),
+                              //                 TextWidget(
+                              //                   text1: 'Өткізілу уақыты',
+                              //                   text2:
+                              //                       '${DateFormat.yMMMMd('kk').format(res[index].startTime!)}, ${DateFormat.Hm().format(res[index].startTime!)}',
+                              //                 ),
+                              //               ],
+                              //             ),
+                              //           ),
+                              //         ],
+                              //       ),
+                              //     ),
+                              //   ),
+                              //   context,
+                              // );
+                            },
+                            child: Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 12.h, horizontal: 12.w),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20),
+                                color: AppColors.white,
+                              ),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      if (res[index].createdAt != null)
+                                        Text(
+                                          DateFormat('dd.MM.yyyy')
+                                              .format(res[index].createdAt!),
+                                          style: getTextStyle(
+                                                  CustomTextStyles.s12w400)
+                                              .copyWith(
+                                                  fontFamily:
+                                                      FontTypes.SF_Pro.name,
+                                                  color: AppColors.grey1),
+                                        ),
+                                      SizedBox(
+                                        height: 2.h,
+                                      ),
+                                      SizedBox(
+                                        width: 250.w,
+                                        child: Text(
+                                          '${res[index].title}',
+                                          overflow: TextOverflow.ellipsis,
+                                          style: getTextStyle(
+                                                  CustomTextStyles.s16w600)
+                                              .copyWith(
+                                                  fontFamily:
+                                                      FontTypes.SF_Pro.name,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 16),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Row(
+                                    children: [
+                                      Text(
+                                        '${res[index].price!.toInt().toString()} ₸',
+                                        style: getTextStyle(
+                                                CustomTextStyles.s16w600)
+                                            .copyWith(color: AppColors.orange),
+                                      ),
+                                      SizedBox(
+                                        width: 13.w,
+                                      ),
+                                      SvgPicture.asset(
+                                        'assets/icons/chevron_right.svg',
+                                        color: AppColors.orange,
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                        separatorBuilder: (BuildContext context, int index) {
+                          return SizedBox(
+                            height: 12.h,
+                          );
+                        },
+                        itemCount: res.length)
               ]),
             ),
           ),

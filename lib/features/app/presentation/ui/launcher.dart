@@ -10,20 +10,21 @@ import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/login_page.da
 
 import '../../../../core/utils/alert_utilrs.dart';
 import '../../on_boarding/presentation/ui/on_boarding.dart';
+
 int _backClickDateTime = 0;
 const int _backClickThreshHold = 3000;
-class LauncherApp extends StatefulWidget {
-  const LauncherApp({super.key});
+
+@RoutePage()
+class LauncherAppPage extends StatefulWidget {
+  const LauncherAppPage({super.key});
 
   @override
-  State<LauncherApp> createState() => _LauncherAppState();
+  State<LauncherAppPage> createState() => _LauncherAppPageState();
 }
 
 bool isShow = false;
 
-
-
-class _LauncherAppState extends State<LauncherApp> {
+class _LauncherAppPageState extends State<LauncherAppPage> {
   @override
   void initState() {
     init();
@@ -33,8 +34,6 @@ class _LauncherAppState extends State<LauncherApp> {
   Future<void> init() async {
     BlocProvider.of<AppBloc>(context).add(const AppEvent.checkAuth());
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -77,15 +76,15 @@ Widget _salam() {
       state.whenOrNull(
         notAuthorizedState: () {
           AutoRouter.of(context)
-              .pushAndPopUntil(LoginPageRoute(), predicate: (route) => false);
+              .pushAndPopUntil(LoginRoute(), predicate: (route) => false);
         },
         notAuthorizedDialogState: () async {
           var dialog = await AlertUtils.showTwoOptionDialog(
               context: context,
-              messageKey: 'exit_des'.tr(),
-              title: 'exit'.tr(),
+              messageKey: 'entry_text'.tr(),
+              title: 'enter'.tr(),
               button1Text: 'cancel'.tr(),
-              button2Text: 'exit2'.tr());
+              button2Text: 'enter'.tr());
           return dialog == true
               ? BlocProvider.of<AppBloc>(context)
                   .add(const AppEvent.nonAuthorizedDialog())

@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'dart:developer';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +9,12 @@ import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/geonames_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/timings_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/widgets/NamazContainerWidget.dart';
 
+@RoutePage()
 class NamazPage extends StatefulWidget {
   final GeonamesDTO? geonamesDTO;
   const NamazPage({Key? key, this.geonamesDTO}) : super(key: key);
@@ -55,6 +58,9 @@ class _NamazPageState extends State<NamazPage> {
                 child: CircularProgressIndicator(color: AppColors.linearBlue),
               );
             },
+            // errorState: (message) {
+            //   return buildErrorCustomSnackBar(context, message);
+            // },
             loaded: (not, geo) {
               final namaz = not.toJson();
               times = namaz.values.toList();
@@ -126,7 +132,7 @@ class _NamazPageState extends State<NamazPage> {
       log(time.toString());
     } catch (e) {
       log(e.toString());
-      return time.last;
+      return 0;
     }
     return indexOfNamaz;
   }
@@ -197,12 +203,22 @@ class _NamazPageState extends State<NamazPage> {
     }
     DateTime now = DateTime.now();
     String formattedTime = DateFormat.Hm().format(now);
-    String timeH = ((int.parse(nextTime.substring(0, 2))) -
-            (int.parse(formattedTime.substring(0, 2))))
-        .toString();
-    String timeM = ((int.parse(nextTime.substring(3, 5))) -
-            (int.parse(formattedTime.substring(3, 5))))
-        .toString();
+
+    int nextHour = int.parse(nextTime.substring(0, 2));
+    int currentHour = int.parse(formattedTime.substring(0, 2));
+    int differenceMinutes = 0;
+    int nextMinute = int.parse(nextTime.substring(3, 5));
+    int currentMinute = int.parse(formattedTime.substring(3, 5));
+    int nextMinutes = nextHour * 60 + nextMinute;
+    int currentMinutes = currentHour * 60 + currentMinute;
+    if (nextMinutes < currentMinutes) {
+      differenceMinutes = 24 * 60 - currentMinutes + nextMinutes;
+    } else {
+      differenceMinutes = nextMinutes - currentMinutes;
+    }
+    int diffetenceHours = differenceMinutes ~/ 60;
+    String timeH = diffetenceHours.toString();
+    String timeM = (differenceMinutes - (diffetenceHours * 60)).toString();
 
     if (timeM.length < 2) {
       timeM = "0$timeM";
@@ -210,7 +226,7 @@ class _NamazPageState extends State<NamazPage> {
     if (timeH.length < 2) {
       timeH = "0$timeH";
     }
-    return "$timeH$timeM";
+    return "$timeH:$timeM";
   }
 }
 

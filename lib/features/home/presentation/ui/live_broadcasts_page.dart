@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -17,6 +18,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/common/assets.dart';
 
+@RoutePage()
 class LiveBroadcastsPage extends StatefulWidget {
   final String? type;
   const LiveBroadcastsPage({Key? key, this.type}) : super(key: key);
