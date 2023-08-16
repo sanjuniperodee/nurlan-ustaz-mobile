@@ -1,7 +1,5 @@
-import 'dart:developer';
-
+ 
 import 'package:auto_route/auto_route.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -12,7 +10,6 @@ import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/calendar/custom_calendar.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/event_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/bloc/checklist_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/bloc/zhosparym_cubit.dart';
@@ -20,21 +17,19 @@ import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/ca
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/cards/seminar_card.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/cards/service_card.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/dialogs/holiday_type_dialog.dart';
-import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/events_card.dart';
-
+ 
 import '../../../app/presentation/widgets/custom_snackbars.dart';
 import '../../data/models/events_type_enum.dart';
-
-@RoutePage(name: 'ZhosparymRouterPage')
+@RoutePage()
 class ZhosparymPage extends StatefulWidget {
   const ZhosparymPage({super.key});
-
+ 
   @override
   State<ZhosparymPage> createState() => _ZhosparymPageState();
 }
-
+ 
 bool _isLoading = false;
-
+ 
 class _ZhosparymPageState extends State<ZhosparymPage> {
   void showEventDialog(
       BuildContext mainContext, EventDto event, LinearGradient gradient) {
@@ -100,9 +95,9 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
         break;
     }
   }
-
+ 
   List<EventDto> holidays = [];
-
+ 
   final gradients = [
     const LinearGradient(colors: [
       Color(0xFF1151C2),
@@ -113,14 +108,14 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
         begin: Alignment.centerLeft,
         end: Alignment.centerRight)
   ];
-
+ 
   @override
   void initState() {
     BlocProvider.of<ZhosparymCubit>(context).getCheckList();
     BlocProvider.of<ZhosparymCubit>(context).calendarEvents(DateTime.now());
     super.initState();
   }
-
+ 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ZhosparymCubit, ZhosparymState>(
@@ -136,7 +131,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
         return Container();
       }, initialState: (events, checklist) {
         holidays.clear();
-
+ 
         final eventsDays = events?.map<DateTime, List<EventDto>>(
           (key, value) => MapEntry(
             DateTime.parse(key),
@@ -148,7 +143,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
             holidays.addAll(value); // Using addAll method
           });
         }
-
+ 
         return Scaffold(
           backgroundColor: AppColors.lightBlue,
           body: SizedBox(
@@ -217,116 +212,17 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                             //     color: AppColors.white,
                             //     borderRadius: BorderRadius.circular(30.r),
                             //   ),
-                              // child: eventsDays == null
-                              //     ? Center(
-                              //         child: CircularProgressIndicator(),
-                              //       )
+                            //   child: eventsDays == null
+                            //       ? Center(
+                            //           child: CircularProgressIndicator(),
+                            //         )
                             //       : CustomCalendar(
                             //           onDateSelected: (DateTime date) {
                             //             context.read<ZhosparymCubit>().chatPer(
                             //                 DateFormat('yyyy-MM-dd')
                             //                     .format(date)
                             //                     .toString());
-
-
-                                        if (!eventsDays.containsKey(date)) {
-                                          return;
-                                        } else {
-                                          if (eventsDays[date]!
-                                                  .toList()
-                                                  .where((element) =>
-                                                      element.type !=
-                                                      EventsType.holiday)
-                                                  .length >
-                                              1) {
-                                            CarouselController controller =
-                                                CarouselController();
-                                            int currentIndex = 0;
-                                            showDialog(
-                                              context: context,
-                                              builder: (context) => Dialog(
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20.r)),
-                                                  child: CarouselSlider(
-                                                    carouselController:
-                                                        controller,
-                                                    items: eventsDays[date]!
-                                                        .toList()
-                                                        .where((element) =>
-                                                            element.type !=
-                                                            EventsType.holiday)
-                                                        .toList()
-                                                        .map(
-                                                      (e) {
-                                                        return EventContainer(
-                                                          e,
-                                                          nextPage: () {
-                                                            controller
-                                                                .nextPage();
-                                                          },
-                                                          previousPage: () {
-                                                            controller
-                                                                .previousPage();
-                                                          },
-                                                          maincontext: context,
-                                                        );
-                                                      },
-                                                    ).toList(),
-                                                    options: CarouselOptions(
-                                                      aspectRatio: 1.3,
-                                                      viewportFraction: 1,
-                                                      autoPlay: true,
-                                                      autoPlayInterval:
-                                                          const Duration(
-                                                              seconds: 3),
-                                                      enlargeCenterPage: true,
-                                                      onPageChanged:
-                                                          (index, _) {
-                                                        setState(() {
-                                                          currentIndex = index;
-                                                        });
-                                                      },
-                                                    ),
-                                                  )),
-                                            );
-                                          } else {
-                                            showEventDialog(
-                                                context,
-                                                eventsDays[date]!.first,
-                                                gradients[0]);
-                                          }
-                                        }
-                                      },
-                                      hideBottomBar: false,
-                                      startOnMonday: true,
-                                      weekDays: const [
-                                        'Дс',
-                                        'Сс',
-                                        'Ср',
-                                        'Бс',
-                                        'Жм',
-                                        'Сн',
-                                        'Жк'
-                                      ],
-                                      events: eventsDays,
-                                      isExpandable: false,
-                                      eventDoneColor: Colors.green,
-                                      selectedColor: Colors.pink,
-                                      todayColor: AppColors.black,
-                                      eventColor: Colors.deepPurple,
-                                      locale: context.locale.languageCode,
-                                      todayButtonText: '',
-                                      isExpanded: true,
-                                      dayOfWeekStyle: const TextStyle(
-                                        color: AppColors.grey2,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                            ),
-
+ 
                             //             if (!eventsDays.containsKey(date)) {
                             //               return;
                             //             } else {
@@ -396,14 +292,6 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                             //                     gradients[0]);
                             //               }
                             //             }
-
-                            //             // eventsT![date]!.toList().isEmpty ? (){} :
-                            //             // showDialog<void>(
-                            //             //   context: context,
-                            //             //   builder: (BuildContext context) {
-                            //             //     return HolidayDialog();
-                            //             //   },
-                            //             //);
                             //           },
                             //           hideBottomBar: false,
                             //           startOnMonday: true,
@@ -432,8 +320,6 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                             //           ),
                             //         ),
                             // ),
-                            
-
                             SizedBox(height: 20.h),
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 26.w),
@@ -597,9 +483,6 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                       ),
                                     ))
                                 .toList(),
-                                 SizedBox(
-                                      height: 165.h,
-                                    ),
                           ],
                         )),
                   ),

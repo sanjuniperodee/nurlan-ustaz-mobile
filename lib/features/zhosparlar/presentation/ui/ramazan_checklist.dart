@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'dart:developer';
  
 // import 'package:calendar_agenda/calendar_agenda.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -10,15 +9,12 @@ import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/bloc/checklist_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/calendar_custom_body.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/checklist_task_item.dart';
  
 import '../../../app/presentation/widgets/custom_snackbars.dart';
 import '../../data/models/checklist_dto.dart';
-import '../widgets/horizontal_calendar/custom_agenda_controller.dart';
-import '../widgets/horizontal_calendar/custom_horizontal_calendar.dart';
 import '../widgets/task_details_dialog.dart';
  
 @RoutePage()
