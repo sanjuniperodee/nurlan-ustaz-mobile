@@ -24,10 +24,10 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
   );
   final buttonNotifier = ValueNotifier<ButtonState>(ButtonState.paused);
 
-  static const url =
-      'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3';
+  // static const url =
+  //     'https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3';
 
-  static const url1 = 'https://samplelib.com/lib/preview/mp3/sample-3s.mp3';
+
   late AudioPlayer _audioPlayer;
   @override
   void initState() {

@@ -86,7 +86,7 @@ class AppRouter extends _$AppRouter {
       AutoRoute(page: TusZhoruRouterPage.page),
       AutoRoute(page: TandaulilarMainRouterPage.page),
       AutoRoute(
-        page: ZhosparymRouterPage.page,
+        page: ZhosparymMainRouterPage.page,
       ),
     ]),
     AutoRoute(

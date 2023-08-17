@@ -11,8 +11,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import 'package:nurlan_ustaz_flutter/core/platform/cache_helper/prefs.dart';
-import 'package:path/path.dart' as p;
 
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
@@ -27,7 +25,6 @@ import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_payload2.dart
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/rename_user_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/get_profile_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/widgets/profile_menu_item.dart';
-import 'package:path_provider/path_provider.dart';
 
 import '../../../../../../core/common/assets.dart';
 import '../../../../../../core/common/colors.dart';

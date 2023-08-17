@@ -227,7 +227,7 @@ class HomeRepositoryImpl extends HomeRepository {
                 NotificationDTO(registrationId: deviceToken);
             await remoteDS
                 .putNotificationDevice(
-                    registrationId: dev!, notification: notificationDeviceDTO)
+                    registrationId: dev, notification: notificationDeviceDTO)
                 .then((value) => prefs.saveDeviceToken(deviceToken!));
           }
         }

@@ -42,7 +42,7 @@ class _BaseState extends State<Base> {
         const IslamTeachingRouterPage(),
         TusZhoruRouterPage(),
         const TandaulilarMainRouterPage(),
-        const ZhosparymRouterPage(),
+        const ZhosparymMainRouterPage(),
       ],
       bottomNavigationBuilder: (_, tabsRouter) {
         return ClipRRect(

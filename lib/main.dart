@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,11 +10,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:nurlan_ustaz_flutter/core/model/async_app_dependecies.dart';
 import 'package:nurlan_ustaz_flutter/features/app/logic/main_runner.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/nurlan_ustaz_app.dart';
-import 'package:nurlan_ustaz_flutter/update_service/update_service.dart';
 
 import 'core/router/app_router.dart';
 import 'core/services/locator_service.dart';
-
 
 // Future<void> firebaseListen() async {
 //   FirebaseMessaging.instance.getInitialMessage();
@@ -28,9 +25,6 @@ import 'core/services/locator_service.dart';
 //     // }
 //   });
 // }
-
-
-
 
 Future<void> firebaseInit() async {
   FirebaseDynamicLinks.instance.onLink.listen((event) {
@@ -76,7 +70,6 @@ Future<void> main() async {
         return const NurlanUstazApp();
       });
   FlutterNativeSplash.remove();
-
 }
 
 Future<void> checkLocationPermission() async {

@@ -1,4 +1,3 @@
- 
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -17,19 +16,20 @@ import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/ca
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/cards/seminar_card.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/cards/service_card.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/dialogs/holiday_type_dialog.dart';
- 
+
 import '../../../app/presentation/widgets/custom_snackbars.dart';
 import '../../data/models/events_type_enum.dart';
-@RoutePage()
+
+@RoutePage(name: 'ZhosparymMainRouterPage')
 class ZhosparymPage extends StatefulWidget {
   const ZhosparymPage({super.key});
- 
+
   @override
   State<ZhosparymPage> createState() => _ZhosparymPageState();
 }
- 
+
 bool _isLoading = false;
- 
+
 class _ZhosparymPageState extends State<ZhosparymPage> {
   void showEventDialog(
       BuildContext mainContext, EventDto event, LinearGradient gradient) {
@@ -95,9 +95,9 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
         break;
     }
   }
- 
+
   List<EventDto> holidays = [];
- 
+
   final gradients = [
     const LinearGradient(colors: [
       Color(0xFF1151C2),
@@ -108,14 +108,14 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
         begin: Alignment.centerLeft,
         end: Alignment.centerRight)
   ];
- 
+
   @override
   void initState() {
     BlocProvider.of<ZhosparymCubit>(context).getCheckList();
     BlocProvider.of<ZhosparymCubit>(context).calendarEvents(DateTime.now());
     super.initState();
   }
- 
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ZhosparymCubit, ZhosparymState>(
@@ -131,7 +131,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
         return Container();
       }, initialState: (events, checklist) {
         holidays.clear();
- 
+
         final eventsDays = events?.map<DateTime, List<EventDto>>(
           (key, value) => MapEntry(
             DateTime.parse(key),
@@ -143,7 +143,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
             holidays.addAll(value); // Using addAll method
           });
         }
- 
+
         return Scaffold(
           backgroundColor: AppColors.lightBlue,
           body: SizedBox(
@@ -222,7 +222,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                             //                 DateFormat('yyyy-MM-dd')
                             //                     .format(date)
                             //                     .toString());
- 
+
                             //             if (!eventsDays.containsKey(date)) {
                             //               return;
                             //             } else {
@@ -328,61 +328,65 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                             SizedBox(
                               height: 15.h,
                             ),
-                            if(checklist != null )AppButton(
-                              isLoading: _isLoading,
-                              onTap: _isLoading == true
-                                  ? null
-                                  : () {
-                                      setState(() {
-                                        _isLoading = true;
-                                      });
-                                      context
-                                          .read<ZhosparymCubit>()
-                                          .getCheckList()
-                                          .then((value) async {
-                                        if (value == null) {
-                                          setState(() {
-                                            _isLoading = false;
-                                          });
-                                          return;
-                                        } else {
-                                          await BlocProvider.of<CheckListCubit>(
-                                                  context)
-                                              .getDays(checklistId: value.id)
-                                              .then((result) {
-                                            if (!(result
-                                                .map((e) => DateFormat(
-                                                        'yyyy-MM-dd')
-                                                    .format(
-                                                        DateTime.parse(e.date)))
-                                                .toList()
-                                                .contains(DateFormat(
-                                                        'yyyy-MM-dd')
-                                                    .format(DateTime.now())))) {
-                                              setState(() {
-                                                _isLoading = false;
-                                              });
-                                              buildErrorCustomSnackBar(context,
-                                                  'чеклист отсутствует');
-                                              return;
-                                            }
-                                            context.router
-                                                .push(
-                                              RamazanChecklistRoute(
-                                                  checkList: value),
-                                            )
-                                                .then((value) {
-                                              setState(() {
-                                                _isLoading = false;
+                            if (checklist != null)
+                              AppButton(
+                                isLoading: _isLoading,
+                                onTap: _isLoading == true
+                                    ? null
+                                    : () {
+                                        setState(() {
+                                          _isLoading = true;
+                                        });
+                                        context
+                                            .read<ZhosparymCubit>()
+                                            .getCheckList()
+                                            .then((value) async {
+                                          if (value == null) {
+                                            setState(() {
+                                              _isLoading = false;
+                                            });
+                                            return;
+                                          } else {
+                                            await BlocProvider.of<
+                                                    CheckListCubit>(context)
+                                                .getDays(checklistId: value.id)
+                                                .then((result) {
+                                              if (!(result
+                                                  .map((e) =>
+                                                      DateFormat('yyyy-MM-dd')
+                                                          .format(
+                                                              DateTime.parse(
+                                                                  e.date)))
+                                                  .toList()
+                                                  .contains(DateFormat(
+                                                          'yyyy-MM-dd')
+                                                      .format(
+                                                          DateTime.now())))) {
+                                                setState(() {
+                                                  _isLoading = false;
+                                                });
+                                                buildErrorCustomSnackBar(
+                                                    context,
+                                                    'чеклист отсутствует');
+                                                return;
+                                              }
+                                              context.router
+                                                  .push(
+                                                RamazanChecklistRoute(
+                                                    checkList: value),
+                                              )
+                                                  .then((value) {
+                                                setState(() {
+                                                  _isLoading = false;
+                                                });
                                               });
                                             });
-                                          });
-                                        }
-                                      });
-                                    },
-                              text: 'Рамазан чеклисті',
-                              color: AppColors.orange,
-                            ),
+                                          }
+                                        });
+                                      },
+                                text: 'Рамазан чеклисті',
+                                color: AppColors.orange,
+                              ),
                             SizedBox(
                               height: 21.h,
                             ),
