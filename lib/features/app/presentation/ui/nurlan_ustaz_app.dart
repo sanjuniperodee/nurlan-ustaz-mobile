@@ -4,16 +4,13 @@ import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:firebase_analytics/observer.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
+
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/multibloc_wrapper.dart';
-
-import '../../../../update_service/update_service.dart';
 
 final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
 
@@ -27,7 +24,6 @@ class NurlanUstazApp extends StatefulWidget {
 class _NurlanUstazAppState extends State<NurlanUstazApp> {
   late AppRouter _rootRouter;
 
-
   // checkAppVersion() async {
   //   log('app_version');
   //   await Future.delayed(const Duration(seconds: 4));
@@ -37,19 +33,12 @@ class _NurlanUstazAppState extends State<NurlanUstazApp> {
   static final FirebaseAnalytics _firebaseAnalytics =
       FirebaseAnalytics.instance;
 
-
   @override
   void initState() {
-    initialise();
     //checkAppVersion();
     _rootRouter = getIt<AppRouter>();
 
     super.initState();
-  }
-
-  void initialise() async {
-    await Future.delayed(const Duration(seconds: 2))
-        .then((value) => FlutterNativeSplash.remove());
   }
 
   @override
@@ -71,8 +60,6 @@ class _NurlanUstazAppState extends State<NurlanUstazApp> {
           },
           builder: (context, state) {
             return MaterialApp.router(
-
-
               // title: 'Flutter Demo',
 
               // key: rootNavigatorKey,

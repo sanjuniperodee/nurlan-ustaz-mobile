@@ -5,7 +5,6 @@ import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:nurlan_ustaz_flutter/core/model/async_app_dependecies.dart';
 import 'package:nurlan_ustaz_flutter/features/app/logic/main_runner.dart';
@@ -53,11 +52,12 @@ Future<void> firebaseInit() async {
 }
 
 Future<void> main() async {
-  WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();
-  FlutterNativeSplash.preserve(widgetsBinding: widgetsBinding);
+  WidgetsFlutterBinding.ensureInitialized();
+
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await Firebase.initializeApp();
+
   await FirebaseDynamicLinks.instance.getInitialLink();
   getIt.registerSingleton<AppRouter>(AppRouter());
   // await firebaseListen();
@@ -69,7 +69,6 @@ Future<void> main() async {
       appBuilder: (dependencies) {
         return const NurlanUstazApp();
       });
-  FlutterNativeSplash.remove();
 }
 
 Future<void> checkLocationPermission() async {
@@ -77,7 +76,7 @@ Future<void> checkLocationPermission() async {
   if (permission == LocationPermission.denied) {
     permission = await Geolocator.requestPermission();
     if (permission == LocationPermission.denied) {
-      // Handle the case when the user has denied location permission permanently
+      
     }
   }
 

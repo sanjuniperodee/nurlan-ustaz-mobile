@@ -86,7 +86,9 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                 ? widget.type == 'isSave'
                     ? const SizedBox()
                     : Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        padding: const EdgeInsets.only(
+                                bottom: 160, left: 16, right: 16)
+                            .r,
                         child: AppButton(
                             onTap: () {
                               context.router.push(
@@ -167,7 +169,6 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                             tusZhoruList: tusZhoruList.tusZhoruList),
                         secondChild: CustomTusZhoruList(
                             tusZhoruList: tusZhoruList.customTusZhoru),
-
                         crossFadeState: tusZhoruList.currentIndex == 0
                             ? CrossFadeState.showFirst
                             : CrossFadeState.showSecond,
@@ -177,11 +178,10 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                     //     ? TusZhoruList(tusZhoruList: tusZhoruList.tusZhoruList)
                     //     : CustomTusZhoruList(
                     //         tusZhoruList: tusZhoruList.customTusZhoru),
-,
+                    ,
                     SizedBox(
                       height: 105.h,
                     ),
-
                   ],
                 ),
               ),
