@@ -1,4 +1,7 @@
 
+import 'dart:developer';
+
+import 'package:better_player/better_player.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:chewie/chewie.dart';
 import 'package:dots_indicator/dots_indicator.dart';
@@ -6,6 +9,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_ip_address/get_ip_address.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/features/app/on_boarding/bloc/on_boarding_cubit.dart';
@@ -25,21 +29,24 @@ int currentIndex = 0;
 
 class _OnBoardingPageState extends State<OnBoardingPage> {
   late VideoPlayerController _controller;
+  late BetterPlayerController _betterPlayerController;
+
 
   @override
   void initState() {
-    // _controller.initialize().then((_) => setState(() {}));
     BlocProvider.of<OnBoardingCubit>(context).getVideo().then((value) {
+      log(Uri.parse('${value.first.file}').toString());
       _controller =
           VideoPlayerController.networkUrl(Uri.parse('${value.first.file}'));
-    }); //   _controller =
-    //       VideoPlayerController.networkUrl(Uri(path: value.first.file));
-    //   setState(() {});
-    // });
+      _controller.addListener(()=> setState(() {
 
-    // _controller.addListener(() {
-    //   setState(() {});
-    // });
+      }));
+      _controller.initialize();
+      _controller.play();
+
+    });
+
+
 
     super.initState();
   }
@@ -79,7 +86,11 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                   child: Container(
                     width: 343.w,
                     height: 648.h,
-                    child: playerWidget,
+                    child:
+
+
+
+                    playerWidget,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30.r),
                     ),
@@ -107,7 +118,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                           onTap: () {
                             if (currentIndex != videoList.length - 1) {
                               _controller = VideoPlayerController.networkUrl(
-                                  Uri.parse('${videoList[1].file}'));
+                                  Uri.parse('${videoList[currentIndex+1].file}'));
                               setState(() {});
 
                               currentIndex++;

@@ -58,6 +58,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_cub
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_fav_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/services_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/bloc/qr_scanner_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/bloc/technical_support_cubit.dart';
 
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/presentation/bloc/calendar_chats_cubit.dart';
@@ -288,6 +289,8 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
             create: (context) => getIt<ZhosparymCubit>()),
         BlocProvider<CheckListCubit>(
             create: (context) => getIt<CheckListCubit>()),
+        BlocProvider<QrScannerCubit>(
+            create: (context) => getIt<QrScannerCubit>()),
       ],
       child: widget.child,
     );

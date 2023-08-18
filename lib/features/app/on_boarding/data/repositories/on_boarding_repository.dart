@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
@@ -53,6 +55,7 @@ class OnBoardingRepositoryImpl extends OnBoardingRepository {
       try {
         final AppVersionsModel model =
             await remoteDS.appVersionModel();
+        log('result from repo - ${model.toString()}');
         return model;
       } on ServerException catch (e) {
         return null;

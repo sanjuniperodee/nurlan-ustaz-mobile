@@ -263,18 +263,28 @@ class _RegistrationFormState extends State<RegistrationForm> {
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             const PrivatePolicyText(),
             Transform.scale(
-              scale: 0.8,
-              child: CupertinoSwitch(
-                trackColor: AppColors.grey2,
-                value: isPrivacyAccept,
-                onChanged: (value) {
-                  setState(() {
-                    isPrivacyAccept = !isPrivacyAccept;
-                  });
-                },
-                activeColor: AppColors.orange,
-              ),
-            )
+                scale: 0.8,
+                child: Switch.adaptive(
+                  activeColor: AppColors.orange,
+                  inactiveTrackColor: AppColors.grey2,
+                  value: isPrivacyAccept,
+                  onChanged: (value) {
+                    setState(() {
+                      isPrivacyAccept = !isPrivacyAccept;
+                    });
+                  },
+                )
+                // CupertinoSwitch(
+                //   trackColor: AppColors.grey2,
+                //   value: isPrivacyAccept,
+                //   onChanged: (value) {
+                //     setState(() {
+                //       isPrivacyAccept = !isPrivacyAccept;
+                //     });
+                //   },
+                //   activeColor: AppColors.orange,
+                // ),
+                )
           ]),
           SizedBox(
             height: 48.h,

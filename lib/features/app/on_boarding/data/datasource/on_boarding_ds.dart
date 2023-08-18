@@ -45,6 +45,8 @@ class OnBoardingDsImpl extends OnBoardingDs {
     try {
       final response =
           await dio.get(EndPoints.onBoarding);
+
+      log(response.toString());
       if (response.statusCode == 200) {
         return (response.data as List)
             .map((e) => OnBoardingVideoDTO.fromJson(e as Map<String, dynamic>))
@@ -65,7 +67,7 @@ class OnBoardingDsImpl extends OnBoardingDs {
       final String type = Platform.operatingSystem;
       final response =
           await dio.get('${EndPoints.appVersions}/${type}/');
-     return AppVersionsModel.fromJson(response as Map<String,dynamic>);
+     return AppVersionsModel.fromJson(response.data as Map<String,dynamic>);
     } on DioError catch (e) {
       throw ServerException(
         message:
