@@ -91,6 +91,8 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
     result.fold(
       (l) {
         emit(TusZhoruState.errorState(message: mapFailureToMessageBack(l)));
+        emit(TusZhoruState.initialState(
+            customTusZhoru:[], currentIndex: 1));
       },
       (r) {
         customTusZhoruList = r;

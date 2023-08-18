@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:nurlan_ustaz_flutter/update_service/app_version_model.dart';
 import 'package:video_player/video_player.dart';
 
 import '../data/models/on_boarding_video_dto.dart';
@@ -36,6 +37,12 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
       emit( _InitialPage(videoList: r.toList()));
       return r.toList();
     });
+  }
+  Future<AppVersionsModel?> getVersion() async {
+
+    final result = await _onBoardingRepository.appVersionsModel();
+    log('result from cubit - ${result.toString()}');
+   return result;
   }
 }
 

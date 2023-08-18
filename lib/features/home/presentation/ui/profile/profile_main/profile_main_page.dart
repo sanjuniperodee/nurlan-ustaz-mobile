@@ -16,6 +16,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_cu
 import 'package:nurlan_ustaz_flutter/features/auth/data/datasource/local/auth_local_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/get_profile_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/widgets/profile_menu_item.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../../../core/common/app_styles.dart';
 import '../../../../../../core/common/assets.dart';
@@ -56,6 +57,7 @@ class _ProfileMainPage extends State<ProfileMainPage> {
   };
   String? chosenLang;
   TextEditingController devc = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -324,6 +326,14 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                                       const ProfileNotificationRoute(),
                                     );
                                   }),
+                              if (user.isStaff == true)
+                                ProfileMenuItem(
+                                    title: 'QR.qr_scanner'.tr(),
+                                    onTap: ()  {
+                                      context.router.push(
+                                        const QrScannerRoute(),
+                                      );
+                                    }),
                             ],
                           ),
                         ),

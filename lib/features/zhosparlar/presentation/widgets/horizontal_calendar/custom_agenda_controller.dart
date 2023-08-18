@@ -1,18 +1,18 @@
-// import 'custom_horizontal_calendar.dart';
+import 'custom_horizontal_calendar.dart';
 
-// // CalendarController
-// class CustomCalendarAgendaController {
-//   CustomCalendarAgendaState? state;
+// CalendarController
+class CustomCalendarAgendaController {
+  CustomCalendarAgendaState? state;
 
-//   void bindState(CustomCalendarAgendaState state) {
-//     this.state = state;
-//   }
+  void bindState(CustomCalendarAgendaState state) {
+    this.state = state;
+  }
 
-//   void goToDay(DateTime date) {
-//     state!.getDate(date);
-//   }
+  void goToDay(DateTime date) {
+    state!.getDate(date);
+  }
 
-//   void dispose() {
-//     state = null;
-//   }
-// }
+  void dispose() {
+    state = null;
+  }
+}

@@ -9,6 +9,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/base.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/login_page.dart';
 
 import '../../../../core/utils/alert_utilrs.dart';
+import '../../../../update_service/update_service.dart';
 import '../../on_boarding/presentation/ui/on_boarding.dart';
 
 int _backClickDateTime = 0;
@@ -30,9 +31,17 @@ class _LauncherAppPageState extends State<LauncherAppPage> {
     init();
     super.initState();
   }
+  final _appVersionService = AppVersionService();
+
+  checkAppVersion() async {
+    _appVersionService
+        .checkAppVersion(context);
+
+  }
 
   Future<void> init() async {
     BlocProvider.of<AppBloc>(context).add(const AppEvent.checkAuth());
+    checkAppVersion();
   }
 
   @override

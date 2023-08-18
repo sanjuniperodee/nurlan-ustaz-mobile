@@ -41,6 +41,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profi
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/profile_info_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/profile_main_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/profile_notification_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/qr_scanner_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/technical_support_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/qiblah_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_detail_page.dart';
@@ -79,6 +80,7 @@ class AppRouter extends _$AppRouter {
   RouteType get defaultRouteType => const RouteType.material();
   @override
   final List<AutoRoute> routes = [
+
     AutoRoute(
       page: LauncherAppRoute.page,
       // path: '/',
@@ -153,5 +155,9 @@ class AppRouter extends _$AppRouter {
     AutoRoute(page: CodeVerificationRoute.page),
     AutoRoute(page: CodeVerificationForgotRoute.page),
     AutoRoute(page: HolidayDetailRoute.page),
+    AutoRoute(page: QrScannerRoute.page),
+
+
+
   ];
 }

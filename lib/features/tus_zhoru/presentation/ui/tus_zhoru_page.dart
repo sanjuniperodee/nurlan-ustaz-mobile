@@ -172,7 +172,7 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                         crossFadeState: tusZhoruList.currentIndex == 0
                             ? CrossFadeState.showFirst
                             : CrossFadeState.showSecond,
-                        duration: Duration(milliseconds: 100))
+                        duration: Duration(milliseconds: 100)),
 
                     // tusZhoruList.currentIndex == 0
                     //     ? TusZhoruList(tusZhoruList: tusZhoruList.tusZhoruList)

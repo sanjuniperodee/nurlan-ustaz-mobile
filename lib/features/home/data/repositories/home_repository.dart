@@ -144,6 +144,7 @@ abstract class HomeRepository {
   });
   Future<Either<Failure, NotificationDTO>> putNotificationDevice(
       {required String registrationId, required NotificationDTO notification});
+  Future<Either<Failure, String>> checkTicket({required String url});
 }
 
 @Singleton(as: HomeRepository)
@@ -784,6 +785,21 @@ class HomeRepositoryImpl extends HomeRepository {
             await remoteDS.putNotificationDevice(
                 registrationId: registrationId, notification: notification);
         return Right(notificationT);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> checkTicket({required String url}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final message = await remoteDS
+            .checkTicket(url: url);
+        return Right(message);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
       }

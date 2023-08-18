@@ -128,6 +128,8 @@ abstract class HomeRemoteDs {
 
   Future<NotificationDTO> putNotificationDevice(
       {required String registrationId, required NotificationDTO notification});
+  Future<String> checkTicket({required String url});
+
 }
 
 @Injectable(as: HomeRemoteDs)
@@ -855,7 +857,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -944,6 +946,22 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message: e.response?.data.toString() ?? 'error',
+      );
+    }
+  }
+
+  @override
+  Future<String> checkTicket({required String url}) async {
+    try {
+      final response = await dio.get(
+        url,
+      );
+      log(response.data.toString());
+      return (response.data.toString());
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+        (e.response!.data.toString()),
       );
     }
   }

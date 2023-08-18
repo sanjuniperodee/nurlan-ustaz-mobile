@@ -102,12 +102,9 @@ class _BaseState extends State<Base> {
                     icon: Column(
                       children: [
                         Container(
+                            child: Lottie.asset('assets/animations/Moon_v06.json',
+                                fit: BoxFit.fitWidth)),
 
-                            child: Lottie.asset('assets/animations/moon.json',
-                                fit: BoxFit.fill)),
-                        SizedBox(
-                          height: 7.h,
-                        ),
                         Padding(
                           padding: const EdgeInsets.only(bottom: 16.0).r,
                           child: Text(

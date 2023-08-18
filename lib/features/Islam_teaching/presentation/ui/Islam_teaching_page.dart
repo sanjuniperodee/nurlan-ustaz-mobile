@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:lottie/lottie.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
@@ -110,22 +111,11 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
               },
               loaded: (ayat, fatyas) {
                 return SizedBox(
-                  height: 1.sh,
+                  height: 1.1.sh,
                   child: Stack(
                     children: [
-                      Image.asset(
-                        Assets.gradient,
-                        fit: BoxFit.cover,
-                      ),
-                      Positioned(
-                          // left: 280.r,
-                          top: 10.r,
-                          child: Image.asset(
-                            'assets/images/x.png',
-                            // colorBlendMode: ,
-                            // opacity: 0.1,
-                            width: 1.sw,
-                          )),
+                      Positioned.fill(
+                          child: Lottie.asset('assets/animations/Book_V04.json',fit: BoxFit.cover),),
                       Padding(
                         padding: const EdgeInsets.only(left: 16, right: 16).r,
                         child: SizedBox(
