@@ -19,6 +19,7 @@ import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/nam
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/prayers_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/surah_page.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/launcher.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/splash.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/code_verification_page.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/forgot_passwords_pages/code_verification_forgot.dart';
@@ -79,17 +80,26 @@ class AppRouter extends _$AppRouter {
   RouteType get defaultRouteType => const RouteType.material();
   @override
   final List<AutoRoute> routes = [
-    AutoRoute(page: LauncherAppRoute.page, path: '/', children: [
-      AutoRoute(
-        page: MainRouterPage.page,
-      ),
-      AutoRoute(page: IslamTeachingRouterPage.page),
-      AutoRoute(page: TusZhoruRouterPage.page),
-      AutoRoute(page: TandaulilarMainRouterPage.page),
-      AutoRoute(
-        page: ZhosparymMainRouterPage.page,
-      ),
-    ]),
+
+    AutoRoute(
+      page: LauncherAppRoute.page,
+      // path: '/',
+      children: [
+        AutoRoute(
+          page: MainRouterPage.page,
+        ),
+        AutoRoute(page: IslamTeachingRouterPage.page),
+        AutoRoute(page: TusZhoruRouterPage.page),
+        AutoRoute(page: TandaulilarMainRouterPage.page),
+        AutoRoute(
+          page: ZhosparymMainRouterPage.page,
+        ),
+      ],
+    ),
+    AutoRoute(
+      initial: true,
+      page: SplashRoute.page,
+    ),
     AutoRoute(
       page: GeonamesRoute.page,
     ),

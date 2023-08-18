@@ -3,7 +3,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/namaz_dto.dart';
-import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/pillars_dto.dart';
+
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/repositories/Islam_teaching_repository.dart';
 
 part 'namaz_detail_cubit.freezed.dart';

@@ -1,6 +1,5 @@
 
 import 'package:auto_route/auto_route.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +10,6 @@ import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/calendar/custom_calendar.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/event_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/bloc/checklist_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/bloc/zhosparym_cubit.dart';
@@ -19,10 +17,10 @@ import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/ca
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/cards/seminar_card.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/cards/service_card.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/dialogs/holiday_type_dialog.dart';
-import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/events_card.dart';
 
 import '../../../app/presentation/widgets/custom_snackbars.dart';
 import '../../data/models/events_type_enum.dart';
+
 @RoutePage(name: 'ZhosparymMainRouterPage')
 class ZhosparymPage extends StatefulWidget {
   const ZhosparymPage({super.key});

@@ -63,7 +63,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
               isFavorite = result.isSaved!;
               isLiked = result.isLiked!;
               likeCount = result.likesCount!;
-              final bool isPaid = result.isPurchased == true;
+              // final bool isPaid = result.isPurchased == true;
               return Stack(children: [
                 CarouselSlider(
                   options: CarouselOptions(

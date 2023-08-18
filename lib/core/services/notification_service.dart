@@ -9,6 +9,8 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/firebase_options.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -75,6 +77,146 @@ Future<void> notificationTapBackground(
           ],
         ),
         const CharityRoute()
+      ]);
+    } else if (data['object_type'] == 'muslim_name' &&
+        data['object_type'] != 0 &&
+        data['object_type'] != '') {
+      String id = data['object_id'];
+      getIt<AppRouter>().pushAll([
+        const LauncherAppRoute(
+          children: [
+            MainRouterPage(),
+          ],
+        ),
+        NameDetailRoute(id: int.parse(id)),
+      ]);
+    } else if (data['object_type'] == 'dream_interpretation' &&
+        data['object_type'] != 0 &&
+        data['object_type'] != '') {
+      String id = data['object_id'];
+      getIt<AppRouter>().pushAll([
+        const LauncherAppRoute(
+          children: [
+            MainRouterPage(),
+          ],
+        ),
+        TusZhoruDetailRoute(id: int.parse(id)),
+      ]);
+    } else if (data['object_type'] == 'partner_shop' &&
+        data['object_type'] != 0 &&
+        data['object_type'] != '') {
+      // String id = data['object_id'];
+      getIt<AppRouter>().pushAll([
+        const LauncherAppRoute(
+          children: [
+            MainRouterPage(),
+          ],
+        ),
+        const ShopRoute(),
+      ]);
+    } else if (data['object_type'] == 'imam_service' &&
+        data['object_type'] != 0 &&
+        data['object_type'] != '') {
+      // String id = data['object_id'];
+      getIt<AppRouter>().pushAll([
+        const LauncherAppRoute(
+          children: [
+            MainRouterPage(),
+          ],
+        ),
+        const ServicesRoute(),
+      ]);
+    } else if (data['object_type'] == 'custom_dream' &&
+        data['object_type'] != 0 &&
+        data['object_type'] != '') {
+      String id = data['object_id'];
+      getIt<AppRouter>().pushAll([
+        const LauncherAppRoute(
+          children: [
+            MainRouterPage(),
+          ],
+        ),
+        CustomTusZhoruDetailRoute(id: int.parse(id)),
+      ]);
+    } else if (data['object_type'] == 'order_dream' &&
+        data['object_type'] != 0 &&
+        data['object_type'] != '') {
+      String id = data['object_id'];
+      getIt<AppRouter>().pushAll([
+        const LauncherAppRoute(
+          children: [
+            MainRouterPage(),
+          ],
+        ),
+        TusZhoruDetailRoute(id: int.parse(id)),
+      ]);
+    } else if (data['object_type'] == 'order_seminar' &&
+        data['object_type'] != 0 &&
+        data['object_type'] != '') {
+      String id = data['object_id'];
+      getIt<AppRouter>().pushAll([
+        const LauncherAppRoute(
+          children: [
+            MainRouterPage(),
+          ],
+        ),
+        SeminarDetailRoute(id: int.parse(id))
+      ]);
+    } else if (data['object_type'] == 'live_in_progress' &&
+        data['object_type'] != 0 &&
+        data['object_type'] != '') {
+      String id = data['object_id'];
+      final Uri url = Uri.parse(id);
+      if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+        throw Exception('Could not launch');
+      }
+    } else if (data['object_type'] == 'live' &&
+        data['object_type'] != 0 &&
+        data['object_type'] != '') {
+      // String id = data['object_id'];
+      getIt<AppRouter>().pushAll([
+        const LauncherAppRoute(
+          children: [
+            MainRouterPage(),
+          ],
+        ),
+        LiveBroadcastsRoute(),
+      ]);
+    } else if (data['object_type'] == 'tell_me_ustaz' &&
+        data['object_type'] != 0 &&
+        data['object_type'] != '') {
+      // String id = data['object_id'];
+      getIt<AppRouter>().pushAll([
+        const LauncherAppRoute(
+          children: [
+            MainRouterPage(),
+          ],
+        ),
+        const UstazAitinizhiRoute(),
+      ]);
+    } else if (data['object_type'] == 'checklist' &&
+        data['object_type'] != 0 &&
+        data['object_type'] != '') {
+      // String id = data['object_id'];
+      getIt<AppRouter>().pushAll([
+        const LauncherAppRoute(
+          children: [
+            MainRouterPage(),
+          ],
+        ),
+        const ZhosparymMainRouterPage(),
+      ]);
+    } else if (data['object_type'] == 'ayat_of_the_day' &&
+        data['object_type'] != 0 &&
+        data['object_type'] != '') {
+      // String id = data['object_id'];
+      getIt<AppRouter>().pushAll([
+        const LauncherAppRoute(
+          children: [
+            IslamTeachingRouterPage(),
+          ],
+        ),
+        // const ShopRoute(),
       ]);
     } else {
       log('NO');

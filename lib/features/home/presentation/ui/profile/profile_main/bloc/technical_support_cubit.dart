@@ -6,7 +6,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/repositories/auth_repository.dart';
-import 'package:nurlan_ustaz_flutter/features/home/data/repositories/home_repository.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/data/models/question_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web_socket_channel/io.dart';
@@ -18,11 +17,10 @@ part 'technical_support_cubit.freezed.dart';
 
 @singleton
 class TechnicalSupportCubit extends Cubit<TechnicalSupportState> {
-  TechnicalSupportCubit(
-      this._homeRepository, this.sharedPreferences, this._authRepo)
+  TechnicalSupportCubit(this.sharedPreferences, this._authRepo)
       : super(const TechnicalSupportState.initialState());
   final AuthRepository _authRepo;
-  final HomeRepository _homeRepository;
+
   final SharedPreferences sharedPreferences;
 
   late UserDto _userDto;
