@@ -224,10 +224,10 @@ class HomeRepositoryImpl extends HomeRepository {
         } else {
           if (dev != deviceToken) {
             NotificationDTO notificationDeviceDTO =
-                NotificationDTO(registrationId: deviceToken);
+                NotificationDTO(registrationId: deviceToken, type: type);
             await remoteDS
                 .putNotificationDevice(
-                    registrationId: dev!, notification: notificationDeviceDTO)
+                    registrationId: dev, notification: notificationDeviceDTO)
                 .then((value) => prefs.saveDeviceToken(deviceToken!));
           }
         }

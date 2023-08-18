@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_qiblah/flutter_qiblah.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/widgets/qiblah_widget.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 @RoutePage()
 class QiblahPage extends StatefulWidget {

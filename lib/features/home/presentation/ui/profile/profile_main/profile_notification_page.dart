@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
@@ -10,7 +9,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
-import 'package:nurlan_ustaz_flutter/features/home/data/models/notification_item_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/notification_settings_model.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/profile_notification_cubit.dart';
 

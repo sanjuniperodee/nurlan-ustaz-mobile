@@ -7,7 +7,7 @@
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
-	<string>Nurlan Ustaz </string>
+	<string>Nurlan Ustaz</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -69,11 +69,11 @@
 	<key>UIBackgroundModes</key>
 	<array/>
 	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
+	<string>LaunchScreen.storyboard</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
 	<key>UIStatusBarHidden</key>
-	<true/>
+	<false/>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
