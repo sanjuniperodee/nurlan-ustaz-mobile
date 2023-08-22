@@ -10,7 +10,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
+import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/data/datasource/local/auth_local_ds.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_post_cubit.dart';
@@ -36,12 +39,16 @@ class _CommentPageNewsState extends State<CommentPageNews> {
   bool isLoadingMore = false;
   FocusNode focusNode = FocusNode();
   int? idChildComment;
+  UserDto? user;
   @override
   void initState() {
     // TODO: implement initState
     BlocProvider.of<CommentNewsCubit>(context)
         .commentsNews(page: 1, isFirstCall: true, id: widget.id);
-    BlocProvider.of<GetProfileCubit>(context).getUser();
+    getIt<AuthLocalDs>().getUserFromCacheNull().then((value) {
+      user = value;
+    });
+
     _scrollController.addListener(_scrollListener);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       FocusScope.of(context).requestFocus(focusNode);
@@ -80,104 +87,101 @@ class _CommentPageNewsState extends State<CommentPageNews> {
               .apply(color: AppColors.black),
         ),
       ),
-      bottomSheet: BlocBuilder<GetProfileCubit, GetProfileState>(
-        builder: (context, state) {
-          return state.maybeWhen(
-            orElse: () {
-              return const CircularProgressIndicator(
-                color: AppColors.linearBlue,
-              );
-            },
-            loaded: (user, geo,dev) {
-              return Container(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      flex: 0,
-                      child: Container(
-                        height: 40,
-                        width: 40,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(100)),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(100),
-                          child: user.avatar != null
-                              ? Image.network(
-                                  user.avatar!,
-                                  fit: BoxFit.cover,
-                                )
-                              : SvgPicture.asset(Assets.userSvg),
-                        ),
+      bottomSheet: user == null
+          ? Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                'check_comment'.tr(),
+                textAlign: TextAlign.center,
+                style: getTextStyle(CustomTextStyles.s20w700)
+                    .apply(color: AppColors.black),
+              ),
+            )
+          : Container(
+              padding: const EdgeInsets.all(16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    flex: 0,
+                    child: Container(
+                      height: 40,
+                      width: 40,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(100)),
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: user!.avatar != null
+                            ? Image.network(
+                                user!.avatar!,
+                                fit: BoxFit.cover,
+                              )
+                            : SvgPicture.asset(Assets.userSvg),
                       ),
                     ),
-                    SizedBox(
-                      width: 4.w,
-                    ),
-                    Expanded(
-                      flex: 3,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(30),
-                            border: Border.all(color: AppColors.grey2)),
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                        ),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: TextField(
-                                autofocus: true, // Set autofocus to true
-                                focusNode: focusNode,
-                                controller: _textEditingController,
-                                maxLength: 999,
-                                decoration: InputDecoration(
-                                    hintText: 'write_comm'.tr(),
-                                    counterText: '',
-                                    border: InputBorder.none),
-                              ),
+                  ),
+                  SizedBox(
+                    width: 4.w,
+                  ),
+                  Expanded(
+                    flex: 3,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(color: AppColors.grey2)),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16,
+                      ),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              autofocus: true, // Set autofocus to true
+                              focusNode: focusNode,
+                              controller: _textEditingController,
+                              maxLength: 999,
+                              decoration: InputDecoration(
+                                  hintText: 'write_comm'.tr(),
+                                  counterText: '',
+                                  border: InputBorder.none),
                             ),
-                            BlocListener<CommentNewsPostCubit,
-                                CommentNewsPostState>(
-                              listener: (context, state) {
+                          ),
+                          BlocListener<CommentNewsPostCubit,
+                              CommentNewsPostState>(
+                            listener: (context, state) {
+                              log(state.toString());
+                              state.maybeWhen(orElse: () {
                                 log(state.toString());
-                                state.maybeWhen(orElse: () {
-                                  log(state.toString());
-                                }, loaded: () {
-                                  BlocProvider.of<CommentNewsCubit>(context)
-                                      .commentsNews(
-                                          page: 1,
-                                          isFirstCall: true,
-                                          id: widget.id);
-                                });
+                              }, loaded: () {
+                                BlocProvider.of<CommentNewsCubit>(context)
+                                    .commentsNews(
+                                        page: 1,
+                                        isFirstCall: true,
+                                        id: widget.id);
+                              });
+                            },
+                            child: IconButton(
+                              icon: const Icon(Icons.send),
+                              onPressed: () {
+                                BlocProvider.of<CommentNewsPostCubit>(context)
+                                    .newsCommentPost(
+                                  body: _textEditingController.text,
+                                  id: widget.id,
+                                  commentId: idChildComment,
+                                );
+                                idChildComment = null;
+                                setState(() {});
+                                _textEditingController.clear();
                               },
-                              child: IconButton(
-                                icon: const Icon(Icons.send),
-                                onPressed: () {
-                                  BlocProvider.of<CommentNewsPostCubit>(context)
-                                      .newsCommentPost(
-                                    body: _textEditingController.text,
-                                    id: widget.id,
-                                    commentId: idChildComment,
-                                  );
-                                  idChildComment = null;
-                                  setState(() {});
-                                  _textEditingController.clear();
-                                },
-                              ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
-              );
-            },
-          );
-        },
-      ),
+                  ),
+                ],
+              ),
+            ),
       body: BlocConsumer<CommentNewsCubit, CommentNewsState>(
         listener: (context, state) {
           state.maybeWhen(
@@ -261,9 +265,14 @@ class _CommentPageNewsState extends State<CommentPageNews> {
                                   trailing:
                                       listOfComments[index].children!.isEmpty
                                           ? const SizedBox()
-                                          : const Icon(
-                                              Icons.expand_more,
-                                              color: AppColors.grey2,
+                                          : Padding(
+                                              padding: const EdgeInsets.only(
+                                                      left: 7.0, top: 15)
+                                                  .r,
+                                              child: const Icon(
+                                                Icons.expand_more,
+                                                color: AppColors.grey2,
+                                              ),
                                             ),
                                   title: CommentDeepItemWidget(
                                     resultHomeDTO: listOfComments[index],
@@ -338,7 +347,7 @@ class _CommentPageNewsState extends State<CommentPageNews> {
                                                             height: 56.h,
                                                             color:
                                                                 AppColors.grey1,
-                                                            child: Center(
+                                                            child: const Center(
                                                                 child: Icon(Icons
                                                                     .info_outline)),
                                                           ),

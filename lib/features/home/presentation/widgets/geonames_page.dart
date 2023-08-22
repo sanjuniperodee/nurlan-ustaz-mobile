@@ -1,5 +1,3 @@
-
-
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -15,13 +13,15 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_sn
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/geonames_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/geonames_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/get_profile_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/set_city_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/timings_cubit.dart';
 
 @RoutePage()
 class GeonamesPage extends StatefulWidget {
   final void Function()? callback;
-  const GeonamesPage({Key? key, this.callback}) : super(key: key);
+  final String? type;
+  const GeonamesPage({Key? key, this.callback, this.type}) : super(key: key);
 
   @override
   State<GeonamesPage> createState() => _GeonamesPageState();
@@ -36,6 +36,7 @@ class _GeonamesPageState extends State<GeonamesPage> {
 
   Prefs prefs = Prefs();
   List<GeonamesDTO> geoa = [];
+  int geoIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,7 +71,7 @@ class _GeonamesPageState extends State<GeonamesPage> {
                       physics: const BouncingScrollPhysics(),
                       child: Column(
                         children: [
-                           CustomAppBar(
+                          CustomAppBar(
                             title: 'choose_location'.tr(),
                           ),
                           SizedBox(
@@ -83,28 +84,34 @@ class _GeonamesPageState extends State<GeonamesPage> {
                               );
                             },
                           ),
-                          ListView.builder(
-                            itemCount: geoa.length,
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemBuilder: (context, index) {
-                              return Padding(
-                                  padding: const EdgeInsets.only(top: 16.0),
-                                  child:
-                                      BlocListener<SetCityCubit, SetCityState>(
-                                    listener: (context, state) {
-                                      state.maybeWhen(
-                                        orElse: () {},
-                                        loaded: (not) {
-                                          BlocProvider.of<TimingsCubit>(context)
-                                              .timings(
-                                            double.parse(geoa[index].lat!),
-                                            double.parse(geoa[index].lng!),
-                                          );
-                                          context.router.pop();
-                                        },
-                                      );
-                                    },
+                          BlocListener<SetCityCubit, SetCityState>(
+                            listener: (context, state) {
+                              state.maybeWhen(
+                                orElse: () {},
+                                loaded: (not) {
+                                  widget.type == 'profile'
+                                      ? BlocProvider.of<GetProfileCubit>(
+                                              context)
+                                          .getUser()
+                                          .then((value) => context.router.pop())
+                                      : BlocProvider.of<TimingsCubit>(context)
+                                          .timings(
+                                            double.parse(geoa[geoIndex].lat!),
+                                            double.parse(geoa[geoIndex].lng!),
+                                          )
+                                          .then(
+                                              (value) => context.router.pop());
+                                },
+                              );
+                              // TODO: implement listener
+                            },
+                            child: ListView.builder(
+                              itemCount: geoa.length,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                    padding: const EdgeInsets.only(top: 16.0),
                                     child: InkWell(
                                       onTap: widget.callback ??
                                           () async {
@@ -113,6 +120,7 @@ class _GeonamesPageState extends State<GeonamesPage> {
                                                 .setCity(
                                               geo: geoa[index],
                                             );
+                                            geoIndex = index;
                                           },
                                       child: Container(
                                         padding: const EdgeInsets.symmetric(
@@ -146,9 +154,9 @@ class _GeonamesPageState extends State<GeonamesPage> {
                                           ],
                                         ),
                                       ),
-                                    ),
-                                  ));
-                            },
+                                    ));
+                              },
+                            ),
                           )
                         ],
                       ),

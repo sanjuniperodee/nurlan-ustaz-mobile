@@ -92,6 +92,7 @@ class _ServicesPageState extends State<ServicesPage> {
               },
               builder: (context, state) {
                 return AppButton(
+                  isActive: id.isNotEmpty,
                   onTap: () {
                     if (id.isEmpty) {
                       buildErrorCustomSnackBar(context, 'ERROR');

@@ -1,4 +1,3 @@
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -62,8 +61,8 @@ class _CommentDeepItemWidgetState extends State<CommentDeepItemWidget> {
                   : SvgPicture.asset(Assets.userSvg),
             ),
           ),
-          const SizedBox(
-            width: 20,
+          SizedBox(
+            width: 18.w,
           ),
           Expanded(
             child: Column(
@@ -71,25 +70,28 @@ class _CommentDeepItemWidgetState extends State<CommentDeepItemWidget> {
               children: [
                 Row(
                   children: [
-                    Text(
-                      widget.resultHomeDTO.user?.fullName ??
-                          'user_delete'.tr(),
-                      style: getTextStyle(CustomTextStyles.s14w700)
-                          .apply(color: AppColors.black),
-                    ),
-                    SizedBox(
-                      width: 4.w,
-                    ),
-                    Text(
-                      DateFormat('dd.MM').format(DateTime.parse(
-                          widget.resultHomeDTO.createdAt.toString())),
-                      style: getTextStyle(CustomTextStyles.s12w700)
-                          .apply(color: AppColors.grey1),
+                    Flexible(
+                      child: RichText(
+                        overflow: TextOverflow.ellipsis,
+                        strutStyle: const StrutStyle(fontSize: 14.0),
+                        text: TextSpan(
+                          text: widget.resultHomeDTO.user?.fullName ??
+                              'user_delete'.tr(),
+                          style: getTextStyle(CustomTextStyles.s14w700)
+                              .apply(color: AppColors.black),
+                        ),
+                      ),
                     ),
                   ],
                 ),
                 const SizedBox(
                   height: 4,
+                ),
+                Text(
+                  DateFormat('dd.MM HH:MM').format(DateTime.parse(
+                      widget.resultHomeDTO.createdAt.toString())),
+                  style: getTextStyle(CustomTextStyles.s12w700)
+                      .apply(color: AppColors.grey1),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -144,7 +146,7 @@ class _CommentDeepItemWidgetState extends State<CommentDeepItemWidget> {
                     : InkWell(
                         borderRadius: BorderRadius.circular(8),
                         onTap: widget.callback ?? () {},
-                        child:  Padding(
+                        child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 8),
                             child: Text(
                               'Answer_send'.tr(),

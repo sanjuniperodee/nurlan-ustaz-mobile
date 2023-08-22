@@ -48,27 +48,28 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
     return Scaffold(
       body: BlocConsumer<NewsDetailCubit, NewsDetailState>(
         listener: (context, state) {
-          state.maybeWhen(orElse: () {}, loadingState: () {
-            return const Center(
-              child: CircularProgressIndicator(color: AppColors.danger),
-            );
-          },
+          state.maybeWhen(
+            orElse: () {},
+            loadingState: () {
+              return const Center(
+                child: CircularProgressIndicator(color: AppColors.danger),
+              );
+            },
             errorState: (message) {
               return buildErrorCustomSnackBar(context, message);
-            },);
+            },
+          );
         },
         builder: (context, state) {
           return state.maybeWhen(
             orElse: () {
               return const Center();
             },
-
             loadingState: () {
               return const Center(
                 child: CircularProgressIndicator(color: AppColors.linearBlue),
               );
             },
-
             loaded: (result) {
               bool scroll = true;
               result.media!.length == 1 ? scroll = false : scroll = true;
@@ -96,10 +97,9 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                           imageUrl: i.file ?? '',
                           fit: BoxFit.cover,
                           width: 1.sw,
-                          errorWidget: (a, b, c) =>
-                              SizedBox(
-                                height: 80.h,
-                              ),
+                          errorWidget: (a, b, c) => SizedBox(
+                            height: 80.h,
+                          ),
                         );
                       },
                     );
@@ -108,21 +108,21 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                 result.media == null
                     ? const SizedBox()
                     : Positioned.fill(
-                  top: 215.r,
-                  child: Align(
-                    alignment: Alignment.topCenter,
-                    child: DotsIndicator(
-                      dotsCount: result.media?.length ?? 0,
-                      position: _currentIndex,
-                      decorator: const DotsDecorator(
-                        color: AppColors
-                            .grey2, // Color of non-selected indicators
-                        activeColor: AppColors
-                            .white, // Color of selected indicator
+                        top: 215.r,
+                        child: Align(
+                          alignment: Alignment.topCenter,
+                          child: DotsIndicator(
+                            dotsCount: result.media?.length ?? 0,
+                            position: _currentIndex,
+                            decorator: const DotsDecorator(
+                              color: AppColors
+                                  .grey2, // Color of non-selected indicators
+                              activeColor: AppColors
+                                  .white, // Color of selected indicator
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                ),
                 SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: Padding(
@@ -148,14 +148,6 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                             SizedBox(
                               height: 12.h,
                             ),
-                            Text(
-                              'Меккеде қазақстандық жұп неке қидырды',
-                              style: getTextStyle(CustomTextStyles.s14w400)
-                                  .apply(color: AppColors.grey2),
-                            ),
-                            SizedBox(
-                              height: 23.h,
-                            ),
                             Row(
                               children: [
                                 Expanded(
@@ -167,7 +159,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                               isLiked = !isLiked;
 
                                               BlocProvider.of<NewsDetailCubit>(
-                                                  context)
+                                                      context)
                                                   .newsLike(id: result.id ?? 0);
                                             });
 
@@ -179,12 +171,12 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                           },
                                           child: isLiked
                                               ? SvgPicture.asset(
-                                            Assets.heartSvg,
-                                          )
+                                                  Assets.heartSvg,
+                                                )
                                               : SvgPicture.asset(
-                                            Assets.heart1Svg,
-                                            color: AppColors.black,
-                                          )),
+                                                  Assets.heart1Svg,
+                                                  color: AppColors.black,
+                                                )),
                                       Text(
                                         likeCount.toString(),
                                         style: getTextStyle(
@@ -196,8 +188,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                       InkWell(
                                           onTap: () {
                                             context.router.push(
-                                              CommentRouteNews(
-                                                  id: result.id!),
+                                              CommentRouteNews(id: result.id!),
                                             );
                                           },
                                           child: SvgPicture.asset(
@@ -213,8 +204,8 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                       InkWell(
                                           onTap: () async {
                                             String unguessableDynamicLink =
-                                            await DynamicLink()
-                                                .createNewsLink(result.id!);
+                                                await DynamicLink()
+                                                    .createNewsLink(result.id!);
                                             await Share.share(
                                               unguessableDynamicLink,
                                             );
@@ -230,7 +221,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                         log('like news');
                                         isFavorite = !isFavorite;
                                         BlocProvider.of<NewsDetailCubit>(
-                                            context)
+                                                context)
                                             .newsFavorite(id: result.id ?? 0);
                                       });
                                     },
@@ -273,9 +264,9 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                         onTap: () {
                           BlocProvider.of<NewsCubit>(context)
                               .news(
-                              page: 1,
-                              isFirstCall: true,
-                              search: widget.search ?? '')
+                                  page: 1,
+                                  isFirstCall: true,
+                                  search: widget.search ?? '')
                               .then((value) => Navigator.pop(context));
                         },
                         child: SvgPicture.asset(Assets.backStackSvg))),

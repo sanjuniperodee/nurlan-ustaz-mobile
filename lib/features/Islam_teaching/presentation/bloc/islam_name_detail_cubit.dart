@@ -38,8 +38,7 @@ class IslamNameDetailCubit extends Cubit<IslamNameDetailState> {
         await _islamTeachingRepository.islamNamesFavorite(id: id);
     failureOrUser.fold(
       (l) {
-        emit(IslamNameDetailState.errorState(
-            message: mapFailureToMessageBack(l)));
+      emit(IslamNameDetailState.loaded(res: res));
       },
       (r) {
         res = res.copyWith(isSaved: !res.isSaved!);

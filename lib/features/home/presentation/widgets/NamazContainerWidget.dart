@@ -112,7 +112,7 @@ class _NamazContainerWidgetState extends State<NamazContainerWidget> {
                       GestureDetector(
                         onTap: () {
                           context.router.push(
-                            GeonamesRoute(),
+                            GeonamesRoute(type: ''),
                           );
                         },
                         child: Row(

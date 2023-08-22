@@ -33,7 +33,7 @@ class _DutyDetailPageState extends State<DutyDetailPage> {
               decoration: const BoxDecoration(color: AppColors.white),
               child: AppButton(
                   onTap: () {
-                    log('URL${widget.pillarsDTO.url}');
+                    log('URL ${widget.pillarsDTO.url}');
                     widget.pillarsDTO.type == 2
                         ? context.router.push(const NamazPatternRoute())
                         : _launchUrl(widget.pillarsDTO.url ?? '');
