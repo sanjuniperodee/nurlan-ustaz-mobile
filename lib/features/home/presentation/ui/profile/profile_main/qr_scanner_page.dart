@@ -53,13 +53,11 @@ class _QrScannerPage extends State<QrScannerPage> {
   @override
   void initState() {
     _requestCameraPermission();
-
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).copyWith(dividerColor: Colors.transparent);
     return BlocConsumer<QrScannerCubit, QrScannerState>(
       listener: (context, state) {
         state.maybeWhen(
@@ -80,7 +78,7 @@ class _QrScannerPage extends State<QrScannerPage> {
             backgroundColor: AppColors.background1,
             body: SizedBox(
               height: 1.1.sh,
-              child: GlobalCustomBody(
+              child: const GlobalCustomBody(
                   child: Center(
                 child: CircularProgressIndicator.adaptive(),
               )),
@@ -118,17 +116,17 @@ class _QrScannerPage extends State<QrScannerPage> {
                           Future<bool?>? isFlash = controller?.getFlashStatus();
                           bool? resolvedBoolValue = await isFlash;
                           log(resolvedBoolValue.toString());
-                          _switchValue = resolvedBoolValue ?? false;
-
+                          log(_switchValue.toString());
+                          _switchValue = !_switchValue;
                           controller?.toggleFlash();
                           setState(() {});
                         },
                         icon: AnimatedCrossFade(
-                          firstChild: Icon(
+                          firstChild: const Icon(
                             Icons.flashlight_on,
                             color: AppColors.white,
                           ),
-                          secondChild: Icon(
+                          secondChild: const Icon(
                             Icons.flashlight_off,
                             color: AppColors.white,
                           ),
@@ -172,8 +170,7 @@ class _QrScannerPage extends State<QrScannerPage> {
       if (!scanData.code
           .toString()
           .contains('https://dev.nurlanustaz.kz/api/banner/use-ticket')) {
-        buildErrorCustomSnackBar(context, 'QR.qr_error_url'.tr())
-          ..then((value) {});
+        buildErrorCustomSnackBar(context, 'QR.qr_error_url'.tr());
       } else {
         controller.pauseCamera();
         context

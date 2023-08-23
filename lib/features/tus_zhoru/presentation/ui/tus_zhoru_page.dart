@@ -178,7 +178,7 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                     //     ? TusZhoruList(tusZhoruList: tusZhoruList.tusZhoruList)
                     //     : CustomTusZhoruList(
                     //         tusZhoruList: tusZhoruList.customTusZhoru),
-                    // ,
+
                     SizedBox(
                       height: 105.h,
                     ),

@@ -86,7 +86,7 @@ class _TusZhoruDetailPage extends State<CustomTusZhoruDetailPage> {
                   ),
                 ),
           backgroundColor: AppColors.white,
-          body: GlobalCustomBody(
+          body: TusZhoruCustomBody(
             left: 0,
             right: 0,
             child: SingleChildScrollView(

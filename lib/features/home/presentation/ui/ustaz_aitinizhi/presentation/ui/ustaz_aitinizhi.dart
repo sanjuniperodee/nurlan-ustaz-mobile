@@ -65,7 +65,7 @@ class _UstazAitinizhiPageState extends State<UstazAitinizhiPage> {
 
               if (questions
                   .toList()
-                  .any((element) => element.email == user.email)) {
+                  .any((element) => element.email == user.email) || channel == null) {
                 log('est');
                 setState(() {
                   showButton = false;

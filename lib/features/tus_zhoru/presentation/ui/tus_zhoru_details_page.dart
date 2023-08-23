@@ -10,6 +10,7 @@ import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_details_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/widgets/tus_zhoru_custom_body.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/widgets/tus_zhoru_detail_body.dart';
 import 'package:share_plus/share_plus.dart';
 
@@ -44,7 +45,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
       return state.maybeWhen(
         loadingState: () {
           return const Scaffold(
-            body: TusZhoruDetailBody(
+            body: TusZhoruCustomBody(
               child: Center(
                 child: CircularProgressIndicator(
                   color: AppColors.linearBlue,
@@ -95,7 +96,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
             backgroundColor: AppColors.white,
             body: BlocBuilder<TusZhoruDetailsCubit, TusZhoruDetailsState>(
                 builder: (context, state) {
-              return TusZhoruDetailBody(
+              return TusZhoruCustomBody(
                 left: 0,
                 right: 0,
                 child: SingleChildScrollView(

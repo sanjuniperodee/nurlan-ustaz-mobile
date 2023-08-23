@@ -62,6 +62,7 @@ class _ProfileMainPage extends State<ProfileMainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightBlue,
+
       body: BlocConsumer<GetProfileCubit, GetProfileState>(
         listener: (context, state) {
           state.whenOrNull(
@@ -71,9 +72,11 @@ class _ProfileMainPage extends State<ProfileMainPage> {
             },
           );
         },
+
         builder: (context, state) {
           log('STATE:::${state.toString()}');
           return state.maybeWhen(
+
             orElse: () {
               return const Center(
                 child: CircularProgressIndicator(

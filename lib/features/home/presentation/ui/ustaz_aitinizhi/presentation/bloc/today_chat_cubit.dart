@@ -16,6 +16,7 @@ import '../../../../../../../core/common/shared_keys.dart';
 import '../../../../../../../core/platform/cache_helper/prefs.dart';
 import '../../../../../../auth/data/datasource/local/auth_local_ds.dart';
 import '../../../../../../auth/data/model/token_dto.dart';
+import '../../data/models/chat_model.dart';
 import '../../data/models/question_model.dart';
 
 part 'today_chat_cubit.freezed.dart';
@@ -27,20 +28,18 @@ class TodayChatCubit extends Cubit<TodayChatState> {
   final AuthRepository _authRepo;
   final HomeRepository _homeRepository;
   final SharedPreferences sharedPreferences;
+  late List<ChatDTO> chatsss;
 
   late UserDto _userDto;
 
   Future<void> connectSocket() async {
     //emit(_LoadingState());
-    late UserDto userP;
-    var user = await _authRepo.getUser();
-    user.fold((l) => {}, (r) {userP = r;log(userP.toString());});
 
-    //final quests = await getQuestions();
-
-    //quests!.clear();
+    final user = await _authRepo.getUser();
+    user.fold((l) => {}, (r) {
+      _userDto = r;
+    });
     List<QuestionDTO> test = [];
-
     TokenDTO? token = TokenDTO.fromJson(
       jsonDecode(sharedPreferences.get(SharedKeys.TOKEN).toString())
           as Map<String, dynamic>,
@@ -48,51 +47,75 @@ class TodayChatCubit extends Cubit<TodayChatState> {
     final channel = IOWebSocketChannel.connect(
         "ws://86.107.45.90:8000/api/tell-me-ustaz/chat/",
         headers: {"Authorization": "Bearer ${token.access}"});
+
     channel.stream.listen((event) async {
       emit(const _LoadingState());
 
       var questions = json.decode(event);
-      log(questions.runtimeType.toString());
-      log((questions.runtimeType == List<dynamic>).toString());
       if (questions.runtimeType == List<dynamic>) {
-        log('1');
         try {
           for (var e in questions) {
-            log('-------${e.toString()}');
             test.add(QuestionDTO.fromJson(e));
           }
         } catch (e) {}
       } else {
         test.add(QuestionDTO.fromJson(questions));
       }
-      log(test.length.toString());
-      emit(_InitialState(channel: channel, questions: test, user: userP));
+      emit(_InitialState(channel: channel, questions: test, user: _userDto));
+    },
+        onDone: () {
+      getQuestionByDate(DateFormat('yyyy-MM-dd').format(DateTime.now()));
+    },
+    onError: (error) {
+    log('ws error $error');
+    });
+  }
+
+  Future<void> getQuestionByDate(String dateTime) async {
+    log('poshla zhara');
+
+    final result = await _homeRepository.chats(
+        startTime: DateFormat('yyyy-MM-dd').format(DateTime.parse(dateTime)),
+        endTime: DateFormat('yyyy-MM-dd').format(DateTime.parse(dateTime)
+            .copyWith(day: DateTime.parse(dateTime).day + 1)));
+    result.fold(
+        (l) => {
+
+            }, (r) async {
+      chatsss = r.toList();
+      if (chatsss
+          .toList()
+          .map((e) => DateFormat('yyyy-MM-dd').format(DateTime.parse(e.date!)))
+          .toList()
+          .contains(
+              DateFormat('yyyy-MM-dd').format(DateTime.parse(dateTime)))) {
+        final dayChat =
+            chatsss.toList().firstWhere((element) => element.date == dateTime);
+        final result = await _homeRepository.questions(
+            id: dayChat.id!, isFirstCall: false, page: 1);
+        result.fold(
+            (l) => {
+
+                }, (r) async {
+          emit(_InitialState().copyWith(
+            user: _userDto,
+            questions: r.toList(),
+          ));
+        });
+      } else {
+        emit(_InitialState().copyWith(
+          user: _userDto,
+          questions: [],
+        ));
+      }
     });
   }
 
   Future<void> change(WebSocketChannel channel) async {
     channel.stream.listen((message) {
-      log(message);
-    });
-  }
-
-  Future<List<QuestionDTO>?> getQuestions() async {
-    final result = await _homeRepository.chats(
-        startTime: DateFormat('yyyy-MM-dd').format(DateTime.now()),
-        endTime: DateFormat('yyyy-MM-dd').format(DateTime.now()));
-    return result.fold((l) {
-      return null;
-    }, (r) async {
-      final result = await _homeRepository.questions(
-          id: r.first.id!, isFirstCall: true, page: 1);
-      return result.fold((l) {
-        return null;
-      }, (r) async {
-        return r.toList().reversed.toList();
-      });
-
-      //emit(const _InitialState().copyWith(chats: r));
-    });
+      log('message $message');
+    },
+        );
   }
 }
 

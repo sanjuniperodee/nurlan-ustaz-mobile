@@ -55,57 +55,58 @@ class _CalendarChatsPageState extends State<CalendarChatsPage> {
                 ));
           },
           initialState: (chats, questions, isLoading) {
+
             final List<DateTime> datesWithChat =
                 chats?.map((e) => DateTime.parse(e.date!)).toList() ?? [];
             print(datesWithChat);
             return Column(
               children: [
-                // Padding(
-                //   padding:
-                //   EdgeInsets.symmetric(vertical: 27.h, horizontal: 10.w),
-                //   child: Container(
-                //     height: 414,
-                //     width: double.infinity,
-                //     decoration: BoxDecoration(
-                //       color: AppColors.white,
-                //       borderRadius: BorderRadius.circular(30.r),
-                //     ),
-                //     child: CustomCalendarChat(
-                //       daysWithChat: datesWithChat,
-                //       onDateSelected: (DateTime date) {
-                //         context.read<CalendarChatsCubit>().chatPer(DateFormat(
-                //             'yyyy-MM-dd').format(date).toString());
-                //       },
-                //       onMonthChanged: (DateTime time) {},
-                //       hideBottomBar: false,
-                //       startOnMonday: true,
-                //       weekDays: const [
-                //         'Дс',
-                //         'Сс',
-                //         'Ср',
-                //         'Бс',
-                //         'Жм',
-                //         'Сн',
-                //         'Жк'
-                //       ],
-                //       events: const {},
-                //       isExpandable: false,
-                //       eventDoneColor: Colors.green,
-                //       selectedColor: Colors.pink,
-                //       todayColor: AppColors.orange,
-                //       eventColor: Colors.deepPurple,
-                //       locale: '${context.locale.languageCode},${context.locale
-                //           .countryCode}',
-                //       todayButtonText: '',
-                //       isExpanded: true,
-                //       dayOfWeekStyle: TextStyle(
-                //         color: AppColors.grey2,
-                //         fontWeight: FontWeight.w400,
-                //         fontSize: 12,
-                //       ),
-                //     ),
-                //   ),
-                // ),
+                Padding(
+                  padding:
+                  EdgeInsets.symmetric(vertical: 27.h, horizontal: 10.w),
+                  child: Container(
+                    height: 414,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: AppColors.white,
+                      borderRadius: BorderRadius.circular(30.r),
+                    ),
+                    child: CustomCalendarChat(
+                      daysWithChat: datesWithChat,
+                      onDateSelected: (DateTime date) {
+                        context.read<CalendarChatsCubit>().chatPer(DateFormat(
+                            'yyyy-MM-dd').format(date).toString());
+                      },
+                      onMonthChanged: (DateTime time) {},
+                      hideBottomBar: false,
+                      startOnMonday: true,
+                      weekDays: const [
+                        'Дс',
+                        'Сс',
+                        'Ср',
+                        'Бс',
+                        'Жм',
+                        'Сн',
+                        'Жк'
+                      ],
+                      events: const {},
+                      isExpandable: false,
+                      eventDoneColor: Colors.green,
+                      selectedColor: Colors.pink,
+                      todayColor: AppColors.orange,
+                      eventColor: Colors.deepPurple,
+                      locale: '${context.locale.languageCode},${context.locale
+                          .countryCode}',
+                      todayButtonText: '',
+                      isExpanded: true,
+                      dayOfWeekStyle: TextStyle(
+                        color: AppColors.grey2,
+                        fontWeight: FontWeight.w400,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                ),
                 isLoading == true ?  Container(
                   height: 200.h,
 

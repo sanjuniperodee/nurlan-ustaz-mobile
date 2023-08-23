@@ -40,6 +40,7 @@ class GetProfileCubit extends Cubit<GetProfileState> {
       failureOrUser.fold(
         (l) {
           emit(GetProfileState.errorState(message: mapFailureToMessageBack(l)));
+
         },
         (r) {
           emit(GetProfileState.loaded(
