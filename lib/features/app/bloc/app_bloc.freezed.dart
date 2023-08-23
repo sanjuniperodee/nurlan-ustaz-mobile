@@ -1036,6 +1036,7 @@ mixin _$AppState {
     required TResult Function() notAuthorizedState,
     required TResult Function() notVerifyed,
     required TResult Function() inAppState,
+    required TResult Function() inState,
     required TResult Function(String message) errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -1047,6 +1048,7 @@ mixin _$AppState {
     TResult? Function()? notAuthorizedState,
     TResult? Function()? notVerifyed,
     TResult? Function()? inAppState,
+    TResult? Function()? inState,
     TResult? Function(String message)? errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -1058,6 +1060,7 @@ mixin _$AppState {
     TResult Function()? notAuthorizedState,
     TResult Function()? notVerifyed,
     TResult Function()? inAppState,
+    TResult Function()? inState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) =>
@@ -1071,6 +1074,7 @@ mixin _$AppState {
     required TResult Function(_NotAuthorizedState value) notAuthorizedState,
     required TResult Function(_NotVerifyed value) notVerifyed,
     required TResult Function(_InAppState value) inAppState,
+    required TResult Function(_InitState value) inState,
     required TResult Function(_ErrorState value) errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -1083,6 +1087,7 @@ mixin _$AppState {
     TResult? Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult? Function(_NotVerifyed value)? notVerifyed,
     TResult? Function(_InAppState value)? inAppState,
+    TResult? Function(_InitState value)? inState,
     TResult? Function(_ErrorState value)? errorState,
   }) =>
       throw _privateConstructorUsedError;
@@ -1094,6 +1099,7 @@ mixin _$AppState {
     TResult Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult Function(_NotVerifyed value)? notVerifyed,
     TResult Function(_InAppState value)? inAppState,
+    TResult Function(_InitState value)? inState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) =>
@@ -1161,6 +1167,7 @@ class _$_OnBoardingState implements _OnBoardingState {
     required TResult Function() notAuthorizedState,
     required TResult Function() notVerifyed,
     required TResult Function() inAppState,
+    required TResult Function() inState,
     required TResult Function(String message) errorState,
   }) {
     return onBoardingState();
@@ -1175,6 +1182,7 @@ class _$_OnBoardingState implements _OnBoardingState {
     TResult? Function()? notAuthorizedState,
     TResult? Function()? notVerifyed,
     TResult? Function()? inAppState,
+    TResult? Function()? inState,
     TResult? Function(String message)? errorState,
   }) {
     return onBoardingState?.call();
@@ -1189,6 +1197,7 @@ class _$_OnBoardingState implements _OnBoardingState {
     TResult Function()? notAuthorizedState,
     TResult Function()? notVerifyed,
     TResult Function()? inAppState,
+    TResult Function()? inState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -1208,6 +1217,7 @@ class _$_OnBoardingState implements _OnBoardingState {
     required TResult Function(_NotAuthorizedState value) notAuthorizedState,
     required TResult Function(_NotVerifyed value) notVerifyed,
     required TResult Function(_InAppState value) inAppState,
+    required TResult Function(_InitState value) inState,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return onBoardingState(this);
@@ -1223,6 +1233,7 @@ class _$_OnBoardingState implements _OnBoardingState {
     TResult? Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult? Function(_NotVerifyed value)? notVerifyed,
     TResult? Function(_InAppState value)? inAppState,
+    TResult? Function(_InitState value)? inState,
     TResult? Function(_ErrorState value)? errorState,
   }) {
     return onBoardingState?.call(this);
@@ -1237,6 +1248,7 @@ class _$_OnBoardingState implements _OnBoardingState {
     TResult Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult Function(_NotVerifyed value)? notVerifyed,
     TResult Function(_InAppState value)? inAppState,
+    TResult Function(_InitState value)? inState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {
@@ -1295,6 +1307,7 @@ class _$_LoadingState implements _LoadingState {
     required TResult Function() notAuthorizedState,
     required TResult Function() notVerifyed,
     required TResult Function() inAppState,
+    required TResult Function() inState,
     required TResult Function(String message) errorState,
   }) {
     return loadingState();
@@ -1309,6 +1322,7 @@ class _$_LoadingState implements _LoadingState {
     TResult? Function()? notAuthorizedState,
     TResult? Function()? notVerifyed,
     TResult? Function()? inAppState,
+    TResult? Function()? inState,
     TResult? Function(String message)? errorState,
   }) {
     return loadingState?.call();
@@ -1323,6 +1337,7 @@ class _$_LoadingState implements _LoadingState {
     TResult Function()? notAuthorizedState,
     TResult Function()? notVerifyed,
     TResult Function()? inAppState,
+    TResult Function()? inState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -1342,6 +1357,7 @@ class _$_LoadingState implements _LoadingState {
     required TResult Function(_NotAuthorizedState value) notAuthorizedState,
     required TResult Function(_NotVerifyed value) notVerifyed,
     required TResult Function(_InAppState value) inAppState,
+    required TResult Function(_InitState value) inState,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return loadingState(this);
@@ -1357,6 +1373,7 @@ class _$_LoadingState implements _LoadingState {
     TResult? Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult? Function(_NotVerifyed value)? notVerifyed,
     TResult? Function(_InAppState value)? inAppState,
+    TResult? Function(_InitState value)? inState,
     TResult? Function(_ErrorState value)? errorState,
   }) {
     return loadingState?.call(this);
@@ -1371,6 +1388,7 @@ class _$_LoadingState implements _LoadingState {
     TResult Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult Function(_NotVerifyed value)? notVerifyed,
     TResult Function(_InAppState value)? inAppState,
+    TResult Function(_InitState value)? inState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {
@@ -1431,6 +1449,7 @@ class _$_NotAuthorizedDialogState implements _NotAuthorizedDialogState {
     required TResult Function() notAuthorizedState,
     required TResult Function() notVerifyed,
     required TResult Function() inAppState,
+    required TResult Function() inState,
     required TResult Function(String message) errorState,
   }) {
     return notAuthorizedDialogState();
@@ -1445,6 +1464,7 @@ class _$_NotAuthorizedDialogState implements _NotAuthorizedDialogState {
     TResult? Function()? notAuthorizedState,
     TResult? Function()? notVerifyed,
     TResult? Function()? inAppState,
+    TResult? Function()? inState,
     TResult? Function(String message)? errorState,
   }) {
     return notAuthorizedDialogState?.call();
@@ -1459,6 +1479,7 @@ class _$_NotAuthorizedDialogState implements _NotAuthorizedDialogState {
     TResult Function()? notAuthorizedState,
     TResult Function()? notVerifyed,
     TResult Function()? inAppState,
+    TResult Function()? inState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -1478,6 +1499,7 @@ class _$_NotAuthorizedDialogState implements _NotAuthorizedDialogState {
     required TResult Function(_NotAuthorizedState value) notAuthorizedState,
     required TResult Function(_NotVerifyed value) notVerifyed,
     required TResult Function(_InAppState value) inAppState,
+    required TResult Function(_InitState value) inState,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return notAuthorizedDialogState(this);
@@ -1493,6 +1515,7 @@ class _$_NotAuthorizedDialogState implements _NotAuthorizedDialogState {
     TResult? Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult? Function(_NotVerifyed value)? notVerifyed,
     TResult? Function(_InAppState value)? inAppState,
+    TResult? Function(_InitState value)? inState,
     TResult? Function(_ErrorState value)? errorState,
   }) {
     return notAuthorizedDialogState?.call(this);
@@ -1507,6 +1530,7 @@ class _$_NotAuthorizedDialogState implements _NotAuthorizedDialogState {
     TResult Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult Function(_NotVerifyed value)? notVerifyed,
     TResult Function(_InAppState value)? inAppState,
+    TResult Function(_InitState value)? inState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {
@@ -1565,6 +1589,7 @@ class _$_NotAuthorizedState implements _NotAuthorizedState {
     required TResult Function() notAuthorizedState,
     required TResult Function() notVerifyed,
     required TResult Function() inAppState,
+    required TResult Function() inState,
     required TResult Function(String message) errorState,
   }) {
     return notAuthorizedState();
@@ -1579,6 +1604,7 @@ class _$_NotAuthorizedState implements _NotAuthorizedState {
     TResult? Function()? notAuthorizedState,
     TResult? Function()? notVerifyed,
     TResult? Function()? inAppState,
+    TResult? Function()? inState,
     TResult? Function(String message)? errorState,
   }) {
     return notAuthorizedState?.call();
@@ -1593,6 +1619,7 @@ class _$_NotAuthorizedState implements _NotAuthorizedState {
     TResult Function()? notAuthorizedState,
     TResult Function()? notVerifyed,
     TResult Function()? inAppState,
+    TResult Function()? inState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -1612,6 +1639,7 @@ class _$_NotAuthorizedState implements _NotAuthorizedState {
     required TResult Function(_NotAuthorizedState value) notAuthorizedState,
     required TResult Function(_NotVerifyed value) notVerifyed,
     required TResult Function(_InAppState value) inAppState,
+    required TResult Function(_InitState value) inState,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return notAuthorizedState(this);
@@ -1627,6 +1655,7 @@ class _$_NotAuthorizedState implements _NotAuthorizedState {
     TResult? Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult? Function(_NotVerifyed value)? notVerifyed,
     TResult? Function(_InAppState value)? inAppState,
+    TResult? Function(_InitState value)? inState,
     TResult? Function(_ErrorState value)? errorState,
   }) {
     return notAuthorizedState?.call(this);
@@ -1641,6 +1670,7 @@ class _$_NotAuthorizedState implements _NotAuthorizedState {
     TResult Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult Function(_NotVerifyed value)? notVerifyed,
     TResult Function(_InAppState value)? inAppState,
+    TResult Function(_InitState value)? inState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {
@@ -1699,6 +1729,7 @@ class _$_NotVerifyed implements _NotVerifyed {
     required TResult Function() notAuthorizedState,
     required TResult Function() notVerifyed,
     required TResult Function() inAppState,
+    required TResult Function() inState,
     required TResult Function(String message) errorState,
   }) {
     return notVerifyed();
@@ -1713,6 +1744,7 @@ class _$_NotVerifyed implements _NotVerifyed {
     TResult? Function()? notAuthorizedState,
     TResult? Function()? notVerifyed,
     TResult? Function()? inAppState,
+    TResult? Function()? inState,
     TResult? Function(String message)? errorState,
   }) {
     return notVerifyed?.call();
@@ -1727,6 +1759,7 @@ class _$_NotVerifyed implements _NotVerifyed {
     TResult Function()? notAuthorizedState,
     TResult Function()? notVerifyed,
     TResult Function()? inAppState,
+    TResult Function()? inState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -1746,6 +1779,7 @@ class _$_NotVerifyed implements _NotVerifyed {
     required TResult Function(_NotAuthorizedState value) notAuthorizedState,
     required TResult Function(_NotVerifyed value) notVerifyed,
     required TResult Function(_InAppState value) inAppState,
+    required TResult Function(_InitState value) inState,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return notVerifyed(this);
@@ -1761,6 +1795,7 @@ class _$_NotVerifyed implements _NotVerifyed {
     TResult? Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult? Function(_NotVerifyed value)? notVerifyed,
     TResult? Function(_InAppState value)? inAppState,
+    TResult? Function(_InitState value)? inState,
     TResult? Function(_ErrorState value)? errorState,
   }) {
     return notVerifyed?.call(this);
@@ -1775,6 +1810,7 @@ class _$_NotVerifyed implements _NotVerifyed {
     TResult Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult Function(_NotVerifyed value)? notVerifyed,
     TResult Function(_InAppState value)? inAppState,
+    TResult Function(_InitState value)? inState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {
@@ -1833,6 +1869,7 @@ class _$_InAppState implements _InAppState {
     required TResult Function() notAuthorizedState,
     required TResult Function() notVerifyed,
     required TResult Function() inAppState,
+    required TResult Function() inState,
     required TResult Function(String message) errorState,
   }) {
     return inAppState();
@@ -1847,6 +1884,7 @@ class _$_InAppState implements _InAppState {
     TResult? Function()? notAuthorizedState,
     TResult? Function()? notVerifyed,
     TResult? Function()? inAppState,
+    TResult? Function()? inState,
     TResult? Function(String message)? errorState,
   }) {
     return inAppState?.call();
@@ -1861,6 +1899,7 @@ class _$_InAppState implements _InAppState {
     TResult Function()? notAuthorizedState,
     TResult Function()? notVerifyed,
     TResult Function()? inAppState,
+    TResult Function()? inState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -1880,6 +1919,7 @@ class _$_InAppState implements _InAppState {
     required TResult Function(_NotAuthorizedState value) notAuthorizedState,
     required TResult Function(_NotVerifyed value) notVerifyed,
     required TResult Function(_InAppState value) inAppState,
+    required TResult Function(_InitState value) inState,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return inAppState(this);
@@ -1895,6 +1935,7 @@ class _$_InAppState implements _InAppState {
     TResult? Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult? Function(_NotVerifyed value)? notVerifyed,
     TResult? Function(_InAppState value)? inAppState,
+    TResult? Function(_InitState value)? inState,
     TResult? Function(_ErrorState value)? errorState,
   }) {
     return inAppState?.call(this);
@@ -1909,6 +1950,7 @@ class _$_InAppState implements _InAppState {
     TResult Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult Function(_NotVerifyed value)? notVerifyed,
     TResult Function(_InAppState value)? inAppState,
+    TResult Function(_InitState value)? inState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {
@@ -1921,6 +1963,146 @@ class _$_InAppState implements _InAppState {
 
 abstract class _InAppState implements AppState {
   const factory _InAppState() = _$_InAppState;
+}
+
+/// @nodoc
+abstract class _$$_InitStateCopyWith<$Res> {
+  factory _$$_InitStateCopyWith(
+          _$_InitState value, $Res Function(_$_InitState) then) =
+      __$$_InitStateCopyWithImpl<$Res>;
+}
+
+/// @nodoc
+class __$$_InitStateCopyWithImpl<$Res>
+    extends _$AppStateCopyWithImpl<$Res, _$_InitState>
+    implements _$$_InitStateCopyWith<$Res> {
+  __$$_InitStateCopyWithImpl(
+      _$_InitState _value, $Res Function(_$_InitState) _then)
+      : super(_value, _then);
+}
+
+/// @nodoc
+
+class _$_InitState implements _InitState {
+  const _$_InitState();
+
+  @override
+  String toString() {
+    return 'AppState.inState()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType && other is _$_InitState);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function() onBoardingState,
+    required TResult Function() loadingState,
+    required TResult Function() notAuthorizedDialogState,
+    required TResult Function() notAuthorizedState,
+    required TResult Function() notVerifyed,
+    required TResult Function() inAppState,
+    required TResult Function() inState,
+    required TResult Function(String message) errorState,
+  }) {
+    return inState();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function()? onBoardingState,
+    TResult? Function()? loadingState,
+    TResult? Function()? notAuthorizedDialogState,
+    TResult? Function()? notAuthorizedState,
+    TResult? Function()? notVerifyed,
+    TResult? Function()? inAppState,
+    TResult? Function()? inState,
+    TResult? Function(String message)? errorState,
+  }) {
+    return inState?.call();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function()? onBoardingState,
+    TResult Function()? loadingState,
+    TResult Function()? notAuthorizedDialogState,
+    TResult Function()? notAuthorizedState,
+    TResult Function()? notVerifyed,
+    TResult Function()? inAppState,
+    TResult Function()? inState,
+    TResult Function(String message)? errorState,
+    required TResult orElse(),
+  }) {
+    if (inState != null) {
+      return inState();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(_OnBoardingState value) onBoardingState,
+    required TResult Function(_LoadingState value) loadingState,
+    required TResult Function(_NotAuthorizedDialogState value)
+        notAuthorizedDialogState,
+    required TResult Function(_NotAuthorizedState value) notAuthorizedState,
+    required TResult Function(_NotVerifyed value) notVerifyed,
+    required TResult Function(_InAppState value) inAppState,
+    required TResult Function(_InitState value) inState,
+    required TResult Function(_ErrorState value) errorState,
+  }) {
+    return inState(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(_OnBoardingState value)? onBoardingState,
+    TResult? Function(_LoadingState value)? loadingState,
+    TResult? Function(_NotAuthorizedDialogState value)?
+        notAuthorizedDialogState,
+    TResult? Function(_NotAuthorizedState value)? notAuthorizedState,
+    TResult? Function(_NotVerifyed value)? notVerifyed,
+    TResult? Function(_InAppState value)? inAppState,
+    TResult? Function(_InitState value)? inState,
+    TResult? Function(_ErrorState value)? errorState,
+  }) {
+    return inState?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(_OnBoardingState value)? onBoardingState,
+    TResult Function(_LoadingState value)? loadingState,
+    TResult Function(_NotAuthorizedDialogState value)? notAuthorizedDialogState,
+    TResult Function(_NotAuthorizedState value)? notAuthorizedState,
+    TResult Function(_NotVerifyed value)? notVerifyed,
+    TResult Function(_InAppState value)? inAppState,
+    TResult Function(_InitState value)? inState,
+    TResult Function(_ErrorState value)? errorState,
+    required TResult orElse(),
+  }) {
+    if (inState != null) {
+      return inState(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _InitState implements AppState {
+  const factory _InitState() = _$_InitState;
 }
 
 /// @nodoc
@@ -1993,6 +2175,7 @@ class _$_ErrorState implements _ErrorState {
     required TResult Function() notAuthorizedState,
     required TResult Function() notVerifyed,
     required TResult Function() inAppState,
+    required TResult Function() inState,
     required TResult Function(String message) errorState,
   }) {
     return errorState(message);
@@ -2007,6 +2190,7 @@ class _$_ErrorState implements _ErrorState {
     TResult? Function()? notAuthorizedState,
     TResult? Function()? notVerifyed,
     TResult? Function()? inAppState,
+    TResult? Function()? inState,
     TResult? Function(String message)? errorState,
   }) {
     return errorState?.call(message);
@@ -2021,6 +2205,7 @@ class _$_ErrorState implements _ErrorState {
     TResult Function()? notAuthorizedState,
     TResult Function()? notVerifyed,
     TResult Function()? inAppState,
+    TResult Function()? inState,
     TResult Function(String message)? errorState,
     required TResult orElse(),
   }) {
@@ -2040,6 +2225,7 @@ class _$_ErrorState implements _ErrorState {
     required TResult Function(_NotAuthorizedState value) notAuthorizedState,
     required TResult Function(_NotVerifyed value) notVerifyed,
     required TResult Function(_InAppState value) inAppState,
+    required TResult Function(_InitState value) inState,
     required TResult Function(_ErrorState value) errorState,
   }) {
     return errorState(this);
@@ -2055,6 +2241,7 @@ class _$_ErrorState implements _ErrorState {
     TResult? Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult? Function(_NotVerifyed value)? notVerifyed,
     TResult? Function(_InAppState value)? inAppState,
+    TResult? Function(_InitState value)? inState,
     TResult? Function(_ErrorState value)? errorState,
   }) {
     return errorState?.call(this);
@@ -2069,6 +2256,7 @@ class _$_ErrorState implements _ErrorState {
     TResult Function(_NotAuthorizedState value)? notAuthorizedState,
     TResult Function(_NotVerifyed value)? notVerifyed,
     TResult Function(_InAppState value)? inAppState,
+    TResult Function(_InitState value)? inState,
     TResult Function(_ErrorState value)? errorState,
     required TResult orElse(),
   }) {

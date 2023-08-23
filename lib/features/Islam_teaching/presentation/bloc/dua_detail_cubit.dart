@@ -36,7 +36,7 @@ class DuaDetailCubit extends Cubit<DuaDetailState> {
     final failureOrUser = await _islamTeachingRepository.duasFavorite(id: id);
     failureOrUser.fold(
       (l) {
-        emit(DuaDetailState.errorState(message: mapFailureToMessageBack(l)));
+        emit(DuaDetailState.loaded(res: res));
       },
       (r) {
         res = res.copyWith(isSaved: !res.isSaved!);

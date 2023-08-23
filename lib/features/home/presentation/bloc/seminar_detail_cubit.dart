@@ -25,8 +25,7 @@ class SeminarDetailCubit extends Cubit<SeminarDetailState> {
     );
     failureOrUser.fold(
       (l) {
-        emit(
-            SeminarDetailState.errorState(message: mapFailureToMessageBack(l)));
+        emit(SeminarDetailState.loaded(res: res));
       },
       (r) {
         res = r;
@@ -40,8 +39,7 @@ class SeminarDetailCubit extends Cubit<SeminarDetailState> {
     final failureOrUser = await _homeRepository.seminarLike(id: id);
     failureOrUser.fold(
       (l) {
-        emit(
-            SeminarDetailState.errorState(message: mapFailureToMessageBack(l)));
+        emit(SeminarDetailState.loaded(res: res));
       },
       (r) {
         res = res.copyWith(
@@ -59,8 +57,7 @@ class SeminarDetailCubit extends Cubit<SeminarDetailState> {
     final failureOrUser = await _homeRepository.seminarFavorite(id: id);
     failureOrUser.fold(
       (l) {
-        emit(
-            SeminarDetailState.errorState(message: mapFailureToMessageBack(l)));
+        emit(SeminarDetailState.loaded(res: res));
       },
       (r) {
         res = res.copyWith(isSaved: !res.isSaved!);

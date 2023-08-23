@@ -32,10 +32,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       (value) async {
         log('_startListenDio message from stream :: $value');
 
-        if (value == 401)  {
-
-           emit(AppState.notAuthorizedDialogState());
-
+        if (value == 401) {
+          emit(AppState.notAuthorizedDialogState());
         }
       },
     );
@@ -48,7 +46,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         logining: (_Logining event) async => _login(event, emit),
         refreshLocal: (_RefreshLocal event) async => _refreshLocal(emit),
         onboardingSave: (_OnboardingSave event) async =>
-            _onboarding(event, emit), nonAuthorizedDialog: (_NonAuthorizedDialog event) async => _nonAuthorizedDialog(emit),
+            _onboarding(event, emit),
+        nonAuthorizedDialog: (_NonAuthorizedDialog event) async =>
+            _nonAuthorizedDialog(emit),
       ),
     );
   }
@@ -97,12 +97,12 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       },
     );
   }
-  Future<void> _nonAuthorizedDialog(
-      Emitter<AppState> emit,
-      ) async {
-        emit(const AppState.notAuthorizedState());
-      }
 
+  Future<void> _nonAuthorizedDialog(
+    Emitter<AppState> emit,
+  ) async {
+    emit(const AppState.notAuthorizedState());
+  }
 
   Future<void> _exit(
     _Exiting event,

@@ -27,6 +27,8 @@ class AlertUtils {
     required String title,
     required String button1Text,
     required String button2Text,
+    Function? onButton1,
+    Function? onButton2,
     Duration? duration,
   }) async {
     return await showDialog(
@@ -62,6 +64,7 @@ class AlertUtils {
                     Flexible(
                       child: AppButtonNoBorder(
                         onTap: () {
+                          onButton1 ?? () {};
                           Navigator.pop(context, false);
                         },
                         text: button1Text,
@@ -71,6 +74,7 @@ class AlertUtils {
                     Flexible(
                       child: AppButtonNoBorder(
                         onTap: () {
+                          onButton2 ?? () {};
                           Navigator.pop(context, true);
                         },
                         text: button2Text,

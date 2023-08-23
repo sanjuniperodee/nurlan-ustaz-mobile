@@ -27,14 +27,13 @@ class RegistrationCubit extends Cubit<RegistrationState> {
   }
 
   Future<void> postUser(UserPayload userDTO) async {
-
     emit(_LoadingState());
     final result = await _authRepository.postUser(userDTO: userDTO);
     return result.fold(
       (l) {
         emit(RegistrationState.errorState(message: mapFailureToMessageBack(l)));
       },
-      (r)  {
+      (r) {
         emit(const _SuccessState());
         userId = r.id ?? 0;
         emit(RegistrationState.loadedState(
@@ -47,18 +46,16 @@ class RegistrationCubit extends Cubit<RegistrationState> {
 @freezed
 class RegistrationState with _$RegistrationState {
   const factory RegistrationState.initialState(
-      {@Default(false)
-          bool isPolicyAccept,
-      @Default(
-          UserPayload(
-              fullName: '',
-              email: '',
-              phoneNumber: '',
-              password: '',
-              rePassword: '',
-              birthday: '',
-              gender: Gender.male))
-          UserPayload userDTO}) = _InitialState;
+      {@Default(false) bool isPolicyAccept,
+      @Default(UserPayload(
+          fullName: '',
+          email: '',
+          phoneNumber: '',
+          password: '',
+          rePassword: '',
+          birthday: '',
+          gender: Gender.male))
+      UserPayload userDTO}) = _InitialState;
 
   const factory RegistrationState.loadedState({
     required UserPayload user,

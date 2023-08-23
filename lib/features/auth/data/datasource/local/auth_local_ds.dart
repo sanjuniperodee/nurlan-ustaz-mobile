@@ -7,6 +7,7 @@ import 'package:nurlan_ustaz_flutter/core/common/shared_keys.dart';
 import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/token_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class AuthLocalDs {
@@ -23,10 +24,13 @@ abstract class AuthLocalDs {
   Future<void> saveToken({
     required TokenDTO token,
   });
-
+  Future<void> saveUser({
+    required UserDto user,
+  });
   String getLocale();
 
   TokenDTO getTokenFromCache();
+  Future<UserDto?> getUserFromCacheNull();
   Future<TokenDTO?> getTokenFromCacheNull();
   Future<void> removeUserFromCache();
   Future<TokenDTO> refreshJwt({
@@ -61,7 +65,7 @@ class AuthLocalDsImpl extends AuthLocalDs {
       saveToken(token: TokenDTO.fromJson(response.data));
       log('refreshJwt::::${TokenDTO.fromJson(response.data).toString()}');
 
-    return TokenDTO.fromJson(response.data);
+      return TokenDTO.fromJson(response.data);
     } catch (e) {
       log('REFRESH EXCEPTION::::${e}');
       throw ServerException(message: e.toString());
@@ -145,6 +149,13 @@ class AuthLocalDsImpl extends AuthLocalDs {
   }
 
   @override
+  Future<void> saveUser({required UserDto user}) async {
+    await sharedPreferences.setString(
+        SharedKeys.USER, jsonEncode(user.toJson()));
+    log('user"""""${jsonEncode(user.toJson())}');
+  }
+
+  @override
   TokenDTO getTokenFromCache() {
     try {
       final token = sharedPreferences.get(SharedKeys.TOKEN);
@@ -156,6 +167,23 @@ class AuthLocalDsImpl extends AuthLocalDs {
       } else {
         throw CacheException(message: 'В кэше нет запрашиваемые данные');
       }
+    } catch (e) {
+      log('AuthLocalDSImpl getUserFromCacheNull:: $e');
+      throw CacheException(message: 'В кэше нет запрашиваемые данные');
+    }
+  }
+
+  @override
+  Future<UserDto?> getUserFromCacheNull() async {
+    try {
+      log('USER:::${sharedPreferences.get(SharedKeys.USER).toString()}');
+
+      UserDto? token = UserDto.fromJson(
+        jsonDecode(sharedPreferences.get(SharedKeys.USER).toString())
+            as Map<String, dynamic>,
+      );
+
+      return token;
     } catch (e) {
       log('AuthLocalDSImpl getUserFromCacheNull:: $e');
       throw CacheException(message: 'В кэше нет запрашиваемые данные');
@@ -203,5 +231,7 @@ class AuthLocalDsImpl extends AuthLocalDs {
   @override
   Future<void> removeUserFromCache() async {
     sharedPreferences.remove(SharedKeys.TOKEN);
+    sharedPreferences.remove(SharedKeys.USER);
+    sharedPreferences.remove(SharedKeys.USER_FROM_CACHE);
   }
 }

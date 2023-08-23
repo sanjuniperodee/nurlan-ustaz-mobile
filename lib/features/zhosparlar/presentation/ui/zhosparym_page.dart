@@ -206,121 +206,121 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                     fontFamily: FontTypes.Philosopher.name,
                                     color: AppColors.white)),
                             SizedBox(height: 24.h),
-                            Container(
-                              height: 414,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: AppColors.white,
-                                borderRadius: BorderRadius.circular(30.r),
-                              ),
-                              child: eventsDays == null
-                                  ? Center(
-                                      child: CircularProgressIndicator(),
-                                    )
-                                  : CustomCalendar(
-                                      onDateSelected: (DateTime date) {
-                                        context.read<ZhosparymCubit>().chatPer(
-                                            DateFormat('yyyy-MM-dd')
-                                                .format(date)
-                                                .toString());
+                            // Container(
+                            //   height: 414,
+                            //   width: double.infinity,
+                            //   decoration: BoxDecoration(
+                            //     color: AppColors.white,
+                            //     borderRadius: BorderRadius.circular(30.r),
+                            //   ),
+                            //   child: eventsDays == null
+                            //       ? Center(
+                            //           child: CircularProgressIndicator(),
+                            //         )
+                            //       : CustomCalendar(
+                            //           onDateSelected: (DateTime date) {
+                            //             context.read<ZhosparymCubit>().chatPer(
+                            //                 DateFormat('yyyy-MM-dd')
+                            //                     .format(date)
+                            //                     .toString());
 
-                                        if (!eventsDays.containsKey(date)) {
-                                          return;
-                                        } else {
-                                          if (eventsDays[date]!
-                                                  .toList()
-                                                  .where((element) =>
-                                                      element.type !=
-                                                      EventsType.holiday)
-                                                  .length >
-                                              1) {
-                                            CarouselController controller =
-                                                CarouselController();
-                                            int currentIndex = 0;
-                                            showDialog(
-                                              context: context,
-                                              builder: (context) => Dialog(
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              20.r)),
-                                                  child: CarouselSlider(
-                                                    carouselController:
-                                                        controller,
-                                                    items: eventsDays[date]!
-                                                        .toList()
-                                                        .where((element) =>
-                                                            element.type !=
-                                                            EventsType.holiday)
-                                                        .toList()
-                                                        .map(
-                                                      (e) {
-                                                        return EventContainer(
-                                                          e,
-                                                          nextPage: () {
-                                                            controller
-                                                                .nextPage();
-                                                          },
-                                                          previousPage: () {
-                                                            controller
-                                                                .previousPage();
-                                                          },
-                                                          maincontext: context,
-                                                        );
-                                                      },
-                                                    ).toList(),
-                                                    options: CarouselOptions(
-                                                      aspectRatio: 1.3,
-                                                      viewportFraction: 1,
-                                                      autoPlay: true,
-                                                      autoPlayInterval:
-                                                          const Duration(
-                                                              seconds: 3),
-                                                      enlargeCenterPage: true,
-                                                      onPageChanged:
-                                                          (index, _) {
-                                                        setState(() {
-                                                          currentIndex = index;
-                                                        });
-                                                      },
-                                                    ),
-                                                  )),
-                                            );
-                                          } else {
-                                            showEventDialog(
-                                                context,
-                                                eventsDays[date]!.first,
-                                                gradients[0]);
-                                          }
-                                        }
-                                      },
-                                      hideBottomBar: false,
-                                      startOnMonday: true,
-                                      weekDays: const [
-                                        'Дс',
-                                        'Сс',
-                                        'Ср',
-                                        'Бс',
-                                        'Жм',
-                                        'Сн',
-                                        'Жк'
-                                      ],
-                                      events: eventsDays,
-                                      isExpandable: false,
-                                      eventDoneColor: Colors.green,
-                                      selectedColor: Colors.pink,
-                                      todayColor: AppColors.black,
-                                      eventColor: Colors.deepPurple,
-                                      locale: context.locale.languageCode,
-                                      todayButtonText: '',
-                                      isExpanded: true,
-                                      dayOfWeekStyle: const TextStyle(
-                                        color: AppColors.grey2,
-                                        fontWeight: FontWeight.w400,
-                                        fontSize: 12,
-                                      ),
-                                    ),
-                            ),
+                            //             if (!eventsDays.containsKey(date)) {
+                            //               return;
+                            //             } else {
+                            //               if (eventsDays[date]!
+                            //                       .toList()
+                            //                       .where((element) =>
+                            //                           element.type !=
+                            //                           EventsType.holiday)
+                            //                       .length >
+                            //                   1) {
+                            //                 CarouselController controller =
+                            //                     CarouselController();
+                            //                 int currentIndex = 0;
+                            //                 showDialog(
+                            //                   context: context,
+                            //                   builder: (context) => Dialog(
+                            //                       shape: RoundedRectangleBorder(
+                            //                           borderRadius:
+                            //                               BorderRadius.circular(
+                            //                                   20.r)),
+                            //                       child: CarouselSlider(
+                            //                         carouselController:
+                            //                             controller,
+                            //                         items: eventsDays[date]!
+                            //                             .toList()
+                            //                             .where((element) =>
+                            //                                 element.type !=
+                            //                                 EventsType.holiday)
+                            //                             .toList()
+                            //                             .map(
+                            //                           (e) {
+                            //                             return EventContainer(
+                            //                               e,
+                            //                               nextPage: () {
+                            //                                 controller
+                            //                                     .nextPage();
+                            //                               },
+                            //                               previousPage: () {
+                            //                                 controller
+                            //                                     .previousPage();
+                            //                               },
+                            //                               maincontext: context,
+                            //                             );
+                            //                           },
+                            //                         ).toList(),
+                            //                         options: CarouselOptions(
+                            //                           aspectRatio: 1.3,
+                            //                           viewportFraction: 1,
+                            //                           autoPlay: true,
+                            //                           autoPlayInterval:
+                            //                               const Duration(
+                            //                                   seconds: 3),
+                            //                           enlargeCenterPage: true,
+                            //                           onPageChanged:
+                            //                               (index, _) {
+                            //                             setState(() {
+                            //                               currentIndex = index;
+                            //                             });
+                            //                           },
+                            //                         ),
+                            //                       )),
+                            //                 );
+                            //               } else {
+                            //                 showEventDialog(
+                            //                     context,
+                            //                     eventsDays[date]!.first,
+                            //                     gradients[0]);
+                            //               }
+                            //             }
+                            //           },
+                            //           hideBottomBar: false,
+                            //           startOnMonday: true,
+                            //           weekDays: const [
+                            //             'Дс',
+                            //             'Сс',
+                            //             'Ср',
+                            //             'Бс',
+                            //             'Жм',
+                            //             'Сн',
+                            //             'Жк'
+                            //           ],
+                            //           events: eventsDays,
+                            //           isExpandable: false,
+                            //           eventDoneColor: Colors.green,
+                            //           selectedColor: Colors.pink,
+                            //           todayColor: AppColors.black,
+                            //           eventColor: Colors.deepPurple,
+                            //           locale: context.locale.languageCode,
+                            //           todayButtonText: '',
+                            //           isExpanded: true,
+                            //           dayOfWeekStyle: const TextStyle(
+                            //             color: AppColors.grey2,
+                            //             fontWeight: FontWeight.w400,
+                            //             fontSize: 12,
+                            //           ),
+                            //         ),
+                            // ),
                             SizedBox(height: 20.h),
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 26.w),

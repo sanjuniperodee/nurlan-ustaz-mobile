@@ -172,7 +172,12 @@ class AuthRepositoryImpl extends AuthRepository {
         final TokenDTO result =
             await remoteDS.createJwt(tokenCreateDTO: createTokenDTO);
         localDS.saveToken(token: result);
-
+        final UserDto? user = await remoteDS.getUser();
+        if (user != null) {
+          localDS.saveUser(user: user);
+        }
+        final UserDto? users = await localDS.getUserFromCacheNull();
+        log('USERRRR${users.toString()}');
         return Right(result);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));

@@ -62,7 +62,15 @@ class _ProfileMainPage extends State<ProfileMainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightBlue,
-      body: BlocBuilder<GetProfileCubit, GetProfileState>(
+      body: BlocConsumer<GetProfileCubit, GetProfileState>(
+        listener: (context, state) {
+          state.whenOrNull(
+            errorState: (message) {
+              log('ERROR');
+              // context.router.pop();
+            },
+          );
+        },
         builder: (context, state) {
           log('STATE:::${state.toString()}');
           return state.maybeWhen(
@@ -78,7 +86,7 @@ class _ProfileMainPage extends State<ProfileMainPage> {
               geo,
               dev,
             ) {
-              devc.text = dev!;
+              // devc.text = dev!;
               log('chosenLang::::${chosenLang.toString()}');
               return GlobalCustomBody(
                 child: SingleChildScrollView(
@@ -309,7 +317,7 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                                   title: geo.name!,
                                   onTap: () {
                                     context.router.push(
-                                      GeonamesRoute(),
+                                      GeonamesRoute(type: 'profile'),
                                     );
                                   }),
                               ProfileMenuItem(
@@ -329,7 +337,7 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                               if (user.isStaff == true)
                                 ProfileMenuItem(
                                     title: 'QR.qr_scanner'.tr(),
-                                    onTap: ()  {
+                                    onTap: () {
                                       context.router.push(
                                         const QrScannerRoute(),
                                       );
@@ -340,9 +348,9 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                         SizedBox(
                           height: 12.h,
                         ),
-                        TextField(
-                          controller: devc,
-                        ),
+                        // TextField(
+                        //   controller: devc,
+                        // ),
                         Container(
                           padding: const EdgeInsets.only(left: 12, right: 17).r,
                           width: double.maxFinite,
