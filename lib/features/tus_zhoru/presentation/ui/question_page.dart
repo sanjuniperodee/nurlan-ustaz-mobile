@@ -15,6 +15,7 @@ import '../../../../core/common/colors.dart';
 import '../../../app/presentation/widgets/app_button.dart';
 import '../../../app/presentation/widgets/custom_app_bar.dart';
 import '../../../app/presentation/widgets/custom_snackbars.dart';
+import '../widgets/tus_zhoru_custom_body.dart';
 
 @RoutePage()
 class QuestionPage extends StatefulWidget {
@@ -83,97 +84,98 @@ class _QuestionPageState extends State<QuestionPage> {
             text: 'send'.tr(),
           ),
         ),
-        body: SingleChildScrollView(
-          primary: true,
-          child: SizedBox(
-            height: 1.3.sh,
-            child: Stack(
-              children: [
-                const GlobalCustomBody(),
-                Positioned(
-                  top: 80.h,
-                  left: 16.r,
-                  right: 16.r,
-                  child: Column(
-                    children: [
-                      CustomAppBar(
-                        onTap: () {
-                          Navigator.pop(context);
-                          controllerForAtau.clear();
-                          controllerForTusimbde.clear();
-                        },
-                        title: 'order'.tr(),
-                      ),
-                    ],
+        body: TusZhoruCustomBody(
+          child: SingleChildScrollView(
+            primary: true,
+            child: SizedBox(
+              height: 1.3.sh,
+              child: Stack(
+                children: [
+                  Positioned(
+                    top: 30.h,
+                    left: 16.r,
+                    right: 16.r,
+                    child: Column(
+                      children: [
+                        CustomAppBar(
+                          onTap: () {
+                            Navigator.pop(context);
+                            controllerForAtau.clear();
+                            controllerForTusimbde.clear();
+                          },
+                          title: 'order'.tr(),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Positioned(
-                    top: 150,
-                    left: 0,
-                    right: 0,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'section'.tr(),
-                            style: getTextStyle(CustomTextStyles.s14w500),
-                            textAlign: TextAlign.center,
-                          ),
-                          SizedBox(
-                            height: 40.h,
-                          ),
-                          CustomTextFormField(
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(60),
-                            ],
-                            onChanged: (value) {
-                              setState(() {});
-                            },
-                            hintText: '${'name1'.tr()}...',
-                            controller: controllerForAtau,
-                          ),
-                          SizedBox(
-                            height: 8.h,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                '${controllerForAtau.value.text.length}/60',
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 40.h,
-                          ),
-                          CustomTextFormField(
-                            minLines: 15,
-                            inputFormatters: [
-                              LengthLimitingTextInputFormatter(999),
-                            ],
-                            hintText: '${'in_dream'.tr()}...',
-                            controller: controllerForTusimbde,
-                            onChanged: (value) {
-                              setState(() {});
-                            },
-                          ),
-                          SizedBox(
-                            height: 8.h,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Text(
-                                '${controllerForTusimbde.value.text.length}/999',
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    )),
-              ],
+                  Positioned(
+                      top: 80.h,
+                      left: 0,
+                      right: 0,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              'section'.tr(),
+                              style: getTextStyle(CustomTextStyles.s14w500),
+                              textAlign: TextAlign.center,
+                            ),
+                            SizedBox(
+                              height: 40.h,
+                            ),
+                            CustomTextFormField(
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(60),
+                              ],
+                              onChanged: (value) {
+                                setState(() {});
+                              },
+                              hintText: '${'name1'.tr()}...',
+                              controller: controllerForAtau,
+                            ),
+                            SizedBox(
+                              height: 8.h,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  '${controllerForAtau.value.text.length}/60',
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 40.h,
+                            ),
+                            CustomTextFormField(
+                              minLines: 15,
+                              inputFormatters: [
+                                LengthLimitingTextInputFormatter(999),
+                              ],
+                              hintText: '${'in_dream'.tr()}...',
+                              controller: controllerForTusimbde,
+                              onChanged: (value) {
+                                setState(() {});
+                              },
+                            ),
+                            SizedBox(
+                              height: 8.h,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  '${controllerForTusimbde.value.text.length}/999',
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )),
+                ],
+              ),
             ),
           ),
         ),

@@ -116,6 +116,7 @@ dependencies:
   webview_flutter: ^3.0.4
   better_player: ^0.0.83
   qr_code_scanner: ^1.0.1
+#  flutter_clean_calendar: ^1.1.0
 
   # analyzer: ^5.3.1
 

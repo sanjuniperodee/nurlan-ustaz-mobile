@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 
 import 'package:better_player/better_player.dart';
@@ -31,22 +30,15 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   late VideoPlayerController _controller;
   late BetterPlayerController _betterPlayerController;
 
-
   @override
   void initState() {
     BlocProvider.of<OnBoardingCubit>(context).getVideo().then((value) {
-      log(Uri.parse('${value.first.file}').toString());
+      log(Uri.parse(value.first.file).toString());
       _controller =
-          VideoPlayerController.networkUrl(Uri.parse('${value.first.file}'));
-      _controller.addListener(()=> setState(() {
-
-      }));
-      _controller.initialize();
+          VideoPlayerController.networkUrl(Uri.parse(value.first.file.toString()),formatHint: VideoFormat.dash);
+      _controller.addListener(() => setState(() {}));
       _controller.play();
-
     });
-
-
 
     super.initState();
   }
@@ -59,8 +51,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         builder: (context, state) {
           return state.maybeWhen(orElse: () {
             return Container();
-          }, initialState: (videoList){
-
+          }, initialState: (videoList) {
             final chewieController = ChewieController(
               videoPlayerController: _controller,
               autoPlay: true,
@@ -86,20 +77,16 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                   child: Container(
                     width: 343.w,
                     height: 648.h,
-                    child:
-
-
-
-                    playerWidget,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30.r),
                     ),
+                    child: playerWidget,
                   ),
                 ),
                 Positioned.fill(
                   top: 720.h,
                   child: Padding(
-                    padding:  EdgeInsets.symmetric(horizontal: 20.w),
+                    padding: EdgeInsets.symmetric(horizontal: 20.w),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -113,16 +100,24 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                                     borderRadius: BorderRadius.circular(5.0.r)),
                                 activeColor: AppColors.white,
                                 shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5.0.r)))),
-                        InkWell(
-                          onTap: () {
+                                    borderRadius:
+                                        BorderRadius.circular(5.0.r)))),
+
+                        MaterialButton(
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10.0), // Adjust the radius as needed
+                          ),
+                          onPressed: () {
                             if (currentIndex != videoList.length - 1) {
                               _controller = VideoPlayerController.networkUrl(
-                                  Uri.parse('${videoList[currentIndex+1].file}'));
+                                  Uri.parse(
+                                      '${videoList[currentIndex + 1].file}'));
                               setState(() {});
 
                               currentIndex++;
                             } else {
+                              _controller.dispose();
+                              setState(() {});
                               BlocProvider.of<AppBloc>(context)
                                   .add(const AppEvent.onboardingSave());
                             }

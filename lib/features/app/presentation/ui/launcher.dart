@@ -100,10 +100,10 @@ Widget _salam() {
         notAuthorizedDialogState: () async {
           var dialog = await AlertUtils.showTwoOptionDialog(
               context: context,
-              messageKey: 'exit_des'.tr(),
-              title: 'exit'.tr(),
+              messageKey: '401.content'.tr(),
+              title: '401.title'.tr(),
               button1Text: 'cancel'.tr(),
-              button2Text: 'exit2'.tr());
+              button2Text: '401.login'.tr());
           return dialog == true
               ? BlocProvider.of<AppBloc>(context)
                   .add(const AppEvent.nonAuthorizedDialog())

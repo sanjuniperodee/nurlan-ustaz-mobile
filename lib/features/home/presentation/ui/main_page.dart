@@ -407,12 +407,16 @@ class _MainPageState extends State<MainPage> {
                                                   .setActiveIndex(2);
                                             },
                                             child: SizedBox(
-                                              width: double.infinity + 200,
-                                              height: 180.h,
-                                              child: Lottie.asset(
-                                                  'assets/animations/tusZhoru_button.json',
-                                                  height: 180.h,
-                                                  fit: BoxFit.fill),
+                                              height: 120.h,
+                                              child: OverflowBox(
+                                                minWidth: 370.w,
+                                                maxWidth: 370.w,
+                                                minHeight: 170.h,
+                                                maxHeight: 170.h,
+                                                child: Lottie.asset(
+                                                    'assets/animations/tusZhoru_button.json',
+                                                    fit: BoxFit.fill),
+                                              ),
                                             ),
                                           ),
                                           MainButton(

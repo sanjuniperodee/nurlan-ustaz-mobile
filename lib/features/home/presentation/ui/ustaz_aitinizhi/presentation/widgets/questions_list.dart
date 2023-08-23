@@ -65,16 +65,20 @@ class QuestionsList extends StatelessWidget {
                                 children: [
                                   Row(
                                     children: [
-                                      Text(
-                                        isSocket != null
-                                            ? e.fullName ?? ''
-                                            : e.user?.fullName ?? '',
-                                        style: getTextStyle(
-                                                CustomTextStyles.s14w500)
-                                            .copyWith(
-                                                fontFamily:
-                                                    FontTypes.SF_Pro.name,
-                                                fontWeight: FontWeight.w600),
+                                      SizedBox(
+                                        width: 250.w,
+                                        child: Text(
+                                          isSocket != null
+                                              ? e.fullName ?? ''
+                                              : e.user?.fullName ?? '',
+                                          style: getTextStyle(
+                                                  CustomTextStyles.s14w500)
+                                              .copyWith(
+                                                  fontFamily:
+                                                      FontTypes.SF_Pro.name,
+                                                  fontWeight: FontWeight.w600),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       ),
                                       SizedBox(
                                         width: 8.w,

@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
@@ -55,17 +56,11 @@ class _NameDetailPageState extends State<NameDetailPage> {
                       Assets.gradient,
                       fit: BoxFit.cover,
                     ),
-                    Positioned(
-                        // left: 280.r,
-                        top: 10.r,
+                    Positioned.fill(
+                      // left: 280.r,
                         child: Opacity(
                           opacity: 0.5,
-                          child: Image.asset(
-                            'assets/images/x.png',
-                            // colorBlendMode: ,
-                            // opacity: 0.1,
-                            width: 1.sw,
-                          ),
+                          child:  Lottie.asset('assets/animations/Book_V04.json',fit: BoxFit.cover),
                         )),
                     SizedBox(
                       child: SingleChildScrollView(

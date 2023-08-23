@@ -63,9 +63,11 @@ class _ProfileMainPage extends State<ProfileMainPage> {
     return Scaffold(
       backgroundColor: AppColors.lightBlue,
       body: BlocBuilder<GetProfileCubit, GetProfileState>(
+
         builder: (context, state) {
           log('STATE:::${state.toString()}');
           return state.maybeWhen(
+
             orElse: () {
               return const Center(
                 child: CircularProgressIndicator(

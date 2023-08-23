@@ -15,7 +15,6 @@ import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import '../../../../core/utils/alert_utilrs.dart';
 import '../../../tandaulilar/presentation/bloc/tandaulilar_cubit.dart';
 
-
 class Base extends StatefulWidget {
   const Base({super.key});
 
@@ -30,7 +29,6 @@ class _BaseState extends State<Base> {
   }
 
   bool isShow = false;
-
 
   @override
   Widget build(BuildContext context) {
@@ -55,8 +53,8 @@ class _BaseState extends State<Base> {
                   .apply(fontFamily: FontTypes.Philosopher.name),
               unselectedLabelStyle: getTextStyle(CustomTextStyles.s14w400)
                   .copyWith(
-                  fontFamily: FontTypes.Philosopher.name,
-                  color: AppColors.primaryColor),
+                      fontFamily: FontTypes.Philosopher.name,
+                      color: AppColors.primaryColor),
               backgroundColor: AppColors.white,
               showUnselectedLabels: true,
               type: BottomNavigationBarType.fixed,
@@ -87,8 +85,8 @@ class _BaseState extends State<Base> {
                 BottomNavigationBarItem(
                   icon: tabsRouter.activeIndex != 0
                       ? SvgPicture.asset(
-                    Assets.homeSvg,
-                  )
+                          Assets.homeSvg,
+                        )
                       : SvgPicture.asset(Assets.home_1Svg),
                   label: 'main_page'.tr(),
                 ),
@@ -111,10 +109,10 @@ class _BaseState extends State<Base> {
                             'dream_interpretation'.tr(),
                             style: getTextStyle(CustomTextStyles.s14w400)
                                 .copyWith(
-                                fontFamily: FontTypes.Philosopher.name,
-                                color: tabsRouter.activeIndex == 2
-                                    ? AppColors.primaryColor
-                                    : AppColors.grey1),
+                                    fontFamily: FontTypes.Philosopher.name,
+                                    color: tabsRouter.activeIndex == 2
+                                        ? AppColors.primaryColor
+                                        : AppColors.grey1),
                           ),
                         )
                       ],

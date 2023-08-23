@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:calendar_agenda/calendar_agenda.dart';
  
 // import 'package:calendar_agenda/calendar_agenda.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -15,6 +16,8 @@ import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/ch
  
 import '../../../app/presentation/widgets/custom_snackbars.dart';
 import '../../data/models/checklist_dto.dart';
+import '../widgets/horizontal_calendar/custom_agenda_controller.dart';
+import '../widgets/horizontal_calendar/custom_horizontal_calendar.dart';
 import '../widgets/task_details_dialog.dart';
  
 @RoutePage()
@@ -27,8 +30,8 @@ class RamazanChecklistPage extends StatefulWidget {
 }
  
 class _RamazanChecklistPageState extends State<RamazanChecklistPage> {
-  // CustomCalendarAgendaController _calendarAgendaControllerNotAppBar =
-  //     CustomCalendarAgendaController();
+  CustomCalendarAgendaController _calendarAgendaControllerNotAppBar =
+      CustomCalendarAgendaController();
  
   int selectedIndex = -1;
   final monthList = List.generate(
@@ -75,22 +78,22 @@ class _RamazanChecklistPageState extends State<RamazanChecklistPage> {
                           title: 'Ramadan_checklist'.tr(),
                         ),
                       ),
-                      // CustomCalendarAgenda(
-                      //   controller: _calendarAgendaControllerNotAppBar,
-                      //   locale: context.locale.languageCode,
-                      //   weekDay: WeekDay.long,
-                      //   fullCalendarDay: WeekDay.long,
-                      //   selectedDateColor: Colors.blue.shade900,
-                      //   initialDate: date ,
-                      //   firstDate: DateTime.parse(widget.checkList.startDate!),
-                      //   lastDate: DateTime.parse(widget.checkList.endDate!),
-                      //   events:
-                      //       days.map((e) => DateTime.parse(e.date)).toList(),
-                      //   onDateSelected: (date) {
-                      //     context.read<CheckListCubit>().changeDate(date: date);
-                      //   },
-                      //   checklist: days,
-                      // ),
+                      CustomCalendarAgenda(
+                        controller: _calendarAgendaControllerNotAppBar,
+                        locale: context.locale.languageCode,
+                        weekDay: WeekDay.long,
+                        fullCalendarDay: WeekDay.long,
+                        selectedDateColor: Colors.blue.shade900,
+                        initialDate: date ,
+                        firstDate: DateTime.parse(widget.checkList.startDate!),
+                        lastDate: DateTime.parse(widget.checkList.endDate!),
+                        events:
+                            days.map((e) => DateTime.parse(e.date)).toList(),
+                        onDateSelected: (date) {
+                          context.read<CheckListCubit>().changeDate(date: date);
+                        },
+                        checklist: days,
+                      ),
                       SizedBox(
                         height: 36.h,
                       ),

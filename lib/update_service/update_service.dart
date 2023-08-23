@@ -19,9 +19,9 @@ class AppVersionService {
 
   static final AppVersionService _singleton = AppVersionService._internal();
   static const playStoreLink =
-      'https://play.google.com/store/apps/details?id=com.bepro_mobile';
+      'https://www.youtube.com/watch?v=wHBGxz5QnIE';
   static const appStoreLink =
-      'https://apps.apple.com/kz/app/bepro/id6443560241';
+      'https://www.youtube.com/watch?v=wHBGxz5QnIE';
   factory AppVersionService() {
     return _singleton;
   }
@@ -50,9 +50,12 @@ class AppVersionService {
       log('saaaa-${result.toString()}');
       AppVersionsModel serverAppVersion = result ;
 
+      log('current-${currentAppVersion.toString()}');
+      log('server-${serverAppVersion.toString()}');
+
       print('appVersion error $serverAppVersion');
       if (int.parse(currentAppVersion.version![0]) < int.parse(serverAppVersion.version![0]) ||
-          int.parse(currentAppVersion.version![2]) < int.parse(serverAppVersion.version![0])) {
+          int.parse(currentAppVersion.version![2]) < int.parse(serverAppVersion.version![2])) {
         _showHardUpdateDialog(context);
       } else if (int.parse(currentAppVersion.version![4]) < int.parse(serverAppVersion.version![4])) {
         _showSoftUpdateDialog(context);
@@ -94,27 +97,31 @@ class AppVersionService {
 
   Future _showSoftUpdateDialog(BuildContext context) async {
     await showCupertinoDialog(
+      barrierDismissible: false,
       context: context,
-      builder: (context) => CupertinoAlertDialog(
-        title: Text('app_version.new_update'.tr()),
-        content: Text('app_version.update_app'.tr()),
-        actions: [
-          CupertinoDialogAction(
+      builder: (context) => WillPopScope(
+        onWillPop: () async { return false; },
+        child: CupertinoAlertDialog(
+          title: Text('app_version.new_update'.tr()),
+          content: Text('app_version.update_app'.tr()),
+          actions: [
+            CupertinoDialogAction(
+                child: Text(
+                  "app_version.not_now".tr(),
+                  style: const TextStyle(color: Colors.black),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                }),
+            CupertinoDialogAction(
+              onPressed: _onUpdateTapped,
               child: Text(
-                "app_version.not_now".tr(),
+                "app_version.update".tr(),
                 style: const TextStyle(color: Colors.black),
               ),
-              onPressed: () {
-                Navigator.of(context).pop();
-              }),
-          CupertinoDialogAction(
-            onPressed: _onUpdateTapped,
-            child: Text(
-              "app_version.update".tr(),
-              style: const TextStyle(color: Colors.black),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

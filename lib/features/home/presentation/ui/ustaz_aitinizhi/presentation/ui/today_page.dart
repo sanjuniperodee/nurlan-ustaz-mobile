@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,8 +23,8 @@ class TodayChatPage extends StatefulWidget {
 class _TodayChatPageState extends State<TodayChatPage> {
   @override
   void initState() {
-    //BlocProvider.of<TusZhoruCubit>(context).secureScreen();
     BlocProvider.of<TodayChatCubit>(context).connectSocket();
+
     super.initState();
   }
 
@@ -55,6 +54,9 @@ class _TodayChatPageState extends State<TodayChatPage> {
           ),
         );
       }, initialState: (questions, channel, user) {
+        //BlocProvider.of<TodayChatCubit>(context).getQuestionByDate(DateFormat('yyyy-MM-dd').format(DateTime.now()));
+
+
         return Column(
           children: [
             SizedBox(
@@ -112,7 +114,7 @@ class _TodayChatPageState extends State<TodayChatPage> {
 
             QuestionsList(
               questions: questions.reversed.toList(),
-              isSocket: false,
+              isSocket: channel == null ? null : false,
             ),
 
             SizedBox(
