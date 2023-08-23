@@ -34,7 +34,7 @@ class _DutyDetailPageState extends State<DutyDetailPage> {
               decoration: const BoxDecoration(color: AppColors.white),
               child: AppButton(
                   onTap: () {
-                    log('URL${widget.pillarsDTO.url}');
+                    log('URL ${widget.pillarsDTO.url}');
                     widget.pillarsDTO.type == 2
                         ? context.router.push(const NamazPatternRoute())
                         : _launchUrl(widget.pillarsDTO.url ?? '');
@@ -97,7 +97,7 @@ class _DutyDetailPageState extends State<DutyDetailPage> {
 
   Future<void> _launchUrl(String _urll) async {
     final Uri _url = Uri.parse('${_urll}');
-    if (!await launchUrl(_url)) {
+    if (!await launchUrl(_url, mode: LaunchMode.externalApplication)) {
       throw Exception('Could not launch $_url');
     }
   }

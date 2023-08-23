@@ -2,6 +2,7 @@
 
 mixin SharedKeys {
   static const USER_FROM_CACHE = 'USER';
+  static const USER = 'USERR';
   static const IS_ONBOARDING = 'IS_ONBOARDING';
   static const DEVICE_TOKEN = 'DEVICE_TOKEN';
   static const APP_LOCALE = 'APP_LOCALE';

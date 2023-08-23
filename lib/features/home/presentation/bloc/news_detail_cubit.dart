@@ -1,5 +1,3 @@
-
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -25,8 +23,7 @@ class NewsDetailCubit extends Cubit<NewsDetailState> {
     );
     failureOrUser.fold(
       (l) {
-
-        emit(NewsDetailState.errorState(message: mapFailureToMessageBack(l)));
+        emit(NewsDetailState.loaded(res: res));
       },
       (r) {
         res = r;
@@ -40,7 +37,7 @@ class NewsDetailCubit extends Cubit<NewsDetailState> {
     final failureOrUser = await _homeRepository.newsLike(id: id);
     failureOrUser.fold(
       (l) {
-        emit(NewsDetailState.errorState(message: mapFailureToMessageBack(l)));
+        emit(NewsDetailState.loaded(res: res));
       },
       (r) {
         res = res.copyWith(
@@ -58,9 +55,7 @@ class NewsDetailCubit extends Cubit<NewsDetailState> {
     final failureOrUser = await _homeRepository.newsFavorite(id: id);
     failureOrUser.fold(
       (l) {
-
         emit(NewsDetailState.loaded(res: res));
-        emit(NewsDetailState.errorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
         res = res.copyWith(isSaved: !res.isSaved!);

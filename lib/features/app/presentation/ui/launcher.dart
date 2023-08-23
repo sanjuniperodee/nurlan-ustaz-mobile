@@ -31,12 +31,11 @@ class _LauncherAppPageState extends State<LauncherAppPage> {
     init();
     super.initState();
   }
+
   final _appVersionService = AppVersionService();
 
   checkAppVersion() async {
-    _appVersionService
-        .checkAppVersion(context);
-
+    _appVersionService.checkAppVersion(context);
   }
 
   Future<void> init() async {
@@ -99,6 +98,7 @@ Widget _salam() {
         },
         notAuthorizedDialogState: () async {
           var dialog = await AlertUtils.showTwoOptionDialog(
+
               context: context,
               messageKey: '401.content'.tr(),
               title: '401.title'.tr(),
@@ -109,6 +109,26 @@ Widget _salam() {
                   .add(const AppEvent.nonAuthorizedDialog())
               : BlocProvider.of<AppBloc>(context)
                   .add(const AppEvent.logining());
+// =======
+//                   context: context,
+//                   messageKey: 'exit_des'.tr(),
+//                   title: 'exit'.tr(),
+//                   button1Text: 'cancel'.tr(),
+//                   onButton1: () {
+//                     BlocProvider.of<AppBloc>(context)
+//                         .add(const AppEvent.nonAuthorizedDialog());
+//                   },
+//                   onButton2: () {
+//                     BlocProvider.of<AppBloc>(context)
+//                         .add(const AppEvent.logining());
+//                   },
+//                   button2Text: 'exit2'.tr())
+//               .then((value) => context.router.pop());
+//           // return dialog == true
+//           //     ? context.router.pop()
+//           // : BlocProvider.of<AppBloc>(context)
+//           //     .add(const AppEvent.logining());
+// >>>>>>> dev
         },
         inAppState: () {
           //context.router.pop();

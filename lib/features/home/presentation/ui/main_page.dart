@@ -297,6 +297,7 @@ class _MainPageState extends State<MainPage> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
+                                          
                                           InkWell(
                                             onTap: () {
                                               context.router.push(
@@ -617,7 +618,7 @@ class _MainPageState extends State<MainPage> {
                                       ),
                                     ),
                                     SizedBox(
-                                      height: 165.h,
+                                      height: 145.h,
                                     ),
                                   ],
                                 ),

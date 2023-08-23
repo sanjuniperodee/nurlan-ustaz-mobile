@@ -180,7 +180,7 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
                     focusNode: focusNode,
                     controller: _textEditingController,
                     decoration: InputDecoration(
-                        hintText: 'write_comm'.tr(), border: InputBorder.none),
+                        hintText: 'write_message'.tr(), border: InputBorder.none),
                   ),
                 ),
                 IconButton(
