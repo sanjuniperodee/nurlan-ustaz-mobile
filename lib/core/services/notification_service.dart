@@ -25,7 +25,6 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await setupFlutterNotifications();
   showFlutterNotification(message);
@@ -183,9 +182,8 @@ Future<void> notificationTapBackground(
         ),
         LiveBroadcastsRoute(),
       ]);
-    } else if (data['object_type'] == 'tell_me_ustaz' &&
-        data['object_type'] != 0 &&
-        data['object_type'] != '') {
+    } else if (data['object_type'] == 'tell_me_ustaz') {
+      log('TEMAAA');
       // String id = data['object_id'];
       getIt<AppRouter>().pushAll([
         const LauncherAppRoute(

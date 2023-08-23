@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
@@ -22,7 +23,7 @@ class SearchWidget extends StatelessWidget {
         style: getTextStyle(CustomTextStyles.s18w400)
             .apply(color: AppColors.white),
         decoration: InputDecoration(
-          hintText: 'Іздеу',
+          hintText: 'search'.tr(),
           hintStyle: getTextStyle(CustomTextStyles.s18w400)
               .apply(color: AppColors.white),
           prefixIcon: const Icon(
