@@ -65,7 +65,6 @@ class _NurlanUstazAppState extends State<NurlanUstazApp> {
               // key: rootNavigatorKey,
               routerConfig: _rootRouter.config(
                   navigatorObservers: () => [
-                        AutoRouteObserver(),
                         FirebaseAnalyticsObserver(
                             analytics: _firebaseAnalytics),
                       ]),

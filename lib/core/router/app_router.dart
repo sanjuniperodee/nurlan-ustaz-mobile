@@ -80,7 +80,6 @@ class AppRouter extends _$AppRouter {
   RouteType get defaultRouteType => const RouteType.material();
   @override
   final List<AutoRoute> routes = [
-
     AutoRoute(
       page: LauncherAppRoute.page,
       // path: '/',
@@ -156,8 +155,5 @@ class AppRouter extends _$AppRouter {
     AutoRoute(page: CodeVerificationForgotRoute.page),
     AutoRoute(page: HolidayDetailRoute.page),
     AutoRoute(page: QrScannerRoute.page),
-
-
-
   ];
 }

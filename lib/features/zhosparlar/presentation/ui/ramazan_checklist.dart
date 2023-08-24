@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:calendar_agenda/calendar_agenda.dart';
- 
+// import 'package:calendar_agenda/calendar_agenda.dart';
+//
 // import 'package:calendar_agenda/calendar_agenda.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -13,26 +13,27 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_ap
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/bloc/checklist_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/calendar_custom_body.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/checklist_task_item.dart';
- 
+
 import '../../../app/presentation/widgets/custom_snackbars.dart';
 import '../../data/models/checklist_dto.dart';
-import '../widgets/horizontal_calendar/custom_agenda_controller.dart';
-import '../widgets/horizontal_calendar/custom_horizontal_calendar.dart';
+// import '../widgets/horizontal_calendar/custom_agenda_controller.dart';
+// import '../widgets/horizontal_calendar/custom_horizontal_calendar.dart';
 import '../widgets/task_details_dialog.dart';
- 
+
 @RoutePage()
 class RamazanChecklistPage extends StatefulWidget {
-  const RamazanChecklistPage({Key? key, required this.checkList}) : super(key: key);
+  const RamazanChecklistPage({Key? key, required this.checkList})
+      : super(key: key);
   final CheckListDto checkList;
- 
+
   @override
   State<RamazanChecklistPage> createState() => _RamazanChecklistPageState();
 }
- 
+
 class _RamazanChecklistPageState extends State<RamazanChecklistPage> {
-  CustomCalendarAgendaController _calendarAgendaControllerNotAppBar =
-      CustomCalendarAgendaController();
- 
+  // CustomCalendarAgendaController _calendarAgendaControllerNotAppBar =
+  //     CustomCalendarAgendaController();
+
   int selectedIndex = -1;
   final monthList = List.generate(
       31,
@@ -41,7 +42,7 @@ class _RamazanChecklistPageState extends State<RamazanChecklistPage> {
             DateTime.now().month,
             index + 1,
           ));
- 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,9 +61,8 @@ class _RamazanChecklistPageState extends State<RamazanChecklistPage> {
             return Container();
           }, loadingState: () {
             return Scaffold(body: Center(child: CircularProgressIndicator()));
-          }, initialState: (days, selectedDate , tasks, isLoading) {
+          }, initialState: (days, selectedDate, tasks, isLoading) {
             final date = selectedDate ?? DateTime.now();
-
 
             return CalendarCustomBody(
               left: 0,
@@ -72,28 +72,28 @@ class _RamazanChecklistPageState extends State<RamazanChecklistPage> {
                   physics: const BouncingScrollPhysics(),
                   child: Column(
                     children: [
-                       Padding(
+                      Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         child: CustomAppBar(
                           title: 'Ramadan_checklist'.tr(),
                         ),
                       ),
-                      CustomCalendarAgenda(
-                        controller: _calendarAgendaControllerNotAppBar,
-                        locale: context.locale.languageCode,
-                        weekDay: WeekDay.long,
-                        fullCalendarDay: WeekDay.long,
-                        selectedDateColor: Colors.blue.shade900,
-                        initialDate: date ,
-                        firstDate: DateTime.parse(widget.checkList.startDate!),
-                        lastDate: DateTime.parse(widget.checkList.endDate!),
-                        events:
-                            days.map((e) => DateTime.parse(e.date)).toList(),
-                        onDateSelected: (date) {
-                          context.read<CheckListCubit>().changeDate(date: date);
-                        },
-                        checklist: days,
-                      ),
+                      // CustomCalendarAgenda(
+                      //   controller: _calendarAgendaControllerNotAppBar,
+                      //   locale: context.locale.languageCode,
+                      //   weekDay: WeekDay.long,
+                      //   fullCalendarDay: WeekDay.long,
+                      //   selectedDateColor: Colors.blue.shade900,
+                      //   initialDate: date,
+                      //   firstDate: DateTime.parse(widget.checkList.startDate!),
+                      //   lastDate: DateTime.parse(widget.checkList.endDate!),
+                      //   events:
+                      //       days.map((e) => DateTime.parse(e.date)).toList(),
+                      //   onDateSelected: (date) {
+                      //     context.read<CheckListCubit>().changeDate(date: date);
+                      //   },
+                      //   checklist: days,
+                      // ),
                       SizedBox(
                         height: 36.h,
                       ),
@@ -114,9 +114,7 @@ class _RamazanChecklistPageState extends State<RamazanChecklistPage> {
                                           color: AppColors.white),
                                 ),
                                 Text(
-
                                   ' ${date.difference(DateTime.parse(widget.checkList.startDate!)).inDays + 1}-${'day'.tr()}',
-
                                   style: getTextStyle(CustomTextStyles.s14w400)
                                       .copyWith(
                                           fontFamily:

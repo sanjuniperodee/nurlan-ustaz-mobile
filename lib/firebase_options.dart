@@ -17,7 +17,10 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      return web;
+      throw UnsupportedError(
+        'DefaultFirebaseOptions have not been configured for web - '
+        'you can reconfigure this by running the FlutterFire CLI again.',
+      );
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -25,7 +28,10 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        return macos;
+        throw UnsupportedError(
+          'DefaultFirebaseOptions have not been configured for macos - '
+          'you can reconfigure this by running the FlutterFire CLI again.',
+        );
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -43,18 +49,9 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCQxX7a8fHl-mACtVzL1WHx2S2YMCPUAaQ',
-    appId: '1:53340493475:web:262e866301916779f1d116',
-    messagingSenderId: '53340493475',
-    projectId: 'nurlanustazdev0',
-    authDomain: 'nurlanustazdev0.firebaseapp.com',
-    storageBucket: 'nurlanustazdev0.appspot.com',
-  );
-
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDjL_Nhu-W4tHdcpNfWLM6DSp-wLGyzjbk',
-    appId: '1:53340493475:android:3048e5ebe28c1553f1d116',
+    appId: '1:53340493475:android:8099ab2d7b1a15dff1d116',
     messagingSenderId: '53340493475',
     projectId: 'nurlanustazdev0',
     storageBucket: 'nurlanustazdev0.appspot.com',
@@ -62,16 +59,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDF8T0zlVedXkzxNT0Ffj-3G6YW_bOokeE',
-    appId: '1:53340493475:ios:b25085d986860f53f1d116',
-    messagingSenderId: '53340493475',
-    projectId: 'nurlanustazdev0',
-    storageBucket: 'nurlanustazdev0.appspot.com',
-    iosBundleId: 'com.nurlan.ustaz.flutter',
-  );
-
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDF8T0zlVedXkzxNT0Ffj-3G6YW_bOokeE',
-    appId: '1:53340493475:ios:b25085d986860f53f1d116',
+    appId: '1:53340493475:ios:7af6bb4e6cd7a700f1d116',
     messagingSenderId: '53340493475',
     projectId: 'nurlanustazdev0',
     storageBucket: 'nurlanustazdev0.appspot.com',
