@@ -278,11 +278,11 @@ Future<void> setupFlutterNotifications() async {
 }
 
 Future<void> showFlutterNotification(RemoteMessage message) async {
-  RemoteNotification? notification = message.notification;
+  log(message.data.toString());
   await flutterLocalNotificationsPlugin.show(
-    notification.hashCode,
-    "${notification!.title}",
-    "${notification.body}",
+    message.hashCode,
+    message.data["title"],
+    message.data["body"],
     payload: json.encode(message.data),
     NotificationDetails(
       android: AndroidNotificationDetails(

@@ -15,13 +15,14 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/nurlan_ustaz_a
 
 import 'core/router/app_router.dart';
 import 'core/services/locator_service.dart';
+import 'core/services/notification_service.dart';
 
 Future<void> firebaseListen() async {
   FirebaseMessaging.instance.getInitialMessage();
   FirebaseMessaging.onMessage.listen((message) {
     log('MESSAGEEEE ${message.data} : ${message.data}');
     // if (message.data['order_id'] != '' && message.data['order_id'] != 0) {
-
+    showFlutterNotification(message);
     // } else {
     //   log('NO');
     // }
