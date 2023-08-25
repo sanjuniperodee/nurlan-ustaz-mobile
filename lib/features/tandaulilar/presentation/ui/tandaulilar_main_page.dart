@@ -7,7 +7,6 @@ import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/bloc/tandaulilar_cubit.dart';
@@ -85,6 +84,9 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                         },
                       ),
                       onRefresh: () {
+                        // lives.clear();
+                        // news.clear();
+                        // seminars.clear();
                         BlocProvider.of<TandaulilarCubit>(context)
                             .livesT(page: 1, isFirstCall: true, isSaved: true);
                         BlocProvider.of<TandaulilarCubit>(context)

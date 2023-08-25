@@ -94,13 +94,12 @@ class _ServicesPageState extends State<ServicesPage> {
                 return AppButton(
                   isActive: id.isNotEmpty,
                   onTap: () {
-                    if (id.isEmpty) {
-                      buildErrorCustomSnackBar(context, 'ERROR');
-                      return;
-                    }
-                    BlocProvider.of<PostServiceCubit>(context).postService(
-                      id: id,
-                    );
+                    id.isNotEmpty
+                        ? BlocProvider.of<PostServiceCubit>(context)
+                            .postService(
+                            id: id,
+                          )
+                        : null;
                   },
                   text: 'leave_req'.tr(),
                   // color: AppColors.blue,
@@ -141,7 +140,7 @@ class _ServicesPageState extends State<ServicesPage> {
                   physics: const BouncingScrollPhysics(),
                   child: Column(
                     children: [
-                       CustomAppBar(
+                      CustomAppBar(
                         title: 'Services'.tr(),
                       ),
                       ListView.builder(

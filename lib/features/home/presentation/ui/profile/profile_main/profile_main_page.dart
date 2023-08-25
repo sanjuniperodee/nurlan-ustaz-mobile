@@ -16,7 +16,6 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_cu
 import 'package:nurlan_ustaz_flutter/features/auth/data/datasource/local/auth_local_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/get_profile_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/widgets/profile_menu_item.dart';
-import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../../../core/common/app_styles.dart';
 import '../../../../../../core/common/assets.dart';
@@ -62,7 +61,6 @@ class _ProfileMainPage extends State<ProfileMainPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.lightBlue,
-
       body: BlocConsumer<GetProfileCubit, GetProfileState>(
         listener: (context, state) {
           state.whenOrNull(
@@ -72,11 +70,9 @@ class _ProfileMainPage extends State<ProfileMainPage> {
             },
           );
         },
-
         builder: (context, state) {
           log('STATE:::${state.toString()}');
           return state.maybeWhen(
-
             orElse: () {
               return const Center(
                 child: CircularProgressIndicator(
@@ -95,7 +91,7 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: SizedBox(
-                    height: 1.1.sh,
+                    height: 1.2.sh,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -103,28 +99,23 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                           title: 'profile'.tr(),
                         ),
                         SizedBox(height: 44.h),
-                        user.avatar != null
-                            ? ClipRRect(
-                                borderRadius: BorderRadius.circular(90),
-                                child: CachedNetworkImage(
-                                  imageUrl: user.avatar ?? '',
-                                  fit: BoxFit.cover,
-                                  height: 94.h,
-                                  width: 94.w,
-                                  errorWidget: (a, b, c) => Center(
-                                    child: SvgPicture.asset(
-                                      Assets.userSvg,
-                                      width: 94,
-                                      height: 94,
-                                    ),
-                                  ),
-                                ),
-                              )
-                            : SvgPicture.asset(
-                                Assets.userSvg,
-                                width: 94,
-                                height: 94,
-                              ),
+                        CircleAvatar(
+                          radius: 47.r,
+                          backgroundColor: Colors.transparent,
+                          backgroundImage: user.avatar != null
+                              ? NetworkImage(
+                                  user.avatar!,
+                                  // fit: BoxFit.cover,
+                                ) as ImageProvider
+                              : null,
+                          child: user.avatar == null
+                              ? SvgPicture.asset(
+                                  Assets.userSvg,
+                                  width: 94.r,
+                                  height: 94.r,
+                                )
+                              : null,
+                        ),
                         SizedBox(
                           height: 12.h,
                         ),

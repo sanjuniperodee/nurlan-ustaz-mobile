@@ -90,6 +90,7 @@
     "save": "Сохранить",
     "project_info": "Информация о проекте",
     "dream_interpretations": "Толкование снов",
+    "dream_interpretations_ind": "Мои сны",
     "muslim_names_meaning": "Значения мусульманских имен",
     "Daily_prayers": "Ежедневные молитвы и зикр",
     "tech_support": "Техническая поддержка",
@@ -133,6 +134,7 @@
     "shop": "Магазины",
     "top": "Топ",
     "all": "Все",
+    "all_payment": "Трактовки снов",
 
 
 
@@ -159,7 +161,7 @@
 
     "Namaz_time": "Время намаза",
     "Qibla": "Кибла",
-    "Islam_study": "Обучение Исламу",
+    "Islam_study": "Обучение\nИсламу",
     "Ayat_of_the_day": "Аят дня",
 
     "Allah_names": "99 имен Аллаха",

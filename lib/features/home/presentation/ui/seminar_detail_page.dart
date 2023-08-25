@@ -94,24 +94,24 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                     );
                   }).toList(),
                 ),
-                // result.media == null
-                //     ? const SizedBox()
-                //     : Positioned.fill(
-                //         top: 215.r,
-                //         child: Align(
-                //           alignment: Alignment.topCenter,
-                //           child: DotsIndicator(
-                //             dotsCount: result.media?.length ?? 1,
-                //             position: _currentIndex,
-                //             decorator: const DotsDecorator(
-                //               color: AppColors
-                //                   .grey2, // Color of non-selected indicators
-                //               activeColor: AppColors
-                //                   .white, // Color of selected indicator
-                //             ),
-                //           ),
-                //         ),
-                //       ),
+                result.media == null
+                    ? const SizedBox()
+                    : Positioned.fill(
+                        top: 215.r,
+                        child: Align(
+                          alignment: Alignment.topCenter,
+                          child: DotsIndicator(
+                            dotsCount: result.media?.length ?? 1,
+                            position: _currentIndex,
+                            decorator: const DotsDecorator(
+                              color: AppColors
+                                  .grey2, // Color of non-selected indicators
+                              activeColor: AppColors
+                                  .white, // Color of selected indicator
+                            ),
+                          ),
+                        ),
+                      ),
                 SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: Padding(
@@ -147,7 +147,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                       width: 10.w,
                                     ),
                                     Text(
-                                      '${DateFormat('d').format(DateTime.parse(result.startTime.toString()))}  ${DateFormat('MMMM').format(DateTime.parse(result.startTime.toString()))}, ${DateFormat('hh:mm').format(DateTime.parse(result.startTime.toString()).toLocal())}',
+                                      '${DateFormat('d').format(DateTime.parse(result.startTime.toString()))}  ${DateFormat('MMMM').format(DateTime.parse(result.startTime.toString()))}, ${DateFormat('HH:mm').format(DateTime.parse(result.startTime.toString()).toLocal())}',
                                       style:
                                           getTextStyle(CustomTextStyles.s14w400)
                                               .apply(color: AppColors.grey2),
