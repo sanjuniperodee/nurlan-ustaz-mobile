@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 // import 'package:calendar_agenda/calendar_agenda.dart';
-//
 // import 'package:calendar_agenda/calendar_agenda.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -84,7 +83,8 @@ class _RamazanChecklistPageState extends State<RamazanChecklistPage> {
                       //   weekDay: WeekDay.long,
                       //   fullCalendarDay: WeekDay.long,
                       //   selectedDateColor: Colors.blue.shade900,
-                      //   initialDate: date,
+                      //   initialDate: date ,
+
                       //   firstDate: DateTime.parse(widget.checkList.startDate!),
                       //   lastDate: DateTime.parse(widget.checkList.endDate!),
                       //   events:
