@@ -1,6 +1,8 @@
 import 'dart:developer';
+import 'dart:ui';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 
@@ -13,13 +15,14 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/nurlan_ustaz_a
 
 import 'core/router/app_router.dart';
 import 'core/services/locator_service.dart';
+import 'core/services/notification_service.dart';
 
 Future<void> firebaseListen() async {
   FirebaseMessaging.instance.getInitialMessage();
   FirebaseMessaging.onMessage.listen((message) {
     log('MESSAGEEEE ${message.data} : ${message.data}');
     // if (message.data['order_id'] != '' && message.data['order_id'] != 0) {
-
+    showFlutterNotification(message);
     // } else {
     //   log('NO');
     // }
@@ -64,6 +67,14 @@ Future<void> main() async {
   await firebaseListen();
   await firebaseInit();
   await checkLocationPermission();
+  FlutterError.onError = (errorDetails) {
+    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+  };
+  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+  PlatformDispatcher.instance.onError = (error, stack) {
+    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+    return true;
+  };
 
   MainRunner.run<AsyncAppDependencies>(
       asyncDependencies: AsyncAppDependencies.obtain,

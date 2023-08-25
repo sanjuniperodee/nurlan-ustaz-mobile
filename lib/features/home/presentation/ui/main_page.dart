@@ -38,7 +38,6 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   RefreshController controller = RefreshController();
 
-  final FirebaseAnalytics _firebaseAnalytics = FirebaseAnalytics.instance;
   final List<PageRouteInfo<dynamic>> myRouteHome = [
     SeminarRoute(),
     const CharityRoute(),
@@ -64,14 +63,6 @@ class _MainPageState extends State<MainPage> {
     );
     super.initState();
   }
-
-  // void _logAppOpen() async {
-  //   await _firebaseAnalytics.logEvent(
-  //     name: 'click',
-  //     parameters: {'event_name': 'name'},
-  //   );
-  //   log('ketti');
-  // }
 
   final now = DateTime.now();
   List times = [];
@@ -297,7 +288,6 @@ class _MainPageState extends State<MainPage> {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          
                                           InkWell(
                                             onTap: () {
                                               context.router.push(
@@ -415,8 +405,9 @@ class _MainPageState extends State<MainPage> {
                                                 minHeight: 170.h,
                                                 maxHeight: 170.h,
                                                 child: Lottie.asset(
-                                                    'assets/animations/tusZhoru_button.json',
-                                                    fit: BoxFit.fill),
+                                                  'assets/animations/tusZhoru_button.json',
+                                                  fit: BoxFit.fill,
+                                                ),
                                               ),
                                             ),
                                           ),
