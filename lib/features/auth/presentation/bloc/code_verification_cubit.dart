@@ -12,7 +12,7 @@ part 'code_verification_cubit.freezed.dart';
 class CodeVerificationCubit extends Cubit<CodeVerificationState> {
   CodeVerificationCubit(
     this._authRepository,
-  ) : super(const CodeVerificationState.loadingState());
+  ) : super(const CodeVerificationState.initialState());
   final AuthRepository _authRepository;
 
   Future<void> resendCode(String email) async {
@@ -30,12 +30,15 @@ class CodeVerificationCubit extends Cubit<CodeVerificationState> {
         activateUserDTO: ActivateUserDTO(user_id: userId, code: code));
     result.fold((l) {
       emit(_ErrorState(message: mapFailureToMessageBack(l)));
+      emit(_InitialState());
+
     }, (r) async {
       final result =
           await _authRepository.createJTW(createTokenDTO: tokenCreateDTO);
       result.fold(
         (l) {
           emit(_ErrorState(message: mapFailureToMessageBack(l)));
+          emit(_InitialState());
         },
         (r) {
           emit(const CodeVerificationState.loadedState());

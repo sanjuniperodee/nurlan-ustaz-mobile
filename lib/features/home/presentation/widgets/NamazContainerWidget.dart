@@ -3,6 +3,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
@@ -10,6 +11,8 @@ import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
+
+import '../bloc/timings_cubit.dart';
 
 class NamazContainerWidget extends StatefulWidget {
   final String name;
@@ -94,6 +97,22 @@ class _NamazContainerWidgetState extends State<NamazContainerWidget> {
                     final value = snap.data;
                     final displayTime = StopWatchTimer.getDisplayTime(value!,
                         milliSecond: false);
+                    if (!_stopWatchTimer.isRunning) {
+                      _stopWatchTimer.onStopTimer();
+
+                      BlocProvider.of<TimingsCubit>(context)
+                          .timings(
+                        43.25,
+                        76.91667,
+                      )
+                          .then((value) {
+                        _stopWatchTimer
+                            .setPresetHoursTime(int.parse(widget.time.substring(0, 2)));
+                        _stopWatchTimer
+                            .setPresetMinuteTime(int.parse(widget.time.substring(3, 5)));
+                        _stopWatchTimer.onStartTimer();
+                      });
+                    };
                     return Text(
                       displayTime,
                       style: getTextStyle(CustomTextStyles.s16w400)

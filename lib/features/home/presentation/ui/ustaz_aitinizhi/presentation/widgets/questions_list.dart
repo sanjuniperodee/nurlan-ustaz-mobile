@@ -64,9 +64,11 @@ class QuestionsList extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
                                     children: [
                                       SizedBox(
-                                        width: 250.w,
+                                        width: 160.w,
                                         child: Text(
                                           isSocket != null
                                               ? e.fullName ?? ''
@@ -85,7 +87,13 @@ class QuestionsList extends StatelessWidget {
                                       ),
                                       Text(
                                         DateFormat(
-                                                '${DateTime.now().day == DateTime.parse(e.createdAt ?? '').day ? '${'Бүгін, HH:mm'}' : 'dd MMMM, HH:mm'}',
+                                                DateTime.now().day ==
+                                                        DateTime.parse(
+                                                                e.createdAt ??
+                                                                    '')
+                                                            .day
+                                                    ? 'Бүгін, HH:mm'
+                                                    : 'd MMMM, HH:mm',
                                                 context.locale.languageCode)
                                             .format(DateTime.parse(
                                                     e.createdAt ?? '')

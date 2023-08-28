@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/repositories/home_repository.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -23,12 +24,13 @@ class CreateSeminarPaymentCubit extends Cubit<CreateSeminarPaymentState> {
     int id,
     BuildContext context,
   ) async {
+    emit(_LoadingState());
     String tusZhoruDynamicLink = await DynamicLink().createSeminarLink(id);
-    log(tusZhoruDynamicLink);
     final result = await _repository.createSeminarPayment(
         id: id, backUrl: tusZhoruDynamicLink);
-    log(tusZhoruDynamicLink);
-    result.fold((l) => {}, (r) async {
+    result.fold((l) {
+      emit(_ErrorState(message: mapFailureToMessageBack(l)));
+    }, (r) async {
       final Uri url = Uri.parse(r.pgRedirectUrl.toString());
       if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
         throw Exception('Could not launch');

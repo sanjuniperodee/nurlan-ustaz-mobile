@@ -26,8 +26,6 @@ class CustomTusZhoruList extends StatefulWidget {
 class _CustomTusZhoruListState extends State<CustomTusZhoruList> {
   @override
   Widget build(BuildContext context) {
-    log(widget.tusZhoruList.toString());
-    log('madi');
     final list = widget.tusZhoruList;
 
     return list.isNotEmpty

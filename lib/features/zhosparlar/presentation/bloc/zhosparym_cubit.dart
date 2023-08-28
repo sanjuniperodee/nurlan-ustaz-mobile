@@ -31,11 +31,11 @@ class ZhosparymCubit extends Cubit<ZhosparymState> {
       return null;
     }, (r) {
       if (r.isNotEmpty) {
-        log('rrr-${r.first.toString()}');
         checklist = r.toList().first;
       }
       else{
         checklist = null;
+
       }
       return r.first;
     });
@@ -48,6 +48,8 @@ class ZhosparymCubit extends Cubit<ZhosparymState> {
   }
 
   Future<void> calendarEvents(DateTime date) async {
+    emit(_InitialState().copyWith(events: null,checklist: checklist));
+
     var lastDayDateTime = (date.month < 12)
         ? DateTime(date.year, date.month + 1, 0)
         : DateTime(date.year + 1, 1, 0);
