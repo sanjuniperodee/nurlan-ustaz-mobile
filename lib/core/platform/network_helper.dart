@@ -1,16 +1,13 @@
 // ignore_for_file: constant_identifier_names
 const TEST = 'http://86.107.45.90:8000';
+
 const PROD = 'https://dev.nurlanustaz.kz';
+
 const SERVER_ = PROD;
-
-
-
-
 
 mixin EndPoints {
   static const String onBoarding = '/api/support/onboarding/';
   static const String appVersions = '/api/support/app-version/';
-
 
   /// auth
   static const String createUser = '/api/users/';
@@ -22,7 +19,8 @@ mixin EndPoints {
   static const String resetPassword = '/api/users/reset_password/';
   static const String resetPasswordConfirm =
       '/api/users/reset_password_confirm/';
-  static const String resetConfirmCode = '/api/users/reset_password_confirm_code/';
+  static const String resetConfirmCode =
+      '/api/users/reset_password_confirm_code/';
   static const String resendActivation = '/api/users/resend_activation/';
 
   static const String register = '/api/v1/register';
@@ -32,7 +30,6 @@ mixin EndPoints {
 
   static const String newPass = '/api/users/set_password/';
   static const String sendCode = '/api/v1/sendCode';
-
 
   //HOME
   static const String prayerTimes = '/api/islam/prayer-times/';

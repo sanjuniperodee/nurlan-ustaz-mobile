@@ -20,20 +20,20 @@ abstract class ZhosparymRepository {
   Future<Either<Failure, List<CheckListDto>>> getCheckLists(
       {String? search, bool? isSaved, int? page, bool? isFirstCall});
 
-  Future<Either<Failure, List<CheckListDayDto>>> getDays({required int checklistId});
-  Future<Either<Failure,void>> autoFillDays({required int checklistId});
-
+  Future<Either<Failure, List<CheckListDayDto>>> getDays(
+      {required int checklistId});
+  Future<Either<Failure, void>> autoFillDays({required int checklistId});
 
   Future<Either<Failure, void>> completeTask(
       {required CheckListDayDto checkListDayDto,
       required CheckListTaskDto checkListTaskDto,
       required bool isComplete});
   Future<Either<Failure, void>> deleteTask(
-      {required int checkListDayId,
-        required int checkListTaskId });
-  Future<Either<Failure, void>> postTask({required int checkListDayId, required String title});
-  Future<Either<Failure, List<CheckListTaskDto>>> getTasksByDate({required int checklistDayId});
-
+      {required int checkListDayId, required int checkListTaskId});
+  Future<Either<Failure, void>> postTask(
+      {required int checkListDayId, required String title});
+  Future<Either<Failure, List<CheckListTaskDto>>> getTasksByDate(
+      {required int checklistDayId});
 }
 
 @Singleton(as: ZhosparymRepository)
@@ -115,10 +115,12 @@ class ZhosparymRepositoryImpl extends ZhosparymRepository {
   }
 
   @override
-  Future<Either<Failure, void>> deleteTask({required int checkListDayId, required int checkListTaskId}) async {
+  Future<Either<Failure, void>> deleteTask(
+      {required int checkListDayId, required int checkListTaskId}) async {
     if (await networkInfo.isConnected) {
       try {
-        await remoteDS.deleteTask(checkListDayId: checkListDayId, checkListTaskId: checkListTaskId);
+        await remoteDS.deleteTask(
+            checkListDayId: checkListDayId, checkListTaskId: checkListTaskId);
         return const Right('success');
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -129,7 +131,8 @@ class ZhosparymRepositoryImpl extends ZhosparymRepository {
   }
 
   @override
-  Future<Either<Failure, void>> postTask({required int checkListDayId, required String title}) async {
+  Future<Either<Failure, void>> postTask(
+      {required int checkListDayId, required String title}) async {
     if (await networkInfo.isConnected) {
       try {
         await remoteDS.postTask(checkListDayId: checkListDayId, title: title);
@@ -145,7 +148,8 @@ class ZhosparymRepositoryImpl extends ZhosparymRepository {
   @override
   Future<Either<Failure, void>> autoFillDays({required int checklistId}) async {
     if (await networkInfo.isConnected) {
-      try {await remoteDS.autoFill(checklistId: checklistId);
+      try {
+        await remoteDS.autoFill(checklistId: checklistId);
         return const Right('success');
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -156,7 +160,8 @@ class ZhosparymRepositoryImpl extends ZhosparymRepository {
   }
 
   @override
-  Future<Either<Failure, List<CheckListTaskDto>>> getTasksByDate({required int checklistDayId}) async {
+  Future<Either<Failure, List<CheckListTaskDto>>> getTasksByDate(
+      {required int checklistDayId}) async {
     if (await networkInfo.isConnected) {
       try {
         final List<CheckListTaskDto> tasks =

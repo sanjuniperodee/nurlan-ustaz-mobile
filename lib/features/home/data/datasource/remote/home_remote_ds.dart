@@ -813,7 +813,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
           if (search != null) 'search': search,
         },
       );
-      // log(response.data.toString());
+      log(response.data.toString());
       if (response.statusCode == 200) {
         if (search != null && search.isNotEmpty) {
           seminarPage.clear();

@@ -10,7 +10,6 @@ import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/firebase_options.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -27,6 +26,7 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await setupFlutterNotifications();
+
   showFlutterNotification(message);
 }
 
@@ -40,9 +40,7 @@ Future<void> notificationTapBackground(
     );
     log('NOTIFICATION');
     log('NOTIFICATION${data.toString()}');
-    if (data['object_type'] == 'seminar' &&
-        data['object_type'] != 0 &&
-        data['object_type'] != '') {
+    if (data['object_type'] == 'seminar') {
       log('YESSSSS');
       String id = data['object_id'];
       getIt<AppRouter>().pushAll([
@@ -54,9 +52,7 @@ Future<void> notificationTapBackground(
         SeminarDetailRoute(id: int.parse(id))
       ]);
       // getIt<OrderByIdCubit>().getOrderById(id: int.parse(id));
-    } else if (data['object_type'] == 'news' &&
-        data['object_type'] != 0 &&
-        data['object_type'] != '') {
+    } else if (data['object_type'] == 'news') {
       String id = data['object_id'];
       getIt<AppRouter>().pushAll([
         const LauncherAppRoute(
@@ -278,11 +274,11 @@ Future<void> setupFlutterNotifications() async {
 }
 
 Future<void> showFlutterNotification(RemoteMessage message) async {
-  RemoteNotification? notification = message.notification;
+  log(message.data.toString());
   await flutterLocalNotificationsPlugin.show(
-    notification.hashCode,
-    "${notification!.title}",
-    "${notification.body}",
+    message.hashCode,
+    message.data["title"],
+    message.data["body"],
     payload: json.encode(message.data),
     NotificationDetails(
       android: AndroidNotificationDetails(
@@ -295,6 +291,8 @@ Future<void> showFlutterNotification(RemoteMessage message) async {
         sound: channel.sound,
         priority: Priority.high,
       ),
+      iOS: const DarwinNotificationDetails(
+          presentAlert: true, presentBadge: true, presentSound: true),
     ),
   );
 }

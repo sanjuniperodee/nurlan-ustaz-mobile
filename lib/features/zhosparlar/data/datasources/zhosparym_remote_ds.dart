@@ -35,7 +35,6 @@ abstract class ZhosparymRemoteDs {
 
   Future<void> autoFill({required int checklistId});
   Future<List<CheckListTaskDto>> getTasksByDate({required int checklistDayId});
-
 }
 
 @Injectable(as: ZhosparymRemoteDs)
@@ -200,37 +199,38 @@ class ZhosparymRemoteDsImpl extends ZhosparymRemoteDs {
   @override
   Future<void> autoFill({required int checklistId}) async {
     try {
-      final response =
-          await dio.post('${EndPoints.checklist}/$checklistId/days/fill-days/', data: {
-      });
+      final response = await dio.post(
+          '${EndPoints.checklist}/$checklistId/days/fill-days/',
+          data: {});
       if (response.statusCode == 201) {
-        return ;
+        return;
       }
       throw 'ERROR';
     } on DioError catch (e) {
       throw ServerException(
         message:
-        (e.response?.data as Map<String, dynamic>)['message'].toString(),
+            (e.response?.data as Map<String, dynamic>)['message'].toString(),
       );
     }
   }
 
   @override
-  Future<List<CheckListTaskDto>> getTasksByDate({required int checklistDayId}) async {
+  Future<List<CheckListTaskDto>> getTasksByDate(
+      {required int checklistDayId}) async {
     try {
       final response =
           await dio.get('${EndPoints.checklistDays}/$checklistDayId/tasks/');
       if (response.statusCode == 200) {
         log(response.data.toString());
         return (response.data as List)
-            .map((e) => CheckListTaskDto.fromJson(e as Map <String, dynamic>))
+            .map((e) => CheckListTaskDto.fromJson(e as Map<String, dynamic>))
             .toList();
       }
       throw 'ERROR';
     } on DioError catch (e) {
       throw ServerException(
         message:
-        (e.response?.data as Map<String, dynamic>)['message'].toString(),
+            (e.response?.data as Map<String, dynamic>)['message'].toString(),
       );
     }
   }

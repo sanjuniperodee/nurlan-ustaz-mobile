@@ -75,6 +75,8 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                 );
               },
               loaded: (result) {
+                     bool dt1 = DateTime.parse(result.startTime.toString())
+                  .isBefore(DateTime.now());
                 bool scroll = true;
                 result.media!.length == 1 ? scroll = false : scroll = true;
                 isFavorite = result.isSaved!;
@@ -158,6 +160,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                               Row(
                                 children: [
                                   Row(
+
                                     children: [
                                       SvgPicture.asset(Assets.seminarCalendarSvg),
                                       SizedBox(
@@ -405,6 +408,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                               ),
                               Text(
                                 result.text ?? 'ERROR',
+
                                 style: getTextStyle(CustomTextStyles.s16w400)
                                     .apply(color: AppColors.black),
                               ),

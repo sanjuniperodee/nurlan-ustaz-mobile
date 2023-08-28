@@ -58,33 +58,41 @@ class _PaymentsPageState extends State<PaymentsPage> {
       },
       builder: (context, state) {
         return GlobalCustomBody(
+          left: 0,
+          right: 0,
           child: SizedBox(
             height: 1.1.sh,
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
-                  CustomAppBar(
-                    title: 'Purchased_services'.tr(),
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 16.0, right: 16, top: 16),
+                    child: CustomAppBar(
+                      title: 'Purchased_services'.tr(),
+                    ),
                   ),
                   const SizedBox(
                     height: 36,
                   ),
                   CustomTabBar(
+                    height: 50,
                     tabs: [
                       Tab(
                         text: 'seminars'.tr(),
                       ),
                       Tab(
-                        text: 'all'.tr(),
+                        text: 'all_payment'.tr(),
                       ),
                       Tab(
-                        text: 'dream_interpretations'.tr(),
+                        text: 'dream_interpretations_ind'.tr(),
                       ),
                     ],
                     onTap: (value) {
                       currentIndex = value;
-
+                      BlocProvider.of<PaymentTickCubit>(context).listHome = [];
+                      BlocProvider.of<PaymentTickCubit>(context).listTus = [];
                       log('INDEX:::${currentIndex.toString()}');
                       if (currentIndex == 0) {
                         BlocProvider.of<PaymentTickCubit>(context).seminar(
@@ -105,18 +113,25 @@ class _PaymentsPageState extends State<PaymentsPage> {
                   ),
                   state.maybeWhen(
                     orElse: () {
-                      return Center(
-                        child: CircularProgressIndicator(),
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 48.0).r,
+                        child: const Center(
+                          child: CircularProgressIndicator(
+                            color: AppColors.linearBlue,
+                          ),
+                        ),
                       );
                     },
                     loaded: (res, res2) {
                       return currentIndex != 0
                           ? ListView.separated(
                               shrinkWrap: true,
+                              padding: const EdgeInsets.all(16).r,
                               physics: const BouncingScrollPhysics(),
                               itemBuilder: (context, index) {
                                 return InkWell(
                                   onTap: () {
+                                    log('URL${tus[index].ticketUrl}');
                                     _launchUrl(tus[index].ticketUrl ?? "");
                                     // bottomSheet(
                                     //   FractionallySizedBox(
@@ -291,9 +306,11 @@ class _PaymentsPageState extends State<PaymentsPage> {
                           : ListView.separated(
                               shrinkWrap: true,
                               physics: const BouncingScrollPhysics(),
+                              padding: const EdgeInsets.all(16).r,
                               itemBuilder: (context, index) {
                                 return InkWell(
                                   onTap: () {
+                                    log('URL${res[index].ticketUrl}');
                                     _launchUrl(res[index].ticketUrl ?? "");
                                     // bottomSheet(
                                     //   FractionallySizedBox(
@@ -479,6 +496,7 @@ class _PaymentsPageState extends State<PaymentsPage> {
 
 Future<void> _launchUrl(String _urll) async {
   final Uri _url = Uri.parse('${_urll}');
+  log(_url.toString());
   if (!await launchUrl(_url, mode: LaunchMode.externalApplication)) {
     throw Exception('Could not launch $_url');
   }

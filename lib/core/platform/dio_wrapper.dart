@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:dio/dio.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
 import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/features/app/logic/not_auth_logic.dart';
@@ -95,7 +96,6 @@ class _KausarDioInterceptor extends Interceptor {
   ) async {
     getIt<NotAuthLogic>().statusSubject.add(err.response?.statusCode ?? 0);
 
-
     if ((err.response?.statusCode ?? 0) == HttpStatus.unauthorized) {
       getIt<NotAuthLogic>().statusSubject.add(401);
 
@@ -112,6 +112,8 @@ class _KausarDioInterceptor extends Interceptor {
       //   throw e;
       // }
     } else if ((err.response?.statusCode ?? 0) == HttpStatus.notFound) {
+      FirebaseCrashlytics.instance
+          .recordError(err, err.stackTrace, fatal: true);
       // getIt<NotFoundLogic>().statusSubject.add(404);
     }
 

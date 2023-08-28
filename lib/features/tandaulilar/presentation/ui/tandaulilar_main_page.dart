@@ -7,7 +7,6 @@ import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/bloc/tandaulilar_cubit.dart';
@@ -36,9 +35,6 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
     super.initState();
   }
 
-  List<ResultHomeDTO> lives = [];
-  List<ResultHomeDTO> news = [];
-  List<ResultHomeDTO> seminars = [];
   @override
   Widget build(BuildContext context) {
     return BlocListener<LanguageCubit, LanguageState>(
@@ -64,9 +60,9 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                 );
               },
               loaded: (livess, newss, seminarss) {
-                lives = livess;
-                news = newss;
-                seminars = seminarss;
+                // lives = livess;
+                // news = newss;
+                // seminars = seminarss;
                 return GlobalCustomBody(
                   left: 16,
                   right: 16,
@@ -85,6 +81,10 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                         },
                       ),
                       onRefresh: () {
+                        BlocProvider.of<TandaulilarCubit>(context).lives = [];
+                        BlocProvider.of<TandaulilarCubit>(context).news = [];
+                        BlocProvider.of<TandaulilarCubit>(context).seminars =
+                            [];
                         BlocProvider.of<TandaulilarCubit>(context)
                             .livesT(page: 1, isFirstCall: true, isSaved: true);
                         BlocProvider.of<TandaulilarCubit>(context)
@@ -115,7 +115,7 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                                     children: [
                                       CategoryCard(
                                         title: 'news'.tr(),
-                                        imageList: news,
+                                        imageList: newss,
                                         onTap: () {
                                           context.router.push(
                                             NewsRoute(type: 'isSave'),
@@ -124,7 +124,7 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                                       ),
                                       CategoryCard(
                                         title: 'live'.tr(),
-                                        imageList: lives,
+                                        imageList: livess,
                                         onTap: () {
                                           context.router.push(
                                             LiveBroadcastsRoute(type: 'isSave'),
@@ -138,7 +138,7 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                                   ),
                                   CategoryCard(
                                     title: 'seminars'.tr(),
-                                    imageList: seminars,
+                                    imageList: seminarss,
                                     titleColor: AppColors.blue,
                                     onTap: () {
                                       context.router.push(
