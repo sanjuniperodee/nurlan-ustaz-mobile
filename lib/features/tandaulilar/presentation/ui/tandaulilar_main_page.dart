@@ -35,9 +35,6 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
     super.initState();
   }
 
-  List<ResultHomeDTO> lives = [];
-  List<ResultHomeDTO> news = [];
-  List<ResultHomeDTO> seminars = [];
   @override
   Widget build(BuildContext context) {
     return BlocListener<LanguageCubit, LanguageState>(
@@ -63,9 +60,9 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                 );
               },
               loaded: (livess, newss, seminarss) {
-                lives = livess;
-                news = newss;
-                seminars = seminarss;
+                // lives = livess;
+                // news = newss;
+                // seminars = seminarss;
                 return GlobalCustomBody(
                   left: 16,
                   right: 16,
@@ -84,9 +81,10 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                         },
                       ),
                       onRefresh: () {
-                        // lives.clear();
-                        // news.clear();
-                        // seminars.clear();
+                        BlocProvider.of<TandaulilarCubit>(context).lives = [];
+                        BlocProvider.of<TandaulilarCubit>(context).news = [];
+                        BlocProvider.of<TandaulilarCubit>(context).seminars =
+                            [];
                         BlocProvider.of<TandaulilarCubit>(context)
                             .livesT(page: 1, isFirstCall: true, isSaved: true);
                         BlocProvider.of<TandaulilarCubit>(context)
@@ -117,7 +115,7 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                                     children: [
                                       CategoryCard(
                                         title: 'news'.tr(),
-                                        imageList: news,
+                                        imageList: newss,
                                         onTap: () {
                                           context.router.push(
                                             NewsRoute(type: 'isSave'),
@@ -126,7 +124,7 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                                       ),
                                       CategoryCard(
                                         title: 'live'.tr(),
-                                        imageList: lives,
+                                        imageList: livess,
                                         onTap: () {
                                           context.router.push(
                                             LiveBroadcastsRoute(type: 'isSave'),
@@ -140,7 +138,7 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                                   ),
                                   CategoryCard(
                                     title: 'seminars'.tr(),
-                                    imageList: seminars,
+                                    imageList: seminarss,
                                     titleColor: AppColors.blue,
                                     onTap: () {
                                       context.router.push(

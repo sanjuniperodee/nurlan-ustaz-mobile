@@ -26,7 +26,7 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await setupFlutterNotifications();
-  
+
   showFlutterNotification(message);
 }
 
@@ -291,6 +291,8 @@ Future<void> showFlutterNotification(RemoteMessage message) async {
         sound: channel.sound,
         priority: Priority.high,
       ),
+      iOS: const DarwinNotificationDetails(
+          presentAlert: true, presentBadge: true, presentSound: true),
     ),
   );
 }
