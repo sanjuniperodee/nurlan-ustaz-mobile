@@ -1,6 +1,6 @@
 // ignore_for_file: constant_identifier_names
 const TEST = 'http://86.107.45.90:8000';
-const PROD = 'https://dev.nurlanustaz.kz/';
+const PROD = 'https://dev.nurlanustaz.kz';
 const SERVER_ = PROD;
 
 

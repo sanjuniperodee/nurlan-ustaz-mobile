@@ -81,83 +81,92 @@ class _CodeVerificationPageState extends State<CodeVerificationPage> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.password);
     return BlocConsumer<CodeVerificationCubit, CodeVerificationState>(
       builder: (context, state) {
-        return Scaffold(
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
-          floatingActionButton: Padding(
-              padding: const EdgeInsets.all(16),
-              child: CustomAppButtonTimer(
-                isActive: true,
-                onTap: () async {
-                  context
-                      .read<CodeVerificationCubit>()
-                      .resendCode(widget.email);
-                },
-                text: 'send_again'.tr(),
-              )),
-          backgroundColor: AppColors.white,
-          body: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 17.w),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 56.h,
-                  ),
-                  CustomAppBar(
-                    title: 'confirmation_code'.tr(),
-                    color: AppColors.black,
-                  ),
-                  SizedBox(
-                    height: 36.h,
-                  ),
-                  Text(
-                    '${'mail_code'.tr()}: ${widget.email}',
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(height: 18.h),
-                  Pinput(
-                    submittedPinTheme: submitted,
-                    focusedPinTheme: focusPinTheme,
-                    defaultPinTheme: defaultPinTheme,
-                    length: 6,
-                    keyboardType:
-                        TextInputType.numberWithOptions(decimal: false),
-                    useNativeKeyboard: true,
-                    inputFormatters: [
-                      FilteringTextInputFormatter.allow(RegExp('[0-9.,]+')),
-                    ],
-                    controller: pinController,
-                    onCompleted: (String value) async {
-                      context.read<CodeVerificationCubit>().sendCode(
-                          pinController.text,
-                          widget.userId,
-                          TokenCreateDTO(
-                              email: widget.email, password: widget.password));
-                    },
-                  ),
-                ],
+        return state.maybeWhen(
+          orElse: () {
+            return Container();
+          },
+          loadingState: () {
+            return const Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
               ),
-            ),
-          ),
+            );
+          },
+          initialState: () {
+            return Scaffold(
+              floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerFloat,
+              floatingActionButton: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: CustomAppButtonTimer(
+                    isActive: true,
+                    onTap: () async {
+                      context
+                          .read<CodeVerificationCubit>()
+                          .resendCode(widget.email);
+                    },
+                    text: 'send_again'.tr(),
+                  )),
+              backgroundColor: AppColors.white,
+              body: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 17.w),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: 56.h,
+                      ),
+                      CustomAppBar(
+                        title: 'confirmation_code'.tr(),
+                        color: AppColors.black,
+                      ),
+                      SizedBox(
+                        height: 36.h,
+                      ),
+                      Text(
+                        '${'mail_code'.tr()}${widget.email}',
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 18.h),
+                      Pinput(
+                        submittedPinTheme: submitted,
+                        focusedPinTheme: focusPinTheme,
+                        defaultPinTheme: defaultPinTheme,
+                        length: 6,
+                        keyboardType:
+                        TextInputType.numberWithOptions(decimal: false),
+                        useNativeKeyboard: true,
+                        inputFormatters: [
+                          FilteringTextInputFormatter.allow(RegExp('[0-9.,]+')),
+                        ],
+                        controller: pinController,
+                        onCompleted: (String value) async {
+                          context.read<CodeVerificationCubit>().sendCode(
+                              pinController.text,
+                              widget.userId,
+                              TokenCreateDTO(
+                                  email: widget.email, password: widget.password));
+                        },
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
         );
+
       },
       listener: (context, state) {
         state.maybeWhen(
-          loadingState: () {
-            return Center(
-              child: CircularProgressIndicator(),
-            );
-          },
           loadedState: () {
             context.router.push(const LauncherAppRoute());
           },
           errorState: (message) {
-            log('oshibka');
+            pinController.clear();
             return buildErrorCustomSnackBar(context, message);
           },
           orElse: () {},

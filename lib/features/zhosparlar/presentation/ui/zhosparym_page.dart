@@ -1,3 +1,4 @@
+import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -73,10 +74,10 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
         showDialog(
             context: mainContext,
             builder: (context) => HolidayDialog(
-              event: event,
-              mainContext: mainContext,
-              gradient: gradient,
-            ));
+                  event: event,
+                  mainContext: mainContext,
+                  gradient: gradient,
+                ));
         break;
       case EventsType.live:
         showDialog(
@@ -95,7 +96,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
         );
         break;
       default:
-      // Handle other event types or display a default dialog
+        // Handle other event types or display a default dialog
         break;
     }
   }
@@ -115,8 +116,10 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
 
   @override
   void initState() {
-    BlocProvider.of<ZhosparymCubit>(context).getCheckList();
-    BlocProvider.of<ZhosparymCubit>(context).calendarEvents(DateTime.now());
+    BlocProvider.of<ZhosparymCubit>(context).getCheckList()
+      ..then((value) {
+        BlocProvider.of<ZhosparymCubit>(context).calendarEvents(DateTime.now());
+      });
     super.initState();
   }
 
@@ -124,20 +127,20 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
   Widget build(BuildContext context) {
     return BlocConsumer<ZhosparymCubit, ZhosparymState>(
         listener: (context, state) {
-          state.maybeWhen(
-            errorState: (message) {
-              buildErrorCustomSnackBar(context, message);
-            },
-            orElse: () {},
-          );
-        }, builder: (context, state) {
+      state.maybeWhen(
+        errorState: (message) {
+          buildErrorCustomSnackBar(context, message);
+        },
+        orElse: () {},
+      );
+    }, builder: (context, state) {
       return state.maybeWhen(orElse: () {
         return Container();
       }, initialState: (events, checklist) {
         holidays.clear();
 
         final eventsDays = events?.map<DateTime, List<EventDto>>(
-              (key, value) => MapEntry(
+          (key, value) => MapEntry(
             DateTime.parse(key),
             value,
           ),
@@ -148,6 +151,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
           });
         }
 
+        log('zhospar-${eventsDays.toString()}');
         return Scaffold(
           backgroundColor: AppColors.lightBlue,
           body: SizedBox(
@@ -207,124 +211,124 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                             Text('my_plans'.tr(),
                                 style: getTextStyle(CustomTextStyles.s36w700)
                                     .apply(
-                                    fontFamily: FontTypes.Philosopher.name,
-                                    color: AppColors.white)),
+                                        fontFamily: FontTypes.Philosopher.name,
+                                        color: AppColors.white)),
                             SizedBox(height: 24.h),
-                            // Container(
-                            //   height: 414,
-                            //   width: double.infinity,
-                            //   decoration: BoxDecoration(
-                            //     color: AppColors.white,
-                            //     borderRadius: BorderRadius.circular(30.r),
-                            //   ),
-                            //   child: eventsDays == null
-                            //       ? Center(
-                            //           child: CircularProgressIndicator(),
-                            //         )
-                            //       : CustomCalendar(
-                            //           onDateSelected: (DateTime date) {
-                            //             context.read<ZhosparymCubit>().chatPer(
-                            //                 DateFormat('yyyy-MM-dd')
-                            //                     .format(date)
-                            //                     .toString());
+                            Container(
+                              height: 414,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: AppColors.white,
+                                borderRadius: BorderRadius.circular(30.r),
+                              ),
+                              child: eventsDays == null
+                                  ? Center(
+                                      child: CircularProgressIndicator(),
+                                    )
+                                  : CustomCalendar(
+                                      onDateSelected: (DateTime date) {
+                                        context.read<ZhosparymCubit>().chatPer(
+                                            DateFormat('yyyy-MM-dd')
+                                                .format(date)
+                                                .toString());
 
-                            //             if (!eventsDays.containsKey(date)) {
-                            //               return;
-                            //             } else {
-                            //               if (eventsDays[date]!
-                            //                       .toList()
-                            //                       .where((element) =>
-                            //                           element.type !=
-                            //                           EventsType.holiday)
-                            //                       .length >
-                            //                   1) {
-                            //                 CarouselController controller =
-                            //                     CarouselController();
-                            //                 int currentIndex = 0;
-                            //                 showDialog(
-                            //                   context: context,
-                            //                   builder: (context) => Dialog(
-                            //                       shape: RoundedRectangleBorder(
-                            //                           borderRadius:
-                            //                               BorderRadius.circular(
-                            //                                   20.r)),
-                            //                       child: CarouselSlider(
-                            //                         carouselController:
-                            //                             controller,
-                            //                         items: eventsDays[date]!
-                            //                             .toList()
-                            //                             .where((element) =>
-                            //                                 element.type !=
-                            //                                 EventsType.holiday)
-                            //                             .toList()
-                            //                             .map(
-                            //                           (e) {
-                            //                             return EventContainer(
-                            //                               e,
-                            //                               nextPage: () {
-                            //                                 controller
-                            //                                     .nextPage();
-                            //                               },
-                            //                               previousPage: () {
-                            //                                 controller
-                            //                                     .previousPage();
-                            //                               },
-                            //                               maincontext: context,
-                            //                             );
-                            //                           },
-                            //                         ).toList(),
-                            //                         options: CarouselOptions(
-                            //                           aspectRatio: 1.3,
-                            //                           viewportFraction: 1,
-                            //                           autoPlay: true,
-                            //                           autoPlayInterval:
-                            //                               const Duration(
-                            //                                   seconds: 3),
-                            //                           enlargeCenterPage: true,
-                            //                           onPageChanged:
-                            //                               (index, _) {
-                            //                             setState(() {
-                            //                               currentIndex = index;
-                            //                             });
-                            //                           },
-                            //                         ),
-                            //                       )),
-                            //                 );
-                            //               } else {
-                            //                 showEventDialog(
-                            //                     context,
-                            //                     eventsDays[date]!.first,
-                            //                     gradients[0]);
-                            //               }
-                            //             }
-                            //           },
-                            //           hideBottomBar: false,
-                            //           startOnMonday: true,
-                            //           weekDays: const [
-                            //             'Дс',
-                            //             'Сс',
-                            //             'Ср',
-                            //             'Бс',
-                            //             'Жм',
-                            //             'Сн',
-                            //             'Жк'
-                            //           ],
-                            //           events: eventsDays,
-                            //           isExpandable: false,
-                            //           eventDoneColor: Colors.green,
-                            //           selectedColor: Colors.pink,
-                            //           todayColor: AppColors.black,
-                            //           eventColor: Colors.deepPurple,
-                            //           locale: context.locale.languageCode,
-                            //           todayButtonText: '',
-                            //           isExpanded: true,
-                            //           dayOfWeekStyle: const TextStyle(
-                            //             color: AppColors.grey2,
-                            //             fontWeight: FontWeight.w400,
-                            //             fontSize: 12,
-                            //           ),
-                            //         ),
-                            // ),
+                                        if (!eventsDays.containsKey(date)) {
+                                          return;
+                                        } else {
+                                          if (eventsDays[date]!
+                                                  .toList()
+                                                  .where((element) =>
+                                                      element.type !=
+                                                      EventsType.holiday)
+                                                  .length >
+                                              1) {
+                                            CarouselController controller =
+                                                CarouselController();
+                                            int currentIndex = 0;
+                                            showDialog(
+                                              context: context,
+                                              builder: (context) => Dialog(
+                                                  shape: RoundedRectangleBorder(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              20.r)),
+                                                  child: CarouselSlider(
+                                                    carouselController:
+                                                        controller,
+                                                    items: eventsDays[date]!
+                                                        .toList()
+                                                        .where((element) =>
+                                                            element.type !=
+                                                            EventsType.holiday)
+                                                        .toList()
+                                                        .map(
+                                                      (e) {
+                                                        return EventContainer(
+                                                          e,
+                                                          nextPage: () {
+                                                            controller
+                                                                .nextPage();
+                                                          },
+                                                          previousPage: () {
+                                                            controller
+                                                                .previousPage();
+                                                          },
+                                                          maincontext: context,
+                                                        );
+                                                      },
+                                                    ).toList(),
+                                                    options: CarouselOptions(
+                                                      aspectRatio: 1.3,
+                                                      viewportFraction: 1,
+                                                      autoPlay: true,
+                                                      autoPlayInterval:
+                                                          const Duration(
+                                                              seconds: 3),
+                                                      enlargeCenterPage: true,
+                                                      onPageChanged:
+                                                          (index, _) {
+                                                        setState(() {
+                                                          currentIndex = index;
+                                                        });
+                                                      },
+                                                    ),
+                                                  )),
+                                            );
+                                          } else {
+                                            showEventDialog(
+                                                context,
+                                                eventsDays[date]!.first,
+                                                gradients[0]);
+                                          }
+                                        }
+                                      },
+                                      hideBottomBar: false,
+                                      startOnMonday: true,
+                                      weekDays: const [
+                                        'Дс',
+                                        'Сс',
+                                        'Ср',
+                                        'Бс',
+                                        'Жм',
+                                        'Сн',
+                                        'Жк'
+                                      ],
+                                      events: eventsDays,
+                                      isExpandable: false,
+                                      eventDoneColor: Colors.green,
+                                      selectedColor: Colors.pink,
+                                      todayColor: AppColors.black,
+                                      eventColor: Colors.deepPurple,
+                                      locale: context.locale.languageCode,
+                                      todayButtonText: '',
+                                      isExpanded: true,
+                                      dayOfWeekStyle: const TextStyle(
+                                        color: AppColors.grey2,
+                                        fontWeight: FontWeight.w400,
+                                        fontSize: 12,
+                                      ),
+                                    ),
+                            ),
                             SizedBox(height: 20.h),
                             Padding(
                               padding: EdgeInsets.symmetric(horizontal: 26.w),
@@ -333,160 +337,162 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                             SizedBox(
                               height: 15.h,
                             ),
-                            if(checklist != null )AppButton(
-                              isLoading: _isLoading,
-                              onTap: _isLoading == true
-                                  ? null
-                                  : () {
-                                setState(() {
-                                  _isLoading = true;
-                                });
-                                context
-                                    .read<ZhosparymCubit>()
-                                    .getCheckList()
-                                    .then((value) async {
-                                  if (value == null) {
-                                    setState(() {
-                                      _isLoading = false;
-                                    });
-                                    return;
-                                  } else {
-                                    await BlocProvider.of<CheckListCubit>(
-                                        context)
-                                        .getDays(checklistId: value.id)
-                                        .then((result) {
-                                      if (!(result
-                                          .map((e) => DateFormat(
-                                          'yyyy-MM-dd')
-                                          .format(
-                                          DateTime.parse(e.date)))
-                                          .toList()
-                                          .contains(DateFormat(
-                                          'yyyy-MM-dd')
-                                          .format(DateTime.now())))) {
+                            if (checklist != null)
+                              AppButton(
+                                isLoading: _isLoading,
+                                onTap: _isLoading == true
+                                    ? null
+                                    : () {
                                         setState(() {
-                                          _isLoading = false;
+                                          _isLoading = true;
                                         });
-                                        buildErrorCustomSnackBar(context,
-                                            'чеклист отсутствует');
-                                        return;
-                                      }
-                                      context.router
-                                          .push(
-                                        RamazanChecklistRoute(
-                                            checkList: value),
-                                      )
-                                          .then((value) {
-                                        setState(() {
-                                          _isLoading = false;
+                                        context
+                                            .read<ZhosparymCubit>()
+                                            .getCheckList()
+                                            .then((value) async {
+                                          if (value == null) {
+                                            setState(() {
+                                              _isLoading = false;
+                                            });
+                                            return;
+                                          } else {
+                                            await BlocProvider.of<
+                                                    CheckListCubit>(context)
+                                                .getDays(checklistId: value.id)
+                                                .then((result) {
+                                                  log('${result.toString()}-checklist');
+                                              if (result.isEmpty) {
+                                                Future.delayed(Duration(seconds: 3,),(){
+                                                  context.router
+                                                      .push(
+                                                    RamazanChecklistRoute(
+                                                        checkList: value),
+                                                  )
+                                                      .then((value) {
+                                                    setState(() {
+                                                      _isLoading = false;
+                                                    });
+                                                  });
+                                                });
+                                               return;
+                                              }
+                                              log('pol2');
+                                              context.router
+                                                  .push(
+                                                RamazanChecklistRoute(
+                                                    checkList: value),
+                                              )
+                                                  .then((value) {
+                                                setState(() {
+                                                  _isLoading = false;
+                                                });
+                                              });
+                                            });
+                                          }
                                         });
-                                      });
-                                    });
-                                  }
-                                });
-                              },
-                              text: 'Рамазан чеклисті',
-                              color: AppColors.orange,
-                            ),
+                                      },
+                                text: 'Ramadan_checklist'.tr(),
+                                color: AppColors.orange,
+                              ),
                             SizedBox(
                               height: 21.h,
                             ),
                             if (holidays
                                 .where((element) =>
-                            element.type == EventsType.holiday)
+                                    element.type == EventsType.holiday)
                                 .toList()
                                 .toSet()
                                 .isNotEmpty)
                               Text(
-                                'Атаулы күндер',
+                                'Important_dates'.tr(),
                                 style: getTextStyle(CustomTextStyles.s14w500)
                                     .copyWith(
-                                    fontFamily: FontTypes.SF_Pro.name),
+                                        fontFamily: FontTypes.SF_Pro.name),
                               ),
                             SizedBox(
                               height: 16.h,
                             ),
                             ...holidays
                                 .where((element) =>
-                            element.type == EventsType.holiday)
+                                    element.type == EventsType.holiday)
                                 .toList()
                                 .toSet()
                                 .map((e) => Padding(
-                              padding:
-                              const EdgeInsets.only(bottom: 31),
-                              child: InkWell(
-                                onTap: () {
-                                  showEventDialog(
-                                      context,
-                                      e,
-                                      holidays
-                                          .where((element) =>
-                                      element.type ==
-                                          EventsType.holiday)
-                                          .toList()
-                                          .toSet()
-                                          .toList()
-                                          .indexOf(e)
-                                          .isEven
-                                          ? gradients[0]
-                                          : gradients[1]);
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.only(
-                                      left: 16,
-                                      right: 16,
-                                      top: 42,
-                                      bottom: 16),
-                                  width: double.infinity,
-                                  height: 130,
-                                  decoration: BoxDecoration(
-                                    borderRadius:
-                                    BorderRadius.circular(30),
-                                    gradient: holidays.indexOf(e).isEven
-                                        ? gradients[0]
-                                        : gradients[1],
-                                    image: const DecorationImage(
-                                      opacity: 0.3,
-                                      image: AssetImage(
-                                          "assets/images/ooo.png"),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        '${DateFormat('dd.MM.yyyy').format(DateTime.parse(e.date!))}ж.',
-                                        style: getTextStyle(
-                                            CustomTextStyles
-                                                .s16w600)
-                                            .copyWith(
-                                            fontFamily: FontTypes
-                                                .SF_Pro.name,
-                                            color: AppColors.white,
-                                            fontWeight:
-                                            FontWeight.w700),
+                                      padding:
+                                          const EdgeInsets.only(bottom: 31),
+                                      child: InkWell(
+                                        onTap: () {
+                                          showEventDialog(
+                                              context,
+                                              e,
+                                              holidays
+                                                      .where((element) =>
+                                                          element.type ==
+                                                          EventsType.holiday)
+                                                      .toList()
+                                                      .toSet()
+                                                      .toList()
+                                                      .indexOf(e)
+                                                      .isEven
+                                                  ? gradients[0]
+                                                  : gradients[1]);
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.only(
+                                              left: 16,
+                                              right: 16,
+                                              top: 42,
+                                              bottom: 16),
+                                          width: double.infinity,
+                                          height: 130,
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                            gradient: holidays.indexOf(e).isEven
+                                                ? gradients[0]
+                                                : gradients[1],
+                                            image: const DecorationImage(
+                                              opacity: 0.3,
+                                              image: AssetImage(
+                                                  "assets/images/ooo.png"),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                '${DateFormat('dd.MM.yyyy').format(DateTime.parse(e.date!))}ж.',
+                                                style: getTextStyle(
+                                                        CustomTextStyles
+                                                            .s16w600)
+                                                    .copyWith(
+                                                        fontFamily: FontTypes
+                                                            .SF_Pro.name,
+                                                        color: AppColors.white,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                              ),
+                                              Text(
+                                                '${e.title}',
+                                                style: getTextStyle(
+                                                        CustomTextStyles
+                                                            .s16w600)
+                                                    .copyWith(
+                                                        fontFamily: FontTypes
+                                                            .SF_Pro.name,
+                                                        color: AppColors.white,
+                                                        fontWeight:
+                                                            FontWeight.w700),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
                                       ),
-                                      Text(
-                                        '${e.title}',
-                                        style: getTextStyle(
-                                            CustomTextStyles
-                                                .s16w600)
-                                            .copyWith(
-                                            fontFamily: FontTypes
-                                                .SF_Pro.name,
-                                            color: AppColors.white,
-                                            fontWeight:
-                                            FontWeight.w700),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ))
+                                    ))
                                 .toList(),
                           ],
                         )),

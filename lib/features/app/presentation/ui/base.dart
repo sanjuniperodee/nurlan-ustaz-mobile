@@ -97,27 +97,21 @@ class _BaseState extends State<Base> {
                   label: 'Islam_study'.tr(),
                 ),
                 BottomNavigationBarItem(
-                    icon: Column(
-                      children: [
-                        Container(
-                            child: Lottie.asset('assets/animations/Moon_v06.json',
-                                fit: BoxFit.fitWidth)),
+                    icon: Container(
+                      child: Column(
+                        children: [
+                          Container(
+                            height: 55.h,
+                            width: 55.w,
+                              child: Lottie.asset('assets/animations/Moon_v08.json',
+                                  fit: BoxFit.fill, ),
+                         ),
+                          SizedBox(height: 8.h,),
 
-                        Padding(
-                          padding: const EdgeInsets.only(bottom: 16.0).r,
-                          child: Text(
-                            'dream_interpretation'.tr(),
-                            style: getTextStyle(CustomTextStyles.s14w400)
-                                .copyWith(
-                                    fontFamily: FontTypes.Philosopher.name,
-                                    color: tabsRouter.activeIndex == 2
-                                        ? AppColors.primaryColor
-                                        : AppColors.grey1),
-                          ),
-                        )
-                      ],
+                        ],
+                      ),
                     ),
-                    label: ''),
+                    label: 'dream_interpretation'.tr(),),
                 BottomNavigationBarItem(
                   icon: tabsRouter.activeIndex != 3
                       ? SvgPicture.asset(Assets.book2Svg)

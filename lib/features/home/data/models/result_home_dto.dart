@@ -19,7 +19,7 @@ class ResultHomeDTO with _$ResultHomeDTO {
       @JsonKey(name: "is_top") bool? isTop,
       @JsonKey(name: "likes_count") int? likesCount,
       @JsonKey(name: "comments_count") int? comentCount,
-      @JsonKey(name: "ticket_url") String? ticketUrl,
+      @JsonKey(name: "ticket_url") String? ticketUrl, @JsonKey(name : "available_tickets") int? availableTicket,
       int? id,
       int? parent,
       String? body,
@@ -40,7 +40,8 @@ class ResultHomeDTO with _$ResultHomeDTO {
       List<RequisitesDTO>? requisites,
       List<ResultHomeDTO>? children,
       List<StatisticsDTO>? statistics,
-      String? address}) = _ResultHomeDTO;
+      String? address,
+      }) = _ResultHomeDTO;
 
   factory ResultHomeDTO.fromJson(Map<String, dynamic> json) =>
       _$ResultHomeDTOFromJson(json);

@@ -30,27 +30,24 @@ class CheckListCubit extends Cubit<CheckListState> {
     checklistID = checklistId;
     final result = await _repository.getDays(checklistId: checklistId);
 
-    result.fold((l) => {
-      log('salamaleikum')
-    }, (r) async {
-      log('${r.toString()}---ooo');
+    result.fold((l) => {}, (r) async {
       days = r.toList();
-      if (days.isEmpty ) {
-        await _repository.autoFillDays(checklistId: checklistId);
-        final result = await _repository.getDays(checklistId: checklistId);
-        result.fold(
-            (l) => {},
-            (r) {
-
-
-
-
-              days = r.toList();
-                  emit(_InitialState(
-                      days: days, selectedDate: selectedDate));
-                });
+      if (days.isEmpty) {
+        await _repository
+            .autoFillDays(checklistId: checklistId)
+            .then((value) async {
+          final result = await _repository.getDays(checklistId: checklistId);
+          result.fold((l) => {}, (r) {
+            log('zaebal-${r.toList().toString()}');
+            days = r.toList();
+            emit(_InitialState(days: r.toList(), selectedDate: selectedDate));
+          });
+        });
       } else {
-        emit(_InitialState(days: r.toList(), selectedDate: selectedDate,));
+        emit(_InitialState(
+          days: r.toList(),
+          selectedDate: selectedDate,
+        ));
       }
     });
     return days;
@@ -73,7 +70,8 @@ class CheckListCubit extends Cubit<CheckListState> {
 
   Future<void> deleteTask(CheckListDayDto checkListDayDto,
       CheckListTaskDto checkListTaskDto) async {
-    emit(_InitialState().copyWith(selectedDate: selectedDate, days: days,tasks: [],isLoading: true));
+    emit(_InitialState().copyWith(
+        selectedDate: selectedDate, days: days, tasks: [], isLoading: true));
 
     await _repository.deleteTask(
         checkListDayId: checkListDayDto.id,
@@ -82,15 +80,18 @@ class CheckListCubit extends Cubit<CheckListState> {
   }
 
   Future<void> changeDate({required DateTime date}) async {
-    emit(_InitialState().copyWith(selectedDate: date, days: days,tasks: [],isLoading: true));
+    emit(_InitialState()
+        .copyWith(selectedDate: date, days: days, tasks: [], isLoading: true));
 
-    final day = days.firstWhere((element) => DateTime.parse(element.date).day == date.day);
+    final day = days
+        .firstWhere((element) => DateTime.parse(element.date).day == date.day);
     final result = await _repository.getTasksByDate(checklistDayId: day.id);
     result.fold((l) => {}, (r) {
       tasks = r.toList();
       log(tasks.toList().toString());
       selectedDate = date;
-      emit(_InitialState().copyWith(selectedDate: date, days: days,tasks: tasks,isLoading: false));
+      emit(_InitialState().copyWith(
+          selectedDate: date, days: days, tasks: tasks, isLoading: false));
     });
   }
 }
@@ -99,7 +100,9 @@ class CheckListCubit extends Cubit<CheckListState> {
 class CheckListState with _$CheckListState {
   const factory CheckListState.initialState(
       {@Default([]) final List<CheckListDayDto> days,
-      final DateTime? selectedDate,final List<CheckListTaskDto>? tasks,@Default(false) bool isLoading}) = _InitialState;
+      final DateTime? selectedDate,
+      final List<CheckListTaskDto>? tasks,
+      @Default(false) bool isLoading}) = _InitialState;
 
   const factory CheckListState.loadedState() = _LoadedState;
 

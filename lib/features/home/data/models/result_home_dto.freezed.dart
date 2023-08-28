@@ -38,6 +38,8 @@ mixin _$ResultHomeDTO {
   int? get comentCount => throw _privateConstructorUsedError;
   @JsonKey(name: "ticket_url")
   String? get ticketUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: "available_tickets")
+  int? get availableTicket => throw _privateConstructorUsedError;
   int? get id => throw _privateConstructorUsedError;
   int? get parent => throw _privateConstructorUsedError;
   String? get body => throw _privateConstructorUsedError;
@@ -85,6 +87,7 @@ abstract class $ResultHomeDTOCopyWith<$Res> {
       @JsonKey(name: "likes_count") int? likesCount,
       @JsonKey(name: "comments_count") int? comentCount,
       @JsonKey(name: "ticket_url") String? ticketUrl,
+      @JsonKey(name: "available_tickets") int? availableTicket,
       int? id,
       int? parent,
       String? body,
@@ -132,6 +135,7 @@ class _$ResultHomeDTOCopyWithImpl<$Res, $Val extends ResultHomeDTO>
     Object? likesCount = freezed,
     Object? comentCount = freezed,
     Object? ticketUrl = freezed,
+    Object? availableTicket = freezed,
     Object? id = freezed,
     Object? parent = freezed,
     Object? body = freezed,
@@ -191,6 +195,10 @@ class _$ResultHomeDTOCopyWithImpl<$Res, $Val extends ResultHomeDTO>
           ? _value.ticketUrl
           : ticketUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      availableTicket: freezed == availableTicket
+          ? _value.availableTicket
+          : availableTicket // ignore: cast_nullable_to_non_nullable
+              as int?,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -309,6 +317,7 @@ abstract class _$$_ResultHomeDTOCopyWith<$Res>
       @JsonKey(name: "likes_count") int? likesCount,
       @JsonKey(name: "comments_count") int? comentCount,
       @JsonKey(name: "ticket_url") String? ticketUrl,
+      @JsonKey(name: "available_tickets") int? availableTicket,
       int? id,
       int? parent,
       String? body,
@@ -355,6 +364,7 @@ class __$$_ResultHomeDTOCopyWithImpl<$Res>
     Object? likesCount = freezed,
     Object? comentCount = freezed,
     Object? ticketUrl = freezed,
+    Object? availableTicket = freezed,
     Object? id = freezed,
     Object? parent = freezed,
     Object? body = freezed,
@@ -414,6 +424,10 @@ class __$$_ResultHomeDTOCopyWithImpl<$Res>
           ? _value.ticketUrl
           : ticketUrl // ignore: cast_nullable_to_non_nullable
               as String?,
+      availableTicket: freezed == availableTicket
+          ? _value.availableTicket
+          : availableTicket // ignore: cast_nullable_to_non_nullable
+              as int?,
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -515,6 +529,7 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
       @JsonKey(name: "likes_count") this.likesCount,
       @JsonKey(name: "comments_count") this.comentCount,
       @JsonKey(name: "ticket_url") this.ticketUrl,
+      @JsonKey(name: "available_tickets") this.availableTicket,
       this.id,
       this.parent,
       this.body,
@@ -571,6 +586,9 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
   @override
   @JsonKey(name: "ticket_url")
   final String? ticketUrl;
+  @override
+  @JsonKey(name: "available_tickets")
+  final int? availableTicket;
   @override
   final int? id;
   @override
@@ -651,7 +669,7 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
 
   @override
   String toString() {
-    return 'ResultHomeDTO(isLiked: $isLiked, isSaved: $isSaved, isLive: $isLive, free: $free, isPurchased: $isPurchased, isTop: $isTop, likesCount: $likesCount, comentCount: $comentCount, ticketUrl: $ticketUrl, id: $id, parent: $parent, body: $body, name: $name, logo: $logo, price: $price, title: $title, description: $description, text: $text, cover: $cover, link: $link, url: $url, user: $user, startTime: $startTime, createdAt: $createdAt, isActive: $isActive, media: $media, requisites: $requisites, children: $children, statistics: $statistics, address: $address)';
+    return 'ResultHomeDTO(isLiked: $isLiked, isSaved: $isSaved, isLive: $isLive, free: $free, isPurchased: $isPurchased, isTop: $isTop, likesCount: $likesCount, comentCount: $comentCount, ticketUrl: $ticketUrl, availableTicket: $availableTicket, id: $id, parent: $parent, body: $body, name: $name, logo: $logo, price: $price, title: $title, description: $description, text: $text, cover: $cover, link: $link, url: $url, user: $user, startTime: $startTime, createdAt: $createdAt, isActive: $isActive, media: $media, requisites: $requisites, children: $children, statistics: $statistics, address: $address)';
   }
 
   @override
@@ -672,6 +690,8 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
                 other.comentCount == comentCount) &&
             (identical(other.ticketUrl, ticketUrl) ||
                 other.ticketUrl == ticketUrl) &&
+            (identical(other.availableTicket, availableTicket) ||
+                other.availableTicket == availableTicket) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.parent, parent) || other.parent == parent) &&
             (identical(other.body, body) || other.body == body) &&
@@ -714,6 +734,7 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
         likesCount,
         comentCount,
         ticketUrl,
+        availableTicket,
         id,
         parent,
         body,
@@ -762,6 +783,7 @@ abstract class _ResultHomeDTO implements ResultHomeDTO {
       @JsonKey(name: "likes_count") final int? likesCount,
       @JsonKey(name: "comments_count") final int? comentCount,
       @JsonKey(name: "ticket_url") final String? ticketUrl,
+      @JsonKey(name: "available_tickets") final int? availableTicket,
       final int? id,
       final int? parent,
       final String? body,
@@ -814,6 +836,9 @@ abstract class _ResultHomeDTO implements ResultHomeDTO {
   @override
   @JsonKey(name: "ticket_url")
   String? get ticketUrl;
+  @override
+  @JsonKey(name: "available_tickets")
+  int? get availableTicket;
   @override
   int? get id;
   @override
