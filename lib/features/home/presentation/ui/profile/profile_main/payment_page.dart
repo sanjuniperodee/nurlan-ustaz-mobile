@@ -91,7 +91,8 @@ class _PaymentsPageState extends State<PaymentsPage> {
                     ],
                     onTap: (value) {
                       currentIndex = value;
-                     
+                      BlocProvider.of<PaymentTickCubit>(context).listHome = [];
+                      BlocProvider.of<PaymentTickCubit>(context).listTus = [];
                       log('INDEX:::${currentIndex.toString()}');
                       if (currentIndex == 0) {
                         BlocProvider.of<PaymentTickCubit>(context).seminar(
@@ -122,7 +123,6 @@ class _PaymentsPageState extends State<PaymentsPage> {
                       );
                     },
                     loaded: (res, res2) {
-                      
                       return currentIndex != 0
                           ? ListView.separated(
                               shrinkWrap: true,
@@ -131,6 +131,7 @@ class _PaymentsPageState extends State<PaymentsPage> {
                               itemBuilder: (context, index) {
                                 return InkWell(
                                   onTap: () {
+                                    log('URL${tus[index].ticketUrl}');
                                     _launchUrl(tus[index].ticketUrl ?? "");
                                     // bottomSheet(
                                     //   FractionallySizedBox(
@@ -309,6 +310,7 @@ class _PaymentsPageState extends State<PaymentsPage> {
                               itemBuilder: (context, index) {
                                 return InkWell(
                                   onTap: () {
+                                    log('URL${res[index].ticketUrl}');
                                     _launchUrl(res[index].ticketUrl ?? "");
                                     // bottomSheet(
                                     //   FractionallySizedBox(

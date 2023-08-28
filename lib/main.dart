@@ -12,7 +12,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:nurlan_ustaz_flutter/core/model/async_app_dependecies.dart';
 import 'package:nurlan_ustaz_flutter/features/app/logic/main_runner.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/nurlan_ustaz_app.dart';
-
 import 'core/router/app_router.dart';
 import 'core/services/locator_service.dart';
 import 'core/services/notification_service.dart';
