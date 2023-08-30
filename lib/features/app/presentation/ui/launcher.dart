@@ -98,7 +98,6 @@ Widget _salam() {
         },
         notAuthorizedDialogState: () async {
           var dialog = await AlertUtils.showTwoOptionDialog(
-
               context: context,
               messageKey: '401.content'.tr(),
               title: '401.title'.tr(),

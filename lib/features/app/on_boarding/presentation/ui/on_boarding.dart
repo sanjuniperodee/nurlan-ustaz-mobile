@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:better_player/better_player.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -27,20 +28,63 @@ CarouselController controller = CarouselController();
 int currentIndex = 0;
 
 class _OnBoardingPageState extends State<OnBoardingPage> {
-  late VideoPlayerController _controller;
-  late BetterPlayerController _betterPlayerController;
+  late VideoPlayerController _videoPlayerController1;
+  ChewieController? _chewieController;
+  int? bufferDelay;
 
   @override
   void initState() {
-    BlocProvider.of<OnBoardingCubit>(context).getVideo().then((value) {
-      log(Uri.parse(value.first.file).toString());
-      _controller =
-          VideoPlayerController.networkUrl(Uri.parse(value.first.file.toString()),formatHint: VideoFormat.dash);
-      _controller.addListener(() => setState(() {}));
-      _controller.play();
-    });
-
     super.initState();
+    initializePlayer();
+  }
+
+  @override
+  void dispose() {
+    _videoPlayerController1.dispose();
+    _chewieController?.dispose();
+    super.dispose();
+  }
+
+  Future<void> initializePlayer() async {
+    await BlocProvider.of<OnBoardingCubit>(context)
+        .getVideo()
+        .then((value) async {
+      _videoPlayerController1 =
+          VideoPlayerController.networkUrl(Uri.parse(value.first.file));
+      await Future.wait([
+        _videoPlayerController1.initialize(),
+      ]);
+      log("message1");
+    });
+    _createChewieController();
+    setState(() {});
+  }
+
+  // Future<void> initializePlayer() async {
+  //   try {
+  //     _videoPlayerController1 = VideoPlayerController.networkUrl(Uri.parse(
+  //         "https://dev.nurlanustaz.kz/api/media/support/onboardings/mixkit-a-girl-blowing-a-bubble-gum-at-an-amusement-park-1226-large.mp4"));
+  //     await Future.wait([
+  //       _videoPlayerController1.initialize(),
+  //     ]);
+  //   } catch (e) {
+  //     log(e.toString());
+  //   }
+
+  //   _createChewieController();
+  //   setState(() {});
+  // }
+
+  void _createChewieController() {
+    _chewieController = ChewieController(
+      videoPlayerController: _videoPlayerController1,
+      autoPlay: true,
+      looping: true,
+      showControls: false,
+      progressIndicatorDelay:
+          bufferDelay != null ? Duration(milliseconds: bufferDelay!) : null,
+      hideControlsTimer: const Duration(seconds: 1),
+    );
   }
 
   @override
@@ -52,18 +96,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           return state.maybeWhen(orElse: () {
             return Container();
           }, initialState: (videoList) {
-            final chewieController = ChewieController(
-              videoPlayerController: _controller,
-              autoPlay: true,
-              looping: false,
-              aspectRatio: 0.42.sp,
-              showOptions: false,
-              showControls: false,
-            );
-
-            final playerWidget = Chewie(
-              controller: chewieController,
-            );
+            // final playerWidget =;
 
             return Center(
               child: Stack(children: [
@@ -76,11 +109,17 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 Positioned.fill(
                   child: Container(
                     width: 343.w,
-                    height: 648.h,
+                    height: 1.sh,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30.r),
                     ),
-                    child: playerWidget,
+                    child: _chewieController != null &&
+                            _chewieController!
+                                .videoPlayerController.value.isInitialized
+                        ? Chewie(
+                            controller: _chewieController!,
+                          )
+                        : const SizedBox(),
                   ),
                 ),
                 Positioned.fill(
@@ -102,21 +141,30 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius:
                                         BorderRadius.circular(5.0.r)))),
-
                         MaterialButton(
                           shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10.0), // Adjust the radius as needed
+                            borderRadius: BorderRadius.circular(
+                                10.0), // Adjust the radius as needed
                           ),
-                          onPressed: () {
+                          onPressed: () async {
                             if (currentIndex != videoList.length - 1) {
-                              _controller = VideoPlayerController.networkUrl(
-                                  Uri.parse(
-                                      '${videoList[currentIndex + 1].file}'));
+                              _videoPlayerController1.pause();
+                              _videoPlayerController1 =
+                                  VideoPlayerController.networkUrl(
+                                Uri.parse(videoList[currentIndex + 1].file),
+                              );
+
+                              await Future.wait([
+                                _videoPlayerController1.initialize(),
+                              ]);
+                              _createChewieController();
+                              // initializePlayer();
                               setState(() {});
 
                               currentIndex++;
                             } else {
-                              _controller.dispose();
+                              _videoPlayerController1.pause();
+                              _videoPlayerController1.dispose();
                               setState(() {});
                               BlocProvider.of<AppBloc>(context)
                                   .add(const AppEvent.onboardingSave());
@@ -140,5 +188,42 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
         },
       ),
     );
+    // return Scaffold(
+    //   body: Column(
+    //     children: <Widget>[
+    //       Expanded(
+    //         child: Center(
+    //           child: _chewieController != null &&
+    //                   _chewieController!
+    //                       .videoPlayerController.value.isInitialized
+    //               ? Chewie(
+    //                   controller: _chewieController!,
+    //                 )
+    //               : const Column(
+    //                   mainAxisAlignment: MainAxisAlignment.center,
+    //                   children: [
+    //                     CircularProgressIndicator(),
+    //                     SizedBox(height: 20),
+    //                     Text('Loading'),
+    //                   ],
+    //                 ),
+    //         ),
+    //       ),
+    //     ],
+    //   ),
+    // );
   }
 }
+
+// late VideoPlayerController _controller;
+// late BetterPlayerController _betterPlayerController;
+
+// ChewieController? chewieController;
+// @override
+// void initState() {
+//   super.initState();
+//   initializePlayer();
+// }
+
+// @override
+// Widget build(BuildContext context) {}

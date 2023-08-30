@@ -34,15 +34,15 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
       return [];
     }, (r) {
       log('videos---${r.toList().toString()}');
-      emit( _InitialPage(videoList: r.toList()));
+      emit(_InitialPage(videoList: r.toList()));
       return r.toList();
     });
   }
-  Future<AppVersionsModel?> getVersion() async {
 
+  Future<AppVersionsModel?> getVersion() async {
     final result = await _onBoardingRepository.appVersionsModel();
     log('result from cubit - ${result.toString()}');
-   return result;
+    return result;
   }
 }
 
