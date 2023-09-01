@@ -36,6 +36,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/notifications
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/about_app_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/add_new_card_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/change_password_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/payment_check_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/payment_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/profile_cards_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/profile_info_page.dart';
@@ -155,5 +156,9 @@ class AppRouter extends _$AppRouter {
     AutoRoute(page: CodeVerificationForgotRoute.page),
     AutoRoute(page: HolidayDetailRoute.page),
     AutoRoute(page: QrScannerRoute.page),
+    AutoRoute(page: PaymentCheckRoute.page)
+
+
+
   ];
 }

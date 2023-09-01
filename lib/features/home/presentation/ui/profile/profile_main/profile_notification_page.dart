@@ -78,10 +78,8 @@ class _ProfileNotificationPage extends State<ProfileNotificationPage> {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).copyWith(dividerColor: Colors.transparent);
     return BlocConsumer<ProfileNotificationCubit, ProfileNotificationState>(
       listener: (context, state) {
-        // TODO: implement listener
       },
       builder: (context, state) {
         return state.maybeWhen(orElse: () {
@@ -90,7 +88,7 @@ class _ProfileNotificationPage extends State<ProfileNotificationPage> {
           return Center(
             child: CircularProgressIndicator(),
           );
-        }, initialState: (items, notification) {
+        }, initialState: (items, notification,serverDto) {
           return Scaffold(
             backgroundColor: AppColors.lightBlue,
             body: GlobalCustomBody(

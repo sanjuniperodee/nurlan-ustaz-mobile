@@ -13,6 +13,7 @@ import 'package:nurlan_ustaz_flutter/features/home/data/models/timings_dto.dart'
 import 'package:nurlan_ustaz_flutter/features/home/data/repositories/home_repository.dart';
 
 import '../../../../core/platform/cache_helper/prefs.dart';
+import '../../../../core/services/notification_service.dart';
 import '../../data/models/notification_dto.dart';
 
 part 'timings_cubit.freezed.dart';
@@ -66,21 +67,12 @@ class TimingsCubit extends Cubit<TimingsState> {
           final result = await _homeRepository.getNotificationDevice(
               registrationId: dev ?? '');
           result.fold((l) {}, (r) => {notification = r});
-          if (notification.prayerTimes! == true) {
+          if (notification.prayerTimes ?? false == true) {
             final List<String> time =
                 r.toJson().values.toList().map((e) => e.toString()).toList();
             for (String item in r.toJson().values.toList()) {
-              FlutterLocalNotificationsPlugin().schedule(
-                  time.indexOf(item),
-                  namasNames[time.indexOf(item)],
-                  '${time.indexOf(item) + 1}' + 'farz'.tr(),
-                  DateFormat('HH:mm').parse(item).copyWith(
-                        year: DateTime.now().year,
-                        month: DateTime.now().month,
-                        day: DateTime.now().day,
-                        second: 00,
-                      ),
-                  NotificationDetails());
+              scheduledNotification('Nurlan Ustaz',
+                  namasNames[time.indexOf(item)].toString(), item);
             }
           }
           emit(TimingsState.loaded(

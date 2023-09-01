@@ -49,19 +49,21 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocListener<CreateSeminarPaymentCubit,CreateSeminarPaymentState>(
-        listener: (context,state){
-          state.maybeWhen(orElse: (){},errorState: (message){
-            buildErrorCustomSnackBar(context, message);
-          });
+      body: BlocListener<CreateSeminarPaymentCubit, CreateSeminarPaymentState>(
+        listener: (context, state) {
+          state.maybeWhen(
+              orElse: () {},
+              errorState: (message) {
+                buildErrorCustomSnackBar(context, message);
+              });
         },
         child: BlocConsumer<SeminarDetailCubit, SeminarDetailState>(
           listener: (context, state) {
-             state.maybeWhen(
+            state.maybeWhen(
                 orElse: () {},
                 errorState: (message) {
                   log('ggg');
-                   buildErrorCustomSnackBar(context, message);
+                  buildErrorCustomSnackBar(context, message);
                 });
           },
           builder: (context, state) {
@@ -75,8 +77,6 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                 );
               },
               loaded: (result) {
-                     bool dt1 = DateTime.parse(result.startTime.toString())
-                  .isBefore(DateTime.now());
                 bool scroll = true;
                 result.media!.length == 1 ? scroll = false : scroll = true;
                 isFavorite = result.isSaved!;
@@ -160,17 +160,17 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                               Row(
                                 children: [
                                   Row(
-
                                     children: [
-                                      SvgPicture.asset(Assets.seminarCalendarSvg),
+                                      SvgPicture.asset(
+                                          Assets.seminarCalendarSvg),
                                       SizedBox(
                                         width: 10.w,
                                       ),
                                       Text(
-                                        '${DateFormat('d').format(DateTime.parse(result.startTime.toString()))}  ${DateFormat('MMMM').format(DateTime.parse(result.startTime.toString()))}, ${DateFormat('hh:mm').format(DateTime.parse(result.startTime.toString()).toLocal())}',
-                                        style:
-                                            getTextStyle(CustomTextStyles.s14w400)
-                                                .apply(color: AppColors.grey2),
+                                        '${DateFormat('d').format(DateTime.parse(result.startTime.toString()))}  ${DateFormat('MMMM').format(DateTime.parse(result.startTime.toString()))}, ${DateFormat('HH:mm').format(DateTime.parse(result.startTime.toString()).toLocal())}',
+                                        style: getTextStyle(
+                                                CustomTextStyles.s14w400)
+                                            .apply(color: AppColors.grey2),
                                       ),
                                       SizedBox(
                                         width: 28.w,
@@ -181,9 +181,9 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                       ),
                                       Text(
                                         result.address ?? 'ERROR',
-                                        style:
-                                            getTextStyle(CustomTextStyles.s14w400)
-                                                .apply(color: AppColors.grey2),
+                                        style: getTextStyle(
+                                                CustomTextStyles.s14w400)
+                                            .apply(color: AppColors.grey2),
                                       ),
                                     ],
                                   ),
@@ -283,132 +283,138 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                               ),
                               result.free == true
                                   ? const SizedBox()
-                                  : result.availableTicket! > 0 ? AppButton(
-                                      onTap: () {
-                                        showDialog(
-                                            context: context,
-                                            builder: (context) {
-                                              return Dialog(
-                                                shape:
-                                                    const RoundedRectangleBorder(
-                                                        borderRadius:
-                                                            BorderRadius.all(
-                                                                Radius.circular(
-                                                                    30))),
-                                                child: Container(
-                                                  height: 289,
-                                                  width: 311,
-                                                  decoration: const BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  30)),
-                                                      gradient: LinearGradient(
-                                                          colors: [
-                                                            AppColors.blue,
-                                                            AppColors.white
-                                                          ],
-                                                          begin:
-                                                              Alignment.topCenter,
-                                                          end: Alignment
-                                                              .bottomCenter)),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment.center,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.center,
-                                                    children: [
-                                                      Container(
-                                                        height: 64,
-                                                        width: 64,
-                                                        decoration:
-                                                            const BoxDecoration(
-                                                                shape: BoxShape
-                                                                    .circle,
-                                                                color: AppColors
-                                                                    .white),
-                                                        child: Center(
-                                                          child: SvgPicture.asset(
-                                                              'assets/icons/money_transfer.svg'),
-                                                        ),
-                                                      ),
-                                                      SizedBox(
-                                                        height: 31.h,
-                                                      ),
-                                                      Padding(
-                                                        padding: const EdgeInsets
-                                                                .symmetric(
-                                                            horizontal: 25),
-                                                        child: Text(
-                                                          'sem_buy_tick'.tr(),
-                                                          style: getTextStyle(
-                                                                  CustomTextStyles
-                                                                      .s16w400)
-                                                              .copyWith(
-                                                                  fontFamily:
-                                                                      FontTypes
-                                                                          .SF_Pro
-                                                                          .name),
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                        ),
-                                                      ),
-                                                      SizedBox(height: 27.h),
-                                                      Padding(
-                                                        padding: const EdgeInsets
-                                                                .symmetric(
-                                                            horizontal: 16),
-                                                        child: MaterialButton(
-                                                          shape: RoundedRectangleBorder(
-                                                              borderRadius:
-                                                                  BorderRadius
+                                  : result.startTime!.isAfter(DateTime.now())
+                                      ? result.availableTicket! > 0
+                                          ? AppButton(
+                                              onTap: () {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (context) {
+                                                      return Dialog(
+                                                        shape: const RoundedRectangleBorder(
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .all(Radius
+                                                                        .circular(
+                                                                            30))),
+                                                        child: Container(
+                                                          height: 289,
+                                                          width: 311,
+                                                          decoration: const BoxDecoration(
+                                                              borderRadius: BorderRadius
+                                                                  .all(Radius
                                                                       .circular(
-                                                                          27)),
-                                                          height: 44,
-                                                          onPressed: () async {
-                                                            await BlocProvider.of<
-                                                                        CreateSeminarPaymentCubit>(
-                                                                    context)
-                                                                .createSeminarPayment(
-                                                                  result.id!,
-                                                                  context,
-                                                                )
-                                                                .then((value) =>
-                                                                    Navigator.of(
+                                                                          30)),
+                                                              gradient: LinearGradient(
+                                                                  colors: [
+                                                                    AppColors
+                                                                        .blue,
+                                                                    AppColors
+                                                                        .white
+                                                                  ],
+                                                                  begin: Alignment
+                                                                      .topCenter,
+                                                                  end: Alignment
+                                                                      .bottomCenter)),
+                                                          child: Column(
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              Container(
+                                                                height: 64,
+                                                                width: 64,
+                                                                decoration: const BoxDecoration(
+                                                                    shape: BoxShape
+                                                                        .circle,
+                                                                    color: AppColors
+                                                                        .white),
+                                                                child: Center(
+                                                                  child: SvgPicture
+                                                                      .asset(
+                                                                          'assets/icons/money_transfer.svg'),
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                height: 31.h,
+                                                              ),
+                                                              Padding(
+                                                                padding: const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        25),
+                                                                child: Text(
+                                                                  'sem_buy_tick'
+                                                                      .tr(),
+                                                                  style: getTextStyle(
+                                                                          CustomTextStyles
+                                                                              .s16w400)
+                                                                      .copyWith(
+                                                                          fontFamily: FontTypes
+                                                                              .SF_Pro
+                                                                              .name),
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .center,
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                  height: 27.h),
+                                                              Padding(
+                                                                padding: const EdgeInsets
+                                                                        .symmetric(
+                                                                    horizontal:
+                                                                        16),
+                                                                child:
+                                                                    MaterialButton(
+                                                                  shape: RoundedRectangleBorder(
+                                                                      borderRadius:
+                                                                          BorderRadius.circular(
+                                                                              27)),
+                                                                  height: 44,
+                                                                  onPressed:
+                                                                      () async {
+                                                                    await BlocProvider.of<CreateSeminarPaymentCubit>(
                                                                             context)
-                                                                        .pop());
-                                                          },
-                                                          color: AppColors.orange,
-                                                          child: Center(
-                                                            child: Text(
-                                                                '${result.price!.toInt()} тг ${'dream_pay'.tr()}',
-                                                                style: getTextStyle(
-                                                                        CustomTextStyles
-                                                                            .s14w400)
-                                                                    .copyWith(
-                                                                        fontFamily: FontTypes
-                                                                            .SF_Pro
-                                                                            .name,
-                                                                        color: AppColors
-                                                                            .white)),
+                                                                        .createSeminarPayment(
+                                                                          result
+                                                                              .id!,
+                                                                          context,
+                                                                        )
+                                                                        .then((value) =>
+                                                                            Navigator.of(context).pop());
+                                                                  },
+                                                                  color: AppColors
+                                                                      .orange,
+                                                                  child: Center(
+                                                                    child: Text(
+                                                                        '${result.price!.toInt()} тг ${'dream_pay'.tr()}',
+                                                                        style: getTextStyle(CustomTextStyles.s14w400).copyWith(
+                                                                            fontFamily:
+                                                                                FontTypes.SF_Pro.name,
+                                                                            color: AppColors.white)),
+                                                                  ),
+                                                                ),
+                                                              )
+                                                            ],
                                                           ),
                                                         ),
-                                                      )
-                                                    ],
-                                                  ),
-                                                ),
-                                              );
-                                            });
-                                      },
-                                      text: 'buy'.tr(),
-                                      color: AppColors.blue,
-                                    ) : Container(),
+                                                      );
+                                                    });
+                                              },
+                                              text: 'buy'.tr(),
+                                              color: AppColors.blue,
+                                            )
+                                          : Container()
+                                      : Container(),
                               SizedBox(
                                 height: 20.h,
                               ),
                               Text(
                                 result.text ?? 'ERROR',
-
                                 style: getTextStyle(CustomTextStyles.s16w400)
                                     .apply(color: AppColors.black),
                               ),

@@ -10,12 +10,24 @@ part 'tandaulilar_cubit.freezed.dart';
 @singleton
 class TandaulilarCubit extends Cubit<TandaulilarState> {
   final HomeRepository _homeRepository;
+
   TandaulilarCubit(
     this._homeRepository,
   ) : super(const TandaulilarState.initialState());
   List<ResultHomeDTO> lives = [];
   List<ResultHomeDTO> news = [];
   List<ResultHomeDTO> seminars = [];
+
+  Future<void> allCategoies() async {
+    emit(_LoadingState());
+    await livesT(page: 1, isSaved: true, isFirstCall: true);
+    await newsT(page: 1, isSaved: true, isFirstCall: true);
+    await seminarT(page: 1, isSaved: true, isFirstCall: true);
+    emit(TandaulilarState.loaded(
+        lives: lives.length < 4 ? lives : lives.take(4).toList(),
+        news: news.length < 4 ? news : news.take(4).toList(),
+        seminars: seminars.length < 4 ? seminars : seminars.take(4).toList()));
+  }
 
   Future<void> livesT({
     String? search,

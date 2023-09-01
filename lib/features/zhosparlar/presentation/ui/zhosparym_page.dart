@@ -197,11 +197,10 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 16, right: 16).r,
+                  padding:
+                      const EdgeInsets.only(left: 16, right: 16, bottom: 100).r,
                   child: SizedBox(
-                    height: 1.2.sh,
                     child: SingleChildScrollView(
-                        primary: true,
                         physics: const BouncingScrollPhysics(),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
@@ -304,14 +303,14 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                       },
                                       hideBottomBar: false,
                                       startOnMonday: true,
-                                      weekDays: const [
-                                        'Дс',
-                                        'Сс',
-                                        'Ср',
-                                        'Бс',
-                                        'Жм',
-                                        'Сн',
-                                        'Жк'
+                                      weekDays: [
+                                        'calendar.m'.tr(),
+                                        'calendar.t'.tr(),
+                                        'calendar.w'.tr(),
+                                        'calendar.r'.tr(),
+                                        'calendar.f'.tr(),
+                                        'calendar.s'.tr(),
+                                        'calendar.u'.tr(),
                                       ],
                                       events: eventsDays,
                                       isExpandable: false,
@@ -360,9 +359,12 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                                     CheckListCubit>(context)
                                                 .getDays(checklistId: value.id)
                                                 .then((result) {
-                                                  log('${result.toString()}-checklist');
+                                              log('${result.toString()}-checklist');
                                               if (result.isEmpty) {
-                                                Future.delayed(Duration(seconds: 3,),(){
+                                                Future.delayed(
+                                                    Duration(
+                                                      seconds: 3,
+                                                    ), () {
                                                   context.router
                                                       .push(
                                                     RamazanChecklistRoute(
@@ -374,7 +376,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                                     });
                                                   });
                                                 });
-                                               return;
+                                                return;
                                               }
                                               log('pol2');
                                               context.router
@@ -465,7 +467,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                '${DateFormat('dd.MM.yyyy').format(DateTime.parse(e.date!))}ж.',
+                                                '${DateFormat.yMMMd().format(DateTime.parse(e.date!)).toLocale()}',
                                                 style: getTextStyle(
                                                         CustomTextStyles
                                                             .s16w600)

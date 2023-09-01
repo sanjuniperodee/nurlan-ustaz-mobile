@@ -6,9 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
-import 'package:nurlan_ustaz_flutter/features/app/on_boarding/data/datasource/on_boarding_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/app/on_boarding/data/repositories/on_boarding_repository.dart';
-import 'package:nurlan_ustaz_flutter/features/home/data/repositories/home_repository.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -25,7 +23,6 @@ class AppVersionService {
   }
 
   bool wasVersionCompatabilityChecked = false;
-  final _onBoardingRepository = getIt<OnBoardingRepository>;
 
   AppVersionService._internal();
 

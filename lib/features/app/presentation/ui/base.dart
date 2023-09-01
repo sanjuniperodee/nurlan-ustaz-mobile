@@ -11,6 +11,7 @@ import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/islam_teaching_icon.dart';
 
 import '../../../../core/utils/alert_utilrs.dart';
 import '../../../tandaulilar/presentation/bloc/tandaulilar_cubit.dart';
@@ -71,7 +72,6 @@ class _BaseState extends State<Base> {
                   tabsRouter.setActiveIndex(index);
                 }
                 if (tabsRouter.activeIndex != 4) {
-                  log('TAPP');
                   BlocProvider.of<TandaulilarCubit>(context)
                       .livesT(page: 1, isFirstCall: true);
                   BlocProvider.of<TandaulilarCubit>(context)
@@ -85,33 +85,39 @@ class _BaseState extends State<Base> {
                 BottomNavigationBarItem(
                   icon: tabsRouter.activeIndex != 0
                       ? SvgPicture.asset(
+                          height: 22.5,
+                          width: 22.5,
                           Assets.homeSvg,
                         )
-                      : SvgPicture.asset(Assets.home_1Svg),
+                      : SvgPicture.asset(
+                          Assets.home_1Svg,
+                        ),
                   label: 'main_page'.tr(),
                 ),
                 BottomNavigationBarItem(
-                  icon: tabsRouter.activeIndex != 1
-                      ? SvgPicture.asset(Assets.bookSvg)
-                      : SvgPicture.asset(Assets.book_1Svg),
-                  label: 'Islam_study'.tr(),
-                ),
-                BottomNavigationBarItem(
-                    icon: Container(
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 55.h,
-                            width: 55.w,
-                              child: Lottie.asset('assets/animations/Moon_v08.json',
-                                  fit: BoxFit.fill, ),
-                         ),
-                          SizedBox(height: 8.h,),
+                    icon: IslamTeachingIcon(isCurrent: tabsRouter.activeIndex != 1, isKazakh: EasyLocalization.of(context)!.locale.toString() == 'kk',),
 
-                        ],
-                      ),
+                    label:EasyLocalization.of(context)!.locale.toString() == 'kk'?  'Islam_study'.tr() : ''),
+                BottomNavigationBarItem(
+                  icon: Container(
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 55.h,
+                          width: 55.w,
+                          child: Lottie.asset(
+                            'assets/animations/Moon_v08.json',
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 8.h,
+                        ),
+                      ],
                     ),
-                    label: 'dream_interpretation'.tr(),),
+                  ),
+                  label: 'dream_interpretation'.tr(),
+                ),
                 BottomNavigationBarItem(
                   icon: tabsRouter.activeIndex != 3
                       ? SvgPicture.asset(Assets.book2Svg)

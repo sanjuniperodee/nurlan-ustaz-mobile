@@ -8,6 +8,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
+import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/payment_tick_cubit.dart';
@@ -26,7 +27,8 @@ class PaymentsPage extends StatefulWidget {
   State<PaymentsPage> createState() => _PaymentsPageState();
 }
 
-int currentIndex = 0;
+int primaryIndex = 0;
+int secondIndex = 0;
 
 class _PaymentsPageState extends State<PaymentsPage> {
   @override
@@ -39,6 +41,7 @@ class _PaymentsPageState extends State<PaymentsPage> {
 
   List<ResultHomeDTO> res = [];
   List<TusZhoruDTO> tus = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,45 +79,75 @@ class _PaymentsPageState extends State<PaymentsPage> {
                   const SizedBox(
                     height: 36,
                   ),
-                  CustomTabBar(
-                    height: 50,
-                    tabs: [
-                      Tab(
-                        text: 'seminars'.tr(),
-                      ),
-                      Tab(
-                        text: 'all_payment'.tr(),
-                      ),
-                      Tab(
-                        text: 'dream_interpretations_ind'.tr(),
-                      ),
-                    ],
-                    onTap: (value) {
-                      currentIndex = value;
-                      BlocProvider.of<PaymentTickCubit>(context).listHome = [];
-                      BlocProvider.of<PaymentTickCubit>(context).listTus = [];
-                      log('INDEX:::${currentIndex.toString()}');
-                      if (currentIndex == 0) {
-                        BlocProvider.of<PaymentTickCubit>(context).seminar(
-                            page: 1, isFirstCall: true, isPurchased: true);
-                      } else if (currentIndex == 1) {
-                        BlocProvider.of<PaymentTickCubit>(context).tusZhoruT(
-                            page: 1, isFirstCall: true, isPurchased: true);
-                      } else if (currentIndex == 2) {
-                        BlocProvider.of<PaymentTickCubit>(context)
-                            .getCustomTusZhoruT(
-                          page: 1,
-                          isFirstCall: true,
-                        );
-                      }
-                      // setState(() {});
-                    },
-                    length: 3,
+                  Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 15.w),
+                    child: CustomTabBar(
+                      height: 50,
+                      tabs: [
+                        Tab(
+                          text: 'seminars'.tr(),
+                        ),
+                        Tab(
+                          text: 'dream_interpretation'.tr(),
+                        ),
+                      ],
+                      onTap: (value) {
+                        primaryIndex = value;
+                        BlocProvider.of<PaymentTickCubit>(context).listHome =
+                            [];
+                        BlocProvider.of<PaymentTickCubit>(context).listTus = [];
+                        log('INDEX:::${primaryIndex.toString()}');
+                        if (primaryIndex == 0) {
+                          BlocProvider.of<PaymentTickCubit>(context).seminar(
+                              page: 1, isFirstCall: true, isPurchased: true);
+                        } else if (primaryIndex == 1) {
+                          BlocProvider.of<PaymentTickCubit>(context).tusZhoruT(
+                              page: 1, isFirstCall: true, isPurchased: true);
+                        }
+                        // setState(() {});
+                      },
+                      length: 2,
+                    ),
                   ),
+                  SizedBox(
+                    height: 30.h,
+                  ),
+                  if (primaryIndex == 1)
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 15.w),
+                      child: CustomTabBar(
+                        height: 50,
+                        tabs: [
+                          Tab(
+                            text: 'all'.tr(),
+                          ),
+                          Tab(
+                            text: 'personal_dream'.tr(),
+                          ),
+                        ],
+                        onTap: (value) {
+                          secondIndex = value;
+                          BlocProvider.of<PaymentTickCubit>(context).listHome =
+                              [];
+                          BlocProvider.of<PaymentTickCubit>(context).listTus =
+                              [];
+                          if (secondIndex == 0) {
+                            BlocProvider.of<PaymentTickCubit>(context)
+                                .tusZhoruT(page: 1, isFirstCall: true);
+                          }
+                          if (secondIndex == 1) {
+                            BlocProvider.of<PaymentTickCubit>(context)
+                                .getCustomTusZhoruT(page: 1, isFirstCall: true);
+                          }
+                          // setState(() {});
+                        },
+                        length: 2,
+                      ),
+                    ),
                   state.maybeWhen(
                     orElse: () {
                       return Padding(
-                        padding: const EdgeInsets.only(top: 48.0).r,
+                        padding: const EdgeInsets.only(top: 250).h,
                         child: const Center(
                           child: CircularProgressIndicator(
                             color: AppColors.linearBlue,
@@ -123,106 +156,18 @@ class _PaymentsPageState extends State<PaymentsPage> {
                       );
                     },
                     loaded: (res, res2) {
-                      return currentIndex != 0
+                      return primaryIndex != 0
                           ? ListView.separated(
                               shrinkWrap: true,
                               padding: const EdgeInsets.all(16).r,
                               physics: const BouncingScrollPhysics(),
                               itemBuilder: (context, index) {
                                 return InkWell(
-                                  onTap: () {
-                                    log('URL${tus[index].ticketUrl}');
-                                    _launchUrl(tus[index].ticketUrl ?? "");
-                                    // bottomSheet(
-                                    //   FractionallySizedBox(
-                                    //     heightFactor: 0.5,
-                                    //     child: Padding(
-                                    //       padding: const EdgeInsets.all(16.0),
-                                    //       child: Column(
-                                    //         crossAxisAlignment: CrossAxisAlignment.end,
-                                    //         children: [
-                                    //           InkWell(
-                                    //             onTap: () {
-                                    //               Navigator.of(context).pop();
-                                    //             },
-                                    //             child: SvgPicture.asset(
-                                    //               Assets.cancelSvg,
-                                    //               color: AppColors.black,
-                                    //             ),
-                                    //           ),
-                                    //           SizedBox(
-                                    //             height: 15.h,
-                                    //           ),
-                                    //           Container(
-                                    //             width: 343.w,
-                                    //             height: 156.h,
-                                    //             decoration: BoxDecoration(
-                                    //                 color: AppColors.white,
-                                    //                 borderRadius:
-                                    //                     BorderRadius.circular(20)),
-                                    //             child: Center(
-                                    //               child: Column(
-                                    //                 crossAxisAlignment:
-                                    //                     CrossAxisAlignment.center,
-                                    //                 mainAxisAlignment:
-                                    //                     MainAxisAlignment.spaceEvenly,
-                                    //                 children: [
-                                    //                   SvgPicture.asset(
-                                    //                       'assets/icons/check_circle.svg'),
-                                    //                   Text(
-                                    //                     'Төленген',
-                                    //                     style: getTextStyle(
-                                    //                         CustomTextStyles.s16w400),
-                                    //                   ),
-                                    //                   Text('${res[index].price} ₸',
-                                    //                       style: getTextStyle(
-                                    //                           CustomTextStyles.s24w700))
-                                    //                 ],
-                                    //               ),
-                                    //             ),
-                                    //           ),
-                                    //           SizedBox(
-                                    //             height: 8.h,
-                                    //           ),
-                                    //           Container(
-                                    //             width: 343.w,
-                                    //             height: 155.h,
-                                    //             decoration: BoxDecoration(
-                                    //                 color: AppColors.white,
-                                    //                 borderRadius:
-                                    //                     BorderRadius.circular(20)),
-                                    //             child: Column(
-                                    //               children: [
-                                    //                 SizedBox(
-                                    //                   height: 8.h,
-                                    //                 ),
-                                    //                 const TextWidget(
-                                    //                   text1: 'Статус',
-                                    //                   text2: 'Төленген',
-                                    //                 ),
-                                    //                 TextWidget(
-                                    //                   text1: 'Билет бағасы',
-                                    //                   text2: '${res[index].price} ₸',
-                                    //                 ),
-                                    //                 TextWidget(
-                                    //                   text1: 'Төленді',
-                                    //                   text2:
-                                    //                       '${DateFormat('dd.MM.yyyy').format(res[index].createdAt!)}, ${DateFormat.Hm().format(res[index].createdAt!)}',
-                                    //                 ),
-                                    //                 TextWidget(
-                                    //                   text1: 'Өткізілу уақыты',
-                                    //                   text2:
-                                    //                       '${DateFormat.yMMMMd('kk').format(res[index].startTime!)}, ${DateFormat.Hm().format(res[index].startTime!)}',
-                                    //                 ),
-                                    //               ],
-                                    //             ),
-                                    //           ),
-                                    //         ],
-                                    //       ),
-                                    //     ),
-                                    //   ),
-                                    //   context,
-                                    // );
+                                  onTap: () async {
+                                    await launchUrl(
+                                      Uri.parse(tus[index].ticketUrl!),
+                                      mode: LaunchMode.externalApplication,
+                                    );
                                   },
                                   child: Container(
                                     padding: EdgeInsets.symmetric(
@@ -312,96 +257,6 @@ class _PaymentsPageState extends State<PaymentsPage> {
                                   onTap: () {
                                     log('URL${res[index].ticketUrl}');
                                     _launchUrl(res[index].ticketUrl ?? "");
-                                    // bottomSheet(
-                                    //   FractionallySizedBox(
-                                    //     heightFactor: 0.5,
-                                    //     child: Padding(
-                                    //       padding: const EdgeInsets.all(16.0),
-                                    //       child: Column(
-                                    //         crossAxisAlignment: CrossAxisAlignment.end,
-                                    //         children: [
-                                    //           InkWell(
-                                    //             onTap: () {
-                                    //               Navigator.of(context).pop();
-                                    //             },
-                                    //             child: SvgPicture.asset(
-                                    //               Assets.cancelSvg,
-                                    //               color: AppColors.black,
-                                    //             ),
-                                    //           ),
-                                    //           SizedBox(
-                                    //             height: 15.h,
-                                    //           ),
-                                    //           Container(
-                                    //             width: 343.w,
-                                    //             height: 156.h,
-                                    //             decoration: BoxDecoration(
-                                    //                 color: AppColors.white,
-                                    //                 borderRadius:
-                                    //                     BorderRadius.circular(20)),
-                                    //             child: Center(
-                                    //               child: Column(
-                                    //                 crossAxisAlignment:
-                                    //                     CrossAxisAlignment.center,
-                                    //                 mainAxisAlignment:
-                                    //                     MainAxisAlignment.spaceEvenly,
-                                    //                 children: [
-                                    //                   SvgPicture.asset(
-                                    //                       'assets/icons/check_circle.svg'),
-                                    //                   Text(
-                                    //                     'Төленген',
-                                    //                     style: getTextStyle(
-                                    //                         CustomTextStyles.s16w400),
-                                    //                   ),
-                                    //                   Text('${res[index].price} ₸',
-                                    //                       style: getTextStyle(
-                                    //                           CustomTextStyles.s24w700))
-                                    //                 ],
-                                    //               ),
-                                    //             ),
-                                    //           ),
-                                    //           SizedBox(
-                                    //             height: 8.h,
-                                    //           ),
-                                    //           Container(
-                                    //             width: 343.w,
-                                    //             height: 155.h,
-                                    //             decoration: BoxDecoration(
-                                    //                 color: AppColors.white,
-                                    //                 borderRadius:
-                                    //                     BorderRadius.circular(20)),
-                                    //             child: Column(
-                                    //               children: [
-                                    //                 SizedBox(
-                                    //                   height: 8.h,
-                                    //                 ),
-                                    //                 const TextWidget(
-                                    //                   text1: 'Статус',
-                                    //                   text2: 'Төленген',
-                                    //                 ),
-                                    //                 TextWidget(
-                                    //                   text1: 'Билет бағасы',
-                                    //                   text2: '${res[index].price} ₸',
-                                    //                 ),
-                                    //                 TextWidget(
-                                    //                   text1: 'Төленді',
-                                    //                   text2:
-                                    //                       '${DateFormat('dd.MM.yyyy').format(res[index].createdAt!)}, ${DateFormat.Hm().format(res[index].createdAt!)}',
-                                    //                 ),
-                                    //                 TextWidget(
-                                    //                   text1: 'Өткізілу уақыты',
-                                    //                   text2:
-                                    //                       '${DateFormat.yMMMMd('kk').format(res[index].startTime!)}, ${DateFormat.Hm().format(res[index].startTime!)}',
-                                    //                 ),
-                                    //               ],
-                                    //             ),
-                                    //           ),
-                                    //         ],
-                                    //       ),
-                                    //     ),
-                                    //   ),
-                                    //   context,
-                                    // );
                                   },
                                   child: Container(
                                     padding: EdgeInsets.symmetric(
@@ -505,6 +360,7 @@ Future<void> _launchUrl(String _urll) async {
 class TextWidget extends StatelessWidget {
   final String text1;
   final String text2;
+
   const TextWidget({
     super.key,
     required this.text1,

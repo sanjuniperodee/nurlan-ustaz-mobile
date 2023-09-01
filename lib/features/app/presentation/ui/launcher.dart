@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -90,7 +92,7 @@ Widget _salam() {
         ),
       );
     },
-    listener: (context, state) {
+    listener: (context, state) async {
       state.whenOrNull(
         notAuthorizedState: () {
           AutoRouter.of(context)
@@ -98,37 +100,19 @@ Widget _salam() {
         },
         notAuthorizedDialogState: () async {
           var dialog = await AlertUtils.showTwoOptionDialog(
-
               context: context,
               messageKey: '401.content'.tr(),
               title: '401.title'.tr(),
               button1Text: 'cancel'.tr(),
               button2Text: '401.login'.tr());
-          return dialog == true
-              ? BlocProvider.of<AppBloc>(context)
-                  .add(const AppEvent.nonAuthorizedDialog())
-              : BlocProvider.of<AppBloc>(context)
-                  .add(const AppEvent.logining());
-// =======
-//                   context: context,
-//                   messageKey: 'exit_des'.tr(),
-//                   title: 'exit'.tr(),
-//                   button1Text: 'cancel'.tr(),
-//                   onButton1: () {
-//                     BlocProvider.of<AppBloc>(context)
-//                         .add(const AppEvent.nonAuthorizedDialog());
-//                   },
-//                   onButton2: () {
-//                     BlocProvider.of<AppBloc>(context)
-//                         .add(const AppEvent.logining());
-//                   },
-//                   button2Text: 'exit2'.tr())
-//               .then((value) => context.router.pop());
-//           // return dialog == true
-//           //     ? context.router.pop()
-//           // : BlocProvider.of<AppBloc>(context)
-//           //     .add(const AppEvent.logining());
-// >>>>>>> dev
+          log('ttttt-${dialog.toString()}');
+          if (dialog == true) {
+            AutoRouter.of(context).pushAndPopUntil(const LoginRoute(),
+                predicate: (route) => true);
+          } else {
+            AutoRouter.of(context).pushAndPopUntil(const MainRouterPage(),
+                predicate: (route) => true);
+          }
         },
         inAppState: () {
           //context.router.pop();

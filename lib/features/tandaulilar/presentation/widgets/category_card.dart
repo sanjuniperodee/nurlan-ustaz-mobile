@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -40,8 +42,7 @@ class CategoryCard extends StatelessWidget {
                 runSpacing: 2,
                 spacing: 2,
                 children: imageList.length < 4
-                    ? imageList
-                            .take(4)
+                    ? imageList.toList()
                             .map(
                               (e) => Container(
                                 height: 82.h,
@@ -51,11 +52,13 @@ class CategoryCard extends StatelessWidget {
                                   child: Image.network(
                                     e.cover!,
                                     fit: BoxFit.cover,
+                                    isAntiAlias: false,
+                                    filterQuality: FilterQuality.low,
                                   ),
                                 ),
                               ),
                             )
-                            .toList() +
+                            .toList()+
                         List.generate(
                             4 - imageList.length,
                             (index) => Container(
@@ -65,9 +68,9 @@ class CategoryCard extends StatelessWidget {
                                     color: AppColors.grey1,
                                     borderRadius: BorderRadius.circular(8.r),
                                   ),
-                                ))
-                    : imageList
-                        .take(4)
+                                ),growable: false)
+                    : imageList.toList()
+                        .take(4).toList()
                         .map(
                           (e) => Container(
                             height: 82.h,

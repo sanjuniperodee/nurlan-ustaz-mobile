@@ -189,7 +189,7 @@ class _SeminarPageState extends State<SeminarPage> {
                                                 DateFormat('dd.MM.yyyy').format(
                                                     DateTime.parse(
                                                         listOfSeminars[index]
-                                                            .createdAt
+                                                            .startTime
                                                             .toString())),
                                                 style: getTextStyle(
                                                         CustomTextStyles

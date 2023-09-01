@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -19,6 +21,7 @@ class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
   ProfileNotificationCubit(
     this._homeRepository,
   ) : super(const ProfileNotificationState.initialState());
+  late List<NotificationItemDTO> serverNotifications;
   late NotificationDTO notificationDeviceDTO;
   late List<NotificationItemDTO> notifications;
   late String token;
@@ -134,7 +137,7 @@ class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
 class ProfileNotificationState with _$ProfileNotificationState {
   const factory ProfileNotificationState.initialState(
       {@Default([]) List<NotificationItemDTO> items,
-      final NotificationDTO? notificationDTO}) = _InitialPage;
+      final NotificationDTO? notificationDTO, final NotificationDTO? serverNotificationDto}) = _InitialPage;
 
   const factory ProfileNotificationState.loadingState() = _LoadingState;
 

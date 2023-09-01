@@ -227,28 +227,17 @@ class _CustomCalendarState extends State<CustomCalendar> {
 
   Widget get calendarGridView {
     return Container(
-      child: SimpleGestureDetector(
-        onSwipeUp: _onSwipeUp,
-        onSwipeDown: _onSwipeDown,
-        onSwipeLeft: _onSwipeLeft,
-        onSwipeRight: _onSwipeRight,
-        swipeConfig: SimpleSwipeConfig(
-          verticalThreshold: 10.0,
-          horizontalThreshold: 40.0,
-          swipeDetectionMoment: SwipeDetectionMoment.onUpdate,
+      child: Column(children: <Widget>[
+        GridView.count(
+          mainAxisSpacing: 15,
+          childAspectRatio: 1.5,
+          primary: false,
+          shrinkWrap: true,
+          crossAxisCount: 7,
+          padding: EdgeInsets.only(bottom: 0.0),
+          children: calendarBuilder(),
         ),
-        child: Column(children: <Widget>[
-          GridView.count(
-            mainAxisSpacing: 15,
-            childAspectRatio: 1.5,
-            primary: false,
-            shrinkWrap: true,
-            crossAxisCount: 7,
-            padding: EdgeInsets.only(bottom: 0.0),
-            children: calendarBuilder(),
-          ),
-        ]),
-      ),
+      ]),
     );
   }
 

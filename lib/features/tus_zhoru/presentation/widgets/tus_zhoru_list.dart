@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,6 +22,7 @@ class _TusZhoruListState extends State<TusZhoruList> {
   @override
   Widget build(BuildContext context) {
     final list = widget.tusZhoruList;
+    log('tus-${list.map((e) => e.isPurchased.toString()).toList().toString()}');
 
     return ListView.separated(
       padding: EdgeInsets.only(bottom: 100, top: 20.h),

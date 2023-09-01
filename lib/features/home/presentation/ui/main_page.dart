@@ -3,8 +3,6 @@ import 'dart:developer';
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -16,17 +14,16 @@ import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
-import 'package:nurlan_ustaz_flutter/core/services/notification_service.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/main_button.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/banner_local_model.dart';
-
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_main_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/timings_cubit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
+
 import '../../../auth/data/datasource/local/auth_local_ds.dart';
 
 @RoutePage(name: 'MainRouterPage')
@@ -307,7 +304,7 @@ class _MainPageState extends State<MainPage> {
                                                             .spaceBetween,
                                                     children: [
                                                       Text(
-                                                          '${geo.name ?? 'Алматы'}, ${DateFormat.yMMMd().format(DateTime.now())}',
+                                                          '${geo.name ?? 'Алматы'}, ${DateFormat.yMMMd().format(DateTime.now()).toLocale()}',
                                                           style: getTextStyle(
                                                                   CustomTextStyles
                                                                       .s14w400)
@@ -395,7 +392,6 @@ class _MainPageState extends State<MainPage> {
                                           ),
                                           InkWell(
                                             onTap: () {
-
                                               TabsRouterScope.of(context)
                                                   ?.controller
                                                   .setActiveIndex(2);
@@ -407,10 +403,19 @@ class _MainPageState extends State<MainPage> {
                                                 maxWidth: 370.w,
                                                 minHeight: 170.h,
                                                 maxHeight: 170.h,
-                                                child: Lottie.asset(
-                                                  'assets/animations/tusZhoru_button.json',
-                                                  fit: BoxFit.fill,
-                                                ),
+                                                child: EasyLocalization.of(
+                                                                context)!
+                                                            .locale
+                                                            .toString() ==
+                                                        'kk'
+                                                    ? Lottie.asset(
+                                                        'assets/animations/tusZhoru_button.json',
+                                                        fit: BoxFit.fill,
+                                                      )
+                                                    : Lottie.asset(
+                                                        'assets/animations/tus_zhoru_button_ru.json',
+                                                        fit: BoxFit.fill,
+                                                      ),
                                               ),
                                             ),
                                           ),

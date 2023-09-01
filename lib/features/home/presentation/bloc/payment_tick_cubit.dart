@@ -13,6 +13,7 @@ part 'payment_tick_cubit.freezed.dart';
 class PaymentTickCubit extends Cubit<PaymentTickState> {
   final HomeRepository _homeRepository;
   final TusZhoruRepository _repository;
+
   PaymentTickCubit(
     this._homeRepository,
     this._repository,
@@ -20,6 +21,7 @@ class PaymentTickCubit extends Cubit<PaymentTickState> {
 
   late List<TusZhoruDTO> listTus = [];
   late List<ResultHomeDTO> listHome = [];
+
   Future<void> tusZhoruT({
     String? search,
     bool? isSaved,
@@ -40,7 +42,8 @@ class PaymentTickCubit extends Cubit<PaymentTickState> {
         emit(PaymentTickState.errorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
-        listTus = r;
+        listTus =
+            r.toList().where((element) => element.isPurchased == true).toList();
         emit(PaymentTickState.loaded(
           res: listHome,
           res2: listTus,
@@ -63,8 +66,10 @@ class PaymentTickCubit extends Cubit<PaymentTickState> {
         emit(PaymentTickState.errorState(message: mapFailureToMessageBack(l)));
       },
       (r) {
-        listTus += r;
-        emit(PaymentTickState.loaded(res: listHome, res2: listTus));
+        final purchasedList =
+            r.toList().where((element) => element.isPaid == true).toList();
+
+        emit(PaymentTickState.loaded(res: listHome, res2: purchasedList));
       },
     );
   }
@@ -103,6 +108,7 @@ class PaymentTickState with _$PaymentTickState {
   const factory PaymentTickState.initialState() = _InitialPage;
 
   const factory PaymentTickState.loadingState() = _LoadingState;
+
   const factory PaymentTickState.loadingMoreState() = _LoadingMoreState;
 
   const factory PaymentTickState.loaded({

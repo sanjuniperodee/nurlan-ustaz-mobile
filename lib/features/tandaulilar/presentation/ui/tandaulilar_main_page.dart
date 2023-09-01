@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -26,6 +28,7 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
   RefreshController controller = RefreshController();
   @override
   void initState() {
+    //BlocProvider.of<TandaulilarCubit>(context).allCategoies();
     BlocProvider.of<TandaulilarCubit>(context)
         .livesT(page: 1, isFirstCall: true, isSaved: true);
     BlocProvider.of<TandaulilarCubit>(context)
@@ -60,6 +63,12 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                 );
               },
               loaded: (livess, newss, seminarss) {
+
+                log('lives-${livess.toList().map((e) => e.cover).toList().toString()}');
+                log('news-${newss.toList().map((e) => e.cover).toList().toString()}');
+                log('seminars-${seminarss.toList().map((e) => e.cover).toList().toString()}');
+
+
                 // lives = livess;
                 // news = newss;
                 // seminars = seminarss;

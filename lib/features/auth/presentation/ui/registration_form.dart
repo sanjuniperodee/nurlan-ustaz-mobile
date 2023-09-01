@@ -183,6 +183,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
           ),
           SizedBox(height: 24.h),
           CustomTextFormProfile(
+            onChanged: (value) {
+              setState(() {});
+            },
             inputAction: TextInputAction.next,
             obscureText: obscureFirst,
             obscure: () {
@@ -190,6 +193,11 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 obscureFirst = !obscureFirst;
               });
             },
+            helperColor: _passwordController.value.text.isEmpty
+                ? AppColors.grey1
+                : _passwordController.length < 8
+                    ? AppColors.red
+                    : AppColors.green,
             keyboardType: TextInputType.visiblePassword,
             helperText: 'password_8'.tr(),
             controller: _passwordController,
@@ -345,7 +353,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                         });
                       });
                     },
-              text: 'entry'.tr())
+              text: 'registration'.tr())
         ],
       );
     });

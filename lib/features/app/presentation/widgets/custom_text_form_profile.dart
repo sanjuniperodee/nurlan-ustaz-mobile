@@ -22,6 +22,7 @@ class CustomTextFormProfile extends StatelessWidget {
   final bool? obscureText;
   final void Function()? obscure;
   final TextInputAction? inputAction;
+  final Color? helperColor;
 
   const CustomTextFormProfile(
       {Key? key,
@@ -38,7 +39,7 @@ class CustomTextFormProfile extends StatelessWidget {
       this.helperText,
       this.keyboardType,
       this.obscureText,
-      this.obscure, this.inputAction})
+      this.obscure, this.inputAction,  this.helperColor})
       : super(key: key);
 
   @override
@@ -64,6 +65,7 @@ class CustomTextFormProfile extends StatelessWidget {
             : null,
 
         helperText: helperText,
+        helperStyle: getTextStyle(CustomTextStyles.s12w400).copyWith(fontFamily: FontTypes.SF_Pro.name,color: helperColor),
         errorText: errorText,
         label: Text(
           labelText,

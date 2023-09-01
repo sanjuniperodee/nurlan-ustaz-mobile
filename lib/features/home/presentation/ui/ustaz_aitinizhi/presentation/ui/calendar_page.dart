@@ -80,14 +80,14 @@ class _CalendarChatsPageState extends State<CalendarChatsPage> {
                       onMonthChanged: (DateTime time) {},
                       hideBottomBar: false,
                       startOnMonday: true,
-                      weekDays: const [
-                        'Дс',
-                        'Сс',
-                        'Ср',
-                        'Бс',
-                        'Жм',
-                        'Сн',
-                        'Жк'
+                      weekDays:[
+                        'calendar.m'.tr(),
+                        'calendar.t'.tr(),
+                        'calendar.w'.tr(),
+                        'calendar.r'.tr(),
+                        'calendar.f'.tr(),
+                        'calendar.s'.tr(),
+                        'calendar.u'.tr(),
                       ],
                       events: const {},
                       isExpandable: false,

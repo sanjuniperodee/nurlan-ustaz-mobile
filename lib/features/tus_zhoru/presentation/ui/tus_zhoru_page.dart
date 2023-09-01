@@ -99,7 +99,7 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                       )
                 : null,
             floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
+                FloatingActionButtonLocation.centerDocked,
             floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
             backgroundColor: const Color(0xFFECF5FF),
             body: TusZhoruCustomBody(

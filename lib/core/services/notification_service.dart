@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -296,6 +297,38 @@ Future<void> showFlutterNotification(RemoteMessage message) async {
     ),
   );
 }
+Future<void> scheduledNotification(String title,String description,String time) async {
+  await flutterLocalNotificationsPlugin.schedule(
+    title.hashCode,
+    title,
+    description,
+    DateFormat('HH:mm').parse(time).copyWith(
+      year: DateTime.now().year,
+      month: DateTime.now().month,
+      day: DateTime.now().day,
+      second: 00,
+    ),
+    NotificationDetails(
+      android: AndroidNotificationDetails(
+        channel.id,
+        channel.name,
+        channelDescription: channel.description,
+        importance: channel.importance,
+        playSound: true,
+        autoCancel: true,
+        sound: channel.sound,
+        priority: Priority.high,
+          icon: '@mipmap/ic_launcher'
+      ),
+      iOS: const DarwinNotificationDetails(
+          presentAlert: true, presentBadge: true, presentSound: true,),
+    ),
+  );
+}
+
+
+
+
 
 class NotificationService {
   // SharedPreferences sharedPreferences;
