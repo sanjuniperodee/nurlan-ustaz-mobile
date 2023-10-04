@@ -81,7 +81,7 @@ class _SurahDetailPageState extends State<SurahDetailPage> {
                             ),
                             Row(
                               children: [
-                                InkWell(
+                                if(widget.result.audio != null)InkWell(
                                     onTap: () {
                                       showAlertDialog(context);
                                     },

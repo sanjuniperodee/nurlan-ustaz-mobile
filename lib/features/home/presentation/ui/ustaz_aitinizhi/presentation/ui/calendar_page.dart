@@ -99,7 +99,7 @@ class _CalendarChatsPageState extends State<CalendarChatsPage> {
                           .countryCode}',
                       todayButtonText: '',
                       isExpanded: true,
-                      dayOfWeekStyle: TextStyle(
+                      dayOfWeekStyle: const TextStyle(
                         color: AppColors.grey2,
                         fontWeight: FontWeight.w400,
                         fontSize: 12,
@@ -107,10 +107,10 @@ class _CalendarChatsPageState extends State<CalendarChatsPage> {
                     ),
                   ),
                 ),
-                isLoading == true ?  Container(
+                isLoading == true ?  SizedBox(
                   height: 200.h,
 
-                  child: Center(child: CircularProgressIndicator(
+                  child: const Center(child: CircularProgressIndicator(
                     color: AppColors.linearBlue,
                   ),),) :
                  (questions != null) ? QuestionsList(

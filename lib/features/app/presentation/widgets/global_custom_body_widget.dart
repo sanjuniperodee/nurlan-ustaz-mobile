@@ -15,10 +15,17 @@ class GlobalCustomBody extends StatefulWidget {
 }
 
 class _GlobalCustomBodyState extends State<GlobalCustomBody>
-    with TickerProviderStateMixin {
-  late  AnimationController _controller =
-      AnimationController(duration: const Duration(minutes: 1), vsync: this)
-        ..repeat();
+    with SingleTickerProviderStateMixin {
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(minutes: 1),
+    vsync: this,
+  )..repeat();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,15 +50,17 @@ class _GlobalCustomBodyState extends State<GlobalCustomBody>
               builder: (BuildContext context, Widget? child) {
                 return Transform.rotate(
                   angle: _controller.value * 2 * 3.14,
-                  child: child,
+                  child: child!,
                 );
               },
             ),
           ),
           Padding(
             padding: EdgeInsets.only(
-                    top: 40, left: widget.left ?? 16, right: widget.right ?? 16)
-                .r,
+              top: 40,
+              left: widget.left ?? 16,
+              right: widget.right ?? 16,
+            ).r,
             child: widget.child ?? const SizedBox(),
           ),
         ],

@@ -1,9 +1,9 @@
 // ignore_for_file: constant_identifier_names
 const TEST = 'http://86.107.45.90:8000';
-
-const PROD = 'https://dev.nurlanustaz.kz';
-
+const TEST2 = 'https://dev.nurlanustaz.kz';
+const PROD = 'https://api.nurlanustaz.kz';
 const SERVER_ = PROD;
+final WebSocketUrl = 'wss://${SERVER_.split('//').last}';
 
 mixin EndPoints {
   static const String onBoarding = '/api/support/onboarding/';

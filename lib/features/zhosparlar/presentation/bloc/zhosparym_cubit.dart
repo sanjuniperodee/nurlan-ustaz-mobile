@@ -4,7 +4,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:nurlan_ustaz_flutter/features/home/data/repositories/home_repository.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/data/models/chat_model.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/checklist_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/repository/zhosparym_repository.dart';
@@ -26,19 +25,17 @@ class ZhosparymCubit extends Cubit<ZhosparymState> {
 
   Future<CheckListDto?> getCheckList() async {
     final result = await _repository.getCheckLists();
-    return result.fold((l) {
-      checklist = null;
-      return null;
-    }, (r) {
-      if (r.isNotEmpty) {
-        checklist = r.toList().first;
-      }
-      else{
-        checklist = null;
 
-      }
-      return r.first;
-    });
+    return result.fold(
+          (error) {
+        checklist = null;
+        return null;
+      },
+          (list) {
+        checklist = list.isNotEmpty ? list.first : null;
+        return checklist;
+      },
+    );
   }
 
   Future<void> chatPer(String dateTime) async {
@@ -48,7 +45,7 @@ class ZhosparymCubit extends Cubit<ZhosparymState> {
   }
 
   Future<void> calendarEvents(DateTime date) async {
-    emit(_InitialState().copyWith(events: null,checklist: checklist));
+    log('daniel-${date.toString()}');
 
     var lastDayDateTime = (date.month < 12)
         ? DateTime(date.year, date.month + 1, 0)
@@ -57,8 +54,8 @@ class ZhosparymCubit extends Cubit<ZhosparymState> {
         startTime: DateFormat('yyyy-MM-dd').format(date.copyWith(day: 1)),
         endTime: DateFormat('yyyy-MM-dd').format(lastDayDateTime));
     events.fold((l) => {}, (r) {
-      log('----------------------${r.toString()}');
-      emit(_InitialState().copyWith(events: r,checklist: checklist));
+      emit(_InitialState()
+          .copyWith(events: r, checklist: checklist, isLoading: false));
     });
   }
 }
@@ -66,7 +63,9 @@ class ZhosparymCubit extends Cubit<ZhosparymState> {
 @freezed
 class ZhosparymState with _$ZhosparymState {
   const factory ZhosparymState.initialState(
-      {Map<String, List<EventDto>>? events,final CheckListDto? checklist}) = _InitialState;
+      {Map<String, List<EventDto>>? events,
+      final CheckListDto? checklist,
+      @Default(false) bool isLoading}) = _InitialState;
 
   const factory ZhosparymState.loadedState() = _LoadedState;
 

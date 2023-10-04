@@ -20,6 +20,7 @@ import '../widgets/floating_container_widget.dart';
 @RoutePage()
 class PrayersDetailPage extends StatefulWidget {
   final int id;
+
   // final ResultTeachingDTO result;
   const PrayersDetailPage({super.key, required this.id});
 
@@ -29,6 +30,7 @@ class PrayersDetailPage extends StatefulWidget {
 
 class _PrayersDetailPageState extends State<PrayersDetailPage> {
   late bool isFavorite;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -57,11 +59,12 @@ class _PrayersDetailPageState extends State<PrayersDetailPage> {
                       fit: BoxFit.cover,
                     ),
                     Positioned.fill(
-                      // left: 280.r,
+                        // left: 280.r,
                         child: Opacity(
-                          opacity: 0.5,
-                          child:  Lottie.asset('assets/animations/Book_V04.json',fit: BoxFit.cover),
-                        )),
+                      opacity: 0.5,
+                      child: Lottie.asset('assets/animations/Book_V04.json',
+                          fit: BoxFit.cover),
+                    )),
                     SizedBox(
                       child: SingleChildScrollView(
                           physics: const BouncingScrollPhysics(),
@@ -122,9 +125,10 @@ class _PrayersDetailPageState extends State<PrayersDetailPage> {
                                       SizedBox(
                                         height: 14.h,
                                       ),
-                                      AudioItemWidget(
-                                        audioUrl: result.audio ?? '',
-                                      ),
+                                      if (result.audio != null)
+                                        AudioItemWidget(
+                                          audioUrl: result.audio ?? '',
+                                        ),
                                       const Spacer(),
                                       Align(
                                         alignment: Alignment.bottomCenter,

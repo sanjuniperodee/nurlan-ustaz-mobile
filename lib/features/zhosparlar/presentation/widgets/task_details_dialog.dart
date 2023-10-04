@@ -1,9 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/checklist_day_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/checklist_task_dto.dart';
@@ -31,45 +29,41 @@ class TaskDetailsDialog extends StatelessWidget {
     }
 
     return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20.r)),
-      child: Container(
-        width: 270.w,
-        height: 200.h,
-        constraints: BoxConstraints(minHeight: 190.h, maxHeight: 200.h),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: AppColors.white,
-        ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      child: SizedBox(
+        width: 270,
+        height: 200,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            SizedBox(
-              height: 16.h,
-            ),
+            const SizedBox(height: 16),
             Text(
-              'New_task'.tr(),
-              style: getTextStyle(CustomTextStyles.s16w700)
-                  .copyWith(fontFamily: FontTypes.Philosopher.name),
+             'New_task'.tr(),
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w700,
+                fontFamily: FontTypes.Philosopher.name,
+              ),
             ),
-            SizedBox(
-              height: 5.h,
-            ),
+            const SizedBox(height: 5),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 50),
               child: Text(
                 'write_down'.tr(),
-                style: getTextStyle(CustomTextStyles.s14w400)
-                    .copyWith(fontFamily: FontTypes.SF_Pro.name)
-                    .copyWith(color: AppColors.grey1.withOpacity(0.5)),
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w400,
+                  fontFamily: FontTypes.SF_Pro.name,
+                  color: AppColors.grey1.withOpacity(0.5),
+                ),
                 textAlign: TextAlign.center,
               ),
             ),
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               child: Container(
-                width: double.infinity,
-                constraints: BoxConstraints(minHeight: 32.h, maxHeight: 35.h),
+                constraints: BoxConstraints(minHeight: 32, maxHeight: 35),
                 child: TextFormField(
                   showCursor: false,
                   minLines: 1,
@@ -80,23 +74,21 @@ class TaskDetailsDialog extends StatelessWidget {
                   ],
                   decoration: InputDecoration(
                     contentPadding:
-                        EdgeInsets.symmetric(horizontal: 3.w, vertical: 2.h),
+                    EdgeInsets.symmetric(horizontal: 3, vertical: 2),
                     floatingLabelBehavior: FloatingLabelBehavior.never,
-                    enabled: true,
-                    labelText: "Text".tr(),
+                    labelText:'Text'.tr(),
                     enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25.0.r),
+                      borderRadius: BorderRadius.circular(25),
                       borderSide:
-                          BorderSide(color: AppColors.grey1.withOpacity(0.2)),
+                      BorderSide(color: AppColors.grey1.withOpacity(0.2)),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25.0.r),
+                      borderRadius: BorderRadius.circular(25),
                       borderSide:
-                          BorderSide(color: AppColors.grey1.withOpacity(0.2)),
+                      BorderSide(color: AppColors.grey1.withOpacity(0.2)),
                     ),
                     filled: true,
                     fillColor: AppColors.blue.withOpacity(0.05),
-                    //fillColor: Colors.green
                   ),
                 ),
               ),
@@ -105,43 +97,49 @@ class TaskDetailsDialog extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Container(
-                  width: 135.w,
+                  width: 135,
                   decoration: const BoxDecoration(
-                      border: Border(
-                          right: BorderSide(color: Color(0xFFE7EAEB)),
-                          top: BorderSide(color: Color(0xFFE7EAEB)))),
+                    border: Border(
+                      right: BorderSide(color: Color(0xFFE7EAEB)),
+                      top: BorderSide(color: Color(0xFFE7EAEB)),
+                    ),
+                  ),
                   child: TextButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
                     child: Text(
                       'Cancel'.tr(),
-                      style: getTextStyle(CustomTextStyles.s14w400)
-                          .copyWith(fontFamily: FontTypes.SF_Pro.name),
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: FontTypes.SF_Pro.name,
+                      ),
                     ),
                   ),
                 ),
                 Container(
-                  width: 135.w,
+                  width: 135,
                   decoration: const BoxDecoration(
-                      border:
-                          Border(top: BorderSide(color: Color(0xFFE7EAEB)))),
+                    border: Border(top: BorderSide(color: Color(0xFFE7EAEB))),
+                  ),
                   child: TextButton(
                     onPressed: () async {
                       if (task != null) {
                         if (task!.title != _controller.text) {
                           if (_controller.text.isEmpty) {
                             buildErrorCustomSnackBar(
-                                context, 'write_line'.tr());
+                                context,
+                                'write_line'.tr());
                           } else {
                             Navigator.pop(context);
                             context
                                 .read<CheckListCubit>()
                                 .completeTask(
-                                    day,
-                                    task!.copyWith(
-                                        title: _controller.value.text),
-                                    task!.isCompleted!)
+                              day,
+                              task!.copyWith(title: _controller.value.text),
+                              task!.isCompleted!,
+                            )
                                 .then((value) {
                               buildSuccessCustomSnackBar(
                                   context, 'success'.tr());
@@ -157,7 +155,8 @@ class TaskDetailsDialog extends StatelessWidget {
                               .read<CheckListCubit>()
                               .postTask(day, _controller.text)
                               .then((value) {
-                            buildSuccessCustomSnackBar(context, 'saved'.tr());
+                            buildSuccessCustomSnackBar(
+                                context, 'saved'.tr());
                           });
                         } else {
                           Navigator.pop(context);
@@ -166,9 +165,12 @@ class TaskDetailsDialog extends StatelessWidget {
                     },
                     child: Text(
                       'OK',
-                      style: getTextStyle(CustomTextStyles.s14w500).copyWith(
-                          fontFamily: FontTypes.SF_Pro.name,
-                          color: AppColors.blue),
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w500,
+                        fontFamily: FontTypes.SF_Pro.name,
+                        color: AppColors.blue,
+                      ),
                     ),
                   ),
                 ),

@@ -87,7 +87,7 @@ class _ChecklistTaskItemState extends State<ChecklistTaskItem> {
       ),
       key: UniqueKey(),
       child: Container(
-        height: 56.h,
+        height: 60.h,
         decoration: BoxDecoration(
           color: AppColors.white,
           borderRadius: widget.index == 0
@@ -95,7 +95,7 @@ class _ChecklistTaskItemState extends State<ChecklistTaskItem> {
                   topRight: Radius.circular(20), topLeft: Radius.circular(20))
               : null,
         ),
-        padding: EdgeInsets.symmetric(vertical: 16.r, horizontal: 16.r),
+        padding: EdgeInsets.symmetric(vertical: 15.r, horizontal: 16.r),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,

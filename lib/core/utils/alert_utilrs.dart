@@ -1,4 +1,6 @@
+
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
@@ -30,115 +32,126 @@ class AlertUtils {
     Function? onButton1,
     Function? onButton2,
     Duration? duration,
+    bool? isApp,
   }) async {
     return await showDialog(
+      barrierDismissible: false,
       context: context,
       useRootNavigator: false,
-      builder: (_) => AlertDialog(
-          alignment: Alignment.center,
-          title: Text(
-            title,
-            style: getTextStyle(CustomTextStyles.s16w200),
-            textAlign: TextAlign.center,
-          ),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-          backgroundColor: AppColors.white,
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: Text(
-                  messageKey,
-                  textAlign: TextAlign.center,
-                  style: getTextStyle(CustomTextStyles.s14w400),
+      builder: (_) => WillPopScope(
+        onWillPop: () async => false,
+        child: AlertDialog(
+            alignment: Alignment.center,
+            title: Text(
+              title,
+              style: getTextStyle(CustomTextStyles.s16w200),
+              textAlign: TextAlign.center,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            backgroundColor: AppColors.white,
+            content: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: Text(
+                    messageKey,
+                    textAlign: TextAlign.center,
+                    style: getTextStyle(CustomTextStyles.s14w400),
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(top: 32),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Flexible(
-                      child: AppButtonNoBorder(
-                        onTap: () {
-                          onButton1 ?? () {};
-                          Navigator.pop(context, false);
-                        },
-                        text: button1Text,
-                        textColor: AppColors.grey1,
+                Padding(
+                  padding: const EdgeInsets.only(top: 32),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Flexible(
+                        child: AppButtonNoBorder(
+                          onTap: () {
+                            onButton1 ?? () {};
+                            Navigator.pop(context, false);
+                          },
+                          text: button1Text,
+                          textColor: AppColors.grey1,
+                        ),
                       ),
-                    ),
-                    Flexible(
-                      child: AppButtonNoBorder(
-                        onTap: () {
-                          onButton2 ?? () {};
-                          Navigator.pop(context, true);
-                        },
-                        text: button2Text,
-                        textColor: AppColors.primaryColor,
+                      Flexible(
+                        child: AppButtonNoBorder(
+                          onTap: () async {
+                            onButton2 ?? () {};
+                            if (isApp != null) {
+                              SystemNavigator.pop();
+                            }
+                            else{
+                              Navigator.pop(context, true);
+
+                            }
+                          },
+                          text: button2Text,
+                          textColor: AppColors.primaryColor,
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          )),
+                    ],
+                  ),
+                )
+              ],
+            )),
+      ),
     );
   }
 
-  // static Future<void> showGeneralDialog(
-  //   BuildContext context, {
-  //   VoidCallback? onTap,
-  //   VoidCallback? secondButtonTap,
-  //   String? buttonText,
-  //   String? secondButtonText,
-  //   bool isError = false,
-  //   required String message,
-  // }) =>
-  //     showDialog(
-  //       context: context,
-  //       useRootNavigator: true,
-  //       builder: (_) => AlertDialog(
-  //         alignment: Alignment.center,
-  //         title:
-  //             isError ? SvgPicture.asset('assets/icons/error_icon.svg') : null,
-  //         shape: RoundedRectangleBorder(
-  //           borderRadius: BorderRadius.circular(10),
-  //         ),
-  //         backgroundColor: AppColors.primaryBackGr,
-  //         content: PopUpDialog(
-  //           message: message,
-  //           onSecondButtonTap: secondButtonTap,
-  //           onButtonTap: onTap,
-  //           buttonText: buttonText,
-  //           secondButtonText: secondButtonText,
-  //           hasSecondButton: secondButtonText != null,
-  //         ),
-  //       ),
-  //     );
+// static Future<void> showGeneralDialog(
+//   BuildContext context, {
+//   VoidCallback? onTap,
+//   VoidCallback? secondButtonTap,
+//   String? buttonText,
+//   String? secondButtonText,
+//   bool isError = false,
+//   required String message,
+// }) =>
+//     showDialog(
+//       context: context,
+//       useRootNavigator: true,
+//       builder: (_) => AlertDialog(
+//         alignment: Alignment.center,
+//         title:
+//             isError ? SvgPicture.asset('assets/icons/error_icon.svg') : null,
+//         shape: RoundedRectangleBorder(
+//           borderRadius: BorderRadius.circular(10),
+//         ),
+//         backgroundColor: AppColors.primaryBackGr,
+//         content: PopUpDialog(
+//           message: message,
+//           onSecondButtonTap: secondButtonTap,
+//           onButtonTap: onTap,
+//           buttonText: buttonText,
+//           secondButtonText: secondButtonText,
+//           hasSecondButton: secondButtonText != null,
+//         ),
+//       ),
+//     );
 
-  // static Future<void> showSuccessDialog(
-  //   BuildContext context, {
-  //   String? title,
-  // }) =>
-  //     showDialog(
-  //       context: context,
-  //       barrierDismissible: false,
-  //       useRootNavigator: false,
-  //       builder: (_) => AlertDialog(
-  //           title: Text(
-  //             title ?? 'успешно',
-  //             textAlign: TextAlign.center,
-  //           ),
-  //           shape: RoundedRectangleBorder(
-  //             borderRadius: BorderRadius.circular(10),
-  //           ),
-  //           backgroundColor: AppColors.background,
-  //           content: const SuccessDialog()),
-  //     );
+// static Future<void> showSuccessDialog(
+//   BuildContext context, {
+//   String? title,
+// }) =>
+//     showDialog(
+//       context: context,
+//       barrierDismissible: false,
+//       useRootNavigator: false,
+//       builder: (_) => AlertDialog(
+//           title: Text(
+//             title ?? 'успешно',
+//             textAlign: TextAlign.center,
+//           ),
+//           shape: RoundedRectangleBorder(
+//             borderRadius: BorderRadius.circular(10),
+//           ),
+//           backgroundColor: AppColors.background,
+//           content: const SuccessDialog()),
+//     );
 }
 
 class Alert {

@@ -262,12 +262,12 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                     left: 16.r,
                     child: GestureDetector(
                         onTap: () {
+                          Navigator.pop(context);
                           BlocProvider.of<NewsCubit>(context)
                               .news(
                                   page: 1,
                                   isFirstCall: true,
-                                  search: widget.search ?? '')
-                              .then((value) => Navigator.pop(context));
+                                  search: widget.search ?? '');
                         },
                         child: SvgPicture.asset(Assets.backStackSvg))),
               ]);

@@ -39,49 +39,73 @@ class TimingsCubit extends Cubit<TimingsState> {
 
   Future<void> timings(double? lat, double? long) async {
     emit(const TimingsState.loadingState());
-    // final geo = _homeLocalDs.getGeoFromCache();
     final GeonamesDTO? geo = _homeLocalDs.getGeoFromCacheNull();
+
     if (geo != null) {
-      final failureOrUser = await _homeRepository.timings(
-          lat: double.parse(geo.lat ?? lat.toString()),
-          long: double.parse(geo.lng ?? long.toString()));
-      failureOrUser.fold(
-        (l) {
-          emit(TimingsState.errorState(message: mapFailureToMessageBack(l)));
-        },
-        (r) {
-          emit(TimingsState.loaded(not: r, geo: geo));
-        },
+      await fetchTimingsAndHandleNotifications(
+        lat: double.parse(geo.lat ?? lat.toString()),
+        long: double.parse(geo.lng ?? long.toString()),
+        geo: geo,
       );
     } else {
-      final failureOrUser = await _homeRepository.timings(
-          lat: double.parse(geo?.lat ?? lat.toString()),
-          long: double.parse(geo?.lng ?? long.toString()));
-      failureOrUser.fold(
-        (l) {
-          emit(TimingsState.errorState(message: mapFailureToMessageBack(l)));
-        },
-        (r) async {
-          Prefs prefs = Prefs();
-          final String? dev = await prefs.getDeviceToken();
-          final result = await _homeRepository.getNotificationDevice(
-              registrationId: dev ?? '');
-          result.fold((l) {}, (r) => {notification = r});
-          if (notification.prayerTimes ?? false == true) {
-            final List<String> time =
-                r.toJson().values.toList().map((e) => e.toString()).toList();
-            for (String item in r.toJson().values.toList()) {
-              scheduledNotification('Nurlan Ustaz',
-                  namasNames[time.indexOf(item)].toString(), item);
-            }
-          }
-          emit(TimingsState.loaded(
-              not: r,
-              geo: geo ??
-                  const GeonamesDTO(
-                      name: 'Алматы', lat: '43.25', lng: '76.91667')));
-        },
+      await fetchTimingsAndHandleNotifications(
+        lat: double.parse(geo?.lat ?? lat.toString()),
+        long: double.parse(geo?.lng ?? long.toString()),
+        geo: null,
       );
+    }
+  }
+
+  Future<void> fetchTimingsAndHandleNotifications({
+    required double lat,
+    required double long,
+    GeonamesDTO? geo,
+  }) async {
+    final failureOrUser = await _homeRepository.timings(lat: lat, long: long);
+
+    failureOrUser.fold(
+          (l) {
+        emit(TimingsState.errorState(message: mapFailureToMessageBack(l)));
+      },
+          (r) async {
+        Prefs prefs = Prefs();
+        final String? dev = await prefs.getDeviceToken();
+        final result = await _homeRepository.getNotificationDevice(registrationId: dev ?? '');
+
+        result.fold((l) {}, (notification) {
+          handlePrayerTimesNotification(notification, r);
+        });
+
+        emit(TimingsState.loaded(
+          not: r,
+          geo: geo ??
+              const GeonamesDTO(
+                name: 'Алматы',
+                lat: '43.25',
+                lng: '76.91667',
+              ),
+        ));
+      },
+    );
+  }
+
+  void handlePrayerTimesNotification(NotificationDTO notification, TimingsDTO r) {
+    if (notification.prayerTimes != null && notification.prayerTimes == true) {
+      final List<String> time = r.toJson().values.map((e) => e.toString()).toList();
+      final now = DateTime.now();
+
+      for (String item in r.toJson().values) {
+        final parts = item.split(':');
+        final hour = int.parse(parts.first);
+        final minute = int.parse(parts.last);
+
+        final prayerTime = now.copyWith(hour: hour, minute: minute);
+
+        if (prayerTime.isAfter(now)) {
+          final index = time.indexOf(item);
+          scheduledNotification('Nurlan Ustaz', namasNames[index], item, index);
+        }
+      }
     }
   }
 }

@@ -111,10 +111,12 @@ abstract class HomeRepository {
       {required double lat, required double long});
 
   Future<Either<Failure, List<ResultHomeDTO>>> projectInfo();
+
   Future<Either<Failure, List<ResultHomeDTO>>> newsMain({
     bool? isSaved,
     int? currentPage,
   });
+
   Future<Either<Failure, GetNotiDTO>> getNotifications();
 
   Future<Either<Failure, ResultHomeDTO>> seminarDetail({required int id});
@@ -122,6 +124,7 @@ abstract class HomeRepository {
   Future<Either<Failure, bool>> newsFavorite({required int id});
 
   Future<Either<Failure, bool>> newsLike({required int id});
+
   Future<Either<Failure, bool>> commentReport(
       {required int id, required String reason});
 
@@ -135,6 +138,7 @@ abstract class HomeRepository {
 
   Future<Either<Failure, FreedomPaymentDTO>> createSeminarPayment(
       {required int id, required String backUrl});
+
   Future<Either<Failure, NotificationDTO>> notificationDevice({
     required NotificationDeviceDTO notificationDTO,
   });
@@ -142,8 +146,10 @@ abstract class HomeRepository {
   Future<Either<Failure, NotificationDTO>> getNotificationDevice({
     required String registrationId,
   });
+
   Future<Either<Failure, NotificationDTO>> putNotificationDevice(
       {required String registrationId, required NotificationDTO notification});
+
   Future<Either<Failure, String>> checkTicket({required String url});
 }
 
@@ -208,30 +214,41 @@ class HomeRepositoryImpl extends HomeRepository {
   }) async {
     if (await networkInfo.isConnected) {
       try {
-        Prefs prefs = Prefs();
-        final String? dev = await prefs.getDeviceToken();
-        final String? deviceToken =
-            await NotificationService().getDeviceToken();
-        final String type = Platform.operatingSystem.toString();
-        if (dev == null) {
-          if (Platform.isIOS || Platform.isAndroid) {
-            await remoteDS.notificationDevice(
-                notification: NotificationDeviceDTO(
-              registrationId: deviceToken,
-              type: type,
-            ));
-            prefs.saveDeviceToken(deviceToken!);
-          }
-        } else {
-          if (dev != deviceToken) {
+        if(isSaved == null){
+          Prefs prefs = Prefs();
+          final String? cacheToken = await prefs.getDeviceToken();
+          final String? firebaseToken =
+          await NotificationService().getDeviceToken();
+          final String type = Platform.operatingSystem.toString();
+
+          if (cacheToken == null) {
+
+            await remoteDS.postNotificationDevice(
+              notification: NotificationDeviceDTO(
+                registrationId: firebaseToken,
+                type: type,
+              ),
+            );
+            await prefs.saveDeviceToken(firebaseToken!);
+          } else if (cacheToken != firebaseToken) {
+
             NotificationDTO notificationDeviceDTO =
-                NotificationDTO(registrationId: deviceToken, type: type);
+            NotificationDTO(registrationId: firebaseToken, type: type);
             await remoteDS
-                .putNotificationDevice(
-                    registrationId: dev, notification: notificationDeviceDTO)
-                .then((value) => prefs.saveDeviceToken(deviceToken!));
+                .patchNotificationDevice(
+                registrationId: cacheToken,
+                notification: notificationDeviceDTO)
+                .then((value) => prefs.saveDeviceToken(firebaseToken!));
+          }else {
+            NotificationDTO notificationDeviceDTO =
+            NotificationDTO(registrationId: firebaseToken, type: type);
+            await remoteDS.patchNotificationDevice(
+              registrationId: cacheToken,
+              notification:  notificationDeviceDTO, // Define an empty notification
+            );
           }
         }
+
 
         final List<ResultHomeDTO> res =
             await remoteDS.newsMain(isSaved: isSaved, currentPage: currentPage);
@@ -567,33 +584,34 @@ class HomeRepositoryImpl extends HomeRepository {
   }) async {
     if (await networkInfo.isConnected) {
       try {
-        final String? deviceToken =
-            await NotificationService().getDeviceToken();
-        final String type = Platform.operatingSystem.toString();
-        final result =
-            await getNotificationDevice(registrationId: deviceToken ?? '');
-        result.fold((l) async {
-          if (Platform.isIOS || Platform.isAndroid) {
-            await remoteDS.notificationDevice(
-                notification: NotificationDeviceDTO(
-              registrationId: deviceToken,
-              type: type,
-            ));
-          }
-        }, (r) async {
-          log('${deviceToken}------/d');
-          log('${r.registrationId}------/r');
-
-          if (r.registrationId != deviceToken) {
+        if(isSaved == null){
+          final String? deviceToken =
+          await NotificationService().getDeviceToken();
+          final String type = Platform.operatingSystem.toString();
+          final result =
+          await getNotificationDevice(registrationId: deviceToken ?? '');
+          result.fold((l) async {
             if (Platform.isIOS || Platform.isAndroid) {
-              await remoteDS.notificationDevice(
+              await remoteDS.postNotificationDevice(
                   notification: NotificationDeviceDTO(
-                registrationId: deviceToken,
-                type: type,
-              ));
+                    registrationId: deviceToken,
+                    type: type,
+                  ));
             }
-          }
-        });
+          }, (r) async {
+
+            if (r.registrationId != deviceToken) {
+              if (Platform.isIOS || Platform.isAndroid) {
+                await remoteDS.postNotificationDevice(
+                    notification: NotificationDeviceDTO(
+                      registrationId: deviceToken,
+                      type: type,
+                    ));
+              }
+            }
+          });
+        }
+
 
         final List<ResultHomeDTO> news = await remoteDS.news(
             search: search,
@@ -748,8 +766,8 @@ class HomeRepositoryImpl extends HomeRepository {
       {required NotificationDeviceDTO notificationDTO}) async {
     if (await networkInfo.isConnected) {
       try {
-        final NotificationDTO notification =
-            await remoteDS.notificationDevice(notification: notificationDTO);
+        final NotificationDTO notification = await remoteDS
+            .postNotificationDevice(notification: notificationDTO);
         return Right(notification);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -782,7 +800,7 @@ class HomeRepositoryImpl extends HomeRepository {
     if (await networkInfo.isConnected) {
       try {
         final NotificationDTO notificationT =
-            await remoteDS.putNotificationDevice(
+            await remoteDS.patchNotificationDevice(
                 registrationId: registrationId, notification: notification);
         return Right(notificationT);
       } on ServerException catch (e) {
@@ -797,8 +815,7 @@ class HomeRepositoryImpl extends HomeRepository {
   Future<Either<Failure, String>> checkTicket({required String url}) async {
     if (await networkInfo.isConnected) {
       try {
-        final message = await remoteDS
-            .checkTicket(url: url);
+        final message = await remoteDS.checkTicket(url: url);
         return Right(message);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));

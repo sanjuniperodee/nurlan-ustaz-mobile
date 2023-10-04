@@ -13,6 +13,8 @@ import '../../../../core/router/app_router.dart';
 import '../../../app/presentation/widgets/app_button.dart';
 import '../../../app/presentation/widgets/custom_snackbars.dart';
 import '../../../app/presentation/widgets/custom_text_form_profile.dart';
+import '../bloc/login_cubit.dart';
+import '../bloc/login_cubit.dart';
 
 class LoginForm extends StatefulWidget {
   const LoginForm({Key? key}) : super(key: key);
@@ -30,115 +32,123 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     return BlocConsumer<LoginCubit, LoginState>(
       builder: (context, state) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              'welcome'.tr(),
-              style: getTextStyle(CustomTextStyles.s36w700).copyWith(
-                  fontFamily: FontTypes.Philosopher.name, fontSize: 32),
-              textAlign: TextAlign.start,
-            ),
-            SizedBox(height: 32.h),
-            CustomTextFormProfile(
-              inputAction: TextInputAction.next,
-              keyboardType: TextInputType.emailAddress,
-              onChanged: (String value) {
-                setState(() {});
-              },
-              controller: emailController,
-              hintText: 'E-mail',
-              labelText: 'E-mail',
-            ),
-            SizedBox(height: 24.h),
-            CustomTextFormProfile(
-              keyboardType: TextInputType.visiblePassword,
-              inputAction: TextInputAction.done,
-              onChanged: (String value) {
-                setState(() {});
-              },
-              obscureText: obscure,
-              obscure: () {
-                setState(() {
-                  obscure = !obscure;
-                });
-              },
-              controller: passwordController,
-              hintText: 'password'.tr(),
-              labelText: 'password'.tr(),
-            ),
-            SizedBox(
-              height: 42.h,
-            ),
-            AppButton(
-                textSize: 16.sp,
-                isActive: (isValidEmail(emailController.value.text) &&
-                    passwordController.value.text.isNotEmpty),
-                onTap: () {
-                  if (emailController.value.text.isEmpty &&
-                      passwordController.value.text.isEmpty) {
-                    buildErrorCustomSnackBar(
-                        context, 'write_email_or_password'.tr());
-                    return;
-                  }
-                  if (emailController.value.text.isEmpty) {
-                    buildErrorCustomSnackBar(context, 'write_email'.tr());
-                    return;
-                  }
-                  if (passwordController.value.text.isEmpty) {
-                    buildErrorCustomSnackBar(context, 'write_password'.tr());
-                    return;
-                  }
-                  if (isValidEmail(emailController.value.text) == false) {
-                    buildErrorCustomSnackBar(
-                        context, 'write_correct_email'.tr());
-                    return;
-                  } else {
-                    context.read<LoginCubit>().createToken(TokenCreateDTO(
-                        email: emailController.text,
-                        password: passwordController.text));
-                  }
+       return  state.maybeWhen(orElse: (){
+         return Container();
+       },loadingState: () {
+         return Padding(
+           padding:  EdgeInsets.only(top: 250).h,
+           child: Center(
+             child: CircularProgressIndicator(
+               color: AppColors.linearBlue,
+             ),
+           ),
+         );
+       },initialState: (){
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'welcome'.tr(),
+                style: getTextStyle(CustomTextStyles.s36w700).copyWith(
+                    fontFamily: FontTypes.Philosopher.name, fontSize: 32),
+                textAlign: TextAlign.start,
+              ),
+              SizedBox(height: 32.h),
+              CustomTextFormProfile(
+                inputAction: TextInputAction.next,
+                keyboardType: TextInputType.emailAddress,
+                onChanged: (String value) {
+                  setState(() {});
                 },
-                text: 'enter'.tr()),
-            SizedBox(height: 12.h),
-            Container(
-              decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: AppColors.gradientSecondaryActiveButton.colors),
-                  borderRadius: const BorderRadius.all(Radius.circular(30)).r),
-              child: MaterialButton(
-                onPressed: () {
-                  context.router.push(const ForgotPasswordRoute());
+                controller: emailController,
+                hintText: 'E-mail',
+                labelText: 'E-mail',
+              ),
+              SizedBox(height: 24.h),
+              CustomTextFormProfile(
+                keyboardType: TextInputType.visiblePassword,
+                inputAction: TextInputAction.done,
+                onChanged: (String value) {
+                  setState(() {});
                 },
-                child: Container(
-                  padding: const EdgeInsets.all(10),
-                  width: 339.w,
-                  child: SizedBox(
-                    child: Text('forgot_password'.tr(),
-                        textAlign: TextAlign.center,
-                        style: getTextStyle(CustomTextStyles.s16w200)
-                            .apply(fontFamily: FontTypes.Philosopher.name)
-                            .copyWith(
-                                fontWeight: FontWeight.w700, fontSize: 16.sp)
-                            .apply(
-                              color: AppColors.blue,
-                            )),
+                obscureText: obscure,
+                obscure: () {
+                  setState(() {
+                    obscure = !obscure;
+                  });
+                },
+                controller: passwordController,
+                hintText: 'password'.tr(),
+                labelText: 'password'.tr(),
+              ),
+              SizedBox(
+                height: 42.h,
+              ),
+              AppButton(
+                  textSize: 16.sp,
+                  isActive: (isValidEmail(emailController.value.text) &&
+                      passwordController.value.text.isNotEmpty),
+                  onTap: () {
+                    if (emailController.value.text.isEmpty &&
+                        passwordController.value.text.isEmpty) {
+                      buildErrorCustomSnackBar(
+                          context, 'write_email_or_password'.tr());
+                      return;
+                    }
+                    if (emailController.value.text.isEmpty) {
+                      buildErrorCustomSnackBar(context, 'write_email'.tr());
+                      return;
+                    }
+                    if (passwordController.value.text.isEmpty) {
+                      buildErrorCustomSnackBar(context, 'write_password'.tr());
+                      return;
+                    }
+                    if (isValidEmail(emailController.value.text) == false) {
+                      buildErrorCustomSnackBar(
+                          context, 'write_correct_email'.tr());
+                      return;
+                    } else {
+                      context.read<LoginCubit>().createToken(TokenCreateDTO(
+                          email: emailController.text,
+                          password: passwordController.text));
+                    }
+                  },
+                  text: 'entry'.tr()),
+              SizedBox(height: 12.h),
+              Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: AppColors.gradientSecondaryActiveButton.colors),
+                    borderRadius: const BorderRadius.all(Radius.circular(30)).r),
+                child: MaterialButton(
+                  onPressed: () {
+                    context.router.push(const ForgotPasswordRoute());
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(10),
+                    width: 339.w,
+                    child: SizedBox(
+                      child: Text('forgot_password'.tr(),
+                          textAlign: TextAlign.center,
+                          style: getTextStyle(CustomTextStyles.s16w200)
+                              .apply(fontFamily: FontTypes.Philosopher.name)
+                              .copyWith(
+                              fontWeight: FontWeight.w700, fontSize: 16.sp)
+                              .apply(
+                            color: AppColors.blue,
+                          )),
+                    ),
                   ),
                 ),
-              ),
-            )
-          ],
-        );
+              )
+            ],
+          );
+        });
+
       },
       listener: (context, state) {
         state.maybeWhen(
-          loadingState: () {
-            const Center(
-              child: CircularProgressIndicator(
-                color: AppColors.linearBlue,
-              ),
-            );
-          },
+
           loadedState: () async {
             emailController.clear();
             passwordController.clear();

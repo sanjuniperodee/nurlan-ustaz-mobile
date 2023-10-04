@@ -12,7 +12,7 @@ part 'login_cubit.freezed.dart';
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(
     this._authRepository,
-  ) : super(const LoginState.loadingState());
+  ) : super(const LoginState.initialState());
   final AuthRepository _authRepository;
 
   Future<void> createToken(TokenCreateDTO tokenCreateDTO) async {
@@ -23,9 +23,13 @@ class LoginCubit extends Cubit<LoginState> {
       (l) {
         l as ServerFailure;
         emit(_ErrorState(message: mapFailureToMessageBack(l)));
+        emit(const LoginState.initialState());
+
       },
       (r) {
         emit(const LoginState.loadedState());
+        emit(const LoginState.initialState());
+
       },
     );
   }

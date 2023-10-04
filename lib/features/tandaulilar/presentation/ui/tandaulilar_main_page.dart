@@ -26,16 +26,19 @@ class TandaulilarMainPage extends StatefulWidget {
 
 class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
   RefreshController controller = RefreshController();
+
   @override
   void initState() {
-    //BlocProvider.of<TandaulilarCubit>(context).allCategoies();
-    BlocProvider.of<TandaulilarCubit>(context)
-        .livesT(page: 1, isFirstCall: true, isSaved: true);
-    BlocProvider.of<TandaulilarCubit>(context)
-        .newsT(page: 1, isFirstCall: true, isSaved: true);
-    BlocProvider.of<TandaulilarCubit>(context)
-        .seminarT(page: 1, isFirstCall: true, isSaved: true);
     super.initState();
+     BlocProvider.of<TandaulilarCubit>(context)
+         .fetchAllData(page: 1, isFirstCall: true, isSaved: true);
+  }
+
+
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
@@ -63,15 +66,10 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                 );
               },
               loaded: (livess, newss, seminarss) {
-
                 log('lives-${livess.toList().map((e) => e.cover).toList().toString()}');
                 log('news-${newss.toList().map((e) => e.cover).toList().toString()}');
                 log('seminars-${seminarss.toList().map((e) => e.cover).toList().toString()}');
 
-
-                // lives = livess;
-                // news = newss;
-                // seminars = seminarss;
                 return GlobalCustomBody(
                   left: 16,
                   right: 16,
@@ -90,15 +88,7 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                         },
                       ),
                       onRefresh: () {
-                        BlocProvider.of<TandaulilarCubit>(context).lives = [];
-                        BlocProvider.of<TandaulilarCubit>(context).news = [];
-                        BlocProvider.of<TandaulilarCubit>(context).seminars =
-                            [];
-                        BlocProvider.of<TandaulilarCubit>(context)
-                            .livesT(page: 1, isFirstCall: true, isSaved: true);
-                        BlocProvider.of<TandaulilarCubit>(context)
-                            .newsT(page: 1, isFirstCall: true, isSaved: true);
-                        BlocProvider.of<TandaulilarCubit>(context).seminarT(
+                        BlocProvider.of<TandaulilarCubit>(context).fetchAllData(
                             page: 1, isFirstCall: true, isSaved: true);
                       },
                       child: SingleChildScrollView(
@@ -124,7 +114,7 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                                     children: [
                                       CategoryCard(
                                         title: 'news'.tr(),
-                                        imageList: newss,
+                                        imageList: newss.toSet().toList(),
                                         onTap: () {
                                           context.router.push(
                                             NewsRoute(type: 'isSave'),
@@ -133,7 +123,7 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                                       ),
                                       CategoryCard(
                                         title: 'live'.tr(),
-                                        imageList: livess,
+                                        imageList: livess.toSet().toList(),
                                         onTap: () {
                                           context.router.push(
                                             LiveBroadcastsRoute(type: 'isSave'),
@@ -147,7 +137,7 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                                   ),
                                   CategoryCard(
                                     title: 'seminars'.tr(),
-                                    imageList: seminarss,
+                                    imageList: seminarss.toSet().toList(),
                                     titleColor: AppColors.blue,
                                     onTap: () {
                                       context.router.push(

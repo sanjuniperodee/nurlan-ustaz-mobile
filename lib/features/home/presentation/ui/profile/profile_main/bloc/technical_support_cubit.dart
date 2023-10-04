@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/repositories/auth_repository.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/data/models/question_model.dart';
@@ -38,7 +39,7 @@ class TechnicalSupportCubit extends Cubit<TechnicalSupportState> {
           as Map<String, dynamic>,
     );
     _channel = IOWebSocketChannel.connect(
-        "ws://86.107.45.90:8000/api/support/chat/",
+        "$WebSocketUrl/api/support/chat/",
         headers: {"Authorization": "Bearer ${token.access}"});
     emit(_InitialState(channel: _channel, questions: [], user: _userDto));
     // emit(const _LoadingState());

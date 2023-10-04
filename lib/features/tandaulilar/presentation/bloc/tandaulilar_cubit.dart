@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -14,19 +16,70 @@ class TandaulilarCubit extends Cubit<TandaulilarState> {
   TandaulilarCubit(
     this._homeRepository,
   ) : super(const TandaulilarState.initialState());
-  List<ResultHomeDTO> lives = [];
-  List<ResultHomeDTO> news = [];
-  List<ResultHomeDTO> seminars = [];
+  late List<ResultHomeDTO> lives;
 
-  Future<void> allCategoies() async {
-    emit(_LoadingState());
-    await livesT(page: 1, isSaved: true, isFirstCall: true);
-    await newsT(page: 1, isSaved: true, isFirstCall: true);
-    await seminarT(page: 1, isSaved: true, isFirstCall: true);
-    emit(TandaulilarState.loaded(
-        lives: lives.length < 4 ? lives : lives.take(4).toList(),
-        news: news.length < 4 ? news : news.take(4).toList(),
-        seminars: seminars.length < 4 ? seminars : seminars.take(4).toList()));
+  late List<ResultHomeDTO> news;
+
+  late List<ResultHomeDTO> seminars;
+
+  Future<void> fetchAllData({
+    String? search,
+    bool isSaved = true,
+    required int page,
+    bool? isFirstCall,
+  }) async {
+    emit(const TandaulilarState.loadingState());
+
+    final failureOrLives = await _homeRepository.lives(
+      search: search,
+      isSaved: isSaved,
+      page: page,
+      isFirstCall: isFirstCall,
+    );
+
+    final failureOrNews = await _homeRepository.news(
+      search: search,
+      isSaved: isSaved,
+      page: page,
+      isFirstCall: isFirstCall,
+    );
+
+    final failureOrSeminars = await _homeRepository.seminar(
+      search: search,
+      isSaved: isSaved,
+      page: page,
+      isFirstCall: isFirstCall,
+    );
+
+    failureOrLives.fold(
+      (l) {
+        emit(TandaulilarState.errorState(message: mapFailureToMessageBack(l)));
+      },
+      (r) {
+        lives = r;
+      },
+    );
+
+    failureOrNews.fold(
+      (l) {
+        emit(TandaulilarState.errorState(message: mapFailureToMessageBack(l)));
+      },
+      (r) {
+        news = r;
+      },
+    );
+
+    failureOrSeminars.fold(
+      (l) {
+        emit(TandaulilarState.errorState(message: mapFailureToMessageBack(l)));
+      },
+      (r) {
+        seminars = r;
+      },
+    );
+    log('pppp-${lives.map((e) => e.cover).toList().toString() + news.map((e) => e.cover).toList().toString() + seminars.map((e) => e.cover).toList().toString()}');
+
+    emit(TandaulilarState.loaded(lives: lives, news: news, seminars: seminars));
   }
 
   Future<void> livesT({
@@ -104,9 +157,9 @@ class TandaulilarState with _$TandaulilarState {
   const factory TandaulilarState.loadingState() = _LoadingState;
 
   const factory TandaulilarState.loaded({
-    required List<ResultHomeDTO> lives,
-    required List<ResultHomeDTO> news,
-    required List<ResultHomeDTO> seminars,
+    @Default([]) final List<ResultHomeDTO> lives,
+    @Default([]) final List<ResultHomeDTO> news,
+    @Default([]) final List<ResultHomeDTO> seminars,
   }) = _LoadedState;
 
   const factory TandaulilarState.errorState({

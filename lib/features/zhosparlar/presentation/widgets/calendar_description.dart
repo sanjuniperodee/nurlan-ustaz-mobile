@@ -3,9 +3,14 @@ import 'package:flutter/cupertino.dart';
 
 import '../../../../core/common/app_styles.dart';
 
-class CalendarDescription extends StatelessWidget {
+class CalendarDescription extends StatefulWidget {
   const CalendarDescription({Key? key}) : super(key: key);
 
+  @override
+  State<CalendarDescription> createState() => _CalendarDescriptionState();
+}
+
+class _CalendarDescriptionState extends State<CalendarDescription> {
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -32,7 +37,7 @@ class CalendarDescription extends StatelessWidget {
                 width: 8,
               ),
               Text(
-                'live'.tr(),
+                context.tr('live'),
                 style:
                 getTextStyle(CustomTextStyles.s12w500)
                     .copyWith(
@@ -63,7 +68,7 @@ class CalendarDescription extends StatelessWidget {
                 width: 8,
               ),
               Text(
-                'Services'.tr(),
+                context.tr('Services'),
                 style:
                 getTextStyle(CustomTextStyles.s12w500)
                     .copyWith(
@@ -94,7 +99,7 @@ class CalendarDescription extends StatelessWidget {
                 width: 8,
               ),
               Text(
-                'Seminar'.tr(),
+                context.tr('Seminar'),
                 style:
                 getTextStyle(CustomTextStyles.s12w500)
                     .copyWith(

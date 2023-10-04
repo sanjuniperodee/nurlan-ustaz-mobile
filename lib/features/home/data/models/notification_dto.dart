@@ -15,7 +15,7 @@ class NotificationDTO with _$NotificationDTO {
     bool? active,
     String? type,
     @JsonKey(name: "date_created") String? dateCreated,
-    @JsonKey(name: "custom_dreams") bool? customDreams,
+    @JsonKey(name: "dreams") bool? customDreams,
     @JsonKey(name: "prayer_times") bool? prayerTimes,
     @JsonKey(name: "ayat_of_the_day") bool? ayatOfTheDay,
     @JsonKey(name: "live_broadcasts") bool? liveBroadcasts,

@@ -72,26 +72,23 @@ class _PayDialogState extends State<PayDialog> {
                 height: 44,
                 onPressed: isLoading == false
                     ? () async {
+                        Navigator.of(context).pop();
                         widget.isCustom
                             ? BlocProvider.of<TusZhoruCubit>(context)
                                 .getCustomTusZhoruT(page: 1)
                             : BlocProvider.of<TusZhoruCubit>(context)
                                 .tosZhoruList;
-
                         setState(() {
                           isLoading = true;
                         });
                         BlocProvider.of<CreateTusZhoruCubit>(context)
                             .createCustomTusZhoruPayment(
-                                widget.id, widget.isCustom);
-                        await Future.delayed(Duration(seconds: 7), () {
+                                widget.id, widget.isCustom)
+                            .then((value) {
                           setState(() {
                             isLoading = false;
                           });
                         });
-                        Navigator.of(context).pop();
-
-
                       }
                     : null,
                 color: AppColors.orange,

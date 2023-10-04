@@ -31,7 +31,7 @@ class TusZhoruPage extends StatefulWidget {
   @override
   State<TusZhoruPage> createState() => _TusZhoruPageState();
 }
-
+bool isLoading = false;
 int currentIndex = 0;
 
 class _TusZhoruPageState extends State<TusZhoruPage> {
@@ -67,6 +67,9 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
               const QuestionRoute(),
             );
           },
+          loadingState: (){
+            isLoading = true;
+          },
           errorState: (message) {
             buildErrorCustomSnackBar(context, message);
           },
@@ -74,12 +77,6 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
       }, builder: (context, state) {
         return state.maybeMap(orElse: () {
           return Container();
-        }, loadingState: (loading) {
-          return const Center(
-            child: CircularProgressIndicator(
-              color: AppColors.linearBlue,
-            ),
-          );
         }, initialState: (tusZhoruList) {
           return Scaffold(
             floatingActionButton: tusZhoruList.currentIndex == 1
@@ -164,7 +161,7 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                       },
                       length: 2,
                     ),
-                    AnimatedCrossFade(
+                    isLoading == true ? CircularProgressIndicator.adaptive(backgroundColor: AppColors.linearBlue,) : AnimatedCrossFade(
                         firstChild: TusZhoruList(
                             tusZhoruList: tusZhoruList.tusZhoruList),
                         secondChild: CustomTusZhoruList(
@@ -172,7 +169,7 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                         crossFadeState: tusZhoruList.currentIndex == 0
                             ? CrossFadeState.showFirst
                             : CrossFadeState.showSecond,
-                        duration: Duration(milliseconds: 100)),
+                        duration: Duration(milliseconds: 200)),
 
                     // tusZhoruList.currentIndex == 0
                     //     ? TusZhoruList(tusZhoruList: tusZhoruList.tusZhoruList)

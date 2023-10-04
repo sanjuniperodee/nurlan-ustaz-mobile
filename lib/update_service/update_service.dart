@@ -15,8 +15,8 @@ import 'app_version_model.dart';
 
 class AppVersionService {
   static final AppVersionService _singleton = AppVersionService._internal();
-  static const playStoreLink = 'https://www.youtube.com/watch?v=wHBGxz5QnIE';
-  static const appStoreLink = 'https://www.youtube.com/watch?v=wHBGxz5QnIE';
+  static const playStoreLink = 'https://www.instagram.com/nurlanimam.kz/';
+  static const appStoreLink = 'https://www.instagram.com/nurlanimam.kz/';
 
   factory AppVersionService() {
     return _singleton;

@@ -213,7 +213,6 @@ class AuthLocalDsImpl extends AuthLocalDs {
 
         log('VERBOOLL:::${verifyJwtBool.toString()}');
         if (verifyJwtBool == true) {
-          // log();
           return token;
         } else {
           token = await refreshJwt(token: token);

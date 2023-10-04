@@ -35,10 +35,10 @@
 			<key>CFBundleURLIconFile</key>
 			<string></string>
 			<key>CFBundleURLName</key>
-			<string>Bundle Id</string>
+			<string></string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>com.nurlan.ustaz.flutter</string>
+				<string></string>
 			</array>
 		</dict>
 	</array>
@@ -60,16 +60,6 @@
 		<true/>
 		<key>NSAllowsArbitraryLoadsForMedia</key>
 		<true/>
-		<key>NSExceptionDomains</key>
-		<dict>
-			<key>https://dev.nurlanustaz.kz/</key>
-			<dict>
-				<key>NSExceptionAllowsInsecureHTTPLoads</key>
-				<true/>
-				<key>NSIncludesSubdomains</key>
-				<true/>
-			</dict>
-		</dict>
 	</dict>
 	<key>NSCameraUsageDescription</key>
 	<string>This app needs camera access to scan QR codes</string>

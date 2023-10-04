@@ -5,7 +5,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
@@ -129,8 +128,7 @@ class _MainPageState extends State<MainPage> {
                       errorState: (message) {
                         buildErrorCustomSnackBar(context, message);
                       },
-                    ); //
-                    // TODO: implement listener
+                    );
                   },
                   builder: (context, state) {
                     return state.maybeWhen(
@@ -235,9 +233,6 @@ class _MainPageState extends State<MainPage> {
                                         itemCount: list.length,
                                         shrinkWrap: true,
                                         itemBuilder: (context, index) {
-                                          for (int n = 0;
-                                              n < myRouteHome.length;
-                                              n++) {}
                                           return InkWell(
                                             onTap: () {
                                               context.router.push(
@@ -245,8 +240,9 @@ class _MainPageState extends State<MainPage> {
                                               );
                                             },
                                             child: Padding(
-                                              padding:
-                                                  EdgeInsets.only(right: 8.r),
+                                              padding: EdgeInsets.only(
+                                                  right: 10.r,
+                                                  left: index == 0 ? 17 : 0),
                                               child: Container(
                                                 padding: EdgeInsets.symmetric(
                                                     horizontal: 10.r),
@@ -264,7 +260,7 @@ class _MainPageState extends State<MainPage> {
                                                     Text(list[index].title,
                                                         style: getTextStyle(
                                                                 CustomTextStyles
-                                                                    .s14w400)
+                                                                    .s16w400)
                                                             .apply(
                                                                 fontFamily:
                                                                     FontTypes
@@ -304,14 +300,14 @@ class _MainPageState extends State<MainPage> {
                                                             .spaceBetween,
                                                     children: [
                                                       Text(
-                                                          '${geo.name ?? 'Алматы'}, ${DateFormat.yMMMd().format(DateTime.now()).toLocale()}',
+                                                          '${geo.name ?? 'Алматы'}, ${DateFormat('dd.MM.yyyy', '${context.locale.languageCode}').format(DateTime.now()).toLocale()}',
                                                           style: getTextStyle(
                                                                   CustomTextStyles
-                                                                      .s14w400)
+                                                                      .s16w400)
                                                               .apply(
                                                                   fontFamily:
                                                                       FontTypes
-                                                                          .SF_Pro
+                                                                          .Philosopher
                                                                           .name)),
                                                       // SizedBox(
                                                       //   width: 175.w,
@@ -342,16 +338,11 @@ class _MainPageState extends State<MainPage> {
                                                             '${namasNames[indexOfNextNames(times)]} ${'Namaz_time'.tr()}',
                                                             style: getTextStyle(
                                                                     CustomTextStyles
-                                                                        .s16w200)
+                                                                        .s16w400)
                                                                 .apply(
-                                                                    fontFamily:
-                                                                        FontTypes
-                                                                            .SF_Pro
-                                                                            .name)
-                                                                .copyWith(
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .w400)),
+                                                                    fontFamily: FontTypes
+                                                                        .Philosopher
+                                                                        .name)),
                                                       ],
                                                     ),
                                                     Column(
@@ -365,16 +356,12 @@ class _MainPageState extends State<MainPage> {
                                                           namasTimestoSend(),
                                                           style: getTextStyle(
                                                                   CustomTextStyles
-                                                                      .s16w200)
+                                                                      .s16w400)
                                                               .apply(
                                                                   fontFamily:
                                                                       FontTypes
-                                                                          .SF_Pro
+                                                                          .Philosopher
                                                                           .name)
-                                                              .copyWith(
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .w500)
                                                               .apply(
                                                                   color:
                                                                       AppColors
@@ -390,30 +377,30 @@ class _MainPageState extends State<MainPage> {
                                               ],
                                             ),
                                           ),
-                                          InkWell(
-                                            onTap: () {
-                                              TabsRouterScope.of(context)
-                                                  ?.controller
-                                                  .setActiveIndex(2);
-                                            },
-                                            child: SizedBox(
-                                              height: 120.h,
+                                          SizedBox(
+                                            height: 100.h,
+                                            child: MaterialButton(
+                                              onPressed: () {
+                                                TabsRouterScope.of(context)
+                                                    ?.controller
+                                                    .setActiveIndex(2);
+                                              },
                                               child: OverflowBox(
-                                                minWidth: 370.w,
-                                                maxWidth: 370.w,
-                                                minHeight: 170.h,
-                                                maxHeight: 170.h,
+                                                minWidth: 350.w,
+                                                maxWidth: 350.w,
+                                                minHeight: 75.h,
+                                                maxHeight: 75.h,
                                                 child: EasyLocalization.of(
                                                                 context)!
                                                             .locale
                                                             .toString() ==
                                                         'kk'
                                                     ? Lottie.asset(
-                                                        'assets/animations/tusZhoru_button.json',
+                                                        'assets/animations/TusZhoru_Button_kz.json',
                                                         fit: BoxFit.fill,
                                                       )
                                                     : Lottie.asset(
-                                                        'assets/animations/tus_zhoru_button_ru.json',
+                                                        'assets/animations/TusZhoru_Button_Rus.json',
                                                         fit: BoxFit.fill,
                                                       ),
                                               ),
@@ -504,8 +491,9 @@ class _MainPageState extends State<MainPage> {
                                         shrinkWrap: true,
                                         itemBuilder: (context, index) {
                                           return Padding(
-                                            padding:
-                                                EdgeInsets.only(right: 12.r),
+                                            padding: EdgeInsets.only(
+                                                right: 12.r,
+                                                left: index == 0 ? 16 : 0),
                                             child: GestureDetector(
                                               onTap: () {
                                                 context.router.push(
@@ -562,8 +550,7 @@ class _MainPageState extends State<MainPage> {
                                                         children: [
                                                           SizedBox(height: 2.h),
                                                           Text(
-                                                              news[
-                                                                          index]
+                                                              news[index]
                                                                       .title ??
                                                                   'ERROR',
                                                               overflow:
@@ -571,16 +558,11 @@ class _MainPageState extends State<MainPage> {
                                                                       .fade,
                                                               style: getTextStyle(
                                                                       CustomTextStyles
-                                                                          .s14w400)
-                                                                  .copyWith(
+                                                                          .s16w400)
+                                                                  .apply(
                                                                       fontFamily: FontTypes
-                                                                          .SF_Pro
-                                                                          .name,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      color: Colors
-                                                                          .black)),
+                                                                          .Philosopher
+                                                                          .name)),
                                                           SizedBox(height: 2.h),
                                                           Text(
                                                             DateFormat(
@@ -592,14 +574,12 @@ class _MainPageState extends State<MainPage> {
                                                                         .toString())),
                                                             style: getTextStyle(
                                                                     CustomTextStyles
-                                                                        .s14w400)
-                                                                .copyWith(
+                                                                        .s16w400)
+                                                                .apply(
                                                                     fontFamily:
                                                                         FontTypes
-                                                                            .SF_Pro
-                                                                            .name,
-                                                                    fontSize:
-                                                                        12.sp)
+                                                                            .Philosopher
+                                                                            .name)
                                                                 .apply(
                                                                     color: AppColors
                                                                         .grey1),
@@ -680,9 +660,7 @@ class _MainPageState extends State<MainPage> {
     String nextTime = '';
     for (int i = 0; i < times.length; i++) {
       if (times[i] == beforeTime) {
-        log('TTTTT$i}');
-        log('TTTTT${times.length}}');
-        log('TTTTT${times[i]}fsaf');
+
         if (i == times.length - 1) {
           nextTime = times[0];
           break;
@@ -800,9 +778,8 @@ class _TimesStateWidgetState extends State<TimesStateWidget> {
           ;
           return Text(
             displayTime,
-            style: getTextStyle(CustomTextStyles.s16w200)
-                .apply(fontFamily: FontTypes.SF_Pro.name)
-                .copyWith(fontWeight: FontWeight.w400, fontSize: 14.sp)
+            style: getTextStyle(CustomTextStyles.s16w400)
+                .apply(fontFamily: FontTypes.Philosopher.name)
                 .apply(color: AppColors.black),
           );
         });

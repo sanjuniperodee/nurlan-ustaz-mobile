@@ -55,11 +55,11 @@ Future<void> firebaseInit() async {
 }
 
 Future<void> main() async {
+
   getIt.registerSingleton<AppRouter>(AppRouter());
 
   WidgetsFlutterBinding.ensureInitialized();
-
-  SystemChrome.setPreferredOrientations(
+  await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await Firebase.initializeApp();
   await FirebaseDynamicLinks.instance.getInitialLink();

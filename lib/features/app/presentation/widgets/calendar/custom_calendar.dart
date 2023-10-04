@@ -1,5 +1,8 @@
 library flutter_clean_calendar;
 
+import 'dart:developer';
+
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
@@ -96,7 +99,6 @@ class CustomCalendar extends StatefulWidget {
   final Color? bottomBarColor;
   final String? expandableDateFormat;
 
-
   CustomCalendar({
     this.onMonthChanged,
     this.onDateSelected,
@@ -169,18 +171,16 @@ class _CustomCalendarState extends State<CustomCalendar> {
 
     if (!widget.hideArrows) {
       leftArrow = IconButton(
-        onPressed: isExpanded ? previousMonth : previousWeek,
-        icon: Icon(
-          Icons.chevron_left,
-          color:
-          Color(0xFF8F8CF7),)
-      );
+          onPressed: isExpanded ? previousMonth : previousWeek,
+          icon: Icon(
+            Icons.chevron_left,
+            color: Color(0xFF8F8CF7),
+          ));
       rightArrow = IconButton(
         onPressed: isExpanded ? nextMonth : nextWeek,
         icon: Icon(
           Icons.chevron_right,
-          color:
-          Color(0xFF8F8CF7),
+          color: Color(0xFF8F8CF7),
         ),
       );
     } else {
@@ -196,7 +196,6 @@ class _CustomCalendarState extends State<CustomCalendar> {
     } else {
       todayIcon = Container();
     }
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
@@ -543,6 +542,7 @@ class _CustomCalendarState extends State<CustomCalendar> {
               _selectedDate.year, _selectedDate.month, _selectedDate.day)] ??
           [];
     });
+    log(_selectedDate.toString());
     _launchDateSelectionCallback(_selectedDate);
   }
 

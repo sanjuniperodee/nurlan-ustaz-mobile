@@ -57,6 +57,7 @@ Widget _salam() {
       return WillPopScope(
         onWillPop: () async {
           return await AlertUtils.showTwoOptionDialog(
+            isApp: true,
               context: context,
               messageKey: 'exit_from_app'.tr(),
               title: 'exit'.tr(),
@@ -74,9 +75,6 @@ Widget _salam() {
             // return const SignInPage();
             return LoginPage();
           },
-          // notVerifyed: () {
-          //   return const SizedBox();
-          // },
           errorState: (String message) {
             return const _Scaffold(
               child: Center(
@@ -108,10 +106,10 @@ Widget _salam() {
           log('ttttt-${dialog.toString()}');
           if (dialog == true) {
             AutoRouter.of(context).pushAndPopUntil(const LoginRoute(),
-                predicate: (route) => true);
+                predicate: (route) => false);
           } else {
             AutoRouter.of(context).pushAndPopUntil(const MainRouterPage(),
-                predicate: (route) => true);
+                predicate: (route) => false);
           }
         },
         inAppState: () {

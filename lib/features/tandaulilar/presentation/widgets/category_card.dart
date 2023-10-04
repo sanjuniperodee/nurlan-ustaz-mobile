@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -38,53 +37,45 @@ class CategoryCard extends StatelessWidget {
             SizedBox(
               height: 10.h,
             ),
+
             Wrap(
-                runSpacing: 2,
-                spacing: 2,
-                children: imageList.length < 4
-                    ? imageList.toList()
-                            .map(
-                              (e) => Container(
-                                height: 82.h,
-                                width: 82.w,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(8.r),
-                                  child: Image.network(
-                                    e.cover!,
-                                    fit: BoxFit.cover,
-                                    isAntiAlias: false,
-                                    filterQuality: FilterQuality.low,
-                                  ),
-                                ),
-                              ),
-                            )
-                            .toList()+
-                        List.generate(
-                            4 - imageList.length,
-                            (index) => Container(
-                                  height: 82.h,
-                                  width: 82.w,
-                                  decoration: BoxDecoration(
-                                    color: AppColors.grey1,
-                                    borderRadius: BorderRadius.circular(8.r),
-                                  ),
-                                ),growable: false)
-                    : imageList.toList()
-                        .take(4).toList()
-                        .map(
-                          (e) => Container(
-                            height: 82.h,
-                            width: 82.w,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8.r),
-                              child: Image.network(
-                                e.cover!,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+              runSpacing: 2,
+              spacing: 2,
+              children: List.generate(
+                4,
+                    (index) {
+                  if (index < imageList.length) {
+                    final imageUrl = imageList[index].cover;
+                    if (imageUrl != null && imageUrl.isNotEmpty) {
+                      return Container(
+                        height: 82.h,
+                        width: 82.w,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(8.r),
+                          child: Image.network(
+                            imageUrl,
+                            fit: BoxFit.cover,
+                            isAntiAlias: false,
+                            filterQuality: FilterQuality.low,
                           ),
-                        )
-                        .toList()),
+                        ),
+                      );
+                    }
+                  }
+                  return Container(
+                    height: 82.h,
+                    width: 82.w,
+                    decoration: BoxDecoration(
+                      color: AppColors.blue.withOpacity(0.1),
+                      borderRadius: BorderRadius.circular(8.r),
+                    ),
+                  );
+                },
+              ),
+            )
+
+
+
           ],
         ),
       ),

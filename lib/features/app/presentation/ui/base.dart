@@ -14,6 +14,7 @@ import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/islam_teaching_icon.dart';
 
 import '../../../../core/utils/alert_utilrs.dart';
+import '../../../home/presentation/widgets/qiblah_widget.dart';
 import '../../../tandaulilar/presentation/bloc/tandaulilar_cubit.dart';
 
 class Base extends StatefulWidget {
@@ -34,7 +35,25 @@ class _BaseState extends State<Base> {
   @override
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
-      backgroundColor: Colors.transparent,
+        transitionBuilder: (context,child, animation){
+          return TweenAnimationBuilder<Offset>(
+            tween: Tween(begin: Offset(0.0, 1.0), end: Offset.zero),
+            duration: Duration(milliseconds: 500), // Adjust the duration as needed.
+            curve: Curves.easeInOutCubic, // Adjust the curve as needed.
+            builder: (context, offset, child) {
+              return Transform.translate(
+                offset: offset,
+                child: Opacity(
+                  opacity: animation.value,
+                  child: child,
+                ),
+              );
+            },
+            child: child,
+          );
+        },
+
+      backgroundColor: Color(0xFFF1F1F1),
       extendBody: true,
       routes: [
         const MainRouterPage(),
@@ -71,14 +90,7 @@ class _BaseState extends State<Base> {
                 } else {
                   tabsRouter.setActiveIndex(index);
                 }
-                if (tabsRouter.activeIndex != 4) {
-                  BlocProvider.of<TandaulilarCubit>(context)
-                      .livesT(page: 1, isFirstCall: true);
-                  BlocProvider.of<TandaulilarCubit>(context)
-                      .newsT(page: 1, isFirstCall: true);
-                  BlocProvider.of<TandaulilarCubit>(context)
-                      .seminarT(page: 1, isFirstCall: true);
-                }
+
               },
               currentIndex: tabsRouter.activeIndex,
               items: [

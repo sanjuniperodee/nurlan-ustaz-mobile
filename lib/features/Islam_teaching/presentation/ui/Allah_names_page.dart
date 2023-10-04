@@ -70,11 +70,12 @@ class _AllahNamesPageState extends State<AllahNamesPage> {
                       fit: BoxFit.cover,
                     ),
                     Positioned.fill(
-                      // left: 280.r,
+                        // left: 280.r,
                         child: Opacity(
-                          opacity: 0.5,
-                          child:  Lottie.asset('assets/animations/Book_V04.json',fit: BoxFit.cover),
-                        )),
+                      opacity: 0.5,
+                      child: Lottie.asset('assets/animations/Book_V04.json',
+                          fit: BoxFit.cover),
+                    )),
                     SizedBox(
                       child: SingleChildScrollView(
                           physics: const BouncingScrollPhysics(),
@@ -87,7 +88,7 @@ class _AllahNamesPageState extends State<AllahNamesPage> {
                                 SizedBox(
                                   height: 56.h,
                                 ),
-                                 CustomAppBar(
+                                CustomAppBar(
                                   title: 'Allah_names'.tr(),
                                 ),
                                 SizedBox(
@@ -138,10 +139,11 @@ class _AllahNamesPageState extends State<AllahNamesPage> {
                                               SizedBox(
                                                 height: 12.h,
                                               ),
-                                              AudioItemWidget(
-                                                audioUrl:
-                                                    names[index].audio ?? '',
-                                              ),
+                                              if (names[index].audio != null)
+                                                AudioItemWidget(
+                                                  audioUrl:
+                                                      names[index].audio ?? '',
+                                                ),
                                               SizedBox(
                                                 height: 12.h,
                                               ),

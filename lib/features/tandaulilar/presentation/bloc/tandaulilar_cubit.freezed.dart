@@ -380,15 +380,16 @@ class __$$_LoadedStateCopyWithImpl<$Res>
 
 class _$_LoadedState implements _LoadedState {
   const _$_LoadedState(
-      {required final List<ResultHomeDTO> lives,
-      required final List<ResultHomeDTO> news,
-      required final List<ResultHomeDTO> seminars})
+      {final List<ResultHomeDTO> lives = const [],
+      final List<ResultHomeDTO> news = const [],
+      final List<ResultHomeDTO> seminars = const []})
       : _lives = lives,
         _news = news,
         _seminars = seminars;
 
   final List<ResultHomeDTO> _lives;
   @override
+  @JsonKey()
   List<ResultHomeDTO> get lives {
     if (_lives is EqualUnmodifiableListView) return _lives;
     // ignore: implicit_dynamic_type
@@ -397,6 +398,7 @@ class _$_LoadedState implements _LoadedState {
 
   final List<ResultHomeDTO> _news;
   @override
+  @JsonKey()
   List<ResultHomeDTO> get news {
     if (_news is EqualUnmodifiableListView) return _news;
     // ignore: implicit_dynamic_type
@@ -405,6 +407,7 @@ class _$_LoadedState implements _LoadedState {
 
   final List<ResultHomeDTO> _seminars;
   @override
+  @JsonKey()
   List<ResultHomeDTO> get seminars {
     if (_seminars is EqualUnmodifiableListView) return _seminars;
     // ignore: implicit_dynamic_type
@@ -522,9 +525,9 @@ class _$_LoadedState implements _LoadedState {
 
 abstract class _LoadedState implements TandaulilarState {
   const factory _LoadedState(
-      {required final List<ResultHomeDTO> lives,
-      required final List<ResultHomeDTO> news,
-      required final List<ResultHomeDTO> seminars}) = _$_LoadedState;
+      {final List<ResultHomeDTO> lives,
+      final List<ResultHomeDTO> news,
+      final List<ResultHomeDTO> seminars}) = _$_LoadedState;
 
   List<ResultHomeDTO> get lives;
   List<ResultHomeDTO> get news;

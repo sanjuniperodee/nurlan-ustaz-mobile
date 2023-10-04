@@ -6,6 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:just_audio/just_audio.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 
+import '../../../../core/common/app_styles.dart';
+
 class AudioItemWidget extends StatefulWidget {
   final String audioUrl;
   const AudioItemWidget({super.key, required this.audioUrl});
@@ -161,6 +163,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
                 return Padding(
                   padding: const EdgeInsets.only(top: 13.0, left: 8, right: 8),
                   child: ProgressBar(
+                    timeLabelTextStyle: getTextStyle(CustomTextStyles.s12w400),
                     baseBarColor: AppColors.orange,
                     progressBarColor: AppColors.orange,
                     bufferedBarColor: AppColors.orange,

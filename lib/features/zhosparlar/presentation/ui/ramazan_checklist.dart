@@ -151,7 +151,7 @@ class _RamazanChecklistPageState extends State<RamazanChecklistPage> {
                               )),
                             )
                           : tasks == null
-                              ? ListView.builder(
+                          ? ListView.builder(
                                   itemCount: days
                                           .map((element) =>
                                               DateTime.parse(element.date).day)

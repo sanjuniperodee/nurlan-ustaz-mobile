@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/repositories/auth_repository.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/repositories/home_repository.dart';
@@ -33,6 +34,7 @@ class TodayChatCubit extends Cubit<TodayChatState> {
   late UserDto _userDto;
 
   Future<void> connectSocket() async {
+    log('${WebSocketUrl}');
     //emit(_LoadingState());
 
     final user = await _authRepo.getUser();
@@ -45,7 +47,7 @@ class TodayChatCubit extends Cubit<TodayChatState> {
           as Map<String, dynamic>,
     );
     final channel = IOWebSocketChannel.connect(
-        "ws://86.107.45.90:8000/api/tell-me-ustaz/chat/",
+        Uri.parse("${WebSocketUrl}/api/tell-me-ustaz/chat/"),
         headers: {"Authorization": "Bearer ${token.access}"});
 
     channel.stream.listen((event) async {

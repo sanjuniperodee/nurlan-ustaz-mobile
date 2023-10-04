@@ -60,8 +60,8 @@ class _NurlanUstazAppState extends State<NurlanUstazApp> {
           },
           builder: (context, state) {
             return MaterialApp.router(
+                themeAnimationDuration:Duration(milliseconds: 100),
               // title: 'Flutter Demo',
-
               // key: rootNavigatorKey,
               routerConfig: _rootRouter.config(
                   navigatorObservers: () => [
