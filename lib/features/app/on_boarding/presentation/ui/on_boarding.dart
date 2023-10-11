@@ -25,42 +25,49 @@ class OnBoardingPage extends StatefulWidget {
 }
 
 class _OnBoardingPageState extends State<OnBoardingPage> {
-  late VideoPlayerController _videoPlayerController;
-  ChewieController? _chewieController;
+  // ChewieController? _chewieController;
   int currentIndex = 0;
   final PageController _pageController = PageController();
-  final List<String> videos = [
+  List<String> videos = [
     'assets/video/1_v.MP4',
     'assets/video/2.mp4',
     'assets/video/3_v.mp4',
     'assets/video/4_v.mp4'
   ];
-
+  List<VideoPlayerController> _videoPlayerControllers = [];
+  List<ChewieController?> _chewieControllers = [];
   @override
   void initState() {
     super.initState();
-    _videoPlayerController = VideoPlayerController.asset(videos.first)
-      ..initialize().then((_) {
-        setState(() {
-          _createChewieController();
-        });
-      });
-
-    _videoPlayerController.addListener(_videoPlayerListener);
+    _videoPlayerControllers = List.generate(videos.length, (index) {
+      return VideoPlayerController.asset(videos[index])
+        ..initialize().then((_) {
+          setState(() {
+            _chewieControllers.add(_createChewieController(index));
+          });
+        })
+        ..addListener(_videoPlayerListener);
+    });
   }
 
   @override
   void dispose() {
-    _videoPlayerController.dispose();
-    _chewieController?.dispose();
+    for (var element in _videoPlayerControllers) {
+      element.dispose();
+    }
+    for (var element in _chewieControllers) {
+      element!.dispose();
+    }
+    // _chewieController?.dispose();
     _pageController.dispose();
     super.dispose();
   }
 
-  void _createChewieController() {
-    _chewieController = ChewieController(
-      videoPlayerController: _videoPlayerController,
-      aspectRatio: _videoPlayerController.value.aspectRatio,
+  ChewieController _createChewieController(int index) {
+    return ChewieController(
+      videoPlayerController: _videoPlayerControllers[index],
+      aspectRatio: MediaQuery.of(context).size.width /
+          MediaQuery.of(context).size.height,
       autoPlay: true,
       looping: false,
       showControls: false,
@@ -80,7 +87,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
               return Container();
             },
             initialState: (_) {
-              return _buildOnBoardingWidget();
+              return _chewieControllers.isNotEmpty
+                  ? _buildOnBoardingWidget()
+                  : SizedBox();
             },
           );
         },
@@ -104,15 +113,19 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
             right: 0,
             bottom: 0,
             child: PageView.builder(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
+              itemCount: videos.length,
               controller: _pageController,
               itemBuilder: (context, position) {
+                if (position == 0) {
+                  _chewieControllers.first?.play();
+                }
                 return GestureDetector(
                   onLongPress: () {
-                    _chewieController?.pause();
+                    _chewieControllers[position]?.pause();
                   },
                   onLongPressEnd: (sir) {
-                    _chewieController?.play();
+                    _chewieControllers[position]?.play();
                   },
                   child: Container(
                     width: MediaQuery.of(context).size.width,
@@ -120,16 +133,18 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(30.r),
                     ),
-                    child: _chewieController != null &&
-                        _chewieController!.videoPlayerController.value.isInitialized
+                    child: _chewieControllers[position] != null &&
+                            _chewieControllers[position]!
+                                .videoPlayerController
+                                .value
+                                .isInitialized
                         ? Chewie(
-                      controller: _chewieController!,
-                    )
+                            controller: _chewieControllers[position]!,
+                          )
                         : const SizedBox(),
                   ),
                 );
               },
-              itemCount: videos.length,
               onPageChanged: (index) async {
                 _onPageChanged(index);
               },
@@ -159,7 +174,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                   ),
                   MaterialButton(
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0), // Adjust the radius as needed
+                      borderRadius: BorderRadius.circular(
+                          10.0), // Adjust the radius as needed
                     ),
                     onPressed: () {
                       _onNextButtonPressed();
@@ -182,96 +198,58 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   }
 
   void _onPageChanged(int index) async {
-    if (currentIndex != index) {
-      // Dispose of the old video controller
-      _videoPlayerController.dispose();
-
-      // Update the currentIndex to the selected index
+    try {
+      log("currentIndex ==== $currentIndex");
+      _chewieControllers[currentIndex]?.pause();
       currentIndex = index;
-
-      try {
-        // Create and initialize a new video controller for the selected video
-        _videoPlayerController = VideoPlayerController.asset(
-          videos[currentIndex],
-        );
-        await _videoPlayerController.initialize();
-         _videoPlayerController.addListener(_videoPlayerListener);
-
-        // Create a new ChewieController for the new video
-        _createChewieController();
-
-        // Ensure that video playback starts
-        _chewieController?.play();
-      } catch (error) {
-        // Handle any errors that may occur during video initialization
-        print("Error initializing video: $error");
-      }
-
-      setState(() {});
+      _chewieControllers[index]?.play();
+      log("currentIndex1 ==== $currentIndex");
+    } catch (error) {
+      print("Error initializing video: $error");
     }
+    setState(() {});
   }
 
   void _onNextButtonPressed() async {
     if (currentIndex < videos.length - 1) {
       // Increment the currentIndex to move to the next video
+
+      log("currentIndex2 ==== $currentIndex");
+      _chewieControllers[currentIndex]?.pause();
       currentIndex++;
+      _chewieControllers[currentIndex]?.play();
 
-      // Dispose of the old video controller
-      _videoPlayerController.dispose();
-
-      // Create and initialize a new video controller for the next video
-      _videoPlayerController = VideoPlayerController.asset(
-        videos[currentIndex],
-      );
-      await _videoPlayerController.initialize();
-
-      // Create a new ChewieController for the new video
-      _createChewieController();
+      log("currentIndex3 ==== $currentIndex");
+      _pageController.nextPage(
+          duration: const Duration(seconds: 1), curve: Curves.ease);
       setState(() {});
     } else {
       // Handle the case when the last video is reached
       // For example, you can navigate to another screen or perform an action.
       // Here, we are adding an event to a Bloc.
-      BlocProvider.of<AppBloc>(context).add(const AppEvent.onboardingSave());
+      // BlocProvider.of<AppBloc>(context).add(const AppEvent.onboardingSave());
     }
   }
 
   Future<void> _videoPlayerListener() async {
-    if (_videoPlayerController.value.position >= _videoPlayerController.value.duration) {
-      if (currentIndex < videos.length - 1) {
-        // Play the next video
-        await _playNextVideo();
-      } else {
-        // Last video has ended, handle as needed
-        BlocProvider.of<AppBloc>(context).add(const AppEvent.onboardingSave());
+    if (_videoPlayerControllers[currentIndex].value.position.inSeconds > 0) {
+      log("${_videoPlayerControllers[currentIndex].value.position == _videoPlayerControllers[currentIndex].value.duration}");
+      if (_videoPlayerControllers[currentIndex].value.position ==
+          _videoPlayerControllers[currentIndex].value.duration) {
+        if (currentIndex < videos.length - 1) {
+          // _chewieControllers[currentIndex]?.pause();
+          setState(() {});
+          _pageController.nextPage(
+              duration: const Duration(seconds: 1), curve: Curves.ease);
+
+          currentIndex++;
+
+          _chewieControllers[currentIndex]?.play();
+        } else {
+          // Last video has ended, handle as needed
+          // BlocProvider.of<AppBloc>(context).add(const AppEvent.onboardingSave());
+        }
       }
     }
   }
-
-  Future<void> _playNextVideo() async {
-    currentIndex++;
-
-    // Dispose of the old video controller and chewie controller
-    await _disposeControllers();
-
-    // Initialize a new video controller for the next video
-    _videoPlayerController = VideoPlayerController.asset(
-      videos[currentIndex],
-    );
-
-    // Set up listener for the new video controller
-    _videoPlayerController.addListener(_videoPlayerListener);
-
-    await _videoPlayerController.initialize();
-
-    // Create a new ChewieController for the new video
-    _createChewieController();
-    setState(() {});
-  }
-
-  Future<void> _disposeControllers() async {
-    await _videoPlayerController.dispose();
-     _chewieController?.dispose();
-  }
-
 }
