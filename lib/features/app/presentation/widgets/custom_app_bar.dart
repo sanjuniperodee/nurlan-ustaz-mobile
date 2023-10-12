@@ -52,7 +52,7 @@ class CustomAppBar extends StatelessWidget {
                 onTap!();
               }
                   : () {
-                Navigator.pop(context);
+                Navigator.of(context).pop();
               },
               child: SvgPicture.asset(
                 Assets.backButtonSvg,

@@ -97,7 +97,9 @@ class _SeminarPageState extends State<SeminarPage> {
                 child: Column(
                   children: [
                     CustomAppBar(
-                      // onTap: () {},
+                       onTap: () {
+                         context.router.pop();
+                       },
                       title: widget.type == 'isSave'
                           ? 'Favourite_sev'.tr()
                           : 'Seminar'.tr(),

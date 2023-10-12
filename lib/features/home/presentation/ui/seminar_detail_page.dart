@@ -23,6 +23,8 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_det
 
 import 'package:share_plus/share_plus.dart';
 
+import '../../../auth/presentation/widgets/pdf_screen.dart';
+
 @RoutePage()
 class SeminarDetailPage extends StatefulWidget {
   final String? search;
@@ -377,15 +379,15 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                                                   height: 44,
                                                                   onPressed:
                                                                       () async {
-                                                                    await BlocProvider.of<CreateSeminarPaymentCubit>(
+                                                                        context.router.pop();
+
+                                                                        await BlocProvider.of<CreateSeminarPaymentCubit>(
                                                                             context)
                                                                         .createSeminarPayment(
                                                                           result
                                                                               .id!,
                                                                           context,
-                                                                        )
-                                                                        .then((value) =>
-                                                                            Navigator.of(context).pop());
+                                                                        );
                                                                   },
                                                                   color: AppColors
                                                                       .orange,
@@ -398,6 +400,59 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                                                             color: AppColors.white)),
                                                                   ),
                                                                 ),
+                                                              ),
+                                                              SizedBox(
+                                                                height: 20.h,
+                                                              ),
+                                                              Row(
+                                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                                children: [
+                                                                  Material(
+                                                                    color: Colors.transparent,
+                                                                    child: InkWell(
+                                                                      splashColor: Colors.blue,
+                                                                      onTap: () {
+                                                                        Navigator.push(
+                                                                          context,
+                                                                          MaterialPageRoute(
+                                                                            builder: (context) => MyPdfViewer(
+                                                                                assetPdf: 'public_oferta.pdf',
+                                                                                title: 'publicOferta'.tr()),
+                                                                          ),
+                                                                        );
+                                                                      },
+                                                                      child: Text(
+                                                                        'publicOferta'.tr(),
+                                                                        style: getTextStyle(CustomTextStyles.s12w400).copyWith(
+                                                                            color: AppColors.blue,
+                                                                            fontFamily: FontTypes.SF_Pro.name,
+                                                                            decoration: TextDecoration.underline),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+
+                                                                  Material(
+                                                                    color: Colors.transparent,
+                                                                    child: InkWell(
+                                                                      splashColor: Colors.blue,
+                                                                      onTap: () {
+                                                                        Navigator.push(
+                                                                          context,
+                                                                          MaterialPageRoute(
+                                                                            builder: (context) => MyPdfViewer(
+                                                                              assetPdf: 'payment_process.pdf',
+                                                                              title: 'payment_process'.tr(),
+                                                                            ),
+                                                                          ),
+                                                                        );
+                                                                      },
+                                                                      child: Text('payment_process'.tr(),
+                                                                          style: getTextStyle(CustomTextStyles.s12w400).copyWith(
+                                                                              fontFamily: FontTypes.SF_Pro.name,color: AppColors.blue,
+                                                                              decoration: TextDecoration.underline)),
+                                                                    ),
+                                                                  ),
+                                                                ],
                                                               )
                                                             ],
                                                           ),

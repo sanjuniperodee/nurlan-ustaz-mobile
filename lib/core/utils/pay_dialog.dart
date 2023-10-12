@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +6,7 @@ import 'package:flutter_svg/svg.dart';
 
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/create_tus_zhoru_cubit.dart';
 
+import '../../features/auth/presentation/widgets/pdf_screen.dart';
 import '../../features/tus_zhoru/presentation/bloc/tus_zhoru_cubit.dart';
 import '../common/app_styles.dart';
 import '../common/colors.dart';
@@ -57,7 +59,7 @@ class _PayDialogState extends State<PayDialog> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25),
               child: Text(
-                'Толық оқу үшін түс садақасына төлем жасауыңызды сұраймыз',
+                "dream_payment".tr(),
                 style: getTextStyle(CustomTextStyles.s16w400)
                     .copyWith(fontFamily: FontTypes.SF_Pro.name),
                 textAlign: TextAlign.center,
@@ -95,13 +97,66 @@ class _PayDialogState extends State<PayDialog> {
                 child: isLoading
                     ? Center(child: CircularProgressIndicator())
                     : Center(
-                        child: Text('${widget.price} тг төлеу',
+                        child: Text('${widget.price} тг ${"dream_pay".tr()}',
                             style: getTextStyle(CustomTextStyles.s14w400)
                                 .copyWith(
                                     fontFamily: FontTypes.SF_Pro.name,
                                     color: AppColors.white)),
                       ),
               ),
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    splashColor: Colors.blue,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MyPdfViewer(
+                              assetPdf: 'public_oferta.pdf',
+                              title: 'publicOferta'.tr()),
+                        ),
+                      );
+                    },
+                    child: Text(
+                      'publicOferta'.tr(),
+                      style: getTextStyle(CustomTextStyles.s12w400).copyWith(
+                        color: AppColors.blue,
+                          fontFamily: FontTypes.SF_Pro.name,
+                          decoration: TextDecoration.underline),
+                    ),
+                  ),
+                ),
+
+                Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    splashColor: Colors.blue,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => MyPdfViewer(
+                            assetPdf: 'payment_process.pdf',
+                            title: 'payment_process'.tr(),
+                          ),
+                        ),
+                      );
+                    },
+                    child: Text('payment_process'.tr(),
+                        style: getTextStyle(CustomTextStyles.s12w400).copyWith(
+                            fontFamily: FontTypes.SF_Pro.name,color: AppColors.blue,
+                            decoration: TextDecoration.underline)),
+                  ),
+                ),
+              ],
             )
           ],
         ),
