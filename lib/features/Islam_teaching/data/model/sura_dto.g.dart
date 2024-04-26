@@ -6,7 +6,8 @@ part of 'sura_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_SuraDTO _$$_SuraDTOFromJson(Map<String, dynamic> json) => _$_SuraDTO(
+_$SuraDTOImpl _$$SuraDTOImplFromJson(Map<String, dynamic> json) =>
+    _$SuraDTOImpl(
       count: json['count'] as int?,
       next: json['next'] as String?,
       previous: json['previous'] as String?,
@@ -15,7 +16,7 @@ _$_SuraDTO _$$_SuraDTOFromJson(Map<String, dynamic> json) => _$_SuraDTO(
           .toList(),
     );
 
-Map<String, dynamic> _$$_SuraDTOToJson(_$_SuraDTO instance) =>
+Map<String, dynamic> _$$SuraDTOImplToJson(_$SuraDTOImpl instance) =>
     <String, dynamic>{
       'count': instance.count,
       'next': instance.next,

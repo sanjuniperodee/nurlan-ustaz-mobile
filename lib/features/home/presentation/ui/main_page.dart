@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,7 +39,7 @@ class _MainPageState extends State<MainPage> {
 
   final List<PageRouteInfo<dynamic>> myRouteHome = [
     SeminarRoute(),
-    const CharityRoute(),
+    // const CharityRoute(),
     const ServicesRoute(),
     LiveBroadcastsRoute(),
     const ShopRoute(),
@@ -53,6 +54,7 @@ class _MainPageState extends State<MainPage> {
       currentPage: 1,
       // isFirstCall: true,
     );
+    _checkInternetConnection();
 
     // _logAppOpen();
     BlocProvider.of<TimingsCubit>(context).timings(
@@ -81,10 +83,10 @@ class _MainPageState extends State<MainPage> {
         title: 'seminar'.tr(),
         url: Assets.banner1Svg,
       ),
-      BannerLocalModel(
-        title: 'Charity'.tr(),
-        url: Assets.banner2Svg,
-      ),
+      // BannerLocalModel(
+      //   title: 'Charity'.tr(),
+      //   url: Assets.banner2Svg,
+      // ),
       BannerLocalModel(
         title: 'Services'.tr(),
         url: Assets.banner3Svg,
@@ -150,6 +152,7 @@ class _MainPageState extends State<MainPage> {
                         return GlobalCustomBody(
                           left: 0,
                           right: 0,
+                          top: 0,
                           child: SizedBox(
                             child: SmartRefresher(
                               enablePullDown: true,
@@ -184,16 +187,21 @@ class _MainPageState extends State<MainPage> {
                                   mainAxisSize: MainAxisSize.max,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
+                                    SizedBox(
+                                      height: 45.h,
+                                    ),
                                     Padding(
-                                      padding: const EdgeInsets.only(
-                                              right: 16.0, left: 16, top: 16)
-                                          .r,
+                                      padding: EdgeInsets.only(
+                                        top: 16.h,
+                                        right: 16.w,
+                                        left: 16.w,
+                                      ).r,
                                       child: Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: [
                                           Image.asset(
-                                            Assets.logoNurlan,
+                                            'assets/images/new_l.png',
                                             width: 145.w,
                                             height: 39.h,
                                           ),
@@ -377,35 +385,27 @@ class _MainPageState extends State<MainPage> {
                                               ],
                                             ),
                                           ),
-                                          SizedBox(
-                                            height: 100.h,
-                                            child: MaterialButton(
-                                              onPressed: () {
-                                                TabsRouterScope.of(context)
-                                                    ?.controller
-                                                    .setActiveIndex(2);
-                                              },
-                                              child: OverflowBox(
-                                                minWidth: 350.w,
-                                                maxWidth: 350.w,
-                                                minHeight: 75.h,
-                                                maxHeight: 75.h,
-                                                child: EasyLocalization.of(
-                                                                context)!
-                                                            .locale
-                                                            .toString() ==
-                                                        'kk'
-                                                    ? Lottie.asset(
-                                                        'assets/animations/TusZhoru_Button_kz.json',
-                                                        fit: BoxFit.fill,
-                                                      )
-                                                    : Lottie.asset(
-                                                        'assets/animations/TusZhoru_Button_Rus.json',
-                                                        fit: BoxFit.fill,
-                                                      ),
-                                              ),
-                                            ),
-                                          ),
+                                          // SizedBox(
+                                          //   height: 100.h,
+                                          //   child: MaterialButton(
+                                          //     onPressed: () {
+                                          //       TabsRouterScope.of(context)
+                                          //           ?.controller
+                                          //           .setActiveIndex(2);
+                                          //     },
+                                          //     child: OverflowBox(
+                                          //         minWidth: 345.w,
+                                          //         maxWidth: 345.w,
+                                          //         minHeight: 75.h,
+                                          //         maxHeight: 75.h,
+                                          //         child: Lottie.asset(
+                                          //             'assets/animations/tus_zhoru_button_${EasyLocalization.of(
+                                          //                 context)!
+                                          //                 .locale
+                                          //                 .toString() ==
+                                          //                 'kk' ? 'kz' : 'ru'}.json')),
+                                          //   ),
+                                          // ),
                                           MainButton(
                                             onTap: () async {
                                               context.router
@@ -414,55 +414,18 @@ class _MainPageState extends State<MainPage> {
                                             text: '${'tell_me_ustaz'.tr()}...',
                                           ),
                                           SizedBox(height: 16.h),
-                                          InkWell(
-                                            onTap: () => context.router
-                                                .push(UstazAitinizhiRoute()),
-                                            child: Container(
-                                              width: 1.sw,
-                                              decoration: BoxDecoration(
-                                                  gradient:
-                                                      const LinearGradient(
-                                                    begin: Alignment.topRight,
-                                                    end: Alignment.bottomRight,
-                                                    colors: [
-                                                      Color(0xFFFAE0AB),
-                                                      Color(0xFFF9A502),
-                                                    ],
-                                                  ),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          24)),
-                                              padding: EdgeInsets.only(
-                                                  top: 19.r,
-                                                  bottom: 19.r,
-                                                  left: 92.r,
-                                                  right: 92.r),
-                                              child: Column(
-                                                children: [
-                                                  SvgPicture.asset(
-                                                      Assets.boxStorySvg),
-                                                  SizedBox(
-                                                    height: 12.h,
-                                                  ),
-                                                  Text(
-                                                    'can_question'.tr(),
-                                                    textAlign: TextAlign.center,
-                                                    style: getTextStyle(
-                                                            CustomTextStyles
-                                                                .s16w200)
-                                                        .copyWith(
-                                                            fontFamily:
-                                                                FontTypes
-                                                                    .Philosopher
-                                                                    .name,
-                                                            fontSize: 24.sp,
-                                                            fontWeight:
-                                                                FontWeight.w700)
-                                                        .apply(
-                                                            color: AppColors
-                                                                .white),
-                                                  )
-                                                ],
+                                          Container(
+                                            width: double.infinity,
+                                            height: 180.h,
+                                            child: InkWell(
+                                              onTap: () => context.router.push(
+                                                  const UstazAitinizhiRoute()),
+                                              child: Hero(
+                                                tag: 'UA',
+                                                child: Image.asset(
+                                                  'assets/images/ustaz_aitinizh.png',
+                                                  fit: BoxFit.fill,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -617,6 +580,31 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
+  Future<void> _checkInternetConnection() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    if (connectivityResult == ConnectivityResult.none) {
+      // ignore: use_build_context_synchronously
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('no_internet_text'.tr()),
+            content: Text(
+                "no_internet_content".tr()),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                child: Text("cancel".tr()),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
+
   int indexOfNextNames(List time) {
     late String namazName2;
     late int indexOfNamaz;
@@ -660,7 +648,6 @@ class _MainPageState extends State<MainPage> {
     String nextTime = '';
     for (int i = 0; i < times.length; i++) {
       if (times[i] == beforeTime) {
-
         if (i == times.length - 1) {
           nextTime = times[0];
           break;

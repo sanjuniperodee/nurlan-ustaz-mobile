@@ -24,7 +24,6 @@ class ProfileNotificationPage extends StatefulWidget {
 }
 
 class _ProfileNotificationPage extends State<ProfileNotificationPage> {
-  bool _switchValue = false;
   String tokens = '';
 
   @override
@@ -39,40 +38,31 @@ class _ProfileNotificationPage extends State<ProfileNotificationPage> {
       case 'dreams':
         return ('dream_interpretations'.tr());
         // Code for case1
-        break;
       case 'prayer_times':
         return ('Namaz'.tr());
         // Code for case2
-        break;
       case 'ayat_of_the_day':
         return ('Ayat_of_the_day'.tr());
         // Code for case3
-        break;
       case 'live_broadcasts':
         return ('live'.tr());
         // Code for case3
-        break;
       case 'tell_me_ustaz':
         return ('tell_me_ustaz'.tr());
         // Code for case3
-        break;
       case 'checklist_results':
         return ('Чек-лист'.tr());
         // Code for case3
-        break;
       case 'seminar_tickets':
         return ('seminar'.tr());
         // Code for case3
-        break;
       case 'new_content':
         return ('news'.tr());
         // Code for case3
-        break;
 
       default:
         return ('Invalid input');
         // Code for default case
-        break;
     }
   }
 
@@ -84,7 +74,7 @@ class _ProfileNotificationPage extends State<ProfileNotificationPage> {
         return state.maybeWhen(orElse: () {
           return Container();
         }, loadingState: () {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }, initialState: (items, notification, serverDto) {
@@ -98,9 +88,7 @@ class _ProfileNotificationPage extends State<ProfileNotificationPage> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SizedBox(
-                        height: 20.h,
-                      ),
+
                       CustomAppBar(
                         title: 'notifications'.tr(),
                       ),
@@ -125,7 +113,7 @@ class _ProfileNotificationPage extends State<ProfileNotificationPage> {
                                   .map(
                                     (e) => Container(
                                       padding:
-                                          EdgeInsets.symmetric(vertical: 4),
+                                          const EdgeInsets.symmetric(vertical: 4),
                                       width: double.infinity,
                                       child: Row(
                                         mainAxisAlignment:

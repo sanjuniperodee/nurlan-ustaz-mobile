@@ -1,6 +1,8 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_windowmanager/flutter_windowmanager.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -19,18 +21,23 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
   TusZhoruCubit(
     this._repository,
   ) : super(const TusZhoruState.initialState()) {}
+  final MethodChannel securityChannel = MethodChannel('app_security_channel');
 
   late List<TusZhoruDTO> tosZhoruList;
   late List<TusZhoruDTO> customTusZhoruList;
 
   Future<void> secureScreen() async {
-    final FlutterWindowManager manager = FlutterWindowManager();
-       await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE);
-  }
-  Future<void> unSecureScreen() async {
-    final FlutterWindowManager manager = FlutterWindowManager();
 
-    await FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE);
+    Platform.isAndroid
+        ? await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE)
+        : await securityChannel.invokeMethod('secureApp');
+  }
+
+  Future<void> unSecureScreen() async {
+    Platform.isAndroid
+        ?     await FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE)
+        : await securityChannel.invokeMethod('unsecureApp');
+
   }
 
   Future<void> toggleFav(int id) async {
@@ -71,11 +78,43 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
     failureOrUser.fold(
       (l) {
         emit(TusZhoruState.errorState(message: mapFailureToMessageBack(l)));
+        emit(TusZhoruState.initialState(
+            tusZhoruList: tosZhoruList, currentIndex: 0));
       },
       (r) {
         tosZhoruList = r.toList();
         emit(TusZhoruState.initialState(
             tusZhoruList: r.toSet().toList(), currentIndex: 0));
+      },
+    );
+  }
+
+  Future<void> paginatedTusZhoru({
+    String? search,
+    bool? isSaved,
+    int? page,
+    bool? isFirstCall,
+    bool? isPurchased,
+  }) async {
+    log('salam');
+    final failureOrUser = await _repository.tusZhoru(
+        page: page,
+        isFirstCall: false,
+        search: search,
+        isPurchased: isPurchased,
+        isSaved: isSaved);
+    failureOrUser.fold(
+      (l) {
+        emit(TusZhoruState.errorState(message: mapFailureToMessageBack(l)));
+        emit(TusZhoruState.initialState(
+            tusZhoruList: tosZhoruList, currentIndex: 0));
+      },
+      (r) {
+        tosZhoruList += r.toList();
+        emit(TusZhoruState.initialState(
+            tusZhoruList: tosZhoruList.toSet().toList(),
+            currentIndex: 0,
+            currentPage: page ?? 0));
       },
     );
   }
@@ -91,8 +130,7 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
     result.fold(
       (l) {
         emit(TusZhoruState.errorState(message: mapFailureToMessageBack(l)));
-        emit(TusZhoruState.initialState(
-            customTusZhoru:[], currentIndex: 1));
+        emit(TusZhoruState.initialState(customTusZhoru: [], currentIndex: 1));
       },
       (r) {
         customTusZhoruList = r;
@@ -109,6 +147,7 @@ class TusZhoruState with _$TusZhoruState {
     @Default([]) List<TusZhoruDTO> tusZhoruList,
     @Default([]) List<TusZhoruDTO> customTusZhoru,
     @Default(0) int currentIndex,
+    @Default(1) int currentPage,
   }) = _InitialPage;
 
   const factory TusZhoruState.loadingState() = _LoadingState;

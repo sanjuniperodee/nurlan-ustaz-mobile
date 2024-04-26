@@ -93,11 +93,10 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                       },
                       child: SingleChildScrollView(
                           physics: const BouncingScrollPhysics(),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
+                          child: Column(mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(height: 22.h),
+                              SizedBox(height: 40.h),
                               Text('MyFavourite'.tr(),
                                   style: getTextStyle(CustomTextStyles.s36w700)
                                       .apply(

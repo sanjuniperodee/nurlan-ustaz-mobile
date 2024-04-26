@@ -37,6 +37,7 @@ class CustomAppBar extends StatelessWidget {
                     style: getTextStyle(CustomTextStyles.s20w700)
                         .apply(color: color ?? AppColors.white),
                     overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
                   ),
                 ),
               ],

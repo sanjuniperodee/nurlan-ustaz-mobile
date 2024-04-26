@@ -1,8 +1,6 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart'; // Import Material for ThemeData
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -20,7 +18,7 @@ class TusZhoruList extends StatelessWidget {
     final list = tusZhoruList;
 
     return ListView.separated(
-      padding: EdgeInsets.only(bottom: 100, top: 20.h),
+      padding: EdgeInsets.only(bottom: 30.h, top: 20.h),
       itemCount: list.length,
       shrinkWrap: true,
       physics: const BouncingScrollPhysics(),

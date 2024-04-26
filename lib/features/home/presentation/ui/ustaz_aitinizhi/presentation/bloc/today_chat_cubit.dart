@@ -14,8 +14,6 @@ import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../../../../../../../core/common/shared_keys.dart';
-import '../../../../../../../core/platform/cache_helper/prefs.dart';
-import '../../../../../../auth/data/datasource/local/auth_local_ds.dart';
 import '../../../../../../auth/data/model/token_dto.dart';
 import '../../data/models/chat_model.dart';
 import '../../data/models/question_model.dart';

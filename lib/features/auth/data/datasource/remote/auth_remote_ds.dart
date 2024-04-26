@@ -178,7 +178,7 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
   @override
   Future<bool> deleteUser() async {
     try {
-      final result = await dio.delete(
+       await dio.delete(
         '${EndPoints.createUser}me/',
       );
 

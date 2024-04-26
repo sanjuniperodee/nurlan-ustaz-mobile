@@ -78,7 +78,7 @@
   "current_password": "Ағымдағы құпия сөз",
   "ready": "Дайын",
   "notification": "Хабарлама",
-  "news": "Жаңалықтар",
+  "news": "Мақалалар",
   "live": "Тікелей эфир",
   "can_question": "Бола ма,\nболмай ма?",
   "seminar": "Cеминар",
@@ -146,7 +146,7 @@
   "Favourite": "Таңдаулы",
   "MyFavourite": "Таңдауым",
   "leave_comment": "Пікір қалдыру",
-  "Favourite_news": "Таңдаулы жаңалықтар",
+  "Favourite_news": "Таңдаулы Мақалалар",
   "Favourite_lives": "Таңдаулы тікелей эфирлер",
   "my_plans": "Менің\nжоспарым",
   "lives": "Тікелей эфирлер",
@@ -238,7 +238,14 @@
   "change_language": "Тілді таңдаңыз",
   "changes_notify": "(Өзгерістер ертең күшіне енеді)",
   "publicOferta": "Қоғамдық ұсыныс",
-  "payment_process":"Төлем процедурасы"
+  "payment_process":"Төлем процедурасы",
+  "no_internet_text": "Интернет байланысы жоқ",
+  "no_internet_content": "Қолданбаны пайдалану үшін Интернетке кіру қажет",
+  "error_payment": "Төлем қатесі",
+  "success_payment": "Сәтті төлем",
+  "add_card_title": "Картаны қосу",
+  "empty_cards": "Төлем жасау үшін жаңа карта жасаңыз"
+
 
 
 }

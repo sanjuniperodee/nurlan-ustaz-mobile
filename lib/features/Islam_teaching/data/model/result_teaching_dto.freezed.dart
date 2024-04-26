@@ -12,7 +12,7 @@ part of 'result_teaching_dto.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 ResultTeachingDTO _$ResultTeachingDTOFromJson(Map<String, dynamic> json) {
   return _ResultTeachingDTO.fromJson(json);
@@ -134,11 +134,11 @@ class _$ResultTeachingDTOCopyWithImpl<$Res, $Val extends ResultTeachingDTO>
 }
 
 /// @nodoc
-abstract class _$$_ResultTeachingDTOCopyWith<$Res>
+abstract class _$$ResultTeachingDTOImplCopyWith<$Res>
     implements $ResultTeachingDTOCopyWith<$Res> {
-  factory _$$_ResultTeachingDTOCopyWith(_$_ResultTeachingDTO value,
-          $Res Function(_$_ResultTeachingDTO) then) =
-      __$$_ResultTeachingDTOCopyWithImpl<$Res>;
+  factory _$$ResultTeachingDTOImplCopyWith(_$ResultTeachingDTOImpl value,
+          $Res Function(_$ResultTeachingDTOImpl) then) =
+      __$$ResultTeachingDTOImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -156,11 +156,11 @@ abstract class _$$_ResultTeachingDTOCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ResultTeachingDTOCopyWithImpl<$Res>
-    extends _$ResultTeachingDTOCopyWithImpl<$Res, _$_ResultTeachingDTO>
-    implements _$$_ResultTeachingDTOCopyWith<$Res> {
-  __$$_ResultTeachingDTOCopyWithImpl(
-      _$_ResultTeachingDTO _value, $Res Function(_$_ResultTeachingDTO) _then)
+class __$$ResultTeachingDTOImplCopyWithImpl<$Res>
+    extends _$ResultTeachingDTOCopyWithImpl<$Res, _$ResultTeachingDTOImpl>
+    implements _$$ResultTeachingDTOImplCopyWith<$Res> {
+  __$$ResultTeachingDTOImplCopyWithImpl(_$ResultTeachingDTOImpl _value,
+      $Res Function(_$ResultTeachingDTOImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -178,7 +178,7 @@ class __$$_ResultTeachingDTOCopyWithImpl<$Res>
     Object? gender = freezed,
     Object? ayats = freezed,
   }) {
-    return _then(_$_ResultTeachingDTO(
+    return _then(_$ResultTeachingDTOImpl(
       isSaved: freezed == isSaved
           ? _value.isSaved
           : isSaved // ignore: cast_nullable_to_non_nullable
@@ -229,8 +229,8 @@ class __$$_ResultTeachingDTOCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ResultTeachingDTO implements _ResultTeachingDTO {
-  const _$_ResultTeachingDTO(
+class _$ResultTeachingDTOImpl implements _ResultTeachingDTO {
+  const _$ResultTeachingDTOImpl(
       {@JsonKey(name: "is_saved") this.isSaved = false,
       this.id,
       this.name,
@@ -244,8 +244,8 @@ class _$_ResultTeachingDTO implements _ResultTeachingDTO {
       final List<AyatDTO>? ayats})
       : _ayats = ayats;
 
-  factory _$_ResultTeachingDTO.fromJson(Map<String, dynamic> json) =>
-      _$$_ResultTeachingDTOFromJson(json);
+  factory _$ResultTeachingDTOImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ResultTeachingDTOImplFromJson(json);
 
   @override
   @JsonKey(name: "is_saved")
@@ -284,10 +284,10 @@ class _$_ResultTeachingDTO implements _ResultTeachingDTO {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ResultTeachingDTO &&
+            other is _$ResultTeachingDTOImpl &&
             (identical(other.isSaved, isSaved) || other.isSaved == isSaved) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
@@ -323,13 +323,13 @@ class _$_ResultTeachingDTO implements _ResultTeachingDTO {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ResultTeachingDTOCopyWith<_$_ResultTeachingDTO> get copyWith =>
-      __$$_ResultTeachingDTOCopyWithImpl<_$_ResultTeachingDTO>(
+  _$$ResultTeachingDTOImplCopyWith<_$ResultTeachingDTOImpl> get copyWith =>
+      __$$ResultTeachingDTOImplCopyWithImpl<_$ResultTeachingDTOImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ResultTeachingDTOToJson(
+    return _$$ResultTeachingDTOImplToJson(
       this,
     );
   }
@@ -347,10 +347,10 @@ abstract class _ResultTeachingDTO implements ResultTeachingDTO {
       final int? number,
       final String? description,
       final String? gender,
-      final List<AyatDTO>? ayats}) = _$_ResultTeachingDTO;
+      final List<AyatDTO>? ayats}) = _$ResultTeachingDTOImpl;
 
   factory _ResultTeachingDTO.fromJson(Map<String, dynamic> json) =
-      _$_ResultTeachingDTO.fromJson;
+      _$ResultTeachingDTOImpl.fromJson;
 
   @override
   @JsonKey(name: "is_saved")
@@ -377,6 +377,6 @@ abstract class _ResultTeachingDTO implements ResultTeachingDTO {
   List<AyatDTO>? get ayats;
   @override
   @JsonKey(ignore: true)
-  _$$_ResultTeachingDTOCopyWith<_$_ResultTeachingDTO> get copyWith =>
+  _$$ResultTeachingDTOImplCopyWith<_$ResultTeachingDTOImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

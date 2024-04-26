@@ -2,8 +2,6 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'enums/gender.dart';
-
 part 'user_dto.freezed.dart';
 part 'user_dto.g.dart';
 

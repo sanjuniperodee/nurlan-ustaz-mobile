@@ -8,6 +8,7 @@ import 'package:nurlan_ustaz_flutter/core/model/freedom_payment_dto.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/cache_helper/prefs.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/dio_wrapper.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/models/card_model.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/faq_model_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/geonames_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/media_dto.dart';
@@ -112,7 +113,7 @@ abstract class HomeRemoteDs {
   Future<List<ChatDTO>> chats(
       {required String startTime, required String endTime});
 
-  Future<FreedomPaymentDTO> createSeminarPayment(
+  Future<void> createSeminarPayment(
       {required int id, required String backUrl});
 
   Future<List<QuestionDTO>> questions(
@@ -131,6 +132,10 @@ abstract class HomeRemoteDs {
       {required String registrationId, required NotificationDTO notification});
 
   Future<String> checkTicket({required String url});
+  Future<List<CardDTO>> getCards({String? search});
+  Future<String> getAddCardUrl();
+    Future<void> setDefaultCard({required int cardId});
+
 }
 
 @Injectable(as: HomeRemoteDs)
@@ -161,7 +166,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   int? lpQuestions;
 
   @override
-  Future<FreedomPaymentDTO> createSeminarPayment(
+  Future<void> createSeminarPayment(
       {required int id, required String backUrl}) async {
     try {
       final response = await dio.post(
@@ -170,7 +175,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
           'back_url': backUrl,
         },
       );
-      return FreedomPaymentDTO.fromJson(response.data);
+      return(response.data);
     } on DioError catch (e) {
       throw ServerException(
         message:
@@ -968,6 +973,64 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message: (e.response!.data.toString()),
+      );
+    }
+  }
+
+  @override
+  Future<List<CardDTO>> getCards({String? search}) async {
+    try {
+      final response = await dio.get(
+        EndPoints.cards,
+      );
+      if (response.statusCode == 200) {
+        var cardList = ((response.data as List)
+            .map((e) => CardDTO.fromJson(e as Map<String, dynamic>))
+            .toList());
+
+        return cardList;
+      }
+      throw 'ERROR';
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<String> getAddCardUrl() async {
+    try {
+      final response = await dio.get(
+        EndPoints.addCards,
+      );
+      if (response.statusCode == 200) {
+        var cardAddUrl = ((response.data as String));
+
+        return cardAddUrl;
+      }
+      throw 'ERROR';
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+  
+  @override
+  Future<void> setDefaultCard({required int cardId})async {
+   try {
+       await dio.get(
+        '${EndPoints.cards}$cardId/set-default-card/',
+      );
+      
+      throw 'ERROR';
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }

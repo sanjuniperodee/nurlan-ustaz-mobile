@@ -71,6 +71,7 @@ class _GeonamesPageState extends State<GeonamesPage> {
                       physics: const BouncingScrollPhysics(),
                       child: Column(
                         children: [
+                          SizedBox(height: 20.h,),
                           CustomAppBar(
                             title: 'choose_location'.tr(),
                           ),

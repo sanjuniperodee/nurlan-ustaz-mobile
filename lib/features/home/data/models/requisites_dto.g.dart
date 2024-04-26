@@ -6,8 +6,8 @@ part of 'requisites_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_RequisitesDTO _$$_RequisitesDTOFromJson(Map<String, dynamic> json) =>
-    _$_RequisitesDTO(
+_$RequisitesDTOImpl _$$RequisitesDTOImplFromJson(Map<String, dynamic> json) =>
+    _$RequisitesDTOImpl(
       id: json['id'] as int,
       bankAccountNumber: json['bank_account_number'] as String?,
       cardNumber: json['card_number'] as String?,
@@ -20,7 +20,7 @@ _$_RequisitesDTO _$$_RequisitesDTOFromJson(Map<String, dynamic> json) =>
       url: json['url'] as String?,
     );
 
-Map<String, dynamic> _$$_RequisitesDTOToJson(_$_RequisitesDTO instance) =>
+Map<String, dynamic> _$$RequisitesDTOImplToJson(_$RequisitesDTOImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'bank_account_number': instance.bankAccountNumber,

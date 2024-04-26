@@ -29,6 +29,9 @@ class TusZhoruDetailPage extends StatefulWidget {
 
 class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
   late bool _isFav;
+  double opacity = 0.3;
+  ScrollController _scrollController = ScrollController();
+  final double triggerOffset = 200.0; // Change opacity below this offset
 
   @override
   void initState() {
@@ -37,14 +40,14 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
       BlocProvider.of<TusZhoruCubit>(context).secureScreen();
     });
     super.initState();
+    _scrollController.addListener(_handleScroll);
   }
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
-        BlocProvider.of<TusZhoruCubit>(context)
-            .unSecureScreen();
+        BlocProvider.of<TusZhoruCubit>(context).unSecureScreen();
         return true;
       },
       child: BlocBuilder<TusZhoruDetailsCubit, TusZhoruDetailsState>(
@@ -105,6 +108,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                   left: 0,
                   right: 0,
                   child: SingleChildScrollView(
+                    controller: _scrollController,
                     physics: const BouncingScrollPhysics(),
                     child: SizedBox(
                       child: Stack(children: [
@@ -121,7 +125,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                 onTap: () async {
                                   BlocProvider.of<TusZhoruCubit>(context)
                                       .unSecureScreen();
-                                  BlocProvider.of<TusZhoruCubit>(context)
+                                   BlocProvider.of<TusZhoruCubit>(context)
                                       .tusZhoruT(page: 1, isFirstCall: true);
                                   Navigator.pop(context);
                                 },
@@ -161,14 +165,15 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                         getTextStyle(CustomTextStyles.s20w700)
                                             .copyWith(
                                                 fontSize: 24,
-                                                fontFamily:
-                                                    FontTypes.Philosopher.name),
+                                                fontFamily: FontTypes
+                                                    .Philosopher.name),
                                     textAlign: TextAlign.start,
                                   ),
                                   SizedBox(
                                     height: 12,
                                   ),
                                   Container(
+
                                     child: Stack(
                                       children: [
                                         Text(
@@ -189,7 +194,8 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                                   height: 1.5),
                                           overflow: TextOverflow.fade,
                                         ),
-                                        if (tusZhoruModel.isPurchased! ==
+                                        if (tusZhoruModel
+                                                    .isPurchased! == //не куплен
                                                 false &&
                                             tusZhoruModel.partialExplanation !=
                                                 null)
@@ -201,7 +207,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                               child: Container(
                                                 decoration: BoxDecoration(
                                                     color: AppColors.white
-                                                        .withOpacity(0.7)),
+                                                        .withOpacity(opacity)),
                                               ))
                                       ],
                                     ),
@@ -317,5 +323,12 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
         );
       }),
     );
+  }
+
+  void _handleScroll() {
+    final double offset = _scrollController.offset;
+    setState(() {
+      opacity = (0.3 - (offset / 200.0)).clamp(0.1, 0.3);
+    });
   }
 }

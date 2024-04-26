@@ -12,7 +12,7 @@ part of 'result_home_dto.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 ResultHomeDTO _$ResultHomeDTOFromJson(Map<String, dynamic> json) {
   return _ResultHomeDTO.fromJson(json);
@@ -300,11 +300,11 @@ class _$ResultHomeDTOCopyWithImpl<$Res, $Val extends ResultHomeDTO>
 }
 
 /// @nodoc
-abstract class _$$_ResultHomeDTOCopyWith<$Res>
+abstract class _$$ResultHomeDTOImplCopyWith<$Res>
     implements $ResultHomeDTOCopyWith<$Res> {
-  factory _$$_ResultHomeDTOCopyWith(
-          _$_ResultHomeDTO value, $Res Function(_$_ResultHomeDTO) then) =
-      __$$_ResultHomeDTOCopyWithImpl<$Res>;
+  factory _$$ResultHomeDTOImplCopyWith(
+          _$ResultHomeDTOImpl value, $Res Function(_$ResultHomeDTOImpl) then) =
+      __$$ResultHomeDTOImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -345,11 +345,11 @@ abstract class _$$_ResultHomeDTOCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_ResultHomeDTOCopyWithImpl<$Res>
-    extends _$ResultHomeDTOCopyWithImpl<$Res, _$_ResultHomeDTO>
-    implements _$$_ResultHomeDTOCopyWith<$Res> {
-  __$$_ResultHomeDTOCopyWithImpl(
-      _$_ResultHomeDTO _value, $Res Function(_$_ResultHomeDTO) _then)
+class __$$ResultHomeDTOImplCopyWithImpl<$Res>
+    extends _$ResultHomeDTOCopyWithImpl<$Res, _$ResultHomeDTOImpl>
+    implements _$$ResultHomeDTOImplCopyWith<$Res> {
+  __$$ResultHomeDTOImplCopyWithImpl(
+      _$ResultHomeDTOImpl _value, $Res Function(_$ResultHomeDTOImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -387,7 +387,7 @@ class __$$_ResultHomeDTOCopyWithImpl<$Res>
     Object? statistics = freezed,
     Object? address = freezed,
   }) {
-    return _then(_$_ResultHomeDTO(
+    return _then(_$ResultHomeDTOImpl(
       isLiked: freezed == isLiked
           ? _value.isLiked
           : isLiked // ignore: cast_nullable_to_non_nullable
@@ -518,8 +518,8 @@ class __$$_ResultHomeDTOCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_ResultHomeDTO implements _ResultHomeDTO {
-  const _$_ResultHomeDTO(
+class _$ResultHomeDTOImpl implements _ResultHomeDTO {
+  const _$ResultHomeDTOImpl(
       {@JsonKey(name: "is_liked") this.isLiked = false,
       @JsonKey(name: "is_saved") this.isSaved = false,
       @JsonKey(name: "is_live") this.isLive,
@@ -556,8 +556,8 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
         _children = children,
         _statistics = statistics;
 
-  factory _$_ResultHomeDTO.fromJson(Map<String, dynamic> json) =>
-      _$$_ResultHomeDTOFromJson(json);
+  factory _$ResultHomeDTOImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ResultHomeDTOImplFromJson(json);
 
   @override
   @JsonKey(name: "is_liked")
@@ -673,10 +673,10 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ResultHomeDTO &&
+            other is _$ResultHomeDTOImpl &&
             (identical(other.isLiked, isLiked) || other.isLiked == isLiked) &&
             (identical(other.isSaved, isSaved) || other.isSaved == isSaved) &&
             (identical(other.isLive, isLive) || other.isLive == isLive) &&
@@ -761,12 +761,12 @@ class _$_ResultHomeDTO implements _ResultHomeDTO {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ResultHomeDTOCopyWith<_$_ResultHomeDTO> get copyWith =>
-      __$$_ResultHomeDTOCopyWithImpl<_$_ResultHomeDTO>(this, _$identity);
+  _$$ResultHomeDTOImplCopyWith<_$ResultHomeDTOImpl> get copyWith =>
+      __$$ResultHomeDTOImplCopyWithImpl<_$ResultHomeDTOImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_ResultHomeDTOToJson(
+    return _$$ResultHomeDTOImplToJson(
       this,
     );
   }
@@ -804,10 +804,10 @@ abstract class _ResultHomeDTO implements ResultHomeDTO {
       final List<RequisitesDTO>? requisites,
       final List<ResultHomeDTO>? children,
       final List<StatisticsDTO>? statistics,
-      final String? address}) = _$_ResultHomeDTO;
+      final String? address}) = _$ResultHomeDTOImpl;
 
   factory _ResultHomeDTO.fromJson(Map<String, dynamic> json) =
-      _$_ResultHomeDTO.fromJson;
+      _$ResultHomeDTOImpl.fromJson;
 
   @override
   @JsonKey(name: "is_liked")
@@ -886,6 +886,6 @@ abstract class _ResultHomeDTO implements ResultHomeDTO {
   String? get address;
   @override
   @JsonKey(ignore: true)
-  _$$_ResultHomeDTOCopyWith<_$_ResultHomeDTO> get copyWith =>
+  _$$ResultHomeDTOImplCopyWith<_$ResultHomeDTOImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

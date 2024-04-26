@@ -49,9 +49,7 @@ class _AboutAppPageState extends State<AboutAppPage> {
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: Column(children: [
-                    SizedBox(
-                      height: 15.h,
-                    ),
+
                     CustomAppBar(
                       title: 'project_info'.tr(),
                     ),
@@ -77,7 +75,7 @@ class _AboutAppPageState extends State<AboutAppPage> {
                               width: 163.w,
                               height: 44.h,
                               child: Image.asset(
-                                Assets.logoNurlan,
+                                'assets/images/new_l.png',
                                 color: AppColors.blue,
                               ),
                             ),
@@ -190,7 +188,7 @@ class _AboutAppPageState extends State<AboutAppPage> {
     ));
   }
 
-  final List<CardModel> cards = List.generate(5, (index) {
-    return CardModel(title: 'Карта', code: '6918 **** **89');
+  final List<CardDTO> cards = List.generate(5, (index) {
+    return CardDTO(id: 1, cardNumber: '6918 **** **89', isDefault: false);
   });
 }

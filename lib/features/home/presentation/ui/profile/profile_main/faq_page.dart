@@ -46,9 +46,6 @@ class _FaqPageState extends State<FaqPage> {
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: Column(children: [
-                    SizedBox(
-                      height: 20.h,
-                    ),
                     const CustomAppBar(
                       title: 'FAQ',
                     ),

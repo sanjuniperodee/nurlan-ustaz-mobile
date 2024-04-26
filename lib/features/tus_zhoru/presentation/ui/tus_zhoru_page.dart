@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nurlan_ustaz_flutter/core/utils/pagination_constant.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_cubit.dart';
@@ -31,12 +32,17 @@ class TusZhoruPage extends StatefulWidget {
   @override
   State<TusZhoruPage> createState() => _TusZhoruPageState();
 }
+
 bool isLoading = false;
-int currentIndex = 0;
+int currentIndex = 1;
+final _scrollController = ScrollController();
+int itemsLength = 0;
 
 class _TusZhoruPageState extends State<TusZhoruPage> {
   @override
   void initState() {
+    _scrollController.addListener(_scrollListener);
+
     widget.type == 'isSave'
         ? BlocProvider.of<TusZhoruCubit>(context)
             .tusZhoruT(page: 1, isFirstCall: true, isSaved: true)
@@ -61,13 +67,19 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
       child: BlocConsumer<TusZhoruCubit, TusZhoruState>(
           listener: (context, state) {
         state.maybeWhen(
+          initialState: (tus, _, __, currentPage) {
+            setState(() {
+              currentIndex = currentPage;
+              itemsLength = tus.length;
+            });
+          },
           orElse: () {},
           loaded: () {
             context.router.push(
               const QuestionRoute(),
             );
           },
-          loadingState: (){
+          loadingState: () {
             isLoading = true;
           },
           errorState: (message) {
@@ -101,6 +113,7 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
             backgroundColor: const Color(0xFFECF5FF),
             body: TusZhoruCustomBody(
               child: SingleChildScrollView(
+                controller: _scrollController,
                 physics: const BouncingScrollPhysics(),
                 child: Column(
                   children: [
@@ -161,15 +174,33 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                       },
                       length: 2,
                     ),
-                    isLoading == true ? CircularProgressIndicator.adaptive(backgroundColor: AppColors.linearBlue,) : AnimatedCrossFade(
-                        firstChild: TusZhoruList(
-                            tusZhoruList: tusZhoruList.tusZhoruList),
-                        secondChild: CustomTusZhoruList(
-                            tusZhoruList: tusZhoruList.customTusZhoru),
-                        crossFadeState: tusZhoruList.currentIndex == 0
-                            ? CrossFadeState.showFirst
-                            : CrossFadeState.showSecond,
-                        duration: Duration(milliseconds: 200)),
+                    isLoading == true
+                        ? CircularProgressIndicator.adaptive(
+                            backgroundColor: AppColors.linearBlue,
+                          )
+                        : AnimatedCrossFade(
+                            firstChild: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                TusZhoruList(
+                                    tusZhoruList: tusZhoruList.tusZhoruList),
+                                if (ConstantHome.globalCountTusZhoru >
+                                    itemsLength)
+                                  Padding(
+                                    padding:
+                                        EdgeInsets.symmetric(vertical: 20.h),
+                                    child: const CircularProgressIndicator(
+                                      color: AppColors.linearBlue,
+                                    ),
+                                  )
+                              ],
+                            ),
+                            secondChild: CustomTusZhoruList(
+                                tusZhoruList: tusZhoruList.customTusZhoru),
+                            crossFadeState: tusZhoruList.currentIndex == 0
+                                ? CrossFadeState.showFirst
+                                : CrossFadeState.showSecond,
+                            duration: Duration(milliseconds: 200)),
 
                     // tusZhoruList.currentIndex == 0
                     //     ? TusZhoruList(tusZhoruList: tusZhoruList.tusZhoruList)
@@ -187,6 +218,23 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
         });
       }),
     );
+  }
+
+  Future<void> _scrollListener() async {
+    if (ConstantHome.globalCountTusZhoru == itemsLength) {
+      log('${ConstantHome.globalCountTusZhoru.toString()}');
+      log(itemsLength.toString());
+      return;
+    } else {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        await currentIndex++;
+        log('kolll----${currentIndex}');
+        await BlocProvider.of<TusZhoruCubit>(context)
+            .paginatedTusZhoru(page: currentIndex, isFirstCall: true);
+        setState(() {});
+      }
+    }
   }
 
   int selectedIndex = -1;

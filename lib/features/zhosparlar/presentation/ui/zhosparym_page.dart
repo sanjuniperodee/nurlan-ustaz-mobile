@@ -70,6 +70,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
         orElse: () {},
       );
     }, builder: (context, state) {
+      print('${context.locale.languageCode},${context.locale.countryCode}');
       return state.maybeWhen(orElse: () {
         return Container();
       }, loadingState: () {
@@ -148,7 +149,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                           mainAxisSize: MainAxisSize.max,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(height: 82.h),
+                            SizedBox(height: 55.h),
                             Text('my_plans'.tr(),
                                 style: getTextStyle(CustomTextStyles.s36w700)
                                     .apply(
@@ -215,7 +216,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                       todayColor: AppColors.black,
                                       eventColor: Colors.deepPurple,
                                       locale:
-                                          '${context.locale.languageCode},${context.locale.countryCode}',
+                                          '${context.locale.languageCode}_${context.locale.languageCode == 'kk' ? 'KZ' : 'RU'}',
                                       todayButtonText: '',
                                       isExpanded: true,
                                       dayOfWeekStyle: const TextStyle(
@@ -451,10 +452,8 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
 
       if (daysResult.isEmpty) {
         await _delayedNavigation(checklist);
-      }
-      else{
+      } else {
         context.router.push(RamazanChecklistRoute(checkList: checklist));
-
       }
     }
 

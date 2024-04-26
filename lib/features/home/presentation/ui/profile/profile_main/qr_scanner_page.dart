@@ -133,7 +133,7 @@ class _QrScannerPage extends State<QrScannerPage> {
                           crossFadeState: _switchValue == true
                               ? CrossFadeState.showFirst
                               : CrossFadeState.showSecond,
-                          duration: Duration(milliseconds: 100),
+                          duration: const Duration(milliseconds: 100),
                         )),
                   ]),
             ),

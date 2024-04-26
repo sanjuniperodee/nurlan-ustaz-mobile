@@ -48,6 +48,8 @@ class _ChecklistTaskItemState extends State<ChecklistTaskItem> {
     log(widget.task.title!);
     log(widget.task!.title!.isEmpty.toString());
     return Slidable(
+      
+      
       closeOnScroll: true,
       endActionPane: ActionPane(
         extentRatio: 0.3.w,

@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:dots_indicator/dots_indicator.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,13 +13,11 @@ import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/app/app_dinamic_link.dart';
-
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/create_seminar_payment_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_detail_cubit.dart';
-
 import 'package:share_plus/share_plus.dart';
 
 import '../../../auth/presentation/widgets/pdf_screen.dart';
@@ -41,6 +38,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
   late bool isFavorite;
   late bool isLiked;
   late int likeCount;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -56,7 +54,14 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
           state.maybeWhen(
               orElse: () {},
               errorState: (message) {
-                buildErrorCustomSnackBar(context, message);
+                if (message == 'There is not default payment card') {
+                  context.router.push(const ProfileCardsRoute());
+                } else {
+                  buildErrorCustomSnackBar(context, 'error_payment'.tr());
+                }
+              },
+              successPay: () {
+                buildSuccessCustomSnackBar(context, 'success_payment'.tr());
               });
         },
         child: BlocConsumer<SeminarDetailCubit, SeminarDetailState>(
@@ -79,11 +84,13 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                 );
               },
               loaded: (result) {
+                print('seminar-platniy-${result.free}');
                 bool scroll = true;
                 result.media!.length == 1 ? scroll = false : scroll = true;
                 isFavorite = result.isSaved!;
                 isLiked = result.isLiked!;
                 likeCount = result.likesCount!;
+
                 // final bool isPaid = result.isPurchased == true;
                 return Stack(children: [
                   CarouselSlider(
@@ -102,15 +109,18 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                     items: result.media!.map((i) {
                       return Builder(
                         builder: (BuildContext context) {
-                          return CachedNetworkImage(
-                              imageUrl: i.file ?? 'assets/images/nur.png',
-                              fit: BoxFit.cover,
-                              width: 1.sw,
-                              errorWidget: (a, b, c) => Image.asset(
-                                    'assets/images/nur.png',
-                                    fit: BoxFit.cover,
-                                    width: 1.sw,
-                                  ));
+                          return Hero(
+                            tag: 'seminar',
+                            child: CachedNetworkImage(
+                                imageUrl: i.file ?? 'assets/images/nur.png',
+                                fit: BoxFit.cover,
+                                width: 1.sw,
+                                errorWidget: (a, b, c) => Image.asset(
+                                      'assets/images/nur.png',
+                                      fit: BoxFit.cover,
+                                      width: 1.sw,
+                                    )),
+                          );
                         },
                       );
                     }).toList(),
@@ -288,6 +298,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                   : result.startTime!.isAfter(DateTime.now())
                                       ? result.availableTicket! > 0
                                           ? AppButton(
+                                              isLoading: isLoading,
                                               onTap: () {
                                                 showDialog(
                                                     context: context,
@@ -345,7 +356,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                                               ),
                                                               Padding(
                                                                 padding: const EdgeInsets
-                                                                        .symmetric(
+                                                                    .symmetric(
                                                                     horizontal:
                                                                         25),
                                                                 child: Text(
@@ -367,7 +378,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                                                   height: 27.h),
                                                               Padding(
                                                                 padding: const EdgeInsets
-                                                                        .symmetric(
+                                                                    .symmetric(
                                                                     horizontal:
                                                                         16),
                                                                 child:
@@ -379,15 +390,30 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                                                   height: 44,
                                                                   onPressed:
                                                                       () async {
-                                                                        context.router.pop();
+                                                                    setState(
+                                                                        () {
+                                                                      isLoading =
+                                                                          true;
+                                                                    });
+                                                                    context
+                                                                        .router
+                                                                        .pop();
 
-                                                                        await BlocProvider.of<CreateSeminarPaymentCubit>(
+                                                                    await BlocProvider.of<CreateSeminarPaymentCubit>(
                                                                             context)
                                                                         .createSeminarPayment(
-                                                                          result
-                                                                              .id!,
-                                                                          context,
-                                                                        );
+                                                                      result
+                                                                          .id!,
+                                                                      context,
+                                                                    )
+                                                                        .whenComplete(
+                                                                            () {
+                                                                      setState(
+                                                                          () {
+                                                                        isLoading =
+                                                                            false;
+                                                                      });
+                                                                    });
                                                                   },
                                                                   color: AppColors
                                                                       .orange,
@@ -405,50 +431,69 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                                                 height: 20.h,
                                                               ),
                                                               Row(
-                                                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .spaceEvenly,
                                                                 children: [
                                                                   Material(
-                                                                    color: Colors.transparent,
-                                                                    child: InkWell(
-                                                                      splashColor: Colors.blue,
-                                                                      onTap: () {
-                                                                        Navigator.push(
+                                                                    color: Colors
+                                                                        .transparent,
+                                                                    child:
+                                                                        InkWell(
+                                                                      splashColor:
+                                                                          Colors
+                                                                              .blue,
+                                                                      onTap:
+                                                                          () {
+                                                                        Navigator
+                                                                            .push(
                                                                           context,
                                                                           MaterialPageRoute(
-                                                                            builder: (context) => MyPdfViewer(
-                                                                                assetPdf: 'public_oferta.pdf',
-                                                                                title: 'publicOferta'.tr()),
+                                                                            builder: (context) =>
+                                                                                MyPdfViewer(assetPdf: 'public_oferta.pdf', title: 'publicOferta'.tr()),
                                                                           ),
                                                                         );
                                                                       },
-                                                                      child: Text(
-                                                                        'publicOferta'.tr(),
+                                                                      child:
+                                                                          Text(
+                                                                        'publicOferta'
+                                                                            .tr(),
                                                                         style: getTextStyle(CustomTextStyles.s12w400).copyWith(
-                                                                            color: AppColors.blue,
+                                                                            color:
+                                                                                AppColors.blue,
                                                                             fontFamily: FontTypes.SF_Pro.name,
                                                                             decoration: TextDecoration.underline),
                                                                       ),
                                                                     ),
                                                                   ),
-
                                                                   Material(
-                                                                    color: Colors.transparent,
-                                                                    child: InkWell(
-                                                                      splashColor: Colors.blue,
-                                                                      onTap: () {
-                                                                        Navigator.push(
+                                                                    color: Colors
+                                                                        .transparent,
+                                                                    child:
+                                                                        InkWell(
+                                                                      splashColor:
+                                                                          Colors
+                                                                              .blue,
+                                                                      onTap:
+                                                                          () {
+                                                                        Navigator
+                                                                            .push(
                                                                           context,
                                                                           MaterialPageRoute(
-                                                                            builder: (context) => MyPdfViewer(
-                                                                              assetPdf: 'payment_process.pdf',
+                                                                            builder: (context) =>
+                                                                                MyPdfViewer(
+                                                                              assetPdf: 'payment_process1.pdf',
                                                                               title: 'payment_process'.tr(),
                                                                             ),
                                                                           ),
                                                                         );
                                                                       },
-                                                                      child: Text('payment_process'.tr(),
+                                                                      child: Text(
+                                                                          'payment_process'
+                                                                              .tr(),
                                                                           style: getTextStyle(CustomTextStyles.s12w400).copyWith(
-                                                                              fontFamily: FontTypes.SF_Pro.name,color: AppColors.blue,
+                                                                              fontFamily: FontTypes.SF_Pro.name,
+                                                                              color: AppColors.blue,
                                                                               decoration: TextDecoration.underline)),
                                                                     ),
                                                                   ),

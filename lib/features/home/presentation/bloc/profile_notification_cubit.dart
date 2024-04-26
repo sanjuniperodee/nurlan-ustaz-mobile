@@ -37,7 +37,7 @@ class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
 
   Future<void> switchNotify(
       NotificationItemDTO notificationItemDTO, bool value) async {
-    emit(_LoadingState());
+    emit(const _LoadingState());
     log(notificationItemDTO.title!);
     final notification =  notificationDeviceDTO.toJson();
     notification[notificationItemDTO.title!] = value;
@@ -97,7 +97,7 @@ class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
     //handleType(notificationItemDTO.title!);
 
 
-    emit(_$_InitialPage().copyWith(
+    emit(const _InitialPage().copyWith(
         serverNotificationDto: serverNotifications,
         notificationDTO: notificationDeviceDTO,
         items:notificationDeviceDTO

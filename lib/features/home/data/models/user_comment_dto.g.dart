@@ -6,15 +6,16 @@ part of 'user_comment_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_UserCommentDTO _$$_UserCommentDTOFromJson(Map<String, dynamic> json) =>
-    _$_UserCommentDTO(
+_$UserCommentDTOImpl _$$UserCommentDTOImplFromJson(Map<String, dynamic> json) =>
+    _$UserCommentDTOImpl(
       id: json['id'] as int,
       fullName: json['full_name'] as String?,
       email: json['email'] as String?,
       avatar: json['avatar'] as String?,
     );
 
-Map<String, dynamic> _$$_UserCommentDTOToJson(_$_UserCommentDTO instance) =>
+Map<String, dynamic> _$$UserCommentDTOImplToJson(
+        _$UserCommentDTOImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'full_name': instance.fullName,

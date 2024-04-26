@@ -12,7 +12,7 @@ part of 'ayat_dto.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 AyatDTO _$AyatDTOFromJson(Map<String, dynamic> json) {
   return _AyatDTO.fromJson(json);
@@ -97,10 +97,10 @@ class _$AyatDTOCopyWithImpl<$Res, $Val extends AyatDTO>
 }
 
 /// @nodoc
-abstract class _$$_AyatDTOCopyWith<$Res> implements $AyatDTOCopyWith<$Res> {
-  factory _$$_AyatDTOCopyWith(
-          _$_AyatDTO value, $Res Function(_$_AyatDTO) then) =
-      __$$_AyatDTOCopyWithImpl<$Res>;
+abstract class _$$AyatDTOImplCopyWith<$Res> implements $AyatDTOCopyWith<$Res> {
+  factory _$$AyatDTOImplCopyWith(
+          _$AyatDTOImpl value, $Res Function(_$AyatDTOImpl) then) =
+      __$$AyatDTOImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -113,10 +113,11 @@ abstract class _$$_AyatDTOCopyWith<$Res> implements $AyatDTOCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_AyatDTOCopyWithImpl<$Res>
-    extends _$AyatDTOCopyWithImpl<$Res, _$_AyatDTO>
-    implements _$$_AyatDTOCopyWith<$Res> {
-  __$$_AyatDTOCopyWithImpl(_$_AyatDTO _value, $Res Function(_$_AyatDTO) _then)
+class __$$AyatDTOImplCopyWithImpl<$Res>
+    extends _$AyatDTOCopyWithImpl<$Res, _$AyatDTOImpl>
+    implements _$$AyatDTOImplCopyWith<$Res> {
+  __$$AyatDTOImplCopyWithImpl(
+      _$AyatDTOImpl _value, $Res Function(_$AyatDTOImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -129,7 +130,7 @@ class __$$_AyatDTOCopyWithImpl<$Res>
     Object? transcription = freezed,
     Object? translation = freezed,
   }) {
-    return _then(_$_AyatDTO(
+    return _then(_$AyatDTOImpl(
       id: freezed == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -160,8 +161,8 @@ class __$$_AyatDTOCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_AyatDTO implements _AyatDTO {
-  const _$_AyatDTO(
+class _$AyatDTOImpl implements _AyatDTO {
+  const _$AyatDTOImpl(
       {this.id,
       @JsonKey(name: "ayat_number") this.ayatNumber,
       this.name,
@@ -169,8 +170,8 @@ class _$_AyatDTO implements _AyatDTO {
       this.transcription,
       this.translation});
 
-  factory _$_AyatDTO.fromJson(Map<String, dynamic> json) =>
-      _$$_AyatDTOFromJson(json);
+  factory _$AyatDTOImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AyatDTOImplFromJson(json);
 
   @override
   final int? id;
@@ -192,10 +193,10 @@ class _$_AyatDTO implements _AyatDTO {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AyatDTO &&
+            other is _$AyatDTOImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.ayatNumber, ayatNumber) ||
                 other.ayatNumber == ayatNumber) &&
@@ -215,12 +216,12 @@ class _$_AyatDTO implements _AyatDTO {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AyatDTOCopyWith<_$_AyatDTO> get copyWith =>
-      __$$_AyatDTOCopyWithImpl<_$_AyatDTO>(this, _$identity);
+  _$$AyatDTOImplCopyWith<_$AyatDTOImpl> get copyWith =>
+      __$$AyatDTOImplCopyWithImpl<_$AyatDTOImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_AyatDTOToJson(
+    return _$$AyatDTOImplToJson(
       this,
     );
   }
@@ -233,9 +234,9 @@ abstract class _AyatDTO implements AyatDTO {
       final String? name,
       final String? arabic,
       final String? transcription,
-      final String? translation}) = _$_AyatDTO;
+      final String? translation}) = _$AyatDTOImpl;
 
-  factory _AyatDTO.fromJson(Map<String, dynamic> json) = _$_AyatDTO.fromJson;
+  factory _AyatDTO.fromJson(Map<String, dynamic> json) = _$AyatDTOImpl.fromJson;
 
   @override
   int? get id;
@@ -252,6 +253,6 @@ abstract class _AyatDTO implements AyatDTO {
   String? get translation;
   @override
   @JsonKey(ignore: true)
-  _$$_AyatDTOCopyWith<_$_AyatDTO> get copyWith =>
+  _$$AyatDTOImplCopyWith<_$AyatDTOImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

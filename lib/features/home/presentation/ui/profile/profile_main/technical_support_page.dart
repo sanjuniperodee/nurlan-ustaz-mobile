@@ -86,9 +86,7 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
                   controller: _scrollController,
                   physics: const BouncingScrollPhysics(),
                   child: Column(children: [
-                    SizedBox(
-                      height: 20.h,
-                    ),
+
                     CustomAppBar(
                       title: 'tech_support'.tr(),
                     ),

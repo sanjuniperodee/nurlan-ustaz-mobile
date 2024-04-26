@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -47,11 +45,11 @@ class _LauncherAppPageState extends State<LauncherAppPage> {
 
   @override
   Widget build(BuildContext context) {
-    return _salam();
+    return _appBLoc();
   }
 }
 
-Widget _salam() {
+Widget _appBLoc() {
   return BlocConsumer<AppBloc, AppState>(
     builder: (context, state) {
       return WillPopScope(
@@ -72,8 +70,7 @@ Widget _salam() {
             return const Base();
           },
           notAuthorizedState: () {
-            // return const SignInPage();
-            return LoginPage();
+            return const LoginPage();
           },
           errorState: (String message) {
             return const _Scaffold(
@@ -103,11 +100,12 @@ Widget _salam() {
               title: '401.title'.tr(),
               button1Text: 'cancel'.tr(),
               button2Text: '401.login'.tr());
-          log('ttttt-${dialog.toString()}');
           if (dialog == true) {
+            // ignore: use_build_context_synchronously
             AutoRouter.of(context).pushAndPopUntil(const LoginRoute(),
                 predicate: (route) => false);
           } else {
+            // ignore: use_build_context_synchronously
             AutoRouter.of(context).pushAndPopUntil(const MainRouterPage(),
                 predicate: (route) => false);
           }

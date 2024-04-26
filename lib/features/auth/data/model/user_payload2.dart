@@ -1,7 +1,6 @@
 // ignore_for_file: invalid_annotation_target
 
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:nurlan_ustaz_flutter/features/auth/data/model/enums/gender.dart';
 
 part 'user_payload2.freezed.dart';
 part 'user_payload2.g.dart';

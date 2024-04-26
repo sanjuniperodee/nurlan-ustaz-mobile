@@ -12,7 +12,7 @@ part of 'app_bloc.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$AppEvent {
@@ -104,25 +104,25 @@ class _$AppEventCopyWithImpl<$Res, $Val extends AppEvent>
 }
 
 /// @nodoc
-abstract class _$$_CheckAuthCopyWith<$Res> {
-  factory _$$_CheckAuthCopyWith(
-          _$_CheckAuth value, $Res Function(_$_CheckAuth) then) =
-      __$$_CheckAuthCopyWithImpl<$Res>;
+abstract class _$$CheckAuthImplCopyWith<$Res> {
+  factory _$$CheckAuthImplCopyWith(
+          _$CheckAuthImpl value, $Res Function(_$CheckAuthImpl) then) =
+      __$$CheckAuthImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_CheckAuthCopyWithImpl<$Res>
-    extends _$AppEventCopyWithImpl<$Res, _$_CheckAuth>
-    implements _$$_CheckAuthCopyWith<$Res> {
-  __$$_CheckAuthCopyWithImpl(
-      _$_CheckAuth _value, $Res Function(_$_CheckAuth) _then)
+class __$$CheckAuthImplCopyWithImpl<$Res>
+    extends _$AppEventCopyWithImpl<$Res, _$CheckAuthImpl>
+    implements _$$CheckAuthImplCopyWith<$Res> {
+  __$$CheckAuthImplCopyWithImpl(
+      _$CheckAuthImpl _value, $Res Function(_$CheckAuthImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_CheckAuth implements _CheckAuth {
-  const _$_CheckAuth();
+class _$CheckAuthImpl implements _CheckAuth {
+  const _$CheckAuthImpl();
 
   @override
   String toString() {
@@ -130,9 +130,9 @@ class _$_CheckAuth implements _CheckAuth {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_CheckAuth);
+        (other.runtimeType == runtimeType && other is _$CheckAuthImpl);
   }
 
   @override
@@ -232,29 +232,29 @@ class _$_CheckAuth implements _CheckAuth {
 }
 
 abstract class _CheckAuth implements AppEvent {
-  const factory _CheckAuth() = _$_CheckAuth;
+  const factory _CheckAuth() = _$CheckAuthImpl;
 }
 
 /// @nodoc
-abstract class _$$_OnboardingSaveCopyWith<$Res> {
-  factory _$$_OnboardingSaveCopyWith(
-          _$_OnboardingSave value, $Res Function(_$_OnboardingSave) then) =
-      __$$_OnboardingSaveCopyWithImpl<$Res>;
+abstract class _$$OnboardingSaveImplCopyWith<$Res> {
+  factory _$$OnboardingSaveImplCopyWith(_$OnboardingSaveImpl value,
+          $Res Function(_$OnboardingSaveImpl) then) =
+      __$$OnboardingSaveImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_OnboardingSaveCopyWithImpl<$Res>
-    extends _$AppEventCopyWithImpl<$Res, _$_OnboardingSave>
-    implements _$$_OnboardingSaveCopyWith<$Res> {
-  __$$_OnboardingSaveCopyWithImpl(
-      _$_OnboardingSave _value, $Res Function(_$_OnboardingSave) _then)
+class __$$OnboardingSaveImplCopyWithImpl<$Res>
+    extends _$AppEventCopyWithImpl<$Res, _$OnboardingSaveImpl>
+    implements _$$OnboardingSaveImplCopyWith<$Res> {
+  __$$OnboardingSaveImplCopyWithImpl(
+      _$OnboardingSaveImpl _value, $Res Function(_$OnboardingSaveImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_OnboardingSave implements _OnboardingSave {
-  const _$_OnboardingSave();
+class _$OnboardingSaveImpl implements _OnboardingSave {
+  const _$OnboardingSaveImpl();
 
   @override
   String toString() {
@@ -262,9 +262,9 @@ class _$_OnboardingSave implements _OnboardingSave {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_OnboardingSave);
+        (other.runtimeType == runtimeType && other is _$OnboardingSaveImpl);
   }
 
   @override
@@ -364,29 +364,29 @@ class _$_OnboardingSave implements _OnboardingSave {
 }
 
 abstract class _OnboardingSave implements AppEvent {
-  const factory _OnboardingSave() = _$_OnboardingSave;
+  const factory _OnboardingSave() = _$OnboardingSaveImpl;
 }
 
 /// @nodoc
-abstract class _$$_LoginingCopyWith<$Res> {
-  factory _$$_LoginingCopyWith(
-          _$_Logining value, $Res Function(_$_Logining) then) =
-      __$$_LoginingCopyWithImpl<$Res>;
+abstract class _$$LoginingImplCopyWith<$Res> {
+  factory _$$LoginingImplCopyWith(
+          _$LoginingImpl value, $Res Function(_$LoginingImpl) then) =
+      __$$LoginingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_LoginingCopyWithImpl<$Res>
-    extends _$AppEventCopyWithImpl<$Res, _$_Logining>
-    implements _$$_LoginingCopyWith<$Res> {
-  __$$_LoginingCopyWithImpl(
-      _$_Logining _value, $Res Function(_$_Logining) _then)
+class __$$LoginingImplCopyWithImpl<$Res>
+    extends _$AppEventCopyWithImpl<$Res, _$LoginingImpl>
+    implements _$$LoginingImplCopyWith<$Res> {
+  __$$LoginingImplCopyWithImpl(
+      _$LoginingImpl _value, $Res Function(_$LoginingImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Logining implements _Logining {
-  const _$_Logining();
+class _$LoginingImpl implements _Logining {
+  const _$LoginingImpl();
 
   @override
   String toString() {
@@ -394,9 +394,9 @@ class _$_Logining implements _Logining {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Logining);
+        (other.runtimeType == runtimeType && other is _$LoginingImpl);
   }
 
   @override
@@ -496,29 +496,29 @@ class _$_Logining implements _Logining {
 }
 
 abstract class _Logining implements AppEvent {
-  const factory _Logining() = _$_Logining;
+  const factory _Logining() = _$LoginingImpl;
 }
 
 /// @nodoc
-abstract class _$$_RefreshLocalCopyWith<$Res> {
-  factory _$$_RefreshLocalCopyWith(
-          _$_RefreshLocal value, $Res Function(_$_RefreshLocal) then) =
-      __$$_RefreshLocalCopyWithImpl<$Res>;
+abstract class _$$RefreshLocalImplCopyWith<$Res> {
+  factory _$$RefreshLocalImplCopyWith(
+          _$RefreshLocalImpl value, $Res Function(_$RefreshLocalImpl) then) =
+      __$$RefreshLocalImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_RefreshLocalCopyWithImpl<$Res>
-    extends _$AppEventCopyWithImpl<$Res, _$_RefreshLocal>
-    implements _$$_RefreshLocalCopyWith<$Res> {
-  __$$_RefreshLocalCopyWithImpl(
-      _$_RefreshLocal _value, $Res Function(_$_RefreshLocal) _then)
+class __$$RefreshLocalImplCopyWithImpl<$Res>
+    extends _$AppEventCopyWithImpl<$Res, _$RefreshLocalImpl>
+    implements _$$RefreshLocalImplCopyWith<$Res> {
+  __$$RefreshLocalImplCopyWithImpl(
+      _$RefreshLocalImpl _value, $Res Function(_$RefreshLocalImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_RefreshLocal implements _RefreshLocal {
-  const _$_RefreshLocal();
+class _$RefreshLocalImpl implements _RefreshLocal {
+  const _$RefreshLocalImpl();
 
   @override
   String toString() {
@@ -526,9 +526,9 @@ class _$_RefreshLocal implements _RefreshLocal {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_RefreshLocal);
+        (other.runtimeType == runtimeType && other is _$RefreshLocalImpl);
   }
 
   @override
@@ -628,28 +628,29 @@ class _$_RefreshLocal implements _RefreshLocal {
 }
 
 abstract class _RefreshLocal implements AppEvent {
-  const factory _RefreshLocal() = _$_RefreshLocal;
+  const factory _RefreshLocal() = _$RefreshLocalImpl;
 }
 
 /// @nodoc
-abstract class _$$_ExitingCopyWith<$Res> {
-  factory _$$_ExitingCopyWith(
-          _$_Exiting value, $Res Function(_$_Exiting) then) =
-      __$$_ExitingCopyWithImpl<$Res>;
+abstract class _$$ExitingImplCopyWith<$Res> {
+  factory _$$ExitingImplCopyWith(
+          _$ExitingImpl value, $Res Function(_$ExitingImpl) then) =
+      __$$ExitingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_ExitingCopyWithImpl<$Res>
-    extends _$AppEventCopyWithImpl<$Res, _$_Exiting>
-    implements _$$_ExitingCopyWith<$Res> {
-  __$$_ExitingCopyWithImpl(_$_Exiting _value, $Res Function(_$_Exiting) _then)
+class __$$ExitingImplCopyWithImpl<$Res>
+    extends _$AppEventCopyWithImpl<$Res, _$ExitingImpl>
+    implements _$$ExitingImplCopyWith<$Res> {
+  __$$ExitingImplCopyWithImpl(
+      _$ExitingImpl _value, $Res Function(_$ExitingImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Exiting implements _Exiting {
-  const _$_Exiting();
+class _$ExitingImpl implements _Exiting {
+  const _$ExitingImpl();
 
   @override
   String toString() {
@@ -657,9 +658,9 @@ class _$_Exiting implements _Exiting {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Exiting);
+        (other.runtimeType == runtimeType && other is _$ExitingImpl);
   }
 
   @override
@@ -759,29 +760,29 @@ class _$_Exiting implements _Exiting {
 }
 
 abstract class _Exiting implements AppEvent {
-  const factory _Exiting() = _$_Exiting;
+  const factory _Exiting() = _$ExitingImpl;
 }
 
 /// @nodoc
-abstract class _$$_DeletingCopyWith<$Res> {
-  factory _$$_DeletingCopyWith(
-          _$_Deleting value, $Res Function(_$_Deleting) then) =
-      __$$_DeletingCopyWithImpl<$Res>;
+abstract class _$$DeletingImplCopyWith<$Res> {
+  factory _$$DeletingImplCopyWith(
+          _$DeletingImpl value, $Res Function(_$DeletingImpl) then) =
+      __$$DeletingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_DeletingCopyWithImpl<$Res>
-    extends _$AppEventCopyWithImpl<$Res, _$_Deleting>
-    implements _$$_DeletingCopyWith<$Res> {
-  __$$_DeletingCopyWithImpl(
-      _$_Deleting _value, $Res Function(_$_Deleting) _then)
+class __$$DeletingImplCopyWithImpl<$Res>
+    extends _$AppEventCopyWithImpl<$Res, _$DeletingImpl>
+    implements _$$DeletingImplCopyWith<$Res> {
+  __$$DeletingImplCopyWithImpl(
+      _$DeletingImpl _value, $Res Function(_$DeletingImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_Deleting implements _Deleting {
-  const _$_Deleting();
+class _$DeletingImpl implements _Deleting {
+  const _$DeletingImpl();
 
   @override
   String toString() {
@@ -789,9 +790,9 @@ class _$_Deleting implements _Deleting {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_Deleting);
+        (other.runtimeType == runtimeType && other is _$DeletingImpl);
   }
 
   @override
@@ -891,29 +892,29 @@ class _$_Deleting implements _Deleting {
 }
 
 abstract class _Deleting implements AppEvent {
-  const factory _Deleting() = _$_Deleting;
+  const factory _Deleting() = _$DeletingImpl;
 }
 
 /// @nodoc
-abstract class _$$_NonAuthorizedDialogCopyWith<$Res> {
-  factory _$$_NonAuthorizedDialogCopyWith(_$_NonAuthorizedDialog value,
-          $Res Function(_$_NonAuthorizedDialog) then) =
-      __$$_NonAuthorizedDialogCopyWithImpl<$Res>;
+abstract class _$$NonAuthorizedDialogImplCopyWith<$Res> {
+  factory _$$NonAuthorizedDialogImplCopyWith(_$NonAuthorizedDialogImpl value,
+          $Res Function(_$NonAuthorizedDialogImpl) then) =
+      __$$NonAuthorizedDialogImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_NonAuthorizedDialogCopyWithImpl<$Res>
-    extends _$AppEventCopyWithImpl<$Res, _$_NonAuthorizedDialog>
-    implements _$$_NonAuthorizedDialogCopyWith<$Res> {
-  __$$_NonAuthorizedDialogCopyWithImpl(_$_NonAuthorizedDialog _value,
-      $Res Function(_$_NonAuthorizedDialog) _then)
+class __$$NonAuthorizedDialogImplCopyWithImpl<$Res>
+    extends _$AppEventCopyWithImpl<$Res, _$NonAuthorizedDialogImpl>
+    implements _$$NonAuthorizedDialogImplCopyWith<$Res> {
+  __$$NonAuthorizedDialogImplCopyWithImpl(_$NonAuthorizedDialogImpl _value,
+      $Res Function(_$NonAuthorizedDialogImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_NonAuthorizedDialog implements _NonAuthorizedDialog {
-  const _$_NonAuthorizedDialog();
+class _$NonAuthorizedDialogImpl implements _NonAuthorizedDialog {
+  const _$NonAuthorizedDialogImpl();
 
   @override
   String toString() {
@@ -921,9 +922,10 @@ class _$_NonAuthorizedDialog implements _NonAuthorizedDialog {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_NonAuthorizedDialog);
+        (other.runtimeType == runtimeType &&
+            other is _$NonAuthorizedDialogImpl);
   }
 
   @override
@@ -1023,7 +1025,7 @@ class _$_NonAuthorizedDialog implements _NonAuthorizedDialog {
 }
 
 abstract class _NonAuthorizedDialog implements AppEvent {
-  const factory _NonAuthorizedDialog() = _$_NonAuthorizedDialog;
+  const factory _NonAuthorizedDialog() = _$NonAuthorizedDialogImpl;
 }
 
 /// @nodoc
@@ -1124,25 +1126,25 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
 }
 
 /// @nodoc
-abstract class _$$_OnBoardingStateCopyWith<$Res> {
-  factory _$$_OnBoardingStateCopyWith(
-          _$_OnBoardingState value, $Res Function(_$_OnBoardingState) then) =
-      __$$_OnBoardingStateCopyWithImpl<$Res>;
+abstract class _$$OnBoardingStateImplCopyWith<$Res> {
+  factory _$$OnBoardingStateImplCopyWith(_$OnBoardingStateImpl value,
+          $Res Function(_$OnBoardingStateImpl) then) =
+      __$$OnBoardingStateImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_OnBoardingStateCopyWithImpl<$Res>
-    extends _$AppStateCopyWithImpl<$Res, _$_OnBoardingState>
-    implements _$$_OnBoardingStateCopyWith<$Res> {
-  __$$_OnBoardingStateCopyWithImpl(
-      _$_OnBoardingState _value, $Res Function(_$_OnBoardingState) _then)
+class __$$OnBoardingStateImplCopyWithImpl<$Res>
+    extends _$AppStateCopyWithImpl<$Res, _$OnBoardingStateImpl>
+    implements _$$OnBoardingStateImplCopyWith<$Res> {
+  __$$OnBoardingStateImplCopyWithImpl(
+      _$OnBoardingStateImpl _value, $Res Function(_$OnBoardingStateImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_OnBoardingState implements _OnBoardingState {
-  const _$_OnBoardingState();
+class _$OnBoardingStateImpl implements _OnBoardingState {
+  const _$OnBoardingStateImpl();
 
   @override
   String toString() {
@@ -1150,9 +1152,9 @@ class _$_OnBoardingState implements _OnBoardingState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_OnBoardingState);
+        (other.runtimeType == runtimeType && other is _$OnBoardingStateImpl);
   }
 
   @override
@@ -1260,29 +1262,29 @@ class _$_OnBoardingState implements _OnBoardingState {
 }
 
 abstract class _OnBoardingState implements AppState {
-  const factory _OnBoardingState() = _$_OnBoardingState;
+  const factory _OnBoardingState() = _$OnBoardingStateImpl;
 }
 
 /// @nodoc
-abstract class _$$_LoadingStateCopyWith<$Res> {
-  factory _$$_LoadingStateCopyWith(
-          _$_LoadingState value, $Res Function(_$_LoadingState) then) =
-      __$$_LoadingStateCopyWithImpl<$Res>;
+abstract class _$$LoadingStateImplCopyWith<$Res> {
+  factory _$$LoadingStateImplCopyWith(
+          _$LoadingStateImpl value, $Res Function(_$LoadingStateImpl) then) =
+      __$$LoadingStateImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_LoadingStateCopyWithImpl<$Res>
-    extends _$AppStateCopyWithImpl<$Res, _$_LoadingState>
-    implements _$$_LoadingStateCopyWith<$Res> {
-  __$$_LoadingStateCopyWithImpl(
-      _$_LoadingState _value, $Res Function(_$_LoadingState) _then)
+class __$$LoadingStateImplCopyWithImpl<$Res>
+    extends _$AppStateCopyWithImpl<$Res, _$LoadingStateImpl>
+    implements _$$LoadingStateImplCopyWith<$Res> {
+  __$$LoadingStateImplCopyWithImpl(
+      _$LoadingStateImpl _value, $Res Function(_$LoadingStateImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_LoadingState implements _LoadingState {
-  const _$_LoadingState();
+class _$LoadingStateImpl implements _LoadingState {
+  const _$LoadingStateImpl();
 
   @override
   String toString() {
@@ -1290,9 +1292,9 @@ class _$_LoadingState implements _LoadingState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_LoadingState);
+        (other.runtimeType == runtimeType && other is _$LoadingStateImpl);
   }
 
   @override
@@ -1400,30 +1402,31 @@ class _$_LoadingState implements _LoadingState {
 }
 
 abstract class _LoadingState implements AppState {
-  const factory _LoadingState() = _$_LoadingState;
+  const factory _LoadingState() = _$LoadingStateImpl;
 }
 
 /// @nodoc
-abstract class _$$_NotAuthorizedDialogStateCopyWith<$Res> {
-  factory _$$_NotAuthorizedDialogStateCopyWith(
-          _$_NotAuthorizedDialogState value,
-          $Res Function(_$_NotAuthorizedDialogState) then) =
-      __$$_NotAuthorizedDialogStateCopyWithImpl<$Res>;
+abstract class _$$NotAuthorizedDialogStateImplCopyWith<$Res> {
+  factory _$$NotAuthorizedDialogStateImplCopyWith(
+          _$NotAuthorizedDialogStateImpl value,
+          $Res Function(_$NotAuthorizedDialogStateImpl) then) =
+      __$$NotAuthorizedDialogStateImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_NotAuthorizedDialogStateCopyWithImpl<$Res>
-    extends _$AppStateCopyWithImpl<$Res, _$_NotAuthorizedDialogState>
-    implements _$$_NotAuthorizedDialogStateCopyWith<$Res> {
-  __$$_NotAuthorizedDialogStateCopyWithImpl(_$_NotAuthorizedDialogState _value,
-      $Res Function(_$_NotAuthorizedDialogState) _then)
+class __$$NotAuthorizedDialogStateImplCopyWithImpl<$Res>
+    extends _$AppStateCopyWithImpl<$Res, _$NotAuthorizedDialogStateImpl>
+    implements _$$NotAuthorizedDialogStateImplCopyWith<$Res> {
+  __$$NotAuthorizedDialogStateImplCopyWithImpl(
+      _$NotAuthorizedDialogStateImpl _value,
+      $Res Function(_$NotAuthorizedDialogStateImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_NotAuthorizedDialogState implements _NotAuthorizedDialogState {
-  const _$_NotAuthorizedDialogState();
+class _$NotAuthorizedDialogStateImpl implements _NotAuthorizedDialogState {
+  const _$NotAuthorizedDialogStateImpl();
 
   @override
   String toString() {
@@ -1431,10 +1434,10 @@ class _$_NotAuthorizedDialogState implements _NotAuthorizedDialogState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_NotAuthorizedDialogState);
+            other is _$NotAuthorizedDialogStateImpl);
   }
 
   @override
@@ -1542,29 +1545,29 @@ class _$_NotAuthorizedDialogState implements _NotAuthorizedDialogState {
 }
 
 abstract class _NotAuthorizedDialogState implements AppState {
-  const factory _NotAuthorizedDialogState() = _$_NotAuthorizedDialogState;
+  const factory _NotAuthorizedDialogState() = _$NotAuthorizedDialogStateImpl;
 }
 
 /// @nodoc
-abstract class _$$_NotAuthorizedStateCopyWith<$Res> {
-  factory _$$_NotAuthorizedStateCopyWith(_$_NotAuthorizedState value,
-          $Res Function(_$_NotAuthorizedState) then) =
-      __$$_NotAuthorizedStateCopyWithImpl<$Res>;
+abstract class _$$NotAuthorizedStateImplCopyWith<$Res> {
+  factory _$$NotAuthorizedStateImplCopyWith(_$NotAuthorizedStateImpl value,
+          $Res Function(_$NotAuthorizedStateImpl) then) =
+      __$$NotAuthorizedStateImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_NotAuthorizedStateCopyWithImpl<$Res>
-    extends _$AppStateCopyWithImpl<$Res, _$_NotAuthorizedState>
-    implements _$$_NotAuthorizedStateCopyWith<$Res> {
-  __$$_NotAuthorizedStateCopyWithImpl(
-      _$_NotAuthorizedState _value, $Res Function(_$_NotAuthorizedState) _then)
+class __$$NotAuthorizedStateImplCopyWithImpl<$Res>
+    extends _$AppStateCopyWithImpl<$Res, _$NotAuthorizedStateImpl>
+    implements _$$NotAuthorizedStateImplCopyWith<$Res> {
+  __$$NotAuthorizedStateImplCopyWithImpl(_$NotAuthorizedStateImpl _value,
+      $Res Function(_$NotAuthorizedStateImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_NotAuthorizedState implements _NotAuthorizedState {
-  const _$_NotAuthorizedState();
+class _$NotAuthorizedStateImpl implements _NotAuthorizedState {
+  const _$NotAuthorizedStateImpl();
 
   @override
   String toString() {
@@ -1572,9 +1575,9 @@ class _$_NotAuthorizedState implements _NotAuthorizedState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_NotAuthorizedState);
+        (other.runtimeType == runtimeType && other is _$NotAuthorizedStateImpl);
   }
 
   @override
@@ -1682,29 +1685,29 @@ class _$_NotAuthorizedState implements _NotAuthorizedState {
 }
 
 abstract class _NotAuthorizedState implements AppState {
-  const factory _NotAuthorizedState() = _$_NotAuthorizedState;
+  const factory _NotAuthorizedState() = _$NotAuthorizedStateImpl;
 }
 
 /// @nodoc
-abstract class _$$_NotVerifyedCopyWith<$Res> {
-  factory _$$_NotVerifyedCopyWith(
-          _$_NotVerifyed value, $Res Function(_$_NotVerifyed) then) =
-      __$$_NotVerifyedCopyWithImpl<$Res>;
+abstract class _$$NotVerifyedImplCopyWith<$Res> {
+  factory _$$NotVerifyedImplCopyWith(
+          _$NotVerifyedImpl value, $Res Function(_$NotVerifyedImpl) then) =
+      __$$NotVerifyedImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_NotVerifyedCopyWithImpl<$Res>
-    extends _$AppStateCopyWithImpl<$Res, _$_NotVerifyed>
-    implements _$$_NotVerifyedCopyWith<$Res> {
-  __$$_NotVerifyedCopyWithImpl(
-      _$_NotVerifyed _value, $Res Function(_$_NotVerifyed) _then)
+class __$$NotVerifyedImplCopyWithImpl<$Res>
+    extends _$AppStateCopyWithImpl<$Res, _$NotVerifyedImpl>
+    implements _$$NotVerifyedImplCopyWith<$Res> {
+  __$$NotVerifyedImplCopyWithImpl(
+      _$NotVerifyedImpl _value, $Res Function(_$NotVerifyedImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_NotVerifyed implements _NotVerifyed {
-  const _$_NotVerifyed();
+class _$NotVerifyedImpl implements _NotVerifyed {
+  const _$NotVerifyedImpl();
 
   @override
   String toString() {
@@ -1712,9 +1715,9 @@ class _$_NotVerifyed implements _NotVerifyed {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_NotVerifyed);
+        (other.runtimeType == runtimeType && other is _$NotVerifyedImpl);
   }
 
   @override
@@ -1822,29 +1825,29 @@ class _$_NotVerifyed implements _NotVerifyed {
 }
 
 abstract class _NotVerifyed implements AppState {
-  const factory _NotVerifyed() = _$_NotVerifyed;
+  const factory _NotVerifyed() = _$NotVerifyedImpl;
 }
 
 /// @nodoc
-abstract class _$$_InAppStateCopyWith<$Res> {
-  factory _$$_InAppStateCopyWith(
-          _$_InAppState value, $Res Function(_$_InAppState) then) =
-      __$$_InAppStateCopyWithImpl<$Res>;
+abstract class _$$InAppStateImplCopyWith<$Res> {
+  factory _$$InAppStateImplCopyWith(
+          _$InAppStateImpl value, $Res Function(_$InAppStateImpl) then) =
+      __$$InAppStateImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_InAppStateCopyWithImpl<$Res>
-    extends _$AppStateCopyWithImpl<$Res, _$_InAppState>
-    implements _$$_InAppStateCopyWith<$Res> {
-  __$$_InAppStateCopyWithImpl(
-      _$_InAppState _value, $Res Function(_$_InAppState) _then)
+class __$$InAppStateImplCopyWithImpl<$Res>
+    extends _$AppStateCopyWithImpl<$Res, _$InAppStateImpl>
+    implements _$$InAppStateImplCopyWith<$Res> {
+  __$$InAppStateImplCopyWithImpl(
+      _$InAppStateImpl _value, $Res Function(_$InAppStateImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_InAppState implements _InAppState {
-  const _$_InAppState();
+class _$InAppStateImpl implements _InAppState {
+  const _$InAppStateImpl();
 
   @override
   String toString() {
@@ -1852,9 +1855,9 @@ class _$_InAppState implements _InAppState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_InAppState);
+        (other.runtimeType == runtimeType && other is _$InAppStateImpl);
   }
 
   @override
@@ -1962,29 +1965,29 @@ class _$_InAppState implements _InAppState {
 }
 
 abstract class _InAppState implements AppState {
-  const factory _InAppState() = _$_InAppState;
+  const factory _InAppState() = _$InAppStateImpl;
 }
 
 /// @nodoc
-abstract class _$$_InitStateCopyWith<$Res> {
-  factory _$$_InitStateCopyWith(
-          _$_InitState value, $Res Function(_$_InitState) then) =
-      __$$_InitStateCopyWithImpl<$Res>;
+abstract class _$$InitStateImplCopyWith<$Res> {
+  factory _$$InitStateImplCopyWith(
+          _$InitStateImpl value, $Res Function(_$InitStateImpl) then) =
+      __$$InitStateImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_InitStateCopyWithImpl<$Res>
-    extends _$AppStateCopyWithImpl<$Res, _$_InitState>
-    implements _$$_InitStateCopyWith<$Res> {
-  __$$_InitStateCopyWithImpl(
-      _$_InitState _value, $Res Function(_$_InitState) _then)
+class __$$InitStateImplCopyWithImpl<$Res>
+    extends _$AppStateCopyWithImpl<$Res, _$InitStateImpl>
+    implements _$$InitStateImplCopyWith<$Res> {
+  __$$InitStateImplCopyWithImpl(
+      _$InitStateImpl _value, $Res Function(_$InitStateImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_InitState implements _InitState {
-  const _$_InitState();
+class _$InitStateImpl implements _InitState {
+  const _$InitStateImpl();
 
   @override
   String toString() {
@@ -1992,9 +1995,9 @@ class _$_InitState implements _InitState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_InitState);
+        (other.runtimeType == runtimeType && other is _$InitStateImpl);
   }
 
   @override
@@ -2102,24 +2105,24 @@ class _$_InitState implements _InitState {
 }
 
 abstract class _InitState implements AppState {
-  const factory _InitState() = _$_InitState;
+  const factory _InitState() = _$InitStateImpl;
 }
 
 /// @nodoc
-abstract class _$$_ErrorStateCopyWith<$Res> {
-  factory _$$_ErrorStateCopyWith(
-          _$_ErrorState value, $Res Function(_$_ErrorState) then) =
-      __$$_ErrorStateCopyWithImpl<$Res>;
+abstract class _$$ErrorStateImplCopyWith<$Res> {
+  factory _$$ErrorStateImplCopyWith(
+          _$ErrorStateImpl value, $Res Function(_$ErrorStateImpl) then) =
+      __$$ErrorStateImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class __$$_ErrorStateCopyWithImpl<$Res>
-    extends _$AppStateCopyWithImpl<$Res, _$_ErrorState>
-    implements _$$_ErrorStateCopyWith<$Res> {
-  __$$_ErrorStateCopyWithImpl(
-      _$_ErrorState _value, $Res Function(_$_ErrorState) _then)
+class __$$ErrorStateImplCopyWithImpl<$Res>
+    extends _$AppStateCopyWithImpl<$Res, _$ErrorStateImpl>
+    implements _$$ErrorStateImplCopyWith<$Res> {
+  __$$ErrorStateImplCopyWithImpl(
+      _$ErrorStateImpl _value, $Res Function(_$ErrorStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -2127,7 +2130,7 @@ class __$$_ErrorStateCopyWithImpl<$Res>
   $Res call({
     Object? message = null,
   }) {
-    return _then(_$_ErrorState(
+    return _then(_$ErrorStateImpl(
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -2138,8 +2141,8 @@ class __$$_ErrorStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ErrorState implements _ErrorState {
-  const _$_ErrorState({required this.message});
+class _$ErrorStateImpl implements _ErrorState {
+  const _$ErrorStateImpl({required this.message});
 
   @override
   final String message;
@@ -2150,10 +2153,10 @@ class _$_ErrorState implements _ErrorState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ErrorState &&
+            other is _$ErrorStateImpl &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -2163,8 +2166,8 @@ class _$_ErrorState implements _ErrorState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ErrorStateCopyWith<_$_ErrorState> get copyWith =>
-      __$$_ErrorStateCopyWithImpl<_$_ErrorState>(this, _$identity);
+  _$$ErrorStateImplCopyWith<_$ErrorStateImpl> get copyWith =>
+      __$$ErrorStateImplCopyWithImpl<_$ErrorStateImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -2268,10 +2271,10 @@ class _$_ErrorState implements _ErrorState {
 }
 
 abstract class _ErrorState implements AppState {
-  const factory _ErrorState({required final String message}) = _$_ErrorState;
+  const factory _ErrorState({required final String message}) = _$ErrorStateImpl;
 
   String get message;
   @JsonKey(ignore: true)
-  _$$_ErrorStateCopyWith<_$_ErrorState> get copyWith =>
+  _$$ErrorStateImplCopyWith<_$ErrorStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

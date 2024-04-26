@@ -2,10 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:get_ip_address/get_ip_address.dart';
 import 'package:injectable/injectable.dart';
+import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/data/repositories/tus_zhoru_repository.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../app/app_dinamic_link.dart';
 import '../../data/models/tus_zhoru_dto.dart';
@@ -23,7 +22,7 @@ class CreateTusZhoruCubit extends Cubit<CreateTusZhoruState> {
   late List<TusZhoruDTO> tosZhoruList;
 
   Future<void> createCustomTusZhoruPayment(int id, bool isCustom) async {
-    emit(_LoadingState());
+    emit(const _LoadingState());
 
     String tusZhoruDynamicLink = isCustom
         ? await DynamicLink().createCustomTusZhoruLink(id)
@@ -32,22 +31,25 @@ class CreateTusZhoruCubit extends Cubit<CreateTusZhoruState> {
     log(tusZhoruDynamicLink);
     final result = isCustom
         ? await _repository.createCustomTusZhoruPayment(
-            id: id, backUrl: tusZhoruDynamicLink)
+            id: id,
+          )
         : await _repository.createTusZhoruPayment(
             id: id, backUrl: tusZhoruDynamicLink);
-    result.fold((l) => {}, (r) async {
-      print(r.toString());
-      final Uri url = Uri.parse(r.pgRedirectUrl.toString());
-      if (!await launchUrl(url,mode: LaunchMode.externalApplication)) {
-        throw Exception('Could not launch');
-      }
+    result.fold((l) {
+
+        
+      emit( _ErrorState(message: mapFailureToMessage(l)));
+    }, (r) {
+      emit(const _SuccessState(message: ''));
     });
   }
 
   Future<void> createTusZhoru(String title, String description) async {
     final result = await _repository.createTusZhoru(
         title: title, description: description);
-    return result.fold((l) => {}, (r) {emit(_LoadedState(tusZhoru: r));});
+    return result.fold((l) => {}, (r) {
+      emit(_LoadedState(tusZhoru: r));
+    });
   }
 }
 
@@ -64,4 +66,7 @@ class CreateTusZhoruState with _$CreateTusZhoruState {
   const factory CreateTusZhoruState.errorState({
     required String message,
   }) = _ErrorState;
+  const factory CreateTusZhoruState.successState({
+    required String message,
+  }) = _SuccessState;
 }

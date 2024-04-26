@@ -6,7 +6,8 @@ part of 'ayat_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_AyatDTO _$$_AyatDTOFromJson(Map<String, dynamic> json) => _$_AyatDTO(
+_$AyatDTOImpl _$$AyatDTOImplFromJson(Map<String, dynamic> json) =>
+    _$AyatDTOImpl(
       id: json['id'] as int?,
       ayatNumber: json['ayat_number'] as int?,
       name: json['name'] as String?,
@@ -15,7 +16,7 @@ _$_AyatDTO _$$_AyatDTOFromJson(Map<String, dynamic> json) => _$_AyatDTO(
       translation: json['translation'] as String?,
     );
 
-Map<String, dynamic> _$$_AyatDTOToJson(_$_AyatDTO instance) =>
+Map<String, dynamic> _$$AyatDTOImplToJson(_$AyatDTOImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'ayat_number': instance.ayatNumber,

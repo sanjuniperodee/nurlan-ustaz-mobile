@@ -60,39 +60,18 @@ class _TodayChatPageState extends State<TodayChatPage> {
         return Column(
           children: [
             SizedBox(
-              height: 34.h,
+              height: 25.h,
             ),
             Container(
-              width: 1.sw,
-              decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color(0xFFFAE0AB),
-                      Color(0xFFF9A502),
-                    ],
-                  ),
-                  borderRadius: BorderRadius.circular(24)),
-              padding: EdgeInsets.only(
-                  top: 19.r, bottom: 19.r, left: 92.r, right: 92.r),
-              child: Column(
-                children: [
-                  SvgPicture.asset(Assets.boxStorySvg),
-                  SizedBox(
-                    height: 12.h,
-                  ),
-                  Text(
-                    'can_question'.tr(),
-                    textAlign: TextAlign.center,
-                    style: getTextStyle(CustomTextStyles.s16w200)
-                        .copyWith(
-                            fontFamily: FontTypes.Philosopher.name,
-                            fontSize: 24.sp,
-                            fontWeight: FontWeight.w700)
-                        .apply(color: AppColors.white),
-                  )
-                ],
+              width: double.infinity,
+              height: 180.h,
+              child: Hero(
+                tag: 'UA',
+                child: Image.asset(
+                  'assets/images/ustaz_aitinizh.png',
+
+                  fit: BoxFit.fill,
+                ),
               ),
             ),
             SizedBox(
@@ -103,9 +82,11 @@ class _TodayChatPageState extends State<TodayChatPage> {
                 await context.read<TodayChatCubit>().connectSocket();
               },
               child: Text(
+
                 'warning_24'.tr(),
                 style: getTextStyle(CustomTextStyles.s12w600)
                     .copyWith(fontFamily: FontTypes.SF_Pro.name),
+                textAlign: TextAlign.center,
               ),
             ),
             SizedBox(

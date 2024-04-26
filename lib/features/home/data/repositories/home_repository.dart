@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
@@ -6,22 +5,20 @@ import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/common/constants.dart';
 import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
-import 'package:nurlan_ustaz_flutter/core/model/freedom_payment_dto.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/cache_helper/prefs.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_info.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/datasource/local/home_local_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/datasource/remote/home_remote_ds.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/models/card_model.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/faq_model_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/geonames_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/get_noti_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/media_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/notification_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
-
+import 'package:nurlan_ustaz_flutter/features/home/data/models/timings_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/data/models/chat_model.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/data/models/question_model.dart';
-
-import 'package:nurlan_ustaz_flutter/features/home/data/models/timings_dto.dart';
 
 import '../../../../core/services/notification_service.dart';
 import '../models/notification_device_dto.dart';
@@ -136,7 +133,7 @@ abstract class HomeRepository {
   Future<Either<Failure, List<QuestionDTO>>> questions(
       {required int id, String? search, int? page, bool? isFirstCall});
 
-  Future<Either<Failure, FreedomPaymentDTO>> createSeminarPayment(
+  Future<Either<Failure, void>> createSeminarPayment(
       {required int id, required String backUrl});
 
   Future<Either<Failure, NotificationDTO>> notificationDevice({
@@ -151,6 +148,13 @@ abstract class HomeRepository {
       {required String registrationId, required NotificationDTO notification});
 
   Future<Either<Failure, String>> checkTicket({required String url});
+  Future<Either<Failure, List<CardDTO>>> getCards(
+      { String? search  });
+        Future<Either<Failure, String>> getAddCArdUrl();
+                Future<Either<Failure, void>> setDefaultCard({required int cardId});
+
+
+
 }
 
 @Singleton(as: HomeRepository)
@@ -294,14 +298,13 @@ class HomeRepositoryImpl extends HomeRepository {
   }
 
   @override
-  Future<Either<Failure, FreedomPaymentDTO>> createSeminarPayment(
+  Future<Either<Failure, void>> createSeminarPayment(
       {required int id, required String backUrl}) async {
     if (await networkInfo.isConnected) {
       try {
-        final FreedomPaymentDTO result =
+        final  result =
             await remoteDS.createSeminarPayment(id: id, backUrl: backUrl);
 
-        log(result.toString());
         return Right(result);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -817,6 +820,50 @@ class HomeRepositoryImpl extends HomeRepository {
       try {
         final message = await remoteDS.checkTicket(url: url);
         return Right(message);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, List<CardDTO>>> getCards({String? search}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final List<CardDTO> cards =
+            await remoteDS.getCards(search: search);
+        return Right(cards);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, String>> getAddCArdUrl() async{
+     if (await networkInfo.isConnected) {
+      try {
+        final String addCardUrl =
+            await remoteDS.getAddCardUrl();
+        return Right(addCardUrl);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, void>> setDefaultCard({required int cardId}) async{
+     if (await networkInfo.isConnected) {
+      try {
+            await remoteDS.setDefaultCard(cardId: cardId);
+        return const Right(null);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
       }

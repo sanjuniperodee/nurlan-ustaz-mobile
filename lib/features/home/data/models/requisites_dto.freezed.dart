@@ -12,7 +12,7 @@ part of 'requisites_dto.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 RequisitesDTO _$RequisitesDTOFromJson(Map<String, dynamic> json) {
   return _RequisitesDTO.fromJson(json);
@@ -130,11 +130,11 @@ class _$RequisitesDTOCopyWithImpl<$Res, $Val extends RequisitesDTO>
 }
 
 /// @nodoc
-abstract class _$$_RequisitesDTOCopyWith<$Res>
+abstract class _$$RequisitesDTOImplCopyWith<$Res>
     implements $RequisitesDTOCopyWith<$Res> {
-  factory _$$_RequisitesDTOCopyWith(
-          _$_RequisitesDTO value, $Res Function(_$_RequisitesDTO) then) =
-      __$$_RequisitesDTOCopyWithImpl<$Res>;
+  factory _$$RequisitesDTOImplCopyWith(
+          _$RequisitesDTOImpl value, $Res Function(_$RequisitesDTOImpl) then) =
+      __$$RequisitesDTOImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -151,11 +151,11 @@ abstract class _$$_RequisitesDTOCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_RequisitesDTOCopyWithImpl<$Res>
-    extends _$RequisitesDTOCopyWithImpl<$Res, _$_RequisitesDTO>
-    implements _$$_RequisitesDTOCopyWith<$Res> {
-  __$$_RequisitesDTOCopyWithImpl(
-      _$_RequisitesDTO _value, $Res Function(_$_RequisitesDTO) _then)
+class __$$RequisitesDTOImplCopyWithImpl<$Res>
+    extends _$RequisitesDTOCopyWithImpl<$Res, _$RequisitesDTOImpl>
+    implements _$$RequisitesDTOImplCopyWith<$Res> {
+  __$$RequisitesDTOImplCopyWithImpl(
+      _$RequisitesDTOImpl _value, $Res Function(_$RequisitesDTOImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -172,7 +172,7 @@ class __$$_RequisitesDTOCopyWithImpl<$Res>
     Object? ppc = freezed,
     Object? url = freezed,
   }) {
-    return _then(_$_RequisitesDTO(
+    return _then(_$RequisitesDTOImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -219,8 +219,8 @@ class __$$_RequisitesDTOCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_RequisitesDTO implements _RequisitesDTO {
-  const _$_RequisitesDTO(
+class _$RequisitesDTOImpl implements _RequisitesDTO {
+  const _$RequisitesDTOImpl(
       {required this.id,
       @JsonKey(name: "bank_account_number") this.bankAccountNumber,
       @JsonKey(name: "card_number") this.cardNumber,
@@ -232,8 +232,8 @@ class _$_RequisitesDTO implements _RequisitesDTO {
       this.ppc,
       this.url});
 
-  factory _$_RequisitesDTO.fromJson(Map<String, dynamic> json) =>
-      _$$_RequisitesDTOFromJson(json);
+  factory _$RequisitesDTOImpl.fromJson(Map<String, dynamic> json) =>
+      _$$RequisitesDTOImplFromJson(json);
 
   @override
   final int id;
@@ -266,10 +266,10 @@ class _$_RequisitesDTO implements _RequisitesDTO {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_RequisitesDTO &&
+            other is _$RequisitesDTOImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.bankAccountNumber, bankAccountNumber) ||
                 other.bankAccountNumber == bankAccountNumber) &&
@@ -294,12 +294,12 @@ class _$_RequisitesDTO implements _RequisitesDTO {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_RequisitesDTOCopyWith<_$_RequisitesDTO> get copyWith =>
-      __$$_RequisitesDTOCopyWithImpl<_$_RequisitesDTO>(this, _$identity);
+  _$$RequisitesDTOImplCopyWith<_$RequisitesDTOImpl> get copyWith =>
+      __$$RequisitesDTOImplCopyWithImpl<_$RequisitesDTOImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_RequisitesDTOToJson(
+    return _$$RequisitesDTOImplToJson(
       this,
     );
   }
@@ -316,10 +316,10 @@ abstract class _RequisitesDTO implements RequisitesDTO {
       final String? iic,
       final String? bic,
       final String? ppc,
-      final String? url}) = _$_RequisitesDTO;
+      final String? url}) = _$RequisitesDTOImpl;
 
   factory _RequisitesDTO.fromJson(Map<String, dynamic> json) =
-      _$_RequisitesDTO.fromJson;
+      _$RequisitesDTOImpl.fromJson;
 
   @override
   int get id;
@@ -347,6 +347,6 @@ abstract class _RequisitesDTO implements RequisitesDTO {
   String? get url;
   @override
   @JsonKey(ignore: true)
-  _$$_RequisitesDTOCopyWith<_$_RequisitesDTO> get copyWith =>
+  _$$RequisitesDTOImplCopyWith<_$RequisitesDTOImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

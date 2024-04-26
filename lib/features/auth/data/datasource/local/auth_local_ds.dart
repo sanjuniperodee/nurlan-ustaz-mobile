@@ -52,7 +52,7 @@ class AuthLocalDsImpl extends AuthLocalDs {
     try {
       Dio dio = Dio(
         BaseOptions(
-          baseUrl: SERVER_.trim() + '',
+          baseUrl: SERVER_.trim(),
         ),
       );
 
@@ -67,7 +67,7 @@ class AuthLocalDsImpl extends AuthLocalDs {
 
       return TokenDTO.fromJson(response.data);
     } catch (e) {
-      log('REFRESH EXCEPTION::::${e}');
+      log('REFRESH EXCEPTION::::$e');
       throw ServerException(message: e.toString());
     }
   }
@@ -77,11 +77,11 @@ class AuthLocalDsImpl extends AuthLocalDs {
     try {
       Dio dio = Dio(
         BaseOptions(
-          baseUrl: SERVER_.trim() + '',
+          baseUrl: SERVER_.trim(),
         ),
       );
       // dio.options.headers = {'Authorization': 'Bearer $accessToken'};
-      final response = await dio.post(
+       await dio.post(
         EndPoints.verifyToken,
         data: {
           'token': accessToken,

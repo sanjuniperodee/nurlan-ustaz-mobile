@@ -125,7 +125,7 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
                                 mainAxisSize: MainAxisSize.max,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  SizedBox(height: 82.h),
+                                  SizedBox(height: 55.h),
                                   Text('Islam_study'.tr(),
                                       style:
                                           getTextStyle(CustomTextStyles.s36w700)

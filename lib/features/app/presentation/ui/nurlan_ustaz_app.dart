@@ -1,11 +1,10 @@
 import 'dart:developer';
 
-import 'package:auto_route/auto_route.dart';
+import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
@@ -60,11 +59,14 @@ class _NurlanUstazAppState extends State<NurlanUstazApp> {
           },
           builder: (context, state) {
             return MaterialApp.router(
-                themeAnimationDuration:Duration(milliseconds: 100),
+             
+                themeAnimationDuration:const Duration(milliseconds: 100),
               // title: 'Flutter Demo',
               // key: rootNavigatorKey,
               routerConfig: _rootRouter.config(
                   navigatorObservers: () => [
+                                                ChuckerFlutter.navigatorObserver,
+
                         FirebaseAnalyticsObserver(
                             analytics: _firebaseAnalytics),
                       ]),
@@ -79,6 +81,7 @@ class _NurlanUstazAppState extends State<NurlanUstazApp> {
 
               supportedLocales: EasyLocalization.of(context)!.supportedLocales,
               theme: ThemeData(
+                useMaterial3: false,
                 fontFamily: 'Poppins',
                 visualDensity: VisualDensity.adaptivePlatformDensity,
               ),

@@ -61,20 +61,14 @@ class _PaymentsPageState extends State<PaymentsPage> {
       },
       builder: (context, state) {
         return GlobalCustomBody(
-          left: 0,
-          right: 0,
           child: SizedBox(
             height: 1.1.sh,
             child: SingleChildScrollView(
               physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
-                  Padding(
-                    padding:
-                        const EdgeInsets.only(left: 16.0, right: 16, top: 16),
-                    child: CustomAppBar(
-                      title: 'Purchased_services'.tr(),
-                    ),
+                  CustomAppBar(
+                    title: 'Purchased_services'.tr(),
                   ),
                   const SizedBox(
                     height: 36,
@@ -178,30 +172,32 @@ class _PaymentsPageState extends State<PaymentsPage> {
                                       color: AppColors.white,
                                     ),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
                                       children: [
                                         Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
                                             if (tus[index].createdAt != null)
-                                              Text(
-                                                DateFormat('dd.MM.yyyy').format(
-                                                    tus[index].createdAt!),
-                                                style: getTextStyle(
-                                                        CustomTextStyles
-                                                            .s12w400)
-                                                    .copyWith(
-                                                        fontFamily: FontTypes
-                                                            .SF_Pro.name,
-                                                        color: AppColors.grey1),
+                                              SizedBox(
+                                                width: 100.w,
+                                                child: Text(
+                                                  DateFormat('dd.MM.yyyy').format(
+                                                      tus[index].createdAt!),
+                                                  style: getTextStyle(
+                                                          CustomTextStyles
+                                                              .s12w400)
+                                                      .copyWith(
+                                                          fontFamily: FontTypes
+                                                              .SF_Pro.name,
+                                                          color: AppColors.grey1),
+                                                          overflow: TextOverflow.ellipsis,
+                                                ),
                                               ),
                                             SizedBox(
                                               height: 2.h,
                                             ),
                                             SizedBox(
-                                              width: 250.w,
+                                              width: 130.w,
                                               child: Text(
                                                 '${tus[index].title}',
                                                 overflow: TextOverflow.ellipsis,
@@ -218,6 +214,7 @@ class _PaymentsPageState extends State<PaymentsPage> {
                                             )
                                           ],
                                         ),
+                                        Spacer(),
                                         Row(
                                           children: [
                                             Text(
@@ -270,42 +267,43 @@ class _PaymentsPageState extends State<PaymentsPage> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            if (res[index].createdAt != null)
-                                              Text(
-                                                DateFormat('dd.MM.yyyy').format(
-                                                    res[index].createdAt!),
-                                                style: getTextStyle(
-                                                        CustomTextStyles
-                                                            .s12w400)
-                                                    .copyWith(
-                                                        fontFamily: FontTypes
-                                                            .SF_Pro.name,
-                                                        color: AppColors.grey1),
+                                        Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              if (res[index].createdAt != null)
+                                                Text(
+                                                  DateFormat('dd.MM.yyyy')
+                                                      .format(res[index]
+                                                          .createdAt!),
+                                                  style: getTextStyle(
+                                                          CustomTextStyles
+                                                              .s12w400)
+                                                      .copyWith(
+                                                    fontFamily:
+                                                        FontTypes.SF_Pro.name,
+                                                    color: AppColors.grey1,
+                                                  ),
+                                                ),
+                                              SizedBox(
+                                                height: 2.h,
                                               ),
-                                            SizedBox(
-                                              height: 2.h,
-                                            ),
-                                            SizedBox(
-                                              width: 250.w,
-                                              child: Text(
+                                              Text(
                                                 '${res[index].title}',
                                                 overflow: TextOverflow.ellipsis,
                                                 style: getTextStyle(
                                                         CustomTextStyles
                                                             .s16w600)
                                                     .copyWith(
-                                                        fontFamily: FontTypes
-                                                            .SF_Pro.name,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        fontSize: 16),
+                                                  fontFamily:
+                                                      FontTypes.SF_Pro.name,
+                                                  fontWeight: FontWeight.w600,
+                                                  fontSize: 16,
+                                                ),
                                               ),
-                                            )
-                                          ],
+                                            ],
+                                          ),
                                         ),
                                         Row(
                                           children: [
@@ -314,7 +312,8 @@ class _PaymentsPageState extends State<PaymentsPage> {
                                               style: getTextStyle(
                                                       CustomTextStyles.s16w600)
                                                   .copyWith(
-                                                      color: AppColors.orange),
+                                                color: AppColors.orange,
+                                              ),
                                             ),
                                             SizedBox(
                                               width: 13.w,
@@ -324,7 +323,7 @@ class _PaymentsPageState extends State<PaymentsPage> {
                                               color: AppColors.orange,
                                             ),
                                           ],
-                                        )
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -349,11 +348,11 @@ class _PaymentsPageState extends State<PaymentsPage> {
   }
 }
 
-Future<void> _launchUrl(String _urll) async {
-  final Uri _url = Uri.parse('${_urll}');
-  log(_url.toString());
-  if (!await launchUrl(_url, mode: LaunchMode.externalApplication)) {
-    throw Exception('Could not launch $_url');
+Future<void> _launchUrl(String urll) async {
+  final Uri url = Uri.parse(urll);
+  log(url.toString());
+  if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+    throw Exception('Could not launch $url');
   }
 }
 

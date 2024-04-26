@@ -1,12 +1,8 @@
 import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
-import 'package:clipboard/clipboard.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:easy_localization/easy_localization.dart';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -44,16 +40,16 @@ class _ProfileMainPage extends State<ProfileMainPage> {
   }
 
   Map<String, String> langMap = {
-    '🇷🇺 Русский': 'ru',
+    //'🇷🇺 Русский': 'ru',
     '🇰🇿 Қазақша': 'kk',
   };
 
   Map<String, String> localMap = {
-    'ru': '🇷🇺 Русский ',
+    //'ru': '🇷🇺 Русский ',
     'kk': '🇰🇿 Қазақша',
   };
   Map<String, String> langMapText = {
-    'ru': 'Русский',
+    //'ru': 'Русский',
     'kk': 'Қазақша',
   };
   String? chosenLang;
@@ -67,13 +63,11 @@ class _ProfileMainPage extends State<ProfileMainPage> {
         listener: (context, state) {
           state.whenOrNull(
             errorState: (message) {
-              log('ERROR');
               // context.router.pop();
             },
           );
         },
         builder: (context, state) {
-          log('STATE:::${state.toString()}');
           return state.maybeWhen(
             orElse: () {
               return const Center(
@@ -87,8 +81,6 @@ class _ProfileMainPage extends State<ProfileMainPage> {
               geo,
               dev,
             ) {
-              // devc.text = dev!;
-              log('chosenLang::::${chosenLang.toString()}');
               return GlobalCustomBody(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
@@ -226,9 +218,9 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                                               color: AppColors.white,
                                               borderRadius: BorderRadius.only(
                                                 topLeft:
-                                                    Radius.circular(20.0).r,
+                                                    const Radius.circular(20.0).r,
                                                 // Adjust the radius as needed
-                                                topRight: Radius.circular(20.0)
+                                                topRight: const Radius.circular(20.0)
                                                     .r, // Adjust the radius as needed
                                               ),
                                             ),
@@ -273,7 +265,8 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                                                                           .toString());
                                                                       context
                                                                           .setLocale(
-                                                                        Locale(langMap[r]!),
+                                                                        Locale(langMap[
+                                                                            r]!),
                                                                       );
 
                                                                       debugPrint(context
@@ -312,9 +305,7 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                                                                         },
                                                                       );
                                                                       setState(
-                                                                          () {
-                                                                        log('suka-${r}');
-                                                                      });
+                                                                          () {});
                                                                     }
                                                                     Navigator.pop(
                                                                         context);

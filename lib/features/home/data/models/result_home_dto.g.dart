@@ -6,8 +6,8 @@ part of 'result_home_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_ResultHomeDTO _$$_ResultHomeDTOFromJson(Map<String, dynamic> json) =>
-    _$_ResultHomeDTO(
+_$ResultHomeDTOImpl _$$ResultHomeDTOImplFromJson(Map<String, dynamic> json) =>
+    _$ResultHomeDTOImpl(
       isLiked: json['is_liked'] as bool? ?? false,
       isSaved: json['is_saved'] as bool? ?? false,
       isLive: json['is_live'] as bool?,
@@ -55,7 +55,7 @@ _$_ResultHomeDTO _$$_ResultHomeDTOFromJson(Map<String, dynamic> json) =>
       address: json['address'] as String?,
     );
 
-Map<String, dynamic> _$$_ResultHomeDTOToJson(_$_ResultHomeDTO instance) =>
+Map<String, dynamic> _$$ResultHomeDTOImplToJson(_$ResultHomeDTOImpl instance) =>
     <String, dynamic>{
       'is_liked': instance.isLiked,
       'is_saved': instance.isSaved,

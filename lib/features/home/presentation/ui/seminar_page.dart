@@ -160,15 +160,18 @@ class _SeminarPageState extends State<SeminarPage> {
                                       borderRadius: const BorderRadius.all(
                                               Radius.circular(12))
                                           .r,
-                                      child: CachedNetworkImage(
-                                        imageUrl:
-                                            listOfSeminars[index].cover ?? '',
-                                        fit: BoxFit.cover,
-                                        height: 100.r,
-                                        width: 100.r,
-                                        errorWidget: (a, b, c) => SizedBox(
-                                          width: 100.r,
+                                      child: Hero(
+                                        tag: 'seminar',
+                                        child: CachedNetworkImage(
+                                          imageUrl:
+                                              listOfSeminars[index].cover ?? '',
+                                          fit: BoxFit.cover,
                                           height: 100.r,
+                                          width: 100.r,
+                                          errorWidget: (a, b, c) => SizedBox(
+                                            width: 100.r,
+                                            height: 100.r,
+                                          ),
                                         ),
                                       ),
                                     ),

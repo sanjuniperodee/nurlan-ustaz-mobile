@@ -12,7 +12,7 @@ part of 'partners_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$PartnersState {
@@ -87,25 +87,25 @@ class _$PartnersStateCopyWithImpl<$Res, $Val extends PartnersState>
 }
 
 /// @nodoc
-abstract class _$$_InitialPageCopyWith<$Res> {
-  factory _$$_InitialPageCopyWith(
-          _$_InitialPage value, $Res Function(_$_InitialPage) then) =
-      __$$_InitialPageCopyWithImpl<$Res>;
+abstract class _$$InitialPageImplCopyWith<$Res> {
+  factory _$$InitialPageImplCopyWith(
+          _$InitialPageImpl value, $Res Function(_$InitialPageImpl) then) =
+      __$$InitialPageImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_InitialPageCopyWithImpl<$Res>
-    extends _$PartnersStateCopyWithImpl<$Res, _$_InitialPage>
-    implements _$$_InitialPageCopyWith<$Res> {
-  __$$_InitialPageCopyWithImpl(
-      _$_InitialPage _value, $Res Function(_$_InitialPage) _then)
+class __$$InitialPageImplCopyWithImpl<$Res>
+    extends _$PartnersStateCopyWithImpl<$Res, _$InitialPageImpl>
+    implements _$$InitialPageImplCopyWith<$Res> {
+  __$$InitialPageImplCopyWithImpl(
+      _$InitialPageImpl _value, $Res Function(_$InitialPageImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_InitialPage implements _InitialPage {
-  const _$_InitialPage();
+class _$InitialPageImpl implements _InitialPage {
+  const _$InitialPageImpl();
 
   @override
   String toString() {
@@ -113,9 +113,9 @@ class _$_InitialPage implements _InitialPage {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_InitialPage);
+        (other.runtimeType == runtimeType && other is _$InitialPageImpl);
   }
 
   @override
@@ -197,29 +197,29 @@ class _$_InitialPage implements _InitialPage {
 }
 
 abstract class _InitialPage implements PartnersState {
-  const factory _InitialPage() = _$_InitialPage;
+  const factory _InitialPage() = _$InitialPageImpl;
 }
 
 /// @nodoc
-abstract class _$$_LoadingStateCopyWith<$Res> {
-  factory _$$_LoadingStateCopyWith(
-          _$_LoadingState value, $Res Function(_$_LoadingState) then) =
-      __$$_LoadingStateCopyWithImpl<$Res>;
+abstract class _$$LoadingStateImplCopyWith<$Res> {
+  factory _$$LoadingStateImplCopyWith(
+          _$LoadingStateImpl value, $Res Function(_$LoadingStateImpl) then) =
+      __$$LoadingStateImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$_LoadingStateCopyWithImpl<$Res>
-    extends _$PartnersStateCopyWithImpl<$Res, _$_LoadingState>
-    implements _$$_LoadingStateCopyWith<$Res> {
-  __$$_LoadingStateCopyWithImpl(
-      _$_LoadingState _value, $Res Function(_$_LoadingState) _then)
+class __$$LoadingStateImplCopyWithImpl<$Res>
+    extends _$PartnersStateCopyWithImpl<$Res, _$LoadingStateImpl>
+    implements _$$LoadingStateImplCopyWith<$Res> {
+  __$$LoadingStateImplCopyWithImpl(
+      _$LoadingStateImpl _value, $Res Function(_$LoadingStateImpl) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$_LoadingState implements _LoadingState {
-  const _$_LoadingState();
+class _$LoadingStateImpl implements _LoadingState {
+  const _$LoadingStateImpl();
 
   @override
   String toString() {
@@ -227,9 +227,9 @@ class _$_LoadingState implements _LoadingState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$_LoadingState);
+        (other.runtimeType == runtimeType && other is _$LoadingStateImpl);
   }
 
   @override
@@ -311,24 +311,24 @@ class _$_LoadingState implements _LoadingState {
 }
 
 abstract class _LoadingState implements PartnersState {
-  const factory _LoadingState() = _$_LoadingState;
+  const factory _LoadingState() = _$LoadingStateImpl;
 }
 
 /// @nodoc
-abstract class _$$_LoadedStateCopyWith<$Res> {
-  factory _$$_LoadedStateCopyWith(
-          _$_LoadedState value, $Res Function(_$_LoadedState) then) =
-      __$$_LoadedStateCopyWithImpl<$Res>;
+abstract class _$$LoadedStateImplCopyWith<$Res> {
+  factory _$$LoadedStateImplCopyWith(
+          _$LoadedStateImpl value, $Res Function(_$LoadedStateImpl) then) =
+      __$$LoadedStateImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<ResultHomeDTO> partners});
 }
 
 /// @nodoc
-class __$$_LoadedStateCopyWithImpl<$Res>
-    extends _$PartnersStateCopyWithImpl<$Res, _$_LoadedState>
-    implements _$$_LoadedStateCopyWith<$Res> {
-  __$$_LoadedStateCopyWithImpl(
-      _$_LoadedState _value, $Res Function(_$_LoadedState) _then)
+class __$$LoadedStateImplCopyWithImpl<$Res>
+    extends _$PartnersStateCopyWithImpl<$Res, _$LoadedStateImpl>
+    implements _$$LoadedStateImplCopyWith<$Res> {
+  __$$LoadedStateImplCopyWithImpl(
+      _$LoadedStateImpl _value, $Res Function(_$LoadedStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -336,7 +336,7 @@ class __$$_LoadedStateCopyWithImpl<$Res>
   $Res call({
     Object? partners = null,
   }) {
-    return _then(_$_LoadedState(
+    return _then(_$LoadedStateImpl(
       partners: null == partners
           ? _value._partners
           : partners // ignore: cast_nullable_to_non_nullable
@@ -347,8 +347,8 @@ class __$$_LoadedStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_LoadedState implements _LoadedState {
-  const _$_LoadedState({required final List<ResultHomeDTO> partners})
+class _$LoadedStateImpl implements _LoadedState {
+  const _$LoadedStateImpl({required final List<ResultHomeDTO> partners})
       : _partners = partners;
 
   final List<ResultHomeDTO> _partners;
@@ -365,10 +365,10 @@ class _$_LoadedState implements _LoadedState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_LoadedState &&
+            other is _$LoadedStateImpl &&
             const DeepCollectionEquality().equals(other._partners, _partners));
   }
 
@@ -379,8 +379,8 @@ class _$_LoadedState implements _LoadedState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
-      __$$_LoadedStateCopyWithImpl<_$_LoadedState>(this, _$identity);
+  _$$LoadedStateImplCopyWith<_$LoadedStateImpl> get copyWith =>
+      __$$LoadedStateImplCopyWithImpl<_$LoadedStateImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -459,29 +459,29 @@ class _$_LoadedState implements _LoadedState {
 
 abstract class _LoadedState implements PartnersState {
   const factory _LoadedState({required final List<ResultHomeDTO> partners}) =
-      _$_LoadedState;
+      _$LoadedStateImpl;
 
   List<ResultHomeDTO> get partners;
   @JsonKey(ignore: true)
-  _$$_LoadedStateCopyWith<_$_LoadedState> get copyWith =>
+  _$$LoadedStateImplCopyWith<_$LoadedStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class _$$_ErrorStateCopyWith<$Res> {
-  factory _$$_ErrorStateCopyWith(
-          _$_ErrorState value, $Res Function(_$_ErrorState) then) =
-      __$$_ErrorStateCopyWithImpl<$Res>;
+abstract class _$$ErrorStateImplCopyWith<$Res> {
+  factory _$$ErrorStateImplCopyWith(
+          _$ErrorStateImpl value, $Res Function(_$ErrorStateImpl) then) =
+      __$$ErrorStateImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String message});
 }
 
 /// @nodoc
-class __$$_ErrorStateCopyWithImpl<$Res>
-    extends _$PartnersStateCopyWithImpl<$Res, _$_ErrorState>
-    implements _$$_ErrorStateCopyWith<$Res> {
-  __$$_ErrorStateCopyWithImpl(
-      _$_ErrorState _value, $Res Function(_$_ErrorState) _then)
+class __$$ErrorStateImplCopyWithImpl<$Res>
+    extends _$PartnersStateCopyWithImpl<$Res, _$ErrorStateImpl>
+    implements _$$ErrorStateImplCopyWith<$Res> {
+  __$$ErrorStateImplCopyWithImpl(
+      _$ErrorStateImpl _value, $Res Function(_$ErrorStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -489,7 +489,7 @@ class __$$_ErrorStateCopyWithImpl<$Res>
   $Res call({
     Object? message = null,
   }) {
-    return _then(_$_ErrorState(
+    return _then(_$ErrorStateImpl(
       message: null == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -500,8 +500,8 @@ class __$$_ErrorStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ErrorState implements _ErrorState {
-  const _$_ErrorState({required this.message});
+class _$ErrorStateImpl implements _ErrorState {
+  const _$ErrorStateImpl({required this.message});
 
   @override
   final String message;
@@ -512,10 +512,10 @@ class _$_ErrorState implements _ErrorState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ErrorState &&
+            other is _$ErrorStateImpl &&
             (identical(other.message, message) || other.message == message));
   }
 
@@ -525,8 +525,8 @@ class _$_ErrorState implements _ErrorState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ErrorStateCopyWith<_$_ErrorState> get copyWith =>
-      __$$_ErrorStateCopyWithImpl<_$_ErrorState>(this, _$identity);
+  _$$ErrorStateImplCopyWith<_$ErrorStateImpl> get copyWith =>
+      __$$ErrorStateImplCopyWithImpl<_$ErrorStateImpl>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -604,10 +604,10 @@ class _$_ErrorState implements _ErrorState {
 }
 
 abstract class _ErrorState implements PartnersState {
-  const factory _ErrorState({required final String message}) = _$_ErrorState;
+  const factory _ErrorState({required final String message}) = _$ErrorStateImpl;
 
   String get message;
   @JsonKey(ignore: true)
-  _$$_ErrorStateCopyWith<_$_ErrorState> get copyWith =>
+  _$$ErrorStateImplCopyWith<_$ErrorStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

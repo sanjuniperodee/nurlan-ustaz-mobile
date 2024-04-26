@@ -12,7 +12,7 @@ part of 'user_comment_dto.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 UserCommentDTO _$UserCommentDTOFromJson(Map<String, dynamic> json) {
   return _UserCommentDTO.fromJson(json);
@@ -85,11 +85,11 @@ class _$UserCommentDTOCopyWithImpl<$Res, $Val extends UserCommentDTO>
 }
 
 /// @nodoc
-abstract class _$$_UserCommentDTOCopyWith<$Res>
+abstract class _$$UserCommentDTOImplCopyWith<$Res>
     implements $UserCommentDTOCopyWith<$Res> {
-  factory _$$_UserCommentDTOCopyWith(
-          _$_UserCommentDTO value, $Res Function(_$_UserCommentDTO) then) =
-      __$$_UserCommentDTOCopyWithImpl<$Res>;
+  factory _$$UserCommentDTOImplCopyWith(_$UserCommentDTOImpl value,
+          $Res Function(_$UserCommentDTOImpl) then) =
+      __$$UserCommentDTOImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -100,11 +100,11 @@ abstract class _$$_UserCommentDTOCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_UserCommentDTOCopyWithImpl<$Res>
-    extends _$UserCommentDTOCopyWithImpl<$Res, _$_UserCommentDTO>
-    implements _$$_UserCommentDTOCopyWith<$Res> {
-  __$$_UserCommentDTOCopyWithImpl(
-      _$_UserCommentDTO _value, $Res Function(_$_UserCommentDTO) _then)
+class __$$UserCommentDTOImplCopyWithImpl<$Res>
+    extends _$UserCommentDTOCopyWithImpl<$Res, _$UserCommentDTOImpl>
+    implements _$$UserCommentDTOImplCopyWith<$Res> {
+  __$$UserCommentDTOImplCopyWithImpl(
+      _$UserCommentDTOImpl _value, $Res Function(_$UserCommentDTOImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -115,7 +115,7 @@ class __$$_UserCommentDTOCopyWithImpl<$Res>
     Object? email = freezed,
     Object? avatar = freezed,
   }) {
-    return _then(_$_UserCommentDTO(
+    return _then(_$UserCommentDTOImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -138,15 +138,15 @@ class __$$_UserCommentDTOCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_UserCommentDTO implements _UserCommentDTO {
-  const _$_UserCommentDTO(
+class _$UserCommentDTOImpl implements _UserCommentDTO {
+  const _$UserCommentDTOImpl(
       {required this.id,
       @JsonKey(name: "full_name") this.fullName,
       this.email,
       this.avatar});
 
-  factory _$_UserCommentDTO.fromJson(Map<String, dynamic> json) =>
-      _$$_UserCommentDTOFromJson(json);
+  factory _$UserCommentDTOImpl.fromJson(Map<String, dynamic> json) =>
+      _$$UserCommentDTOImplFromJson(json);
 
   @override
   final int id;
@@ -164,10 +164,10 @@ class _$_UserCommentDTO implements _UserCommentDTO {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UserCommentDTO &&
+            other is _$UserCommentDTOImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.fullName, fullName) ||
                 other.fullName == fullName) &&
@@ -182,12 +182,13 @@ class _$_UserCommentDTO implements _UserCommentDTO {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UserCommentDTOCopyWith<_$_UserCommentDTO> get copyWith =>
-      __$$_UserCommentDTOCopyWithImpl<_$_UserCommentDTO>(this, _$identity);
+  _$$UserCommentDTOImplCopyWith<_$UserCommentDTOImpl> get copyWith =>
+      __$$UserCommentDTOImplCopyWithImpl<_$UserCommentDTOImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_UserCommentDTOToJson(
+    return _$$UserCommentDTOImplToJson(
       this,
     );
   }
@@ -198,10 +199,10 @@ abstract class _UserCommentDTO implements UserCommentDTO {
       {required final int id,
       @JsonKey(name: "full_name") final String? fullName,
       final String? email,
-      final String? avatar}) = _$_UserCommentDTO;
+      final String? avatar}) = _$UserCommentDTOImpl;
 
   factory _UserCommentDTO.fromJson(Map<String, dynamic> json) =
-      _$_UserCommentDTO.fromJson;
+      _$UserCommentDTOImpl.fromJson;
 
   @override
   int get id;
@@ -214,6 +215,6 @@ abstract class _UserCommentDTO implements UserCommentDTO {
   String? get avatar;
   @override
   @JsonKey(ignore: true)
-  _$$_UserCommentDTOCopyWith<_$_UserCommentDTO> get copyWith =>
+  _$$UserCommentDTOImplCopyWith<_$UserCommentDTOImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

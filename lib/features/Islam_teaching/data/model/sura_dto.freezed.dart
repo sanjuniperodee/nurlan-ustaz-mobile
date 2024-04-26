@@ -12,7 +12,7 @@ part of 'sura_dto.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 SuraDTO _$SuraDTOFromJson(Map<String, dynamic> json) {
   return _SuraDTO.fromJson(json);
@@ -82,10 +82,10 @@ class _$SuraDTOCopyWithImpl<$Res, $Val extends SuraDTO>
 }
 
 /// @nodoc
-abstract class _$$_SuraDTOCopyWith<$Res> implements $SuraDTOCopyWith<$Res> {
-  factory _$$_SuraDTOCopyWith(
-          _$_SuraDTO value, $Res Function(_$_SuraDTO) then) =
-      __$$_SuraDTOCopyWithImpl<$Res>;
+abstract class _$$SuraDTOImplCopyWith<$Res> implements $SuraDTOCopyWith<$Res> {
+  factory _$$SuraDTOImplCopyWith(
+          _$SuraDTOImpl value, $Res Function(_$SuraDTOImpl) then) =
+      __$$SuraDTOImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -96,10 +96,11 @@ abstract class _$$_SuraDTOCopyWith<$Res> implements $SuraDTOCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_SuraDTOCopyWithImpl<$Res>
-    extends _$SuraDTOCopyWithImpl<$Res, _$_SuraDTO>
-    implements _$$_SuraDTOCopyWith<$Res> {
-  __$$_SuraDTOCopyWithImpl(_$_SuraDTO _value, $Res Function(_$_SuraDTO) _then)
+class __$$SuraDTOImplCopyWithImpl<$Res>
+    extends _$SuraDTOCopyWithImpl<$Res, _$SuraDTOImpl>
+    implements _$$SuraDTOImplCopyWith<$Res> {
+  __$$SuraDTOImplCopyWithImpl(
+      _$SuraDTOImpl _value, $Res Function(_$SuraDTOImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -110,7 +111,7 @@ class __$$_SuraDTOCopyWithImpl<$Res>
     Object? previous = freezed,
     Object? results = freezed,
   }) {
-    return _then(_$_SuraDTO(
+    return _then(_$SuraDTOImpl(
       count: freezed == count
           ? _value.count
           : count // ignore: cast_nullable_to_non_nullable
@@ -133,16 +134,16 @@ class __$$_SuraDTOCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_SuraDTO implements _SuraDTO {
-  const _$_SuraDTO(
+class _$SuraDTOImpl implements _SuraDTO {
+  const _$SuraDTOImpl(
       {this.count,
       this.next,
       this.previous,
       final List<ResultTeachingDTO>? results})
       : _results = results;
 
-  factory _$_SuraDTO.fromJson(Map<String, dynamic> json) =>
-      _$$_SuraDTOFromJson(json);
+  factory _$SuraDTOImpl.fromJson(Map<String, dynamic> json) =>
+      _$$SuraDTOImplFromJson(json);
 
   @override
   final int? count;
@@ -166,10 +167,10 @@ class _$_SuraDTO implements _SuraDTO {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_SuraDTO &&
+            other is _$SuraDTOImpl &&
             (identical(other.count, count) || other.count == count) &&
             (identical(other.next, next) || other.next == next) &&
             (identical(other.previous, previous) ||
@@ -185,12 +186,12 @@ class _$_SuraDTO implements _SuraDTO {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SuraDTOCopyWith<_$_SuraDTO> get copyWith =>
-      __$$_SuraDTOCopyWithImpl<_$_SuraDTO>(this, _$identity);
+  _$$SuraDTOImplCopyWith<_$SuraDTOImpl> get copyWith =>
+      __$$SuraDTOImplCopyWithImpl<_$SuraDTOImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_SuraDTOToJson(
+    return _$$SuraDTOImplToJson(
       this,
     );
   }
@@ -201,9 +202,9 @@ abstract class _SuraDTO implements SuraDTO {
       {final int? count,
       final String? next,
       final String? previous,
-      final List<ResultTeachingDTO>? results}) = _$_SuraDTO;
+      final List<ResultTeachingDTO>? results}) = _$SuraDTOImpl;
 
-  factory _SuraDTO.fromJson(Map<String, dynamic> json) = _$_SuraDTO.fromJson;
+  factory _SuraDTO.fromJson(Map<String, dynamic> json) = _$SuraDTOImpl.fromJson;
 
   @override
   int? get count;
@@ -215,6 +216,6 @@ abstract class _SuraDTO implements SuraDTO {
   List<ResultTeachingDTO>? get results;
   @override
   @JsonKey(ignore: true)
-  _$$_SuraDTOCopyWith<_$_SuraDTO> get copyWith =>
+  _$$SuraDTOImplCopyWith<_$SuraDTOImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -13,7 +13,6 @@ import '../../../../../../../core/error/excepteion.dart';
 import '../../../../../../../core/platform/network_helper.dart';
 import '../models/on_boarding_video_dto.dart';
 
-const _tag = 'AuthRemoteDS';
 
 abstract class OnBoardingDs {
   Future<List<OnBoardingVideoDTO>> onBoardingVideo();
@@ -57,7 +56,7 @@ class OnBoardingDsImpl extends OnBoardingDs {
   Future<AppVersionsModel> appVersionModel() async {
     try {
       final String type = Platform.operatingSystem;
-      final response = await dio.get('${EndPoints.appVersions}/${type}/');
+      final response = await dio.get('${EndPoints.appVersions}/$type/');
       return AppVersionsModel.fromJson(response.data as Map<String, dynamic>);
     } on DioError catch (e) {
       throw ServerException(

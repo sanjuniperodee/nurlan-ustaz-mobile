@@ -137,7 +137,7 @@ class _CodeVerificationPageState extends State<CodeVerificationPage> {
                         defaultPinTheme: defaultPinTheme,
                         length: 6,
                         keyboardType:
-                        TextInputType.numberWithOptions(decimal: false),
+                        const TextInputType.numberWithOptions(decimal: false),
                         useNativeKeyboard: true,
                         inputFormatters: [
                           FilteringTextInputFormatter.allow(RegExp('[0-9.,]+')),

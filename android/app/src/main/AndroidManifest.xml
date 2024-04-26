@@ -2,7 +2,7 @@
     package="com.nurlan_ustaz_flutter">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="Nurlan Ustaz"
+        android:label="Nurlan Imam"
         android:name="${applicationName}"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/launcher_icon">

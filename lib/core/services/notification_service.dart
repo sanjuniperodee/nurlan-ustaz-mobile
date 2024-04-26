@@ -344,6 +344,7 @@ Future<void> scheduledNotification(
           id + 1,
           title,
           description.tr(),
+          // ignore: sdk_version_since
           DateTime.now().copyWith(
             hour: int.parse(time.split(':').first),
             minute: int.parse(time.split(':').last),

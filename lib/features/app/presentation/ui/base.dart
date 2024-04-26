@@ -1,9 +1,6 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
@@ -12,10 +9,6 @@ import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/islam_teaching_icon.dart';
-
-import '../../../../core/utils/alert_utilrs.dart';
-import '../../../home/presentation/widgets/qiblah_widget.dart';
-import '../../../tandaulilar/presentation/bloc/tandaulilar_cubit.dart';
 
 class Base extends StatefulWidget {
   const Base({super.key});
@@ -111,22 +104,20 @@ class _BaseState extends State<Base> {
 
                     label:EasyLocalization.of(context)!.locale.toString() == 'kk'?  'Islam_study'.tr() : ''),
                 BottomNavigationBarItem(
-                  icon: Container(
-                    child: Column(
-                      children: [
-                        Container(
-                          height: 55.h,
-                          width: 55.w,
-                          child: Lottie.asset(
-                            'assets/animations/Moon_v08.json',
-                            fit: BoxFit.fill,
-                          ),
+                  icon: Column(
+                    children: [
+                      SizedBox(
+                        height: 55.h,
+                        width: 55.w,
+                        child: Lottie.asset(
+                          'assets/animations/Moon_v08.json',
+                          fit: BoxFit.fill,
                         ),
-                        SizedBox(
-                          height: 8.h,
-                        ),
-                      ],
-                    ),
+                      ),
+                      SizedBox(
+                        height: 8.h,
+                      ),
+                    ],
                   ),
                   label: 'dream_interpretation'.tr(),
                 ),

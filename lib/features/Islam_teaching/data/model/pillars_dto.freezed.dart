@@ -12,7 +12,7 @@ part of 'pillars_dto.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 PillarsDTO _$PillarsDTOFromJson(Map<String, dynamic> json) {
   return _PillarsDTO.fromJson(json);
@@ -119,11 +119,11 @@ class _$PillarsDTOCopyWithImpl<$Res, $Val extends PillarsDTO>
 }
 
 /// @nodoc
-abstract class _$$_PillarsDTOCopyWith<$Res>
+abstract class _$$PillarsDTOImplCopyWith<$Res>
     implements $PillarsDTOCopyWith<$Res> {
-  factory _$$_PillarsDTOCopyWith(
-          _$_PillarsDTO value, $Res Function(_$_PillarsDTO) then) =
-      __$$_PillarsDTOCopyWithImpl<$Res>;
+  factory _$$PillarsDTOImplCopyWith(
+          _$PillarsDTOImpl value, $Res Function(_$PillarsDTOImpl) then) =
+      __$$PillarsDTOImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -139,11 +139,11 @@ abstract class _$$_PillarsDTOCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_PillarsDTOCopyWithImpl<$Res>
-    extends _$PillarsDTOCopyWithImpl<$Res, _$_PillarsDTO>
-    implements _$$_PillarsDTOCopyWith<$Res> {
-  __$$_PillarsDTOCopyWithImpl(
-      _$_PillarsDTO _value, $Res Function(_$_PillarsDTO) _then)
+class __$$PillarsDTOImplCopyWithImpl<$Res>
+    extends _$PillarsDTOCopyWithImpl<$Res, _$PillarsDTOImpl>
+    implements _$$PillarsDTOImplCopyWith<$Res> {
+  __$$PillarsDTOImplCopyWithImpl(
+      _$PillarsDTOImpl _value, $Res Function(_$PillarsDTOImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -159,7 +159,7 @@ class __$$_PillarsDTOCopyWithImpl<$Res>
     Object? rakats = freezed,
     Object? cover = freezed,
   }) {
-    return _then(_$_PillarsDTO(
+    return _then(_$PillarsDTOImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -202,8 +202,8 @@ class __$$_PillarsDTOCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_PillarsDTO implements _PillarsDTO {
-  const _$_PillarsDTO(
+class _$PillarsDTOImpl implements _PillarsDTO {
+  const _$PillarsDTOImpl(
       {required this.id,
       this.type,
       this.title,
@@ -214,8 +214,8 @@ class _$_PillarsDTO implements _PillarsDTO {
       this.rakats,
       this.cover});
 
-  factory _$_PillarsDTO.fromJson(Map<String, dynamic> json) =>
-      _$$_PillarsDTOFromJson(json);
+  factory _$PillarsDTOImpl.fromJson(Map<String, dynamic> json) =>
+      _$$PillarsDTOImplFromJson(json);
 
   @override
   final int id;
@@ -242,10 +242,10 @@ class _$_PillarsDTO implements _PillarsDTO {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_PillarsDTO &&
+            other is _$PillarsDTOImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.type, type) || other.type == type) &&
             (identical(other.title, title) || other.title == title) &&
@@ -265,12 +265,12 @@ class _$_PillarsDTO implements _PillarsDTO {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_PillarsDTOCopyWith<_$_PillarsDTO> get copyWith =>
-      __$$_PillarsDTOCopyWithImpl<_$_PillarsDTO>(this, _$identity);
+  _$$PillarsDTOImplCopyWith<_$PillarsDTOImpl> get copyWith =>
+      __$$PillarsDTOImplCopyWithImpl<_$PillarsDTOImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_PillarsDTOToJson(
+    return _$$PillarsDTOImplToJson(
       this,
     );
   }
@@ -286,10 +286,10 @@ abstract class _PillarsDTO implements PillarsDTO {
       final String? url,
       final int? time,
       final String? rakats,
-      final String? cover}) = _$_PillarsDTO;
+      final String? cover}) = _$PillarsDTOImpl;
 
   factory _PillarsDTO.fromJson(Map<String, dynamic> json) =
-      _$_PillarsDTO.fromJson;
+      _$PillarsDTOImpl.fromJson;
 
   @override
   int get id;
@@ -311,6 +311,6 @@ abstract class _PillarsDTO implements PillarsDTO {
   String? get cover;
   @override
   @JsonKey(ignore: true)
-  _$$_PillarsDTOCopyWith<_$_PillarsDTO> get copyWith =>
+  _$$PillarsDTOImplCopyWith<_$PillarsDTOImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

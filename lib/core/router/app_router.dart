@@ -81,9 +81,9 @@ class AppRouter extends _$AppRouter {
   RouteType get defaultRouteType =>  RouteType.custom(
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
       return TweenAnimationBuilder<Offset>(
-        tween: Tween(begin: Offset(0.0, 1.0), end: Offset.zero),
-        duration: Duration(milliseconds: 500), // Adjust the duration as needed.
-        curve: Curves.easeInOutCubic, // Adjust the curve as needed.
+        tween: Tween(begin: const Offset(0.0, 1.0), end: Offset.zero),
+        duration: const Duration(milliseconds: 500), 
+        curve: Curves.easeInOutCubic, 
         builder: (context, offset, child) {
           return Transform.translate(
             offset: offset,

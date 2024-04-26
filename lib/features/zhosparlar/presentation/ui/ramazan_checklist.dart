@@ -1,5 +1,5 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:calendar_agenda/calendar_agenda.dart';
+//import 'package:calendar_agenda/calendar_agenda.dart';
 // import 'package:calendar_agenda/calendar_agenda.dart';
 // import 'package:calendar_agenda/calendar_agenda.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -20,6 +20,7 @@ import '../../data/models/checklist_dto.dart';
 // import '../widgets/horizontal_calendar/custom_horizontal_calendar.dart';
 import '../widgets/horizontal_calendar/custom_agenda_controller.dart';
 import '../widgets/horizontal_calendar/custom_horizontal_calendar.dart';
+import '../widgets/horizontal_calendar/custom_type_data.dart';
 import '../widgets/task_details_dialog.dart';
 
 @RoutePage()

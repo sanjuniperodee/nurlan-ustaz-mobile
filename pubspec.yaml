@@ -32,10 +32,10 @@ dependencies:
   flutter:
     sdk: flutter
   auto_route: ^7.8.0
-  chucker_flutter: ^1.3.5
+  chucker_flutter: ^1.5.1
   just_audio: ^0.9.34
   change_app_package_name: ^1.1.0
-  cached_network_image: ^3.2.3
+  cached_network_image: ^3.3.0
   dio: ^5.2.0
   pretty_dio_logger: ^1.1.1
   dartz: ^0.10.1
@@ -97,7 +97,7 @@ dependencies:
   equatable: ^2.0.5
   long_press_button_with_timer: ^0.0.2
   timer_button_fork: ^3.0.2
-  calendar_agenda: ^0.0.2+3
+  # calendar_agenda: ^0.0.2+3
   flutter_pw_validator: ^1.6.0
   flutter_launcher_icons: ^0.13.1
   msh_checkbox: ^2.0.1
@@ -119,6 +119,9 @@ dependencies:
   firebase_crashlytics: ^3.3.5
   percent_indicator: ^4.2.3
   shimmer: ^3.0.0
+  connectivity_plus: 4.0.2
+  scrollable_positioned_list: ^0.3.8
+  flutter_native_splash: ^2.3.10
 #  flutter_clean_calendar: ^1.1.0
 
   # analyzer: ^5.3.1
@@ -142,9 +145,9 @@ dev_dependencies:
   share_plus: ^6.3.4
 # flutter_native_splash:
 #   color: "#6771F3"
-#   image: assets/images/on_boarding_background.png
+#   image: assets/images/bg.png
 #   android: true
-#   ios: true
+#   ios: false
 #   web: false
 #   fullscreen: true
 
@@ -153,9 +156,11 @@ dev_dependencies:
 flutter_icons:
   android: "launcher_icon"
   ios: true
-  image_path_ios: "assets/images/logo/appstore.png"
-  image_path: "assets/images/logo/focus.png"
+  image_path_ios: "assets/images/logo/new_log.png"
+  image_path: "assets/images/logo/new_d.png"
   min_sdk_android: 13
+  remove_alpha_ios: true
+
 
   # The following section is specific to Flutter packages.
 flutter:

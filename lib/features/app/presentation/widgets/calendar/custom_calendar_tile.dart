@@ -48,16 +48,16 @@ class CalendarTile extends StatelessWidget {
   final bool? isChat;
   final List<DateTime>? daysWithChat;
 
-  CalendarTile({
+  CalendarTile({super.key, 
     this.onDateSelected,
     this.date,
     this.child,
     this.dateStyles,
     this.dayOfWeek,
     this.dayOfWeekStyle,
-    this.isDayOfWeek: false,
-    this.isSelected: false,
-    this.inMonth: true,
+    this.isDayOfWeek = false,
+    this.isSelected = false,
+    this.inMonth = true,
     this.events,
     this.selectedColor,
     this.todayColor,
@@ -81,8 +81,8 @@ class CalendarTile extends StatelessWidget {
     // We decide, if this calendar tile should display a day name in the header row. If this is the
     // case, we return a widget, that contains a text widget with style property [dayOfWeekStyle]
     if (isDayOfWeek) {
-      return new InkWell(
-        child: new Container(
+      return InkWell(
+        child: Container(
           alignment: Alignment.center,
           child: Text(
             dayOfWeek ?? '',
@@ -108,16 +108,16 @@ class CalendarTile extends StatelessWidget {
             // the color passed with the selectedColor parameter or red color.
             decoration: isChat == true
                 ? isSelected && date != null
-                    ? BoxDecoration(
+                    ? const BoxDecoration(
                         color: AppColors.orange, shape: BoxShape.circle)
-                    : BoxDecoration()
+                    : const BoxDecoration()
                 : isSelected && date != null //если выбран или сегодня
                     ? BoxDecoration(
                         shape: BoxShape.circle,
                         gradient: LinearGradient(
                             colors:
                                 AppColors.gradientPrimaryActiveButton.colors))
-                    : BoxDecoration(), // no decoration when not selected
+                    : const BoxDecoration(), // no decoration when not selected
             alignment: Alignment.center,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -138,7 +138,7 @@ class CalendarTile extends StatelessWidget {
                                       .grey), // Grey color for previous or next months dates
                 ),
                 // Dots for the events
-                events != null && events!.length > 0
+                events != null && events!.isNotEmpty
                 ?   DateStatusesWidget(events: statuses.toList() )
 
 
@@ -195,8 +195,8 @@ class CalendarTile extends StatelessWidget {
     // be rendered to display weekday or date
     if (child != null) {
       return InkWell(
-        child: child,
         onTap: onDateSelected,
+        child: child,
       );
     }
     return Container(

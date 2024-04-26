@@ -29,12 +29,19 @@ class CreateSeminarPaymentCubit extends Cubit<CreateSeminarPaymentState> {
     final result = await _repository.createSeminarPayment(
         id: id, backUrl: tusZhoruDynamicLink);
     result.fold((l) {
-      emit(_ErrorState(message: mapFailureToMessageBack(l)));
-    }, (r) async {
-      final Uri url = Uri.parse(r.pgRedirectUrl.toString());
-      if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-        throw Exception('Could not launch');
+
+      try{      emit(_ErrorState(message: mapFailureToMessage(l)));
+}
+      catch(e){
+        emit(_ErrorState(message: l.toString()));
       }
+    }, (r) async {
+      emit(_SuccessPay());
+
+      // final Uri url = Uri.parse(r.pgRedirectUrl.toString());
+      // if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      //   throw Exception('Could not launch');
+      // }
     });
   }
 }
@@ -50,4 +57,5 @@ class CreateSeminarPaymentState with _$CreateSeminarPaymentState {
   const factory CreateSeminarPaymentState.errorState({
     required String message,
   }) = _ErrorState;
+  const factory CreateSeminarPaymentState.successPay() = _SuccessPay;
 }

@@ -69,12 +69,10 @@ class CalendarChatsCubit extends Cubit<CalendarChatsState> {
       final result =
           await _homeRepository.questions(id: dayChat.id!, isFirstCall: false,page: 1);
       return result.fold(
-          (l) => {
-                emit(const _InitialState()
-                    .copyWith(questions: null, chats: chatsss,isLoading:false))
-              }, (r) async {
+          (l) => emit(const _InitialState()
+                    .copyWith(questions: null, chats: chatsss,isLoading:false)), (r) async {
             log(r.toString());
-        emit(_InitialState().copyWith(questions: r.toList(), chats: chatsss,isLoading:false));
+        emit(const _InitialState().copyWith(questions: r.toList(), chats: chatsss,isLoading:false));
       });
     }
 

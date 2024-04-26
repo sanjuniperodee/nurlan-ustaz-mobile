@@ -6,8 +6,9 @@ part of 'names_of_Allah_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_NamesOfAllahDTO _$$_NamesOfAllahDTOFromJson(Map<String, dynamic> json) =>
-    _$_NamesOfAllahDTO(
+_$NamesOfAllahDTOImpl _$$NamesOfAllahDTOImplFromJson(
+        Map<String, dynamic> json) =>
+    _$NamesOfAllahDTOImpl(
       id: json['id'] as int,
       isSaved: json['is_saved'] as bool?,
       name: json['name'] as String?,
@@ -18,7 +19,8 @@ _$_NamesOfAllahDTO _$$_NamesOfAllahDTOFromJson(Map<String, dynamic> json) =>
       number: json['number'] as int?,
     );
 
-Map<String, dynamic> _$$_NamesOfAllahDTOToJson(_$_NamesOfAllahDTO instance) =>
+Map<String, dynamic> _$$NamesOfAllahDTOImplToJson(
+        _$NamesOfAllahDTOImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'is_saved': instance.isSaved,

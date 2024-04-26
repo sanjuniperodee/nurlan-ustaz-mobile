@@ -6,7 +6,8 @@ part of 'media_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_MediaDTO _$$_MediaDTOFromJson(Map<String, dynamic> json) => _$_MediaDTO(
+_$MediaDTOImpl _$$MediaDTOImplFromJson(Map<String, dynamic> json) =>
+    _$MediaDTOImpl(
       id: json['id'] as int,
       file: json['file'] as String?,
       title: json['title'] as String?,
@@ -15,7 +16,7 @@ _$_MediaDTO _$$_MediaDTOFromJson(Map<String, dynamic> json) => _$_MediaDTO(
       icon: json['icon'] as String?,
     );
 
-Map<String, dynamic> _$$_MediaDTOToJson(_$_MediaDTO instance) =>
+Map<String, dynamic> _$$MediaDTOImplToJson(_$MediaDTOImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'file': instance.file,

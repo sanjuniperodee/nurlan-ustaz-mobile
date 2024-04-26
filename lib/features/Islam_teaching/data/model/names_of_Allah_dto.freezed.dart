@@ -12,7 +12,7 @@ part of 'names_of_Allah_dto.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 NamesOfAllahDTO _$NamesOfAllahDTOFromJson(Map<String, dynamic> json) {
   return _NamesOfAllahDTO.fromJson(json);
@@ -113,11 +113,11 @@ class _$NamesOfAllahDTOCopyWithImpl<$Res, $Val extends NamesOfAllahDTO>
 }
 
 /// @nodoc
-abstract class _$$_NamesOfAllahDTOCopyWith<$Res>
+abstract class _$$NamesOfAllahDTOImplCopyWith<$Res>
     implements $NamesOfAllahDTOCopyWith<$Res> {
-  factory _$$_NamesOfAllahDTOCopyWith(
-          _$_NamesOfAllahDTO value, $Res Function(_$_NamesOfAllahDTO) then) =
-      __$$_NamesOfAllahDTOCopyWithImpl<$Res>;
+  factory _$$NamesOfAllahDTOImplCopyWith(_$NamesOfAllahDTOImpl value,
+          $Res Function(_$NamesOfAllahDTOImpl) then) =
+      __$$NamesOfAllahDTOImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -132,11 +132,11 @@ abstract class _$$_NamesOfAllahDTOCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_NamesOfAllahDTOCopyWithImpl<$Res>
-    extends _$NamesOfAllahDTOCopyWithImpl<$Res, _$_NamesOfAllahDTO>
-    implements _$$_NamesOfAllahDTOCopyWith<$Res> {
-  __$$_NamesOfAllahDTOCopyWithImpl(
-      _$_NamesOfAllahDTO _value, $Res Function(_$_NamesOfAllahDTO) _then)
+class __$$NamesOfAllahDTOImplCopyWithImpl<$Res>
+    extends _$NamesOfAllahDTOCopyWithImpl<$Res, _$NamesOfAllahDTOImpl>
+    implements _$$NamesOfAllahDTOImplCopyWith<$Res> {
+  __$$NamesOfAllahDTOImplCopyWithImpl(
+      _$NamesOfAllahDTOImpl _value, $Res Function(_$NamesOfAllahDTOImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -151,7 +151,7 @@ class __$$_NamesOfAllahDTOCopyWithImpl<$Res>
     Object? description = freezed,
     Object? number = freezed,
   }) {
-    return _then(_$_NamesOfAllahDTO(
+    return _then(_$NamesOfAllahDTOImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -190,8 +190,8 @@ class __$$_NamesOfAllahDTOCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_NamesOfAllahDTO implements _NamesOfAllahDTO {
-  const _$_NamesOfAllahDTO(
+class _$NamesOfAllahDTOImpl implements _NamesOfAllahDTO {
+  const _$NamesOfAllahDTOImpl(
       {required this.id,
       @JsonKey(name: "is_saved") this.isSaved,
       this.name,
@@ -201,8 +201,8 @@ class _$_NamesOfAllahDTO implements _NamesOfAllahDTO {
       this.description,
       this.number});
 
-  factory _$_NamesOfAllahDTO.fromJson(Map<String, dynamic> json) =>
-      _$$_NamesOfAllahDTOFromJson(json);
+  factory _$NamesOfAllahDTOImpl.fromJson(Map<String, dynamic> json) =>
+      _$$NamesOfAllahDTOImplFromJson(json);
 
   @override
   final int id;
@@ -228,10 +228,10 @@ class _$_NamesOfAllahDTO implements _NamesOfAllahDTO {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_NamesOfAllahDTO &&
+            other is _$NamesOfAllahDTOImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.isSaved, isSaved) || other.isSaved == isSaved) &&
             (identical(other.name, name) || other.name == name) &&
@@ -252,12 +252,13 @@ class _$_NamesOfAllahDTO implements _NamesOfAllahDTO {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_NamesOfAllahDTOCopyWith<_$_NamesOfAllahDTO> get copyWith =>
-      __$$_NamesOfAllahDTOCopyWithImpl<_$_NamesOfAllahDTO>(this, _$identity);
+  _$$NamesOfAllahDTOImplCopyWith<_$NamesOfAllahDTOImpl> get copyWith =>
+      __$$NamesOfAllahDTOImplCopyWithImpl<_$NamesOfAllahDTOImpl>(
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_NamesOfAllahDTOToJson(
+    return _$$NamesOfAllahDTOImplToJson(
       this,
     );
   }
@@ -272,10 +273,10 @@ abstract class _NamesOfAllahDTO implements NamesOfAllahDTO {
       final String? translation,
       final String? audio,
       final String? description,
-      final int? number}) = _$_NamesOfAllahDTO;
+      final int? number}) = _$NamesOfAllahDTOImpl;
 
   factory _NamesOfAllahDTO.fromJson(Map<String, dynamic> json) =
-      _$_NamesOfAllahDTO.fromJson;
+      _$NamesOfAllahDTOImpl.fromJson;
 
   @override
   int get id;
@@ -296,6 +297,6 @@ abstract class _NamesOfAllahDTO implements NamesOfAllahDTO {
   int? get number;
   @override
   @JsonKey(ignore: true)
-  _$$_NamesOfAllahDTOCopyWith<_$_NamesOfAllahDTO> get copyWith =>
+  _$$NamesOfAllahDTOImplCopyWith<_$NamesOfAllahDTOImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

@@ -6,8 +6,8 @@ part of 'pillars_dto.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$_PillarsDTO _$$_PillarsDTOFromJson(Map<String, dynamic> json) =>
-    _$_PillarsDTO(
+_$PillarsDTOImpl _$$PillarsDTOImplFromJson(Map<String, dynamic> json) =>
+    _$PillarsDTOImpl(
       id: json['id'] as int,
       type: json['type'] as int?,
       title: json['title'] as String?,
@@ -19,7 +19,7 @@ _$_PillarsDTO _$$_PillarsDTOFromJson(Map<String, dynamic> json) =>
       cover: json['cover'] as String?,
     );
 
-Map<String, dynamic> _$$_PillarsDTOToJson(_$_PillarsDTO instance) =>
+Map<String, dynamic> _$$PillarsDTOImplToJson(_$PillarsDTOImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'type': instance.type,
