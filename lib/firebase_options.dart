@@ -28,10 +28,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -50,19 +47,29 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDjL_Nhu-W4tHdcpNfWLM6DSp-wLGyzjbk',
-    appId: '1:53340493475:android:8099ab2d7b1a15dff1d116',
-    messagingSenderId: '53340493475',
-    projectId: 'nurlanustazdev0',
-    storageBucket: 'nurlanustazdev0.appspot.com',
+    apiKey: 'AIzaSyCZEONhqAiBmGIHRcJ_PXiJam4cxxrxbl0',
+    appId: '1:280448489679:android:0eabadf205f11bded7bfba',
+    messagingSenderId: '280448489679',
+    projectId: 'nurlanustazanalytics',
+    storageBucket: 'nurlanustazanalytics.firebasestorage.app',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDF8T0zlVedXkzxNT0Ffj-3G6YW_bOokeE',
-    appId: '1:53340493475:ios:7af6bb4e6cd7a700f1d116',
-    messagingSenderId: '53340493475',
-    projectId: 'nurlanustazdev0',
-    storageBucket: 'nurlanustazdev0.appspot.com',
+    apiKey: 'AIzaSyDmeow6oyX2cWv1OX6oj9NiEDBKmvKdXIw',
+    appId: '1:280448489679:ios:81108d4cc41893ccd7bfba',
+    messagingSenderId: '280448489679',
+    projectId: 'nurlanustazanalytics',
+    storageBucket: 'nurlanustazanalytics.firebasestorage.app',
     iosBundleId: 'com.nurlan.ustaz.flutter',
   );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyDmeow6oyX2cWv1OX6oj9NiEDBKmvKdXIw',
+    appId: '1:280448489679:ios:81108d4cc41893ccd7bfba',
+    messagingSenderId: '280448489679',
+    projectId: 'nurlanustazanalytics',
+    storageBucket: 'nurlanustazanalytics.firebasestorage.app',
+    iosBundleId: 'com.nurlan.ustaz.flutter',
+  );
+
 }

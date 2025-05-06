@@ -3,17 +3,17 @@
 <plist version="1.0">
 <dict>
 	<key>API_KEY</key>
-	<string>AIzaSyDF8T0zlVedXkzxNT0Ffj-3G6YW_bOokeE</string>
+	<string>AIzaSyDmeow6oyX2cWv1OX6oj9NiEDBKmvKdXIw</string>
 	<key>GCM_SENDER_ID</key>
-	<string>53340493475</string>
+	<string>280448489679</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
 	<string>com.nurlan.ustaz.flutter</string>
 	<key>PROJECT_ID</key>
-	<string>nurlanustazdev0</string>
+	<string>nurlanustazanalytics</string>
 	<key>STORAGE_BUCKET</key>
-	<string>nurlanustazdev0.appspot.com</string>
+	<string>nurlanustazanalytics.firebasestorage.app</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -25,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:53340493475:ios:8804f542264b1934f1d116</string>
+	<string>1:280448489679:ios:81108d4cc41893ccd7bfba</string>
 </dict>
 </plist>

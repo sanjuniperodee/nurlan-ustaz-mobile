@@ -208,7 +208,6 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                             children: [
                               DropdownButtonHideUnderline(
                                 child: DropdownButton2(
-                                  itemHeight: 30,
                                   items: langMap.keys
                                       .map<DropdownMenuItem<String>>(
                                           (String value) {
@@ -234,12 +233,16 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                                       ),
                                     );
                                   }).toList(),
-                                  dropdownDecoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(16),
+                                  menuItemStyleData: MenuItemStyleData(
+                                    height: 30,
+                                  ),
+                                  dropdownStyleData: DropdownStyleData(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    width: MediaQuery.sizeOf(context).width,
                                   ),
                                   // dropdownPadding: const EdgeInsets.only(bottom: 10),
-                                  dropdownWidth:
-                                      MediaQuery.of(context).size.width,
                                   customButton: Padding(
                                     padding: const EdgeInsets.only(top: 8.0),
                                     child: Row(
@@ -299,8 +302,11 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                                       });
                                     }
                                   },
-                                  icon: SvgPicture.asset(
-                                      'assets/icons/chevron_right.svg'),
+                                  iconStyleData: IconStyleData(
+                                    icon: SvgPicture.asset(
+                                      'assets/icons/chevron_right.svg',
+                                    ),
+                                  ),
                                 ),
                               ),
                               SizedBox(

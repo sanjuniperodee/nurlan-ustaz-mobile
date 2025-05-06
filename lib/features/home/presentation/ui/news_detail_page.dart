@@ -113,7 +113,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                           alignment: Alignment.topCenter,
                           child: DotsIndicator(
                             dotsCount: result.media?.length ?? 0,
-                            position: _currentIndex,
+                            position: _currentIndex / 1,
                             decorator: const DotsDecorator(
                               color: AppColors
                                   .grey2, // Color of non-selected indicators

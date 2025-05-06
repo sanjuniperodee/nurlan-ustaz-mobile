@@ -96,23 +96,22 @@ class CustomCalendar extends StatefulWidget {
   final Color? bottomBarColor;
   final String? expandableDateFormat;
 
-
   CustomCalendar({
     this.onMonthChanged,
     this.onDateSelected,
     this.onRangeSelected,
     this.onExpandStateChanged,
     this.onEventSelected,
-    this.hideBottomBar: false,
-    this.isExpandable: false,
+    this.hideBottomBar = false,
+    this.isExpandable = false,
     this.events,
     this.dayBuilder,
     this.eventListBuilder,
-    this.hideTodayIcon: false,
-    this.hideArrows: false,
+    this.hideTodayIcon = false,
+    this.hideArrows = false,
     this.selectedColor,
     this.todayColor,
-    this.todayButtonText: 'Today',
+    this.todayButtonText = 'Today',
     this.eventColor,
     this.eventDoneColor,
     this.initialDate,
@@ -169,18 +168,16 @@ class _CustomCalendarState extends State<CustomCalendar> {
 
     if (!widget.hideArrows) {
       leftArrow = IconButton(
-        onPressed: isExpanded ? previousMonth : previousWeek,
-        icon: Icon(
-          Icons.chevron_left,
-          color:
-          Color(0xFF8F8CF7),)
-      );
+          onPressed: isExpanded ? previousMonth : previousWeek,
+          icon: Icon(
+            Icons.chevron_left,
+            color: Color(0xFF8F8CF7),
+          ));
       rightArrow = IconButton(
         onPressed: isExpanded ? nextMonth : nextWeek,
         icon: Icon(
           Icons.chevron_right,
-          color:
-          Color(0xFF8F8CF7),
+          color: Color(0xFF8F8CF7),
         ),
       );
     } else {
@@ -332,7 +329,7 @@ class _CustomCalendarState extends State<CustomCalendar> {
 
   TextStyle? configureDateStyle(monthStarted, monthEnded) {
     TextStyle? dateStyles;
-    final TextStyle? body1Style = Theme.of(context).textTheme.bodyText2;
+    final TextStyle? body1Style = Theme.of(context).textTheme.bodyMedium;
 
     if (isExpanded) {
       final TextStyle body1StyleDisabled = body1Style!.copyWith(

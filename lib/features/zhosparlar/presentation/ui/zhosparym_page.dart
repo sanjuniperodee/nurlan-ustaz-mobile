@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:auto_route/auto_route.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:calendar_agenda/calendar_agenda.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -242,8 +243,8 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                                       EventsType.holiday)
                                                   .length >
                                               1) {
-                                            CarouselController controller =
-                                                CarouselController();
+                                            final controller =
+                                                CarouselSliderController();
                                             int currentIndex = 0;
                                             showDialog(
                                               context: context,
@@ -360,9 +361,12 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                                     CheckListCubit>(context)
                                                 .getDays(checklistId: value.id)
                                                 .then((result) {
-                                                  log('${result.toString()}-checklist');
+                                              log('${result.toString()}-checklist');
                                               if (result.isEmpty) {
-                                                Future.delayed(Duration(seconds: 3,),(){
+                                                Future.delayed(
+                                                    Duration(
+                                                      seconds: 3,
+                                                    ), () {
                                                   context.router
                                                       .push(
                                                     RamazanChecklistRoute(
@@ -374,7 +378,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                                     });
                                                   });
                                                 });
-                                               return;
+                                                return;
                                               }
                                               log('pol2');
                                               context.router

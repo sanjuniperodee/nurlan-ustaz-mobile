@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -8,6 +6,7 @@ import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/datasource/local/home_local_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/geonames_dto.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 import 'package:nurlan_ustaz_flutter/features/home/data/models/timings_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/repositories/home_repository.dart';
@@ -70,17 +69,22 @@ class TimingsCubit extends Cubit<TimingsState> {
             final List<String> time =
                 r.toJson().values.toList().map((e) => e.toString()).toList();
             for (String item in r.toJson().values.toList()) {
-              FlutterLocalNotificationsPlugin().schedule(
-                  time.indexOf(item),
-                  namasNames[time.indexOf(item)],
-                  '${time.indexOf(item) + 1}' + 'farz'.tr(),
+              FlutterLocalNotificationsPlugin().zonedSchedule(
+                time.indexOf(item),
+                namasNames[time.indexOf(item)],
+                '${time.indexOf(item) + 1}' + 'farz'.tr(),
+                tz.TZDateTime.from(
                   DateFormat('HH:mm').parse(item).copyWith(
                         year: DateTime.now().year,
                         month: DateTime.now().month,
                         day: DateTime.now().day,
                         second: 00,
                       ),
-                  NotificationDetails());
+                  tz.local,
+                ),
+                NotificationDetails(),
+                androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+              );
             }
           }
           emit(TimingsState.loaded(

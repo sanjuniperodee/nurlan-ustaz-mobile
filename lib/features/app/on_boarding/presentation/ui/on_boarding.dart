@@ -1,15 +1,10 @@
 import 'dart:developer';
-import 'dart:io';
 
-import 'package:better_player/better_player.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:chewie/chewie.dart';
 import 'package:dots_indicator/dots_indicator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get_ip_address/get_ip_address.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/features/app/on_boarding/bloc/on_boarding_cubit.dart';
@@ -24,13 +19,11 @@ class OnBoardingPage extends StatefulWidget {
   State<OnBoardingPage> createState() => _OnBoardingPageState();
 }
 
-CarouselController controller = CarouselController();
-int currentIndex = 0;
-
 class _OnBoardingPageState extends State<OnBoardingPage> {
   late VideoPlayerController _videoPlayerController1;
   ChewieController? _chewieController;
   int? bufferDelay;
+  int currentIndex = 0;
 
   @override
   void initState() {
@@ -131,7 +124,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                       children: [
                         DotsIndicator(
                             dotsCount: videoList.length,
-                            position: currentIndex,
+                            position: currentIndex / 1,
                             decorator: DotsDecorator(
                                 size: Size(8.w, 8.h),
                                 color: AppColors.white.withOpacity(0.1),

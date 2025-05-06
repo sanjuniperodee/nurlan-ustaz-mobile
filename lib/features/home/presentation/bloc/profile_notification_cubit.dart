@@ -6,7 +6,6 @@ import 'package:nurlan_ustaz_flutter/core/platform/cache_helper/prefs.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/repositories/home_repository.dart';
 
-import '../../../../core/services/notification_service.dart';
 import '../../data/models/notification_dto.dart';
 import '../../data/models/notification_item_dto.dart';
 
@@ -86,9 +85,10 @@ class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
 
     handleType(notificationItemDTO.title!);
 
-    final String? deviceToken = await NotificationService().getDeviceToken();
+    // final String? deviceToken = await NotificationService().getDeviceToken();
 
-    emit(_$_InitialPage().copyWith(
+    emit(
+      const _InitialPage().copyWith(
         notificationDTO: notificationDeviceDTO,
         items: notificationDeviceDTO
             .toJson()
@@ -97,7 +97,9 @@ class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
             .sublist(8, 15)
             .map((e) =>
                 NotificationItemDTO(title: e.key, status: e.value as bool))
-            .toList()));
+            .toList(),
+      ),
+    );
   }
 
   Future<void> getNotificationDto() async {
