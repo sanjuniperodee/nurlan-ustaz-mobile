@@ -76,7 +76,7 @@ import '../../features/zhosparlar/presentation/ui/ramazan_checklist.dart';
 part 'app_router.gr.dart';
 
 @AutoRouterConfig()
-class AppRouter extends _$AppRouter {
+class AppRouter extends RootStackRouter {
   @override
   RouteType get defaultRouteType =>  RouteType.custom(
     transitionsBuilder: (context, animation, secondaryAnimation, child) {

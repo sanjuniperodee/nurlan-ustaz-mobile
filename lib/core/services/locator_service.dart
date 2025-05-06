@@ -60,7 +60,7 @@ Future<void> initLocator() async {
   getIt.registerLazySingleton(() => Dio());
   // getIt.registerLazySingleton(() => APIRequester(d));
   getIt.registerLazySingleton(() => DioWrapper(getIt<AuthLocalDs>()));
-  getIt.registerLazySingleton(() => InternetConnectionChecker());
+  getIt.registerLazySingleton(() => InternetConnectionChecker.instance);
   configureDependencies();
   // sl.registerLazySingleton(() => AppRouter());
 }

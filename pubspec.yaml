@@ -1,158 +1,111 @@
 name: nurlan_ustaz_flutter
 description: A new Flutter project.
 
-# The following line prevents the package from being accidentally published to
-# pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: "none" # Remove this line if you wish to publish to pub.dev
+publish_to: "none"
 
-# The following defines the version and build number for your application.
-# A version number is three numbers separated by dots, like 1.2.43
-# followed by an optional build number separated by a +.
-# Both the version and the builder number may be overridden in flutter
-# build by specifying --build-name and --build-number, respectively.
-# In Android, build-name is used as versionName while build-number used as versionCode.
-# Read more about Android versioning at https://developer.android.com/studio/publish/versioning
-# In iOS, build-name is used as CFBundleShortVersionString while build-number is used as CFBundleVersion.
-# Read more about iOS versioning at
-# https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-# In Windows, build-name is used as the major, minor, and patch parts
-# of the product and file versions while build-number is used as the build suffix.
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.18.5 <3.0.0"
+  sdk: ">=3.0.0 <4.0.0"
 
-# Dependencies specify other packages that your package needs in order to work.
-# To automatically upgrade your package dependencies to the latest versions
-# consider running `flutter pub upgrade --major-versions`. Alternatively,
-# dependencies can be manually updated by changing the version numbers below to
-# the latest version available on pub.dev. To see which dependencies have newer
-# versions available, run `flutter pub outdated`.
 dependencies:
   flutter:
     sdk: flutter
-  auto_route: ^7.8.0
-  chucker_flutter: ^1.5.1
+
+  # plugins
+  chewie: ^1.5.0
+  clipboard: ^0.1.3
   just_audio: ^0.9.34
-  change_app_package_name: ^1.1.0
-  cached_network_image: ^3.3.0
-  dio: ^5.2.0
-  pretty_dio_logger: ^1.1.1
-  dartz: ^0.10.1
-  permission_handler: ^10.2.0
-  geolocator: ^9.0.2
-  audioplayers: ^4.1.0
+  share_plus: ^10.1.4
+  geolocator: ^13.0.4
   url_launcher: ^6.1.11
-  image_picker: ^0.8.9
-  web_socket_channel: ^2.4.0
+  image_picker: ^1.1.2
+  audioplayers: ^6.4.0
+  video_player: ^2.7.0
+  path_provider: ^2.0.15
+  better_player: ^0.0.83
+  webview_flutter: ^4.11.0
+  qr_code_scanner: ^1.0.1
+  package_info_plus: ^8.3.0
+  network_info_plus: ^6.1.4
+  shared_preferences: ^2.0.15
+  permission_handler: ^12.0.0+1
+  flutter_windowmanager: ^0.2.0
+  internet_connection_checker: ^3.0.1
+  flutter_local_notifications: ^19.1.0
+  syncfusion_flutter_pdfviewer: ^29.1.40
 
   #state
-  injectable: ^2.1.0
-  provider: ^6.0.5
-  get_it: ^7.2.0
-  flutter_bloc: ^8.1.2
-  rxdart: ^0.27.7
-  easy_localization: ^3.0.1
-  #storage
-  shared_preferences: ^2.0.15
   hive: ^2.2.3
   hive_flutter: ^1.1.0
-  internet_connection_checker: ^1.0.0+1
-  pull_to_refresh: ^2.0.0
-  path_provider: ^2.0.15
+
+  # dart
+  dio: ^5.2.0
+  get_it: ^8.0.3
+  dartz: ^0.10.1
+  rxdart: ^0.28.0
+  provider: ^6.0.5
+  equatable: ^2.0.5
+  auto_route: ^9.3.0+1
+  injectable: ^2.1.0
+  flutter_bloc: ^9.1.1
+  get_ip_address: ^0.0.5
+  chucker_flutter: ^1.3.5
+  json_annotation: ^4.7.0
+  stop_watch_timer: ^3.2.2
+  pretty_dio_logger: ^1.1.1
+  easy_localization: ^3.0.1
+  freezed_annotation: ^3.0.0
+  web_socket_channel: ^3.0.3
+  cached_network_image: ^3.2.3
+  flutter_cache_manager: ^3.3.1
 
   # firebase
-  firebase_core: ^2.9.0
-  firebase_messaging: ^14.4.0
-  flutter_local_notifications: ^13.0.0
-  clipboard: ^0.1.3
+  firebase_core: ^3.13.0
+  firebase_analytics: ^11.4.5
+  firebase_messaging: ^15.2.5
+  firebase_crashlytics: ^4.3.5
+  firebase_dynamic_links: ^6.1.5
+
   #ui
-  audio_video_progress_bar: ^1.0.1
-  dropdown_button2: ^1.8.9
-  flutter_screenutil: ^5.7.0
-  flutter_svg: ^1.1.6
-  carousel_slider: ^4.0.0
-  dots_indicator: ^3.0.0
-  flutter_qiblah: ^2.1.0
+  pinput: ^5.0.1
+  lottie: ^3.3.1
+  flutter_svg: ^2.1.0
   fluttertoast: ^8.2.1
-  stop_watch_timer: ^2.0.0
-  json_annotation: ^4.7.0
-  json_serializable: ^6.5.4
-  flutter_widget_from_html: ^0.8.5
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  # flutter_native_splash: ^2.0.0
-  cupertino_icons: ^1.0.2
-  flutter_slidable: ^2.0.0
+  # msh_checkbox: ^2.0.1
+  dots_indicator: ^4.0.1
+  flutter_qiblah: ^3.1.0+1
+  pull_to_refresh: ^2.0.0
+  carousel_slider: ^5.0.0
+  flutter_slidable: ^4.0.0
+  dropdown_button2: ^2.3.9
+  timer_button_fork: ^4.0.1
+  flutter_screenutil: ^5.7.0
+  audio_video_progress_bar: ^2.0.3
+  flutter_widget_from_html: ^0.15.3
   mask_text_input_formatter: ^2.4.0
-  firebase_dynamic_links: ^5.3.5
-  pinput: ^2.2.31
-  introduction_slider: ^2.0.1
-
-  network_info_plus: ^3.0.5
-  get_ip_address: ^0.0.5
-  flutter_windowmanager: ^0.2.0
-
-  equatable: ^2.0.5
-  long_press_button_with_timer: ^0.0.2
-  timer_button_fork: ^3.0.2
   # calendar_agenda: ^0.0.2+3
-  flutter_pw_validator: ^1.6.0
-  flutter_launcher_icons: ^0.13.1
-  msh_checkbox: ^2.0.1
-
-  lottie: ^2.3.2
-
-  network_to_file_image: ^4.0.1
-  flutter_cache_manager: ^3.3.1
-  video_player: ^2.7.0
-  chewie: ^1.5.0
-
-  package_info_plus: ^3.1.2
-
-  syncfusion_flutter_pdfviewer: ^20.4.48
-  firebase_analytics: ^10.4.4
-  webview_flutter: ^3.0.4
-  better_player: ^0.0.83
-  qr_code_scanner: ^1.0.1
-  firebase_crashlytics: ^3.3.5
-  percent_indicator: ^4.2.3
-  shimmer: ^3.0.0
-  connectivity_plus: 4.0.2
-  scrollable_positioned_list: ^0.3.8
-  flutter_native_splash: ^2.3.10
-#  flutter_clean_calendar: ^1.1.0
-
-  # analyzer: ^5.3.1
+  calendar_agenda:
+    path: ../calendar_agenda
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
+  # codegen
+  freezed: ^3.0.0-0.0.dev
   build_runner: ^2.3.3
-  auto_route_generator: ^7.3.0
   hive_generator: ^2.0.0
+  json_serializable: ^6.5.4
+  auto_route_generator: ^9.0.0
   injectable_generator: ^2.1.5
-  freezed: ^2.3.2
 
-  # The "flutter_lints" package below contains a set of recommended lints to
-  # encourage good coding practices. The lint set provided by the package is
-  # activated in the `analysis_options.yaml` file located at the root of your
-  # package. See that file for information about deactivating specific lint
-  # rules and activating additional ones.
-  flutter_lints: ^2.0.0
-  share_plus: ^6.3.4
-# flutter_native_splash:
-#   color: "#6771F3"
-#   image: assets/images/bg.png
-#   android: true
-#   ios: false
-#   web: false
-#   fullscreen: true
+  #
+  change_app_package_name: ^1.1.0
 
-# For information on the generic Dart part of this file, see the
-# following page: https://dart.dev/tools/pub/pubspec
+  # linter
+  flutter_lints: ^5.0.0
+
 flutter_icons:
   android: "launcher_icon"
   ios: true
@@ -162,11 +115,7 @@ flutter_icons:
   remove_alpha_ios: true
 
 
-  # The following section is specific to Flutter packages.
 flutter:
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
   uses-material-design: true
 
   assets:
@@ -197,23 +146,3 @@ flutter:
         - asset: assets/fonts/Philosopher-Italic.ttf
         - asset: assets/fonts/Philosopher-Regular.ttf
         - asset: assets/fonts/Philosopher-Bold.ttf
-
-  # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
-
-  # An image asset can refer to one or more resolution-specific "variants", see
-  # https://flutter.dev/assets-and-images/#resolution-aware
-
-  # For details regarding adding assets from package dependencies, see
-  # https://flutter.dev/assets-and-images/#from-packages
-
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
-
-  # For details regarding fonts from package dependencies,
-  # see https://flutter.dev/custom-fonts/#from-packages

@@ -57,9 +57,10 @@ Future<void> main() async {
   await SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   await Firebase.initializeApp();
-  await FirebaseDynamicLinks.instance.getInitialLink();
+  // TODO(Radomir): Remove Firebase Dynamix Links from project, as it is deprecated
+  // await FirebaseDynamicLinks.instance.getInitialLink();
   await firebaseListen();
-  await firebaseInit();
+  // await firebaseInit();
   await checkLocationPermission();
   ChuckerFlutter.showOnRelease = false;
   FlutterError.onError = (errorDetails) {

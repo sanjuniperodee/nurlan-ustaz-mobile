@@ -94,14 +94,15 @@ class _GeonamesPageState extends State<GeonamesPage> {
                                       ? BlocProvider.of<GetProfileCubit>(
                                               context)
                                           .getUser()
-                                          .then((value) => context.router.pop())
+                                          .then((value) =>
+                                              context.router.maybePop())
                                       : BlocProvider.of<TimingsCubit>(context)
                                           .timings(
                                             double.parse(geoa[geoIndex].lat!),
                                             double.parse(geoa[geoIndex].lng!),
                                           )
-                                          .then(
-                                              (value) => context.router.pop());
+                                          .then((value) =>
+                                              context.router.maybePop());
                                 },
                               );
                               // TODO: implement listener

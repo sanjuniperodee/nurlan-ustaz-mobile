@@ -87,8 +87,7 @@ class _RamazanChecklistPageState extends State<RamazanChecklistPage> {
                         weekDay: WeekDay.long,
                         fullCalendarDay: WeekDay.long,
                         selectedDateColor: Colors.blue.shade900,
-                        initialDate: date ,
-
+                        initialDate: date,
                         firstDate: DateTime.parse(widget.checkList.startDate!),
                         lastDate: DateTime.parse(widget.checkList.endDate!),
                         events:
@@ -152,7 +151,7 @@ class _RamazanChecklistPageState extends State<RamazanChecklistPage> {
                               )),
                             )
                           : tasks == null
-                          ? ListView.builder(
+                              ? ListView.builder(
                                   itemCount: days
                                           .map((element) =>
                                               DateTime.parse(element.date).day)

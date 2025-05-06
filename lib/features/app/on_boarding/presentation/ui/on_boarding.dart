@@ -197,8 +197,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           duration: const Duration(seconds: 1), curve: Curves.ease);
       setState(() {});
     } else {
-
-       BlocProvider.of<AppBloc>(context).add(const AppEvent.onboardingSave());
+      BlocProvider.of<AppBloc>(context).add(const AppEvent.onboardingSave());
     }
   }
 
@@ -217,7 +216,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           _chewieControllers[currentIndex].play();
         } else {
           // Last video has ended, handle as needed
-           BlocProvider.of<AppBloc>(context).add(const AppEvent.onboardingSave());
+          BlocProvider.of<AppBloc>(context)
+              .add(const AppEvent.onboardingSave());
         }
       }
     }

@@ -60,13 +60,14 @@ class TimingsCubit extends Cubit<TimingsState> {
     final failureOrUser = await _homeRepository.timings(lat: lat, long: long);
 
     failureOrUser.fold(
-          (l) {
+      (l) {
         emit(TimingsState.errorState(message: mapFailureToMessageBack(l)));
       },
-          (r) async {
+      (r) async {
         Prefs prefs = Prefs();
         final String? dev = await prefs.getDeviceToken();
-        final result = await _homeRepository.getNotificationDevice(registrationId: dev ?? '');
+        final result = await _homeRepository.getNotificationDevice(
+            registrationId: dev ?? '');
 
         result.fold((l) {}, (notification) {
           handlePrayerTimesNotification(notification, r);
@@ -85,9 +86,11 @@ class TimingsCubit extends Cubit<TimingsState> {
     );
   }
 
-  void handlePrayerTimesNotification(NotificationDTO notification, TimingsDTO r) {
+  void handlePrayerTimesNotification(
+      NotificationDTO notification, TimingsDTO r) {
     if (notification.prayerTimes != null && notification.prayerTimes == true) {
-      final List<String> time = r.toJson().values.map((e) => e.toString()).toList();
+      final List<String> time =
+          r.toJson().values.map((e) => e.toString()).toList();
       final now = DateTime.now();
 
       for (String item in r.toJson().values) {

@@ -218,9 +218,11 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                                               color: AppColors.white,
                                               borderRadius: BorderRadius.only(
                                                 topLeft:
-                                                    const Radius.circular(20.0).r,
+                                                    const Radius.circular(20.0)
+                                                        .r,
                                                 // Adjust the radius as needed
-                                                topRight: const Radius.circular(20.0)
+                                                topRight: const Radius.circular(
+                                                        20.0)
                                                     .r, // Adjust the radius as needed
                                               ),
                                             ),
@@ -247,7 +249,7 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                                                     .map((r) => Padding(
                                                           padding:
                                                               const EdgeInsets
-                                                                      .symmetric(
+                                                                  .symmetric(
                                                                   vertical: 10),
                                                           child: Row(
                                                             children: [

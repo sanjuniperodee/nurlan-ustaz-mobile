@@ -9,7 +9,6 @@ import 'package:nurlan_ustaz_flutter/features/home/data/models/notification_devi
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/repositories/home_repository.dart';
 
-import '../../../../core/services/notification_service.dart';
 import '../../data/models/notification_dto.dart';
 import '../../data/models/notification_item_dto.dart';
 
@@ -39,9 +38,9 @@ class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
       NotificationItemDTO notificationItemDTO, bool value) async {
     emit(const _LoadingState());
     log(notificationItemDTO.title!);
-    final notification =  notificationDeviceDTO.toJson();
+    final notification = notificationDeviceDTO.toJson();
     notification[notificationItemDTO.title!] = value;
-    notificationDeviceDTO = NotificationDTO.fromJson(notification) ;
+    notificationDeviceDTO = NotificationDTO.fromJson(notification);
 
     // void handleType(String namazTime) {
     //
@@ -96,18 +95,20 @@ class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
 
     //handleType(notificationItemDTO.title!);
 
-
-    emit(const _InitialPage().copyWith(
+    emit(
+      const _InitialPage().copyWith(
         serverNotificationDto: serverNotifications,
         notificationDTO: notificationDeviceDTO,
-        items:notificationDeviceDTO
+        items: notificationDeviceDTO
             .toJson()
             .entries
             .toList()
             .sublist(7, 15)
             .map((e) =>
                 NotificationItemDTO(title: e.key, status: e.value as bool))
-            .toList()));
+            .toList(),
+      ),
+    );
   }
 
   Future<void> getNotificationDto() async {
@@ -122,9 +123,10 @@ class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
       log(serverNotifications
           .toJson()
           .entries
-          .toList().map((e) => e.key.toString()).toList()
+          .toList()
+          .map((e) => e.key.toString())
+          .toList()
           .toString());
-
 
       notifications = r
           .toJson()
