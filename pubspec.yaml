@@ -35,9 +35,6 @@ dependencies:
   flutter_local_notifications: ^19.1.0
   syncfusion_flutter_pdfviewer: ^29.1.40
 
-  #state
-  hive: ^2.2.3
-  hive_flutter: ^1.1.0
 
   # dart
   dio: ^5.2.0
@@ -46,18 +43,18 @@ dependencies:
   rxdart: ^0.28.0
   provider: ^6.0.5
   equatable: ^2.0.5
-  auto_route: ^9.3.0+1
+  auto_route: ^10.0.1
   injectable: ^2.1.0
   flutter_bloc: ^9.1.1
   get_ip_address: ^0.0.5
   chucker_flutter: ^1.3.5
-  json_annotation: ^4.7.0
+  json_annotation: ^4.9.0
   stop_watch_timer: ^3.2.2
   pretty_dio_logger: ^1.1.1
   easy_localization: ^3.0.1
   freezed_annotation: ^3.0.0
   web_socket_channel: ^3.0.3
-  cached_network_image: ^3.2.3
+  cached_network_image: ^3.4.1
   flutter_cache_manager: ^3.3.1
 
   # firebase
@@ -67,12 +64,11 @@ dependencies:
   firebase_crashlytics: ^4.3.5
   firebase_dynamic_links: ^6.1.5
 
-  #ui
+  # ui
   pinput: ^5.0.1
   lottie: ^3.3.1
   flutter_svg: ^2.1.0
   fluttertoast: ^8.2.1
-  # msh_checkbox: ^2.0.1
   dots_indicator: ^4.0.1
   flutter_qiblah: ^3.1.0+1
   pull_to_refresh: ^2.0.0
@@ -84,20 +80,17 @@ dependencies:
   audio_video_progress_bar: ^2.0.3
   flutter_widget_from_html: ^0.15.3
   mask_text_input_formatter: ^2.4.0
-  # calendar_agenda: ^0.0.2+3
-  calendar_agenda:
-    path: ../calendar_agenda
+  scrollable_positioned_list: ^0.3.8
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
   # codegen
-  freezed: ^3.0.0-0.0.dev
+  freezed: ^3.0.6
   build_runner: ^2.3.3
-  hive_generator: ^2.0.0
   json_serializable: ^6.5.4
-  auto_route_generator: ^9.0.0
+  auto_route_generator: ^10.0.1
   injectable_generator: ^2.1.5
 
   #
