@@ -36,7 +36,6 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
   ];
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     BlocProvider.of<AyatOfDayCubit>(context).auatOfDay();
     BlocProvider.of<AyatOfDayCubit>(context).fatya();

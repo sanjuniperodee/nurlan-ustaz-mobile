@@ -241,7 +241,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                       InkWell(
                                           onTap: () {
                                             context.router.push(
-                                              CommentRouteSem(id: result.id!),
+                                              CommentSemRoute(id: result.id!),
                                             );
                                           },
                                           child: SvgPicture.asset(
@@ -525,7 +525,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                             GestureDetector(
                               onTap: () {
                                 context.router.push(
-                                  CommentRouteSem(id: result.id!),
+                                  CommentSemRoute(id: result.id!),
                                 );
                               },
                               child: Text(

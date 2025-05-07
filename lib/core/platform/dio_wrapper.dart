@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
@@ -22,7 +21,6 @@ class DioWrapper {
     dio = Dio(
       BaseOptions(baseUrl: SERVER_.trim() + path.trim()),
     )..interceptors.addAll([
-         ChuckerDioInterceptor(),
         _KausarDioInterceptor(
           _authLocalDS,
         ),
@@ -66,7 +64,6 @@ class _KausarDioInterceptor extends Interceptor {
   final AuthLocalDs _authLocalDS;
 
   _KausarDioInterceptor(this._authLocalDS);
-  static ChuckerHttpClient? _chuckerHttpClient;
 
   Dio dio = Dio(BaseOptions(baseUrl: SERVER_));
 

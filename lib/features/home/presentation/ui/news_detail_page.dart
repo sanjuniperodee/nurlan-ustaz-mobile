@@ -176,7 +176,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                                     InkWell(
                                         onTap: () {
                                           context.router.push(
-                                            CommentRouteNews(id: result.id!),
+                                            CommentNewsRoute(id: result.id!),
                                           );
                                         },
                                         child: SvgPicture.asset(
@@ -231,7 +231,7 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
                           GestureDetector(
                             onTap: () {
                               context.router.push(
-                                CommentRouteNews(id: result.id!),
+                                CommentNewsRoute(id: result.id!),
                               );
                             },
                             child: Text(
