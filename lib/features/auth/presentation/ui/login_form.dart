@@ -32,18 +32,18 @@ class _LoginFormState extends State<LoginForm> {
   Widget build(BuildContext context) {
     return BlocConsumer<LoginCubit, LoginState>(
       builder: (context, state) {
-       return  state.maybeWhen(orElse: (){
-         return Container();
-       },loadingState: () {
-         return Padding(
-           padding:  EdgeInsets.only(top: 250).h,
-           child: Center(
-             child: CircularProgressIndicator(
-               color: AppColors.linearBlue,
-             ),
-           ),
-         );
-       },initialState: (){
+        if (state is LoginLoadingState) {
+          return Padding(
+            padding: EdgeInsets.only(top: 250).h,
+            child: Center(
+              child: CircularProgressIndicator(
+                color: AppColors.linearBlue,
+              ),
+            ),
+          );
+        }
+
+        if (state is LoginInitialState) {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -119,7 +119,8 @@ class _LoginFormState extends State<LoginForm> {
                 decoration: BoxDecoration(
                     gradient: LinearGradient(
                         colors: AppColors.gradientSecondaryActiveButton.colors),
-                    borderRadius: const BorderRadius.all(Radius.circular(30)).r),
+                    borderRadius:
+                        const BorderRadius.all(Radius.circular(30)).r),
                 child: MaterialButton(
                   onPressed: () {
                     context.router.push(const ForgotPasswordRoute());
@@ -133,33 +134,33 @@ class _LoginFormState extends State<LoginForm> {
                           style: getTextStyle(CustomTextStyles.s16w200)
                               .apply(fontFamily: FontTypes.Philosopher.name)
                               .copyWith(
-                              fontWeight: FontWeight.w700, fontSize: 16.sp)
+                                  fontWeight: FontWeight.w700, fontSize: 16.sp)
                               .apply(
-                            color: AppColors.blue,
-                          )),
+                                color: AppColors.blue,
+                              )),
                     ),
                   ),
                 ),
               )
             ],
           );
-        });
+        }
 
+        // TODO: error widget
+        return const SizedBox.shrink();
       },
       listener: (context, state) {
-        state.maybeWhen(
-
-          loadedState: () async {
+        switch (state) {
+          case LoginLoadedState():
             emailController.clear();
             passwordController.clear();
             AutoRouter.of(context).pushAndPopUntil(const LauncherAppRoute(),
                 predicate: (route) => false);
-          },
-          errorState: (message) {
+            break;
+          case LoginErrorState(:final message):
             buildErrorCustomSnackBar(context, message);
-          },
-          orElse: () {},
-        );
+          default:
+        }
       },
     );
   }

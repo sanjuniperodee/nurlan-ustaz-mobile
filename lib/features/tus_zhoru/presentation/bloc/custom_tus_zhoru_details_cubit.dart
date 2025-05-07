@@ -12,46 +12,37 @@ class CustomTusZhoruDetailsCubit extends Cubit<CustomTusZhoruDetailsState> {
   final TusZhoruRepository _repository;
 
   CustomTusZhoruDetailsCubit(
-      this._repository,
-      ) : super(const CustomTusZhoruDetailsState.initialState());
+    this._repository,
+  ) : super(const CustomTusZhoruDetailsState.initial());
 
   late List<TusZhoruDTO> tosZhoruList;
   late List<TusZhoruDTO> customTusZhoruList;
 
-
-
-
   Future<TusZhoruDTO?> getCustomTusZhoruById(int id) async {
-    emit(_LoadingState());
+    emit(const CustomTusZhoruDetailsState.loading());
     final result = await _repository.getCustomTusZhoru(id: id);
     return result.fold((l) {
       return null;
     }, (r) {
-      emit(_LoadedState(r));
+      emit(CustomTusZhoruDetailsState.loaded(r));
       return r;
     });
   }
-
-
-
-
 }
 
 @freezed
-class CustomTusZhoruDetailsState with _$CustomTusZhoruDetailsState {
-  const factory CustomTusZhoruDetailsState.initialState({
+sealed class CustomTusZhoruDetailsState with _$CustomTusZhoruDetailsState {
+  const factory CustomTusZhoruDetailsState.initial({
     @Default([]) List<TusZhoruDTO> tusZhoruList,
     @Default([]) List<TusZhoruDTO> customTusZhoru,
     @Default(0) int currentIndex,
-  }) = _InitialPage;
-
-  const factory CustomTusZhoruDetailsState.loadingState() = _LoadingState;
-
+  }) = CustomTusZhoruDetailsInitialPage;
+  const factory CustomTusZhoruDetailsState.loading() =
+      CustomTusZhoruDetailsLoadingState;
   const factory CustomTusZhoruDetailsState.loaded(
-      final TusZhoruDTO? tusZhoru,
-      ) = _LoadedState;
-
-  const factory CustomTusZhoruDetailsState.errorState({
+    final TusZhoruDTO? tusZhoru,
+  ) = CustomTusZhoruDetailsLoadedState;
+  const factory CustomTusZhoruDetailsState.error({
     required String message,
-  }) = _ErrorState;
+  }) = CustomTusZhoruDetailsErrorState;
 }

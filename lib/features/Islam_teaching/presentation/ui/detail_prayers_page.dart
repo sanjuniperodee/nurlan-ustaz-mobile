@@ -44,139 +44,136 @@ class _PrayersDetailPageState extends State<PrayersDetailPage> {
       backgroundColor: AppColors.lightBlue,
       body: BlocBuilder<DuaDetailCubit, DuaDetailState>(
         builder: (context, state) {
-          return state.maybeWhen(
-            orElse: () {
-              return const Center();
-            },
-            loaded: (result) {
-              isFavorite = result.isSaved!;
-              return SizedBox(
-                height: 1.sh,
-                child: Stack(
-                  children: [
-                    Image.asset(
-                      Assets.gradient,
-                      fit: BoxFit.cover,
-                    ),
-                    Positioned.fill(
-                        // left: 280.r,
-                        child: Opacity(
-                      opacity: 0.5,
-                      child: Lottie.asset('assets/animations/Book_V04.json',
-                          fit: BoxFit.cover),
-                    )),
-                    SizedBox(
-                      child: SingleChildScrollView(
-                          physics: const BouncingScrollPhysics(),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              SizedBox(
-                                height: 56.h,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: CustomAppBar(
-                                  title: result.name ?? 'ERROR',
-                                  onTap: () {
-                                    BlocProvider.of<DuasCubit>(context)
-                                        .duas(page: 1, isFirstCall: true)
-                                        .then(
-                                            (value) => Navigator.pop(context));
-                                  },
-                                ),
-                              ),
-                              SizedBox(
-                                height: 26.h,
-                              ),
-                              Container(
-                                  height: 0.8.sh,
-                                  decoration: BoxDecoration(
-                                      color: AppColors.white.withOpacity(0.3),
-                                      borderRadius: BorderRadius.circular(24)),
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 16, horizontal: 20),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        result.arabic ?? 'ERROR',
-                                        style: getTextStyle(
-                                            CustomTextStyles.s14w400),
-                                      ),
-                                      SizedBox(
-                                        height: 24.h,
-                                      ),
-                                      Text(
-                                        result.transcription ?? 'ERROR',
-                                        style: getTextStyle(
-                                            CustomTextStyles.s14w400),
-                                      ),
-                                      SizedBox(
-                                        height: 14.h,
-                                      ),
-                                      Text(
-                                        result.translation ?? 'ERROR',
-                                        style: getTextStyle(
-                                            CustomTextStyles.s14w400),
-                                      ),
-                                      SizedBox(
-                                        height: 14.h,
-                                      ),
-                                      if (result.audio != null)
-                                        AudioItemWidget(
-                                          audioUrl: result.audio ?? '',
-                                        ),
-                                      const Spacer(),
-                                      Align(
-                                        alignment: Alignment.bottomCenter,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            FloatinContainerWidget(
-                                              text: 'Favourite'.tr(),
-                                              onTap: () {
-                                                BlocProvider.of<DuaDetailCubit>(
-                                                        context)
-                                                    .duasFavorite(
-                                                        id: result.id ?? 0);
-                                                isFavorite = !isFavorite;
-                                                setState(() {});
-                                              },
-                                              color: 'sadf',
-                                              url: isFavorite
-                                                  ? Assets.bookMark1Svg
-                                                  : Assets.bookMarkSvg,
-                                            ),
-                                            FloatinContainerWidget(
-                                              color: 'asd',
-                                              onTap: () async {
-                                                String unguessableDynamicLink =
-                                                    await DynamicLink()
-                                                        .createDuhasLink(
-                                                            result.id!);
-                                                await Share.share(
-                                                  unguessableDynamicLink,
-                                                );
-                                              },
-                                              text: 'share'.tr(),
-                                              url: Assets.shareSvg,
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  )),
-                            ],
-                          )),
-                    ),
-                  ],
+          // TODO: error widget
+          if (state is! DuaDetailLoadedState) {
+            return const SizedBox.shrink();
+          }
+
+          final result = state.res;
+          isFavorite = result.isSaved!;
+          return SizedBox(
+            height: 1.sh,
+            child: Stack(
+              children: [
+                Image.asset(
+                  Assets.gradient,
+                  fit: BoxFit.cover,
                 ),
-              );
-            },
+                Positioned.fill(
+                    // left: 280.r,
+                    child: Opacity(
+                  opacity: 0.5,
+                  child: Lottie.asset('assets/animations/Book_V04.json',
+                      fit: BoxFit.cover),
+                )),
+                SizedBox(
+                  child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(
+                            height: 56.h,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: CustomAppBar(
+                              title: result.name ?? 'ERROR',
+                              onTap: () {
+                                BlocProvider.of<DuasCubit>(context)
+                                    .duas(page: 1, isFirstCall: true)
+                                    .then((value) => Navigator.pop(context));
+                              },
+                            ),
+                          ),
+                          SizedBox(
+                            height: 26.h,
+                          ),
+                          Container(
+                              height: 0.8.sh,
+                              decoration: BoxDecoration(
+                                  color: AppColors.white.withOpacity(0.3),
+                                  borderRadius: BorderRadius.circular(24)),
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 16, horizontal: 20),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    result.arabic ?? 'ERROR',
+                                    style:
+                                        getTextStyle(CustomTextStyles.s14w400),
+                                  ),
+                                  SizedBox(
+                                    height: 24.h,
+                                  ),
+                                  Text(
+                                    result.transcription ?? 'ERROR',
+                                    style:
+                                        getTextStyle(CustomTextStyles.s14w400),
+                                  ),
+                                  SizedBox(
+                                    height: 14.h,
+                                  ),
+                                  Text(
+                                    result.translation ?? 'ERROR',
+                                    style:
+                                        getTextStyle(CustomTextStyles.s14w400),
+                                  ),
+                                  SizedBox(
+                                    height: 14.h,
+                                  ),
+                                  if (result.audio != null)
+                                    AudioItemWidget(
+                                      audioUrl: result.audio ?? '',
+                                    ),
+                                  const Spacer(),
+                                  Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        FloatinContainerWidget(
+                                          text: 'Favourite'.tr(),
+                                          onTap: () {
+                                            BlocProvider.of<DuaDetailCubit>(
+                                                    context)
+                                                .duasFavorite(
+                                                    id: result.id ?? 0);
+                                            isFavorite = !isFavorite;
+                                            setState(() {});
+                                          },
+                                          color: 'sadf',
+                                          url: isFavorite
+                                              ? Assets.bookMark1Svg
+                                              : Assets.bookMarkSvg,
+                                        ),
+                                        FloatinContainerWidget(
+                                          color: 'asd',
+                                          onTap: () async {
+                                            String unguessableDynamicLink =
+                                                await DynamicLink()
+                                                    .createDuhasLink(
+                                                        result.id!);
+                                            await Share.share(
+                                              unguessableDynamicLink,
+                                            );
+                                          },
+                                          text: 'share'.tr(),
+                                          url: Assets.shareSvg,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )),
+                        ],
+                      )),
+                ),
+              ],
+            ),
           );
         },
       ),

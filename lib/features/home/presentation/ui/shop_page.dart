@@ -42,165 +42,150 @@ class _ShopPageState extends State<ShopPage> {
           // TODO: implement listener
         },
         builder: (context, state) {
-          return state.maybeWhen(
-            loadingState: () {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.linearBlue,
-                ),
-              );
-            },
-            orElse: () {
-              return const Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.linearBlue
-                ),
-              );
-            },
-            loaded: (partners) {
-              final topPartners = partners.where((element) => element.isTop == true).toList();
-              final otherPartners = partners.where((element) => element.isTop == false).toList();
-              log(partners.toList().toString());
-              return GlobalCustomBody(
-                child: SizedBox(
-                  child: SmartRefresher(
-                    onRefresh: () => context.read<PartnersCubit>().partners(),
-                    controller: controller,
-                    child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      child: Column(
-                        children: [
-                           CustomAppBar(
-                            title: 'shop'.tr(),
-                          ),
-                          SizedBox(
-                            height: 36.h,
-                          ),
-                          Text(
-                            'top'.tr(),
-                            style: getTextStyle(CustomTextStyles.s20w700)
-                                .apply(color: AppColors.white),
-                          ),
-                          SizedBox(
-                            height: 16.h,
-                          ),
-                          GridView.builder(
-                            itemCount:topPartners
-                                .length,
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            padding: const EdgeInsets.all(0),
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              crossAxisSpacing: 20.0,
-                              mainAxisSpacing: 20.0,
-                            ),
-                            itemBuilder: (BuildContext context, int index) {
-                              if (topPartners[index].logo == null) {
-                                return Container(
-                                  height: 100,
-                                  width: 100,
-                                  child: Center(
-                                    child: Text(
-                                      topPartners[index].name ?? 'ERROR',
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                  decoration: BoxDecoration(
-                                      color: const Color(0xFFFEEDCC),
+          // TODO: error widget
+          if (state is! PartnersLoadedState) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: AppColors.linearBlue,
+              ),
+            );
+          }
 
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(12))),
-                                );
-                              }
-
-                              return ClipRRect(
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(12))
-                                        .r,
-                                child: InkWell(
-                                  onTap: () {
-                                    _launchUrl(topPartners[index].url ?? '');
-                                  },
-                                  child: CachedNetworkImage(
-                                    imageUrl: topPartners[index].logo ?? '',
-                                    fit: BoxFit.cover,
-                                    height: 55.h,
-                                    width: 55.w,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                          SizedBox(
-                            height: 16.h,
-                          ),
-                          Text(
-                            'all'.tr(),
-                            style: getTextStyle(CustomTextStyles.s20w700)
-                                .apply(color: AppColors.black),
-                          ),
-                          SizedBox(
-                            height: 16.h,
-                          ),
-                          GridView.builder(
-                            itemCount:otherPartners
-                                .length,
-                            shrinkWrap: true,
-                            padding: const EdgeInsets.all(0),
-                            physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              crossAxisSpacing: 20.0,
-                              mainAxisSpacing: 20.0,
-                            ),
-                            itemBuilder: (BuildContext context, int index) {
-                              if (otherPartners[index].logo == null) {
-                                return Container(
-                                  height: 100,
-                                  width: 100,
-                                  child: Center(
-                                    child: Text(
-                                      otherPartners[index].name ?? 'ERROR',
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ),
-                                  decoration: BoxDecoration(
-                                      color: const Color(0xFFFEEDCC),
-
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(12))),
-                                );
-                              }
-                              return ClipRRect(
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(12))
-                                        .r,
-                                child: InkWell(
-                                  onTap: () {
-                                    _launchUrl(otherPartners[index].url ?? '');
-                                  },
-                                  child:  CachedNetworkImage(
-                                          imageUrl: otherPartners[index].logo ?? '',
-                                          fit: BoxFit.cover,
-                                          height: 55.h,
-                                          width: 55.w,
-
-                                        )
-
-                                ),
-                              );
-                            },
-                          ),
-                        ],
+          final partners = state.partners;
+          final topPartners =
+              partners.where((element) => element.isTop == true).toList();
+          final otherPartners =
+              partners.where((element) => element.isTop == false).toList();
+          log(partners.toList().toString());
+          return GlobalCustomBody(
+            child: SizedBox(
+              child: SmartRefresher(
+                onRefresh: () => context.read<PartnersCubit>().partners(),
+                controller: controller,
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    children: [
+                      CustomAppBar(
+                        title: 'shop'.tr(),
                       ),
-                    ),
+                      SizedBox(
+                        height: 36.h,
+                      ),
+                      Text(
+                        'top'.tr(),
+                        style: getTextStyle(CustomTextStyles.s20w700)
+                            .apply(color: AppColors.white),
+                      ),
+                      SizedBox(
+                        height: 16.h,
+                      ),
+                      GridView.builder(
+                        itemCount: topPartners.length,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        padding: const EdgeInsets.all(0),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 20.0,
+                          mainAxisSpacing: 20.0,
+                        ),
+                        itemBuilder: (BuildContext context, int index) {
+                          if (topPartners[index].logo == null) {
+                            return Container(
+                              height: 100,
+                              width: 100,
+                              child: Center(
+                                child: Text(
+                                  topPartners[index].name ?? 'ERROR',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                  color: const Color(0xFFFEEDCC),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(12))),
+                            );
+                          }
+
+                          return ClipRRect(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(12)).r,
+                            child: InkWell(
+                              onTap: () {
+                                _launchUrl(topPartners[index].url ?? '');
+                              },
+                              child: CachedNetworkImage(
+                                imageUrl: topPartners[index].logo ?? '',
+                                fit: BoxFit.cover,
+                                height: 55.h,
+                                width: 55.w,
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      SizedBox(
+                        height: 16.h,
+                      ),
+                      Text(
+                        'all'.tr(),
+                        style: getTextStyle(CustomTextStyles.s20w700)
+                            .apply(color: AppColors.black),
+                      ),
+                      SizedBox(
+                        height: 16.h,
+                      ),
+                      GridView.builder(
+                        itemCount: otherPartners.length,
+                        shrinkWrap: true,
+                        padding: const EdgeInsets.all(0),
+                        physics: const NeverScrollableScrollPhysics(),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 3,
+                          crossAxisSpacing: 20.0,
+                          mainAxisSpacing: 20.0,
+                        ),
+                        itemBuilder: (BuildContext context, int index) {
+                          if (otherPartners[index].logo == null) {
+                            return Container(
+                              height: 100,
+                              width: 100,
+                              child: Center(
+                                child: Text(
+                                  otherPartners[index].name ?? 'ERROR',
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              decoration: BoxDecoration(
+                                  color: const Color(0xFFFEEDCC),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(12))),
+                            );
+                          }
+                          return ClipRRect(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(12)).r,
+                            child: InkWell(
+                                onTap: () {
+                                  _launchUrl(otherPartners[index].url ?? '');
+                                },
+                                child: CachedNetworkImage(
+                                  imageUrl: otherPartners[index].logo ?? '',
+                                  fit: BoxFit.cover,
+                                  height: 55.h,
+                                  width: 55.w,
+                                )),
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ),
-              );
-            },
+              ),
+            ),
           );
         },
       ),

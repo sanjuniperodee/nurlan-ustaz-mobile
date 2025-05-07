@@ -52,19 +52,19 @@ class _RamazanChecklistPageState extends State<RamazanChecklistPage> {
       backgroundColor: AppColors.lightBlue,
       body: BlocConsumer<CheckListCubit, CheckListState>(
         listener: (context, state) {
-          state.maybeWhen(
-            errorState: (message) {
-              buildErrorCustomSnackBar(context, message);
-            },
-            orElse: () {},
-          );
+          if (state is CheckListErrorState) {
+            buildErrorCustomSnackBar(context, state.message);
+          }
         },
         builder: (context, state) {
-          return state.maybeWhen(orElse: () {
-            return Container();
-          }, loadingState: () {
+          if (state is CheckListLoadingState) {
             return Scaffold(body: Center(child: CircularProgressIndicator()));
-          }, initialState: (days, selectedDate, tasks, isLoading) {
+          }
+
+          if (state is CheckListInitialState) {
+            final selectedDate = state.selectedDate;
+            final days = state.days;
+            final tasks = state.tasks;
             final date = selectedDate ?? DateTime.now();
 
             return CalendarCustomBody(
@@ -201,7 +201,9 @@ class _RamazanChecklistPageState extends State<RamazanChecklistPage> {
                 ),
               ),
             );
-          });
+          }
+
+          return const SizedBox.shrink();
         },
       ),
     );

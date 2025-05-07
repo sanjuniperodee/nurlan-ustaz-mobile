@@ -43,34 +43,23 @@ class _UstazAitinizhiPageState extends State<UstazAitinizhiPage> {
   Widget build(BuildContext context) {
     return BlocListener<TodayChatCubit, TodayChatState>(
       listener: (context, state) {
-        state.maybeWhen(
-            orElse: () {},
-            loadingState: () {
-              return const Padding(
-                padding: EdgeInsets.only(top: 600),
-                child: Center(
-                  child: CircularProgressIndicator(),
-                ),
-              );
-            },
-            initialState: (questions, channel, user) {
-              userSir = user!;
-              _channel = channel;
-              if (questions
-                      .toList()
-                      .any((element) => element.email == user.email) ||
-                  channel == null) {
-                log('est');
-                setState(() {
-                  showButton = false;
-                });
-              } else {
-                setState(() {
-                  showButton = true;
-                });
-              }
+        if (state is TodayChatInitialState) {
+          userSir = state.user!;
+          _channel = state.channel;
+          if (state.questions
+                  .toList()
+                  .any((element) => element.email == userSir.email) ||
+              state.channel == null) {
+            log('est');
+            setState(() {
+              showButton = false;
             });
-        // TODO: implement listener
+          } else {
+            setState(() {
+              showButton = true;
+            });
+          }
+        }
       },
       child: WillPopScope(
         onWillPop: _onWillPop,

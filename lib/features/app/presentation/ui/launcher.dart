@@ -55,7 +55,7 @@ Widget _appBLoc() {
       return WillPopScope(
         onWillPop: () async {
           return await AlertUtils.showTwoOptionDialog(
-            isApp: true,
+              isApp: true,
               context: context,
               messageKey: 'exit_from_app'.tr(),
               title: 'exit'.tr(),
@@ -63,37 +63,27 @@ Widget _appBLoc() {
               button2Text: 'exit2'.tr());
         },
         child: state.maybeWhen(
-          onBoardingState: () {
-            return const OnBoardingPage();
-          },
-          loadingState: () {
-            return const Base();
-          },
-          notAuthorizedState: () {
-            return const LoginPage();
-          },
-          errorState: (String message) {
-            return const _Scaffold(
-              child: Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.linearBlue,
-                ),
+          onBoarding: () => const OnBoardingPage(),
+          loading: () => const Base(),
+          notAuthorized: () => const LoginPage(),
+          error: (String message) => const _Scaffold(
+            child: Center(
+              child: CircularProgressIndicator(
+                color: AppColors.linearBlue,
               ),
-            );
-          },
-          orElse: () {
-            return const Base();
-          },
+            ),
+          ),
+          orElse: () => const Base(),
         ),
       );
     },
     listener: (context, state) async {
       state.whenOrNull(
-        notAuthorizedState: () {
+        notAuthorized: () {
           AutoRouter.of(context)
               .pushAndPopUntil(const LoginRoute(), predicate: (route) => false);
         },
-        notAuthorizedDialogState: () async {
+        notAuthorizedDialog: () async {
           var dialog = await AlertUtils.showTwoOptionDialog(
               context: context,
               messageKey: '401.content'.tr(),
@@ -110,7 +100,7 @@ Widget _appBLoc() {
                 predicate: (route) => false);
           }
         },
-        inAppState: () {
+        inApp: () {
           //context.router.pop();
         },
       );

@@ -17,7 +17,7 @@ class GetProfileCubit extends Cubit<GetProfileState> {
   GetProfileCubit(
     this._authRepository,
     this._homeLocalDs,
-  ) : super(const GetProfileState.initialState());
+  ) : super(const GetProfileState.initial());
 
   Future<void> getUser() async {
     final GeonamesDTO? geo = _homeLocalDs.getGeoFromCacheNull();
@@ -27,7 +27,7 @@ class GetProfileCubit extends Cubit<GetProfileState> {
       final failureOrUser = await _authRepository.getUser();
       failureOrUser.fold(
         (l) {
-          emit(GetProfileState.errorState(message: mapFailureToMessageBack(l)));
+          emit(GetProfileState.error(message: mapFailureToMessageBack(l)));
         },
         (r) {
           emit(GetProfileState.loaded(user: r, geo: geo));
@@ -37,8 +37,7 @@ class GetProfileCubit extends Cubit<GetProfileState> {
       final failureOrUser = await _authRepository.getUser();
       failureOrUser.fold(
         (l) {
-          emit(GetProfileState.errorState(message: mapFailureToMessageBack(l)));
-
+          emit(GetProfileState.error(message: mapFailureToMessageBack(l)));
         },
         (r) {
           emit(GetProfileState.loaded(
@@ -54,18 +53,15 @@ class GetProfileCubit extends Cubit<GetProfileState> {
 }
 
 @freezed
-class GetProfileState with _$GetProfileState {
-  const factory GetProfileState.initialState() = _InitialPage;
-
-  const factory GetProfileState.loadingState() = _LoadingState;
-
+sealed class GetProfileState with _$GetProfileState {
+  const factory GetProfileState.initial() = GetProfileInitialPage;
+  const factory GetProfileState.loading() = GetProfileLoadingState;
   const factory GetProfileState.loaded({
     required UserDto user,
     required GeonamesDTO geo,
     String? dev,
-  }) = _LoadedState;
-
-  const factory GetProfileState.errorState({
+  }) = GetProfileLoadedState;
+  const factory GetProfileState.error({
     required String message,
-  }) = _ErrorState;
+  }) = GetProfileErrorState;
 }

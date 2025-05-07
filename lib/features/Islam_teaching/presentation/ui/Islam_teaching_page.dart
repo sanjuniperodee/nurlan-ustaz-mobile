@@ -1,5 +1,3 @@
-
-
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -73,199 +71,178 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
       ),
     ];
     return BlocListener<LanguageCubit, LanguageState>(
-      listener: (context, state) {
-        state.maybeWhen(
-          orElse: () {},
-          loadedState: () {
-            setState(() {});
-          },
-        );
-        // TODO: implement listener
-      },
+      listenWhen: (previous, current) => current is LanguageLoadedState,
+      listener: (context, state) => setState(() {}),
       child: Scaffold(
         backgroundColor: AppColors.lightBlue,
         body: BlocConsumer<AyatOfDayCubit, AyatOfDayState>(
           listener: (context, state) {
-            state.maybeWhen(
-              orElse: () {},
-              errorState: (message) {
-                buildErrorCustomSnackBar(context, message);
-              },
-            ); //          // TODO: implement listener
+            if (state is AyatOfDayErrorState) {
+              buildErrorCustomSnackBar(context, state.message);
+            }
           },
           builder: (context, state) {
-            return state.maybeWhen(
-              orElse: () {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.linearBlue,
+            // TODO: error widget
+            if (state is! AyatOfDayLoadedState) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.linearBlue,
+                ),
+              );
+            }
+
+            final ayat = state.ayat;
+            final fatyas = state.pillars;
+            return SizedBox(
+              height: 1.1.sh,
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: Lottie.asset('assets/animations/Book_V04.json',
+                        fit: BoxFit.cover),
                   ),
-                );
-              },
-              loadingState: () {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.linearBlue,
-                  ),
-                );
-              },
-              loaded: (ayat, fatyas) {
-                return SizedBox(
-                  height: 1.1.sh,
-                  child: Stack(
-                    children: [
-                      Positioned.fill(
-                          child: Lottie.asset('assets/animations/Book_V04.json',fit: BoxFit.cover),),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16, right: 16).r,
-                        child: SizedBox(
-                          child: SingleChildScrollView(
-                              physics: const BouncingScrollPhysics(),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  SizedBox(height: 55.h),
-                                  Text('Islam_study'.tr(),
-                                      style:
-                                          getTextStyle(CustomTextStyles.s36w700)
-                                              .apply(
-                                                  fontFamily: FontTypes
-                                                      .Philosopher.name,
-                                                  color: AppColors.white)),
-                                  SizedBox(height: 24.h),
-                                  ayat.id == null
-                                      ? const SizedBox()
-                                      : GestureDetector(
-                                          onTap: () {
-                                            context.router.push(
-                                              AyatDayRoute(ayatDTO: ayat),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16, right: 16).r,
+                    child: SizedBox(
+                      child: SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(height: 55.h),
+                              Text('Islam_study'.tr(),
+                                  style: getTextStyle(CustomTextStyles.s36w700)
+                                      .apply(
+                                          fontFamily:
+                                              FontTypes.Philosopher.name,
+                                          color: AppColors.white)),
+                              SizedBox(height: 24.h),
+                              ayat.id == null
+                                  ? const SizedBox()
+                                  : GestureDetector(
+                                      onTap: () {
+                                        context.router.push(
+                                          AyatDayRoute(ayatDTO: ayat),
+                                        );
+                                      },
+                                      child: AyatDayCardWidget(
+                                        ayatDTO: ayat,
+                                      )),
+                              SizedBox(height: 20.h),
+                              GridView.builder(
+                                itemCount: list.length,
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                padding: const EdgeInsets.all(0),
+                                gridDelegate:
+                                    const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  childAspectRatio: (60 / 50),
+                                  crossAxisSpacing: 16.0,
+                                  mainAxisSpacing: 16.0,
+                                ),
+                                itemBuilder: (BuildContext context, int index) {
+                                  for (int n = 0;
+                                      n < myRouteHome.length;
+                                      n++) {}
+                                  return InkWell(
+                                    onTap: () {
+                                      list[index].title == 'Fatwa'.tr()
+                                          ? _launchUrl(
+                                              fatyas.first.url ?? 'ERROR')
+                                          : context.router.push(
+                                              myRouteHome[index],
                                             );
-                                          },
-                                          child: AyatDayCardWidget(
-                                            ayatDTO: ayat,
+                                    },
+                                    child: Container(
+                                      padding: const EdgeInsets.only(
+                                          left: 16,
+                                          right: 16,
+                                          top: 10,
+                                          bottom: 10),
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(30).r,
+                                          gradient: LinearGradient(
+                                            begin: Alignment.topRight,
+                                            end: Alignment.bottomLeft,
+                                            colors: [
+                                              const Color(0xFF1151C2)
+                                                  .withOpacity(0.18),
+                                              const Color(0xFF8F8CF7)
+                                                  .withOpacity(0.18),
+                                            ],
                                           )),
-                                  SizedBox(height: 20.h),
-                                  GridView.builder(
-                                    itemCount: list.length,
-                                    shrinkWrap: true,
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    padding: const EdgeInsets.all(0),
-                                    gridDelegate:
-                                        const SliverGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 2,
-                                      childAspectRatio: (60 / 50),
-                                      crossAxisSpacing: 16.0,
-                                      mainAxisSpacing: 16.0,
-                                    ),
-                                    itemBuilder:
-                                        (BuildContext context, int index) {
-                                      for (int n = 0;
-                                          n < myRouteHome.length;
-                                          n++) {}
-                                      return InkWell(
-                                        onTap: () {
-                                          list[index].title == 'Fatwa'.tr()
-                                              ? _launchUrl(
-                                                  fatyas.first.url ?? 'ERROR')
-                                              : context.router.push(
-                                                  myRouteHome[index],
-                                                );
-                                        },
-                                        child: Container(
-                                          padding: const EdgeInsets.only(
-                                              left: 16,
-                                              right: 16,
-                                              top: 10,
-                                              bottom: 10),
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(30).r,
-                                              gradient: LinearGradient(
-                                                begin: Alignment.topRight,
-                                                end: Alignment.bottomLeft,
-                                                colors: [
-                                                  const Color(0xFF1151C2)
-                                                      .withOpacity(0.18),
-                                                  const Color(0xFF8F8CF7)
-                                                      .withOpacity(0.18),
-                                                ],
-                                              )),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          SizedBox(
+                                            height: 12.h,
+                                          ),
+                                          SvgPicture.asset(list[index].url),
+                                          SizedBox(
+                                            height: 12.h,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
-                                              SizedBox(
-                                                height: 12.h,
+                                              Text(
+                                                list[index].title,
+                                                style: getTextStyle(
+                                                        CustomTextStyles
+                                                            .s16w500)
+                                                    .apply(
+                                                        color: AppColors.black),
                                               ),
-                                              SvgPicture.asset(list[index].url),
-                                              SizedBox(
-                                                height: 12.h,
+                                              const Icon(
+                                                Icons.arrow_forward_ios_rounded,
+                                                color: AppColors.orange,
                                               ),
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: [
-                                                  Text(
-                                                    list[index].title,
-                                                    style: getTextStyle(
-                                                            CustomTextStyles
-                                                                .s16w500)
-                                                        .apply(
-                                                            color: AppColors
-                                                                .black),
-                                                  ),
-                                                  const Icon(
-                                                    Icons
-                                                        .arrow_forward_ios_rounded,
-                                                    color: AppColors.orange,
-                                                  ),
-                                                ],
-                                              ),
-                                              // Expanded(
-                                              //   child: Align(
-                                              //     alignment:
-                                              //         Alignment.bottomRight,
-                                              //     child: GestureDetector(
-                                              //       onTap: () {},
-                                              //       child: const Icon(
-                                              //         Icons
-                                              //             .arrow_forward_ios_rounded,
-                                              //         color: AppColors.orange,
-                                              //       ),
-                                              //     ),
-                                              //   ),
-                                              // ),
-                                              // SizedBox(
-                                              //   height: 12.h,
-                                              // ),
                                             ],
                                           ),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                  SizedBox(
-                                    height: 16.h,
-                                  ),
-                                  AppButton(
-                                      onTap: () {
-                                        context.router.push(NameRoute());
-                                      },
-                                      text: 'name_meaning'.tr()),
-                                 SizedBox(
-                                      height: 165.h,
+                                          // Expanded(
+                                          //   child: Align(
+                                          //     alignment:
+                                          //         Alignment.bottomRight,
+                                          //     child: GestureDetector(
+                                          //       onTap: () {},
+                                          //       child: const Icon(
+                                          //         Icons
+                                          //             .arrow_forward_ios_rounded,
+                                          //         color: AppColors.orange,
+                                          //       ),
+                                          //     ),
+                                          //   ),
+                                          // ),
+                                          // SizedBox(
+                                          //   height: 12.h,
+                                          // ),
+                                        ],
+                                      ),
                                     ),
-                                ],
-                              )),
-                        ),
-                      ),
-                    ],
+                                  );
+                                },
+                              ),
+                              SizedBox(
+                                height: 16.h,
+                              ),
+                              AppButton(
+                                  onTap: () {
+                                    context.router.push(NameRoute());
+                                  },
+                                  text: 'name_meaning'.tr()),
+                              SizedBox(
+                                height: 165.h,
+                              ),
+                            ],
+                          )),
+                    ),
                   ),
-                );
-              },
+                ],
+              ),
             );
           },
         ),

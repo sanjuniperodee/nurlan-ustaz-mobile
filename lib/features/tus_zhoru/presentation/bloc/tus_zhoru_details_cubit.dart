@@ -13,57 +13,47 @@ class TusZhoruDetailsCubit extends Cubit<TusZhoruDetailsState> {
 
   TusZhoruDetailsCubit(
     this._repository,
-  ) : super(const TusZhoruDetailsState.initialState());
+  ) : super(const TusZhoruDetailsState.initial());
 
   late List<TusZhoruDTO> tosZhoruList;
   late List<TusZhoruDTO> customTusZhoruList;
   late TusZhoruDTO tusZhoru;
 
-
-
-
-
   Future<TusZhoruDTO?> likeTusZhoru(int id) async {
-
     final result = await _repository.tusZhoruFavorite(id: id);
     return result.fold((l) {
       return null;
     }, (r) {
       tusZhoru = tusZhoru.copyWith(isSaved: !(tusZhoru.isSaved!));
-      emit(_LoadedState(tusZhoru));
+      emit(TusZhoruDetailsState.loaded(tusZhoru));
     });
   }
 
-
-
   Future<TusZhoruDTO?> getTusZhoruById(int id) async {
-    emit(_LoadingState());
+    emit(const TusZhoruDetailsState.loading());
 
     final result = await _repository.getTusZhoruById(id: id);
     return result.fold((l) {
       return null;
     }, (r) {
       tusZhoru = r;
-      emit(_LoadedState(r));
+      emit(TusZhoruDetailsState.loaded(r));
     });
   }
 }
 
 @freezed
-class TusZhoruDetailsState with _$TusZhoruDetailsState {
-  const factory TusZhoruDetailsState.initialState({
+sealed class TusZhoruDetailsState with _$TusZhoruDetailsState {
+  const factory TusZhoruDetailsState.initial({
     @Default([]) List<TusZhoruDTO> tusZhoruList,
     @Default([]) List<TusZhoruDTO> customTusZhoru,
     @Default(0) int currentIndex,
-  }) = _InitialPage;
-
-  const factory TusZhoruDetailsState.loadingState() = _LoadingState;
-
+  }) = TusZhoruDetailsInitialPage;
+  const factory TusZhoruDetailsState.loading() = TusZhoruDetailsLoadingState;
   const factory TusZhoruDetailsState.loaded(
     final TusZhoruDTO? tusZhoru,
-  ) = _LoadedState;
-
-  const factory TusZhoruDetailsState.errorState({
+  ) = TusZhoruDetailsLoadedState;
+  const factory TusZhoruDetailsState.error({
     required String message,
-  }) = _ErrorState;
+  }) = TusZhoruDetailsErrorState;
 }

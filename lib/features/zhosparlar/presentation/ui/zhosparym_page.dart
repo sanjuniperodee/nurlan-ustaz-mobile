@@ -126,81 +126,80 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ZhosparymCubit, ZhosparymState>(
-        listener: (context, state) {
-      state.maybeWhen(
-        errorState: (message) {
-          buildErrorCustomSnackBar(context, message);
-        },
-        orElse: () {},
-      );
-    }, builder: (context, state) {
-      return state.maybeWhen(orElse: () {
-        return Container();
-      }, initialState: (events, checklist) {
-        holidays.clear();
-
-        final eventsDays = events?.map<DateTime, List<EventDto>>(
-          (key, value) => MapEntry(
-            DateTime.parse(key),
-            value,
-          ),
-        );
-        if (eventsDays != null) {
-          eventsDays.forEach((key, value) {
-            holidays.addAll(value); // Using addAll method
-          });
+      listener: (context, state) {
+        if (state is ZhosparymErrorState) {
+          buildErrorCustomSnackBar(context, state.message);
         }
+      },
+      builder: (context, state) {
+        if (state is ZhosparymInitialState) {
+          final events = state.events;
+          final checklist = state.checklist;
+          holidays.clear();
 
-        log('zhospar-${eventsDays.toString()}');
-        return Scaffold(
-          backgroundColor: AppColors.lightBlue,
-          body: SizedBox(
-            height: 1.sh,
-            child: Stack(
-              children: [
-                Image.asset(
-                  Assets.gradient,
-                  fit: BoxFit.cover,
-                ),
-                Positioned(
-                  top: 130.h,
-                  left: 300.w,
-                  child: ShaderMask(
-                    shaderCallback: (Rect bounds) => LinearGradient(
-                      colors: [
-                        AppColors.white.withOpacity(0.001),
-                        AppColors.white,
-                      ],
-                    ).createShader(bounds),
-                    child: SvgPicture.asset(
-                      'assets/icons/calendar_custom_icon_2.svg',
-                      color: AppColors.white.withOpacity(0.5),
-                      fit: BoxFit.cover,
+          final eventsDays = events?.map<DateTime, List<EventDto>>(
+            (key, value) => MapEntry(
+              DateTime.parse(key),
+              value,
+            ),
+          );
+          if (eventsDays != null) {
+            eventsDays.forEach((key, value) {
+              holidays.addAll(value); // Using addAll method
+            });
+          }
+
+          log('zhospar-${eventsDays.toString()}');
+          return Scaffold(
+            backgroundColor: AppColors.lightBlue,
+            body: SizedBox(
+              height: 1.sh,
+              child: Stack(
+                children: [
+                  Image.asset(
+                    Assets.gradient,
+                    fit: BoxFit.cover,
+                  ),
+                  Positioned(
+                    top: 130.h,
+                    left: 300.w,
+                    child: ShaderMask(
+                      shaderCallback: (Rect bounds) => LinearGradient(
+                        colors: [
+                          AppColors.white.withOpacity(0.001),
+                          AppColors.white,
+                        ],
+                      ).createShader(bounds),
+                      child: SvgPicture.asset(
+                        'assets/icons/calendar_custom_icon_2.svg',
+                        color: AppColors.white.withOpacity(0.5),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                Positioned(
-                  top: 50.h,
-                  left: 120.w,
-                  child: ShaderMask(
-                    shaderCallback: (Rect bounds) => LinearGradient(
-                      colors: [
-                        AppColors.white.withOpacity(0.001),
-                        AppColors.white,
-                      ],
-                    ).createShader(bounds),
-                    child: SvgPicture.asset(
-                      'assets/icons/tumer1.svg',
-                      color: AppColors.white.withOpacity(0.5),
-                      fit: BoxFit.cover,
+                  Positioned(
+                    top: 50.h,
+                    left: 120.w,
+                    child: ShaderMask(
+                      shaderCallback: (Rect bounds) => LinearGradient(
+                        colors: [
+                          AppColors.white.withOpacity(0.001),
+                          AppColors.white,
+                        ],
+                      ).createShader(bounds),
+                      child: SvgPicture.asset(
+                        'assets/icons/tumer1.svg',
+                        color: AppColors.white.withOpacity(0.5),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding:
-                      const EdgeInsets.only(left: 16, right: 16, bottom: 100).r,
-                  child: SizedBox(
-                    child: SingleChildScrollView(
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 16, right: 16, bottom: 100)
+                            .r,
+                    child: SizedBox(
+                      child: SingleChildScrollView(
                         physics: const BouncingScrollPhysics(),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
@@ -497,14 +496,17 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                     ))
                                 .toList(),
                           ],
-                        )),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        );
-      });
-    });
+          );
+        }
+        return const SizedBox.shrink();
+      },
+    );
   }
 }

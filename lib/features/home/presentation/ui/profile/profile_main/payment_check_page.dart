@@ -8,35 +8,44 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_cu
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../../../app/presentation/widgets/custom_app_bar.dart';
+
 @RoutePage()
-class PaymentCheckPage extends StatelessWidget {
+class PaymentCheckPage extends StatefulWidget {
   const PaymentCheckPage({Key? key, required this.checkUrl}) : super(key: key);
   final String checkUrl;
 
   @override
+  State<PaymentCheckPage> createState() => _PaymentCheckPageState();
+}
+
+class _PaymentCheckPageState extends State<PaymentCheckPage> {
+  final controller = WebViewController();
+
+  @override
+  void initState() {
+    super.initState();
+    controller
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..loadRequest(Uri.parse(widget.checkUrl));
+  }
+
+  @override
   Widget build(BuildContext context) {
-    final  uri = Uri.parse(checkUrl);
+    final uri = Uri.parse(widget.checkUrl);
     log(uri.toString());
     return Scaffold(
       body: GlobalCustomBody(
         child: SingleChildScrollView(
           child: Column(
-
             children: [
-              CustomAppBar(title: 'salam',),
+              CustomAppBar(
+                title: 'salam',
+              ),
               Container(
                 width: double.infinity,
                 height: 500.h,
-                child: WebView(
-                  initialUrl: uri.toString(),
-                  javascriptMode: JavascriptMode.unrestricted,
-                  onWebResourceError: (error) {
-                    print('Error: ${error.description}');
-                  },
-
-                  onWebViewCreated: (WebViewController controller){
-                    controller.loadUrl(uri.toString());
-                  },
+                child: WebViewWidget(
+                  controller: controller,
                 ),
               ),
             ],

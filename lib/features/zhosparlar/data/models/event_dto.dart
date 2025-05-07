@@ -7,9 +7,9 @@ part 'event_dto.freezed.dart';
 part 'event_dto.g.dart';
 
 @freezed
-class EventDto with _$EventDto {
+abstract class EventDto with _$EventDto {
   const factory EventDto({
-  final int? id,
+    final int? id,
     final EventsType? type,
     final String? title,
     final String? description,

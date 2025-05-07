@@ -12,38 +12,33 @@ part 'login_cubit.freezed.dart';
 class LoginCubit extends Cubit<LoginState> {
   LoginCubit(
     this._authRepository,
-  ) : super(const LoginState.initialState());
+  ) : super(const LoginState.initial());
   final AuthRepository _authRepository;
 
   Future<void> createToken(TokenCreateDTO tokenCreateDTO) async {
-    emit(_LoadingState());
+    emit(const LoginState.loading());
     final result =
         await _authRepository.createJTW(createTokenDTO: tokenCreateDTO);
     result.fold(
       (l) {
         l as ServerFailure;
-        emit(_ErrorState(message: mapFailureToMessageBack(l)));
-        emit(const LoginState.initialState());
-
+        emit(LoginState.error(message: mapFailureToMessageBack(l)));
+        emit(const LoginState.initial());
       },
       (r) {
-        emit(const LoginState.loadedState());
-        emit(const LoginState.initialState());
-
+        emit(const LoginState.loaded());
+        emit(const LoginState.initial());
       },
     );
   }
 }
 
 @freezed
-class LoginState with _$LoginState {
-  const factory LoginState.initialState() = _InitialState;
-
-  const factory LoginState.loadedState() = _LoadedState;
-
-  const factory LoginState.loadingState() = _LoadingState;
-
-  const factory LoginState.errorState({
+sealed class LoginState with _$LoginState {
+  const factory LoginState.initial() = LoginInitialState;
+  const factory LoginState.loaded() = LoginLoadedState;
+  const factory LoginState.loading() = LoginLoadingState;
+  const factory LoginState.error({
     required String message,
-  }) = _ErrorState;
+  }) = LoginErrorState;
 }

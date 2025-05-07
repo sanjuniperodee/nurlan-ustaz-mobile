@@ -78,25 +78,26 @@ part 'app_router.gr.dart';
 @AutoRouterConfig()
 class AppRouter extends RootStackRouter {
   @override
-  RouteType get defaultRouteType =>  RouteType.custom(
-    transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      return TweenAnimationBuilder<Offset>(
-        tween: Tween(begin: const Offset(0.0, 1.0), end: Offset.zero),
-        duration: const Duration(milliseconds: 500), 
-        curve: Curves.easeInOutCubic, 
-        builder: (context, offset, child) {
-          return Transform.translate(
-            offset: offset,
-            child: Opacity(
-              opacity: animation.value,
-              child: child,
-            ),
+  RouteType get defaultRouteType => RouteType.custom(
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return TweenAnimationBuilder<Offset>(
+            tween: Tween(begin: const Offset(0.0, 1.0), end: Offset.zero),
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOutCubic,
+            builder: (context, offset, child) {
+              return Transform.translate(
+                offset: offset,
+                child: Opacity(
+                  opacity: animation.value,
+                  child: child,
+                ),
+              );
+            },
+            child: child,
           );
         },
-        child: child,
       );
-    },
-  );
+
   @override
   final List<AutoRoute> routes = [
     AutoRoute(
@@ -151,8 +152,8 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: TusZhoruDetailRoute.page),
     AutoRoute(page: CustomTusZhoruDetailRoute.page),
     AutoRoute(page: QuestionRoute.page),
-    AutoRoute(page: ProfileMainRoute.page),
-    AutoRoute(page: PaymentsRoute.page),
+    // AutoRoute(page: ProfileMainRoute.page),
+    // AutoRoute(page: PaymentsRoute.page),
     AutoRoute(page: AyatDayRoute.page),
     AutoRoute(page: DutyRoute.page),
     AutoRoute(page: AllahNamesRoute.page),
@@ -175,8 +176,5 @@ class AppRouter extends RootStackRouter {
     AutoRoute(page: HolidayDetailRoute.page),
     AutoRoute(page: QrScannerRoute.page),
     AutoRoute(page: PaymentCheckRoute.page)
-
-
-
   ];
 }

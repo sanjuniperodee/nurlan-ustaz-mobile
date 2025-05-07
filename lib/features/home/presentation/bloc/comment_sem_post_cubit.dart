@@ -11,14 +11,14 @@ class CommentSemPostCubit extends Cubit<CommentSemPostState> {
   final HomeRepository _homeRepository;
   CommentSemPostCubit(
     this._homeRepository,
-  ) : super(const CommentSemPostState.initialState());
+  ) : super(const CommentSemPostState.initial());
 
   Future<void> seminarCommentPost({
     required int id,
     int? commentId,
     required String body,
   }) async {
-    emit(const CommentSemPostState.loadingState());
+    emit(const CommentSemPostState.loading());
     final failureOrUser = await _homeRepository.commentSemPost(
       id: id,
       commentId: commentId,
@@ -26,8 +26,7 @@ class CommentSemPostCubit extends Cubit<CommentSemPostState> {
     );
     failureOrUser.fold(
       (l) {
-        emit(CommentSemPostState.errorState(
-            message: mapFailureToMessageBack(l)));
+        emit(CommentSemPostState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         emit(const CommentSemPostState.loaded());
@@ -37,14 +36,11 @@ class CommentSemPostCubit extends Cubit<CommentSemPostState> {
 }
 
 @freezed
-class CommentSemPostState with _$CommentSemPostState {
-  const factory CommentSemPostState.initialState() = _InitialPage;
-
-  const factory CommentSemPostState.loadingState() = _LoadingState;
-
-  const factory CommentSemPostState.loaded() = _LoadedState;
-
-  const factory CommentSemPostState.errorState({
+sealed class CommentSemPostState with _$CommentSemPostState {
+  const factory CommentSemPostState.initial() = CommentSemPostInitialPage;
+  const factory CommentSemPostState.loading() = CommentSemPostLoadingState;
+  const factory CommentSemPostState.loaded() = CommentSemPostLoadedState;
+  const factory CommentSemPostState.error({
     required String message,
-  }) = _ErrorState;
+  }) = CommentSemPostErrorState;
 }

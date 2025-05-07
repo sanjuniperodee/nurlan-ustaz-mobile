@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -39,7 +38,6 @@ abstract class AuthRemoteDs {
       required String reNewPassword});
   Future<String> confirmCode({required ActivateUserDTO activateUserDTO});
   Future<String> resendActivation({required String email});
-
 }
 
 @Injectable(as: AuthRemoteDs)
@@ -154,7 +152,7 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       required String newPass,
       required String pass}) async {
     try {
-       await dio.post(
+      await dio.post(
         EndPoints.newPass,
         data: {
           'new_password': newPass,
@@ -165,7 +163,7 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       log(curPass.toString());
       log(newPass.toString());
       log(pass.toString());
-      
+
       return true;
     } on DioError catch (e) {
       throw ServerException(
@@ -178,7 +176,7 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
   @override
   Future<bool> deleteUser() async {
     try {
-       await dio.delete(
+      await dio.delete(
         '${EndPoints.createUser}me/',
       );
 
@@ -238,7 +236,7 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
       final response = await dio.post(
         EndPoints.resetConfirmCode,
         data: {
-          'user_id': "${activateUserDTO.user_id}",
+          'user_id': "${activateUserDTO.userId}",
           "code": "${activateUserDTO.code}",
         },
       );
@@ -261,13 +259,12 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
           'email': email,
         },
       );
-      return('success');
+      return ('success');
     } on DioError catch (e) {
       throw ServerException(
         message:
-        (e.response!.data as Map<String, dynamic>)['message'] as String,);
-
-
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
     }
   }
 }

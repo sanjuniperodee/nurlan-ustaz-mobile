@@ -17,12 +17,12 @@ class CreateTusZhoruCubit extends Cubit<CreateTusZhoruState> {
 
   CreateTusZhoruCubit(
     this._repository,
-  ) : super(const CreateTusZhoruState.initialState());
+  ) : super(const CreateTusZhoruState.initial());
 
   late List<TusZhoruDTO> tosZhoruList;
 
   Future<void> createCustomTusZhoruPayment(int id, bool isCustom) async {
-    emit(const _LoadingState());
+    emit(const CreateTusZhoruState.loading());
 
     String tusZhoruDynamicLink = isCustom
         ? await DynamicLink().createCustomTusZhoruLink(id)
@@ -36,11 +36,9 @@ class CreateTusZhoruCubit extends Cubit<CreateTusZhoruState> {
         : await _repository.createTusZhoruPayment(
             id: id, backUrl: tusZhoruDynamicLink);
     result.fold((l) {
-
-        
-      emit( _ErrorState(message: mapFailureToMessage(l)));
+      emit(CreateTusZhoruState.error(message: mapFailureToMessage(l)));
     }, (r) {
-      emit(const _SuccessState(message: ''));
+      emit(const CreateTusZhoruState.success(message: ''));
     });
   }
 
@@ -48,25 +46,23 @@ class CreateTusZhoruCubit extends Cubit<CreateTusZhoruState> {
     final result = await _repository.createTusZhoru(
         title: title, description: description);
     return result.fold((l) => {}, (r) {
-      emit(_LoadedState(tusZhoru: r));
+      emit(CreateTusZhoruState.loaded(tusZhoru: r));
     });
   }
 }
 
 @freezed
-class CreateTusZhoruState with _$CreateTusZhoruState {
-  const factory CreateTusZhoruState.initialState() = _InitialPage;
-
-  const factory CreateTusZhoruState.loadingState() = _LoadingState;
-
+sealed class CreateTusZhoruState with _$CreateTusZhoruState {
+  const factory CreateTusZhoruState.initial() = CreateTusZhoruInitialState;
+  const factory CreateTusZhoruState.loading() = CreateTusZhoruLoadingState;
   const factory CreateTusZhoruState.loaded({
     required TusZhoruDTO tusZhoru,
-  }) = _LoadedState;
+  }) = CreateTusZhoruLoadedState;
 
-  const factory CreateTusZhoruState.errorState({
+  const factory CreateTusZhoruState.error({
     required String message,
-  }) = _ErrorState;
-  const factory CreateTusZhoruState.successState({
+  }) = CreateTusZhoruErrorState;
+  const factory CreateTusZhoruState.success({
     required String message,
-  }) = _SuccessState;
+  }) = CreateTusZhoruSuccessState;
 }

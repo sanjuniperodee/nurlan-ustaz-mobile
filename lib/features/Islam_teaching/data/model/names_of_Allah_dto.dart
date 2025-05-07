@@ -5,7 +5,7 @@ part 'names_of_Allah_dto.freezed.dart';
 part 'names_of_Allah_dto.g.dart';
 
 @freezed
-class NamesOfAllahDTO with _$NamesOfAllahDTO {
+abstract class NamesOfAllahDTO with _$NamesOfAllahDTO {
   const factory NamesOfAllahDTO({
     required int id,
     @JsonKey(name: "is_saved") bool? isSaved,

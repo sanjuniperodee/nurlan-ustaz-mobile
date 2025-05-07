@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:auto_route/auto_route.dart';
@@ -22,9 +21,17 @@ class AddNewCardPage extends StatefulWidget {
   State<AddNewCardPage> createState() => _AddNewCardPageState();
 }
 
-late WebViewController controller;
-
 class _AddNewCardPageState extends State<AddNewCardPage> {
+  final controller = WebViewController();
+
+  @override
+  void initState() {
+    super.initState();
+    controller
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..loadRequest(Uri.parse(widget.addCardUrl));
+  }
+
   @override
   Widget build(BuildContext context) {
     print('ssilka2-${widget.addCardUrl}');
@@ -35,38 +42,40 @@ class _AddNewCardPageState extends State<AddNewCardPage> {
         return true;
       },
       child: Scaffold(
-        
           appBar: AppBar(
-          title: Text(
-            'add_card_title'.tr(),
-            style:
-                getTextStyle(CustomTextStyles.s20w700, color: AppColors.white),
-            textAlign: TextAlign.center,
-          ),
-          centerTitle: true,
-          flexibleSpace: Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.topRight,
-                colors: AppColors.gradientPrimaryActiveButton
-                    .colors, // Specify your gradient colors
+            title: Text(
+              'add_card_title'.tr(),
+              style: getTextStyle(CustomTextStyles.s20w700,
+                  color: AppColors.white),
+              textAlign: TextAlign.center,
+            ),
+            centerTitle: true,
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.topRight,
+                  colors: AppColors.gradientPrimaryActiveButton
+                      .colors, // Specify your gradient colors
+                ),
               ),
             ),
           ),
-        ),
           body: Padding(
-            padding:    Platform.isIOS ?  const EdgeInsets.only(bottom:30).r : EdgeInsets.zero,
+            padding: Platform.isIOS
+                ? const EdgeInsets.only(bottom: 30).r
+                : EdgeInsets.zero,
             child: SizedBox(
               width: 1.sw,
               height: 1.sh,
-              child: WebView(
-                javascriptMode: JavascriptMode.unrestricted,
-                onWebViewCreated: (controller) {
-                  controller.loadUrl(widget.addCardUrl);
-                },
-                allowsInlineMediaPlayback: true,
-                initialUrl: Uri.parse(widget.addCardUrl).toString(),
+              child: WebViewWidget(
+                // javascriptMode: JavascriptMode.unrestricted,
+                // onWebViewCreated: (controller) {
+                //   controller.loadUrl(widget.addCardUrl);
+                // },
+                controller: controller,
+                // allowsInlineMediaPlayback: true,
+                // initialUrl: Uri.parse(widget.addCardUrl).toString(),
               ),
             ),
           )),

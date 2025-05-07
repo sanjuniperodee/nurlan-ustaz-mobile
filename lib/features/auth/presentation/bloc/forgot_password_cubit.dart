@@ -14,75 +14,68 @@ part 'forgot_password_cubit.freezed.dart';
 class ForgotPasswordCubitCubit extends Cubit<ForgotPasswordState> {
   ForgotPasswordCubitCubit(
     this._authRepository,
-  ) : super(const ForgotPasswordState.initialState());
+  ) : super(const ForgotPasswordState.initial());
   final AuthRepository _authRepository;
   late int userId;
   late String sessionId;
 
   Future<void> resetConfirm(
-      {
-      required String newPassword,
-      required String reNewPassword}) async {
-    emit(ForgotPasswordState.loadingState());
+      {required String newPassword, required String reNewPassword}) async {
+    emit(ForgotPasswordState.loading());
 
     final result = await _authRepository.resetPasswordConfirm(
-        sessionId:sessionId,
+        sessionId: sessionId,
         newPassword: newPassword,
         reNewPassword: reNewPassword);
     result.fold((l) {
-      emit(_ErrorState(message: mapFailureToMessageBack(l)));
-      emit(ForgotPasswordState.verificationCodeState(userId: userId));
+      emit(ForgotPasswordState.error(message: mapFailureToMessageBack(l)));
+      emit(ForgotPasswordState.verificationCode(userId: userId));
     }, (r) {
-      emit(const _SuccessConfirm());
-      emit(_InitialState());
-
+      emit(const ForgotPasswordState.successConfirm());
+      emit(const ForgotPasswordState.initial());
     });
   }
 
-  Future<void> resetConfirmCode(
-      {required String code,
-        }) async {
-    emit(ForgotPasswordState.loadingState());
+  Future<void> resetConfirmCode({
+    required String code,
+  }) async {
+    emit(ForgotPasswordState.loading());
 
     final result = await _authRepository.ressetConfirmCode(
-       activateUserDTO: ActivateUserDTO(user_id: userId,code: code));
+        activateUserDTO: ActivateUserDTO(userId: userId, code: code));
     result.fold((l) {
-      emit(_ErrorState(message: mapFailureToMessageBack(l)));
-      emit(ForgotPasswordState.verificationCodeState(userId: userId));
+      emit(ForgotPasswordState.error(message: mapFailureToMessageBack(l)));
+      emit(ForgotPasswordState.verificationCode(userId: userId));
     }, (r) {
       log('${r}------sessionID');
       sessionId = r;
-      emit(const _NewPasswordState());
-
+      emit(const ForgotPasswordState.newPassword());
     });
   }
 
-
-
-
   Future<void> getIdByMail(String mail) async {
-    emit(ForgotPasswordState.loadingState());
+    emit(ForgotPasswordState.loading());
     final id = await _authRepository.resetPassword(mail: mail);
 
     return id.fold((l) {
-      emit(_ErrorState(message: mapFailureToMessageBack(l)));
-      emit(_InitialState());
+      emit(ForgotPasswordState.error(message: mapFailureToMessageBack(l)));
+      emit(ForgotPasswordState.initial());
     }, (r) {
       userId = r;
-      emit(ForgotPasswordState.verificationCodeState(userId: r));
+      emit(ForgotPasswordState.verificationCode(userId: r));
     });
   }
 
   Future<void> toInitialPage() async {
-    emit(const ForgotPasswordState.initialState());
+    emit(const ForgotPasswordState.initial());
   }
 
   Future<void> toCodeVerificationPage() async {
-    emit(ForgotPasswordState.verificationCodeState(userId: userId));
+    emit(ForgotPasswordState.verificationCode(userId: userId));
   }
 
   Future<void> toNewPasswordPage() async {
-    emit(_NewPasswordState());
+    emit(const ForgotPasswordState.newPassword());
   }
 
   // void toInitialPage() {
@@ -118,20 +111,16 @@ class ForgotPasswordCubitCubit extends Cubit<ForgotPasswordState> {
 }
 
 @freezed
-class ForgotPasswordState with _$ForgotPasswordState {
-  const factory ForgotPasswordState.initialState() = _InitialState;
-
-  const factory ForgotPasswordState.successConfirm() = _SuccessConfirm;
-
-  const factory ForgotPasswordState.verificationCodeState(
-      {required int userId}) = _VerificationCodeState;
-
+sealed class ForgotPasswordState with _$ForgotPasswordState {
+  const factory ForgotPasswordState.initial() = ForgotPasswordInitialState;
+  const factory ForgotPasswordState.successConfirm() =
+      ForgotPasswordSuccessConfirmState;
+  const factory ForgotPasswordState.verificationCode({required int userId}) =
+      ForgotPasswordVerificationCodeState;
   const factory ForgotPasswordState.newPassword() =
-      _NewPasswordState;
-
-  const factory ForgotPasswordState.loadingState() = _LoadingState;
-
-  const factory ForgotPasswordState.errorState({
+      ForgotPasswordNewPasswordState;
+  const factory ForgotPasswordState.loading() = ForgotPasswordLoadingState;
+  const factory ForgotPasswordState.error({
     required String message,
-  }) = _ErrorState;
+  }) = ForgotPasswordErrorState;
 }

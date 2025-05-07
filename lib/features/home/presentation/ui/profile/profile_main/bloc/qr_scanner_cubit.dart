@@ -10,40 +10,36 @@ part 'qr_scanner_cubit.freezed.dart';
 @singleton
 class QrScannerCubit extends Cubit<QrScannerState> {
   QrScannerCubit(this._homeRepository, this.sharedPreferences)
-      : super(const QrScannerState.initialState());
+      : super(const QrScannerState.initial());
   final HomeRepository _homeRepository;
   final SharedPreferences sharedPreferences;
 
   Future<void> checkTicket({required String url}) async {
-    emit(const _LoadingState());
-    if(!url.contains('https://dev.nurlanustaz.kz/api/banner/use-ticket')){
-      emit(const _ErrorState(message: 'Произошла ошибка при сканировании QR-кода'));
-      emit(const _InitialState());
-    }
-    else{
+    emit(const QrScannerState.loading());
+    if (!url.contains('https://dev.nurlanustaz.kz/api/banner/use-ticket')) {
+      emit(const QrScannerState.error(
+          message: 'Произошла ошибка при сканировании QR-кода'));
+      emit(const QrScannerState.initial());
+    } else {
       final result = await _homeRepository.checkTicket(url: url);
       return result.fold((l) {
-        emit(_ErrorState(message: 'QR.qr_success'.tr()));
-        emit(const _InitialState());
+        emit(QrScannerState.error(message: 'QR.qr_success'.tr()));
+        emit(const QrScannerState.initial());
       }, (r) {
-        emit(_LoadedState(message: 'QR.qr_failed'.tr()));
-        emit(const _InitialState());
-
+        emit(QrScannerState.loaded(message: 'QR.qr_failed'.tr()));
+        emit(const QrScannerState.initial());
       });
     }
-
   }
 }
 
 @freezed
-class QrScannerState with _$QrScannerState {
-  const factory QrScannerState.initialState() = _InitialState;
-
-  const factory QrScannerState.loadedState({ required String message}) = _LoadedState;
-
-  const factory QrScannerState.loadingState() = _LoadingState;
-
-  const factory QrScannerState.errorState({
+sealed class QrScannerState with _$QrScannerState {
+  const factory QrScannerState.initial() = QrScannerInitialState;
+  const factory QrScannerState.loaded({required String message}) =
+      QrScannerLoadedState;
+  const factory QrScannerState.loading() = QrScannerLoadingState;
+  const factory QrScannerState.error({
     required String message,
-  }) = _ErrorState;
+  }) = QrScannerErrorState;
 }

@@ -12,13 +12,13 @@ class FaqCubit extends Cubit<FaqState> {
   final HomeRepository _homeRepository;
   FaqCubit(
     this._homeRepository,
-  ) : super(const FaqState.initialState());
+  ) : super(const FaqState.initial());
 
   Future<void> faq() async {
     final failureOrUser = await _homeRepository.faq();
     failureOrUser.fold(
       (l) {
-        emit(FaqState.errorState(message: mapFailureToMessageBack(l)));
+        emit(FaqState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         emit(FaqState.loaded(faq: r));
@@ -29,15 +29,12 @@ class FaqCubit extends Cubit<FaqState> {
 
 @freezed
 class FaqState with _$FaqState {
-  const factory FaqState.initialState() = _InitialPage;
-
-  const factory FaqState.loadingState() = _LoadingState;
-
+  const factory FaqState.initial() = FaqInitialPage;
+  const factory FaqState.loading() = FaqLoadingState;
   const factory FaqState.loaded({
     required List<FaqModelDTO> faq,
-  }) = _LoadedState;
-
-  const factory FaqState.errorState({
+  }) = FaqLoadedState;
+  const factory FaqState.error({
     required String message,
-  }) = _ErrorState;
+  }) = FaqErrorState;
 }

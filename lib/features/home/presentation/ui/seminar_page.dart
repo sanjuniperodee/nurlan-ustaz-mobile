@@ -62,32 +62,20 @@ class _SeminarPageState extends State<SeminarPage> {
       backgroundColor: AppColors.lightBlue,
       body: BlocConsumer<SeminarCubit, SeminarState>(
         listener: (context, state) {
-          state.maybeWhen(
-            orElse: () {
-              isLoadingMore = false;
-            },
-            errorState: (message) {
-              isLoadingMore = false;
-              buildErrorCustomSnackBar(context, message);
-            },
-            loadingMoreState: () {
-              isLoadingMore = true;
-            },
-            loaded: (seminar) {
-              isLoadingMore = false;
-              listOfSeminars = seminar;
-              listOfFav.clear();
-              // listOfSeminars.clear();
-              listOfSeminars.forEach(
-                (element) {
-                  listOfFav.add(element.isSaved!);
-                },
-              );
+          isLoadingMore = state is SeminarLoadingMoreState;
+          if (state is SeminarLoadedState) {
+            listOfSeminars = state.news;
+            listOfFav.clear();
+            listOfSeminars.forEach(
+              (element) {
+                listOfFav.add(element.isSaved!);
+              },
+            );
 
-              // setState(() {});
-            },
-          );
-          // TODO: implement listener
+            // setState(() {});
+          } else if (state is SeminarErrorState) {
+            buildErrorCustomSnackBar(context, state.message);
+          }
         },
         builder: (context, state) {
           return GlobalCustomBody(
@@ -97,9 +85,9 @@ class _SeminarPageState extends State<SeminarPage> {
                 child: Column(
                   children: [
                     CustomAppBar(
-                       onTap: () {
-                         context.router.pop();
-                       },
+                      onTap: () {
+                        context.router.maybePop();
+                      },
                       title: widget.type == 'isSave'
                           ? 'Favourite_sev'.tr()
                           : 'Seminar'.tr(),
@@ -123,12 +111,8 @@ class _SeminarPageState extends State<SeminarPage> {
                         }
                       },
                     ),
-                    state.maybeWhen(orElse: () {
-                      log('STATE:::${state.toString()}');
-                      return const SizedBox();
-                    }, loaded: (res) {
-                      log('SEARCH::::::${res.toString()}');
-                      return ListView.builder(
+                    if (state is SeminarLoadedState)
+                      ListView.builder(
                         itemCount: listOfSeminars.length,
                         shrinkWrap: true,
                         physics: const BouncingScrollPhysics(),
@@ -254,8 +238,7 @@ class _SeminarPageState extends State<SeminarPage> {
                             ),
                           );
                         },
-                      );
-                    }),
+                      ),
                     SizedBox(
                       height: 10.h,
                     ),

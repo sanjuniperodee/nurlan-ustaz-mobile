@@ -17,7 +17,7 @@ class PaymentTickCubit extends Cubit<PaymentTickState> {
   PaymentTickCubit(
     this._homeRepository,
     this._repository,
-  ) : super(const PaymentTickState.initialState());
+  ) : super(const PaymentTickState.initial());
 
   late List<TusZhoruDTO> listTus = [];
   late List<ResultHomeDTO> listHome = [];
@@ -29,7 +29,7 @@ class PaymentTickCubit extends Cubit<PaymentTickState> {
     bool? isFirstCall,
     bool? isPurchased,
   }) async {
-    emit(const _LoadingState());
+    emit(const PaymentTickState.loading());
     final failureOrUser = await _repository.tusZhoru(
         page: page,
         isFirstCall: true,
@@ -39,7 +39,7 @@ class PaymentTickCubit extends Cubit<PaymentTickState> {
 
     failureOrUser.fold(
       (l) {
-        emit(PaymentTickState.errorState(message: mapFailureToMessageBack(l)));
+        emit(PaymentTickState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         listTus =
@@ -58,12 +58,12 @@ class PaymentTickCubit extends Cubit<PaymentTickState> {
     int? page,
     bool? isFirstCall,
   }) async {
-    emit(const _LoadingState());
+    emit(const PaymentTickState.loading());
     final result = await _repository.customTusZhoru(
         page: 1, isFirstCall: true, search: search);
     result.fold(
       (l) {
-        emit(PaymentTickState.errorState(message: mapFailureToMessageBack(l)));
+        emit(PaymentTickState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         final purchasedList =
@@ -82,8 +82,8 @@ class PaymentTickCubit extends Cubit<PaymentTickState> {
     bool? isFirstCall,
   }) async {
     page > 1
-        ? emit(const PaymentTickState.loadingMoreState())
-        : emit(const PaymentTickState.loadingState());
+        ? emit(const PaymentTickState.loadingMore())
+        : emit(const PaymentTickState.loading());
     final failureOrUser = await _homeRepository.seminar(
       search: search,
       isSaved: isSaved,
@@ -93,7 +93,7 @@ class PaymentTickCubit extends Cubit<PaymentTickState> {
     );
     failureOrUser.fold(
       (l) {
-        emit(PaymentTickState.errorState(message: mapFailureToMessageBack(l)));
+        emit(PaymentTickState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         listHome = r;
@@ -104,19 +104,16 @@ class PaymentTickCubit extends Cubit<PaymentTickState> {
 }
 
 @freezed
-class PaymentTickState with _$PaymentTickState {
-  const factory PaymentTickState.initialState() = _InitialPage;
-
-  const factory PaymentTickState.loadingState() = _LoadingState;
-
-  const factory PaymentTickState.loadingMoreState() = _LoadingMoreState;
-
+sealed class PaymentTickState with _$PaymentTickState {
+  const factory PaymentTickState.initial() = PaymentTickInitialPage;
+  const factory PaymentTickState.loading() = PaymentTickLoadingState;
+  const factory PaymentTickState.loadingMore() = PaymentTickLoadingMoreState;
   const factory PaymentTickState.loaded({
     required List<ResultHomeDTO> res,
     required List<TusZhoruDTO> res2,
-  }) = _LoadedState;
+  }) = PaymentTickLoadedState;
 
-  const factory PaymentTickState.errorState({
+  const factory PaymentTickState.error({
     required String message,
-  }) = _ErrorState;
+  }) = PaymentTickErrorState;
 }

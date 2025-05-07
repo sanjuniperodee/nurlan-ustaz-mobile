@@ -5,7 +5,7 @@ part 'pillars_dto.freezed.dart';
 part 'pillars_dto.g.dart';
 
 @freezed
-class PillarsDTO with _$PillarsDTO {
+abstract class PillarsDTO with _$PillarsDTO {
   const factory PillarsDTO({
     required int id,
     int? type,

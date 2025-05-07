@@ -83,221 +83,218 @@ class _RegistrationFormState extends State<RegistrationForm> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<RegistrationCubit, RegistrationState>(
-        listener: (context, state) {
-      state.maybeWhen(
-        loadingState: () {
-          const Center(
-            child: CircularProgressIndicator(
-              color: AppColors.linearBlue,
+      listener: (context, state) {
+        switch (state) {
+          case RegistrationLoadedState(:final user):
+            context.router.push(
+              CodeVerificationRoute(
+                userPayload: user,
+                email: user.email!,
+                password: user.password!,
+                userId: user.id ?? 0,
+              ),
+            );
+            break;
+          case RegistrationSuccessState():
+            setState(() {
+              _emailController.clear();
+              _nameController.clear();
+              _numberController.clear();
+              _dateController.clear();
+              _passwordController.clear();
+              _passwordRepeatController.clear();
+              isPrivacyAccept = false;
+            });
+            break;
+          case RegistrationErrorState(:final message):
+            buildErrorCustomSnackBar(context, message);
+            break;
+          default:
+        }
+      },
+      builder: (context, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'welcome'.tr(),
+              style: getTextStyle(CustomTextStyles.s36w700).copyWith(
+                  fontFamily: FontTypes.Philosopher.name, fontSize: 32),
+              textAlign: TextAlign.start,
             ),
-          );
-        },
-        loadedState: (user) {
-          context.router.push(CodeVerificationRoute(
-              userPayload: user,
-              email: user.email!,
-              password: user.password!,
-              userId: user.id ?? 0));
-        },
-        successState: () {
-          setState(() {
-            _emailController.clear();
-            _nameController.clear();
-            _numberController.clear();
-            _dateController.clear();
-            _passwordController.clear();
-            _passwordRepeatController.clear();
-            isPrivacyAccept = false;
-          });
-        },
-        errorState: (message) {
-          buildErrorCustomSnackBar(context, message);
-        },
-        orElse: () {},
-      );
-    }, builder: (context, state) {
-      return Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'welcome'.tr(),
-            style: getTextStyle(CustomTextStyles.s36w700)
-                .copyWith(fontFamily: FontTypes.Philosopher.name, fontSize: 32),
-            textAlign: TextAlign.start,
-          ),
-          SizedBox(height: 32.h),
-          CustomTextFormProfile(
-            inputAction: TextInputAction.next,
-            keyboardType: TextInputType.name,
-            controller: _nameController,
-            hintText: 'name-surname'.tr(),
-            labelText: 'name-surname'.tr(),
-          ),
-          SizedBox(height: 24.h),
-          CustomTextFormProfile(
-            inputAction: TextInputAction.next,
-            keyboardType: TextInputType.emailAddress,
-            controller: _emailController,
-            hintText: 'E-mail',
-            labelText: 'E-mail',
-          ),
-          SizedBox(height: 24.h),
-          CustomTextFormProfile(
-            onChanged: (value) {
-              log(_numberController.value.text);
-            },
-            keyboardType: TextInputType.phone,
-            inputFormatters: [maskFormatter],
-            controller: _numberController,
-            hintText: 'phone_number'.tr(),
-            labelText: 'phone_number'.tr(),
-          ),
-          SizedBox(height: 24.h),
-          CustomTextFormProfile(
-            inputAction: TextInputAction.next,
-            onTap: () {
-              _showDialog(
-                  CupertinoDatePicker(
-                    dateOrder: DatePickerDateOrder.dmy,
-                    minimumYear: DateTime.now().year - 73,
-                    maximumYear: DateTime.now().year - 10,
+            SizedBox(height: 32.h),
+            CustomTextFormProfile(
+              inputAction: TextInputAction.next,
+              keyboardType: TextInputType.name,
+              controller: _nameController,
+              hintText: 'name-surname'.tr(),
+              labelText: 'name-surname'.tr(),
+            ),
+            SizedBox(height: 24.h),
+            CustomTextFormProfile(
+              inputAction: TextInputAction.next,
+              keyboardType: TextInputType.emailAddress,
+              controller: _emailController,
+              hintText: 'E-mail',
+              labelText: 'E-mail',
+            ),
+            SizedBox(height: 24.h),
+            CustomTextFormProfile(
+              onChanged: (value) {
+                log(_numberController.value.text);
+              },
+              keyboardType: TextInputType.phone,
+              inputFormatters: [maskFormatter],
+              controller: _numberController,
+              hintText: 'phone_number'.tr(),
+              labelText: 'phone_number'.tr(),
+            ),
+            SizedBox(height: 24.h),
+            CustomTextFormProfile(
+              inputAction: TextInputAction.next,
+              onTap: () {
+                _showDialog(
+                    CupertinoDatePicker(
+                      dateOrder: DatePickerDateOrder.dmy,
+                      minimumYear: DateTime.now().year - 73,
+                      maximumYear: DateTime.now().year - 10,
 
-                    initialDateTime:
-                        DateTime.now().subtract(Duration(days: 365 * 10)),
-                    mode: CupertinoDatePickerMode.date,
-                    use24hFormat: true,
-                    // This is called when the user changes the date.
-                    onDateTimeChanged: (DateTime newDate) {
-                      setState(
-                        () => _dateController.text =
-                            DateFormat('yyyy-MM-dd').format(newDate),
-                      );
-                    },
-                  ),
-                  context);
-            },
-            readOnly: true,
-            controller: _dateController,
-            hintText: 'date_of_birth'.tr(),
-            labelText: 'date_of_birth'.tr(),
-          ),
-          SizedBox(height: 24.h),
-          CustomTextFormProfile(
-            onChanged: (value) {
-              setState(() {});
-            },
-            inputAction: TextInputAction.next,
-            obscureText: obscureFirst,
-            obscure: () {
-              setState(() {
-                obscureFirst = !obscureFirst;
-              });
-            },
-            helperColor: _passwordController.value.text.isEmpty
-                ? AppColors.grey1
-                : _passwordController.length < 8
-                    ? AppColors.red
-                    : AppColors.green,
-            keyboardType: TextInputType.visiblePassword,
-            helperText: 'password_8'.tr(),
-            controller: _passwordController,
-            hintText: 'password'.tr(),
-            labelText: 'password'.tr(),
-          ),
-          SizedBox(height: 24.h),
-          CustomTextFormProfile(
-            obscure: () {
-              setState(() {
-                obscureSecond = !obscureSecond;
-              });
-            },
-            obscureText: obscureSecond,
-            keyboardType: TextInputType.visiblePassword,
-            controller: _passwordRepeatController,
-            hintText: 'repeat_password'.tr(),
-            labelText: 'repeat_password'.tr(),
-          ),
-          SizedBox(height: 24.h),
-          Text('gender'.tr()),
-          SizedBox(
-            height: 8.h,
-          ),
-          Row(
-            children: [
-              Row(
-                children: [
-                  IconButton(
-                    icon: SvgPicture.asset(gender == Gender.female
-                        ? 'assets/icons/fill_checkbox.svg'
-                        : 'assets/icons/empty_checkbox.svg'),
-                    onPressed: () {
+                      initialDateTime:
+                          DateTime.now().subtract(Duration(days: 365 * 10)),
+                      mode: CupertinoDatePickerMode.date,
+                      use24hFormat: true,
+                      // This is called when the user changes the date.
+                      onDateTimeChanged: (DateTime newDate) {
+                        setState(
+                          () => _dateController.text =
+                              DateFormat('yyyy-MM-dd').format(newDate),
+                        );
+                      },
+                    ),
+                    context);
+              },
+              readOnly: true,
+              controller: _dateController,
+              hintText: 'date_of_birth'.tr(),
+              labelText: 'date_of_birth'.tr(),
+            ),
+            SizedBox(height: 24.h),
+            CustomTextFormProfile(
+              onChanged: (value) {
+                setState(() {});
+              },
+              inputAction: TextInputAction.next,
+              obscureText: obscureFirst,
+              obscure: () {
+                setState(() {
+                  obscureFirst = !obscureFirst;
+                });
+              },
+              helperColor: _passwordController.value.text.isEmpty
+                  ? AppColors.grey1
+                  : _passwordController.length < 8
+                      ? AppColors.red
+                      : AppColors.green,
+              keyboardType: TextInputType.visiblePassword,
+              helperText: 'password_8'.tr(),
+              controller: _passwordController,
+              hintText: 'password'.tr(),
+              labelText: 'password'.tr(),
+            ),
+            SizedBox(height: 24.h),
+            CustomTextFormProfile(
+              obscure: () {
+                setState(() {
+                  obscureSecond = !obscureSecond;
+                });
+              },
+              obscureText: obscureSecond,
+              keyboardType: TextInputType.visiblePassword,
+              controller: _passwordRepeatController,
+              hintText: 'repeat_password'.tr(),
+              labelText: 'repeat_password'.tr(),
+            ),
+            SizedBox(height: 24.h),
+            Text('gender'.tr()),
+            SizedBox(
+              height: 8.h,
+            ),
+            Row(
+              children: [
+                Row(
+                  children: [
+                    IconButton(
+                      icon: SvgPicture.asset(gender == Gender.female
+                          ? 'assets/icons/fill_checkbox.svg'
+                          : 'assets/icons/empty_checkbox.svg'),
+                      onPressed: () {
+                        setState(() {
+                          gender = Gender.female;
+                        });
+                      },
+                    ),
+                    SizedBox(
+                      width: 8.h,
+                    ),
+                    Text('female'.tr())
+                  ],
+                ),
+                SizedBox(
+                  width: 100.w,
+                ),
+                Row(
+                  children: [
+                    IconButton(
+                      icon: SvgPicture.asset(gender == Gender.male
+                          ? 'assets/icons/fill_checkbox.svg'
+                          : 'assets/icons/empty_checkbox.svg'),
+                      onPressed: () {
+                        setState(() {
+                          gender = Gender.male;
+                        });
+                      },
+                    ),
+                    SizedBox(
+                      width: 8.w,
+                    ),
+                    Text('male'.tr())
+                  ],
+                )
+              ],
+            ),
+            SizedBox(
+              height: 36.h,
+            ),
+            Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+              const PrivatePolicyText(),
+              Transform.scale(
+                  scale: 0.8,
+                  child: Switch.adaptive(
+                    activeColor: AppColors.orange,
+                    inactiveTrackColor: AppColors.grey2,
+                    value: isPrivacyAccept,
+                    onChanged: (value) {
                       setState(() {
-                        gender = Gender.female;
+                        isPrivacyAccept = !isPrivacyAccept;
                       });
                     },
-                  ),
-                  SizedBox(
-                    width: 8.h,
-                  ),
-                  Text('female'.tr())
-                ],
-              ),
-              SizedBox(
-                width: 100.w,
-              ),
-              Row(
-                children: [
-                  IconButton(
-                    icon: SvgPicture.asset(gender == Gender.male
-                        ? 'assets/icons/fill_checkbox.svg'
-                        : 'assets/icons/empty_checkbox.svg'),
-                    onPressed: () {
-                      setState(() {
-                        gender = Gender.male;
-                      });
-                    },
-                  ),
-                  SizedBox(
-                    width: 8.w,
-                  ),
-                  Text('male'.tr())
-                ],
-              )
-            ],
-          ),
-          SizedBox(
-            height: 36.h,
-          ),
-          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            const PrivatePolicyText(),
-            Transform.scale(
-                scale: 0.8,
-                child: Switch.adaptive(
-                  activeColor: AppColors.orange,
-                  inactiveTrackColor: AppColors.grey2,
-                  value: isPrivacyAccept,
-                  onChanged: (value) {
-                    setState(() {
-                      isPrivacyAccept = !isPrivacyAccept;
-                    });
-                  },
-                )
-                // CupertinoSwitch(
-                //   trackColor: AppColors.grey2,
-                //   value: isPrivacyAccept,
-                //   onChanged: (value) {
-                //     setState(() {
-                //       isPrivacyAccept = !isPrivacyAccept;
-                //     });
-                //   },
-                //   activeColor: AppColors.orange,
-                // ),
-                )
-          ]),
-          SizedBox(
-            height: 48.h,
-          ),
-          AppButton(
+                  )
+                  // CupertinoSwitch(
+                  //   trackColor: AppColors.grey2,
+                  //   value: isPrivacyAccept,
+                  //   onChanged: (value) {
+                  //     setState(() {
+                  //       isPrivacyAccept = !isPrivacyAccept;
+                  //     });
+                  //   },
+                  //   activeColor: AppColors.orange,
+                  // ),
+                  )
+            ]),
+            SizedBox(
+              height: 48.h,
+            ),
+            AppButton(
               isLoading: isLoading,
               onTap: isLoading == true
                   ? null
@@ -353,9 +350,11 @@ class _RegistrationFormState extends State<RegistrationForm> {
                         });
                       });
                     },
-              text: 'registration'.tr())
-        ],
-      );
-    });
+              text: 'registration'.tr(),
+            )
+          ],
+        );
+      },
+    );
   }
 }

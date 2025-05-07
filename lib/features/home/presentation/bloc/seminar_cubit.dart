@@ -14,7 +14,7 @@ class SeminarCubit extends Cubit<SeminarState> {
   final HomeRepository _homeRepository;
   SeminarCubit(
     this._homeRepository,
-  ) : super(const SeminarState.initialState());
+  ) : super(const SeminarState.initial());
 
   Future<void> seminar({
     String? search,
@@ -24,8 +24,8 @@ class SeminarCubit extends Cubit<SeminarState> {
     bool? isFirstCall,
   }) async {
     page > 1
-        ? emit(const SeminarState.loadingMoreState())
-        : emit(const SeminarState.loadingState());
+        ? emit(const SeminarState.loadingMore())
+        : emit(const SeminarState.loading());
     final failureOrUser = await _homeRepository.seminar(
       search: search,
       isSaved: isSaved,
@@ -35,7 +35,7 @@ class SeminarCubit extends Cubit<SeminarState> {
     );
     failureOrUser.fold(
       (l) {
-        emit(SeminarState.errorState(message: mapFailureToMessageBack(l)));
+        emit(SeminarState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         emit(SeminarState.loaded(news: r.toSet().toList()));
@@ -45,17 +45,14 @@ class SeminarCubit extends Cubit<SeminarState> {
 }
 
 @freezed
-class SeminarState with _$SeminarState {
-  const factory SeminarState.initialState() = _InitialPage;
-
-  const factory SeminarState.loadingState() = _LoadingState;
-  const factory SeminarState.loadingMoreState() = _LoadingMoreState;
-
+sealed class SeminarState with _$SeminarState {
+  const factory SeminarState.initial() = SeminarInitialPage;
+  const factory SeminarState.loading() = SeminarLoadingState;
+  const factory SeminarState.loadingMore() = SeminarLoadingMoreState;
   const factory SeminarState.loaded({
     required List<ResultHomeDTO> news,
-  }) = _LoadedState;
-
-  const factory SeminarState.errorState({
+  }) = SeminarLoadedState;
+  const factory SeminarState.error({
     required String message,
-  }) = _ErrorState;
+  }) = SeminarErrorState;
 }

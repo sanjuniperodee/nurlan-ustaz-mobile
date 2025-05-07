@@ -50,43 +50,33 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
     return Scaffold(
       body: BlocConsumer<TechnicalSupportCubit, TechnicalSupportState>(
         listener: (context, state) {
-          state.maybeWhen(
-            orElse: () {},
-            errorState: (message) {
+          switch (state) {
+            case TechnicalSupportErrorState(:final message):
               buildErrorCustomSnackBar(context, message);
-            },
-            initialState: (questions, channel, user) {
+              break;
+            case TechnicalSupportInitialState():
               Future.delayed(const Duration(milliseconds: 300))
                   .then((value) => scrollToTheEnd());
-            },
-          );
-          // TODO: implement listener
+              break;
+            default:
+          }
         },
         builder: (context, state) {
-          return state.maybeWhen(
-            orElse: () {
-              return Container();
-            },
-            errorState: (message) {
-              return Container();
-            },
-            loadingState: () {
-              return const Padding(
+          return switch (state) {
+            TechnicalSupportLoadingState() => const Padding(
                 padding: EdgeInsets.only(top: 300),
                 child: Center(
                   child: CircularProgressIndicator(
                     color: AppColors.linearBlue,
                   ),
                 ),
-              );
-            },
-            initialState: (questions, channel, user) {
-              return GlobalCustomBody(
+              ),
+            TechnicalSupportInitialState(:final questions, :final user) =>
+              GlobalCustomBody(
                 child: SingleChildScrollView(
                   controller: _scrollController,
                   physics: const BouncingScrollPhysics(),
                   child: Column(children: [
-
                     CustomAppBar(
                       title: 'tech_support'.tr(),
                     ),
@@ -129,19 +119,20 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
                                       height: 4,
                                     ),
                                     Text(
-                                        DateFormat('HH:mm').format(
-                                            DateTime.parse(questions[index]
-                                                    .createdAt
-                                                    .toString())
-                                                .toLocal()),
-                                        style: getTextStyle(
-                                                CustomTextStyles.s12w400)
-                                            .apply(
-                                                color:
-                                                    questions[index].userName !=
-                                                            user.email
-                                                        ? AppColors.grey2
-                                                        : Colors.blue[900])),
+                                      DateFormat('HH:mm').format(DateTime.parse(
+                                              questions[index]
+                                                  .createdAt
+                                                  .toString())
+                                          .toLocal()),
+                                      style:
+                                          getTextStyle(CustomTextStyles.s12w400)
+                                              .apply(
+                                                  color: questions[index]
+                                                              .userName !=
+                                                          user.email
+                                                      ? AppColors.grey2
+                                                      : Colors.blue[900]),
+                                    ),
                                   ],
                                 ),
                               ),
@@ -154,9 +145,9 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
                     )
                   ]),
                 ),
-              );
-            },
-          );
+              ),
+            _ => const SizedBox.shrink()
+          };
         },
       ),
       bottomSheet: Container(
@@ -178,7 +169,8 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
                     focusNode: focusNode,
                     controller: _textEditingController,
                     decoration: InputDecoration(
-                        hintText: 'write_message'.tr(), border: InputBorder.none),
+                        hintText: 'write_message'.tr(),
+                        border: InputBorder.none),
                   ),
                 ),
                 IconButton(

@@ -16,7 +16,7 @@ part 'zhosparym_cubit.freezed.dart';
 class ZhosparymCubit extends Cubit<ZhosparymState> {
   ZhosparymCubit(
     this._repository,
-  ) : super(const ZhosparymState.initialState());
+  ) : super(const ZhosparymState.initial());
 
   final ZhosparymRepository _repository;
   late List<ChatDTO> chatsss;
@@ -27,11 +27,11 @@ class ZhosparymCubit extends Cubit<ZhosparymState> {
     final result = await _repository.getCheckLists();
 
     return result.fold(
-          (error) {
+      (error) {
         checklist = null;
         return null;
       },
-          (list) {
+      (list) {
         checklist = list.isNotEmpty ? list.first : null;
         return checklist;
       },
@@ -54,24 +54,21 @@ class ZhosparymCubit extends Cubit<ZhosparymState> {
         startTime: DateFormat('yyyy-MM-dd').format(date.copyWith(day: 1)),
         endTime: DateFormat('yyyy-MM-dd').format(lastDayDateTime));
     events.fold((l) => {}, (r) {
-      emit(_InitialState()
-          .copyWith(events: r, checklist: checklist, isLoading: false));
+      emit(ZhosparymState.initial(
+          events: r, checklist: checklist, isLoading: false));
     });
   }
 }
 
 @freezed
-class ZhosparymState with _$ZhosparymState {
-  const factory ZhosparymState.initialState(
+sealed class ZhosparymState with _$ZhosparymState {
+  const factory ZhosparymState.initial(
       {Map<String, List<EventDto>>? events,
       final CheckListDto? checklist,
-      @Default(false) bool isLoading}) = _InitialState;
-
-  const factory ZhosparymState.loadedState() = _LoadedState;
-
-  const factory ZhosparymState.loadingState() = _LoadingState;
-
-  const factory ZhosparymState.errorState({
+      @Default(false) bool isLoading}) = ZhosparymInitialState;
+  const factory ZhosparymState.loaded() = ZhosparymLoadedState;
+  const factory ZhosparymState.loading() = ZhosparymLoadingState;
+  const factory ZhosparymState.error({
     required String message,
-  }) = _ErrorState;
+  }) = ZhosparymErrorState;
 }

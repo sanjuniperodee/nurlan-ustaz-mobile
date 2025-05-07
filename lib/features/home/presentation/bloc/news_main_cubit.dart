@@ -13,7 +13,7 @@ class NewsMainCubit extends Cubit<NewsMainState> {
   final HomeRepository _homeRepository;
   NewsMainCubit(
     this._homeRepository,
-  ) : super(const NewsMainState.initialState());
+  ) : super(const NewsMainState.initial());
 
   Future<void> newsMain({
     bool? isSaved,
@@ -26,7 +26,7 @@ class NewsMainCubit extends Cubit<NewsMainState> {
         isSaved: isSaved, currentPage: currentPage);
     failureOrUser.fold(
       (l) {
-        emit(NewsMainState.errorState(message: mapFailureToMessageBack(l)));
+        emit(NewsMainState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         emit(NewsMainState.loaded(res: r));
@@ -36,16 +36,13 @@ class NewsMainCubit extends Cubit<NewsMainState> {
 }
 
 @freezed
-class NewsMainState with _$NewsMainState {
-  const factory NewsMainState.initialState() = _InitialPage;
-
-  const factory NewsMainState.loadingState() = _LoadingState;
-
+sealed class NewsMainState with _$NewsMainState {
+  const factory NewsMainState.initial() = NewsMainInitialPage;
+  const factory NewsMainState.loading() = NewsMainLoadingState;
   const factory NewsMainState.loaded({
     required List<ResultHomeDTO> res,
-  }) = _LoadedState;
-
-  const factory NewsMainState.errorState({
+  }) = NewsMainLoadedState;
+  const factory NewsMainState.error({
     required String message,
-  }) = _ErrorState;
+  }) = NewsMainErrorState;
 }

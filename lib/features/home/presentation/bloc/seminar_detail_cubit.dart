@@ -11,12 +11,12 @@ class SeminarDetailCubit extends Cubit<SeminarDetailState> {
   final HomeRepository _homeRepository;
   SeminarDetailCubit(
     this._homeRepository,
-  ) : super(const SeminarDetailState.initialState());
+  ) : super(const SeminarDetailState.initial());
   late ResultHomeDTO res;
   Future<void> seminarDetail({
     required int id,
   }) async {
-    emit(const SeminarDetailState.loadingState());
+    emit(const SeminarDetailState.loading());
     final failureOrUser = await _homeRepository.seminarDetail(
       id: id,
     );
@@ -65,15 +65,12 @@ class SeminarDetailCubit extends Cubit<SeminarDetailState> {
 }
 
 @freezed
-class SeminarDetailState with _$SeminarDetailState {
-  const factory SeminarDetailState.initialState() = _InitialPage;
-
-  const factory SeminarDetailState.loadingState() = _LoadingState;
-
+sealed class SeminarDetailState with _$SeminarDetailState {
+  const factory SeminarDetailState.initial() = SeminarDetailInitialPage;
+  const factory SeminarDetailState.loading() = SeminarDetailLoadingState;
   const factory SeminarDetailState.loaded({required ResultHomeDTO res}) =
-      _LoadedState;
-
-  const factory SeminarDetailState.errorState({
+      SeminarDetailLoadedState;
+  const factory SeminarDetailState.error({
     required String message,
-  }) = _ErrorState;
+  }) = SeminarDetailErrorState;
 }

@@ -12,7 +12,7 @@ class CommentSemCubit extends Cubit<CommentSemState> {
   final HomeRepository _homeRepository;
   CommentSemCubit(
     this._homeRepository,
-  ) : super(const CommentSemState.initialState());
+  ) : super(const CommentSemState.initial());
 
   Future<void> commentsSem({
     required int page,
@@ -20,13 +20,13 @@ class CommentSemCubit extends Cubit<CommentSemState> {
     int? id,
   }) async {
     page > 1
-        ? emit(const CommentSemState.loadingMoreState())
-        : emit(const CommentSemState.loadingState());
-    final failureOrUser =
-        await _homeRepository.commentSem(page: page, isFirstCall: isFirstCall,id: id);
+        ? emit(const CommentSemState.loadingMore())
+        : emit(const CommentSemState.loading());
+    final failureOrUser = await _homeRepository.commentSem(
+        page: page, isFirstCall: isFirstCall, id: id);
     failureOrUser.fold(
       (l) {
-        emit(CommentSemState.errorState(message: mapFailureToMessageBack(l)));
+        emit(CommentSemState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         emit(CommentSemState.loaded(comments: r));
@@ -36,17 +36,14 @@ class CommentSemCubit extends Cubit<CommentSemState> {
 }
 
 @freezed
-class CommentSemState with _$CommentSemState {
-  const factory CommentSemState.initialState() = _InitialPage;
-
-  const factory CommentSemState.loadingState() = _LoadingState;
-  const factory CommentSemState.loadingMoreState() = _LoadingMoreState;
-
+sealed class CommentSemState with _$CommentSemState {
+  const factory CommentSemState.initial() = CommentSemInitialPage;
+  const factory CommentSemState.loading() = CommentSemLoadingState;
+  const factory CommentSemState.loadingMore() = CommentSemLoadingMoreState;
   const factory CommentSemState.loaded({
     required List<ResultHomeDTO> comments,
-  }) = _LoadedState;
-
-  const factory CommentSemState.errorState({
+  }) = CommentSemLoadedState;
+  const factory CommentSemState.error({
     required String message,
-  }) = _ErrorState;
+  }) = CommentSemErrorState;
 }

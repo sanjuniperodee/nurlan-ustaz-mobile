@@ -51,67 +51,61 @@ class _NamazPageState extends State<NamazPage> {
       backgroundColor: AppColors.lightBlue,
       body: BlocBuilder<TimingsCubit, TimingsState>(
         builder: (context, state) {
-          return state.maybeWhen(
-            orElse: () {
-              return const Center(
-                child: CircularProgressIndicator(color: AppColors.linearBlue),
-              );
-            },
-            // errorState: (message) {
-            //   return buildErrorCustomSnackBar(context, message);
-            // },
-            loaded: (not, geo) {
-              final namaz = not.toJson();
-              times = namaz.values.toList();
+          // TODO: error widget
+          if (state is! TimingsLoadedState) {
+            return const Center(
+              child: CircularProgressIndicator(color: AppColors.linearBlue),
+            );
+          }
 
-              return SizedBox(
-                height: 1.sh,
-                child: Stack(
-                  children: [
-                    Image.asset(
-                      Assets.gradient,
-                      fit: BoxFit.cover,
-                    ),
-                    SingleChildScrollView(
-                      padding:
-                          const EdgeInsets.only(top: 40, left: 16, right: 16).r,
-                      physics: const BouncingScrollPhysics(),
-                      child: Column(
-                        children: [
-                          CustomAppBar(
-                            title: 'Namaz_times'.tr(),
-                          ),
-                          SizedBox(
-                            height: 28.h,
-                          ),
-                          NamazContainerWidget(
-                            name: geo.name ?? 'Алматы',
-                            time: timesToSend(),
-                            namazName: namasNames[indexOfNextNames(times)],
-                            namazTime: namasTimestoSend(),
-                          ),
-                          SizedBox(
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemCount: times.length,
-                              itemBuilder: (context, index) {
-                                return NamazContainer(
-                                  name: namasNames[index],
-                                  isActive:
-                                      times[index] == beforeFormatter(times),
-                                  time: times[index],
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+          final namaz = state.not.toJson();
+          times = namaz.values.toList();
+
+          return SizedBox(
+            height: 1.sh,
+            child: Stack(
+              children: [
+                Image.asset(
+                  Assets.gradient,
+                  fit: BoxFit.cover,
                 ),
-              );
-            },
+                SingleChildScrollView(
+                  padding:
+                      const EdgeInsets.only(top: 40, left: 16, right: 16).r,
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    children: [
+                      CustomAppBar(
+                        title: 'Namaz_times'.tr(),
+                      ),
+                      SizedBox(
+                        height: 28.h,
+                      ),
+                      NamazContainerWidget(
+                        name: state.geo.name ?? 'Алматы',
+                        time: timesToSend(),
+                        namazName: namasNames[indexOfNextNames(times)],
+                        namazTime: namasTimestoSend(),
+                      ),
+                      SizedBox(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemCount: times.length,
+                          itemBuilder: (context, index) {
+                            return NamazContainer(
+                              name: namasNames[index],
+                              isActive: times[index] == beforeFormatter(times),
+                              time: times[index],
+                            );
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           );
         },
       ),

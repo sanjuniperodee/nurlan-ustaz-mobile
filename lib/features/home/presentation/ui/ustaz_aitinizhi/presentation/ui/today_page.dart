@@ -31,80 +31,72 @@ class _TodayChatPageState extends State<TodayChatPage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<TodayChatCubit, TodayChatState>(
-        listener: (context, state) {
-      state.maybeWhen(
-          orElse: () {},
-          errorState: (message) {
-            buildErrorCustomSnackBar(context, message);
-          });
-      // TODO: implement listener
-    }, builder: (context, state) {
-      log(state.toString());
-      return state.maybeWhen(orElse: () {
-        return Container();
-      }, errorState: (message) {
-        return Container();
-      }, loadingState: () {
-        return const Padding(
-          padding: EdgeInsets.only(top: 300),
-          child: Center(
-            child: CircularProgressIndicator(
-              color: AppColors.linearBlue,
-            ),
-          ),
-        );
-      }, initialState: (questions, channel, user) {
-        //BlocProvider.of<TodayChatCubit>(context).getQuestionByDate(DateFormat('yyyy-MM-dd').format(DateTime.now()));
+      listener: (context, state) {
+        if (state is TodayChatErrorState) {
+          buildErrorCustomSnackBar(context, state.message);
+        }
+      },
+      builder: (context, state) {
+        log(state.toString());
 
-
-        return Column(
-          children: [
-            SizedBox(
-              height: 25.h,
-            ),
-            Container(
-              width: double.infinity,
-              height: 180.h,
-              child: Hero(
-                tag: 'UA',
-                child: Image.asset(
-                  'assets/images/ustaz_aitinizh.png',
-
-                  fit: BoxFit.fill,
+        return switch (state) {
+          TodayChatLoadingState() => const Padding(
+              padding: EdgeInsets.only(top: 300),
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.linearBlue,
                 ),
               ),
             ),
-            SizedBox(
-              height: 8.h,
-            ),
-            InkWell(
-              onTap: () async {
-                await context.read<TodayChatCubit>().connectSocket();
-              },
-              child: Text(
+          TodayChatInitialState(:final questions, :final channel) => Column(
+              children: [
+                SizedBox(
+                  height: 25.h,
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  height: 180.h,
+                  child: Hero(
+                    tag: 'UA',
+                    child: Image.asset(
+                      'assets/images/ustaz_aitinizh.png',
+                      fit: BoxFit.fill,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 8.h,
+                ),
+                InkWell(
+                  onTap: () async {
+                    await context.read<TodayChatCubit>().connectSocket();
+                  },
+                  child: Text(
+                    'warning_24'.tr(),
+                    style: getTextStyle(CustomTextStyles.s12w600)
+                        .copyWith(fontFamily: FontTypes.SF_Pro.name),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                SizedBox(
+                  height: 16.h,
+                ),
 
-                'warning_24'.tr(),
-                style: getTextStyle(CustomTextStyles.s12w600)
-                    .copyWith(fontFamily: FontTypes.SF_Pro.name),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            SizedBox(
-              height: 16.h,
-            ),
+                QuestionsList(
+                  questions: questions.reversed.toList(),
+                  isSocket: channel == null ? null : false,
+                ),
 
-            QuestionsList(
-              questions: questions.reversed.toList(),
-              isSocket: channel == null ? null : false,
+                SizedBox(
+                  height: 200,
+                ),
+                //QuestionsList(questions: questions,),
+              ],
             ),
-
-            SizedBox(
-              height: 200,
-            ),
-            //QuestionsList(questions: questions,),
-          ],
-        );
-      });
-    });
+          // TODO: error widget
+          _ => const SizedBox.shrink()
+        };
+      },
+    );
   }
 }

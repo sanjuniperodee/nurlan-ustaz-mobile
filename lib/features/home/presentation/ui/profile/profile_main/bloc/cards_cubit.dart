@@ -12,16 +12,16 @@ class CardsCubit extends Cubit<CardsState> {
   final HomeRepository homeRepo;
   CardsCubit(
     this.homeRepo,
-  ) : super(const CardsState.initialState());
+  ) : super(const CardsState.initial());
 
   Future<void> getCardList() async {
-    emit(const _LoadingState());
+    emit(const CardsState.loading());
     await homeRepo.getCards().then((value) {
       value.fold((l) {
-        emit(_ErrorState(message: mapFailureToMessage(l)));
-        emit(const _LoadedState(cards: []));
+        emit(CardsState.error(message: mapFailureToMessage(l)));
+        emit(const CardsState.loaded(cards: []));
       }, (r) {
-        emit(_LoadedState(cards: r.toList()));
+        emit(CardsState.loaded(cards: r.toList()));
       });
     });
   }
@@ -38,32 +38,28 @@ class CardsCubit extends Cubit<CardsState> {
   }
 
   Future<void> setDefaultCard({required int cardId}) async {
-    emit(const _LoadingState());
+    emit(const CardsState.loading());
     await homeRepo.setDefaultCard(cardId: cardId).whenComplete(() async {
-       await homeRepo.getCards().then((value) {
-      value.fold((l) {
-        emit(_ErrorState(message: mapFailureToMessage(l)));
-        emit(const _LoadedState(cards: []));
-      }, (r) {
-        emit(_LoadedState(cards: r.toList()));
+      await homeRepo.getCards().then((value) {
+        value.fold((l) {
+          emit(CardsState.error(message: mapFailureToMessage(l)));
+          emit(const CardsState.loaded(cards: []));
+        }, (r) {
+          emit(CardsState.loaded(cards: r.toList()));
+        });
       });
     });
-    });
-   
   }
 }
 
 @freezed
-class CardsState with _$CardsState {
-  const factory CardsState.initialState() = _InitialPage;
-
-  const factory CardsState.loadingState() = _LoadingState;
-
+sealed class CardsState with _$CardsState {
+  const factory CardsState.initial() = CardsInitialPage;
+  const factory CardsState.loading() = CardsLoadingState;
   const factory CardsState.loaded({
     required List<CardDTO> cards,
-  }) = _LoadedState;
-
-  const factory CardsState.errorState({
+  }) = CardsLoadedState;
+  const factory CardsState.error({
     required String message,
-  }) = _ErrorState;
+  }) = CardsErrorState;
 }

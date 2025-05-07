@@ -38,55 +38,48 @@ class _NotificationPageState extends State<NotificationPage> {
       backgroundColor: AppColors.lightBlue,
       body: BlocBuilder<GetNotiCubit, GetNotiState>(
         builder: (context, state) {
-          return state.maybeWhen(
-            orElse: () => _buildLoading(),
-            loaded: (res) => _buildContent(res),
+          if (state is! GetNotiLoadedState) {
+            return Center(
+              child: CircularProgressIndicator(
+                color: AppColors.linearBlue,
+              ),
+            );
+          }
+          final res = state.res;
+          log('уведомления-${res}');
+          return GlobalCustomBody(
+            child: SingleChildScrollView(
+              physics: BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  CustomAppBar(
+                    title: 'notifications'.tr(),
+                  ),
+                  _buildExpansionTile(
+                    res.news,
+                    'news'.tr(),
+                  ),
+                  _buildExpansionTile(
+                    res.dream,
+                    'dream_interpretation'.tr(),
+                  ),
+                  _buildExpansionTile(
+                    res.muslimName,
+                    'name_meaning'.tr(),
+                  ),
+                  _buildExpansionTile(
+                    res.live,
+                    'live'.tr(),
+                  ),
+                  _buildExpansionTile(
+                    res.tellMe,
+                    'can_ques'.tr(),
+                  ),
+                ],
+              ),
+            ),
           );
         },
-      ),
-    );
-  }
-
-  Widget _buildLoading() {
-    return Center(
-      child: CircularProgressIndicator(
-        color: AppColors.linearBlue,
-      ),
-    );
-  }
-
-  Widget _buildContent(GetNotiDTO res) {
-    log('уведомления-${res}');
-    return GlobalCustomBody(
-      child: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        child: Column(
-          children: [
-            CustomAppBar(
-              title: 'notifications'.tr(),
-            ),
-            _buildExpansionTile(
-              res.news,
-              'news'.tr(),
-            ),
-            _buildExpansionTile(
-              res.dream,
-              'dream_interpretation'.tr(),
-            ),
-            _buildExpansionTile(
-              res.muslimName,
-              'name_meaning'.tr(),
-            ),
-            _buildExpansionTile(
-              res.live,
-              'live'.tr(),
-            ),
-            _buildExpansionTile(
-              res.tellMe,
-              'can_ques'.tr(),
-            ),
-          ],
-        ),
       ),
     );
   }

@@ -13,13 +13,13 @@ class PrjInfoCubit extends Cubit<PrjInfoState> {
   final HomeRepository _homeRepository;
   PrjInfoCubit(
     this._homeRepository,
-  ) : super(const PrjInfoState.initialState());
+  ) : super(const PrjInfoState.initial());
 
   Future<void> prjInfo() async {
     final failureOrUser = await _homeRepository.projectInfo();
     failureOrUser.fold(
       (l) {
-        emit(PrjInfoState.errorState(message: mapFailureToMessageBack(l)));
+        emit(PrjInfoState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         emit(PrjInfoState.loaded(res: r));
@@ -29,16 +29,16 @@ class PrjInfoCubit extends Cubit<PrjInfoState> {
 }
 
 @freezed
-class PrjInfoState with _$PrjInfoState {
-  const factory PrjInfoState.initialState() = _InitialPage;
+sealed class PrjInfoState with _$PrjInfoState {
+  const factory PrjInfoState.initial() = PrjInfoInitialPage;
 
-  const factory PrjInfoState.loadingState() = _LoadingState;
+  const factory PrjInfoState.loading() = PrjInfoLoadingState;
 
   const factory PrjInfoState.loaded({
     required List<ResultHomeDTO> res,
-  }) = _LoadedState;
+  }) = PrjInfoLoadedState;
 
-  const factory PrjInfoState.errorState({
+  const factory PrjInfoState.error({
     required String message,
-  }) = _ErrorState;
+  }) = PrjInfoErrorState;
 }

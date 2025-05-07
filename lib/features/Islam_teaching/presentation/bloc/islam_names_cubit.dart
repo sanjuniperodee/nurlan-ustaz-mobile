@@ -12,7 +12,7 @@ class IslamNamesCubit extends Cubit<IslamNamesState> {
   final IslamTeachingRepository _islamTeachingRepository;
   IslamNamesCubit(
     this._islamTeachingRepository,
-  ) : super(const IslamNamesState.initialState());
+  ) : super(const IslamNamesState.initial());
 
   Future<void> islamNamesMan({
     String? search,
@@ -21,13 +21,13 @@ class IslamNamesCubit extends Cubit<IslamNamesState> {
     bool? isFirstCall,
   }) async {
     page > 1
-        ? emit(const IslamNamesState.loadingMoreState())
-        : emit(const IslamNamesState.loadingState());
+        ? emit(const IslamNamesState.loadingMore())
+        : emit(const IslamNamesState.loading());
     final failureOrUser = await _islamTeachingRepository.islamNamesMan(
         search: search, isSaved: isSaved, page: page, isFirstCall: isFirstCall);
     failureOrUser.fold(
       (l) {
-        emit(IslamNamesState.errorState(message: mapFailureToMessageBack(l)));
+        emit(IslamNamesState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         emit(IslamNamesState.loaded(islam: r.toSet().toList()));
@@ -42,13 +42,13 @@ class IslamNamesCubit extends Cubit<IslamNamesState> {
     bool? isFirstCall,
   }) async {
     page > 1
-        ? emit(const IslamNamesState.loadingMoreState())
-        : emit(const IslamNamesState.loadingState());
+        ? emit(const IslamNamesState.loadingMore())
+        : emit(const IslamNamesState.loading());
     final failureOrUser = await _islamTeachingRepository.islamWoman(
         search: search, isSaved: isSaved, page: page, isFirstCall: isFirstCall);
     failureOrUser.fold(
       (l) {
-        emit(IslamNamesState.errorState(message: mapFailureToMessageBack(l)));
+        emit(IslamNamesState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         emit(IslamNamesState.loaded(islam: r.toSet().toList()));
@@ -58,17 +58,14 @@ class IslamNamesCubit extends Cubit<IslamNamesState> {
 }
 
 @freezed
-class IslamNamesState with _$IslamNamesState {
-  const factory IslamNamesState.initialState() = _InitialPage;
-
-  const factory IslamNamesState.loadingState() = _LoadingState;
-  const factory IslamNamesState.loadingMoreState() = _LoadingMoreState;
-
+sealed class IslamNamesState with _$IslamNamesState {
+  const factory IslamNamesState.initial() = IslamNamesInitialPage;
+  const factory IslamNamesState.loading() = IslamNamesLoadingState;
+  const factory IslamNamesState.loadingMore() = IslamNamesLoadingMoreState;
   const factory IslamNamesState.loaded({
     required List<ResultTeachingDTO> islam,
-  }) = _LoadedState;
-
-  const factory IslamNamesState.errorState({
+  }) = IslamNamesLoadedState;
+  const factory IslamNamesState.error({
     required String message,
-  }) = _ErrorState;
+  }) = IslamNamesErrorState;
 }

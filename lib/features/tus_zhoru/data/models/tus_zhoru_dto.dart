@@ -5,7 +5,7 @@ part 'tus_zhoru_dto.freezed.dart';
 part 'tus_zhoru_dto.g.dart';
 
 @freezed
-class TusZhoruDTO with _$TusZhoruDTO {
+abstract class TusZhoruDTO with _$TusZhoruDTO {
   const factory TusZhoruDTO({
     @JsonKey(name: "id") int? id,
     @JsonKey(name: "title") String? title,

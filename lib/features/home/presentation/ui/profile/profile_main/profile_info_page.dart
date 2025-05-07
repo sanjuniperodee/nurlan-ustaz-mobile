@@ -236,7 +236,6 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                     SizedBox(
                       height: 20.h,
                     ),
-                    
                     ProfileMenuItem(
                       title: 'Delete_account'.tr(),
                       titleStyle: getTextStyle(CustomTextStyles.s16w500)
@@ -264,19 +263,18 @@ class _ProfileInfoPageState extends State<ProfileInfoPage> {
                     BlocListener<RenameUserCubit, RenameUserState>(
                       listener: (context, state) {
                         log('STATE::::${state.toString()}');
-                        state.maybeWhen(
-                          orElse: () {},
-                          errorState: (message) {
-                            return buildErrorCustomSnackBar(context, message);
-                          },
-                          loadedState: (user) {
+                        switch (state) {
+                          case RenameUserErrorState(:final message):
+                            buildErrorCustomSnackBar(context, message);
+                            break;
+                          case RenameUserLoadedState():
                             buildSuccessCustomSnackBar(context, 'success'.tr());
                             BlocProvider.of<GetProfileCubit>(context)
                                 .getUser()
                                 .then((value) => Navigator.pop(context));
-                          },
-                        );
-                        // TODO: implement listener
+                            break;
+                          default:
+                        }
                       },
                       child: AppButton(
                           onTap: () async {

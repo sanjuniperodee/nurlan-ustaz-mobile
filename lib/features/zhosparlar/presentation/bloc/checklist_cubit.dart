@@ -14,7 +14,7 @@ part 'checklist_cubit.freezed.dart';
 class CheckListCubit extends Cubit<CheckListState> {
   CheckListCubit(
     this._repository,
-  ) : super(const CheckListState.initialState()) {
+  ) : super(const CheckListState.initial()) {
     selectedDate = DateTime.now();
   }
 
@@ -40,11 +40,12 @@ class CheckListCubit extends Cubit<CheckListState> {
           result.fold((l) => {}, (r) {
             log('zaebal-${r.toList().toString()}');
             days = r.toList();
-            emit(_InitialState(days: r.toList(), selectedDate: selectedDate));
+            emit(CheckListState.initial(
+                days: r.toList(), selectedDate: selectedDate));
           });
         });
       } else {
-        emit(_InitialState(
+        emit(CheckListState.initial(
           days: r.toList(),
           selectedDate: selectedDate,
         ));
@@ -70,7 +71,7 @@ class CheckListCubit extends Cubit<CheckListState> {
 
   Future<void> deleteTask(CheckListDayDto checkListDayDto,
       CheckListTaskDto checkListTaskDto) async {
-    emit(_InitialState().copyWith(
+    emit(CheckListState.initial(
         selectedDate: selectedDate, days: days, tasks: [], isLoading: true));
 
     await _repository.deleteTask(
@@ -80,8 +81,8 @@ class CheckListCubit extends Cubit<CheckListState> {
   }
 
   Future<void> changeDate({required DateTime date}) async {
-    emit(_InitialState()
-        .copyWith(selectedDate: date, days: days, tasks: [], isLoading: true));
+    emit(CheckListState.initial(
+        selectedDate: date, days: days, tasks: [], isLoading: true));
 
     final day = days
         .firstWhere((element) => DateTime.parse(element.date).day == date.day);
@@ -90,25 +91,22 @@ class CheckListCubit extends Cubit<CheckListState> {
       tasks = r.toList();
       log(tasks.toList().toString());
       selectedDate = date;
-      emit(_InitialState().copyWith(
+      emit(CheckListState.initial(
           selectedDate: date, days: days, tasks: tasks, isLoading: false));
     });
   }
 }
 
 @freezed
-class CheckListState with _$CheckListState {
-  const factory CheckListState.initialState(
+sealed class CheckListState with _$CheckListState {
+  const factory CheckListState.initial(
       {@Default([]) final List<CheckListDayDto> days,
       final DateTime? selectedDate,
       final List<CheckListTaskDto>? tasks,
-      @Default(false) bool isLoading}) = _InitialState;
-
-  const factory CheckListState.loadedState() = _LoadedState;
-
-  const factory CheckListState.loadingState() = _LoadingState;
-
-  const factory CheckListState.errorState({
+      @Default(false) bool isLoading}) = CheckListInitialState;
+  const factory CheckListState.loaded() = CheckListLoadedState;
+  const factory CheckListState.loading() = CheckListLoadingState;
+  const factory CheckListState.error({
     required String message,
-  }) = _ErrorState;
+  }) = CheckListErrorState;
 }

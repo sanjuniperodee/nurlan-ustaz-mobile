@@ -12,19 +12,20 @@ class CharitiesCubit extends Cubit<CharitiesState> {
   final HomeRepository _homeRepository;
   CharitiesCubit(
     this._homeRepository,
-  ) : super(const CharitiesState.initialState());
+  ) : super(const CharitiesState.initial());
 
   Future<void> charities({
     required int page,
-     bool? isFirstCall,
+    bool? isFirstCall,
   }) async {
     page > 1
-        ? emit(const CharitiesState.loadingMoreState())
-        : emit(const CharitiesState.loadingState());
-    final failureOrUser = await _homeRepository.charities(page: page,isFirstCall: isFirstCall);
+        ? emit(const CharitiesState.loadingMore())
+        : emit(const CharitiesState.loading());
+    final failureOrUser =
+        await _homeRepository.charities(page: page, isFirstCall: isFirstCall);
     failureOrUser.fold(
       (l) {
-        emit(CharitiesState.errorState(message: mapFailureToMessageBack(l)));
+        emit(CharitiesState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         emit(CharitiesState.loaded(charities: r));
@@ -34,17 +35,14 @@ class CharitiesCubit extends Cubit<CharitiesState> {
 }
 
 @freezed
-class CharitiesState with _$CharitiesState {
-  const factory CharitiesState.initialState() = _InitialPage;
-
-  const factory CharitiesState.loadingState() = _LoadingState;
-  const factory CharitiesState.loadingMoreState() = _LoadingMoreState;
-
+sealed class CharitiesState with _$CharitiesState {
+  const factory CharitiesState.initial() = CharitiesInitialPage;
+  const factory CharitiesState.loading() = CharitiesLoadingState;
+  const factory CharitiesState.loadingMore() = CharitiesLoadingMoreState;
   const factory CharitiesState.loaded({
     required List<ResultHomeDTO> charities,
-  }) = _LoadedState;
-
-  const factory CharitiesState.errorState({
+  }) = CharitiesLoadedState;
+  const factory CharitiesState.error({
     required String message,
-  }) = _ErrorState;
+  }) = CharitiesErrorState;
 }

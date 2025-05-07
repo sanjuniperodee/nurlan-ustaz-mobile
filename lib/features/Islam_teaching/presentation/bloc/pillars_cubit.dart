@@ -12,16 +12,16 @@ class PillarsCubit extends Cubit<PillarsState> {
   final IslamTeachingRepository _islamTeachingRepository;
   PillarsCubit(
     this._islamTeachingRepository,
-  ) : super(const PillarsState.initialState());
+  ) : super(const PillarsState.initial());
 
   Future<void> pillars() async {
-    emit(const PillarsState.loadingState());
+    emit(const PillarsState.loading());
 
     final failureOrUser = await _islamTeachingRepository.pillars();
 
     failureOrUser.fold(
       (l) {
-        emit(PillarsState.errorState(message: mapFailureToMessageBack(l)));
+        emit(PillarsState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         emit(PillarsState.loaded(pillars: r.toSet().toList()));
@@ -31,16 +31,13 @@ class PillarsCubit extends Cubit<PillarsState> {
 }
 
 @freezed
-class PillarsState with _$PillarsState {
-  const factory PillarsState.initialState() = _InitialPage;
-
-  const factory PillarsState.loadingState() = _LoadingState;
-
+sealed class PillarsState with _$PillarsState {
+  const factory PillarsState.initial() = PillarsInitialPage;
+  const factory PillarsState.loading() = PillarsLoadingState;
   const factory PillarsState.loaded({
     required List<PillarsDTO> pillars,
-  }) = _LoadedState;
-
-  const factory PillarsState.errorState({
+  }) = PillarsLoadedState;
+  const factory PillarsState.error({
     required String message,
-  }) = _ErrorState;
+  }) = PillarsErrorState;
 }

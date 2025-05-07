@@ -32,24 +32,16 @@ class _AboutAppPageState extends State<AboutAppPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: BlocBuilder<PrjInfoCubit, PrjInfoState>(
-      builder: (context, state) {
-        return state.maybeWhen(
-          orElse: () {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: AppColors.linearBlue,
-              ),
-            );
-          },
-          loaded: (res) {
+    return Scaffold(
+      body: BlocBuilder<PrjInfoCubit, PrjInfoState>(
+        builder: (context, state) {
+          if (state is PrjInfoLoadedState) {
             return GlobalCustomBody(
               child: SizedBox(
                 height: 1.1.sh,
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: Column(children: [
-
                     CustomAppBar(
                       title: 'project_info'.tr(),
                     ),
@@ -102,13 +94,13 @@ class _AboutAppPageState extends State<AboutAppPage> {
                       height: 20.h,
                     ),
                     Text(
-                      res.first.description ?? 'ERROR',
+                      state.res.first.description ?? 'ERROR',
                       style: getTextStyle(CustomTextStyles.s16w400)
                           .copyWith(fontFamily: FontTypes.SF_Pro.name),
                       textAlign: TextAlign.center,
                     ),
                     ListView.builder(
-                      itemCount: res.first.statistics!.length,
+                      itemCount: state.res.first.statistics!.length,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
@@ -129,7 +121,8 @@ class _AboutAppPageState extends State<AboutAppPage> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        res.first.statistics![index].value ??
+                                        state.res.first.statistics![index]
+                                                .value ??
                                             'ERROR',
                                         maxLines: 1,
                                         textAlign: TextAlign.center,
@@ -146,7 +139,8 @@ class _AboutAppPageState extends State<AboutAppPage> {
                                         height: 4.h,
                                       ),
                                       Text(
-                                        res.first.statistics![index].title ??
+                                        state.res.first.statistics![index]
+                                                .title ??
                                             'ERROR',
                                         textAlign: TextAlign.center,
                                         style: getTextStyle(
@@ -182,10 +176,16 @@ class _AboutAppPageState extends State<AboutAppPage> {
                 ),
               ),
             );
-          },
-        );
-      },
-    ));
+          }
+
+          return const Center(
+            child: CircularProgressIndicator(
+              color: AppColors.linearBlue,
+            ),
+          );
+        },
+      ),
+    );
   }
 
   final List<CardDTO> cards = List.generate(5, (index) {

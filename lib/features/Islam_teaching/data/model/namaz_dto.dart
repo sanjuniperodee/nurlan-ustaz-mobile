@@ -5,7 +5,7 @@ part 'namaz_dto.freezed.dart';
 part 'namaz_dto.g.dart';
 
 @freezed
-class NamazDTO with _$NamazDTO {
+abstract class NamazDTO with _$NamazDTO {
   const factory NamazDTO({
     required int id,
     String? type,

@@ -13,18 +13,18 @@ class AyatOfDayCubit extends Cubit<AyatOfDayState> {
   final IslamTeachingRepository _islamTeachingRepository;
   AyatOfDayCubit(
     this._islamTeachingRepository,
-  ) : super(const AyatOfDayState.initialState());
+  ) : super(const AyatOfDayState.initial());
 
   late AyatDTO ayat;
   List<PillarsDTO> fatyas = [];
   Future<void> auatOfDay() async {
-    emit(const AyatOfDayState.loadingState());
+    emit(const AyatOfDayState.loading());
 
     final failureOrUser = await _islamTeachingRepository.ayatOfDay();
 
     failureOrUser.fold(
       (l) {
-        emit(AyatOfDayState.errorState(message: mapFailureToMessageBack(l)));
+        emit(AyatOfDayState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         ayat = r;
@@ -34,13 +34,13 @@ class AyatOfDayCubit extends Cubit<AyatOfDayState> {
   }
 
   Future<void> fatya() async {
-    emit(const AyatOfDayState.loadingState());
+    emit(const AyatOfDayState.loading());
 
     final failureOrUser = await _islamTeachingRepository.fatwas();
 
     failureOrUser.fold(
       (l) {
-        emit(AyatOfDayState.errorState(message: mapFailureToMessageBack(l)));
+        emit(AyatOfDayState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         fatyas = r;
@@ -51,17 +51,14 @@ class AyatOfDayCubit extends Cubit<AyatOfDayState> {
 }
 
 @freezed
-class AyatOfDayState with _$AyatOfDayState {
-  const factory AyatOfDayState.initialState() = _InitialPage;
-
-  const factory AyatOfDayState.loadingState() = _LoadingState;
-
+sealed class AyatOfDayState with _$AyatOfDayState {
+  const factory AyatOfDayState.initial() = AyatOfDayInitialPage;
+  const factory AyatOfDayState.loading() = AyatOfDayLoadingState;
   const factory AyatOfDayState.loaded({
     required AyatDTO ayat,
     required List<PillarsDTO> pillars,
-  }) = _LoadedState;
-
-  const factory AyatOfDayState.errorState({
+  }) = AyatOfDayLoadedState;
+  const factory AyatOfDayState.error({
     required String message,
-  }) = _ErrorState;
+  }) = AyatOfDayErrorState;
 }

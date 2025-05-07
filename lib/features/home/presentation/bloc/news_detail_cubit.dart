@@ -12,12 +12,12 @@ class NewsDetailCubit extends Cubit<NewsDetailState> {
   final HomeRepository _homeRepository;
   NewsDetailCubit(
     this._homeRepository,
-  ) : super(const NewsDetailState.initialState());
+  ) : super(const NewsDetailState.initial());
   late ResultHomeDTO res;
   Future<void> newsDetail({
     required int id,
   }) async {
-    emit(const NewsDetailState.loadingState());
+    emit(const NewsDetailState.loading());
     final failureOrUser = await _homeRepository.newsDetail(
       id: id,
     );
@@ -66,15 +66,12 @@ class NewsDetailCubit extends Cubit<NewsDetailState> {
 }
 
 @freezed
-class NewsDetailState with _$NewsDetailState {
-  const factory NewsDetailState.initialState() = _InitialPage;
-
-  const factory NewsDetailState.loadingState() = _LoadingState;
-
+sealed class NewsDetailState with _$NewsDetailState {
+  const factory NewsDetailState.initial() = NewsDetailInitialPage;
+  const factory NewsDetailState.loading() = NewsDetailLoadingState;
   const factory NewsDetailState.loaded({required ResultHomeDTO res}) =
-      _LoadedState;
-
-  const factory NewsDetailState.errorState({
+      NewsDetailLoadedState;
+  const factory NewsDetailState.error({
     required String message,
-  }) = _ErrorState;
+  }) = NewsDetailErrorState;
 }

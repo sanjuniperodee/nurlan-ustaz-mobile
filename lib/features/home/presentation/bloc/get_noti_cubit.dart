@@ -12,14 +12,14 @@ class GetNotiCubit extends Cubit<GetNotiState> {
   final HomeRepository _homeRepository;
   GetNotiCubit(
     this._homeRepository,
-  ) : super(const GetNotiState.initialState());
+  ) : super(const GetNotiState.initial());
 
   Future<void> getNoti() async {
-    emit(const GetNotiState.loadingState());
+    emit(const GetNotiState.loading());
     final failureOrUser = await _homeRepository.getNotifications();
     failureOrUser.fold(
       (l) {
-        emit(GetNotiState.errorState(message: mapFailureToMessageBack(l)));
+        emit(GetNotiState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         emit(GetNotiState.loaded(res: r));
@@ -29,16 +29,13 @@ class GetNotiCubit extends Cubit<GetNotiState> {
 }
 
 @freezed
-class GetNotiState with _$GetNotiState {
-  const factory GetNotiState.initialState() = _InitialPage;
-
-  const factory GetNotiState.loadingState() = _LoadingState;
-
+sealed class GetNotiState with _$GetNotiState {
+  const factory GetNotiState.initial() = GetNotiInitialPage;
+  const factory GetNotiState.loading() = GetNotiLoadingState;
   const factory GetNotiState.loaded({
     required GetNotiDTO res,
-  }) = _LoadedState;
-
-  const factory GetNotiState.errorState({
+  }) = GetNotiLoadedState;
+  const factory GetNotiState.error({
     required String message,
-  }) = _ErrorState;
+  }) = GetNotiErrorState;
 }

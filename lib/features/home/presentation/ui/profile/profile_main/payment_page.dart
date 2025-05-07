@@ -47,17 +47,10 @@ class _PaymentsPageState extends State<PaymentsPage> {
     return Scaffold(
         body: BlocConsumer<PaymentTickCubit, PaymentTickState>(
       listener: (context, state) {
-        state.maybeWhen(
-          orElse: () {},
-          loaded: (
-            ress,
-            res2,
-          ) {
-            res = ress;
-            tus = res2;
-          },
-        );
-        // TODO: implement listener
+        if (state is PaymentTickLoadedState) {
+          res = state.res;
+          tus = state.res2;
+        }
       },
       builder: (context, state) {
         return GlobalCustomBody(
@@ -138,206 +131,215 @@ class _PaymentsPageState extends State<PaymentsPage> {
                         length: 2,
                       ),
                     ),
-                  state.maybeWhen(
-                    orElse: () {
-                      return Padding(
+                  switch (state) {
+                    PaymentTickLoadedState(:final res) => primaryIndex != 0
+                        ? ListView.separated(
+                            shrinkWrap: true,
+                            padding: const EdgeInsets.all(16).r,
+                            physics: const BouncingScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                onTap: () async {
+                                  await launchUrl(
+                                    Uri.parse(tus[index].ticketUrl!),
+                                    mode: LaunchMode.externalApplication,
+                                  );
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 12.h, horizontal: 12.w),
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: AppColors.white,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          if (tus[index].createdAt != null)
+                                            SizedBox(
+                                              width: 100.w,
+                                              child: Text(
+                                                DateFormat('dd.MM.yyyy').format(
+                                                    tus[index].createdAt!),
+                                                style: getTextStyle(
+                                                        CustomTextStyles
+                                                            .s12w400)
+                                                    .copyWith(
+                                                        fontFamily: FontTypes
+                                                            .SF_Pro.name,
+                                                        color: AppColors.grey1),
+                                                overflow: TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                          SizedBox(
+                                            height: 2.h,
+                                          ),
+                                          SizedBox(
+                                            width: 130.w,
+                                            child: Text(
+                                              '${tus[index].title}',
+                                              overflow: TextOverflow.ellipsis,
+                                              style: getTextStyle(
+                                                      CustomTextStyles.s16w600)
+                                                  .copyWith(
+                                                      fontFamily:
+                                                          FontTypes.SF_Pro.name,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontSize: 16),
+                                            ),
+                                          )
+                                        ],
+                                      ),
+                                      Spacer(),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            '${tus[index].price!.toInt().toString()} ₸',
+                                            style: getTextStyle(
+                                                    CustomTextStyles.s16w600)
+                                                .copyWith(
+                                                    color: AppColors.orange),
+                                          ),
+                                          SizedBox(
+                                            width: 13.w,
+                                          ),
+                                          SvgPicture.asset(
+                                            'assets/icons/chevron_right.svg',
+                                            color: AppColors.orange,
+                                          ),
+                                        ],
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return SizedBox(
+                                height: 12.h,
+                              );
+                            },
+                            itemCount: tus.length)
+                        : ListView.separated(
+                            shrinkWrap: true,
+                            physics: const BouncingScrollPhysics(),
+                            padding: const EdgeInsets.all(16).r,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                onTap: () {
+                                  log('URL${res[index].ticketUrl}');
+                                  _launchUrl(res[index].ticketUrl ?? "");
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 12.h, horizontal: 12.w),
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(20),
+                                    color: AppColors.white,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            if (res[index].createdAt != null)
+                                              Text(
+                                                DateFormat('dd.MM.yyyy').format(
+                                                    res[index].createdAt!),
+                                                style: getTextStyle(
+                                                        CustomTextStyles
+                                                            .s12w400)
+                                                    .copyWith(
+                                                  fontFamily:
+                                                      FontTypes.SF_Pro.name,
+                                                  color: AppColors.grey1,
+                                                ),
+                                              ),
+                                            SizedBox(
+                                              height: 2.h,
+                                            ),
+                                            Text(
+                                              '${res[index].title}',
+                                              overflow: TextOverflow.ellipsis,
+                                              style: getTextStyle(
+                                                      CustomTextStyles.s16w600)
+                                                  .copyWith(
+                                                fontFamily:
+                                                    FontTypes.SF_Pro.name,
+                                                fontWeight: FontWeight.w600,
+                                                fontSize: 16,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(
+                                            '${res[index].price!.toInt().toString()} ₸',
+                                            style: getTextStyle(
+                                                    CustomTextStyles.s16w600)
+                                                .copyWith(
+                                              color: AppColors.orange,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            width: 13.w,
+                                          ),
+                                          SvgPicture.asset(
+                                            'assets/icons/chevron_right.svg',
+                                            color: AppColors.orange,
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                            separatorBuilder:
+                                (BuildContext context, int index) {
+                              return SizedBox(
+                                height: 12.h,
+                              );
+                            },
+                            itemCount: res.length,
+                          ),
+                    _ => Padding(
                         padding: const EdgeInsets.only(top: 250).h,
                         child: const Center(
                           child: CircularProgressIndicator(
                             color: AppColors.linearBlue,
                           ),
                         ),
-                      );
-                    },
-                    loaded: (res, res2) {
-                      return primaryIndex != 0
-                          ? ListView.separated(
-                              shrinkWrap: true,
-                              padding: const EdgeInsets.all(16).r,
-                              physics: const BouncingScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return InkWell(
-                                  onTap: () async {
-                                    await launchUrl(
-                                      Uri.parse(tus[index].ticketUrl!),
-                                      mode: LaunchMode.externalApplication,
-                                    );
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 12.h, horizontal: 12.w),
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: AppColors.white,
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            if (tus[index].createdAt != null)
-                                              SizedBox(
-                                                width: 100.w,
-                                                child: Text(
-                                                  DateFormat('dd.MM.yyyy').format(
-                                                      tus[index].createdAt!),
-                                                  style: getTextStyle(
-                                                          CustomTextStyles
-                                                              .s12w400)
-                                                      .copyWith(
-                                                          fontFamily: FontTypes
-                                                              .SF_Pro.name,
-                                                          color: AppColors.grey1),
-                                                          overflow: TextOverflow.ellipsis,
-                                                ),
-                                              ),
-                                            SizedBox(
-                                              height: 2.h,
-                                            ),
-                                            SizedBox(
-                                              width: 130.w,
-                                              child: Text(
-                                                '${tus[index].title}',
-                                                overflow: TextOverflow.ellipsis,
-                                                style: getTextStyle(
-                                                        CustomTextStyles
-                                                            .s16w600)
-                                                    .copyWith(
-                                                        fontFamily: FontTypes
-                                                            .SF_Pro.name,
-                                                        fontWeight:
-                                                            FontWeight.w600,
-                                                        fontSize: 16),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                        Spacer(),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              '${tus[index].price!.toInt().toString()} ₸',
-                                              style: getTextStyle(
-                                                      CustomTextStyles.s16w600)
-                                                  .copyWith(
-                                                      color: AppColors.orange),
-                                            ),
-                                            SizedBox(
-                                              width: 13.w,
-                                            ),
-                                            SvgPicture.asset(
-                                              'assets/icons/chevron_right.svg',
-                                              color: AppColors.orange,
-                                            ),
-                                          ],
-                                        )
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                              separatorBuilder:
-                                  (BuildContext context, int index) {
-                                return SizedBox(
-                                  height: 12.h,
-                                );
-                              },
-                              itemCount: tus.length)
-                          : ListView.separated(
-                              shrinkWrap: true,
-                              physics: const BouncingScrollPhysics(),
-                              padding: const EdgeInsets.all(16).r,
-                              itemBuilder: (context, index) {
-                                return InkWell(
-                                  onTap: () {
-                                    log('URL${res[index].ticketUrl}');
-                                    _launchUrl(res[index].ticketUrl ?? "");
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 12.h, horizontal: 12.w),
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: AppColors.white,
-                                    ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              if (res[index].createdAt != null)
-                                                Text(
-                                                  DateFormat('dd.MM.yyyy')
-                                                      .format(res[index]
-                                                          .createdAt!),
-                                                  style: getTextStyle(
-                                                          CustomTextStyles
-                                                              .s12w400)
-                                                      .copyWith(
-                                                    fontFamily:
-                                                        FontTypes.SF_Pro.name,
-                                                    color: AppColors.grey1,
-                                                  ),
-                                                ),
-                                              SizedBox(
-                                                height: 2.h,
-                                              ),
-                                              Text(
-                                                '${res[index].title}',
-                                                overflow: TextOverflow.ellipsis,
-                                                style: getTextStyle(
-                                                        CustomTextStyles
-                                                            .s16w600)
-                                                    .copyWith(
-                                                  fontFamily:
-                                                      FontTypes.SF_Pro.name,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontSize: 16,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        Row(
-                                          children: [
-                                            Text(
-                                              '${res[index].price!.toInt().toString()} ₸',
-                                              style: getTextStyle(
-                                                      CustomTextStyles.s16w600)
-                                                  .copyWith(
-                                                color: AppColors.orange,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: 13.w,
-                                            ),
-                                            SvgPicture.asset(
-                                              'assets/icons/chevron_right.svg',
-                                              color: AppColors.orange,
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                );
-                              },
-                              separatorBuilder:
-                                  (BuildContext context, int index) {
-                                return SizedBox(
-                                  height: 12.h,
-                                );
-                              },
-                              itemCount: res.length);
-                    },
-                  )
+                      ),
+                  }
+                  // state.maybeWhen(
+                  //   orElse: () {
+                  //     return Padding(
+                  //       padding: const EdgeInsets.only(top: 250).h,
+                  //       child: const Center(
+                  //         child: CircularProgressIndicator(
+                  //           color: AppColors.linearBlue,
+                  //         ),
+                  //       ),
+                  //     );
+                  //   },
+                  //   loaded: (res, res2) {
+                  //     return
+                  //   },
+                  // )
                 ],
               ),
             ),

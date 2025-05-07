@@ -20,7 +20,7 @@ class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
 
   ProfileNotificationCubit(
     this._homeRepository,
-  ) : super(const ProfileNotificationState.initialState());
+  ) : super(const ProfileNotificationState.initial());
   late NotificationDTO serverNotifications;
   late NotificationDTO notificationDeviceDTO;
   late List<NotificationItemDTO> notifications;
@@ -30,13 +30,17 @@ class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
     final result = await _homeRepository.putNotificationDevice(
         registrationId: token, notification: notificationDeviceDTO);
 
-    result.fold((l) => {emit(_ErrorState(message: mapFailureToMessage(l)))},
+    result.fold(
+        (l) => {
+              emit(ProfileNotificationState.error(
+                  message: mapFailureToMessage(l)))
+            },
         (r) => {getNotificationDto()});
   }
 
   Future<void> switchNotify(
       NotificationItemDTO notificationItemDTO, bool value) async {
-    emit(const _LoadingState());
+    emit(const ProfileNotificationState.loading());
     log(notificationItemDTO.title!);
     final notification = notificationDeviceDTO.toJson();
     notification[notificationItemDTO.title!] = value;
@@ -96,7 +100,7 @@ class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
     //handleType(notificationItemDTO.title!);
 
     emit(
-      const _InitialPage().copyWith(
+      ProfileNotificationState.initial(
         serverNotificationDto: serverNotifications,
         notificationDTO: notificationDeviceDTO,
         items: notificationDeviceDTO
@@ -137,7 +141,7 @@ class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
               (e) => NotificationItemDTO(title: e.key, status: e.value as bool))
           .toList();
       token = dev ?? '';
-      emit(const _InitialPage().copyWith(
+      emit(ProfileNotificationState.initial(
           notificationDTO: r,
           serverNotificationDto: serverNotifications,
           items: r
@@ -153,21 +157,20 @@ class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
 }
 
 @freezed
-class ProfileNotificationState with _$ProfileNotificationState {
-  const factory ProfileNotificationState.initialState(
-      {@Default([]) List<NotificationItemDTO> items,
-      final NotificationDTO? notificationDTO,
-      final NotificationDTO? serverNotificationDto}) = _InitialPage;
-
-  const factory ProfileNotificationState.loadingState() = _LoadingState;
-
-  const factory ProfileNotificationState.loadingMoreState() = _LoadingMoreState;
-
+sealed class ProfileNotificationState with _$ProfileNotificationState {
+  const factory ProfileNotificationState.initial(
+          {@Default([]) List<NotificationItemDTO> items,
+          final NotificationDTO? notificationDTO,
+          final NotificationDTO? serverNotificationDto}) =
+      ProfileNotificationInitialPage;
+  const factory ProfileNotificationState.loading() =
+      ProfileNotificationLoadingState;
+  const factory ProfileNotificationState.loadingMore() =
+      ProfileNotificationLoadingMoreState;
   const factory ProfileNotificationState.loaded({
     required List<ResultHomeDTO> news,
-  }) = _LoadedState;
-
-  const factory ProfileNotificationState.errorState({
+  }) = ProfileNotificationLoadedState;
+  const factory ProfileNotificationState.error({
     required String message,
-  }) = _ErrorState;
+  }) = ProfileNotificationErrorState;
 }

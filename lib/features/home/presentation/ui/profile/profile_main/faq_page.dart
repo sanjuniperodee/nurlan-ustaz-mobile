@@ -31,74 +31,69 @@ class _FaqPageState extends State<FaqPage> {
 
     return Scaffold(body: BlocBuilder<FaqCubit, FaqState>(
       builder: (context, state) {
-        return state.maybeWhen(
-          orElse: () {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: AppColors.linearBlue,
-              ),
-            );
-          },
-          loaded: (faq) {
-            return GlobalCustomBody(
-              child: SizedBox(
-                height: 1.1.sh,
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Column(children: [
-                    const CustomAppBar(
-                      title: 'FAQ',
-                    ),
-                    ListView.builder(
-                      itemCount: faq.length,
-                      shrinkWrap: true,
-                      physics: const NeverScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: const EdgeInsets.only(top: 8.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: AppColors.white,
-                                borderRadius: BorderRadius.circular(20)),
-                            child: Theme(
-                              data: theme,
-                              child: ExpansionTile(
-                                collapsedIconColor: AppColors.orange,
-                                iconColor: AppColors.orange,
-                                title: Text(
-                                  '${faq[index].question}',
-                                  style: getTextStyle(CustomTextStyles.s14w500)
-                                      .copyWith(
-                                          fontFamily: FontTypes.SF_Pro.name,
-                                          color: AppColors.black),
-                                ),
-                                children: <Widget>[
-                                  ListTile(
-                                    title: Text(
-                                      '${faq[index].answer}',
-                                      style:
-                                          getTextStyle(CustomTextStyles.s14w400)
-                                              .apply(
-                                                  color: AppColors.grey1,
-                                                  fontFamily:
-                                                      FontTypes.SF_Pro.name),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                    SizedBox(
-                      height: 200.h,
-                    )
-                  ]),
+        if (state is! FaqLoadedState) {
+          return const Center(
+            child: CircularProgressIndicator(
+              color: AppColors.linearBlue,
+            ),
+          );
+        }
+
+        return GlobalCustomBody(
+          child: SizedBox(
+            height: 1.1.sh,
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Column(children: [
+                const CustomAppBar(
+                  title: 'FAQ',
                 ),
-              ),
-            );
-          },
+                ListView.builder(
+                  itemCount: state.faq.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                            color: AppColors.white,
+                            borderRadius: BorderRadius.circular(20)),
+                        child: Theme(
+                          data: theme,
+                          child: ExpansionTile(
+                            collapsedIconColor: AppColors.orange,
+                            iconColor: AppColors.orange,
+                            title: Text(
+                              '${state.faq[index].question}',
+                              style: getTextStyle(CustomTextStyles.s14w500)
+                                  .copyWith(
+                                      fontFamily: FontTypes.SF_Pro.name,
+                                      color: AppColors.black),
+                            ),
+                            children: <Widget>[
+                              ListTile(
+                                title: Text(
+                                  '${state.faq[index].answer}',
+                                  style: getTextStyle(CustomTextStyles.s14w400)
+                                      .apply(
+                                          color: AppColors.grey1,
+                                          fontFamily: FontTypes.SF_Pro.name),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+                SizedBox(
+                  height: 200.h,
+                )
+              ]),
+            ),
+          ),
         );
       },
     ));

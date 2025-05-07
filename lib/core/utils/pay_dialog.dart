@@ -34,33 +34,28 @@ class _PayDialogState extends State<PayDialog> {
       shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(30))),
       child: BlocListener<CreateTusZhoruCubit, CreateTusZhoruState>(
-        listener: (context, state) {
-          state.mapOrNull(
-            errorState: (value) async {
-              if (value.message == "There is not default payment card") {
-                  context.router.push(ProfileCardsRoute());
-                }
-                else{
-                                buildErrorCustomSnackBar(context, 'error_payment'.tr());
-
-                }
-              if (widget.isCustom) {
-                await BlocProvider.of<TusZhoruCubit>(context)
-                    .getCustomTusZhoruT(page: 1);
-              } else {
-                await BlocProvider.of<TusZhoruCubit>(context).tosZhoruList;
-              }
-            },
-            successState: (value) async {
-              buildSuccessCustomSnackBar(context, 'success_payment'.tr());
-              if (widget.isCustom) {
-                await BlocProvider.of<TusZhoruCubit>(context)
-                    .getCustomTusZhoruT(page: 1);
-              } else {
-                await BlocProvider.of<TusZhoruCubit>(context).tosZhoruList;
-              }
-            },
-          );
+        listener: (context, state) async {
+          if (state is CreateTusZhoruErrorState) {
+            if (state.message == "There is not default payment card") {
+              context.router.push(ProfileCardsRoute());
+            } else {
+              buildErrorCustomSnackBar(context, 'error_payment'.tr());
+            }
+            if (widget.isCustom) {
+              await BlocProvider.of<TusZhoruCubit>(context)
+                  .getCustomTusZhoruT(page: 1);
+            } else {
+              BlocProvider.of<TusZhoruCubit>(context).tosZhoruList;
+            }
+          } else if (state is CreateTusZhoruSuccessState) {
+            buildSuccessCustomSnackBar(context, 'success_payment'.tr());
+            if (widget.isCustom) {
+              await BlocProvider.of<TusZhoruCubit>(context)
+                  .getCustomTusZhoruT(page: 1);
+            } else {
+              BlocProvider.of<TusZhoruCubit>(context).tosZhoruList;
+            }
+          }
         },
         child: Container(
           height: 289,
@@ -124,7 +119,7 @@ class _PayDialogState extends State<PayDialog> {
                             setState(() {
                               isLoading = false;
                             });
-                                                        Navigator.of(context).pop();
+                            Navigator.of(context).pop();
 
                             if (widget.isCustom) {
                               print('custom');

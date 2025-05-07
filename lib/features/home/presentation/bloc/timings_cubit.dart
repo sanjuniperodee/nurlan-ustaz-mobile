@@ -23,7 +23,7 @@ class TimingsCubit extends Cubit<TimingsState> {
   TimingsCubit(
     this._homeRepository,
     this._homeLocalDs,
-  ) : super(const TimingsState.initialState());
+  ) : super(const TimingsState.initial());
   List<String> namasNames = [
     'Fajr'.tr(),
     'Күн',
@@ -34,7 +34,7 @@ class TimingsCubit extends Cubit<TimingsState> {
   ];
 
   Future<void> timings(double? lat, double? long) async {
-    emit(const TimingsState.loadingState());
+    emit(const TimingsState.loading());
     final GeonamesDTO? geo = _homeLocalDs.getGeoFromCacheNull();
 
     if (geo != null) {
@@ -61,7 +61,7 @@ class TimingsCubit extends Cubit<TimingsState> {
 
     failureOrUser.fold(
       (l) {
-        emit(TimingsState.errorState(message: mapFailureToMessageBack(l)));
+        emit(TimingsState.error(message: mapFailureToMessageBack(l)));
       },
       (r) async {
         Prefs prefs = Prefs();
@@ -110,17 +110,14 @@ class TimingsCubit extends Cubit<TimingsState> {
 }
 
 @freezed
-class TimingsState with _$TimingsState {
-  const factory TimingsState.initialState() = _InitialPage;
-
-  const factory TimingsState.loadingState() = _LoadingState;
-
+sealed class TimingsState with _$TimingsState {
+  const factory TimingsState.initial() = TimingsInitialPage;
+  const factory TimingsState.loading() = TimingsLoadingState;
   const factory TimingsState.loaded({
     required TimingsDTO not,
     required GeonamesDTO geo,
-  }) = _LoadedState;
-
-  const factory TimingsState.errorState({
+  }) = TimingsLoadedState;
+  const factory TimingsState.error({
     required String message,
-  }) = _ErrorState;
+  }) = TimingsErrorState;
 }

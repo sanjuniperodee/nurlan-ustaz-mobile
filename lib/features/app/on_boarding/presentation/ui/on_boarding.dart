@@ -87,21 +87,18 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       body: BlocConsumer<OnBoardingCubit, OnBoardingState>(
         listener: (context, state) {},
         builder: (context, state) {
-          return state.maybeWhen(
-            orElse: () {
-              return Container();
-            },
-            initialState: (_) {
-              return _chewieWidgets.length == videos.length
-                  ? _buildOnBoardingWidget()
-                  : Image.asset(
-                      'assets/images/bg.png',
-                      fit: BoxFit.cover,
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height,
-                    );
-            },
-          );
+          if (state is OnBoardingInitialPage) {
+            return _chewieWidgets.length == videos.length
+                ? _buildOnBoardingWidget()
+                : Image.asset(
+                    'assets/images/bg.png',
+                    fit: BoxFit.cover,
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                  );
+          }
+
+          return const SizedBox.shrink();
         },
       ),
     );
@@ -132,7 +129,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                 children: [
                   DotsIndicator(
                     dotsCount: videos.length,
-                    position: currentIndex,
+                    // TODO(Radomir): temporary dividing by 1. Expected double,
+                    // perhaps, for smooth animation
+                    position: currentIndex / 1,
                     decorator: DotsDecorator(
                       size: Size(8.w, 8.h),
                       color: AppColors.white.withOpacity(0.1),

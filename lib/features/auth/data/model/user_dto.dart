@@ -6,7 +6,7 @@ part 'user_dto.freezed.dart';
 part 'user_dto.g.dart';
 
 @freezed
-class UserDto with _$UserDto {
+abstract class UserDto with _$UserDto {
   const factory UserDto({
     @JsonKey(name: 'id') int? id,
     @JsonKey(name: "full_name") String? fullName,
@@ -18,7 +18,6 @@ class UserDto with _$UserDto {
     @JsonKey(name: "birthday") DateTime? birthday,
     @JsonKey(name: "re_password") String? rePassword,
     @JsonKey(name: "is_staff") bool? isStaff,
-
     String? avatar,
   }) = _UserDto;
 

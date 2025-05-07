@@ -6,7 +6,7 @@ part 'freedom_payment_dto.freezed.dart';
 part 'freedom_payment_dto.g.dart';
 
 @freezed
-class FreedomPaymentDTO with _$FreedomPaymentDTO {
+abstract class FreedomPaymentDTO with _$FreedomPaymentDTO {
   const factory FreedomPaymentDTO({
     @JsonKey(name: "pg_status") String? pgStatus,
     @JsonKey(name: "pg_payment_id") String? pgPaymentId,

@@ -6,9 +6,9 @@ part 'card_model.freezed.dart';
 part 'card_model.g.dart';
 
 @freezed
-class CardDTO with _$CardDTO {
+abstract class CardDTO with _$CardDTO {
   const factory CardDTO({
-  required final int id,
+    required final int id,
     @JsonKey(name: "card_number") String? cardNumber,
     @JsonKey(name: "is_default") bool? isDefault,
   }) = _CardDTO;

@@ -5,7 +5,7 @@ part 'ayat_dto.freezed.dart';
 part 'ayat_dto.g.dart';
 
 @freezed
-class AyatDTO with _$AyatDTO {
+abstract class AyatDTO with _$AyatDTO {
   const factory AyatDTO({
     int? id,
     @JsonKey(name: "ayat_number") int? ayatNumber,

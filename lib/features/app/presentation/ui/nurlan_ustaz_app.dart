@@ -43,54 +43,51 @@ class _NurlanUstazAppState extends State<NurlanUstazApp> {
   @override
   Widget build(BuildContext context) {
     return MultiblocWrapper(
-        child: ScreenUtilInit(
-      designSize: const Size(375, 812),
-      builder: (context, child) {
-        return BlocConsumer<LanguageCubit, LanguageState>(
-          listener: (context, state) {
-            state.maybeWhen(
-              orElse: () {},
-              loadedState: () {
+      child: ScreenUtilInit(
+        designSize: const Size(375, 812),
+        builder: (context, child) {
+          return BlocConsumer<LanguageCubit, LanguageState>(
+            listener: (context, state) {
+              if (state is LanguageLoadedState) {
                 setState(() {
                   log('SETSTATE:::');
                 });
-              },
-            );
-          },
-          builder: (context, state) {
-            return MaterialApp.router(
-             
-                themeAnimationDuration:const Duration(milliseconds: 100),
-              // title: 'Flutter Demo',
-              // key: rootNavigatorKey,
-              routerConfig: _rootRouter.config(
-                  navigatorObservers: () => [
-                                                ChuckerFlutter.navigatorObserver,
+              }
+            },
+            builder: (context, state) {
+              return MaterialApp.router(
+                themeAnimationDuration: const Duration(milliseconds: 100),
+                // title: 'Flutter Demo',
+                // key: rootNavigatorKey,
+                routerConfig: _rootRouter.config(
+                    navigatorObservers: () => [
+                          ChuckerFlutter.navigatorObserver,
+                          FirebaseAnalyticsObserver(
+                              analytics: _firebaseAnalytics),
+                        ]),
 
-                        FirebaseAnalyticsObserver(
-                            analytics: _firebaseAnalytics),
-                      ]),
+                debugShowCheckedModeBanner: false,
+                locale: EasyLocalization.of(context)?.locale,
+                localizationsDelegates:
+                    EasyLocalization.of(context)?.delegates.toList(),
+                // ...context.localizationDelegates,
+                // CountryLocalizat
+                // ions.delegate,
 
-              debugShowCheckedModeBanner: false,
-              locale: EasyLocalization.of(context)?.locale,
-              localizationsDelegates:
-                  EasyLocalization.of(context)?.delegates.toList(),
-              // ...context.localizationDelegates,
-              // CountryLocalizat
-              // ions.delegate,
-
-              supportedLocales: EasyLocalization.of(context)!.supportedLocales,
-              theme: ThemeData(
-                useMaterial3: false,
-                fontFamily: 'Poppins',
-                visualDensity: VisualDensity.adaptivePlatformDensity,
-              ),
-              // routerDelegate: _rootRouter.delegate(),
-              // routeInformationParser: _rootRouter.defaultRouteParser(),
-            );
-          },
-        );
-      },
-    ));
+                supportedLocales:
+                    EasyLocalization.of(context)!.supportedLocales,
+                theme: ThemeData(
+                  useMaterial3: false,
+                  fontFamily: 'Poppins',
+                  visualDensity: VisualDensity.adaptivePlatformDensity,
+                ),
+                // routerDelegate: _rootRouter.delegate(),
+                // routeInformationParser: _rootRouter.defaultRouteParser(),
+              );
+            },
+          );
+        },
+      ),
+    );
   }
 }

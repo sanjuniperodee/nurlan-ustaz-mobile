@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:ui';
 
@@ -51,32 +52,40 @@ Future<void> firebaseInit() async {
 }
 
 Future<void> main() async {
-  getIt.registerSingleton<AppRouter>(AppRouter());
+  runZonedGuarded(
+    () async {
+      getIt.registerSingleton<AppRouter>(AppRouter());
 
-  WidgetsFlutterBinding.ensureInitialized();
-  await SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  await Firebase.initializeApp();
-  // TODO(Radomir): Remove Firebase Dynamix Links from project, as it is deprecated
-  // await FirebaseDynamicLinks.instance.getInitialLink();
-  await firebaseListen();
-  // await firebaseInit();
-  await checkLocationPermission();
-  ChuckerFlutter.showOnRelease = false;
-  FlutterError.onError = (errorDetails) {
-    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-  };
-  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
-  PlatformDispatcher.instance.onError = (error, stack) {
-    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-    return true;
-  };
+      WidgetsFlutterBinding.ensureInitialized();
+      await SystemChrome.setPreferredOrientations(
+          [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+      await Firebase.initializeApp();
+      // TODO(Radomir): Remove Firebase Dynamix Links from project, as it is deprecated
+      // await FirebaseDynamicLinks.instance.getInitialLink();
+      await firebaseListen();
+      // await firebaseInit();
+      await checkLocationPermission();
+      ChuckerFlutter.showOnRelease = false;
+      FlutterError.onError = (errorDetails) {
+        FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+      };
+      // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+      PlatformDispatcher.instance.onError = (error, stack) {
+        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+        return true;
+      };
 
-  MainRunner.run<AsyncAppDependencies>(
-      asyncDependencies: AsyncAppDependencies.obtain,
-      appBuilder: (dependencies) {
-        return const NurlanUstazApp();
-      });
+      await MainRunner.run<AsyncAppDependencies>(
+        asyncDependencies: AsyncAppDependencies.obtain,
+        appBuilder: (dependencies) {
+          return const NurlanUstazApp();
+        },
+      );
+    },
+    (error, stack) {
+      FirebaseCrashlytics.instance.recordError(error, stack);
+    },
+  );
 }
 
 Future<void> checkLocationPermission() async {

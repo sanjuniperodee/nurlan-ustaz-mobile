@@ -13,28 +13,28 @@ part 'registration_cubit.freezed.dart';
 class RegistrationCubit extends Cubit<RegistrationState> {
   RegistrationCubit(
     this._authRepository,
-  ) : super(const RegistrationState.loadingState());
+  ) : super(const RegistrationState.loading());
   final AuthRepository _authRepository;
   late int userId;
   late String password;
 
   void changeGender(Gender gender) {
     print(gender.name);
-    emit(RegistrationState.initialState(
+    emit(RegistrationState.initial(
         userDTO: const UserPayload().copyWith(gender: gender)));
   }
 
   Future<void> postUser(UserPayload userDTO) async {
-    emit(_LoadingState());
+    emit(const RegistrationState.loading());
     final result = await _authRepository.postUser(userDTO: userDTO);
     return result.fold(
       (l) {
-        emit(RegistrationState.errorState(message: mapFailureToMessageBack(l)));
+        emit(RegistrationState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
-        emit(const _SuccessState());
+        emit(const RegistrationState.success());
         userId = r.id ?? 0;
-        emit(RegistrationState.loadedState(
+        emit(RegistrationState.loaded(
             user: r.copyWith(password: userDTO.password!)));
       },
     );
@@ -42,8 +42,8 @@ class RegistrationCubit extends Cubit<RegistrationState> {
 }
 
 @freezed
-class RegistrationState with _$RegistrationState {
-  const factory RegistrationState.initialState(
+sealed class RegistrationState with _$RegistrationState {
+  const factory RegistrationState.initial(
       {@Default(false) bool isPolicyAccept,
       @Default(UserPayload(
           fullName: '',
@@ -53,17 +53,15 @@ class RegistrationState with _$RegistrationState {
           rePassword: '',
           birthday: '',
           gender: Gender.male))
-      UserPayload userDTO}) = _InitialState;
+      UserPayload userDTO}) = RegistrationInitialState;
 
-  const factory RegistrationState.loadedState({
+  const factory RegistrationState.loaded({
     required UserPayload user,
-  }) = _LoadedState;
+  }) = RegistrationLoadedState;
 
-  const factory RegistrationState.loadingState() = _LoadingState;
-
-  const factory RegistrationState.successState() = _SuccessState;
-
-  const factory RegistrationState.errorState({
+  const factory RegistrationState.loading() = RegistrationLoadingState;
+  const factory RegistrationState.success() = RegistrationSuccessState;
+  const factory RegistrationState.error({
     required String message,
-  }) = _ErrorState;
+  }) = RegistrationErrorState;
 }

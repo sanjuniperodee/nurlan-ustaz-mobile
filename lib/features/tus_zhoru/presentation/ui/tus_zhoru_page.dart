@@ -55,43 +55,39 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
   @override
   Widget build(BuildContext context) {
     return BlocListener<LanguageCubit, LanguageState>(
-      listener: (context, state) {
-        state.maybeWhen(
-          orElse: () {},
-          loadedState: () {
-            setState(() {});
-          },
-        );
-        // TODO: implement listener
-      },
+      listenWhen: (previous, current) => current is LanguageLoadedState,
+      listener: (context, state) => setState(() {}),
       child: BlocConsumer<TusZhoruCubit, TusZhoruState>(
-          listener: (context, state) {
-        state.maybeWhen(
-          initialState: (tus, _, __, currentPage) {
-            setState(() {
-              currentIndex = currentPage;
-              itemsLength = tus.length;
-            });
-          },
-          orElse: () {},
-          loaded: () {
-            context.router.push(
-              const QuestionRoute(),
-            );
-          },
-          loadingState: () {
-            isLoading = true;
-          },
-          errorState: (message) {
-            buildErrorCustomSnackBar(context, message);
-          },
-        );
-      }, builder: (context, state) {
-        return state.maybeMap(orElse: () {
-          return Container();
-        }, initialState: (tusZhoruList) {
+        listener: (context, state) {
+          switch (state) {
+            case TusZhoruInitialPage(:final currentPage, :final tusZhoruList):
+              setState(() {
+                currentIndex = currentPage;
+                itemsLength = tusZhoruList.length;
+              });
+              break;
+            case TusZhoruLoadedState():
+              context.router.push(const QuestionRoute());
+              break;
+            case TusZhoruLoadingState():
+              isLoading = true;
+              break;
+            case TusZhoruErrorState(:final message):
+              buildErrorCustomSnackBar(context, message);
+              break;
+          }
+        },
+        builder: (context, state) {
+          if (state is! TusZhoruInitialPage) {
+            return const SizedBox.shrink();
+          }
+
+          final tusZhoruList = state.tusZhoruList;
+          final currentIndex = state.currentIndex;
+          final customTusZhoru = state.customTusZhoru;
+
           return Scaffold(
-            floatingActionButton: tusZhoruList.currentIndex == 1
+            floatingActionButton: currentIndex == 1
                 ? widget.type == 'isSave'
                     ? const SizedBox()
                     : Padding(
@@ -133,7 +129,7 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                       onChanged: (value) {
                         log(value);
 
-                        if (tusZhoruList.currentIndex == 0) {
+                        if (currentIndex == 0) {
                           value.isEmpty
                               ? context
                                   .read<TusZhoruCubit>()
@@ -141,7 +137,7 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                               : context.read<TusZhoruCubit>().tusZhoruT(
                                   search: value, page: 1, isFirstCall: true);
                         }
-                        if (tusZhoruList.currentIndex == 1) {
+                        if (currentIndex == 1) {
                           value.isEmpty
                               ? context
                                   .read<TusZhoruCubit>()
@@ -182,8 +178,7 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                             firstChild: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                TusZhoruList(
-                                    tusZhoruList: tusZhoruList.tusZhoruList),
+                                TusZhoruList(tusZhoruList: tusZhoruList),
                                 if (ConstantHome.globalCountTusZhoru >
                                     itemsLength)
                                   Padding(
@@ -196,8 +191,8 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                               ],
                             ),
                             secondChild: CustomTusZhoruList(
-                                tusZhoruList: tusZhoruList.customTusZhoru),
-                            crossFadeState: tusZhoruList.currentIndex == 0
+                                tusZhoruList: customTusZhoru),
+                            crossFadeState: currentIndex == 0
                                 ? CrossFadeState.showFirst
                                 : CrossFadeState.showSecond,
                             duration: Duration(milliseconds: 200)),
@@ -215,8 +210,8 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
               ),
             ),
           );
-        });
-      }),
+        },
+      ),
     );
   }
 

@@ -5,7 +5,7 @@ part 'statistics_dto.freezed.dart';
 part 'statistics_dto.g.dart';
 
 @freezed
-class StatisticsDTO with _$StatisticsDTO {
+abstract class StatisticsDTO with _$StatisticsDTO {
   const factory StatisticsDTO({
     required int id,
     String? title,

@@ -53,121 +53,103 @@ class _DhikrPageState extends State<DhikrPage> {
       backgroundColor: AppColors.lightBlue,
       body: BlocConsumer<DhikrsCubit, DhikrsState>(
         listener: (context, state) {
-          state.maybeWhen(
-            orElse: () {
-              isLoadingMore = false;
-            },
-            errorState: (message) {
-              isLoadingMore = false;
-              buildErrorCustomSnackBar(context, message);
-            },
-            loadingMoreState: () {
-              isLoadingMore = true;
-            },
-            loaded: (news) {
-              isLoadingMore = false;
-              listOfDhikrs = news;
-            },
-          ); //
-          // TODO: implement listener
+          isLoadingMore = state is DhikrsLoadingMoreState;
+          if (state is DhikrsLoadedState) {
+            listOfDhikrs = state.dhikrs;
+          } else if (state is DhikrsErrorState) {
+            buildErrorCustomSnackBar(context, state.message);
+          }
         },
         builder: (context, state) {
-          return state.maybeWhen(
-            orElse: () {
-              return SizedBox(
-                height: 1.sh,
-                child: Stack(
-                  children: [
-                    Image.asset(
-                      Assets.gradient,
-                      fit: BoxFit.cover,
-                    ),
-                    Positioned.fill(
-                      // left: 280.r,
-                        child: Opacity(
-                          opacity: 0.5,
-                          child:  Lottie.asset('assets/animations/Book_V04.json',fit: BoxFit.cover),
-                        )),
-                    SizedBox(
-                      child: SingleChildScrollView(
-                          physics: const BouncingScrollPhysics(),
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 56.h,
-                                ),
-                                CustomAppBar(
-                                  title: widget.type == 'isSave'
-                                      ? 'save_zikrs'.tr()
-                                      : 'Zikrs'.tr(),
-                                ),
-                                SizedBox(
-                                  height: 36.h,
-                                ),
-                                SearchWidget(onChanged: (string) {
-                                  searchText = string;
-                                  if (string.isEmpty) {
-                                    BlocProvider.of<DhikrsCubit>(context)
-                                        .dhikrs(
-                                      page: 1,
-                                    );
-                                  } else {
-                                    BlocProvider.of<DhikrsCubit>(context)
-                                        .dhikrs(page: 1, search: searchText);
-                                  }
-                                }),
-                                ListView.builder(
-                                  itemCount: listOfDhikrs.length,
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.only(top: 8.0),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          context.router.push(
-
-                                            DhikrDetailRoute(
-                                                result: listOfDhikrs[index]),
-
-                                          );
-                                        },
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              color: AppColors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                          child: ListTile(
-                                            iconColor: AppColors.black,
-                                            title: Text(
-                                              listOfDhikrs[index].name ??
-                                                  'ERROR',
-                                              style: getTextStyle(
-                                                  CustomTextStyles.s16w500),
-                                            ),
-                                            trailing: Image.asset(
-                                              Assets.hand,
-                                              height: 20.r,
-                                              width: 20.r,
-                                            ),
-                                          ),
+          return SizedBox(
+            height: 1.sh,
+            child: Stack(
+              children: [
+                Image.asset(
+                  Assets.gradient,
+                  fit: BoxFit.cover,
+                ),
+                Positioned.fill(
+                    // left: 280.r,
+                    child: Opacity(
+                  opacity: 0.5,
+                  child: Lottie.asset('assets/animations/Book_V04.json',
+                      fit: BoxFit.cover),
+                )),
+                SizedBox(
+                  child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 56.h,
+                            ),
+                            CustomAppBar(
+                              title: widget.type == 'isSave'
+                                  ? 'save_zikrs'.tr()
+                                  : 'Zikrs'.tr(),
+                            ),
+                            SizedBox(
+                              height: 36.h,
+                            ),
+                            SearchWidget(onChanged: (string) {
+                              searchText = string;
+                              if (string.isEmpty) {
+                                BlocProvider.of<DhikrsCubit>(context).dhikrs(
+                                  page: 1,
+                                );
+                              } else {
+                                BlocProvider.of<DhikrsCubit>(context)
+                                    .dhikrs(page: 1, search: searchText);
+                              }
+                            }),
+                            ListView.builder(
+                              itemCount: listOfDhikrs.length,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      context.router.push(
+                                        DhikrDetailRoute(
+                                            result: listOfDhikrs[index]),
+                                      );
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: AppColors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      child: ListTile(
+                                        iconColor: AppColors.black,
+                                        title: Text(
+                                          listOfDhikrs[index].name ?? 'ERROR',
+                                          style: getTextStyle(
+                                              CustomTextStyles.s16w500),
+                                        ),
+                                        trailing: Image.asset(
+                                          Assets.hand,
+                                          height: 20.r,
+                                          width: 20.r,
                                         ),
                                       ),
-                                    );
-                                  },
-                                )
-                              ],
-                            ),
-                          )),
-                    ),
-                  ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            )
+                          ],
+                        ),
+                      )),
                 ),
-              );
-            },
+              ],
+            ),
           );
         },
       ),

@@ -6,7 +6,7 @@ part 'question_model.freezed.dart';
 part 'question_model.g.dart';
 
 @freezed
-class QuestionDTO with _$QuestionDTO {
+abstract class QuestionDTO with _$QuestionDTO {
   const factory QuestionDTO({
     @JsonKey(name: "id") int? id,
     @JsonKey(name: "message") String? message,
@@ -18,10 +18,6 @@ class QuestionDTO with _$QuestionDTO {
     @JsonKey(name: "avatar") String? avatar,
     @JsonKey(name: "email") String? email,
     @JsonKey(name: "full_name") String? fullName,
-
-
-
-
   }) = _QuestionDTO;
 
   factory QuestionDTO.fromJson(Map<String, dynamic> json) =>

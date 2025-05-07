@@ -19,7 +19,7 @@ part 'technical_support_cubit.freezed.dart';
 @singleton
 class TechnicalSupportCubit extends Cubit<TechnicalSupportState> {
   TechnicalSupportCubit(this.sharedPreferences, this._authRepo)
-      : super(const TechnicalSupportState.initialState());
+      : super(const TechnicalSupportState.initial());
   final AuthRepository _authRepo;
 
   final SharedPreferences sharedPreferences;
@@ -27,7 +27,7 @@ class TechnicalSupportCubit extends Cubit<TechnicalSupportState> {
   late UserDto _userDto;
   late IOWebSocketChannel _channel;
   Future<void> connectSocket() async {
-    emit(const _LoadingState());
+    emit(const TechnicalSupportState.loading());
 
     var user = await _authRepo.getUser();
     user.fold((l) => {}, (r) => {_userDto = r});
@@ -38,10 +38,10 @@ class TechnicalSupportCubit extends Cubit<TechnicalSupportState> {
       jsonDecode(sharedPreferences.get(SharedKeys.TOKEN).toString())
           as Map<String, dynamic>,
     );
-    _channel = IOWebSocketChannel.connect(
-        "$WebSocketUrl/api/support/chat/",
+    _channel = IOWebSocketChannel.connect("$WebSocketUrl/api/support/chat/",
         headers: {"Authorization": "Bearer ${token.access}"});
-    emit(_InitialState(channel: _channel, questions: [], user: _userDto));
+    emit(TechnicalSupportState.initial(
+        channel: _channel, questions: [], user: _userDto));
     // emit(const _LoadingState());
     _channel.stream.listen(
       (event) async {
@@ -57,8 +57,9 @@ class TechnicalSupportCubit extends Cubit<TechnicalSupportState> {
         } else {
           test.add(QuestionDTO.fromJson(questions));
         }
-        emit(const _LoadedState());
-        emit(_InitialState(channel: _channel, questions: test, user: _userDto));
+        emit(const TechnicalSupportState.loaded());
+        emit(TechnicalSupportState.initial(
+            channel: _channel, questions: test, user: _userDto));
       },
     );
   }
@@ -70,17 +71,14 @@ class TechnicalSupportCubit extends Cubit<TechnicalSupportState> {
 }
 
 @freezed
-class TechnicalSupportState with _$TechnicalSupportState {
-  const factory TechnicalSupportState.initialState(
+sealed class TechnicalSupportState with _$TechnicalSupportState {
+  const factory TechnicalSupportState.initial(
       {@Default([]) List<QuestionDTO> questions,
       final IOWebSocketChannel? channel,
-      final UserDto? user}) = _InitialState;
-
-  const factory TechnicalSupportState.loadedState() = _LoadedState;
-
-  const factory TechnicalSupportState.loadingState() = _LoadingState;
-
-  const factory TechnicalSupportState.errorState({
+      final UserDto? user}) = TechnicalSupportInitialState;
+  const factory TechnicalSupportState.loaded() = TechnicalSupportLoadedState;
+  const factory TechnicalSupportState.loading() = TechnicalSupportLoadingState;
+  const factory TechnicalSupportState.error({
     required String message,
-  }) = _ErrorState;
+  }) = TechnicalSupportErrorState;
 }

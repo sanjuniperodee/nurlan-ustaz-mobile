@@ -11,6 +11,7 @@ import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/firebase_options.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -340,14 +341,17 @@ Future<void> scheduledNotification(
     String title, String description, String time, int id) async {
   try {
     flutterLocalNotificationsPlugin
-        .schedule(
+        .zonedSchedule(
           id + 1,
           title,
           description.tr(),
           // ignore: sdk_version_since
-          DateTime.now().copyWith(
-            hour: int.parse(time.split(':').first),
-            minute: int.parse(time.split(':').last),
+          tz.TZDateTime.from(
+            DateTime.now().copyWith(
+              hour: int.parse(time.split(':').first),
+              minute: int.parse(time.split(':').last),
+            ),
+            tz.local,
           ),
           NotificationDetails(
             android: AndroidNotificationDetails(channel.id, channel.name,
@@ -363,6 +367,7 @@ Future<void> scheduledNotification(
               presentSound: true,
             ),
           ),
+          androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
         )
         .then((value) => log(
             'notifi-time2-${DateTime.now().copyWith(hour: int.parse(time.split(':').first), minute: int.parse(time.split(':')[1]), second: int.parse(time.split(':').last))}'));

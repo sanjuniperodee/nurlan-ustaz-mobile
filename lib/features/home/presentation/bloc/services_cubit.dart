@@ -12,20 +12,20 @@ class ServicesCubit extends Cubit<ServicesState> {
   final HomeRepository _homeRepository;
   ServicesCubit(
     this._homeRepository,
-  ) : super(const ServicesState.initialState());
+  ) : super(const ServicesState.initial());
 
   Future<void> services({
     required int page,
     bool? isFirstCall,
   }) async {
     page > 1
-        ? emit(const ServicesState.loadingMoreState())
-        : emit(const ServicesState.loadingState());
+        ? emit(const ServicesState.loadingMore())
+        : emit(const ServicesState.loading());
     final failureOrUser =
         await _homeRepository.services(page: page, isFirstCall: isFirstCall);
     failureOrUser.fold(
       (l) {
-        emit(ServicesState.errorState(message: mapFailureToMessageBack(l)));
+        emit(ServicesState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         emit(ServicesState.loaded(media: r.toSet().toList()));
@@ -35,17 +35,14 @@ class ServicesCubit extends Cubit<ServicesState> {
 }
 
 @freezed
-class ServicesState with _$ServicesState {
-  const factory ServicesState.initialState() = _InitialPage;
-
-  const factory ServicesState.loadingState() = _LoadingState;
-  const factory ServicesState.loadingMoreState() = _LoadingMoreState;
-
+sealed class ServicesState with _$ServicesState {
+  const factory ServicesState.initial() = ServicesInitialPage;
+  const factory ServicesState.loading() = ServicesLoadingState;
+  const factory ServicesState.loadingMore() = ServicesLoadingMoreState;
   const factory ServicesState.loaded({
     required List<MediaDTO> media,
-  }) = _LoadedState;
-
-  const factory ServicesState.errorState({
+  }) = ServicesLoadedState;
+  const factory ServicesState.error({
     required String message,
-  }) = _ErrorState;
+  }) = ServicesErrorState;
 }

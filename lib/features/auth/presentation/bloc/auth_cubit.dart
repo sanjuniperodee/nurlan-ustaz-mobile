@@ -20,12 +20,11 @@ class AuthCubit extends Cubit<AuthState> {
 
   AuthCubit(
     this.authRepository,
-  ) : super(AuthState.initialState());
+  ) : super(AuthState.initial());
 
   late int userId;
   void changeGender(Gender gender) {
-    emit(AuthState.initialState(
-        userDTO: UserPayload().copyWith(gender: gender)));
+    emit(AuthState.initial(userDTO: UserPayload().copyWith(gender: gender)));
   }
 
   Future<void> postUser(UserPayload userDTO) async {
@@ -41,7 +40,7 @@ class AuthCubit extends Cubit<AuthState> {
 
   Future<void> sendCode(String? code) async {
     final result = await authRepository.activateUser(
-        activateUserDTO: ActivateUserDTO(user_id: userId, code: code));
+        activateUserDTO: ActivateUserDTO(userId: userId, code: code));
     result.fold((l) => {result.toString()}, (r) => {print('uiiii')});
   }
 
@@ -60,26 +59,22 @@ class AuthCubit extends Cubit<AuthState> {
 }
 
 @freezed
-class AuthState with _$AuthState {
-  factory AuthState.initialState({
+sealed class AuthState with _$AuthState {
+  factory AuthState.initial({
     @Default(false) bool isPolicyAccept,
-    @Default(
-        UserPayload(
-            fullName: '',
-            email: '',
-            phoneNumber: '',
-            password: '',
-            rePassword: '',
-            birthday: '',
-            gender: Gender.male))
-        UserPayload userDTO,
-  }) = _InitialPage;
-
-  const factory AuthState.loadingState() = _LoadingState;
-
-  const factory AuthState.loaded() = _LoadedState;
-
-  const factory AuthState.errorState({
+    @Default(UserPayload(
+        fullName: '',
+        email: '',
+        phoneNumber: '',
+        password: '',
+        rePassword: '',
+        birthday: '',
+        gender: Gender.male))
+    UserPayload userDTO,
+  }) = AuthInitialPage;
+  const factory AuthState.loading() = AuthLoadingState;
+  const factory AuthState.loaded() = AuthLoadedState;
+  const factory AuthState.error({
     required String message,
-  }) = _ErrorState;
+  }) = AuthErrorState;
 }

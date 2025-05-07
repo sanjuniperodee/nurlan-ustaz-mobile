@@ -6,7 +6,7 @@ part 'city_dto.freezed.dart';
 part 'city_dto.g.dart';
 
 @freezed
-class CityDTO with _$CityDTO {
+abstract class CityDTO with _$CityDTO {
   const factory CityDTO({
     @JsonKey(name: "name") String? name,
     @JsonKey(name: "latitude") double? latitude,

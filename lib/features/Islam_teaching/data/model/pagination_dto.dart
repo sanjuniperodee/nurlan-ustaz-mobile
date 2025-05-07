@@ -6,7 +6,7 @@ part 'pagination_dto.freezed.dart';
 part 'pagination_dto.g.dart';
 
 @freezed
-class PaginationDTO with _$PaginationDTO {
+abstract class PaginationDTO with _$PaginationDTO {
   const factory PaginationDTO({
     required List<ResultTeachingDTO> results,
     required MetaDTO meta,
@@ -18,7 +18,7 @@ class PaginationDTO with _$PaginationDTO {
 }
 
 @freezed
-class MetaDTO with _$MetaDTO {
+abstract class MetaDTO with _$MetaDTO {
   const factory MetaDTO({
     required PaginationMeta pagination,
   }) = _MetaDTO;
@@ -28,7 +28,7 @@ class MetaDTO with _$MetaDTO {
 }
 
 @freezed
-class LinksDTO with _$LinksDTO {
+abstract class LinksDTO with _$LinksDTO {
   const factory LinksDTO({
     required String first,
     required String last,
@@ -41,7 +41,7 @@ class LinksDTO with _$LinksDTO {
 }
 
 @freezed
-class PaginationMeta with _$PaginationMeta {
+abstract class PaginationMeta with _$PaginationMeta {
   const factory PaginationMeta({
     required int page,
     required int pages,

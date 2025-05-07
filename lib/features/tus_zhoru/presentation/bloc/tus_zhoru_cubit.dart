@@ -20,14 +20,13 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
 
   TusZhoruCubit(
     this._repository,
-  ) : super(const TusZhoruState.initialState()) {}
+  ) : super(const TusZhoruState.initial()) {}
   final MethodChannel securityChannel = MethodChannel('app_security_channel');
 
   late List<TusZhoruDTO> tosZhoruList;
   late List<TusZhoruDTO> customTusZhoruList;
 
   Future<void> secureScreen() async {
-
     Platform.isAndroid
         ? await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE)
         : await securityChannel.invokeMethod('secureApp');
@@ -35,9 +34,9 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
 
   Future<void> unSecureScreen() async {
     Platform.isAndroid
-        ?     await FlutterWindowManager.clearFlags(FlutterWindowManager.FLAG_SECURE)
+        ? await FlutterWindowManager.clearFlags(
+            FlutterWindowManager.FLAG_SECURE)
         : await securityChannel.invokeMethod('unsecureApp');
-
   }
 
   Future<void> toggleFav(int id) async {
@@ -56,7 +55,7 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
     }
     // if(index ==0  ){tusZhoruT(page: 1,isFirstCall: false);}
 
-    emit(_InitialPage().copyWith(
+    emit(TusZhoruState.initial(
         currentIndex: index,
         tusZhoruList: tosZhoruList,
         customTusZhoru: customTusZhoruList));
@@ -77,13 +76,13 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
         isSaved: isSaved);
     failureOrUser.fold(
       (l) {
-        emit(TusZhoruState.errorState(message: mapFailureToMessageBack(l)));
-        emit(TusZhoruState.initialState(
-            tusZhoruList: tosZhoruList, currentIndex: 0));
+        emit(TusZhoruState.error(message: mapFailureToMessageBack(l)));
+        emit(
+            TusZhoruState.initial(tusZhoruList: tosZhoruList, currentIndex: 0));
       },
       (r) {
         tosZhoruList = r.toList();
-        emit(TusZhoruState.initialState(
+        emit(TusZhoruState.initial(
             tusZhoruList: r.toSet().toList(), currentIndex: 0));
       },
     );
@@ -105,13 +104,13 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
         isSaved: isSaved);
     failureOrUser.fold(
       (l) {
-        emit(TusZhoruState.errorState(message: mapFailureToMessageBack(l)));
-        emit(TusZhoruState.initialState(
-            tusZhoruList: tosZhoruList, currentIndex: 0));
+        emit(TusZhoruState.error(message: mapFailureToMessageBack(l)));
+        emit(
+            TusZhoruState.initial(tusZhoruList: tosZhoruList, currentIndex: 0));
       },
       (r) {
         tosZhoruList += r.toList();
-        emit(TusZhoruState.initialState(
+        emit(TusZhoruState.initial(
             tusZhoruList: tosZhoruList.toSet().toList(),
             currentIndex: 0,
             currentPage: page ?? 0));
@@ -129,12 +128,12 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
         page: 1, isFirstCall: true, search: search);
     result.fold(
       (l) {
-        emit(TusZhoruState.errorState(message: mapFailureToMessageBack(l)));
-        emit(TusZhoruState.initialState(customTusZhoru: [], currentIndex: 1));
+        emit(TusZhoruState.error(message: mapFailureToMessageBack(l)));
+        emit(TusZhoruState.initial(customTusZhoru: [], currentIndex: 1));
       },
       (r) {
         customTusZhoruList = r;
-        emit(TusZhoruState.initialState(
+        emit(TusZhoruState.initial(
             customTusZhoru: r.toSet().toList(), currentIndex: 1));
       },
     );
@@ -142,19 +141,16 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
 }
 
 @freezed
-class TusZhoruState with _$TusZhoruState {
-  const factory TusZhoruState.initialState({
+sealed class TusZhoruState with _$TusZhoruState {
+  const factory TusZhoruState.initial({
     @Default([]) List<TusZhoruDTO> tusZhoruList,
     @Default([]) List<TusZhoruDTO> customTusZhoru,
     @Default(0) int currentIndex,
     @Default(1) int currentPage,
-  }) = _InitialPage;
-
-  const factory TusZhoruState.loadingState() = _LoadingState;
-
-  const factory TusZhoruState.loaded() = _LoadedState;
-
-  const factory TusZhoruState.errorState({
+  }) = TusZhoruInitialPage;
+  const factory TusZhoruState.loading() = TusZhoruLoadingState;
+  const factory TusZhoruState.loaded() = TusZhoruLoadedState;
+  const factory TusZhoruState.error({
     required String message,
-  }) = _ErrorState;
+  }) = TusZhoruErrorState;
 }
