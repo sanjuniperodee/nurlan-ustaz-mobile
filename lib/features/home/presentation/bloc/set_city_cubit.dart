@@ -13,14 +13,14 @@ class SetCityCubit extends Cubit<SetCityState> {
   final HomeRepository _homeRepository;
   SetCityCubit(
     this._homeRepository,
-  ) : super(const SetCityState.initialState());
+  ) : super(const SetCityState.initial());
 
   Future<void> setCity({required GeonamesDTO geo}) async {
-    emit(const SetCityState.loadingState());
+    emit(const SetCityState.loading());
     final failureOrUser = await _homeRepository.setCity(geo: geo);
     failureOrUser.fold(
       (l) {
-        emit(SetCityState.errorState(message: mapFailureToMessageBack(l)));
+        emit(SetCityState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         emit(SetCityState.loaded(not: r));
@@ -30,16 +30,13 @@ class SetCityCubit extends Cubit<SetCityState> {
 }
 
 @freezed
-class SetCityState with _$SetCityState {
-  const factory SetCityState.initialState() = _InitialPage;
-
-  const factory SetCityState.loadingState() = _LoadingState;
-
+sealed class SetCityState with _$SetCityState {
+  const factory SetCityState.initial() = SetCityInitialPage;
+  const factory SetCityState.loading() = SetCityLoadingState;
   const factory SetCityState.loaded({
     required NotificationDTO not,
-  }) = _LoadedState;
-
-  const factory SetCityState.errorState({
+  }) = SetCityLoadedState;
+  const factory SetCityState.error({
     required String message,
-  }) = _ErrorState;
+  }) = SetCityErrorState;
 }

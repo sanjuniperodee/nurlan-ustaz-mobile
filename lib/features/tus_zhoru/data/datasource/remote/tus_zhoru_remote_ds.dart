@@ -1,5 +1,3 @@
-
-
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -10,6 +8,8 @@ import 'package:nurlan_ustaz_flutter/core/platform/dio_wrapper.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/data/models/tus_zhoru_dto.dart';
+
+import '../../../../../core/utils/pagination_constant.dart';
 
 abstract class TusZhoruRemoteDs {
   Future<List<TusZhoruDTO>> tusZhoru(
@@ -29,9 +29,8 @@ abstract class TusZhoruRemoteDs {
 
   Future<TusZhoruDTO> createTusZhoru(
       {required String title, required String description});
-  Future<FreedomPaymentDTO> createCustomTusZhoruPayment(
-      {required int id, required String backUrl});
-  Future<FreedomPaymentDTO> createTusZhoruPayment(
+  Future<String> createCustomTusZhoruPayment({required int id});
+  Future<String> createTusZhoruPayment(
       {required int id, required String backUrl});
   Future<bool> tusZhoruFavorite({required int id});
   Future<TusZhoruDTO> getTusZhoruById({required int id});
@@ -109,32 +108,27 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
       bool? isPurchased,
       bool? isFirstCall = false}) async {
     try {
-      if (isFirstCall ?? false) {
-        tusZhoruList.clear();
-      }
-      if (lpc != null && currentPage! >= lpc! && currentPage != 1) {
-        return tusZhoruList;
-      }
       final response = await dio.get(
         EndPoints.tusZhoru,
         queryParameters: {
           'page[number]': currentPage,
-          'page[size]': 100,
+          'page[size]': isSaved == null ? 50 : 200,
           if (isPurchased != null) 'is_purchased': isPurchased,
           if (isSaved != null) 'is_saved': isSaved,
           if (search != null) 'search': search,
         },
       );
       if (response.statusCode == 200) {
-        if (search != null && search.isNotEmpty) {
-          tusZhoruList.clear();
-        }
+        ConstantHome.globalCountTusZhoru =
+            response.data['meta']['pagination']['count'];
+
+        if (search != null && search.isNotEmpty) {}
         lpc = response.data['meta']['pagination']['pages'];
 
-        tusZhoruList.addAll(
+        tusZhoruList =
             ((response.data as Map<String, dynamic>)['results'] as List)
                 .map((e) => TusZhoruDTO.fromJson(e as Map<String, dynamic>))
-                .toList());
+                .toList();
         return tusZhoruList;
       }
       // log('PAGE${response.data['meta']['pagination']['page']}');
@@ -208,17 +202,15 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
   }
 
   @override
-  Future<FreedomPaymentDTO> createCustomTusZhoruPayment(
-      {required int id,
-      required String backUrl}) async {
+  Future<String> createCustomTusZhoruPayment({required int id}) async {
     try {
       final response = await dio.post(
         '${EndPoints.customTusZhoru}/$id/init_purchase/',
         data: {
-          'back_url': backUrl,
+          'back_url': 'https://www.youtube.com',
         },
       );
-      return FreedomPaymentDTO.fromJson(response.data);
+      return (response.data);
     } on DioError catch (e) {
       throw ServerException(
         message:
@@ -228,9 +220,8 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
   }
 
   @override
-  Future<FreedomPaymentDTO> createTusZhoruPayment(
-      {required int id,
-      required String backUrl}) async {
+  Future<String> createTusZhoruPayment(
+      {required int id, required String backUrl}) async {
     try {
       final response = await dio.post(
         '${EndPoints.tusZhoru}/$id/init_purchase/',
@@ -238,7 +229,7 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
           'back_url': backUrl,
         },
       );
-      return FreedomPaymentDTO.fromJson(response.data);
+      return response.data;
     } on DioError catch (e) {
       throw ServerException(
         message:

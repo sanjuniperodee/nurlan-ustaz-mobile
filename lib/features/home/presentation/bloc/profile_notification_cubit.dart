@@ -1,12 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/cache_helper/prefs.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/models/notification_device_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/repositories/home_repository.dart';
 
-import '../../../../core/services/notification_service.dart';
 import '../../data/models/notification_dto.dart';
 import '../../data/models/notification_item_dto.dart';
 
@@ -18,7 +20,8 @@ class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
 
   ProfileNotificationCubit(
     this._homeRepository,
-  ) : super(const ProfileNotificationState.initialState());
+  ) : super(const ProfileNotificationState.initial());
+  late NotificationDTO serverNotifications;
   late NotificationDTO notificationDeviceDTO;
   late List<NotificationItemDTO> notifications;
   late String token;
@@ -27,77 +30,89 @@ class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
     final result = await _homeRepository.putNotificationDevice(
         registrationId: token, notification: notificationDeviceDTO);
 
-    result.fold((l) => {emit(_ErrorState(message: mapFailureToMessage(l)))},
+    result.fold(
+        (l) => {
+              emit(ProfileNotificationState.error(
+                  message: mapFailureToMessage(l)))
+            },
         (r) => {getNotificationDto()});
   }
 
   Future<void> switchNotify(
       NotificationItemDTO notificationItemDTO, bool value) async {
-    emit(_LoadingState());
+    emit(const ProfileNotificationState.loading());
+    log(notificationItemDTO.title!);
+    final notification = notificationDeviceDTO.toJson();
+    notification[notificationItemDTO.title!] = value;
+    notificationDeviceDTO = NotificationDTO.fromJson(notification);
 
-    void handleType(String namazTime) {
-      switch (namazTime) {
-        case 'custom_dreams':
-          notificationDeviceDTO =
-              notificationDeviceDTO.copyWith(customDreams: value);
-          // Code for case1
-          break;
-        case 'prayer_times':
-          notificationDeviceDTO =
-              notificationDeviceDTO.copyWith(prayerTimes: value);
-          // Code for case2
-          break;
-        case 'ayat_of_the_day':
-          notificationDeviceDTO =
-              notificationDeviceDTO.copyWith(ayatOfTheDay: value);
-          // Code for case3
-          break;
-        case 'live_broadcasts':
-          notificationDeviceDTO =
-              notificationDeviceDTO.copyWith(liveBroadcasts: value);
-          // Code for case3
-          break;
-        case 'tell_me_ustaz':
-          notificationDeviceDTO =
-              notificationDeviceDTO.copyWith(tellMeUstaz: value);
-          // Code for case3
-          break;
-        case 'checklist_results':
-          notificationDeviceDTO =
-              notificationDeviceDTO.copyWith(checklistResults: value);
-          // Code for case3
-          break;
-        case 'seminar_tickets':
-          notificationDeviceDTO =
-              notificationDeviceDTO.copyWith(seminarTickets: value);
-          // Code for case3
-          break;
-        case 'new_content':
-          notificationDeviceDTO =
-              notificationDeviceDTO.copyWith(newContent: value);
-          // Code for case3
-          break;
+    // void handleType(String namazTime) {
+    //
+    //
+    //   switch (namazTime) {
+    //     case 'dreams':
+    //       notificationDeviceDTO =
+    //           notificationDeviceDTO.copyWith(customDreams: value);
+    //       // Code for case1
+    //       break;
+    //     case 'prayer_times':
+    //       notificationDeviceDTO =
+    //           notificationDeviceDTO.copyWith(prayerTimes: value);
+    //       // Code for case2
+    //       break;
+    //     case 'ayat_of_the_day':
+    //       notificationDeviceDTO =
+    //           notificationDeviceDTO.copyWith(ayatOfTheDay: value);
+    //       // Code for case3
+    //       break;
+    //     case 'live_broadcasts':
+    //       notificationDeviceDTO =
+    //           notificationDeviceDTO.copyWith(liveBroadcasts: value);
+    //       // Code for case3
+    //       break;
+    //     case 'tell_me_ustaz':
+    //       notificationDeviceDTO =
+    //           notificationDeviceDTO.copyWith(tellMeUstaz: value);
+    //       // Code for case3
+    //       break;
+    //     case 'checklist_results':
+    //       notificationDeviceDTO =
+    //           notificationDeviceDTO.copyWith(checklistResults: value);
+    //       // Code for case3
+    //       break;
+    //     case 'seminar_tickets':
+    //       notificationDeviceDTO =
+    //           notificationDeviceDTO.copyWith(seminarTickets: value);
+    //       // Code for case3
+    //       break;
+    //     case 'new_content':
+    //       notificationDeviceDTO =
+    //           notificationDeviceDTO.copyWith(newContent: value);
+    //       // Code for case3
+    //       break;
+    //
+    //     default:
+    //       // Code for default case
+    //       break;
+    //   }
+    // }
 
-        default:
-          // Code for default case
-          break;
-      }
-    }
+    //handleType(notificationItemDTO.title!);
 
-    handleType(notificationItemDTO.title!);
-
-    final String? deviceToken = await NotificationService().getDeviceToken();
-
-    emit(_$_InitialPage().copyWith(
+    emit(
+      ProfileNotificationState.initial(
+        serverNotificationDto: serverNotifications,
         notificationDTO: notificationDeviceDTO,
         items: notificationDeviceDTO
             .toJson()
             .entries
             .toList()
-            .sublist(8, 15)
+            .sublist(7, 15)
             .map((e) =>
                 NotificationItemDTO(title: e.key, status: e.value as bool))
-            .toList()));
+            .toList(),
+      ),
+    );
   }
 
   Future<void> getNotificationDto() async {
@@ -106,23 +121,34 @@ class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
     final result =
         await _homeRepository.getNotificationDevice(registrationId: dev ?? '');
     result.fold((l) => {}, (r) {
+      notificationDeviceDTO = r;
+
+      serverNotifications = r;
+      log(serverNotifications
+          .toJson()
+          .entries
+          .toList()
+          .map((e) => e.key.toString())
+          .toList()
+          .toString());
+
       notifications = r
           .toJson()
           .entries
           .toList()
-          .sublist(8, 15)
+          .sublist(7, 15)
           .map(
               (e) => NotificationItemDTO(title: e.key, status: e.value as bool))
           .toList();
       token = dev ?? '';
-      notificationDeviceDTO = r;
-      emit(const _InitialPage().copyWith(
+      emit(ProfileNotificationState.initial(
           notificationDTO: r,
+          serverNotificationDto: serverNotifications,
           items: r
               .toJson()
               .entries
               .toList()
-              .sublist(8, 15)
+              .sublist(7, 15)
               .map((e) =>
                   NotificationItemDTO(title: e.key, status: e.value as bool))
               .toList()));
@@ -131,20 +157,20 @@ class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
 }
 
 @freezed
-class ProfileNotificationState with _$ProfileNotificationState {
-  const factory ProfileNotificationState.initialState(
-      {@Default([]) List<NotificationItemDTO> items,
-      final NotificationDTO? notificationDTO}) = _InitialPage;
-
-  const factory ProfileNotificationState.loadingState() = _LoadingState;
-
-  const factory ProfileNotificationState.loadingMoreState() = _LoadingMoreState;
-
+sealed class ProfileNotificationState with _$ProfileNotificationState {
+  const factory ProfileNotificationState.initial(
+          {@Default([]) List<NotificationItemDTO> items,
+          final NotificationDTO? notificationDTO,
+          final NotificationDTO? serverNotificationDto}) =
+      ProfileNotificationInitialPage;
+  const factory ProfileNotificationState.loading() =
+      ProfileNotificationLoadingState;
+  const factory ProfileNotificationState.loadingMore() =
+      ProfileNotificationLoadingMoreState;
   const factory ProfileNotificationState.loaded({
     required List<ResultHomeDTO> news,
-  }) = _LoadedState;
-
-  const factory ProfileNotificationState.errorState({
+  }) = ProfileNotificationLoadedState;
+  const factory ProfileNotificationState.error({
     required String message,
-  }) = _ErrorState;
+  }) = ProfileNotificationErrorState;
 }

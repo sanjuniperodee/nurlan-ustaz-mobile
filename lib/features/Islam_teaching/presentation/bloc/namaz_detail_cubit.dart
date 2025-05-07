@@ -13,17 +13,17 @@ class NamazDetailCubit extends Cubit<NamazDetailState> {
   final IslamTeachingRepository _islamTeachingRepository;
   NamazDetailCubit(
     this._islamTeachingRepository,
-  ) : super(const NamazDetailState.initialState());
+  ) : super(const NamazDetailState.initial());
 
   Future<void> namazDetail({required String gender, required int id}) async {
-    emit(const NamazDetailState.loadingState());
+    emit(const NamazDetailState.loading());
 
     final failureOrUser =
         await _islamTeachingRepository.namazDetail(gender: gender, id: id);
 
     failureOrUser.fold(
       (l) {
-        emit(NamazDetailState.errorState(message: mapFailureToMessageBack(l)));
+        emit(NamazDetailState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         emit(NamazDetailState.loaded(namaz: r));
@@ -33,16 +33,13 @@ class NamazDetailCubit extends Cubit<NamazDetailState> {
 }
 
 @freezed
-class NamazDetailState with _$NamazDetailState {
-  const factory NamazDetailState.initialState() = _InitialPage;
-
-  const factory NamazDetailState.loadingState() = _LoadingState;
-
+sealed class NamazDetailState with _$NamazDetailState {
+  const factory NamazDetailState.initial() = NamazDetailInitialPage;
+  const factory NamazDetailState.loading() = NamazDetailLoadingState;
   const factory NamazDetailState.loaded({
     required List<NamazDTO> namaz,
-  }) = _LoadedState;
-
-  const factory NamazDetailState.errorState({
+  }) = NamazDetailLoadedState;
+  const factory NamazDetailState.error({
     required String message,
-  }) = _ErrorState;
+  }) = NamazDetailErrorState;
 }

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
@@ -6,22 +5,20 @@ import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/common/constants.dart';
 import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
-import 'package:nurlan_ustaz_flutter/core/model/freedom_payment_dto.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/cache_helper/prefs.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_info.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/datasource/local/home_local_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/datasource/remote/home_remote_ds.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/models/card_model.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/faq_model_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/geonames_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/get_noti_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/media_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/notification_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
-
+import 'package:nurlan_ustaz_flutter/features/home/data/models/timings_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/data/models/chat_model.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/data/models/question_model.dart';
-
-import 'package:nurlan_ustaz_flutter/features/home/data/models/timings_dto.dart';
 
 import '../../../../core/services/notification_service.dart';
 import '../models/notification_device_dto.dart';
@@ -111,10 +108,12 @@ abstract class HomeRepository {
       {required double lat, required double long});
 
   Future<Either<Failure, List<ResultHomeDTO>>> projectInfo();
+
   Future<Either<Failure, List<ResultHomeDTO>>> newsMain({
     bool? isSaved,
     int? currentPage,
   });
+
   Future<Either<Failure, GetNotiDTO>> getNotifications();
 
   Future<Either<Failure, ResultHomeDTO>> seminarDetail({required int id});
@@ -122,6 +121,7 @@ abstract class HomeRepository {
   Future<Either<Failure, bool>> newsFavorite({required int id});
 
   Future<Either<Failure, bool>> newsLike({required int id});
+
   Future<Either<Failure, bool>> commentReport(
       {required int id, required String reason});
 
@@ -133,8 +133,9 @@ abstract class HomeRepository {
   Future<Either<Failure, List<QuestionDTO>>> questions(
       {required int id, String? search, int? page, bool? isFirstCall});
 
-  Future<Either<Failure, FreedomPaymentDTO>> createSeminarPayment(
+  Future<Either<Failure, void>> createSeminarPayment(
       {required int id, required String backUrl});
+
   Future<Either<Failure, NotificationDTO>> notificationDevice({
     required NotificationDeviceDTO notificationDTO,
   });
@@ -142,9 +143,18 @@ abstract class HomeRepository {
   Future<Either<Failure, NotificationDTO>> getNotificationDevice({
     required String registrationId,
   });
+
   Future<Either<Failure, NotificationDTO>> putNotificationDevice(
       {required String registrationId, required NotificationDTO notification});
+
   Future<Either<Failure, String>> checkTicket({required String url});
+  Future<Either<Failure, List<CardDTO>>> getCards(
+      { String? search  });
+        Future<Either<Failure, String>> getAddCArdUrl();
+                Future<Either<Failure, void>> setDefaultCard({required int cardId});
+
+
+
 }
 
 @Singleton(as: HomeRepository)
@@ -208,30 +218,41 @@ class HomeRepositoryImpl extends HomeRepository {
   }) async {
     if (await networkInfo.isConnected) {
       try {
-        Prefs prefs = Prefs();
-        final String? dev = await prefs.getDeviceToken();
-        final String? deviceToken =
-            await NotificationService().getDeviceToken();
-        final String type = Platform.operatingSystem.toString();
-        if (dev == null) {
-          if (Platform.isIOS || Platform.isAndroid) {
-            await remoteDS.notificationDevice(
-                notification: NotificationDeviceDTO(
-              registrationId: deviceToken,
-              type: type,
-            ));
-            prefs.saveDeviceToken(deviceToken!);
-          }
-        } else {
-          if (dev != deviceToken) {
+        if(isSaved == null){
+          Prefs prefs = Prefs();
+          final String? cacheToken = await prefs.getDeviceToken();
+          final String? firebaseToken =
+          await NotificationService().getDeviceToken();
+          final String type = Platform.operatingSystem.toString();
+
+          if (cacheToken == null) {
+
+            await remoteDS.postNotificationDevice(
+              notification: NotificationDeviceDTO(
+                registrationId: firebaseToken,
+                type: type,
+              ),
+            );
+            await prefs.saveDeviceToken(firebaseToken!);
+          } else if (cacheToken != firebaseToken) {
+
             NotificationDTO notificationDeviceDTO =
-                NotificationDTO(registrationId: deviceToken, type: type);
+            NotificationDTO(registrationId: firebaseToken, type: type);
             await remoteDS
-                .putNotificationDevice(
-                    registrationId: dev, notification: notificationDeviceDTO)
-                .then((value) => prefs.saveDeviceToken(deviceToken!));
+                .patchNotificationDevice(
+                registrationId: cacheToken,
+                notification: notificationDeviceDTO)
+                .then((value) => prefs.saveDeviceToken(firebaseToken!));
+          }else {
+            NotificationDTO notificationDeviceDTO =
+            NotificationDTO(registrationId: firebaseToken, type: type);
+            await remoteDS.patchNotificationDevice(
+              registrationId: cacheToken,
+              notification:  notificationDeviceDTO, // Define an empty notification
+            );
           }
         }
+
 
         final List<ResultHomeDTO> res =
             await remoteDS.newsMain(isSaved: isSaved, currentPage: currentPage);
@@ -277,14 +298,13 @@ class HomeRepositoryImpl extends HomeRepository {
   }
 
   @override
-  Future<Either<Failure, FreedomPaymentDTO>> createSeminarPayment(
+  Future<Either<Failure, void>> createSeminarPayment(
       {required int id, required String backUrl}) async {
     if (await networkInfo.isConnected) {
       try {
-        final FreedomPaymentDTO result =
+        final  result =
             await remoteDS.createSeminarPayment(id: id, backUrl: backUrl);
 
-        log(result.toString());
         return Right(result);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -567,33 +587,34 @@ class HomeRepositoryImpl extends HomeRepository {
   }) async {
     if (await networkInfo.isConnected) {
       try {
-        final String? deviceToken =
-            await NotificationService().getDeviceToken();
-        final String type = Platform.operatingSystem.toString();
-        final result =
-            await getNotificationDevice(registrationId: deviceToken ?? '');
-        result.fold((l) async {
-          if (Platform.isIOS || Platform.isAndroid) {
-            await remoteDS.notificationDevice(
-                notification: NotificationDeviceDTO(
-              registrationId: deviceToken,
-              type: type,
-            ));
-          }
-        }, (r) async {
-          log('${deviceToken}------/d');
-          log('${r.registrationId}------/r');
-
-          if (r.registrationId != deviceToken) {
+        if(isSaved == null){
+          final String? deviceToken =
+          await NotificationService().getDeviceToken();
+          final String type = Platform.operatingSystem.toString();
+          final result =
+          await getNotificationDevice(registrationId: deviceToken ?? '');
+          result.fold((l) async {
             if (Platform.isIOS || Platform.isAndroid) {
-              await remoteDS.notificationDevice(
+              await remoteDS.postNotificationDevice(
                   notification: NotificationDeviceDTO(
-                registrationId: deviceToken,
-                type: type,
-              ));
+                    registrationId: deviceToken,
+                    type: type,
+                  ));
             }
-          }
-        });
+          }, (r) async {
+
+            if (r.registrationId != deviceToken) {
+              if (Platform.isIOS || Platform.isAndroid) {
+                await remoteDS.postNotificationDevice(
+                    notification: NotificationDeviceDTO(
+                      registrationId: deviceToken,
+                      type: type,
+                    ));
+              }
+            }
+          });
+        }
+
 
         final List<ResultHomeDTO> news = await remoteDS.news(
             search: search,
@@ -748,8 +769,8 @@ class HomeRepositoryImpl extends HomeRepository {
       {required NotificationDeviceDTO notificationDTO}) async {
     if (await networkInfo.isConnected) {
       try {
-        final NotificationDTO notification =
-            await remoteDS.notificationDevice(notification: notificationDTO);
+        final NotificationDTO notification = await remoteDS
+            .postNotificationDevice(notification: notificationDTO);
         return Right(notification);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -782,7 +803,7 @@ class HomeRepositoryImpl extends HomeRepository {
     if (await networkInfo.isConnected) {
       try {
         final NotificationDTO notificationT =
-            await remoteDS.putNotificationDevice(
+            await remoteDS.patchNotificationDevice(
                 registrationId: registrationId, notification: notification);
         return Right(notificationT);
       } on ServerException catch (e) {
@@ -797,9 +818,52 @@ class HomeRepositoryImpl extends HomeRepository {
   Future<Either<Failure, String>> checkTicket({required String url}) async {
     if (await networkInfo.isConnected) {
       try {
-        final message = await remoteDS
-            .checkTicket(url: url);
+        final message = await remoteDS.checkTicket(url: url);
         return Right(message);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, List<CardDTO>>> getCards({String? search}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final List<CardDTO> cards =
+            await remoteDS.getCards(search: search);
+        return Right(cards);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, String>> getAddCArdUrl() async{
+     if (await networkInfo.isConnected) {
+      try {
+        final String addCardUrl =
+            await remoteDS.getAddCardUrl();
+        return Right(addCardUrl);
+      } on ServerException catch (e) {
+        return Left(ServerFailure(message: e.message));
+      }
+    } else {
+      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    }
+  }
+  
+  @override
+  Future<Either<Failure, void>> setDefaultCard({required int cardId}) async{
+     if (await networkInfo.isConnected) {
+      try {
+            await remoteDS.setDefaultCard(cardId: cardId);
+        return const Right(null);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
       }

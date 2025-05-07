@@ -12,7 +12,7 @@ class DuaDetailCubit extends Cubit<DuaDetailState> {
   final IslamTeachingRepository _islamTeachingRepository;
   DuaDetailCubit(
     this._islamTeachingRepository,
-  ) : super(const DuaDetailState.initialState());
+  ) : super(const DuaDetailState.initial());
   late ResultTeachingDTO res;
   Future<void> duaDetail({
     required int id,
@@ -23,7 +23,7 @@ class DuaDetailCubit extends Cubit<DuaDetailState> {
     );
     failureOrUser.fold(
       (l) {
-        emit(DuaDetailState.errorState(message: mapFailureToMessageBack(l)));
+        emit(DuaDetailState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         res = r;
@@ -47,15 +47,12 @@ class DuaDetailCubit extends Cubit<DuaDetailState> {
 }
 
 @freezed
-class DuaDetailState with _$DuaDetailState {
-  const factory DuaDetailState.initialState() = _InitialPage;
-
-  const factory DuaDetailState.loadingState() = _LoadingState;
-
+sealed class DuaDetailState with _$DuaDetailState {
+  const factory DuaDetailState.initial() = DuaDetailInitialPage;
+  const factory DuaDetailState.loading() = DuaDetailLoadingState;
   const factory DuaDetailState.loaded({required ResultTeachingDTO res}) =
-      _LoadedState;
-
-  const factory DuaDetailState.errorState({
+      DuaDetailLoadedState;
+  const factory DuaDetailState.error({
     required String message,
-  }) = _ErrorState;
+  }) = DuaDetailErrorState;
 }

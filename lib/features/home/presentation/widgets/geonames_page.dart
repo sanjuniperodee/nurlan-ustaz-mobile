@@ -43,16 +43,15 @@ class _GeonamesPageState extends State<GeonamesPage> {
       backgroundColor: AppColors.lightBlue,
       body: BlocConsumer<GeonamesCubit, GeonamesState>(
         listener: (context, state) {
-          state.maybeWhen(
-            orElse: () {},
-            errorState: (message) {
+          switch (state) {
+            case GeonamesErrorState(:final message):
               buildErrorCustomSnackBar(context, message);
-            },
-            loaded: (geo) {
+              break;
+            case GeonamesLoadedState(:final geo):
               geoa = geo;
-            },
-          );
-          // TODO: implement listener
+              break;
+            default:
+          }
         },
         builder: (context, state) {
           return SizedBox(
@@ -71,6 +70,9 @@ class _GeonamesPageState extends State<GeonamesPage> {
                       physics: const BouncingScrollPhysics(),
                       child: Column(
                         children: [
+                          SizedBox(
+                            height: 20.h,
+                          ),
                           CustomAppBar(
                             title: 'choose_location'.tr(),
                           ),
@@ -86,24 +88,20 @@ class _GeonamesPageState extends State<GeonamesPage> {
                           ),
                           BlocListener<SetCityCubit, SetCityState>(
                             listener: (context, state) {
-                              state.maybeWhen(
-                                orElse: () {},
-                                loaded: (not) {
-                                  widget.type == 'profile'
-                                      ? BlocProvider.of<GetProfileCubit>(
-                                              context)
-                                          .getUser()
-                                          .then((value) => context.router.pop())
-                                      : BlocProvider.of<TimingsCubit>(context)
-                                          .timings(
-                                            double.parse(geoa[geoIndex].lat!),
-                                            double.parse(geoa[geoIndex].lng!),
-                                          )
-                                          .then(
-                                              (value) => context.router.pop());
-                                },
-                              );
-                              // TODO: implement listener
+                              if (state is SetCityLoadedState) {
+                                widget.type == 'profile'
+                                    ? BlocProvider.of<GetProfileCubit>(context)
+                                        .getUser()
+                                        .then((value) =>
+                                            context.router.maybePop())
+                                    : BlocProvider.of<TimingsCubit>(context)
+                                        .timings(
+                                          double.parse(geoa[geoIndex].lat!),
+                                          double.parse(geoa[geoIndex].lng!),
+                                        )
+                                        .then((value) =>
+                                            context.router.maybePop());
+                              }
                             },
                             child: ListView.builder(
                               itemCount: geoa.length,

@@ -12,7 +12,7 @@ class IslamNameDetailCubit extends Cubit<IslamNameDetailState> {
   final IslamTeachingRepository _islamTeachingRepository;
   IslamNameDetailCubit(
     this._islamTeachingRepository,
-  ) : super(const IslamNameDetailState.initialState());
+  ) : super(const IslamNameDetailState.initial());
   late ResultTeachingDTO res;
   Future<void> islamNameDetail({
     required int id,
@@ -23,8 +23,7 @@ class IslamNameDetailCubit extends Cubit<IslamNameDetailState> {
     );
     failureOrUser.fold(
       (l) {
-        emit(IslamNameDetailState.errorState(
-            message: mapFailureToMessageBack(l)));
+        emit(IslamNameDetailState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         res = r;
@@ -38,7 +37,7 @@ class IslamNameDetailCubit extends Cubit<IslamNameDetailState> {
         await _islamTeachingRepository.islamNamesFavorite(id: id);
     failureOrUser.fold(
       (l) {
-      emit(IslamNameDetailState.loaded(res: res));
+        emit(IslamNameDetailState.loaded(res: res));
       },
       (r) {
         res = res.copyWith(isSaved: !res.isSaved!);
@@ -49,15 +48,12 @@ class IslamNameDetailCubit extends Cubit<IslamNameDetailState> {
 }
 
 @freezed
-class IslamNameDetailState with _$IslamNameDetailState {
-  const factory IslamNameDetailState.initialState() = _InitialPage;
-
-  const factory IslamNameDetailState.loadingState() = _LoadingState;
-
+sealed class IslamNameDetailState with _$IslamNameDetailState {
+  const factory IslamNameDetailState.initial() = IslamNameDetailInitialPage;
+  const factory IslamNameDetailState.loading() = IslamNameDetailLoadingState;
   const factory IslamNameDetailState.loaded({required ResultTeachingDTO res}) =
-      _LoadedState;
-
-  const factory IslamNameDetailState.errorState({
+      IslamNameDetailLoadedState;
+  const factory IslamNameDetailState.error({
     required String message,
-  }) = _ErrorState;
+  }) = IslamNameDetailErrorState;
 }

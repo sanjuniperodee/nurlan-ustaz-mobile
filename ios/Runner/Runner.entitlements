@@ -6,7 +6,7 @@
 	<string>development</string>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>applinks:nurlanustazflutter.page.link</string>
+		<string>applinks: https://nurlanustaz.page.link</string>
 	</array>
 </dict>
 </plist>

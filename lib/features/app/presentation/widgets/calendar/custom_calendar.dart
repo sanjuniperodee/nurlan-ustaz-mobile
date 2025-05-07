@@ -1,5 +1,8 @@
 library flutter_clean_calendar;
 
+import 'dart:developer';
+
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
@@ -7,7 +10,6 @@ import 'package:intl/intl.dart';
 import '../../../../zhosparlar/data/models/event_dto.dart';
 import 'custom_calendar_tile.dart';
 import 'custom_date_utils.dart';
-import 'custom_gesture_detector.dart';
 
 // Export NeatCleanCalendarEvent for using it in the application
 
@@ -96,23 +98,23 @@ class CustomCalendar extends StatefulWidget {
   final Color? bottomBarColor;
   final String? expandableDateFormat;
 
-
-  CustomCalendar({
+  const CustomCalendar({
+    super.key,
     this.onMonthChanged,
     this.onDateSelected,
     this.onRangeSelected,
     this.onExpandStateChanged,
     this.onEventSelected,
-    this.hideBottomBar: false,
-    this.isExpandable: false,
+    this.hideBottomBar = false,
+    this.isExpandable = false,
     this.events,
     this.dayBuilder,
     this.eventListBuilder,
-    this.hideTodayIcon: false,
-    this.hideArrows: false,
+    this.hideTodayIcon = false,
+    this.hideArrows = false,
     this.selectedColor,
     this.todayColor,
-    this.todayButtonText: 'Today',
+    this.todayButtonText = 'Today',
     this.eventColor,
     this.eventDoneColor,
     this.initialDate,
@@ -169,18 +171,16 @@ class _CustomCalendarState extends State<CustomCalendar> {
 
     if (!widget.hideArrows) {
       leftArrow = IconButton(
-        onPressed: isExpanded ? previousMonth : previousWeek,
-        icon: Icon(
-          Icons.chevron_left,
-          color:
-          Color(0xFF8F8CF7),)
-      );
+          onPressed: isExpanded ? previousMonth : previousWeek,
+          icon: Icon(
+            Icons.chevron_left,
+            color: Color(0xFF8F8CF7),
+          ));
       rightArrow = IconButton(
         onPressed: isExpanded ? nextMonth : nextWeek,
         icon: Icon(
           Icons.chevron_right,
-          color:
-          Color(0xFF8F8CF7),
+          color: Color(0xFF8F8CF7),
         ),
       );
     } else {
@@ -196,7 +196,6 @@ class _CustomCalendarState extends State<CustomCalendar> {
     } else {
       todayIcon = Container();
     }
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
@@ -227,28 +226,17 @@ class _CustomCalendarState extends State<CustomCalendar> {
 
   Widget get calendarGridView {
     return Container(
-      child: SimpleGestureDetector(
-        onSwipeUp: _onSwipeUp,
-        onSwipeDown: _onSwipeDown,
-        onSwipeLeft: _onSwipeLeft,
-        onSwipeRight: _onSwipeRight,
-        swipeConfig: SimpleSwipeConfig(
-          verticalThreshold: 10.0,
-          horizontalThreshold: 40.0,
-          swipeDetectionMoment: SwipeDetectionMoment.onUpdate,
+      child: Column(children: <Widget>[
+        GridView.count(
+          mainAxisSpacing: 15,
+          childAspectRatio: 1.5,
+          primary: false,
+          shrinkWrap: true,
+          crossAxisCount: 7,
+          padding: EdgeInsets.only(bottom: 0.0),
+          children: calendarBuilder(),
         ),
-        child: Column(children: <Widget>[
-          GridView.count(
-            mainAxisSpacing: 15,
-            childAspectRatio: 1.5,
-            primary: false,
-            shrinkWrap: true,
-            crossAxisCount: 7,
-            padding: EdgeInsets.only(bottom: 0.0),
-            children: calendarBuilder(),
-          ),
-        ]),
-      ),
+      ]),
     );
   }
 
@@ -332,7 +320,7 @@ class _CustomCalendarState extends State<CustomCalendar> {
 
   TextStyle? configureDateStyle(monthStarted, monthEnded) {
     TextStyle? dateStyles;
-    final TextStyle? body1Style = Theme.of(context).textTheme.bodyText2;
+    final TextStyle? body1Style = Theme.of(context).textTheme.bodyMedium;
 
     if (isExpanded) {
       final TextStyle body1StyleDisabled = body1Style!.copyWith(
@@ -356,23 +344,26 @@ class _CustomCalendarState extends State<CustomCalendar> {
       return GestureDetector(
         onTap: toggleExpanded,
         child: Container(
-          color: widget.bottomBarColor ?? Color.fromRGBO(200, 200, 200, 0.2),
+          color:
+              widget.bottomBarColor ?? const Color.fromRGBO(200, 200, 200, 0.2),
           height: 40,
-          margin: EdgeInsets.only(top: 8.0),
-          padding: EdgeInsets.all(0),
+          margin: const EdgeInsets.only(top: 8.0),
+          padding: const EdgeInsets.all(0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              SizedBox(width: 40.0),
+              const SizedBox(width: 40.0),
               Text(
                 DateFormat(widget.expandableDateFormat, widget.locale)
                     .format(_selectedDate),
-                style: widget.bottomBarTextStyle ?? TextStyle(fontSize: 13),
+                style:
+                    widget.bottomBarTextStyle ?? const TextStyle(fontSize: 13),
               ),
               IconButton(
                 onPressed: toggleExpanded,
                 iconSize: 25.0,
-                padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
                 icon: isExpanded
                     ? Icon(
                         Icons.arrow_drop_up,
@@ -478,21 +469,19 @@ class _CustomCalendarState extends State<CustomCalendar> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        mainAxisSize: MainAxisSize.min,
-        children: <Widget>[
-          nameAndIconRow,
-          ExpansionCrossFade(
-            collapsed: calendarGridView,
-            expanded: calendarGridView,
-            isExpanded: isExpanded,
-          ),
-          //expansionButtonRow,
-          //eventList
-        ],
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisSize: MainAxisSize.min,
+      children: <Widget>[
+        nameAndIconRow,
+        ExpansionCrossFade(
+          collapsed: calendarGridView,
+          expanded: calendarGridView,
+          isExpanded: isExpanded,
+        ),
+        //expansionButtonRow,
+        //eventList
+      ],
     );
   }
 
@@ -554,6 +543,7 @@ class _CustomCalendarState extends State<CustomCalendar> {
               _selectedDate.year, _selectedDate.month, _selectedDate.day)] ??
           [];
     });
+    log(_selectedDate.toString());
     _launchDateSelectionCallback(_selectedDate);
   }
 
@@ -692,7 +682,7 @@ class _CustomCalendarState extends State<CustomCalendar> {
   }
 
   _lastDayOfWeek(DateTime date) {
-    return _firstDayOfWeek(date).add(new Duration(days: 7));
+    return _firstDayOfWeek(date).add(const Duration(days: 7));
   }
 
   /// The function [_daysInMonth] takes the parameter [month] (which is of type [DateTime])

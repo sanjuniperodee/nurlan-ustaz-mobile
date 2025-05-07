@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/repositories/auth_repository.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/repositories/home_repository.dart';
@@ -13,8 +14,6 @@ import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 
 import '../../../../../../../core/common/shared_keys.dart';
-import '../../../../../../../core/platform/cache_helper/prefs.dart';
-import '../../../../../../auth/data/datasource/local/auth_local_ds.dart';
 import '../../../../../../auth/data/model/token_dto.dart';
 import '../../data/models/chat_model.dart';
 import '../../data/models/question_model.dart';
@@ -24,7 +23,7 @@ part 'today_chat_cubit.freezed.dart';
 @singleton
 class TodayChatCubit extends Cubit<TodayChatState> {
   TodayChatCubit(this._homeRepository, this.sharedPreferences, this._authRepo)
-      : super(const TodayChatState.initialState());
+      : super(const TodayChatState.initial());
   final AuthRepository _authRepo;
   final HomeRepository _homeRepository;
   final SharedPreferences sharedPreferences;
@@ -33,6 +32,7 @@ class TodayChatCubit extends Cubit<TodayChatState> {
   late UserDto _userDto;
 
   Future<void> connectSocket() async {
+    log('${WebSocketUrl}');
     //emit(_LoadingState());
 
     final user = await _authRepo.getUser();
@@ -45,11 +45,11 @@ class TodayChatCubit extends Cubit<TodayChatState> {
           as Map<String, dynamic>,
     );
     final channel = IOWebSocketChannel.connect(
-        "ws://86.107.45.90:8000/api/tell-me-ustaz/chat/",
+        Uri.parse("${WebSocketUrl}/api/tell-me-ustaz/chat/"),
         headers: {"Authorization": "Bearer ${token.access}"});
 
     channel.stream.listen((event) async {
-      emit(const _LoadingState());
+      emit(const TodayChatState.loading());
 
       var questions = json.decode(event);
       if (questions.runtimeType == List<dynamic>) {
@@ -61,13 +61,12 @@ class TodayChatCubit extends Cubit<TodayChatState> {
       } else {
         test.add(QuestionDTO.fromJson(questions));
       }
-      emit(_InitialState(channel: channel, questions: test, user: _userDto));
-    },
-        onDone: () {
+      emit(TodayChatState.initial(
+          channel: channel, questions: test, user: _userDto));
+    }, onDone: () {
       getQuestionByDate(DateFormat('yyyy-MM-dd').format(DateTime.now()));
-    },
-    onError: (error) {
-    log('ws error $error');
+    }, onError: (error) {
+      log('ws error $error');
     });
   }
 
@@ -78,10 +77,7 @@ class TodayChatCubit extends Cubit<TodayChatState> {
         startTime: DateFormat('yyyy-MM-dd').format(DateTime.parse(dateTime)),
         endTime: DateFormat('yyyy-MM-dd').format(DateTime.parse(dateTime)
             .copyWith(day: DateTime.parse(dateTime).day + 1)));
-    result.fold(
-        (l) => {
-
-            }, (r) async {
+    result.fold((l) => {}, (r) async {
       chatsss = r.toList();
       if (chatsss
           .toList()
@@ -93,17 +89,14 @@ class TodayChatCubit extends Cubit<TodayChatState> {
             chatsss.toList().firstWhere((element) => element.date == dateTime);
         final result = await _homeRepository.questions(
             id: dayChat.id!, isFirstCall: false, page: 1);
-        result.fold(
-            (l) => {
-
-                }, (r) async {
-          emit(_InitialState().copyWith(
+        result.fold((l) => {}, (r) async {
+          emit(TodayChatState.initial(
             user: _userDto,
             questions: r.toList(),
           ));
         });
       } else {
-        emit(_InitialState().copyWith(
+        emit(TodayChatState.initial(
           user: _userDto,
           questions: [],
         ));
@@ -112,25 +105,23 @@ class TodayChatCubit extends Cubit<TodayChatState> {
   }
 
   Future<void> change(WebSocketChannel channel) async {
-    channel.stream.listen((message) {
-      log('message $message');
-    },
-        );
+    channel.stream.listen(
+      (message) {
+        log('message $message');
+      },
+    );
   }
 }
 
 @freezed
-class TodayChatState with _$TodayChatState {
-  const factory TodayChatState.initialState(
+sealed class TodayChatState with _$TodayChatState {
+  const factory TodayChatState.initial(
       {@Default([]) List<QuestionDTO> questions,
       final IOWebSocketChannel? channel,
-      final UserDto? user}) = _InitialState;
-
-  const factory TodayChatState.loadedState() = _LoadedState;
-
-  const factory TodayChatState.loadingState() = _LoadingState;
-
-  const factory TodayChatState.errorState({
+      final UserDto? user}) = TodayChatInitialState;
+  const factory TodayChatState.loaded() = TodayChatLoadedState;
+  const factory TodayChatState.loading() = TodayChatLoadingState;
+  const factory TodayChatState.error({
     required String message,
-  }) = _ErrorState;
+  }) = TodayChatErrorState;
 }

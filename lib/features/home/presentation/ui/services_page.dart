@@ -80,15 +80,11 @@ class _ServicesPageState extends State<ServicesPage> {
             ),
             BlocConsumer<PostServiceCubit, PostServiceState>(
               listener: (context, state) {
-                state.maybeWhen(
-                  orElse: () {},
-                  loaded: (url) {
-                    _launchUrl(url);
+                if (state is PostServiceLoadedState) {
+                  _launchUrl(state.url);
 
-                    Navigator.pop(context);
-                  },
-                );
-                // TODO: implement listener
+                  Navigator.pop(context);
+                }
               },
               builder: (context, state) {
                 return AppButton(
@@ -114,128 +110,115 @@ class _ServicesPageState extends State<ServicesPage> {
       ),
       body: BlocConsumer<ServicesCubit, ServicesState>(
         listener: (context, state) {
-          state.maybeWhen(
-            orElse: () {
-              isLoadingMore = false;
-            },
-            errorState: (message) {
-              isLoadingMore = false;
-              buildErrorCustomSnackBar(context, message);
-            },
-            loadingMoreState: () {
-              isLoadingMore = true;
-            },
-            loaded: (services) {
-              isLoadingMore = false;
-              listOfServices = services;
-            },
-          );
-          // TODO: implement listener
+          isLoadingMore = state is ServicesLoadingMoreState;
+          if (state is ServicesLoadedState) {
+            listOfServices = state.media;
+          } else if (state is ServicesErrorState) {
+            buildErrorCustomSnackBar(context, state.message);
+          }
         },
         builder: (context, state) {
-          return state.maybeWhen(orElse: () {
-            return GlobalCustomBody(
-              child: SizedBox(
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    children: [
-                      CustomAppBar(
-                        title: 'Services'.tr(),
-                      ),
-                      ListView.builder(
-                        itemCount: listOfServices.length,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: EdgeInsets.only(top: 12.r),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                  color: AppColors.white,
-                                  borderRadius: BorderRadius.circular(20).r),
-                              padding: const EdgeInsets.symmetric(
-                                      vertical: 12, horizontal: 12)
-                                  .r
-                                  .r,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Row(
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                            color: AppColors.orange,
-                                            borderRadius:
-                                                BorderRadius.circular(12).r),
-                                        padding: const EdgeInsets.all(10).r,
-                                        child: CachedNetworkImage(
-                                          imageUrl:
-                                              listOfServices[index].icon ?? '',
-                                          fit: BoxFit.cover,
-                                          width: 55.w,
-                                          height: 55.h,
-                                          errorWidget: (a, b, c) => SizedBox(
-                                            width: 55.w,
-                                            height: 55.h,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 8.w,
-                                      ),
-                                      SizedBox(
-                                        width: 210.w,
-                                        child: Text(
-                                          listOfServices[index].title ??
-                                              'ERROR',
-                                          overflow: TextOverflow.ellipsis,
-                                          style: getTextStyle(
-                                                  CustomTextStyles.s16w500)
-                                              .apply(color: AppColors.black),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  GestureDetector(
-                                      onTap: () {
-                                        if (id.contains(
-                                            listOfServices[index].id)) {
-                                          id.remove(listOfServices[index].id);
-                                        } else {
-                                          id.add(listOfServices[index].id);
-                                        }
-                                        setState(() {});
-                                        log(id.toString());
-                                      },
-                                      child: id.contains(
-                                        listOfServices[index].id,
-                                      )
-                                          ? SvgPicture.asset(Assets.radioOnSvg)
-                                          : SvgPicture.asset(
-                                              Assets.radioCircleSvg))
-                                ],
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                      SizedBox(
-                        height: 150.h,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            );
-          }, loadingState: () {
+          if (state is ServicesLoadingState) {
             return const Center(
               child: CircularProgressIndicator(
                 color: AppColors.linearBlue,
               ),
             );
-          });
+          }
+
+          return GlobalCustomBody(
+            child: SizedBox(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  children: [
+                    CustomAppBar(
+                      title: 'Services'.tr(),
+                    ),
+                    ListView.builder(
+                      itemCount: listOfServices.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.only(top: 12.r),
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: AppColors.white,
+                                borderRadius: BorderRadius.circular(20).r),
+                            padding: const EdgeInsets.symmetric(
+                                    vertical: 12, horizontal: 12)
+                                .r
+                                .r,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Row(
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                          color: AppColors.orange,
+                                          borderRadius:
+                                              BorderRadius.circular(12).r),
+                                      padding: const EdgeInsets.all(10).r,
+                                      child: CachedNetworkImage(
+                                        imageUrl:
+                                            listOfServices[index].icon ?? '',
+                                        fit: BoxFit.cover,
+                                        width: 55.w,
+                                        height: 55.h,
+                                        errorWidget: (a, b, c) => SizedBox(
+                                          width: 55.w,
+                                          height: 55.h,
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      width: 8.w,
+                                    ),
+                                    SizedBox(
+                                      width: 210.w,
+                                      child: Text(
+                                        listOfServices[index].title ?? 'ERROR',
+                                        overflow: TextOverflow.ellipsis,
+                                        style: getTextStyle(
+                                                CustomTextStyles.s16w500)
+                                            .apply(color: AppColors.black),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                GestureDetector(
+                                    onTap: () {
+                                      if (id
+                                          .contains(listOfServices[index].id)) {
+                                        id.remove(listOfServices[index].id);
+                                      } else {
+                                        id.add(listOfServices[index].id);
+                                      }
+                                      setState(() {});
+                                      log(id.toString());
+                                    },
+                                    child: id.contains(
+                                      listOfServices[index].id,
+                                    )
+                                        ? SvgPicture.asset(Assets.radioOnSvg)
+                                        : SvgPicture.asset(
+                                            Assets.radioCircleSvg))
+                              ],
+                            ),
+                          ),
+                        );
+                      },
+                    ),
+                    SizedBox(
+                      height: 150.h,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
         },
       ),
     );

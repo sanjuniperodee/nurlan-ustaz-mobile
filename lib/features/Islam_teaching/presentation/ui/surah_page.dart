@@ -49,123 +49,108 @@ class _SurahPageState extends State<SurahPage> {
       backgroundColor: AppColors.lightBlue,
       body: BlocConsumer<SurahCubit, SurahState>(
         listener: (context, state) {
-          state.maybeWhen(
-            orElse: () {
-              isLoadingMore = false;
-            },
-            errorState: (message) {
-              isLoadingMore = false;
-              buildErrorCustomSnackBar(context, message);
-            },
-            loadingMoreState: () {
-              isLoadingMore = true;
-            },
-            loaded: (news) {
-              isLoadingMore = false;
-              listOfSurah = news;
-            },
-          ); //
-          // TODO: implement listener
+          isLoadingMore = state is SurahLoadingMoreState;
+          if (state is SurahLoadedState) {
+            listOfSurah = state.sura;
+          } else if (state is SurahErrorState) {
+            buildErrorCustomSnackBar(context, state.message);
+          }
         },
         builder: (context, state) {
-          return state.maybeWhen(
-            orElse: () {
-              return SizedBox(
-                height: 1.sh,
-                child: Stack(
-                  children: [
-                    Image.asset(
-                      Assets.gradient,
-                      fit: BoxFit.cover,
-                    ),
-                    Positioned.fill(
-                      // left: 280.r,
-                        child: Opacity(
-                          opacity: 0.5,
-                          child:  Lottie.asset('assets/animations/Book_V04.json',fit: BoxFit.cover),
-                        )),
-                    SizedBox(
-                      child: SingleChildScrollView(
-                          physics: const BouncingScrollPhysics(),
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 56.h,
-                                ),
-                                CustomAppBar(
-                                  title: 'Surahs'.tr(),
-                                ),
-                                SizedBox(
-                                  height: 36.h,
-                                ),
-                                SearchWidget(onChanged: (string) {
-                                  searchText = string;
-                                  if (string.isEmpty) {
-                                    BlocProvider.of<SurahCubit>(context).sura(
-                                      page: 1,
-                                    );
-                                  } else {
-                                    BlocProvider.of<SurahCubit>(context)
-                                        .sura(page: 1, search: searchText);
-                                  }
-                                }),
-                                ListView.builder(
-                                  itemCount: listOfSurah.length,
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.only(top: 8.0),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          context.router.push(
-                                            SurahDetailRoute(
-                                                result: listOfSurah[index]),
-                                          );
-                                        },
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              color: AppColors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                          child: ListTile(
-                                            iconColor: AppColors.black,
-                                            title: Text(
-                                              listOfSurah[index].name ??
-                                                  'ERROR',
-                                              style: getTextStyle(
-                                                  CustomTextStyles.s16w400),
-                                            ),
-                                            trailing: const Icon(
-                                              Icons.arrow_forward_ios_rounded,
-                                              color: AppColors.black,
-                                            ),
-                                          ),
+          return SizedBox(
+            height: 1.sh,
+            child: Stack(
+              children: [
+                Image.asset(
+                  Assets.gradient,
+                  fit: BoxFit.cover,
+                ),
+                Positioned.fill(
+                    // left: 280.r,
+                    child: Opacity(
+                  opacity: 0.5,
+                  child: Lottie.asset('assets/animations/Book_V04.json',
+                      fit: BoxFit.cover),
+                )),
+                SizedBox(
+                  child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 56.h,
+                            ),
+                            CustomAppBar(
+                              title: 'Surahs'.tr(),
+                            ),
+                            SizedBox(
+                              height: 36.h,
+                            ),
+                            SearchWidget(onChanged: (string) {
+                              searchText = string;
+                              if (string.isEmpty) {
+                                BlocProvider.of<SurahCubit>(context).sura(
+                                  page: 1,
+                                );
+                              } else {
+                                BlocProvider.of<SurahCubit>(context)
+                                    .sura(page: 1, search: searchText);
+                              }
+                            }),
+                            ListView.builder(
+                              itemCount: listOfSurah.length,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      context.router.push(
+                                        SurahDetailRoute(
+                                            result: listOfSurah[index]),
+                                      );
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: AppColors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      child: ListTile(
+                                        iconColor: AppColors.black,
+                                        title: Text(
+                                          listOfSurah[index].name ?? 'ERROR',
+                                          style: getTextStyle(
+                                              CustomTextStyles.s16w400),
+                                        ),
+                                        trailing: const Icon(
+                                          Icons.arrow_forward_ios_rounded,
+                                          color: AppColors.black,
                                         ),
                                       ),
-                                    );
-                                  },
-                                ),
-                                SizedBox(
-                                  height: 10.h,
-                                ),
-                                isLoadingMore
-                                    ? const Align(
-                                        alignment: Alignment.center,
-                                        child: CircularProgressIndicator())
-                                    : const SizedBox(),
-                              ],
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
-                          )),
-                    ),
-                  ],
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            isLoadingMore
+                                ? const Align(
+                                    alignment: Alignment.center,
+                                    child: CircularProgressIndicator())
+                                : const SizedBox(),
+                          ],
+                        ),
+                      )),
                 ),
-              );
-            },
+              ],
+            ),
           );
         },
       ),

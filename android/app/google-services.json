@@ -1,13 +1,32 @@
 {
   "project_info": {
-    "project_number": "53340493475",
-    "project_id": "nurlanustazdev0",
-    "storage_bucket": "nurlanustazdev0.appspot.com"
+    "project_number": "280448489679",
+    "project_id": "nurlanustazanalytics",
+    "storage_bucket": "nurlanustazanalytics.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:53340493475:android:8099ab2d7b1a15dff1d116",
+        "mobilesdk_app_id": "1:280448489679:android:c330bba61b0da07bd7bfba",
+        "android_client_info": {
+          "package_name": "com.nurlan.ustaz.nurlan_ustaz_flutter"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZEONhqAiBmGIHRcJ_PXiJam4cxxrxbl0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280448489679:android:0eabadf205f11bded7bfba",
         "android_client_info": {
           "package_name": "com.nurlan_ustaz_flutter"
         }
@@ -15,7 +34,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDjL_Nhu-W4tHdcpNfWLM6DSp-wLGyzjbk"
+          "current_key": "AIzaSyCZEONhqAiBmGIHRcJ_PXiJam4cxxrxbl0"
         }
       ],
       "services": {

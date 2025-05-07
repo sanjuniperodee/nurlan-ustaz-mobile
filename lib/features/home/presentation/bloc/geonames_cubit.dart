@@ -12,14 +12,14 @@ class GeonamesCubit extends Cubit<GeonamesState> {
   final HomeRepository _homeRepository;
   GeonamesCubit(
     this._homeRepository,
-  ) : super(const GeonamesState.initialState());
+  ) : super(const GeonamesState.initial());
 
   Future<void> geoNames({required String name}) async {
     // emit(const GeonamesState.loadingState());
     final failureOrUser = await _homeRepository.geoNames(name: name);
     failureOrUser.fold(
       (l) {
-        emit(GeonamesState.errorState(message: mapFailureToMessageBack(l)));
+        emit(GeonamesState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         emit(GeonamesState.loaded(geo: r));
@@ -29,16 +29,13 @@ class GeonamesCubit extends Cubit<GeonamesState> {
 }
 
 @freezed
-class GeonamesState with _$GeonamesState {
-  const factory GeonamesState.initialState() = _InitialPage;
-
-  const factory GeonamesState.loadingState() = _LoadingState;
-
+sealed class GeonamesState with _$GeonamesState {
+  const factory GeonamesState.initial() = GeonamesInitialPage;
+  const factory GeonamesState.loading() = GeonamesLoadingState;
   const factory GeonamesState.loaded({
     required List<GeonamesDTO> geo,
-  }) = _LoadedState;
-
-  const factory GeonamesState.errorState({
+  }) = GeonamesLoadedState;
+  const factory GeonamesState.error({
     required String message,
-  }) = _ErrorState;
+  }) = GeonamesErrorState;
 }

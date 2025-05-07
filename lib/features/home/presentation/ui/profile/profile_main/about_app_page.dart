@@ -32,26 +32,16 @@ class _AboutAppPageState extends State<AboutAppPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: BlocBuilder<PrjInfoCubit, PrjInfoState>(
-      builder: (context, state) {
-        return state.maybeWhen(
-          orElse: () {
-            return const Center(
-              child: CircularProgressIndicator(
-                color: AppColors.linearBlue,
-              ),
-            );
-          },
-          loaded: (res) {
+    return Scaffold(
+      body: BlocBuilder<PrjInfoCubit, PrjInfoState>(
+        builder: (context, state) {
+          if (state is PrjInfoLoadedState) {
             return GlobalCustomBody(
               child: SizedBox(
                 height: 1.1.sh,
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
                   child: Column(children: [
-                    SizedBox(
-                      height: 15.h,
-                    ),
                     CustomAppBar(
                       title: 'project_info'.tr(),
                     ),
@@ -77,7 +67,7 @@ class _AboutAppPageState extends State<AboutAppPage> {
                               width: 163.w,
                               height: 44.h,
                               child: Image.asset(
-                                Assets.logoNurlan,
+                                'assets/images/new_l.png',
                                 color: AppColors.blue,
                               ),
                             ),
@@ -104,13 +94,13 @@ class _AboutAppPageState extends State<AboutAppPage> {
                       height: 20.h,
                     ),
                     Text(
-                      res.first.description ?? 'ERROR',
+                      state.res.first.description ?? 'ERROR',
                       style: getTextStyle(CustomTextStyles.s16w400)
                           .copyWith(fontFamily: FontTypes.SF_Pro.name),
                       textAlign: TextAlign.center,
                     ),
                     ListView.builder(
-                      itemCount: res.first.statistics!.length,
+                      itemCount: state.res.first.statistics!.length,
                       shrinkWrap: true,
                       physics: const NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
@@ -131,7 +121,8 @@ class _AboutAppPageState extends State<AboutAppPage> {
                                         CrossAxisAlignment.center,
                                     children: [
                                       Text(
-                                        res.first.statistics![index].value ??
+                                        state.res.first.statistics![index]
+                                                .value ??
                                             'ERROR',
                                         maxLines: 1,
                                         textAlign: TextAlign.center,
@@ -148,7 +139,8 @@ class _AboutAppPageState extends State<AboutAppPage> {
                                         height: 4.h,
                                       ),
                                       Text(
-                                        res.first.statistics![index].title ??
+                                        state.res.first.statistics![index]
+                                                .title ??
                                             'ERROR',
                                         textAlign: TextAlign.center,
                                         style: getTextStyle(
@@ -184,13 +176,19 @@ class _AboutAppPageState extends State<AboutAppPage> {
                 ),
               ),
             );
-          },
-        );
-      },
-    ));
+          }
+
+          return const Center(
+            child: CircularProgressIndicator(
+              color: AppColors.linearBlue,
+            ),
+          );
+        },
+      ),
+    );
   }
 
-  final List<CardModel> cards = List.generate(5, (index) {
-    return CardModel(title: 'Карта', code: '6918 **** **89');
+  final List<CardDTO> cards = List.generate(5, (index) {
+    return CardDTO(id: 1, cardNumber: '6918 **** **89', isDefault: false);
   });
 }

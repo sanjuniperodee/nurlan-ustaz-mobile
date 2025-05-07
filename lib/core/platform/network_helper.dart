@@ -1,9 +1,9 @@
 // ignore_for_file: constant_identifier_names
-const TEST = 'http://86.107.45.90:8000';
-
-const PROD = 'https://dev.nurlanustaz.kz';
-
+const TEST = 'http://86.107.45.90';
+const TEST2 = 'https://dev.nurlanustaz.kz';
+const PROD = 'https://api.nurlanimam.com';
 const SERVER_ = PROD;
+final WebSocketUrl = 'wss://${SERVER_.split('//').last}';
 
 mixin EndPoints {
   static const String onBoarding = '/api/support/onboarding/';
@@ -72,4 +72,9 @@ mixin EndPoints {
   static const String events = '/api/calendar/events/';
   static const String checklist = '/api/calendar/checklists/';
   static const String checklistDays = '/api/calendar/checklist-days/';
+  //cards
+  static const String cards = '/api/payment/cards/';
+  static const String addCards = '/api/payment/add-card/';
+
+
 }

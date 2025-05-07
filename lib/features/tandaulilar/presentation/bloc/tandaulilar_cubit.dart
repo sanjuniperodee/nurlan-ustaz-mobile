@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -10,12 +12,75 @@ part 'tandaulilar_cubit.freezed.dart';
 @singleton
 class TandaulilarCubit extends Cubit<TandaulilarState> {
   final HomeRepository _homeRepository;
+
   TandaulilarCubit(
     this._homeRepository,
-  ) : super(const TandaulilarState.initialState());
-  List<ResultHomeDTO> lives = [];
-  List<ResultHomeDTO> news = [];
-  List<ResultHomeDTO> seminars = [];
+  ) : super(const TandaulilarState.initial());
+  late List<ResultHomeDTO> lives;
+
+  late List<ResultHomeDTO> news;
+
+  late List<ResultHomeDTO> seminars;
+
+  Future<void> fetchAllData({
+    String? search,
+    bool isSaved = true,
+    required int page,
+    bool? isFirstCall,
+  }) async {
+    emit(const TandaulilarState.loading());
+
+    final failureOrLives = await _homeRepository.lives(
+      search: search,
+      isSaved: isSaved,
+      page: page,
+      isFirstCall: isFirstCall,
+    );
+
+    final failureOrNews = await _homeRepository.news(
+      search: search,
+      isSaved: isSaved,
+      page: page,
+      isFirstCall: isFirstCall,
+    );
+
+    final failureOrSeminars = await _homeRepository.seminar(
+      search: search,
+      isSaved: isSaved,
+      page: page,
+      isFirstCall: isFirstCall,
+    );
+
+    failureOrLives.fold(
+      (l) {
+        emit(TandaulilarState.error(message: mapFailureToMessageBack(l)));
+      },
+      (r) {
+        lives = r;
+      },
+    );
+
+    failureOrNews.fold(
+      (l) {
+        emit(TandaulilarState.error(message: mapFailureToMessageBack(l)));
+      },
+      (r) {
+        news = r;
+      },
+    );
+
+    failureOrSeminars.fold(
+      (l) {
+        emit(TandaulilarState.error(message: mapFailureToMessageBack(l)));
+      },
+      (r) {
+        seminars = r;
+      },
+    );
+    log('pppp-${lives.map((e) => e.cover).toList().toString() + news.map((e) => e.cover).toList().toString() + seminars.map((e) => e.cover).toList().toString()}');
+
+    emit(TandaulilarState.loaded(lives: lives, news: news, seminars: seminars));
+  }
 
   Future<void> livesT({
     String? search,
@@ -23,12 +88,12 @@ class TandaulilarCubit extends Cubit<TandaulilarState> {
     required int page,
     bool? isFirstCall,
   }) async {
-    emit(const TandaulilarState.loadingState());
+    emit(const TandaulilarState.loading());
     final failureOrUser = await _homeRepository.lives(
         search: search, isSaved: true, page: page, isFirstCall: isFirstCall);
     failureOrUser.fold(
       (l) {
-        emit(TandaulilarState.errorState(message: mapFailureToMessageBack(l)));
+        emit(TandaulilarState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         lives = r;
@@ -44,12 +109,12 @@ class TandaulilarCubit extends Cubit<TandaulilarState> {
     required int page,
     bool? isFirstCall,
   }) async {
-    emit(const TandaulilarState.loadingState());
+    emit(const TandaulilarState.loading());
     final failureOrUser = await _homeRepository.news(
         search: search, isSaved: true, page: page, isFirstCall: isFirstCall);
     failureOrUser.fold(
       (l) {
-        emit(TandaulilarState.errorState(message: mapFailureToMessageBack(l)));
+        emit(TandaulilarState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         news = r;
@@ -65,7 +130,7 @@ class TandaulilarCubit extends Cubit<TandaulilarState> {
     required int page,
     bool? isFirstCall,
   }) async {
-    emit(const TandaulilarState.loadingState());
+    emit(const TandaulilarState.loading());
     final failureOrUser = await _homeRepository.seminar(
       search: search,
       isSaved: true,
@@ -74,7 +139,7 @@ class TandaulilarCubit extends Cubit<TandaulilarState> {
     );
     failureOrUser.fold(
       (l) {
-        emit(TandaulilarState.errorState(message: mapFailureToMessageBack(l)));
+        emit(TandaulilarState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         seminars = r;
@@ -86,18 +151,15 @@ class TandaulilarCubit extends Cubit<TandaulilarState> {
 }
 
 @freezed
-class TandaulilarState with _$TandaulilarState {
-  const factory TandaulilarState.initialState() = _InitialPage;
-
-  const factory TandaulilarState.loadingState() = _LoadingState;
-
+sealed class TandaulilarState with _$TandaulilarState {
+  const factory TandaulilarState.initial() = TandaulilarInitialPage;
+  const factory TandaulilarState.loading() = TandaulilarLoadingState;
   const factory TandaulilarState.loaded({
-    required List<ResultHomeDTO> lives,
-    required List<ResultHomeDTO> news,
-    required List<ResultHomeDTO> seminars,
-  }) = _LoadedState;
-
-  const factory TandaulilarState.errorState({
+    @Default([]) final List<ResultHomeDTO> lives,
+    @Default([]) final List<ResultHomeDTO> news,
+    @Default([]) final List<ResultHomeDTO> seminars,
+  }) = TandaulilarLoadedState;
+  const factory TandaulilarState.error({
     required String message,
-  }) = _ErrorState;
+  }) = TandaulilarErrorState;
 }

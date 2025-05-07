@@ -6,9 +6,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
-import 'package:nurlan_ustaz_flutter/features/app/on_boarding/data/datasource/on_boarding_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/app/on_boarding/data/repositories/on_boarding_repository.dart';
-import 'package:nurlan_ustaz_flutter/features/home/data/repositories/home_repository.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -17,15 +15,14 @@ import 'app_version_model.dart';
 
 class AppVersionService {
   static final AppVersionService _singleton = AppVersionService._internal();
-  static const playStoreLink = 'https://www.youtube.com/watch?v=wHBGxz5QnIE';
-  static const appStoreLink = 'https://www.youtube.com/watch?v=wHBGxz5QnIE';
+  static const playStoreLink = 'https://www.instagram.com/nurlanimam.kz/';
+  static const appStoreLink = 'https://www.instagram.com/nurlanimam.kz/';
 
   factory AppVersionService() {
     return _singleton;
   }
 
   bool wasVersionCompatabilityChecked = false;
-  final _onBoardingRepository = getIt<OnBoardingRepository>;
 
   AppVersionService._internal();
 

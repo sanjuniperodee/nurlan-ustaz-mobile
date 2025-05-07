@@ -5,7 +5,7 @@ part 'user_comment_dto.freezed.dart';
 part 'user_comment_dto.g.dart';
 
 @freezed
-class UserCommentDTO with _$UserCommentDTO {
+abstract class UserCommentDTO with _$UserCommentDTO {
   const factory UserCommentDTO({
     required int id,
     @JsonKey(name: "full_name") String? fullName,

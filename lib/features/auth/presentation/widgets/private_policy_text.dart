@@ -17,7 +17,7 @@ class PrivatePolicyText extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => const MyPdfViewer(),
+            builder: (context) =>  MyPdfViewer(assetPdf: 'PDF.pdf', title: 'agree3'.tr(),),
           ),
         );
       },
@@ -38,7 +38,7 @@ class PrivatePolicyText extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const MyPdfViewer(),
+                        builder: (context) =>  MyPdfViewer(assetPdf: 'PDF.pdf', title: 'agree3'.tr(),),
                       ),
                     );
                   }),
@@ -55,7 +55,7 @@ class PrivatePolicyText extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const MyPdfViewer(),
+                        builder: (context) =>  MyPdfViewer(assetPdf: 'PDF.pdf', title: 'agree3'.tr(),),
                       ),
                     );
                   })

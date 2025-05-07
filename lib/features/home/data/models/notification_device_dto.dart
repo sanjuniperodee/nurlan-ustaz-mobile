@@ -7,7 +7,7 @@ part 'notification_device_dto.freezed.dart';
 part 'notification_device_dto.g.dart';
 
 @freezed
-class NotificationDeviceDTO with _$NotificationDeviceDTO {
+abstract class NotificationDeviceDTO with _$NotificationDeviceDTO {
   const factory NotificationDeviceDTO({
     @JsonKey(name: "name") String? name,
     @JsonKey(name: "registration_id") String? registrationId,

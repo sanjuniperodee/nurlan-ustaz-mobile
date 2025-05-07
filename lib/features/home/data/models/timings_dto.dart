@@ -5,7 +5,7 @@ part 'timings_dto.freezed.dart';
 part 'timings_dto.g.dart';
 
 @freezed
-class TimingsDTO with _$TimingsDTO {
+abstract class TimingsDTO with _$TimingsDTO {
   const factory TimingsDTO({
     @JsonKey(name: "Fajr") String? fajr,
     @JsonKey(name: "Sunrise") String? sunrise,

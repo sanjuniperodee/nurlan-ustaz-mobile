@@ -5,7 +5,7 @@ part 'faq_model_dto.freezed.dart';
 part 'faq_model_dto.g.dart';
 
 @freezed
-class FaqModelDTO with _$FaqModelDTO {
+abstract class FaqModelDTO with _$FaqModelDTO {
   const factory FaqModelDTO({
     required int id,
     String? question,

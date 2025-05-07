@@ -11,7 +11,6 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_butto
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_details_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/widgets/tus_zhoru_custom_body.dart';
-import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/widgets/tus_zhoru_detail_body.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/utils/pay_dialog.dart';
@@ -30,20 +29,30 @@ class TusZhoruDetailPage extends StatefulWidget {
 
 class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
   late bool _isFav;
+  double opacity = 0.3;
+  ScrollController _scrollController = ScrollController();
+  final double triggerOffset = 200.0; // Change opacity below this offset
 
   @override
   void initState() {
     BlocProvider.of<TusZhoruDetailsCubit>(context).getTusZhoruById(widget.id);
-    BlocProvider.of<TusZhoruCubit>(context).secureScreen();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      BlocProvider.of<TusZhoruCubit>(context).secureScreen();
+    });
     super.initState();
+    _scrollController.addListener(_handleScroll);
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<TusZhoruDetailsCubit, TusZhoruDetailsState>(
-        builder: (context, state) {
-      return state.maybeWhen(
-        loadingState: () {
+    return WillPopScope(
+      onWillPop: () async {
+        BlocProvider.of<TusZhoruCubit>(context).unSecureScreen();
+        return true;
+      },
+      child: BlocBuilder<TusZhoruDetailsCubit, TusZhoruDetailsState>(
+          builder: (context, state) {
+        if (state is TusZhoruDetailsLoadingState) {
           return const Scaffold(
             body: TusZhoruCustomBody(
               child: Center(
@@ -53,11 +62,9 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
               ),
             ),
           );
-        },
-        orElse: () {
-          return const Center();
-        },
-        loaded: (tusZhoruModel) {
+        }
+        if (state is TusZhoruDetailsLoadedState) {
+          final tusZhoruModel = state.tusZhoru;
           _isFav = tusZhoruModel!.isSaved!;
 
           final bool isFree = tusZhoruModel.isFree == true;
@@ -78,7 +85,6 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                             showDialog(
                                 context: context,
                                 builder: (context) {
-
                                   return PayDialog(
                                     price: tusZhoruModel.price
                                             ?.toInt()
@@ -88,7 +94,6 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                     isCustom: false,
                                   );
                                 });
-
                           },
                           text: 'show_all'.tr(),
                         ),
@@ -100,24 +105,26 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                 left: 0,
                 right: 0,
                 child: SingleChildScrollView(
+                  controller: _scrollController,
                   physics: const BouncingScrollPhysics(),
                   child: SizedBox(
                     child: Stack(children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          SizedBox(height: 20.h,),
+                          SizedBox(
+                            height: 20.h,
+                          ),
                           Padding(
                             padding: const EdgeInsets.only(left: 12),
                             child: CustomAppBar(
                               title: tusZhoruModel.title ?? '',
                               onTap: () async {
-                                 BlocProvider.of<TusZhoruCubit>(context)
+                                BlocProvider.of<TusZhoruCubit>(context)
                                     .unSecureScreen();
-                                 BlocProvider.of<TusZhoruCubit>(context)
-                                     .tusZhoruT(page: 1, isFirstCall: true);
+                                BlocProvider.of<TusZhoruCubit>(context)
+                                    .tusZhoruT(page: 1, isFirstCall: true);
                                 Navigator.pop(context);
-
                               },
                             ),
                           ),
@@ -182,7 +189,9 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                                 height: 1.5),
                                         overflow: TextOverflow.fade,
                                       ),
-                                      if (tusZhoruModel.isPurchased! == false &&
+                                      if (tusZhoruModel
+                                                  .isPurchased! == //не куплен
+                                              false &&
                                           tusZhoruModel.partialExplanation !=
                                               null)
                                         Positioned(
@@ -193,7 +202,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                             child: Container(
                                               decoration: BoxDecoration(
                                                   color: AppColors.white
-                                                      .withOpacity(0.7)),
+                                                      .withOpacity(opacity)),
                                             ))
                                     ],
                                   ),
@@ -249,14 +258,14 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                     ),
                                     InkWell(
                                       onTap: () async {
-                                        String unguessableDynamicLink =
-                                            await DynamicLink()
-                                                .createTusZhoruLink(
-                                                    tusZhoruModel.id!);
-                                        print(unguessableDynamicLink);
-                                        await Share.share(
-                                          unguessableDynamicLink,
-                                        );
+                                        DynamicLink()
+                                            .createTusZhoruLink(
+                                                tusZhoruModel.id!)
+                                            .then((unguessableDynamicLink) =>
+                                                Share.share(
+                                                    unguessableDynamicLink));
+
+                                        // Wrap Share.share in a Future.delayed to prevent UI blocking
                                       },
                                       child: Container(
                                         width: 150,
@@ -301,8 +310,18 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
               );
             }),
           );
-        },
-      );
+        }
+
+        // TODO: error widget
+        return const SizedBox.shrink();
+      }),
+    );
+  }
+
+  void _handleScroll() {
+    final double offset = _scrollController.offset;
+    setState(() {
+      opacity = (0.3 - (offset / 200.0)).clamp(0.1, 0.3);
     });
   }
 }

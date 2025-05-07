@@ -7,7 +7,7 @@ part 'checklist_dto.freezed.dart';
 part 'checklist_dto.g.dart';
 
 @freezed
-class CheckListDto with _$CheckListDto {
+abstract class CheckListDto with _$CheckListDto {
   const factory CheckListDto({
     required final int id,
     @JsonKey(name: "is_active") bool? isActive,
@@ -15,7 +15,6 @@ class CheckListDto with _$CheckListDto {
     @JsonKey(name: "start_date") String? startDate,
     @JsonKey(name: "end_date") String? endDate,
     @JsonKey(name: "default_tasks") String? defaultTasks,
-
   }) = _CheckListDto;
 
   factory CheckListDto.fromJson(Map<String, dynamic> json) =>

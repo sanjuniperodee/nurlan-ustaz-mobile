@@ -13,7 +13,7 @@ class NamesOfAllahCubit extends Cubit<NamesOfAllahState> {
   final IslamTeachingRepository _islamTeachingRepository;
   NamesOfAllahCubit(
     this._islamTeachingRepository,
-  ) : super(const NamesOfAllahState.initialState());
+  ) : super(const NamesOfAllahState.initial());
 
   Future<void> namesOfAllah({String? search, bool? isSaved}) async {
     final failureOrUser = await _islamTeachingRepository.namesOfAllah(
@@ -21,7 +21,7 @@ class NamesOfAllahCubit extends Cubit<NamesOfAllahState> {
 
     failureOrUser.fold(
       (l) {
-        emit(NamesOfAllahState.errorState(message: mapFailureToMessageBack(l)));
+        emit(NamesOfAllahState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         emit(NamesOfAllahState.loaded(names: r.toSet().toList()));
@@ -31,16 +31,13 @@ class NamesOfAllahCubit extends Cubit<NamesOfAllahState> {
 }
 
 @freezed
-class NamesOfAllahState with _$NamesOfAllahState {
-  const factory NamesOfAllahState.initialState() = _InitialPage;
-
-  const factory NamesOfAllahState.loadingState() = _LoadingState;
-
+sealed class NamesOfAllahState with _$NamesOfAllahState {
+  const factory NamesOfAllahState.initial() = NamesOfAllahInitialPage;
+  const factory NamesOfAllahState.loading() = NamesOfAllahLoadingState;
   const factory NamesOfAllahState.loaded({
     required List<NamesOfAllahDTO> names,
-  }) = _LoadedState;
-
-  const factory NamesOfAllahState.errorState({
+  }) = NamesOfAllahLoadedState;
+  const factory NamesOfAllahState.error({
     required String message,
-  }) = _ErrorState;
+  }) = NamesOfAllahErrorState;
 }

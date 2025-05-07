@@ -60,85 +60,84 @@ class _QrScannerPage extends State<QrScannerPage> {
   Widget build(BuildContext context) {
     return BlocConsumer<QrScannerCubit, QrScannerState>(
       listener: (context, state) {
-        state.maybeWhen(
-          orElse: () {},
-          loadedState: (message) {
+        switch (state) {
+          case QrScannerLoadedState(:final message):
             buildSuccessCustomSnackBar(context, message);
-          },
-          errorState: (message) {
+            break;
+          case QrScannerErrorState(:final message):
             buildErrorCustomSnackBar(context, message);
-          },
-        );
+            break;
+          default:
+        }
       },
       builder: (context, state) {
-        return state.maybeWhen(orElse: () {
-          return Container();
-        }, loadingState: () {
-          return Scaffold(
-            backgroundColor: AppColors.background1,
-            body: SizedBox(
-              height: 1.1.sh,
-              child: const GlobalCustomBody(
-                  child: Center(
-                child: CircularProgressIndicator.adaptive(),
-              )),
+        return switch (state) {
+          QrScannerLoadingState() => Scaffold(
+              backgroundColor: AppColors.background1,
+              body: SizedBox(
+                height: 1.1.sh,
+                child: const GlobalCustomBody(
+                    child: Center(
+                  child: CircularProgressIndicator.adaptive(),
+                )),
+              ),
             ),
-          );
-        }, initialState: () {
-          return Scaffold(
-            backgroundColor: AppColors.background1,
-            body: SizedBox(
-              height: 1.1.sh,
-              child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 50.h,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20.w),
-                      child: CustomAppBar(
-                        title: 'QR.qr_scanner'.tr(),
+          QrScannerInitialState() => Scaffold(
+              backgroundColor: AppColors.background1,
+              body: SizedBox(
+                height: 1.1.sh,
+                child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(
+                        height: 50.h,
                       ),
-                    ),
-                    SizedBox(
-                      height: 70.h,
-                    ),
-                    Container(
-                        height: 500.h,
-                        width: double.infinity,
-                        child: _buildQrView(context)),
-                    SizedBox(
-                      height: 30.h,
-                    ),
-                    IconButton(
-                        onPressed: () async {
-                          Future<bool?>? isFlash = controller?.getFlashStatus();
-                          bool? resolvedBoolValue = await isFlash;
-                          log(resolvedBoolValue.toString());
-                          log(_switchValue.toString());
-                          _switchValue = !_switchValue;
-                          controller?.toggleFlash();
-                          setState(() {});
-                        },
-                        icon: AnimatedCrossFade(
-                          firstChild: const Icon(
-                            Icons.flashlight_on,
-                            color: AppColors.white,
-                          ),
-                          secondChild: const Icon(
-                            Icons.flashlight_off,
-                            color: AppColors.white,
-                          ),
-                          crossFadeState: _switchValue == true
-                              ? CrossFadeState.showFirst
-                              : CrossFadeState.showSecond,
-                          duration: Duration(milliseconds: 100),
-                        )),
-                  ]),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20.w),
+                        child: CustomAppBar(
+                          title: 'QR.qr_scanner'.tr(),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 70.h,
+                      ),
+                      Container(
+                          height: 500.h,
+                          width: double.infinity,
+                          child: _buildQrView(context)),
+                      SizedBox(
+                        height: 30.h,
+                      ),
+                      IconButton(
+                          onPressed: () async {
+                            Future<bool?>? isFlash =
+                                controller?.getFlashStatus();
+                            bool? resolvedBoolValue = await isFlash;
+                            log(resolvedBoolValue.toString());
+                            log(_switchValue.toString());
+                            _switchValue = !_switchValue;
+                            controller?.toggleFlash();
+                            setState(() {});
+                          },
+                          icon: AnimatedCrossFade(
+                            firstChild: const Icon(
+                              Icons.flashlight_on,
+                              color: AppColors.white,
+                            ),
+                            secondChild: const Icon(
+                              Icons.flashlight_off,
+                              color: AppColors.white,
+                            ),
+                            crossFadeState: _switchValue == true
+                                ? CrossFadeState.showFirst
+                                : CrossFadeState.showSecond,
+                            duration: const Duration(milliseconds: 100),
+                          )),
+                    ]),
+              ),
             ),
-          );
-        });
+          _ => const SizedBox.shrink(),
+        };
       },
     );
   }

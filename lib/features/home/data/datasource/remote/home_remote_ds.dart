@@ -8,6 +8,7 @@ import 'package:nurlan_ustaz_flutter/core/model/freedom_payment_dto.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/cache_helper/prefs.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/dio_wrapper.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/models/card_model.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/faq_model_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/geonames_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/media_dto.dart';
@@ -32,6 +33,7 @@ abstract class HomeRemoteDs {
   Future<bool> newsFavorite({required int id});
 
   Future<bool> newsLike({required int id});
+
   Future<bool> commentReport({required int id, required String reason});
 
   Future<bool> commentSemPost({
@@ -111,7 +113,7 @@ abstract class HomeRemoteDs {
   Future<List<ChatDTO>> chats(
       {required String startTime, required String endTime});
 
-  Future<FreedomPaymentDTO> createSeminarPayment(
+  Future<void> createSeminarPayment(
       {required int id, required String backUrl});
 
   Future<List<QuestionDTO>> questions(
@@ -120,15 +122,19 @@ abstract class HomeRemoteDs {
       required int id,
       bool? isFirstCall = false});
 
-  Future<NotificationDTO> notificationDevice(
+  Future<NotificationDTO> postNotificationDevice(
       {required NotificationDeviceDTO notification});
 
   Future<NotificationDTO> getNotificationDevice(
       {required String registrationId});
 
-  Future<NotificationDTO> putNotificationDevice(
+  Future<NotificationDTO> patchNotificationDevice(
       {required String registrationId, required NotificationDTO notification});
+
   Future<String> checkTicket({required String url});
+  Future<List<CardDTO>> getCards({String? search});
+  Future<String> getAddCardUrl();
+    Future<void> setDefaultCard({required int cardId});
 
 }
 
@@ -160,7 +166,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   int? lpQuestions;
 
   @override
-  Future<FreedomPaymentDTO> createSeminarPayment(
+  Future<void> createSeminarPayment(
       {required int id, required String backUrl}) async {
     try {
       final response = await dio.post(
@@ -169,7 +175,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
           'back_url': backUrl,
         },
       );
-      return FreedomPaymentDTO.fromJson(response.data);
+      return(response.data);
     } on DioError catch (e) {
       throw ServerException(
         message:
@@ -714,6 +720,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
             ((response.data as Map<String, dynamic>)['results'] as List)
                 .map((e) => ResultHomeDTO.fromJson(e as Map<String, dynamic>))
                 .toList());
+        log('lives response-${livesPage.map((e) => e.cover).toList().toString()}');
         return livesPage;
       }
       // log('PAGE${response.data['meta']['pagination']['page']}');
@@ -758,6 +765,8 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
             ((response.data as Map<String, dynamic>)['results'] as List)
                 .map((e) => ResultHomeDTO.fromJson(e as Map<String, dynamic>))
                 .toList());
+        log('news response-${newsPage.map((e) => e.cover).toList().toString()}');
+
         return newsPage;
       }
       // log('PAGE${response.data['meta']['pagination']['page']}');
@@ -824,7 +833,8 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
             ((response.data as Map<String, dynamic>)['results'] as List)
                 .map((e) => ResultHomeDTO.fromJson(e as Map<String, dynamic>))
                 .toList());
-        log(seminarPage.toString());
+        log('seminar response-${seminarPage.map((e) => e.cover).toList().toString()}');
+
         return seminarPage;
       }
 
@@ -857,7 +867,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     } on DioError catch (e) {
       throw ServerException(
         message:
-        (e.response!.data as Map<String, dynamic>)['message'] as String,
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }
@@ -897,7 +907,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   }
 
   @override
-  Future<NotificationDTO> notificationDevice(
+  Future<NotificationDTO> postNotificationDevice(
       {required NotificationDeviceDTO notification}) async {
     try {
       final response = await dio.post(
@@ -932,11 +942,13 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   }
 
   @override
-  Future<NotificationDTO> putNotificationDevice(
+  Future<NotificationDTO> patchNotificationDevice(
       {required String registrationId,
       required NotificationDTO notification}) async {
+    log('Atai-${registrationId}');
+    log('Atai1-${notification.toString()}');
+
     try {
-      log('LOG::::${notification.toString()}');
       final FormData formData = FormData.fromMap(notification.toJson());
       final response = await dio.patch(
         '${EndPoints.notification}/$registrationId/',
@@ -960,8 +972,65 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       return (response.data.toString());
     } on DioError catch (e) {
       throw ServerException(
+        message: (e.response!.data.toString()),
+      );
+    }
+  }
+
+  @override
+  Future<List<CardDTO>> getCards({String? search}) async {
+    try {
+      final response = await dio.get(
+        EndPoints.cards,
+      );
+      if (response.statusCode == 200) {
+        var cardList = ((response.data as List)
+            .map((e) => CardDTO.fromJson(e as Map<String, dynamic>))
+            .toList());
+
+        return cardList;
+      }
+      throw 'ERROR';
+    } on DioError catch (e) {
+      throw ServerException(
         message:
-        (e.response!.data.toString()),
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+
+  @override
+  Future<String> getAddCardUrl() async {
+    try {
+      final response = await dio.get(
+        EndPoints.addCards,
+      );
+      if (response.statusCode == 200) {
+        var cardAddUrl = ((response.data as String));
+
+        return cardAddUrl;
+      }
+      throw 'ERROR';
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
+      );
+    }
+  }
+  
+  @override
+  Future<void> setDefaultCard({required int cardId})async {
+   try {
+       await dio.get(
+        '${EndPoints.cards}$cardId/set-default-card/',
+      );
+      
+      throw 'ERROR';
+    } on DioError catch (e) {
+      throw ServerException(
+        message:
+            (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
     }
   }

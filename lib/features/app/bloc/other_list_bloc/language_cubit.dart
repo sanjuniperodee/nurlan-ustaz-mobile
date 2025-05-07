@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
+import 'package:nurlan_ustaz_flutter/core/services/notification_service.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/repositories/auth_repository.dart';
 
 part 'language_cubit.freezed.dart';
@@ -14,21 +15,21 @@ const _tag = 'LanguageCubit';
 class LanguageCubit extends Cubit<LanguageState> {
   LanguageCubit(
     this._authRepository,
-  ) : super(const LanguageState.initialState());
+  ) : super(const LanguageState.initial());
   final AuthRepository _authRepository;
 
   Future<void> changeLanguage({
     String? language,
   }) async {
-    emit(const LanguageState.loadingState());
+    emit(const LanguageState.loading());
     log('changeLanguage', name: _tag);
     saveLocaleToCache(locale: language!);
-    emit(const LanguageState.loadedState());
+    emit(const LanguageState.loaded());
   }
 
   void changeLocal() {
-    emit(const LanguageState.loadingState());
-    emit(const LanguageState.loadedState());
+    emit(const LanguageState.loading());
+    emit(const LanguageState.loaded());
   }
 
   Future<void> saveLocaleToCache({required String locale}) async {
@@ -52,16 +53,11 @@ class LanguageCubit extends Cubit<LanguageState> {
 }
 
 @freezed
-class LanguageState with _$LanguageState {
-  const factory LanguageState.initialState() = _InitialState;
-
-  const factory LanguageState.loadedState() = _LoadedState;
-
-  const factory LanguageState.restartState() = _RestartState;
-
-  const factory LanguageState.loadingState() = _LoadingState;
-
-  const factory LanguageState.errorState({
-    required String message,
-  }) = _ErrorState;
+sealed class LanguageState with _$LanguageState {
+  const factory LanguageState.initial() = LanguageInitialState;
+  const factory LanguageState.loaded() = LanguageLoadedState;
+  const factory LanguageState.restart() = LanguageRestartState;
+  const factory LanguageState.loading() = LanguageLoadingState;
+  const factory LanguageState.error({required String message}) =
+      LanguageErrorState;
 }

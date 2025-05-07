@@ -1,7 +1,7 @@
 part of 'app_bloc.dart';
 
 @freezed
-class AppEvent with _$AppEvent {
+sealed class AppEvent with _$AppEvent {
   const factory AppEvent.checkAuth() = _CheckAuth;
 
   const factory AppEvent.onboardingSave() = _OnboardingSave;
@@ -12,5 +12,4 @@ class AppEvent with _$AppEvent {
   const factory AppEvent.exiting() = _Exiting;
   const factory AppEvent.deleting() = _Deleting;
   const factory AppEvent.nonAuthorizedDialog() = _NonAuthorizedDialog;
-
 }

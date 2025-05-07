@@ -126,82 +126,80 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<ZhosparymCubit, ZhosparymState>(
-        listener: (context, state) {
-      state.maybeWhen(
-        errorState: (message) {
-          buildErrorCustomSnackBar(context, message);
-        },
-        orElse: () {},
-      );
-    }, builder: (context, state) {
-      return state.maybeWhen(orElse: () {
-        return Container();
-      }, initialState: (events, checklist) {
-        holidays.clear();
-
-        final eventsDays = events?.map<DateTime, List<EventDto>>(
-          (key, value) => MapEntry(
-            DateTime.parse(key),
-            value,
-          ),
-        );
-        if (eventsDays != null) {
-          eventsDays.forEach((key, value) {
-            holidays.addAll(value); // Using addAll method
-          });
+      listener: (context, state) {
+        if (state is ZhosparymErrorState) {
+          buildErrorCustomSnackBar(context, state.message);
         }
+      },
+      builder: (context, state) {
+        if (state is ZhosparymInitialState) {
+          final events = state.events;
+          final checklist = state.checklist;
+          holidays.clear();
 
-        log('zhospar-${eventsDays.toString()}');
-        return Scaffold(
-          backgroundColor: AppColors.lightBlue,
-          body: SizedBox(
-            height: 1.sh,
-            child: Stack(
-              children: [
-                Image.asset(
-                  Assets.gradient,
-                  fit: BoxFit.cover,
-                ),
-                Positioned(
-                  top: 130.h,
-                  left: 300.w,
-                  child: ShaderMask(
-                    shaderCallback: (Rect bounds) => LinearGradient(
-                      colors: [
-                        AppColors.white.withOpacity(0.001),
-                        AppColors.white,
-                      ],
-                    ).createShader(bounds),
-                    child: SvgPicture.asset(
-                      'assets/icons/calendar_custom_icon_2.svg',
-                      color: AppColors.white.withOpacity(0.5),
-                      fit: BoxFit.cover,
+          final eventsDays = events?.map<DateTime, List<EventDto>>(
+            (key, value) => MapEntry(
+              DateTime.parse(key),
+              value,
+            ),
+          );
+          if (eventsDays != null) {
+            eventsDays.forEach((key, value) {
+              holidays.addAll(value); // Using addAll method
+            });
+          }
+
+          log('zhospar-${eventsDays.toString()}');
+          return Scaffold(
+            backgroundColor: AppColors.lightBlue,
+            body: SizedBox(
+              height: 1.sh,
+              child: Stack(
+                children: [
+                  Image.asset(
+                    Assets.gradient,
+                    fit: BoxFit.cover,
+                  ),
+                  Positioned(
+                    top: 130.h,
+                    left: 300.w,
+                    child: ShaderMask(
+                      shaderCallback: (Rect bounds) => LinearGradient(
+                        colors: [
+                          AppColors.white.withOpacity(0.001),
+                          AppColors.white,
+                        ],
+                      ).createShader(bounds),
+                      child: SvgPicture.asset(
+                        'assets/icons/calendar_custom_icon_2.svg',
+                        color: AppColors.white.withOpacity(0.5),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                Positioned(
-                  top: 50.h,
-                  left: 120.w,
-                  child: ShaderMask(
-                    shaderCallback: (Rect bounds) => LinearGradient(
-                      colors: [
-                        AppColors.white.withOpacity(0.001),
-                        AppColors.white,
-                      ],
-                    ).createShader(bounds),
-                    child: SvgPicture.asset(
-                      'assets/icons/tumer1.svg',
-                      color: AppColors.white.withOpacity(0.5),
-                      fit: BoxFit.cover,
+                  Positioned(
+                    top: 50.h,
+                    left: 120.w,
+                    child: ShaderMask(
+                      shaderCallback: (Rect bounds) => LinearGradient(
+                        colors: [
+                          AppColors.white.withOpacity(0.001),
+                          AppColors.white,
+                        ],
+                      ).createShader(bounds),
+                      child: SvgPicture.asset(
+                        'assets/icons/tumer1.svg',
+                        color: AppColors.white.withOpacity(0.5),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16, right: 16).r,
-                  child: SizedBox(
-                    height: 1.2.sh,
-                    child: SingleChildScrollView(
-                        primary: true,
+                  Padding(
+                    padding:
+                        const EdgeInsets.only(left: 16, right: 16, bottom: 100)
+                            .r,
+                    child: SizedBox(
+                      child: SingleChildScrollView(
                         physics: const BouncingScrollPhysics(),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
@@ -242,8 +240,8 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                                       EventsType.holiday)
                                                   .length >
                                               1) {
-                                            CarouselController controller =
-                                                CarouselController();
+                                            final controller =
+                                                CarouselSliderController();
                                             int currentIndex = 0;
                                             showDialog(
                                               context: context,
@@ -304,14 +302,14 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                       },
                                       hideBottomBar: false,
                                       startOnMonday: true,
-                                      weekDays: const [
-                                        'Дс',
-                                        'Сс',
-                                        'Ср',
-                                        'Бс',
-                                        'Жм',
-                                        'Сн',
-                                        'Жк'
+                                      weekDays: [
+                                        'calendar.m'.tr(),
+                                        'calendar.t'.tr(),
+                                        'calendar.w'.tr(),
+                                        'calendar.r'.tr(),
+                                        'calendar.f'.tr(),
+                                        'calendar.s'.tr(),
+                                        'calendar.u'.tr(),
                                       ],
                                       events: eventsDays,
                                       isExpandable: false,
@@ -360,9 +358,12 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                                     CheckListCubit>(context)
                                                 .getDays(checklistId: value.id)
                                                 .then((result) {
-                                                  log('${result.toString()}-checklist');
+                                              log('${result.toString()}-checklist');
                                               if (result.isEmpty) {
-                                                Future.delayed(Duration(seconds: 3,),(){
+                                                Future.delayed(
+                                                    Duration(
+                                                      seconds: 3,
+                                                    ), () {
                                                   context.router
                                                       .push(
                                                     RamazanChecklistRoute(
@@ -374,7 +375,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                                     });
                                                   });
                                                 });
-                                               return;
+                                                return;
                                               }
                                               log('pol2');
                                               context.router
@@ -465,7 +466,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                '${DateFormat('dd.MM.yyyy').format(DateTime.parse(e.date!))}ж.',
+                                                '${DateFormat.yMMMd().format(DateTime.parse(e.date!)).toLocale()}',
                                                 style: getTextStyle(
                                                         CustomTextStyles
                                                             .s16w600)
@@ -495,14 +496,17 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                     ))
                                 .toList(),
                           ],
-                        )),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        );
-      });
-    });
+          );
+        }
+        return const SizedBox.shrink();
+      },
+    );
   }
 }

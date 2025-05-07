@@ -148,16 +148,11 @@ class _CommentPageNewsState extends State<CommentPageNews> {
                           BlocListener<CommentNewsPostCubit,
                               CommentNewsPostState>(
                             listener: (context, state) {
+                              if (state is CommentNewsLoadedState) {
+                                context.read<CommentNewsCubit>().commentsNews(
+                                    page: 1, isFirstCall: true, id: widget.id);
+                              }
                               log(state.toString());
-                              state.maybeWhen(orElse: () {
-                                log(state.toString());
-                              }, loaded: () {
-                                BlocProvider.of<CommentNewsCubit>(context)
-                                    .commentsNews(
-                                        page: 1,
-                                        isFirstCall: true,
-                                        id: widget.id);
-                              });
                             },
                             child: IconButton(
                               icon: const Icon(Icons.send),
@@ -183,211 +178,194 @@ class _CommentPageNewsState extends State<CommentPageNews> {
             ),
       body: BlocConsumer<CommentNewsCubit, CommentNewsState>(
         listener: (context, state) {
-          state.maybeWhen(
-            orElse: () {
-              isLoadingMore = false;
-            },
-            errorState: (message) {
-              isLoadingMore = false;
-              buildErrorCustomSnackBar(context, message);
-            },
-            loadingMoreState: () {
-              isLoadingMore = true;
-            },
-            loaded: (comments) {
-              isLoadingMore = false;
-              listOfComments = comments;
-            },
-          );
-          // TODO: implement listener
+          isLoadingMore = state is CommentNewsLoadingMoreState;
+          if (state is CommentNewsLoadedState) {
+            listOfComments = state.comments;
+          } else if (state is CommentNewsErrorState) {
+            buildErrorCustomSnackBar(context, state.message);
+          }
         },
         builder: (context, state) {
-          return state.maybeWhen(orElse: () {
-            return ListView(
-              children: [
-                // if (listOfComments != null)
-                listOfComments == []
-                    ? Padding(
-                        padding: const EdgeInsets.only(top: 200),
-                        child: Center(
-                          child: Text(
-                            'no_comments_yet'.tr(),
-                            style: getTextStyle(CustomTextStyles.s20w700)
-                                .apply(color: AppColors.black),
-                          ),
+          return ListView(
+            children: [
+              // if (listOfComments != null)
+              listOfComments == []
+                  ? Padding(
+                      padding: const EdgeInsets.only(top: 200),
+                      child: Center(
+                        child: Text(
+                          'no_comments_yet'.tr(),
+                          style: getTextStyle(CustomTextStyles.s20w700)
+                              .apply(color: AppColors.black),
                         ),
-                      )
-                    : Padding(
-                        padding: const EdgeInsets.symmetric(
-                                vertical: 26, horizontal: 16)
-                            .r,
-                        child: ListView.builder(
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: listOfComments.length,
-                          itemBuilder: (context, index) {
-                            return Theme(
-                              data: ThemeData()
-                                  .copyWith(dividerColor: Colors.transparent),
-                              child: Slidable(
-                                closeOnScroll: true,
-                                endActionPane: ActionPane(
-                                  extentRatio: 0.3.w,
-                                  motion: const ScrollMotion(),
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        BlocProvider.of<CommentReportCubit>(
-                                                context)
-                                            .commentReport(
-                                              id: listOfComments[index].id!,
-                                              reason:
-                                                  listOfComments[index].body ??
-                                                      'ERROR',
-                                            )
-                                            .then((value) =>
-                                                buildErrorCustomSnackBar(
-                                                    context, 'report'.tr()));
-                                      },
-                                      child: Container(
-                                        width: 56.w,
-                                        height: 56.h,
-                                        color: AppColors.grey1,
-                                        child: const Center(
-                                            child: Icon(Icons.info_outline)),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                key: UniqueKey(),
-                                child: ExpansionTile(
-                                  trailing:
-                                      listOfComments[index].children!.isEmpty
-                                          ? const SizedBox()
-                                          : Padding(
-                                              padding: const EdgeInsets.only(
-                                                      left: 7.0, top: 15)
-                                                  .r,
-                                              child: const Icon(
-                                                Icons.expand_more,
-                                                color: AppColors.grey2,
-                                              ),
-                                            ),
-                                  title: CommentDeepItemWidget(
-                                    resultHomeDTO: listOfComments[index],
-                                    id: widget.id,
-                                    type: 'sem',
-                                    ans: false,
-                                    callback: () {
-                                      _textEditingController.text =
-                                          '@${listOfComments[index].user!.fullName!} ';
-                                      _textEditingController.selection =
-                                          TextSelection.fromPosition(
-                                              TextPosition(
-                                                  offset: _textEditingController
-                                                      .text.length));
-                                      idChildComment = listOfComments[index].id;
+                      ),
+                    )
+                  : Padding(
+                      padding: const EdgeInsets.symmetric(
+                              vertical: 26, horizontal: 16)
+                          .r,
+                      child: ListView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: listOfComments.length,
+                        itemBuilder: (context, index) {
+                          return Theme(
+                            data: ThemeData()
+                                .copyWith(dividerColor: Colors.transparent),
+                            child: Slidable(
+                              closeOnScroll: true,
+                              endActionPane: ActionPane(
+                                extentRatio: 0.3.w,
+                                motion: const ScrollMotion(),
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      BlocProvider.of<CommentReportCubit>(
+                                              context)
+                                          .commentReport(
+                                            id: listOfComments[index].id!,
+                                            reason:
+                                                listOfComments[index].body ??
+                                                    'ERROR',
+                                          )
+                                          .then((value) =>
+                                              buildErrorCustomSnackBar(
+                                                  context, 'report'.tr()));
                                     },
+                                    child: Container(
+                                      width: 56.w,
+                                      height: 56.h,
+                                      color: AppColors.grey1,
+                                      child: const Center(
+                                          child: Icon(Icons.info_outline)),
+                                    ),
                                   ),
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 65),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          if (listOfComments[index].children !=
-                                              null)
-                                            ListView.builder(
-                                              physics:
-                                                  const NeverScrollableScrollPhysics(),
-                                              itemCount: listOfComments[index]
-                                                  .children!
-                                                  .length,
-                                              shrinkWrap: true,
-                                              itemBuilder: (context, indexx) {
-                                                return Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          bottom: 18),
-                                                  child: Slidable(
-                                                    closeOnScroll: true,
-                                                    endActionPane: ActionPane(
-                                                      extentRatio: 0.3.w,
-                                                      motion:
-                                                          const ScrollMotion(),
-                                                      children: [
-                                                        InkWell(
-                                                          onTap: () {
-                                                            BlocProvider.of<
-                                                                        CommentReportCubit>(
-                                                                    context)
-                                                                .commentReport(
-                                                                  id: listOfComments[
-                                                                          index]
-                                                                      .children![
-                                                                          index]
-                                                                      .id!,
-                                                                  reason: listOfComments[
-                                                                              index]
-                                                                          .children![
-                                                                              index]
-                                                                          .body ??
-                                                                      'ERROR',
-                                                                )
-                                                                .then((value) =>
-                                                                    buildErrorCustomSnackBar(
-                                                                        context,
-                                                                        'report'
-                                                                            .tr()));
-                                                          },
-                                                          child: Container(
-                                                            width: 56.w,
-                                                            height: 56.h,
-                                                            color:
-                                                                AppColors.grey1,
-                                                            child: const Center(
-                                                                child: Icon(Icons
-                                                                    .info_outline)),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    key: UniqueKey(),
-                                                    child:
-                                                        CommentDeepItemWidget(
-                                                      resultHomeDTO:
-                                                          listOfComments[index]
-                                                                  .children![
-                                                              indexx],
-                                                      id: widget.id,
-                                                      type: 'sem',
-                                                      ans: true,
-                                                    ),
-                                                  ),
-                                                );
-                                              },
-                                            )
-                                        ],
-                                      ),
-                                    )
-                                  ],
-                                ),
+                                ],
                               ),
-                            );
-                          },
-                        )),
-                SizedBox(
-                  height: 60.h,
-                ),
-                isLoadingMore
-                    ? const Align(
-                        alignment: Alignment.center,
-                        child: CircularProgressIndicator())
-                    : const SizedBox(),
-              ],
-            );
-          });
+                              key: UniqueKey(),
+                              child: ExpansionTile(
+                                trailing:
+                                    listOfComments[index].children!.isEmpty
+                                        ? const SizedBox()
+                                        : Padding(
+                                            padding: const EdgeInsets.only(
+                                                    left: 7.0, top: 15)
+                                                .r,
+                                            child: const Icon(
+                                              Icons.expand_more,
+                                              color: AppColors.grey2,
+                                            ),
+                                          ),
+                                title: CommentDeepItemWidget(
+                                  resultHomeDTO: listOfComments[index],
+                                  id: widget.id,
+                                  type: 'sem',
+                                  ans: false,
+                                  callback: () {
+                                    _textEditingController.text =
+                                        '@${listOfComments[index].user!.fullName!} ';
+                                    _textEditingController.selection =
+                                        TextSelection.fromPosition(TextPosition(
+                                            offset: _textEditingController
+                                                .text.length));
+                                    idChildComment = listOfComments[index].id;
+                                  },
+                                ),
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.only(left: 65),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        if (listOfComments[index].children !=
+                                            null)
+                                          ListView.builder(
+                                            physics:
+                                                const NeverScrollableScrollPhysics(),
+                                            itemCount: listOfComments[index]
+                                                .children!
+                                                .length,
+                                            shrinkWrap: true,
+                                            itemBuilder: (context, indexx) {
+                                              return Padding(
+                                                padding: const EdgeInsets.only(
+                                                    bottom: 18),
+                                                child: Slidable(
+                                                  closeOnScroll: true,
+                                                  endActionPane: ActionPane(
+                                                    extentRatio: 0.3.w,
+                                                    motion:
+                                                        const ScrollMotion(),
+                                                    children: [
+                                                      InkWell(
+                                                        onTap: () {
+                                                          BlocProvider.of<
+                                                                      CommentReportCubit>(
+                                                                  context)
+                                                              .commentReport(
+                                                                id: listOfComments[
+                                                                        index]
+                                                                    .children![
+                                                                        index]
+                                                                    .id!,
+                                                                reason: listOfComments[
+                                                                            index]
+                                                                        .children![
+                                                                            index]
+                                                                        .body ??
+                                                                    'ERROR',
+                                                              )
+                                                              .then((value) =>
+                                                                  buildErrorCustomSnackBar(
+                                                                      context,
+                                                                      'report'
+                                                                          .tr()));
+                                                        },
+                                                        child: Container(
+                                                          width: 56.w,
+                                                          height: 56.h,
+                                                          color:
+                                                              AppColors.grey1,
+                                                          child: const Center(
+                                                              child: Icon(Icons
+                                                                  .info_outline)),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                  key: UniqueKey(),
+                                                  child: CommentDeepItemWidget(
+                                                    resultHomeDTO:
+                                                        listOfComments[index]
+                                                            .children![indexx],
+                                                    id: widget.id,
+                                                    type: 'sem',
+                                                    ans: true,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          )
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      )),
+              SizedBox(
+                height: 60.h,
+              ),
+              isLoadingMore
+                  ? const Align(
+                      alignment: Alignment.center,
+                      child: CircularProgressIndicator())
+                  : const SizedBox(),
+            ],
+          );
         },
       ),
     );

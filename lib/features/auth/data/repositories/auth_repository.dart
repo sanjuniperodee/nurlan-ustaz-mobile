@@ -258,7 +258,7 @@ class AuthRepositoryImpl extends AuthRepository {
     try {
       // final user = localDS.getUserFromCache();
       localDS.removeUserFromCache();
-      return Right('success');
+      return const Right('success');
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));
     }

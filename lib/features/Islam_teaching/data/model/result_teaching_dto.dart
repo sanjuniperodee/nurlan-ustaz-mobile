@@ -6,7 +6,7 @@ part 'result_teaching_dto.freezed.dart';
 part 'result_teaching_dto.g.dart';
 
 @freezed
-class ResultTeachingDTO with _$ResultTeachingDTO {
+abstract class ResultTeachingDTO with _$ResultTeachingDTO {
   const factory ResultTeachingDTO({
     @JsonKey(name: "is_saved") @Default(false) bool? isSaved,
     int? id,

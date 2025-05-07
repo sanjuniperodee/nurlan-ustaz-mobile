@@ -5,7 +5,7 @@ part 'on_boarding_video_dto.freezed.dart';
 part 'on_boarding_video_dto.g.dart';
 
 @freezed
-class OnBoardingVideoDTO with _$OnBoardingVideoDTO {
+abstract class OnBoardingVideoDTO with _$OnBoardingVideoDTO {
   const factory OnBoardingVideoDTO({
     required int id,
     required int number,

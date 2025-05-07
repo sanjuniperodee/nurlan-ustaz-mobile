@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -10,6 +11,7 @@ import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/firebase_options.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
     FlutterLocalNotificationsPlugin();
@@ -20,13 +22,14 @@ const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'High Importance Notifications', // title
     description:
         'This channel is used for important notifications.', // description
-    importance: Importance.high);
+    importance: Importance.max);
 
 @pragma('vm:entry-point')
 Future<void> firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  log(message.data.toString());
+
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await setupFlutterNotifications();
-
   showFlutterNotification(message);
 }
 
@@ -38,184 +41,203 @@ Future<void> notificationTapBackground(
     Map<String, dynamic> data = json.decode(
       notificationResponse.payload!,
     );
+
     log('NOTIFICATION');
     log('NOTIFICATION${data.toString()}');
-    if (data['object_type'] == 'seminar') {
-      log('YESSSSS');
-      String id = data['object_id'];
-      getIt<AppRouter>().pushAll([
-        const LauncherAppRoute(
-          children: [
-            MainRouterPage(),
-          ],
-        ),
-        SeminarDetailRoute(id: int.parse(id))
-      ]);
-      // getIt<OrderByIdCubit>().getOrderById(id: int.parse(id));
-    } else if (data['object_type'] == 'news') {
-      String id = data['object_id'];
-      getIt<AppRouter>().pushAll([
-        const LauncherAppRoute(
-          children: [
-            MainRouterPage(),
-          ],
-        ),
-        NewsDetailRoute(id: int.parse(id))
-      ]);
-    } else if (data['object_type'] == 'charity' &&
-        data['object_type'] != 0 &&
-        data['object_type'] != '') {
-      // String id = data['object_id'];
-      getIt<AppRouter>().pushAll([
-        const LauncherAppRoute(
-          children: [
-            MainRouterPage(),
-          ],
-        ),
-        const CharityRoute()
-      ]);
-    } else if (data['object_type'] == 'muslim_name' &&
-        data['object_type'] != 0 &&
-        data['object_type'] != '') {
-      String id = data['object_id'];
-      getIt<AppRouter>().pushAll([
-        const LauncherAppRoute(
-          children: [
-            MainRouterPage(),
-          ],
-        ),
-        NameDetailRoute(id: int.parse(id)),
-      ]);
-    } else if (data['object_type'] == 'dream_interpretation' &&
-        data['object_type'] != 0 &&
-        data['object_type'] != '') {
-      String id = data['object_id'];
-      getIt<AppRouter>().pushAll([
-        const LauncherAppRoute(
-          children: [
-            MainRouterPage(),
-          ],
-        ),
-        TusZhoruDetailRoute(id: int.parse(id)),
-      ]);
-    } else if (data['object_type'] == 'partner_shop' &&
-        data['object_type'] != 0 &&
-        data['object_type'] != '') {
-      // String id = data['object_id'];
-      getIt<AppRouter>().pushAll([
-        const LauncherAppRoute(
-          children: [
-            MainRouterPage(),
-          ],
-        ),
-        const ShopRoute(),
-      ]);
-    } else if (data['object_type'] == 'imam_service' &&
-        data['object_type'] != 0 &&
-        data['object_type'] != '') {
-      // String id = data['object_id'];
-      getIt<AppRouter>().pushAll([
-        const LauncherAppRoute(
-          children: [
-            MainRouterPage(),
-          ],
-        ),
-        const ServicesRoute(),
-      ]);
-    } else if (data['object_type'] == 'custom_dream' &&
-        data['object_type'] != 0 &&
-        data['object_type'] != '') {
-      String id = data['object_id'];
-      getIt<AppRouter>().pushAll([
-        const LauncherAppRoute(
-          children: [
-            MainRouterPage(),
-          ],
-        ),
-        CustomTusZhoruDetailRoute(id: int.parse(id)),
-      ]);
-    } else if (data['object_type'] == 'order_dream' &&
-        data['object_type'] != 0 &&
-        data['object_type'] != '') {
-      String id = data['object_id'];
-      getIt<AppRouter>().pushAll([
-        const LauncherAppRoute(
-          children: [
-            MainRouterPage(),
-          ],
-        ),
-        TusZhoruDetailRoute(id: int.parse(id)),
-      ]);
-    } else if (data['object_type'] == 'order_seminar' &&
-        data['object_type'] != 0 &&
-        data['object_type'] != '') {
-      String id = data['object_id'];
-      getIt<AppRouter>().pushAll([
-        const LauncherAppRoute(
-          children: [
-            MainRouterPage(),
-          ],
-        ),
-        SeminarDetailRoute(id: int.parse(id))
-      ]);
-    } else if (data['object_type'] == 'live_in_progress' &&
-        data['object_type'] != 0 &&
-        data['object_type'] != '') {
-      String id = data['object_id'];
-      final Uri url = Uri.parse(id);
-      if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-        throw Exception('Could not launch');
-      }
-    } else if (data['object_type'] == 'live' &&
-        data['object_type'] != 0 &&
-        data['object_type'] != '') {
-      // String id = data['object_id'];
-      getIt<AppRouter>().pushAll([
-        const LauncherAppRoute(
-          children: [
-            MainRouterPage(),
-          ],
-        ),
-        LiveBroadcastsRoute(),
-      ]);
-    } else if (data['object_type'] == 'tell_me_ustaz') {
-      log('TEMAAA');
-      // String id = data['object_id'];
-      getIt<AppRouter>().pushAll([
-        const LauncherAppRoute(
-          children: [
-            MainRouterPage(),
-          ],
-        ),
-        const UstazAitinizhiRoute(),
-      ]);
-    } else if (data['object_type'] == 'checklist' &&
-        data['object_type'] != 0 &&
-        data['object_type'] != '') {
-      // String id = data['object_id'];
-      getIt<AppRouter>().pushAll([
-        const LauncherAppRoute(
-          children: [
-            MainRouterPage(),
-          ],
-        ),
-        const ZhosparymMainRouterPage(),
-      ]);
-    } else if (data['object_type'] == 'ayat_of_the_day' &&
-        data['object_type'] != 0 &&
-        data['object_type'] != '') {
-      // String id = data['object_id'];
-      getIt<AppRouter>().pushAll([
-        const LauncherAppRoute(
-          children: [
-            IslamTeachingRouterPage(),
-          ],
-        ),
-        // const ShopRoute(),
-      ]);
-    } else {
-      log('NO');
+
+    final String objectType = data['object_type'];
+    final String objectId = data['object_id'];
+
+    switch (objectType) {
+      case 'seminar':
+        getIt<AppRouter>().pushAll([
+          const LauncherAppRoute(
+            children: [
+              MainRouterPage(),
+            ],
+          ),
+          SeminarDetailRoute(id: int.parse(objectId)),
+        ]);
+        break;
+
+      case 'news':
+        getIt<AppRouter>().pushAll([
+          const LauncherAppRoute(
+            children: [
+              MainRouterPage(),
+            ],
+          ),
+          NewsDetailRoute(id: int.parse(objectId)),
+        ]);
+        break;
+
+      case 'charity':
+        if (objectId != '0' && objectId.isNotEmpty) {
+          getIt<AppRouter>().pushAll([
+            const LauncherAppRoute(
+              children: [
+                MainRouterPage(),
+              ],
+            ),
+            const CharityRoute(),
+          ]);
+        }
+        break;
+
+      case 'muslim_name':
+        if (objectId != '0' && objectId.isNotEmpty) {
+          getIt<AppRouter>().pushAll([
+            const LauncherAppRoute(
+              children: [
+                MainRouterPage(),
+              ],
+            ),
+            NameDetailRoute(id: int.parse(objectId)),
+          ]);
+        }
+        break;
+
+      case 'dream_interpretation':
+        if (objectId != '0' && objectId.isNotEmpty) {
+          getIt<AppRouter>().pushAll([
+            const LauncherAppRoute(
+              children: [
+                MainRouterPage(),
+              ],
+            ),
+            TusZhoruDetailRoute(id: int.parse(objectId)),
+          ]);
+        }
+        break;
+
+      case 'partner_shop':
+        if (objectId != '0' && objectId.isNotEmpty) {
+          getIt<AppRouter>().pushAll([
+            const LauncherAppRoute(
+              children: [
+                MainRouterPage(),
+              ],
+            ),
+            const ShopRoute(),
+          ]);
+        }
+        break;
+
+      case 'imam_service':
+        if (objectId != '0' && objectId.isNotEmpty) {
+          getIt<AppRouter>().pushAll([
+            const LauncherAppRoute(
+              children: [
+                MainRouterPage(),
+              ],
+            ),
+            const ServicesRoute(),
+          ]);
+        }
+        break;
+
+      case 'custom_dream':
+        if (objectId != '0' && objectId.isNotEmpty) {
+          getIt<AppRouter>().pushAll([
+            const LauncherAppRoute(
+              children: [
+                MainRouterPage(),
+              ],
+            ),
+            CustomTusZhoruDetailRoute(id: int.parse(objectId)),
+          ]);
+        }
+        break;
+
+      case 'order_dream':
+        if (objectId != '0' && objectId.isNotEmpty) {
+          getIt<AppRouter>().pushAll([
+            const LauncherAppRoute(
+              children: [
+                MainRouterPage(),
+              ],
+            ),
+            TusZhoruDetailRoute(id: int.parse(objectId)),
+          ]);
+        }
+        break;
+
+      case 'order_seminar':
+        if (objectId != '0' && objectId.isNotEmpty) {
+          getIt<AppRouter>().pushAll([
+            const LauncherAppRoute(
+              children: [
+                MainRouterPage(),
+              ],
+            ),
+            SeminarDetailRoute(id: int.parse(objectId)),
+          ]);
+        }
+        break;
+
+      case 'live_in_progress':
+        if (objectId != '0' && objectId.isNotEmpty) {
+          final Uri url = Uri.parse(objectId);
+          if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+            throw Exception('Could not launch');
+          }
+        }
+        break;
+
+      case 'live':
+        if (objectId != '0' && objectId.isNotEmpty) {
+          getIt<AppRouter>().pushAll([
+            const LauncherAppRoute(
+              children: [
+                MainRouterPage(),
+              ],
+            ),
+            LiveBroadcastsRoute(),
+          ]);
+        }
+        break;
+
+      case 'tell_me_ustaz':
+        getIt<AppRouter>().pushAll([
+          const LauncherAppRoute(
+            children: [
+              MainRouterPage(),
+            ],
+          ),
+          const UstazAitinizhiRoute(),
+        ]);
+        break;
+
+      case 'checklist':
+        if (objectId != '0' && objectId.isNotEmpty) {
+          getIt<AppRouter>().pushAll([
+            const LauncherAppRoute(
+              children: [
+                MainRouterPage(),
+              ],
+            ),
+            const ZhosparymMainRouterPage(),
+          ]);
+        }
+        break;
+
+      case 'ayat_of_the_day':
+        if (objectId != '0' && objectId.isNotEmpty) {
+          getIt<AppRouter>().pushAll([
+            const LauncherAppRoute(
+              children: [
+                IslamTeachingRouterPage(),
+              ],
+            ),
+            // const ShopRoute(),
+          ]);
+        }
+        break;
+
+      default:
+        log('NO');
     }
+
     log(data.toString());
   } catch (e) {
     log(e.toString());
@@ -275,13 +297,28 @@ Future<void> setupFlutterNotifications() async {
 
 Future<void> showFlutterNotification(RemoteMessage message) async {
   log(message.data.toString());
+  String title = message.data['title'];
+  if (title == 'None' || title.isEmpty || title.trim() == '') {
+    title = 'Nurlan Ustaz'; // Replace with the default value
+  }
+  final bigTextStyleInformation = BigTextStyleInformation(
+    message.data["description"],
+    contentTitle: title, // Title of the full notification
+  );
+
   await flutterLocalNotificationsPlugin.show(
     message.hashCode,
-    message.data["title"],
-    message.data["body"],
+    title,
+    message.data["description"],
     payload: json.encode(message.data),
     NotificationDetails(
       android: AndroidNotificationDetails(
+        styleInformation: bigTextStyleInformation,
+        fullScreenIntent: true,
+        setAsGroupSummary: true,
+        category: AndroidNotificationCategory.message,
+        channelShowBadge: true,
+        visibility: NotificationVisibility.public,
         channel.id,
         channel.name,
         channelDescription: channel.description,
@@ -289,19 +326,63 @@ Future<void> showFlutterNotification(RemoteMessage message) async {
         playSound: true,
         autoCancel: true,
         sound: channel.sound,
-        priority: Priority.high,
+        priority: Priority.max,
       ),
       iOS: const DarwinNotificationDetails(
-          presentAlert: true, presentBadge: true, presentSound: true),
+          presentAlert: true,
+          presentBadge: true,
+          presentSound: true,
+          interruptionLevel: InterruptionLevel.timeSensitive),
     ),
   );
+}
+
+Future<void> scheduledNotification(
+    String title, String description, String time, int id) async {
+  try {
+    flutterLocalNotificationsPlugin
+        .zonedSchedule(
+          id + 1,
+          title,
+          description.tr(),
+          // ignore: sdk_version_since
+          tz.TZDateTime.from(
+            DateTime.now().copyWith(
+              hour: int.parse(time.split(':').first),
+              minute: int.parse(time.split(':').last),
+            ),
+            tz.local,
+          ),
+          NotificationDetails(
+            android: AndroidNotificationDetails(channel.id, channel.name,
+                channelDescription: channel.description,
+                importance: channel.importance,
+                playSound: true,
+                autoCancel: false,
+                priority: Priority.high,
+                icon: '@mipmap/ic_launcher'),
+            iOS: const DarwinNotificationDetails(
+              presentAlert: true,
+              presentBadge: true,
+              presentSound: true,
+            ),
+          ),
+          androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        )
+        .then((value) => log(
+            'notifi-time2-${DateTime.now().copyWith(hour: int.parse(time.split(':').first), minute: int.parse(time.split(':')[1]), second: int.parse(time.split(':').last))}'));
+  } catch (e) {
+    log('noti-error-${e.toString()}');
+  }
 }
 
 class NotificationService {
   // SharedPreferences sharedPreferences;
 
   NotificationService();
+
   late FirebaseMessaging _messaging;
+
   Future<void> init() async {
     _messaging = FirebaseMessaging.instance;
     _messaging.getInitialMessage().then((value) => log('Message is $value'));

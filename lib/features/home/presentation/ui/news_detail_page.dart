@@ -48,230 +48,215 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
     return Scaffold(
       body: BlocConsumer<NewsDetailCubit, NewsDetailState>(
         listener: (context, state) {
-          state.maybeWhen(
-            orElse: () {},
-            loadingState: () {
-              return const Center(
-                child: CircularProgressIndicator(color: AppColors.danger),
-              );
-            },
-            errorState: (message) {
-              return buildErrorCustomSnackBar(context, message);
-            },
-          );
+          if (state is NewsDetailErrorState) {
+            buildErrorCustomSnackBar(context, state.message);
+          }
         },
         builder: (context, state) {
-          return state.maybeWhen(
-            orElse: () {
-              return const Center();
-            },
-            loadingState: () {
-              return const Center(
-                child: CircularProgressIndicator(color: AppColors.linearBlue),
-              );
-            },
-            loaded: (result) {
-              bool scroll = true;
-              result.media!.length == 1 ? scroll = false : scroll = true;
-              isFavorite = result.isSaved!;
-              isLiked = result.isLiked!;
-              likeCount = result.likesCount!;
-              return Stack(children: [
-                CarouselSlider(
-                  options: CarouselOptions(
-                    viewportFraction: 1,
-                    autoPlay: scroll,
-                    autoPlayInterval: const Duration(seconds: 3),
-                    enlargeCenterPage: true,
-                    aspectRatio: 17 / 13,
-                    onPageChanged: (index, _) {
-                      setState(() {
-                        _currentIndex = index;
-                      });
-                    },
-                  ),
-                  items: result.media!.map((i) {
-                    return Builder(
-                      builder: (BuildContext context) {
-                        return CachedNetworkImage(
-                          imageUrl: i.file ?? '',
-                          fit: BoxFit.cover,
-                          width: 1.sw,
-                          errorWidget: (a, b, c) => SizedBox(
-                            height: 80.h,
-                          ),
-                        );
-                      },
-                    );
-                  }).toList(),
+          if (state is! NewsDetailLoadedState) {
+            return const Center(
+              child: CircularProgressIndicator(color: AppColors.linearBlue),
+            );
+          }
+          final result = state.res;
+          bool scroll = result.media!.length != 1;
+          isFavorite = result.isSaved!;
+          isLiked = result.isLiked!;
+          likeCount = result.likesCount!;
+          return Stack(
+            children: [
+              CarouselSlider(
+                options: CarouselOptions(
+                  viewportFraction: 1,
+                  autoPlay: scroll,
+                  autoPlayInterval: const Duration(seconds: 3),
+                  enlargeCenterPage: true,
+                  aspectRatio: 17 / 13,
+                  onPageChanged: (index, _) {
+                    setState(() {
+                      _currentIndex = index;
+                    });
+                  },
                 ),
-                result.media == null
-                    ? const SizedBox()
-                    : Positioned.fill(
-                        top: 215.r,
-                        child: Align(
-                          alignment: Alignment.topCenter,
-                          child: DotsIndicator(
-                            dotsCount: result.media?.length ?? 0,
-                            position: _currentIndex,
-                            decorator: const DotsDecorator(
-                              color: AppColors
-                                  .grey2, // Color of non-selected indicators
-                              activeColor: AppColors
-                                  .white, // Color of selected indicator
-                            ),
+                items: result.media!.map((i) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return CachedNetworkImage(
+                        imageUrl: i.file ?? '',
+                        fit: BoxFit.cover,
+                        width: 1.sw,
+                        errorWidget: (a, b, c) => SizedBox(
+                          height: 80.h,
+                        ),
+                      );
+                    },
+                  );
+                }).toList(),
+              ),
+              result.media == null
+                  ? const SizedBox()
+                  : Positioned.fill(
+                      top: 215.r,
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: DotsIndicator(
+                          dotsCount: result.media?.length ?? 0,
+                          position: _currentIndex / 1,
+                          decorator: const DotsDecorator(
+                            color: AppColors
+                                .grey2, // Color of non-selected indicators
+                            activeColor:
+                                AppColors.white, // Color of selected indicator
                           ),
                         ),
                       ),
-                SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Padding(
-                      padding: const EdgeInsets.only(top: 259).r,
-                      child: Container(
-                        width: 1.sw,
-                        decoration: BoxDecoration(
-                            color: AppColors.white,
-                            borderRadius: BorderRadius.only(
-                              topRight: const Radius.circular(30).r,
-                              topLeft: const Radius.circular(30).r,
-                            )),
-                        padding: EdgeInsets.symmetric(
-                            vertical: 16.r, horizontal: 16.r),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              result.title ?? 'ERROR',
-                              style: getTextStyle(CustomTextStyles.s20w700)
-                                  .apply(color: AppColors.black),
-                            ),
-                            SizedBox(
-                              height: 12.h,
-                            ),
-                            Row(
-                              children: [
-                                Expanded(
-                                  child: Row(
-                                    children: [
-                                      InkWell(
-                                          onTap: () {
-                                            setState(() {
-                                              isLiked = !isLiked;
+                    ),
+              SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Padding(
+                    padding: const EdgeInsets.only(top: 259).r,
+                    child: Container(
+                      width: 1.sw,
+                      decoration: BoxDecoration(
+                          color: AppColors.white,
+                          borderRadius: BorderRadius.only(
+                            topRight: const Radius.circular(30).r,
+                            topLeft: const Radius.circular(30).r,
+                          )),
+                      padding: EdgeInsets.symmetric(
+                          vertical: 16.r, horizontal: 16.r),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            result.title ?? 'ERROR',
+                            style: getTextStyle(CustomTextStyles.s20w700)
+                                .apply(color: AppColors.black),
+                          ),
+                          SizedBox(
+                            height: 12.h,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    InkWell(
+                                        onTap: () {
+                                          setState(() {
+                                            isLiked = !isLiked;
 
-                                              BlocProvider.of<NewsDetailCubit>(
-                                                      context)
-                                                  .newsLike(id: result.id ?? 0);
-                                            });
+                                            BlocProvider.of<NewsDetailCubit>(
+                                                    context)
+                                                .newsLike(id: result.id ?? 0);
+                                          });
 
-                                            if (isLiked == true) {
-                                              likeCount += 1;
-                                            } else {
-                                              likeCount -= 1;
-                                            }
-                                          },
-                                          child: isLiked
-                                              ? SvgPicture.asset(
-                                                  Assets.heartSvg,
-                                                )
-                                              : SvgPicture.asset(
-                                                  Assets.heart1Svg,
-                                                  color: AppColors.black,
-                                                )),
-                                      Text(
-                                        likeCount.toString(),
-                                        style: getTextStyle(
-                                            CustomTextStyles.s14w400),
-                                      ),
-                                      SizedBox(
-                                        width: 12.w,
-                                      ),
-                                      InkWell(
-                                          onTap: () {
-                                            context.router.push(
-                                              CommentRouteNews(id: result.id!),
-                                            );
-                                          },
-                                          child: SvgPicture.asset(
-                                              Assets.commentSvg)),
-                                      Text(
-                                        result.comentCount.toString(),
-                                        style: getTextStyle(
-                                            CustomTextStyles.s14w400),
-                                      ),
-                                      SizedBox(
-                                        width: 12.w,
-                                      ),
-                                      InkWell(
-                                          onTap: () async {
-                                            String unguessableDynamicLink =
-                                                await DynamicLink()
-                                                    .createNewsLink(result.id!);
-                                            await Share.share(
-                                              unguessableDynamicLink,
-                                            );
-                                          },
-                                          child: SvgPicture.asset(
-                                              Assets.shareSvg)),
-                                    ],
-                                  ),
+                                          if (isLiked == true) {
+                                            likeCount += 1;
+                                          } else {
+                                            likeCount -= 1;
+                                          }
+                                        },
+                                        child: isLiked
+                                            ? SvgPicture.asset(
+                                                Assets.heartSvg,
+                                              )
+                                            : SvgPicture.asset(
+                                                Assets.heart1Svg,
+                                                color: AppColors.black,
+                                              )),
+                                    Text(
+                                      likeCount.toString(),
+                                      style: getTextStyle(
+                                          CustomTextStyles.s14w400),
+                                    ),
+                                    SizedBox(
+                                      width: 12.w,
+                                    ),
+                                    InkWell(
+                                        onTap: () {
+                                          context.router.push(
+                                            CommentRouteNews(id: result.id!),
+                                          );
+                                        },
+                                        child: SvgPicture.asset(
+                                            Assets.commentSvg)),
+                                    Text(
+                                      result.comentCount.toString(),
+                                      style: getTextStyle(
+                                          CustomTextStyles.s14w400),
+                                    ),
+                                    SizedBox(
+                                      width: 12.w,
+                                    ),
+                                    InkWell(
+                                        onTap: () async {
+                                          String unguessableDynamicLink =
+                                              await DynamicLink()
+                                                  .createNewsLink(result.id!);
+                                          await Share.share(
+                                            unguessableDynamicLink,
+                                          );
+                                        },
+                                        child:
+                                            SvgPicture.asset(Assets.shareSvg)),
+                                  ],
                                 ),
-                                GestureDetector(
-                                    onTap: () {
-                                      setState(() {
-                                        log('like news');
-                                        isFavorite = !isFavorite;
-                                        BlocProvider.of<NewsDetailCubit>(
-                                                context)
-                                            .newsFavorite(id: result.id ?? 0);
-                                      });
-                                    },
-                                    child: SvgPicture.asset(isFavorite
-                                        ? Assets.bookMark1Svg
-                                        : Assets.bookMarkSvg))
-                              ],
-                            ),
-                            SizedBox(
-                              height: 21.h,
-                            ),
-                            Text(
-                              result.text ?? 'ERROR',
-                              style: getTextStyle(CustomTextStyles.s16w400)
-                                  .apply(color: AppColors.black),
-                            ),
-                            SizedBox(
-                              height: 20.h,
-                            ),
-                            GestureDetector(
-                              onTap: () {
-                                context.router.push(
-                                  CommentRouteNews(id: result.id!),
-                                );
-                              },
-                              child: Text(
-                                '${'look_opinion'.tr()} ${result.comentCount}',
-                                style: getTextStyle(CustomTextStyles.s16w400)
-                                    .apply(color: AppColors.grey1),
                               ),
-                            )
-                          ],
-                        ),
-                      )),
-                ),
-                Positioned(
-                    top: 54.r,
-                    left: 16.r,
-                    child: GestureDetector(
-                        onTap: () {
-                          BlocProvider.of<NewsCubit>(context)
-                              .news(
-                                  page: 1,
-                                  isFirstCall: true,
-                                  search: widget.search ?? '')
-                              .then((value) => Navigator.pop(context));
-                        },
-                        child: SvgPicture.asset(Assets.backStackSvg))),
-              ]);
-            },
+                              GestureDetector(
+                                  onTap: () {
+                                    setState(() {
+                                      log('like news');
+                                      isFavorite = !isFavorite;
+                                      BlocProvider.of<NewsDetailCubit>(context)
+                                          .newsFavorite(id: result.id ?? 0);
+                                    });
+                                  },
+                                  child: SvgPicture.asset(isFavorite
+                                      ? Assets.bookMark1Svg
+                                      : Assets.bookMarkSvg))
+                            ],
+                          ),
+                          SizedBox(
+                            height: 21.h,
+                          ),
+                          Text(
+                            result.text ?? 'ERROR',
+                            style: getTextStyle(CustomTextStyles.s16w400)
+                                .apply(color: AppColors.black),
+                          ),
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              context.router.push(
+                                CommentRouteNews(id: result.id!),
+                              );
+                            },
+                            child: Text(
+                              '${'look_opinion'.tr()} ${result.comentCount}',
+                              style: getTextStyle(CustomTextStyles.s16w400)
+                                  .apply(color: AppColors.grey1),
+                            ),
+                          )
+                        ],
+                      ),
+                    )),
+              ),
+              Positioned(
+                  top: 54.r,
+                  left: 16.r,
+                  child: GestureDetector(
+                      onTap: () {
+                        Navigator.pop(context);
+                        BlocProvider.of<NewsCubit>(context).news(
+                            page: 1,
+                            isFirstCall: true,
+                            search: widget.search ?? '');
+                      },
+                      child: SvgPicture.asset(Assets.backStackSvg))),
+            ],
           );
         },
       ),

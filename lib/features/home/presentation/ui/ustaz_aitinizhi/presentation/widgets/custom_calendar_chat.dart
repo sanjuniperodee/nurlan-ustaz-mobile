@@ -10,12 +10,11 @@ import '../../../../../../app/presentation/widgets/calendar/custom_date_utils.da
 import '../../../../../../app/presentation/widgets/calendar/custom_gesture_detector.dart';
 import 'custom_calendar_event.dart';
 
-
-
 // Export NeatCleanCalendarEvent for using it in the application
 
 typedef DayBuilder(BuildContext context, DateTime day);
-typedef EventListBuilder(BuildContext context, List<CustomCalendarEvent> events);
+typedef EventListBuilder(
+    BuildContext context, List<CustomCalendarEvent> events);
 
 class Range {
   final DateTime from;
@@ -100,23 +99,22 @@ class CustomCalendarChat extends StatefulWidget {
   final String? expandableDateFormat;
   final List<DateTime> daysWithChat;
 
-
   CustomCalendarChat({
     this.onMonthChanged,
     this.onDateSelected,
     this.onRangeSelected,
     this.onExpandStateChanged,
     this.onEventSelected,
-    this.hideBottomBar: false,
-    this.isExpandable: false,
+    this.hideBottomBar = false,
+    this.isExpandable = false,
     this.events,
     this.dayBuilder,
     this.eventListBuilder,
-    this.hideTodayIcon: false,
-    this.hideArrows: false,
+    this.hideTodayIcon = false,
+    this.hideArrows = false,
     this.selectedColor,
     this.todayColor,
-    this.todayButtonText: 'Today',
+    this.todayButtonText = 'Today',
     this.eventColor,
     this.eventDoneColor,
     this.initialDate,
@@ -128,7 +126,8 @@ class CustomCalendarChat extends StatefulWidget {
     this.bottomBarTextStyle,
     this.bottomBarArrowColor,
     this.bottomBarColor,
-    this.expandableDateFormat = 'EEEE MMMM dd, yyyy', required this.daysWithChat,
+    this.expandableDateFormat = 'EEEE MMMM dd, yyyy',
+    required this.daysWithChat,
   });
 
   @override
@@ -153,16 +152,16 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
     _selectedDate = widget.initialDate ?? DateTime.now();
     selectedMonthsDays = _daysInMonth(_selectedDate);
     selectedWeekDays = Utils.daysInRange(
-        _firstDayOfWeek(_selectedDate), _lastDayOfWeek(_selectedDate))
+            _firstDayOfWeek(_selectedDate), _lastDayOfWeek(_selectedDate))
         .toList();
     initializeDateFormatting(widget.locale, null).then((_) => setState(() {
-      var monthFormat =
-      DateFormat('MMMM yyyy', widget.locale).format(_selectedDate);
-      displayMonth =
-      '${monthFormat[0].toUpperCase()}${monthFormat.substring(1)}';
-    }));
+          var monthFormat =
+              DateFormat('MMMM yyyy', widget.locale).format(_selectedDate);
+          displayMonth =
+              '${monthFormat[0].toUpperCase()}${monthFormat.substring(1)}';
+        }));
     _selectedEvents = widget.events?[DateTime(
-        _selectedDate.year, _selectedDate.month, _selectedDate.day)] ??
+            _selectedDate.year, _selectedDate.month, _selectedDate.day)] ??
         [];
   }
 
@@ -176,15 +175,13 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
           onPressed: isExpanded ? previousMonth : previousWeek,
           icon: Icon(
             Icons.chevron_left,
-            color:
-            AppColors.orange,)
-      );
+            color: AppColors.orange,
+          ));
       rightArrow = IconButton(
         onPressed: isExpanded ? nextMonth : nextWeek,
         icon: Icon(
           Icons.chevron_right,
-          color:
-          AppColors.orange,
+          color: AppColors.orange,
         ),
       );
     } else {
@@ -259,9 +256,9 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
   List<Widget> calendarBuilder() {
     List<Widget> dayWidgets = [];
     List<DateTime> calendarDays =
-    isExpanded ? selectedMonthsDays : selectedWeekDays as List<DateTime>;
+        isExpanded ? selectedMonthsDays : selectedWeekDays as List<DateTime>;
     widget.weekDays.forEach(
-          (day) {
+      (day) {
         dayWidgets.add(
           CustomCalendarChatTile(
             daysWithChat: widget.daysWithChat,
@@ -287,7 +284,7 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
     bool monthEnded = false;
 
     calendarDays.forEach(
-          (day) {
+      (day) {
         if (day.hour > 0) {
           day = day.toLocal();
           day = day.subtract(new Duration(hours: day.hour));
@@ -306,7 +303,6 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
           dayWidgets.add(
             CustomCalendarChatTile(
               daysWithChat: widget.daysWithChat,
-
               selectedColor: widget.selectedColor,
               todayColor: widget.todayColor,
               eventColor: widget.eventColor,
@@ -321,7 +317,6 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
           dayWidgets.add(
             CustomCalendarChatTile(
                 daysWithChat: widget.daysWithChat,
-
                 selectedColor: widget.selectedColor,
                 todayColor: widget.todayColor,
                 eventColor: widget.eventColor,
@@ -341,19 +336,19 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
 
   TextStyle? configureDateStyle(monthStarted, monthEnded) {
     TextStyle? dateStyles;
-    final TextStyle? body1Style = Theme.of(context).textTheme.bodyText2;
+    final TextStyle? body1Style = Theme.of(context).textTheme.bodyMedium;
 
     if (isExpanded) {
       final TextStyle body1StyleDisabled = body1Style!.copyWith(
           color: Color.fromARGB(
-            100,
-            body1Style.color!.red,
-            body1Style.color!.green,
-            body1Style.color!.blue,
-          ));
+        100,
+        body1Style.color!.red,
+        body1Style.color!.green,
+        body1Style.color!.blue,
+      ));
 
       dateStyles =
-      monthStarted && !monthEnded ? body1Style : body1StyleDisabled;
+          monthStarted && !monthEnded ? body1Style : body1StyleDisabled;
     } else {
       dateStyles = body1Style;
     }
@@ -384,13 +379,13 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
                 padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
                 icon: isExpanded
                     ? Icon(
-                  Icons.arrow_drop_up,
-                  color: widget.bottomBarArrowColor ?? Colors.black,
-                )
+                        Icons.arrow_drop_up,
+                        color: widget.bottomBarArrowColor ?? Colors.black,
+                      )
                     : Icon(
-                  Icons.arrow_drop_down,
-                  color: widget.bottomBarArrowColor ?? Colors.black,
-                ),
+                        Icons.arrow_drop_down,
+                        color: widget.bottomBarArrowColor ?? Colors.black,
+                      ),
               ),
             ],
           ),
@@ -406,77 +401,77 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
       return Expanded(
         child: _selectedEvents != null && _selectedEvents!.isNotEmpty
             ? ListView.builder(
-          padding: EdgeInsets.all(0.0),
-          itemBuilder: (BuildContext context, int index) {
-            final CustomCalendarEvent event = _selectedEvents![index];
-            final String start =
-            DateFormat('HH:mm').format(event.startTime).toString();
-            final String end =
-            DateFormat('HH:mm').format(event.endTime).toString();
-            return Container(
-              height: 60.0,
-              child: InkWell(
-                onTap: () {
-                  if (widget.onEventSelected != null) {
-                    widget.onEventSelected!(event);
-                  }
+                padding: EdgeInsets.all(0.0),
+                itemBuilder: (BuildContext context, int index) {
+                  final CustomCalendarEvent event = _selectedEvents![index];
+                  final String start =
+                      DateFormat('HH:mm').format(event.startTime).toString();
+                  final String end =
+                      DateFormat('HH:mm').format(event.endTime).toString();
+                  return Container(
+                    height: 60.0,
+                    child: InkWell(
+                      onTap: () {
+                        if (widget.onEventSelected != null) {
+                          widget.onEventSelected!(event);
+                        }
+                      },
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Expanded(
+                            flex: 5,
+                            child: Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Container(
+                                color: event.color,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 75,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(event.summary,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleSmall),
+                                  Text(event.description)
+                                ],
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 20,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(start,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge),
+                                  Text(end,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyLarge),
+                                ],
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
                 },
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Expanded(
-                      flex: 5,
-                      child: Padding(
-                        padding: const EdgeInsets.all(4.0),
-                        child: Container(
-                          color: event.color,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 75,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(event.summary,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle2),
-                            Text(event.description)
-                          ],
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      flex: 20,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(start,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1),
-                            Text(end,
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyText1),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            );
-          },
-          itemCount: _selectedEvents!.length,
-        )
+                itemCount: _selectedEvents!.length,
+              )
             : Container(),
       );
     } else {
@@ -519,11 +514,11 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
               .toList();
       selectedMonthsDays = _daysInMonth(_selectedDate);
       var monthFormat =
-      DateFormat('MMMM yyyy', widget.locale).format(_selectedDate);
+          DateFormat('MMMM yyyy', widget.locale).format(_selectedDate);
       displayMonth =
-      '${monthFormat[0].toUpperCase()}${monthFormat.substring(1)}';
+          '${monthFormat[0].toUpperCase()}${monthFormat.substring(1)}';
       _selectedEvents = widget.events?[DateTime(
-          _selectedDate.year, _selectedDate.month, _selectedDate.day)] ??
+              _selectedDate.year, _selectedDate.month, _selectedDate.day)] ??
           [];
     });
 
@@ -538,11 +533,11 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
       updateSelectedRange(firstDateOfNewMonth, lastDateOfNewMonth);
       selectedMonthsDays = _daysInMonth(_selectedDate);
       var monthFormat =
-      DateFormat('MMMM yyyy', widget.locale).format(_selectedDate);
+          DateFormat('MMMM yyyy', widget.locale).format(_selectedDate);
       displayMonth =
-      '${monthFormat[0].toUpperCase()}${monthFormat.substring(1)}';
+          '${monthFormat[0].toUpperCase()}${monthFormat.substring(1)}';
       _selectedEvents = widget.events?[DateTime(
-          _selectedDate.year, _selectedDate.month, _selectedDate.day)] ??
+              _selectedDate.year, _selectedDate.month, _selectedDate.day)] ??
           [];
     });
     _launchDateSelectionCallback(_selectedDate);
@@ -556,11 +551,11 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
       updateSelectedRange(firstDateOfNewMonth, lastDateOfNewMonth);
       selectedMonthsDays = _daysInMonth(_selectedDate);
       var monthFormat =
-      DateFormat('MMMM yyyy', widget.locale).format(_selectedDate);
+          DateFormat('MMMM yyyy', widget.locale).format(_selectedDate);
       displayMonth =
-      '${monthFormat[0].toUpperCase()}${monthFormat.substring(1)}';
+          '${monthFormat[0].toUpperCase()}${monthFormat.substring(1)}';
       _selectedEvents = widget.events?[DateTime(
-          _selectedDate.year, _selectedDate.month, _selectedDate.day)] ??
+              _selectedDate.year, _selectedDate.month, _selectedDate.day)] ??
           [];
     });
     _launchDateSelectionCallback(_selectedDate);
@@ -576,11 +571,11 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
           Utils.daysInRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek)
               .toList();
       var monthFormat =
-      DateFormat('MMMM yyyy', widget.locale).format(_selectedDate);
+          DateFormat('MMMM yyyy', widget.locale).format(_selectedDate);
       displayMonth =
-      '${monthFormat[0].toUpperCase()}${monthFormat.substring(1)}';
+          '${monthFormat[0].toUpperCase()}${monthFormat.substring(1)}';
       _selectedEvents = widget.events?[DateTime(
-          _selectedDate.year, _selectedDate.month, _selectedDate.day)] ??
+              _selectedDate.year, _selectedDate.month, _selectedDate.day)] ??
           [];
     });
     _launchDateSelectionCallback(_selectedDate);
@@ -596,11 +591,11 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
           Utils.daysInRange(firstDayOfCurrentWeek, lastDayOfCurrentWeek)
               .toList();
       var monthFormat =
-      DateFormat('MMMM yyyy', widget.locale).format(_selectedDate);
+          DateFormat('MMMM yyyy', widget.locale).format(_selectedDate);
       displayMonth =
-      '${monthFormat[0].toUpperCase()}${monthFormat.substring(1)}';
+          '${monthFormat[0].toUpperCase()}${monthFormat.substring(1)}';
       _selectedEvents = widget.events?[DateTime(
-          _selectedDate.year, _selectedDate.month, _selectedDate.day)] ??
+              _selectedDate.year, _selectedDate.month, _selectedDate.day)] ??
           [];
     });
     _launchDateSelectionCallback(_selectedDate);
@@ -651,7 +646,6 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
     // Check if the selected day falls into the next month. If this is the case,
     // then we need to additionaly check, if a day in next year was selected.
     if (_selectedDate.month > day.month) {
-
       // Day in next year selected? Switch to next month.
       if (_selectedDate.year < day.year) {
         nextMonth();
@@ -671,11 +665,9 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
         }
         previousMonth();
         widget.onMonthChanged!;
-
       } else {
         nextMonth();
         widget.onMonthChanged!;
-
       }
     }
     setState(() {
@@ -696,7 +688,6 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
     // if (widget.onMonthChanged != null) {
     //   widget.onMonthChanged!(day);
     // }
-
   }
 
   _firstDayOfWeek(DateTime date) {
@@ -745,8 +736,8 @@ class ExpansionCrossFade extends StatelessWidget {
 
   ExpansionCrossFade(
       {required this.collapsed,
-        required this.expanded,
-        required this.isExpanded});
+      required this.expanded,
+      required this.isExpanded});
 
   @override
   Widget build(BuildContext context) {
@@ -757,7 +748,7 @@ class ExpansionCrossFade extends StatelessWidget {
       secondCurve: const Interval(0.0, 1.0, curve: Curves.fastOutSlowIn),
       sizeCurve: Curves.decelerate,
       crossFadeState:
-      isExpanded ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+          isExpanded ? CrossFadeState.showSecond : CrossFadeState.showFirst,
       duration: const Duration(milliseconds: 300),
     );
   }

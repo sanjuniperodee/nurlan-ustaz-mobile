@@ -58,197 +58,171 @@ class _NamePageState extends State<NamePage> {
       backgroundColor: AppColors.lightBlue,
       body: BlocConsumer<IslamNamesCubit, IslamNamesState>(
         listener: (context, state) {
-          state.maybeWhen(
-            orElse: () {
-              isLoadingMore = false;
-            },
-            errorState: (message) {
-              isLoadingMore = false;
-              buildErrorCustomSnackBar(context, message);
-            },
-            loadingMoreState: () {
-              isLoadingMore = true;
-            },
-            loaded: (islam) {
-              isLoadingMore = false;
-              listOfIslamNames = islam;
-            },
-          );
-          // TODO: implement listener
+          isLoadingMore = state is IslamNamesLoadingMoreState;
+          if (state is IslamNamesLoadedState) {
+            listOfIslamNames = state.islam;
+          } else if (state is IslamNamesErrorState) {
+            buildErrorCustomSnackBar(context, state.message);
+          }
         },
         builder: (context, state) {
-          return state.maybeWhen(
-            orElse: () {
-              return SizedBox(
-                height: 1.sh,
-                child: Stack(
-                  children: [
-                    Image.asset(
-                      Assets.gradient,
-                      fit: BoxFit.cover,
-                    ),
-                    Positioned.fill(
-                      // left: 280.r,
-                        child: Opacity(
-                          opacity: 0.5,
-                          child:  Lottie.asset('assets/animations/Book_V04.json',fit: BoxFit.cover),
-                        )),
-                    SizedBox(
-                      child: SingleChildScrollView(
-                          physics: const BouncingScrollPhysics(),
-                          controller: _scrollController,
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 56.h,
-                                ),
-                                CustomAppBar(
-                                  title: widget.type == 'isSave'
-                                      ? 'save_name_meaning'.tr()
-                                      : 'name_meaning'.tr(),
-                                ),
-                                SizedBox(
-                                  height: 36.h,
-                                ),
-                                SearchWidget(onChanged: (string) {
-                                  searchText = string;
-                                  if (string.isEmpty) {
-                                    if (currentIndex == 0) {
-                                      log(1.toString());
-                                      BlocProvider.of<IslamNamesCubit>(context)
-                                          .islamNamesMan(page: 1);
-                                    } else {
-                                      log(2.toString());
-                                      BlocProvider.of<IslamNamesCubit>(context)
-                                          .islamWoman(page: 1);
-                                    }
-                                  } else {
-                                    if (currentIndex == 0) {
-                                      log(1.toString());
-                                      BlocProvider.of<IslamNamesCubit>(context)
-                                          .islamNamesMan(
-                                              page: 1, search: searchText);
-                                    } else {
-                                      log(2.toString());
-                                      BlocProvider.of<IslamNamesCubit>(context)
-                                          .islamWoman(
-                                              page: 1, search: searchText);
-                                    }
-                                  }
-                                }),
-                                SizedBox(
-                                  height: 22.h,
-                                ),
-                                CustomTabBar(
-                                  tabs: [
-                                    Tab(
-                                      text: 'male'.tr(),
-                                    ),
-                                    Tab(
-                                      text: 'female'.tr(),
-                                    ),
-                                  ],
-                                  onTap: (int) {
-                                    log('INDEX:::${currentIndex.toString()}');
-                                    if (currentIndex != 0) {
-                                      log(1.toString());
-                                      BlocProvider.of<IslamNamesCubit>(context)
-                                          .islamNamesMan(
-                                              page: 1,
-                                              search: searchText.isNotEmpty
-                                                  ? searchText
-                                                  : null);
-                                    } else {
-                                      log(2.toString());
-                                      BlocProvider.of<IslamNamesCubit>(context)
-                                          .islamWoman(
-                                              page: 1,
-                                              search: searchText.isNotEmpty
-                                                  ? searchText
-                                                  : null);
-                                    }
-                                    currentIndex = int;
-                                  },
-                                  length: 2,
-                                ),
-                                ListView.builder(
-                                  itemCount: listOfIslamNames.length,
-                                  shrinkWrap: true,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  padding: const EdgeInsets.only(top: 8),
-                                  itemBuilder: (context, index) {
-                                    return Padding(
-                                      padding: const EdgeInsets.only(top: 8.0),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          context.router.push(
-                                            NameDetailRoute(
-                                                index: currentIndex,
-                                                id: listOfIslamNames[index]
-                                                    .id!),
-                                          );
-                                        },
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              color: AppColors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(20)),
-                                          child: ListTile(
-                                              iconColor: AppColors.black,
-                                              title: Text(
-                                                listOfIslamNames[index].name ??
-                                                    'ERROR',
-                                                style: getTextStyle(
-                                                    CustomTextStyles.s16w500),
-                                              ),
-                                              subtitle: Text(
-                                                listOfIslamNames[index]
-                                                        .description ??
-                                                    'ERROR',
-                                                style: getTextStyle(
-                                                        CustomTextStyles
-                                                            .s14w400)
-                                                    .apply(
-                                                        color: AppColors.grey2),
-                                                overflow: TextOverflow.ellipsis,
-                                              ),
-                                              trailing: const Icon(
-                                                Icons
-                                                    .arrow_forward_ios_outlined,
-                                                color: AppColors.orange,
-                                              )),
-                                        ),
-                                      ),
-                                    );
-                                  },
-                                ),
-                                SizedBox(
-                                  height: 10.h,
-                                ),
-                                isLoadingMore
-                                    ? const Align(
-                                        alignment: Alignment.center,
-                                        child: CircularProgressIndicator())
-                                    : const SizedBox(),
-                              ],
-                            ),
-                          )),
-                    ),
-                  ],
+          return SizedBox(
+            height: 1.sh,
+            child: Stack(
+              children: [
+                Image.asset(
+                  Assets.gradient,
+                  fit: BoxFit.cover,
                 ),
-              );
-            },
-            // loadingState: () {
-            //   return const Center(
-            //     child: CircularProgressIndicator(
-            //       color: Colors.yellow,
-            //     ),
-            //   );
-            // },
+                Positioned.fill(
+                    // left: 280.r,
+                    child: Opacity(
+                  opacity: 0.5,
+                  child: Lottie.asset('assets/animations/Book_V04.json',
+                      fit: BoxFit.cover),
+                )),
+                SizedBox(
+                  child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      controller: _scrollController,
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 56.h,
+                            ),
+                            CustomAppBar(
+                              title: widget.type == 'isSave'
+                                  ? 'save_name_meaning'.tr()
+                                  : 'name_meaning'.tr(),
+                            ),
+                            SizedBox(
+                              height: 36.h,
+                            ),
+                            SearchWidget(onChanged: (string) {
+                              searchText = string;
+                              if (string.isEmpty) {
+                                if (currentIndex == 0) {
+                                  log(1.toString());
+                                  BlocProvider.of<IslamNamesCubit>(context)
+                                      .islamNamesMan(page: 1);
+                                } else {
+                                  log(2.toString());
+                                  BlocProvider.of<IslamNamesCubit>(context)
+                                      .islamWoman(page: 1);
+                                }
+                              } else {
+                                if (currentIndex == 0) {
+                                  log(1.toString());
+                                  BlocProvider.of<IslamNamesCubit>(context)
+                                      .islamNamesMan(
+                                          page: 1, search: searchText);
+                                } else {
+                                  log(2.toString());
+                                  BlocProvider.of<IslamNamesCubit>(context)
+                                      .islamWoman(page: 1, search: searchText);
+                                }
+                              }
+                            }),
+                            SizedBox(
+                              height: 22.h,
+                            ),
+                            CustomTabBar(
+                              tabs: [
+                                Tab(
+                                  text: 'male'.tr(),
+                                ),
+                                Tab(
+                                  text: 'female'.tr(),
+                                ),
+                              ],
+                              onTap: (int) {
+                                log('INDEX:::${currentIndex.toString()}');
+                                if (currentIndex != 0) {
+                                  log(1.toString());
+                                  BlocProvider.of<IslamNamesCubit>(context)
+                                      .islamNamesMan(
+                                          page: 1,
+                                          search: searchText.isNotEmpty
+                                              ? searchText
+                                              : null);
+                                } else {
+                                  log(2.toString());
+                                  BlocProvider.of<IslamNamesCubit>(context)
+                                      .islamWoman(
+                                          page: 1,
+                                          search: searchText.isNotEmpty
+                                              ? searchText
+                                              : null);
+                                }
+                                currentIndex = int;
+                              },
+                              length: 2,
+                            ),
+                            ListView.builder(
+                              itemCount: listOfIslamNames.length,
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              padding: const EdgeInsets.only(top: 8),
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: const EdgeInsets.only(top: 8.0),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      context.router.push(
+                                        NameDetailRoute(
+                                            index: currentIndex,
+                                            id: listOfIslamNames[index].id!),
+                                      );
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: AppColors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(20)),
+                                      child: ListTile(
+                                          iconColor: AppColors.black,
+                                          title: Text(
+                                            listOfIslamNames[index].name ??
+                                                'ERROR',
+                                            style: getTextStyle(
+                                                CustomTextStyles.s16w500),
+                                          ),
+                                          subtitle: Text(
+                                            listOfIslamNames[index]
+                                                    .description ??
+                                                'ERROR',
+                                            style: getTextStyle(
+                                                    CustomTextStyles.s14w400)
+                                                .apply(color: AppColors.grey2),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          trailing: const Icon(
+                                            Icons.arrow_forward_ios_outlined,
+                                            color: AppColors.orange,
+                                          )),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            isLoadingMore
+                                ? const Align(
+                                    alignment: Alignment.center,
+                                    child: CircularProgressIndicator())
+                                : const SizedBox(),
+                          ],
+                        ),
+                      )),
+                ),
+              ],
+            ),
           );
         },
       ),

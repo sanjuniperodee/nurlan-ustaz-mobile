@@ -49,96 +49,83 @@ class _CharityPageState extends State<CharityPage> {
       backgroundColor: AppColors.lightBlue,
       body: BlocConsumer<CharitiesCubit, CharitiesState>(
         listener: (context, state) {
-          state.maybeWhen(
-            orElse: () {
-              isLoadingMore = false;
-            },
-            errorState: (message) {
-              isLoadingMore = false;
-              buildErrorCustomSnackBar(context, message);
-            },
-            loadingMoreState: () {
-              isLoadingMore = true;
-            },
-            loaded: (news) {
-              isLoadingMore = false;
-              listOfCharity = news;
-            },
-          );
-          // TODO: implement listener
+          isLoadingMore = state is CharitiesLoadingMoreState;
+          if (state is CharitiesLoadedState) {
+            listOfCharity = state.charities;
+          } else if (state is CharitiesErrorState) {
+            buildErrorCustomSnackBar(context, state.message);
+          }
         },
         builder: (context, state) {
-          return state.maybeWhen(orElse: () {
-            return GlobalCustomBody(
-              child: SizedBox(
-                child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
-                  child: Column(
-                    children: [
-                       CustomAppBar(
-                        title: 'Charity'.tr(),
-                      ),
-                      ListView.builder(
-                        itemCount: listOfCharity.length,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: EdgeInsets.only(top: 12.r),
-                            child: GestureDetector(
-                              onTap: () {
-                                context.router.push(
-                                  CharityDetailRoute(
-                                      result: listOfCharity[index]),
-                                );
-                              },
-                              child: Container(
-                                decoration: BoxDecoration(
-                                    color: AppColors.white,
-                                    borderRadius: BorderRadius.circular(20).r),
-                                padding: const EdgeInsets.symmetric(
-                                        vertical: 12, horizontal: 12)
-                                    .r,
-                                child: ListTile(
-                                    contentPadding: const EdgeInsets.all(0),
-                                    leading: ClipRRect(
-                                      borderRadius: const BorderRadius.all(
-                                              Radius.circular(12))
-                                          .r,
-                                      child: CachedNetworkImage(
-                                        imageUrl:
-                                            listOfCharity[index].cover ?? '',
-                                        fit: BoxFit.cover,
-                                        height: 65.h,
+          return GlobalCustomBody(
+            child: SizedBox(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  children: [
+                    CustomAppBar(
+                      title: 'Charity'.tr(),
+                    ),
+                    ListView.builder(
+                      itemCount: listOfCharity.length,
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.only(top: 12.r),
+                          child: GestureDetector(
+                            onTap: () {
+                              context.router.push(
+                                CharityDetailRoute(
+                                    result: listOfCharity[index]),
+                              );
+                            },
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: AppColors.white,
+                                  borderRadius: BorderRadius.circular(20).r),
+                              padding: const EdgeInsets.symmetric(
+                                      vertical: 12, horizontal: 12)
+                                  .r,
+                              child: ListTile(
+                                  contentPadding: const EdgeInsets.all(0),
+                                  leading: ClipRRect(
+                                    borderRadius: const BorderRadius.all(
+                                            Radius.circular(12))
+                                        .r,
+                                    child: CachedNetworkImage(
+                                      imageUrl:
+                                          listOfCharity[index].cover ?? '',
+                                      fit: BoxFit.cover,
+                                      height: 65.h,
+                                      width: 55.w,
+                                      errorWidget: (a, b, c) => SizedBox(
                                         width: 55.w,
-                                        errorWidget: (a, b, c) => SizedBox(
-                                          width: 55.w,
-                                          height: 55.h,
-                                        ),
+                                        height: 55.h,
                                       ),
                                     ),
-                                    title: Text(
-                                      listOfCharity[index].title ?? 'ERROR',
-                                      textAlign: TextAlign.left,
-                                      style:
-                                          getTextStyle(CustomTextStyles.s16w500)
-                                              .apply(color: AppColors.black),
-                                    ),
-                                    trailing: const Icon(
-                                      Icons.arrow_forward,
-                                      color: AppColors.orange,
-                                    )),
-                              ),
+                                  ),
+                                  title: Text(
+                                    listOfCharity[index].title ?? 'ERROR',
+                                    textAlign: TextAlign.left,
+                                    style:
+                                        getTextStyle(CustomTextStyles.s16w500)
+                                            .apply(color: AppColors.black),
+                                  ),
+                                  trailing: const Icon(
+                                    Icons.arrow_forward,
+                                    color: AppColors.orange,
+                                  )),
                             ),
-                          );
-                        },
-                      ),
-                    ],
-                  ),
+                          ),
+                        );
+                      },
+                    ),
+                  ],
                 ),
               ),
-            );
-          });
+            ),
+          );
         },
       ),
     );

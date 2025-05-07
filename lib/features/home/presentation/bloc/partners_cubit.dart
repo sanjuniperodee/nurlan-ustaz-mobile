@@ -12,14 +12,14 @@ class PartnersCubit extends Cubit<PartnersState> {
   final HomeRepository _homeRepository;
   PartnersCubit(
     this._homeRepository,
-  ) : super(const PartnersState.initialState());
+  ) : super(const PartnersState.initial());
 
   Future<void> partners() async {
-    emit(const PartnersState.loadingState());
+    emit(const PartnersState.loading());
     final failureOrUser = await _homeRepository.partners();
     failureOrUser.fold(
       (l) {
-        emit(PartnersState.errorState(message: mapFailureToMessageBack(l)));
+        emit(PartnersState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         emit(PartnersState.loaded(partners: r));
@@ -29,16 +29,13 @@ class PartnersCubit extends Cubit<PartnersState> {
 }
 
 @freezed
-class PartnersState with _$PartnersState {
-  const factory PartnersState.initialState() = _InitialPage;
-
-  const factory PartnersState.loadingState() = _LoadingState;
-
+sealed class PartnersState with _$PartnersState {
+  const factory PartnersState.initial() = PartnersInitialPage;
+  const factory PartnersState.loading() = PartnersLoadingState;
   const factory PartnersState.loaded({
     required List<ResultHomeDTO> partners,
-  }) = _LoadedState;
-
-  const factory PartnersState.errorState({
+  }) = PartnersLoadedState;
+  const factory PartnersState.error({
     required String message,
-  }) = _ErrorState;
+  }) = PartnersErrorState;
 }

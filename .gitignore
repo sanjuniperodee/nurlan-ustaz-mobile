@@ -76,10 +76,13 @@ app.*.map.json
 **/ios/ServiceDefinitions.json
 **/ios/Runner/GeneratedPluginRegistrant.*
 **/ios/**/Podfile.lock
-lib/core/router/app_router.gr.dart
-*.gr.dart
-*.freezed.dart
-*.g.dart
-lib/core/services/locator_service.config.dart
 linux/
 windows/
+
+.timetracker
+
+# Generated code
+**/*.g.dart
+**/*.gr.dart
+**/*.config.dart
+**/*.freezed.dart

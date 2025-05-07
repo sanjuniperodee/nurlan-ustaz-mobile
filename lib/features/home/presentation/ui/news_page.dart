@@ -58,198 +58,177 @@ class _NewsPageState extends State<NewsPage> {
       backgroundColor: AppColors.lightBlue,
       body: BlocConsumer<NewsCubit, NewsState>(
         listener: (context, state) {
-          state.maybeWhen(
-            orElse: () {
-              isLoadingMore = false;
-            },
-            errorState: (message) {
-              isLoadingMore = false;
-              buildErrorCustomSnackBar(context, message);
-            },
-            loadingMoreState: () {
-              isLoadingMore = true;
-            },
-            loaded: (news) {
-              isLoadingMore = false;
-              listOfNews = news;
-              listOfFav.clear();
-              listOfNews.forEach(
-                (element) {
-                  listOfFav.add(element.isSaved!);
-                },
-              );
+          isLoadingMore = state is NewsLoadingMoreState;
+          if (state is NewsLoadedState) {
+            listOfNews = state.news;
+            listOfFav.clear();
+            listOfNews.forEach(
+              (element) {
+                listOfFav.add(element.isSaved!);
+              },
+            );
 
-              setState(() {});
-            },
-          );
-          // TODO: implement listener
+            setState(() {});
+          } else if (state is NewsErrorState) {
+            buildErrorCustomSnackBar(context, state.message);
+          }
         },
         builder: (context, state) {
-          return state.maybeWhen(
-            orElse: () {
-              return GlobalCustomBody(
-                child: SizedBox(
-                  child: SingleChildScrollView(
-                    physics: const BouncingScrollPhysics(),
-                    child: Column(
-                      children: [
-                        CustomAppBar(
-                          title: widget.type == 'isSave'
-                              ? 'Favourite_news'.tr()
-                              : 'news'.tr(),
-                        ),
-                        SizedBox(
-                          height: 36.h,
-                        ),
-                        SearchWidget(
-                          onChanged: (string) {
-                            searchText = string;
-                            if (string.isEmpty) {
-                              BlocProvider.of<NewsCubit>(context)
-                                  .news(page: 1, isFirstCall: true);
-                            } else {
-                              BlocProvider.of<NewsCubit>(context).news(
-                                  page: 1,
+          return GlobalCustomBody(
+            child: SizedBox(
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  children: [
+                    CustomAppBar(
+                      title: widget.type == 'isSave'
+                          ? 'Favourite_news'.tr()
+                          : 'news'.tr(),
+                    ),
+                    SizedBox(
+                      height: 36.h,
+                    ),
+                    SearchWidget(
+                      onChanged: (string) {
+                        searchText = string;
+                        if (string.isEmpty) {
+                          BlocProvider.of<NewsCubit>(context)
+                              .news(page: 1, isFirstCall: true);
+                        } else {
+                          BlocProvider.of<NewsCubit>(context).news(
+                              page: 1, search: searchText, isFirstCall: true);
+                        }
+                      },
+                    ),
+                    ListView.builder(
+                      itemCount: listOfNews.length,
+                      shrinkWrap: true,
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: EdgeInsets.only(bottom: 20.r),
+                          child: GestureDetector(
+                            onTap: () {
+                              context.router.push(
+                                NewsDetailRoute(
+                                  id: listOfNews[index].id!,
                                   search: searchText,
-                                  isFirstCall: true);
-                            }
-                          },
-                        ),
-                        ListView.builder(
-                          itemCount: listOfNews.length,
-                          shrinkWrap: true,
-                          physics: const BouncingScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            return Padding(
-                              padding: EdgeInsets.only(bottom: 20.r),
-                              child: GestureDetector(
-                                onTap: () {
-                                  context.router.push(
-                                    NewsDetailRoute(
-                                      id: listOfNews[index].id!,
-                                      search: searchText,
+                                ),
+                              );
+                            },
+                            child: Container(
+                              height: 116.h,
+                              width: 1.sw,
+                              decoration: BoxDecoration(
+                                color: AppColors.white,
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 8.r, horizontal: 8.r),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: const BorderRadius.all(
+                                            Radius.circular(12))
+                                        .r,
+                                    child: CachedNetworkImage(
+                                      imageUrl: listOfNews[index].cover ?? '',
+                                      fit: BoxFit.cover,
+                                      height: 100.h,
+                                      width: 100.w,
+                                      errorWidget: (a, b, c) => SizedBox(
+                                        height: 100.h,
+                                        width: 100.w,
+                                      ),
                                     ),
-                                  );
-                                },
-                                child: Container(
-                                  height: 116.h,
-                                  width: 1.sw,
-                                  decoration: BoxDecoration(
-                                    color: AppColors.white,
-                                    borderRadius: BorderRadius.circular(20),
                                   ),
-                                  padding: EdgeInsets.symmetric(
-                                      vertical: 8.r, horizontal: 8.r),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: const BorderRadius.all(
-                                                Radius.circular(12))
-                                            .r,
-                                        child: CachedNetworkImage(
-                                          imageUrl:
-                                              listOfNews[index].cover ?? '',
-                                          fit: BoxFit.cover,
-                                          height: 100.h,
-                                          width: 100.w,
-                                          errorWidget: (a, b, c) => SizedBox(
-                                            height: 100.h,
-                                            width: 100.w,
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 12.w,
-                                      ),
-                                      Expanded(
-                                        // width: 240.w,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
+                                  SizedBox(
+                                    width: 12.w,
+                                  ),
+                                  Expanded(
+                                    // width: 240.w,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  DateFormat('dd.MM.yyyy')
-                                                      .format(DateTime.parse(
-                                                          listOfNews[index]
-                                                              .createdAt
-                                                              .toString())),
+                                            Text(
+                                              DateFormat('dd.MM.yyyy').format(
+                                                  DateTime.parse(
+                                                      listOfNews[index]
+                                                          .createdAt
+                                                          .toString())),
+                                              style: getTextStyle(
+                                                      CustomTextStyles.s12w400)
+                                                  .apply(
+                                                      color: AppColors.grey1),
+                                            ),
+                                            SizedBox(
+                                              height: 5.h,
+                                            ),
+                                            Flexible(
+                                              child: SizedBox(
+                                                width: 190.w,
+                                                child: Text(
+                                                  listOfNews[index].title ??
+                                                      'ERROR',
                                                   style: getTextStyle(
                                                           CustomTextStyles
-                                                              .s12w400)
+                                                              .s16w500)
                                                       .apply(
                                                           color:
-                                                              AppColors.grey1),
+                                                              AppColors.black),
                                                 ),
-                                                SizedBox(
-                                                  height: 5.h,
-                                                ),
-                                                Flexible(
-                                                  child: SizedBox(
-                                                    width: 190.w,
-                                                    child: Text(
-                                                      listOfNews[index].title ??
-                                                          'ERROR',
-                                                      style: getTextStyle(
-                                                              CustomTextStyles
-                                                                  .s16w500)
-                                                          .apply(
-                                                              color: AppColors
-                                                                  .black),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
+                                              ),
                                             ),
-                                            GestureDetector(
-                                                onTap: () {
-                                                  BlocProvider.of<NewsFavCubit>(
-                                                          context)
-                                                      .newsFav(
-                                                          id: listOfNews[index]
-                                                                  .id ??
-                                                              0);
-                                                  listOfFav[index] =
-                                                      !listOfFav[index];
-
-                                                  setState(() {});
-                                                },
-                                                child: listOfFav[index]
-                                                    ? SvgPicture.asset(
-                                                        Assets.bookMark1Svg)
-                                                    : SvgPicture.asset(
-                                                        Assets.bookMarkSvg)),
                                           ],
                                         ),
-                                      ),
-                                    ],
+                                        GestureDetector(
+                                            onTap: () {
+                                              BlocProvider.of<NewsFavCubit>(
+                                                      context)
+                                                  .newsFav(
+                                                      id: listOfNews[index]
+                                                              .id ??
+                                                          0);
+                                              listOfFav[index] =
+                                                  !listOfFav[index];
+
+                                              setState(() {});
+                                            },
+                                            child: listOfFav[index]
+                                                ? SvgPicture.asset(
+                                                    Assets.bookMark1Svg)
+                                                : SvgPicture.asset(
+                                                    Assets.bookMarkSvg)),
+                                      ],
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
-                            );
-                          },
-                        ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
-                        isLoadingMore
-                            ? const Align(
-                                alignment: Alignment.center,
-                                child: CircularProgressIndicator())
-                            : const SizedBox(),
-                      ],
+                            ),
+                          ),
+                        );
+                      },
                     ),
-                  ),
+                    SizedBox(
+                      height: 10.h,
+                    ),
+                    isLoadingMore
+                        ? const Align(
+                            alignment: Alignment.center,
+                            child: CircularProgressIndicator())
+                        : const SizedBox(),
+                  ],
                 ),
-              );
-            },
+              ),
+            ),
           );
         },
       ),

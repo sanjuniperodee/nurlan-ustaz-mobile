@@ -54,17 +54,16 @@ class _NamazPatternPageState extends State<NamazPatternPage> {
       backgroundColor: AppColors.lightBlue,
       body: BlocConsumer<AblutionsCubit, AblutionsState>(
         listener: (context, state) {
-          state.maybeWhen(
-            orElse: () {},
-            errorState: (message) {
+          switch (state) {
+            case AblutionsErrorState(:final message):
               buildErrorCustomSnackBar(context, message);
-            },
-            loaded: (abll, pree) {
-              abl = abll;
-              pre = pree;
-            },
-          ); //
-          // TODO: implement listener
+              break;
+            case AblutionsLoadedState(:final abl, :final pre):
+              this.abl = abl;
+              this.pre = pre;
+              break;
+            default:
+          }
         },
         builder: (context, state) {
           return SizedBox(
@@ -76,11 +75,12 @@ class _NamazPatternPageState extends State<NamazPatternPage> {
                   fit: BoxFit.cover,
                 ),
                 Positioned.fill(
-                  // left: 280.r,
+                    // left: 280.r,
                     child: Opacity(
-                      opacity: 0.5,
-                      child:  Lottie.asset('assets/animations/Book_V04.json',fit: BoxFit.cover),
-                    )),
+                  opacity: 0.5,
+                  child: Lottie.asset('assets/animations/Book_V04.json',
+                      fit: BoxFit.cover),
+                )),
                 SizedBox(
                   child: SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
@@ -93,14 +93,14 @@ class _NamazPatternPageState extends State<NamazPatternPage> {
                             SizedBox(
                               height: 56.h,
                             ),
-                             CustomAppBar(
+                            CustomAppBar(
                               title: 'example_namaz'.tr(),
                             ),
                             SizedBox(
                               height: 36.h,
                             ),
                             CustomTabBar(
-                              tabs:  [
+                              tabs: [
                                 Tab(
                                   text: 'male'.tr(),
                                 ),
@@ -131,8 +131,7 @@ class _NamazPatternPageState extends State<NamazPatternPage> {
                               child: GestureDetector(
                                 onTap: () {
                                   log(abl.toString());
-                                  context.router
-                                      .push(WudhuRoute(wudhu: abl));
+                                  context.router.push(WudhuRoute(wudhu: abl));
                                 },
                                 child: Container(
                                   height: 75.h,

@@ -12,7 +12,7 @@ class DuasCubit extends Cubit<DuasState> {
   final IslamTeachingRepository _islamTeachingRepository;
   DuasCubit(
     this._islamTeachingRepository,
-  ) : super(const DuasState.initialState());
+  ) : super(const DuasState.initial());
 
   Future<void> duas({
     String? search,
@@ -21,8 +21,8 @@ class DuasCubit extends Cubit<DuasState> {
     bool? isFirstCall,
   }) async {
     page > 1
-        ? emit(const DuasState.loadingMoreState())
-        : emit(const DuasState.loadingState());
+        ? emit(const DuasState.loadingMore())
+        : emit(const DuasState.loading());
     final failureOrUser = await _islamTeachingRepository.duha(
         search: search,
         isSaved: isSaved,
@@ -30,7 +30,7 @@ class DuasCubit extends Cubit<DuasState> {
         isFirstCall: isFirstCall);
     failureOrUser.fold(
       (l) {
-        emit(DuasState.errorState(message: mapFailureToMessageBack(l)));
+        emit(DuasState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         emit(DuasState.loaded(duha: r.toSet().toList()));
@@ -40,16 +40,14 @@ class DuasCubit extends Cubit<DuasState> {
 }
 
 @freezed
-class DuasState with _$DuasState {
-  const factory DuasState.initialState() = _InitialPage;
-
-  const factory DuasState.loadingState() = _LoadingState;
-  const factory DuasState.loadingMoreState() = _LoadingMoreState;
+sealed class DuasState with _$DuasState {
+  const factory DuasState.initial() = DuasInitialPage;
+  const factory DuasState.loading() = DuasLoadingState;
+  const factory DuasState.loadingMore() = DuasLoadingMoreState;
   const factory DuasState.loaded({
     required List<ResultTeachingDTO> duha,
-  }) = _LoadedState;
-
-  const factory DuasState.errorState({
+  }) = DuasLoadedState;
+  const factory DuasState.error({
     required String message,
-  }) = _ErrorState;
+  }) = DuasErrorState;
 }

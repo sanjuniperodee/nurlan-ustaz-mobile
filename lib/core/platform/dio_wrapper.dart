@@ -22,6 +22,7 @@ class DioWrapper {
     dio = Dio(
       BaseOptions(baseUrl: SERVER_.trim() + path.trim()),
     )..interceptors.addAll([
+         ChuckerDioInterceptor(),
         _KausarDioInterceptor(
           _authLocalDS,
         ),

@@ -36,6 +36,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/notifications
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/about_app_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/add_new_card_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/change_password_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/payment_check_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/payment_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/profile_cards_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/profile_info_page.dart';
@@ -75,9 +76,28 @@ import '../../features/zhosparlar/presentation/ui/ramazan_checklist.dart';
 part 'app_router.gr.dart';
 
 @AutoRouterConfig()
-class AppRouter extends _$AppRouter {
+class AppRouter extends RootStackRouter {
   @override
-  RouteType get defaultRouteType => const RouteType.material();
+  RouteType get defaultRouteType => RouteType.custom(
+        transitionsBuilder: (context, animation, secondaryAnimation, child) {
+          return TweenAnimationBuilder<Offset>(
+            tween: Tween(begin: const Offset(0.0, 1.0), end: Offset.zero),
+            duration: const Duration(milliseconds: 500),
+            curve: Curves.easeInOutCubic,
+            builder: (context, offset, child) {
+              return Transform.translate(
+                offset: offset,
+                child: Opacity(
+                  opacity: animation.value,
+                  child: child,
+                ),
+              );
+            },
+            child: child,
+          );
+        },
+      );
+
   @override
   final List<AutoRoute> routes = [
     AutoRoute(
@@ -132,8 +152,8 @@ class AppRouter extends _$AppRouter {
     AutoRoute(page: TusZhoruDetailRoute.page),
     AutoRoute(page: CustomTusZhoruDetailRoute.page),
     AutoRoute(page: QuestionRoute.page),
-    AutoRoute(page: ProfileMainRoute.page),
-    AutoRoute(page: PaymentsRoute.page),
+    // AutoRoute(page: ProfileMainRoute.page),
+    // AutoRoute(page: PaymentsRoute.page),
     AutoRoute(page: AyatDayRoute.page),
     AutoRoute(page: DutyRoute.page),
     AutoRoute(page: AllahNamesRoute.page),
@@ -155,5 +175,6 @@ class AppRouter extends _$AppRouter {
     AutoRoute(page: CodeVerificationForgotRoute.page),
     AutoRoute(page: HolidayDetailRoute.page),
     AutoRoute(page: QrScannerRoute.page),
+    AutoRoute(page: PaymentCheckRoute.page)
   ];
 }

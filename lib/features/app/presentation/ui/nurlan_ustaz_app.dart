@@ -1,11 +1,10 @@
 import 'dart:developer';
 
-import 'package:auto_route/auto_route.dart';
+import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
@@ -44,50 +43,51 @@ class _NurlanUstazAppState extends State<NurlanUstazApp> {
   @override
   Widget build(BuildContext context) {
     return MultiblocWrapper(
-        child: ScreenUtilInit(
-      designSize: const Size(375, 812),
-      builder: (context, child) {
-        return BlocConsumer<LanguageCubit, LanguageState>(
-          listener: (context, state) {
-            state.maybeWhen(
-              orElse: () {},
-              loadedState: () {
+      child: ScreenUtilInit(
+        designSize: const Size(375, 812),
+        builder: (context, child) {
+          return BlocConsumer<LanguageCubit, LanguageState>(
+            listener: (context, state) {
+              if (state is LanguageLoadedState) {
                 setState(() {
                   log('SETSTATE:::');
                 });
-              },
-            );
-          },
-          builder: (context, state) {
-            return MaterialApp.router(
-              // title: 'Flutter Demo',
+              }
+            },
+            builder: (context, state) {
+              return MaterialApp.router(
+                themeAnimationDuration: const Duration(milliseconds: 100),
+                // title: 'Flutter Demo',
+                // key: rootNavigatorKey,
+                routerConfig: _rootRouter.config(
+                    navigatorObservers: () => [
+                          ChuckerFlutter.navigatorObserver,
+                          FirebaseAnalyticsObserver(
+                              analytics: _firebaseAnalytics),
+                        ]),
 
-              // key: rootNavigatorKey,
-              routerConfig: _rootRouter.config(
-                  navigatorObservers: () => [
-                        FirebaseAnalyticsObserver(
-                            analytics: _firebaseAnalytics),
-                      ]),
+                debugShowCheckedModeBanner: false,
+                locale: EasyLocalization.of(context)?.locale,
+                localizationsDelegates:
+                    EasyLocalization.of(context)?.delegates.toList(),
+                // ...context.localizationDelegates,
+                // CountryLocalizat
+                // ions.delegate,
 
-              debugShowCheckedModeBanner: false,
-              locale: EasyLocalization.of(context)?.locale,
-              localizationsDelegates:
-                  EasyLocalization.of(context)?.delegates.toList(),
-              // ...context.localizationDelegates,
-              // CountryLocalizat
-              // ions.delegate,
-
-              supportedLocales: EasyLocalization.of(context)!.supportedLocales,
-              theme: ThemeData(
-                fontFamily: 'Poppins',
-                visualDensity: VisualDensity.adaptivePlatformDensity,
-              ),
-              // routerDelegate: _rootRouter.delegate(),
-              // routeInformationParser: _rootRouter.defaultRouteParser(),
-            );
-          },
-        );
-      },
-    ));
+                supportedLocales:
+                    EasyLocalization.of(context)!.supportedLocales,
+                theme: ThemeData(
+                  useMaterial3: false,
+                  fontFamily: 'Poppins',
+                  visualDensity: VisualDensity.adaptivePlatformDensity,
+                ),
+                // routerDelegate: _rootRouter.delegate(),
+                // routeInformationParser: _rootRouter.defaultRouteParser(),
+              );
+            },
+          );
+        },
+      ),
+    );
   }
 }

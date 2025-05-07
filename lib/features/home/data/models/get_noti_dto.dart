@@ -6,7 +6,7 @@ part 'get_noti_dto.freezed.dart';
 part 'get_noti_dto.g.dart';
 
 @freezed
-class GetNotiDTO with _$GetNotiDTO {
+abstract class GetNotiDTO with _$GetNotiDTO {
   const factory GetNotiDTO({
     List<MediaDTO>? news,
     List<MediaDTO>? live,

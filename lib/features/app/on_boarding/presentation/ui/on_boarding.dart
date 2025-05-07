@@ -1,15 +1,9 @@
 import 'dart:developer';
-import 'dart:io';
-
-import 'package:better_player/better_player.dart';
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:chewie/chewie.dart';
 import 'package:dots_indicator/dots_indicator.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get_ip_address/get_ip_address.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/features/app/on_boarding/bloc/on_boarding_cubit.dart';
@@ -24,67 +18,67 @@ class OnBoardingPage extends StatefulWidget {
   State<OnBoardingPage> createState() => _OnBoardingPageState();
 }
 
-CarouselController controller = CarouselController();
-int currentIndex = 0;
-
 class _OnBoardingPageState extends State<OnBoardingPage> {
-  late VideoPlayerController _videoPlayerController1;
-  ChewieController? _chewieController;
-  int? bufferDelay;
-
+  // ChewieController? _chewieController;
+  int currentIndex = 0;
+  final PageController _pageController = PageController();
+  List<Chewie> _chewieWidgets = [];
+  List<ChewieController> _chewieControllers = [];
+  List<VideoPlayerController> videos = [
+    VideoPlayerController.asset(
+      'assets/video/1_v.MP4',
+    ),
+    VideoPlayerController.asset(
+      'assets/video/2.mp4',
+    ),
+    VideoPlayerController.asset(
+      'assets/video/3_v.mp4',
+    ),
+    VideoPlayerController.asset(
+      'assets/video/4_v.mp4',
+    )
+  ];
   @override
   void initState() {
+    initVideos().then((_) {
+      setState(() {});
+    });
     super.initState();
-    initializePlayer();
+  }
+
+  Future<void> initVideos() async {
+    for (var element in videos) {
+      await element.initialize();
+      _chewieControllers.add(ChewieController(
+        videoPlayerController: element,
+        aspectRatio: 1.sw / 1.sh,
+        autoPlay: false,
+        looping: false,
+        showControls: false,
+        progressIndicatorDelay: Duration(milliseconds: 20),
+        hideControlsTimer: const Duration(seconds: 1),
+      ));
+      element.addListener(_videoPlayerListener);
+    }
+    for (var element in _chewieControllers) {
+      _chewieWidgets.add(
+        Chewie(
+          controller: element,
+        ),
+      );
+    }
   }
 
   @override
   void dispose() {
-    _videoPlayerController1.dispose();
-    _chewieController?.dispose();
+    for (var element in videos) {
+      element.dispose();
+    }
+    for (var element in _chewieControllers) {
+      element.dispose();
+    }
+    _pageController.dispose();
     super.dispose();
-  }
-
-  Future<void> initializePlayer() async {
-    await BlocProvider.of<OnBoardingCubit>(context)
-        .getVideo()
-        .then((value) async {
-      _videoPlayerController1 =
-          VideoPlayerController.networkUrl(Uri.parse(value.first.file));
-      await Future.wait([
-        _videoPlayerController1.initialize(),
-      ]);
-      log("message1");
-    });
-    _createChewieController();
-    setState(() {});
-  }
-
-  // Future<void> initializePlayer() async {
-  //   try {
-  //     _videoPlayerController1 = VideoPlayerController.networkUrl(Uri.parse(
-  //         "https://dev.nurlanustaz.kz/api/media/support/onboardings/mixkit-a-girl-blowing-a-bubble-gum-at-an-amusement-park-1226-large.mp4"));
-  //     await Future.wait([
-  //       _videoPlayerController1.initialize(),
-  //     ]);
-  //   } catch (e) {
-  //     log(e.toString());
-  //   }
-
-  //   _createChewieController();
-  //   setState(() {});
-  // }
-
-  void _createChewieController() {
-    _chewieController = ChewieController(
-      videoPlayerController: _videoPlayerController1,
-      autoPlay: true,
-      looping: true,
-      showControls: false,
-      progressIndicatorDelay:
-          bufferDelay != null ? Duration(milliseconds: bufferDelay!) : null,
-      hideControlsTimer: const Duration(seconds: 1),
-    );
   }
 
   @override
@@ -93,137 +87,138 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
       body: BlocConsumer<OnBoardingCubit, OnBoardingState>(
         listener: (context, state) {},
         builder: (context, state) {
-          return state.maybeWhen(orElse: () {
-            return Container();
-          }, initialState: (videoList) {
-            // final playerWidget =;
+          if (state is OnBoardingInitialPage) {
+            return _chewieWidgets.length == videos.length
+                ? _buildOnBoardingWidget()
+                : Image.asset(
+                    'assets/images/bg.png',
+                    fit: BoxFit.cover,
+                    width: MediaQuery.of(context).size.width,
+                    height: MediaQuery.of(context).size.height,
+                  );
+          }
 
-            return Center(
-              child: Stack(children: [
-                Image.asset(
-                  'assets/images/on_boarding_background.png',
-                  fit: BoxFit.cover,
-                  width: MediaQuery.of(context).size.width,
-                  height: MediaQuery.of(context).size.height,
-                ),
-                Positioned.fill(
-                  child: Container(
-                    width: 343.w,
-                    height: 1.sh,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30.r),
-                    ),
-                    child: _chewieController != null &&
-                            _chewieController!
-                                .videoPlayerController.value.isInitialized
-                        ? Chewie(
-                            controller: _chewieController!,
-                          )
-                        : const SizedBox(),
-                  ),
-                ),
-                Positioned.fill(
-                  top: 720.h,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        DotsIndicator(
-                            dotsCount: videoList.length,
-                            position: currentIndex,
-                            decorator: DotsDecorator(
-                                size: Size(8.w, 8.h),
-                                color: AppColors.white.withOpacity(0.1),
-                                activeShape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(5.0.r)),
-                                activeColor: AppColors.white,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius:
-                                        BorderRadius.circular(5.0.r)))),
-                        MaterialButton(
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(
-                                10.0), // Adjust the radius as needed
-                          ),
-                          onPressed: () async {
-                            if (currentIndex != videoList.length - 1) {
-                              _videoPlayerController1.pause();
-                              _videoPlayerController1 =
-                                  VideoPlayerController.networkUrl(
-                                Uri.parse(videoList[currentIndex + 1].file),
-                              );
-
-                              await Future.wait([
-                                _videoPlayerController1.initialize(),
-                              ]);
-                              _createChewieController();
-                              // initializePlayer();
-                              setState(() {});
-
-                              currentIndex++;
-                            } else {
-                              _videoPlayerController1.pause();
-                              _videoPlayerController1.dispose();
-                              setState(() {});
-                              BlocProvider.of<AppBloc>(context)
-                                  .add(const AppEvent.onboardingSave());
-                            }
-                          },
-                          child: Text(
-                            'Аумин 🤲',
-                            style: getTextStyle(CustomTextStyles.s16w500)
-                                .copyWith(
-                                    fontFamily: FontTypes.SF_Pro.name,
-                                    color: AppColors.white),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ]),
-            );
-          });
+          return const SizedBox.shrink();
         },
       ),
     );
-    // return Scaffold(
-    //   body: Column(
-    //     children: <Widget>[
-    //       Expanded(
-    //         child: Center(
-    //           child: _chewieController != null &&
-    //                   _chewieController!
-    //                       .videoPlayerController.value.isInitialized
-    //               ? Chewie(
-    //                   controller: _chewieController!,
-    //                 )
-    //               : const Column(
-    //                   mainAxisAlignment: MainAxisAlignment.center,
-    //                   children: [
-    //                     CircularProgressIndicator(),
-    //                     SizedBox(height: 20),
-    //                     Text('Loading'),
-    //                   ],
-    //                 ),
-    //         ),
-    //       ),
-    //     ],
-    //   ),
-    // );
+  }
+
+  Widget _buildOnBoardingWidget() {
+    _chewieControllers[currentIndex].play();
+    return Center(
+      child: Stack(
+        children: [
+          Positioned.fill(
+            left: 0,
+            top: 0,
+            right: 0,
+            bottom: 0,
+            child: PageView(
+              controller: _pageController,
+              onPageChanged: _onPageChanged,
+              children: _chewieWidgets,
+            ),
+          ),
+          Positioned.fill(
+            top: 720.h,
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  DotsIndicator(
+                    dotsCount: videos.length,
+                    // TODO(Radomir): temporary dividing by 1. Expected double,
+                    // perhaps, for smooth animation
+                    position: currentIndex / 1,
+                    decorator: DotsDecorator(
+                      size: Size(8.w, 8.h),
+                      color: AppColors.white.withOpacity(0.1),
+                      activeShape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0.r),
+                      ),
+                      activeColor: AppColors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0.r),
+                      ),
+                    ),
+                  ),
+                  MaterialButton(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                          10.0), // Adjust the radius as needed
+                    ),
+                    onPressed: () {
+                      _onNextButtonPressed();
+                    },
+                    child: Text(
+                      'Аумин 🤲',
+                      style: getTextStyle(CustomTextStyles.s16w500).copyWith(
+                        fontFamily: FontTypes.SF_Pro.name,
+                        color: AppColors.white,
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _onPageChanged(int index) async {
+    try {
+      log("currentIndex ==== $currentIndex");
+      _chewieControllers[currentIndex].pause();
+      currentIndex = index;
+      _chewieControllers[index].play();
+      log("currentIndex1 ==== $currentIndex");
+    } catch (error) {
+      print("Error initializing video: $error");
+    }
+    setState(() {});
+  }
+
+  void _onNextButtonPressed() async {
+    if (currentIndex < videos.length - 1) {
+      // Increment the currentIndex to move to the next video
+
+      log("currentIndex2 ==== $currentIndex");
+      _chewieControllers[currentIndex].pause();
+      currentIndex++;
+      _chewieControllers[currentIndex].play();
+
+      log("currentIndex3 ==== $currentIndex");
+      _pageController.nextPage(
+          duration: const Duration(seconds: 1), curve: Curves.ease);
+      setState(() {});
+    } else {
+      BlocProvider.of<AppBloc>(context).add(const AppEvent.onboardingSave());
+    }
+  }
+
+  Future<void> _videoPlayerListener() async {
+    if (videos[currentIndex].value.position.inSeconds > 0) {
+      if (videos[currentIndex].value.position ==
+          videos[currentIndex].value.duration) {
+        if (currentIndex < videos.length - 1) {
+          // _chewieControllers[currentIndex]?.pause();
+          setState(() {});
+          _pageController.nextPage(
+              duration: const Duration(seconds: 1), curve: Curves.ease);
+
+          currentIndex++;
+
+          _chewieControllers[currentIndex].play();
+        } else {
+          // Last video has ended, handle as needed
+          BlocProvider.of<AppBloc>(context)
+              .add(const AppEvent.onboardingSave());
+        }
+      }
+    }
   }
 }
-
-// late VideoPlayerController _controller;
-// late BetterPlayerController _betterPlayerController;
-
-// ChewieController? chewieController;
-// @override
-// void initState() {
-//   super.initState();
-//   initializePlayer();
-// }
-
-// @override
-// Widget build(BuildContext context) {}

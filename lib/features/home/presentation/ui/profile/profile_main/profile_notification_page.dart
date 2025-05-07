@@ -1,8 +1,7 @@
-import 'package:auto_route/auto_route.dart';
 import 'dart:developer';
 
+import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -25,7 +24,7 @@ class ProfileNotificationPage extends StatefulWidget {
 }
 
 class _ProfileNotificationPage extends State<ProfileNotificationPage> {
-  bool _switchValue = false;
+  String tokens = '';
 
   @override
   void initState() {
@@ -36,99 +35,86 @@ class _ProfileNotificationPage extends State<ProfileNotificationPage> {
 
   String handleString(String namazTime) {
     switch (namazTime) {
-      case 'custom_dreams':
+      case 'dreams':
         return ('dream_interpretations'.tr());
-        // Code for case1
-        break;
+      // Code for case1
       case 'prayer_times':
         return ('Namaz'.tr());
-        // Code for case2
-        break;
+      // Code for case2
       case 'ayat_of_the_day':
         return ('Ayat_of_the_day'.tr());
-        // Code for case3
-        break;
+      // Code for case3
       case 'live_broadcasts':
         return ('live'.tr());
-        // Code for case3
-        break;
+      // Code for case3
       case 'tell_me_ustaz':
         return ('tell_me_ustaz'.tr());
-        // Code for case3
-        break;
+      // Code for case3
       case 'checklist_results':
         return ('Чек-лист'.tr());
-        // Code for case3
-        break;
+      // Code for case3
       case 'seminar_tickets':
         return ('seminar'.tr());
-        // Code for case3
-        break;
+      // Code for case3
       case 'new_content':
         return ('news'.tr());
-        // Code for case3
-        break;
+      // Code for case3
 
       default:
         return ('Invalid input');
-        // Code for default case
-        break;
+      // Code for default case
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context).copyWith(dividerColor: Colors.transparent);
     return BlocConsumer<ProfileNotificationCubit, ProfileNotificationState>(
-      listener: (context, state) {
-        // TODO: implement listener
-      },
+      listener: (context, state) {},
       builder: (context, state) {
-        return state.maybeWhen(orElse: () {
-          return Container();
-        }, loadingState: () {
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }, initialState: (items, notification) {
-          return Scaffold(
-            backgroundColor: AppColors.lightBlue,
-            body: GlobalCustomBody(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: SizedBox(
-                  height: 1.1.sh,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      CustomAppBar(
-                        title: 'notifications'.tr(),
-                      ),
-                      SizedBox(
-                        height: 32,
-                      ),
-                      Container(
-                        padding: EdgeInsets.only(
-                          left: 12,
-                          right: 17,
-                          top: 20,
-                          bottom: 20,
+        return switch (state) {
+          ProfileNotificationLoadingState() => const Center(
+              child: CircularProgressIndicator(),
+            ),
+          ProfileNotificationInitialPage(
+            :final items,
+            :final notificationDTO,
+            :final serverNotificationDto
+          ) =>
+            Scaffold(
+              backgroundColor: AppColors.lightBlue,
+              body: GlobalCustomBody(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: SizedBox(
+                    height: 1.1.sh,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CustomAppBar(
+                          title: 'notifications'.tr(),
                         ),
-                        width: double.maxFinite,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Colors.white),
-                        child: Column(
+                        const SizedBox(
+                          height: 32,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.only(
+                            left: 12,
+                            right: 17,
+                            top: 20,
+                            bottom: 20,
+                          ),
+                          width: double.maxFinite,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              color: Colors.white),
+                          child: Column(
                             children:
                                 //notificationMap.entries.toList().sublist(8,15)
                                 items
                                     .map(
                                       (e) => Container(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 4),
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 4),
                                         width: double.infinity,
                                         child: Row(
                                           mainAxisAlignment:
@@ -143,9 +129,20 @@ class _ProfileNotificationPage extends State<ProfileNotificationPage> {
                                                     FontTypes.SF_Pro.name,
                                               ),
                                             ),
+                                            if (e.title == 'prayer_times')
+                                              Text(
+                                                'changes_notify'.tr(),
+                                                style: getTextStyle(
+                                                        CustomTextStyles
+                                                            .s12w400)
+                                                    .copyWith(
+                                                        fontFamily: FontTypes
+                                                            .SF_Pro.name,
+                                                        color: AppColors.grey1),
+                                              ),
                                             Transform.scale(
                                               scale: 0.8,
-                                              child: CupertinoSwitch(
+                                              child: Switch.adaptive(
                                                 value: e.status!,
                                                 onChanged: (value) {
                                                   log(value.toString());
@@ -161,55 +158,33 @@ class _ProfileNotificationPage extends State<ProfileNotificationPage> {
                                         ),
                                       ),
                                     )
-                                    .toList()
-
-                            // [
-                            //   ListView.builder(
-                            //       shrinkWrap: true,
-                            //       itemBuilder: (context, index) {
-                            //         return Container(
-                            //           color: Colors.black,
-                            //           width: double.infinity,
-                            //           child: Row(
-                            //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //             children: [
-                            //               Text(
-                            //                 '${notifications[index].title}',
-                            //                 style: getTextStyle(CustomTextStyles.s16w500)
-                            //                     .copyWith(
-                            //                         fontFamily: FontTypes.SF_Pro.name,fontWeight: FontWeight.w600),
-                            //               ),
-                            //               CupertinoSwitch(
-                            //                   value: notifications[index].status,
-                            //                   onChanged: (value) {})
-                            //             ],
-                            //           ),
-                            //         );
-                            //       },
-                            //       itemCount: notifications.length),
-                            // ],
-
-                            ),
-                      ),
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      AppButton(
-                          onTap: () {
-                            context
-                                .read<ProfileNotificationCubit>()
-                                .saveChanges()
-                                .then((value) => buildSuccessCustomSnackBar(
-                                    context, 'success'.tr()));
-                          },
-                          text: 'save'.tr())
-                    ],
+                                    .toList(),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                        AppButton(
+                            isActive: serverNotificationDto != notificationDTO,
+                            onTap: serverNotificationDto != notificationDTO
+                                ? () {
+                                    context
+                                        .read<ProfileNotificationCubit>()
+                                        .saveChanges()
+                                        .then((value) =>
+                                            buildSuccessCustomSnackBar(
+                                                context, "saved".tr()));
+                                  }
+                                : null,
+                            text: 'save'.tr())
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-          );
-        });
+          _ => const SizedBox.shrink(),
+        };
       },
     );
   }

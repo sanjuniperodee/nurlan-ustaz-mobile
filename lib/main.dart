@@ -1,6 +1,8 @@
+import 'dart:async';
 import 'dart:developer';
 import 'dart:ui';
 
+import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
@@ -19,12 +21,7 @@ import 'core/services/notification_service.dart';
 Future<void> firebaseListen() async {
   FirebaseMessaging.instance.getInitialMessage();
   FirebaseMessaging.onMessage.listen((message) {
-    log('MESSAGEEEE ${message.data} : ${message.data}');
-    // if (message.data['order_id'] != '' && message.data['order_id'] != 0) {
     showFlutterNotification(message);
-    // } else {
-    //   log('NO');
-    // }
   });
 }
 
@@ -55,31 +52,40 @@ Future<void> firebaseInit() async {
 }
 
 Future<void> main() async {
-  getIt.registerSingleton<AppRouter>(AppRouter());
+  runZonedGuarded(
+    () async {
+      getIt.registerSingleton<AppRouter>(AppRouter());
 
-  WidgetsFlutterBinding.ensureInitialized();
+      WidgetsFlutterBinding.ensureInitialized();
+      await SystemChrome.setPreferredOrientations(
+          [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+      await Firebase.initializeApp();
+      // TODO(Radomir): Remove Firebase Dynamix Links from project, as it is deprecated
+      // await FirebaseDynamicLinks.instance.getInitialLink();
+      await firebaseListen();
+      // await firebaseInit();
+      await checkLocationPermission();
+      ChuckerFlutter.showOnRelease = false;
+      FlutterError.onError = (errorDetails) {
+        FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+      };
+      // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
+      PlatformDispatcher.instance.onError = (error, stack) {
+        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+        return true;
+      };
 
-  SystemChrome.setPreferredOrientations(
-      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-  await Firebase.initializeApp();
-  await FirebaseDynamicLinks.instance.getInitialLink();
-  await firebaseListen();
-  await firebaseInit();
-  await checkLocationPermission();
-  FlutterError.onError = (errorDetails) {
-    FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-  };
-  // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
-  PlatformDispatcher.instance.onError = (error, stack) {
-    FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-    return true;
-  };
-
-  MainRunner.run<AsyncAppDependencies>(
-      asyncDependencies: AsyncAppDependencies.obtain,
-      appBuilder: (dependencies) {
-        return const NurlanUstazApp();
-      });
+      await MainRunner.run<AsyncAppDependencies>(
+        asyncDependencies: AsyncAppDependencies.obtain,
+        appBuilder: (dependencies) {
+          return const NurlanUstazApp();
+        },
+      );
+    },
+    (error, stack) {
+      FirebaseCrashlytics.instance.recordError(error, stack);
+    },
+  );
 }
 
 Future<void> checkLocationPermission() async {
@@ -117,11 +123,9 @@ Future<void> navigateToTusZhoru(Uri link) async {
 }
 
 Future<void> navigateToCustomTusZhoru(Uri link) async {
-  print("event.link.queryParameters ${link.queryParameters}");
-
   var deepLink = link;
   final queryParams = deepLink.queryParameters;
-  if (queryParams.length > 0) {
+  if (queryParams.isNotEmpty) {
     var id = queryParams['id'];
     if (id != null) {
       getIt<AppRouter>().pushAll([
@@ -141,7 +145,7 @@ Future<void> navigateToSeminar(Uri link) async {
 
   var deepLink = link;
   final queryParams = deepLink.queryParameters;
-  if (queryParams.length > 0) {
+  if (queryParams.isNotEmpty) {
     var id = queryParams['id'];
     if (id != null) {
       getIt<AppRouter>().pushAll([
@@ -201,7 +205,7 @@ Future<void> navigateToName(Uri link) async {
 
   var deepLink = link;
   final queryParams = deepLink.queryParameters;
-  if (queryParams.length > 0) {
+  if (queryParams.isNotEmpty) {
     var id = queryParams['id'];
     if (id != null) {
       getIt<AppRouter>().pushAll([

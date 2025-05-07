@@ -12,7 +12,7 @@ class ChangePassCubit extends Cubit<ChangePassState> {
   final AuthRepository _authRepository;
   ChangePassCubit(
     this._authRepository,
-  ) : super(const ChangePassState.initialState());
+  ) : super(const ChangePassState.initial());
 
   Future<void> changePass(
       {required String curPass,
@@ -22,10 +22,8 @@ class ChangePassCubit extends Cubit<ChangePassState> {
         curPass: curPass, newPass: newPass, pass: pass);
     failureOrUser.fold(
       (l) {
-        emit(ChangePassState.errorState(message: mapFailureToMessageBack(l)));
-        emit(ChangePassState.initialState());
-
-
+        emit(ChangePassState.error(message: mapFailureToMessageBack(l)));
+        emit(ChangePassState.initial());
       },
       (r) {
         emit(ChangePassState.loaded(status: r));
@@ -35,14 +33,12 @@ class ChangePassCubit extends Cubit<ChangePassState> {
 }
 
 @freezed
-class ChangePassState with _$ChangePassState {
-  const factory ChangePassState.initialState() = _InitialPage;
-
-  const factory ChangePassState.loadingState() = _LoadingState;
-
-  const factory ChangePassState.loaded({required bool status}) = _LoadedState;
-
-  const factory ChangePassState.errorState({
+sealed class ChangePassState with _$ChangePassState {
+  const factory ChangePassState.initial() = ChangePassInitialPage;
+  const factory ChangePassState.loading() = ChangePassLoadingState;
+  const factory ChangePassState.loaded({required bool status}) =
+      ChangePassLoadedState;
+  const factory ChangePassState.error({
     required String message,
-  }) = _ErrorState;
+  }) = ChangePassErrorState;
 }

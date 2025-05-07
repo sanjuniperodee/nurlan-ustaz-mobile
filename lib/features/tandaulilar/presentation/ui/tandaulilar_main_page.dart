@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -24,186 +26,173 @@ class TandaulilarMainPage extends StatefulWidget {
 
 class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
   RefreshController controller = RefreshController();
+
   @override
   void initState() {
-    BlocProvider.of<TandaulilarCubit>(context)
-        .livesT(page: 1, isFirstCall: true, isSaved: true);
-    BlocProvider.of<TandaulilarCubit>(context)
-        .newsT(page: 1, isFirstCall: true, isSaved: true);
-    BlocProvider.of<TandaulilarCubit>(context)
-        .seminarT(page: 1, isFirstCall: true, isSaved: true);
     super.initState();
+    BlocProvider.of<TandaulilarCubit>(context)
+        .fetchAllData(page: 1, isFirstCall: true, isSaved: true);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocListener<LanguageCubit, LanguageState>(
-      listener: (context, state) {
-        state.maybeWhen(
-          orElse: () {},
-          loadedState: () {
-            setState(() {});
-          },
-        );
-        // TODO: implement listener
-      },
+      listenWhen: (previous, current) => current is LanguageLoadedState,
+      listener: (context, state) => setState(() {}),
       child: Scaffold(
         backgroundColor: AppColors.lightBlue,
         body: BlocBuilder<TandaulilarCubit, TandaulilarState>(
           builder: (context, state) {
-            return state.maybeWhen(
-              orElse: () {
-                return const Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.linearBlue,
+            // TODO: error widget
+            if (state is! TandaulilarLoadedState) {
+              return const Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.linearBlue,
+                ),
+              );
+            }
+
+            final lives = state.lives;
+            final news = state.news;
+            final seminars = state.seminars;
+            log('lives-${lives.toList().map((e) => e.cover).toList().toString()}');
+            log('news-${news.toList().map((e) => e.cover).toList().toString()}');
+            log('seminars-${seminars.toList().map((e) => e.cover).toList().toString()}');
+
+            return GlobalCustomBody(
+              left: 16,
+              right: 16,
+              child: SizedBox(
+                child: SmartRefresher(
+                  enablePullDown: true,
+                  controller: controller,
+                  header: CustomHeader(
+                    builder: (context, mode) {
+                      return const Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.linearBlue,
+                        ),
+                      );
+                      // Return an empty container to remove the default text
+                    },
                   ),
-                );
-              },
-              loaded: (livess, newss, seminarss) {
-                // lives = livess;
-                // news = newss;
-                // seminars = seminarss;
-                return GlobalCustomBody(
-                  left: 16,
-                  right: 16,
-                  child: SizedBox(
-                    child: SmartRefresher(
-                      enablePullDown: true,
-                      controller: controller,
-                      header: CustomHeader(
-                        builder: (context, mode) {
-                          return const Center(
-                            child: CircularProgressIndicator(
-                              color: AppColors.linearBlue,
-                            ),
-                          );
-                          // Return an empty container to remove the default text
-                        },
-                      ),
-                      onRefresh: () {
-                        BlocProvider.of<TandaulilarCubit>(context).lives = [];
-                        BlocProvider.of<TandaulilarCubit>(context).news = [];
-                        BlocProvider.of<TandaulilarCubit>(context).seminars =
-                            [];
-                        BlocProvider.of<TandaulilarCubit>(context)
-                            .livesT(page: 1, isFirstCall: true, isSaved: true);
-                        BlocProvider.of<TandaulilarCubit>(context)
-                            .newsT(page: 1, isFirstCall: true, isSaved: true);
-                        BlocProvider.of<TandaulilarCubit>(context).seminarT(
-                            page: 1, isFirstCall: true, isSaved: true);
-                      },
-                      child: SingleChildScrollView(
-                          physics: const BouncingScrollPhysics(),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
+                  onRefresh: () {
+                    BlocProvider.of<TandaulilarCubit>(context).fetchAllData(
+                        page: 1, isFirstCall: true, isSaved: true);
+                  },
+                  child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          SizedBox(height: 40.h),
+                          Text('MyFavourite'.tr(),
+                              style: getTextStyle(CustomTextStyles.s36w700)
+                                  .apply(
+                                      fontFamily: FontTypes.Philosopher.name,
+                                      color: AppColors.white)),
+                          SizedBox(height: 24.h),
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              SizedBox(height: 22.h),
-                              Text('MyFavourite'.tr(),
-                                  style: getTextStyle(CustomTextStyles.s36w700)
-                                      .apply(
-                                          fontFamily:
-                                              FontTypes.Philosopher.name,
-                                          color: AppColors.white)),
-                              SizedBox(height: 24.h),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      CategoryCard(
-                                        title: 'news'.tr(),
-                                        imageList: newss,
-                                        onTap: () {
-                                          context.router.push(
-                                            NewsRoute(type: 'isSave'),
-                                          );
-                                        },
-                                      ),
-                                      CategoryCard(
-                                        title: 'live'.tr(),
-                                        imageList: livess,
-                                        onTap: () {
-                                          context.router.push(
-                                            LiveBroadcastsRoute(type: 'isSave'),
-                                          );
-                                        },
-                                      )
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 11,
-                                  ),
                                   CategoryCard(
-                                    title: 'seminars'.tr(),
-                                    imageList: seminarss,
-                                    titleColor: AppColors.blue,
+                                    title: 'news'.tr(),
+                                    imageList: news.toSet().toList(),
                                     onTap: () {
                                       context.router.push(
-                                        SeminarRoute(type: 'isSave'),
+                                        NewsRoute(type: 'isSave'),
                                       );
                                     },
                                   ),
-                                  SizedBox(
-                                    height: 32.h,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      CategoryTitleCard(
-                                          title: 'dream_interpretations'.tr(),
-                                          onTap: () {
-                                            context.router.push(
-                                              TusZhoruRouterPage(
-                                                  type: 'isSave'),
-                                            );
-                                          }),
-                                      CategoryTitleCard(
-                                          title: 'names'.tr(),
-                                          onTap: () {
-                                            context.router.push(
-                                              NameRoute(type: 'isSave'),
-                                            );
-                                          }),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 9.h,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      CategoryTitleCard(
-                                          title: 'Duas'.tr(),
-                                          onTap: () {
-                                            context.router.push(
-                                              PrayersRoute(type: 'isSave'),
-                                            );
-                                          }),
-                                      CategoryTitleCard(
-                                          title: 'Zikrs'.tr(),
-                                          onTap: () {
-                                            context.router.push(
-                                              DhikrRoute(type: 'isSave'),
-                                            );
-                                          }),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 165.h,
-                                  ),
+                                  CategoryCard(
+                                    title: 'live'.tr(),
+                                    imageList: lives.toSet().toList(),
+                                    onTap: () {
+                                      context.router.push(
+                                        LiveBroadcastsRoute(type: 'isSave'),
+                                      );
+                                    },
+                                  )
                                 ],
-                              )
+                              ),
+                              const SizedBox(
+                                height: 11,
+                              ),
+                              CategoryCard(
+                                title: 'seminars'.tr(),
+                                imageList: seminars.toSet().toList(),
+                                titleColor: AppColors.blue,
+                                onTap: () {
+                                  context.router.push(
+                                    SeminarRoute(type: 'isSave'),
+                                  );
+                                },
+                              ),
+                              SizedBox(
+                                height: 32.h,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CategoryTitleCard(
+                                      title: 'dream_interpretations'.tr(),
+                                      onTap: () {
+                                        context.router.push(
+                                          TusZhoruRouterPage(type: 'isSave'),
+                                        );
+                                      }),
+                                  CategoryTitleCard(
+                                      title: 'names'.tr(),
+                                      onTap: () {
+                                        context.router.push(
+                                          NameRoute(type: 'isSave'),
+                                        );
+                                      }),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 9.h,
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  CategoryTitleCard(
+                                      title: 'Duas'.tr(),
+                                      onTap: () {
+                                        context.router.push(
+                                          PrayersRoute(type: 'isSave'),
+                                        );
+                                      }),
+                                  CategoryTitleCard(
+                                      title: 'Zikrs'.tr(),
+                                      onTap: () {
+                                        context.router.push(
+                                          DhikrRoute(type: 'isSave'),
+                                        );
+                                      }),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 165.h,
+                              ),
                             ],
-                          )),
-                    ),
-                  ),
-                );
-              },
+                          )
+                        ],
+                      )),
+                ),
+              ),
             );
           },
         ),

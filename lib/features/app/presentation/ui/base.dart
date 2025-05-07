@@ -1,9 +1,6 @@
-import 'dart:developer';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:lottie/lottie.dart';
@@ -11,9 +8,7 @@ import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
-
-import '../../../../core/utils/alert_utilrs.dart';
-import '../../../tandaulilar/presentation/bloc/tandaulilar_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/islam_teaching_icon.dart';
 
 class Base extends StatefulWidget {
   const Base({super.key});
@@ -33,7 +28,25 @@ class _BaseState extends State<Base> {
   @override
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
-      backgroundColor: Colors.transparent,
+        transitionBuilder: (context,child, animation){
+          return TweenAnimationBuilder<Offset>(
+            tween: Tween(begin: Offset(0.0, 1.0), end: Offset.zero),
+            duration: Duration(milliseconds: 500), // Adjust the duration as needed.
+            curve: Curves.easeInOutCubic, // Adjust the curve as needed.
+            builder: (context, offset, child) {
+              return Transform.translate(
+                offset: offset,
+                child: Opacity(
+                  opacity: animation.value,
+                  child: child,
+                ),
+              );
+            },
+            child: child,
+          );
+        },
+
+      backgroundColor: Color(0xFFF1F1F1),
       extendBody: true,
       routes: [
         const MainRouterPage(),
@@ -70,48 +83,44 @@ class _BaseState extends State<Base> {
                 } else {
                   tabsRouter.setActiveIndex(index);
                 }
-                if (tabsRouter.activeIndex != 4) {
-                  log('TAPP');
-                  BlocProvider.of<TandaulilarCubit>(context)
-                      .livesT(page: 1, isFirstCall: true);
-                  BlocProvider.of<TandaulilarCubit>(context)
-                      .newsT(page: 1, isFirstCall: true);
-                  BlocProvider.of<TandaulilarCubit>(context)
-                      .seminarT(page: 1, isFirstCall: true);
-                }
+
               },
               currentIndex: tabsRouter.activeIndex,
               items: [
                 BottomNavigationBarItem(
                   icon: tabsRouter.activeIndex != 0
                       ? SvgPicture.asset(
+                          height: 22.5,
+                          width: 22.5,
                           Assets.homeSvg,
                         )
-                      : SvgPicture.asset(Assets.home_1Svg),
+                      : SvgPicture.asset(
+                          Assets.home_1Svg,
+                        ),
                   label: 'main_page'.tr(),
                 ),
                 BottomNavigationBarItem(
-                  icon: tabsRouter.activeIndex != 1
-                      ? SvgPicture.asset(Assets.bookSvg)
-                      : SvgPicture.asset(Assets.book_1Svg),
-                  label: 'Islam_study'.tr(),
-                ),
-                BottomNavigationBarItem(
-                    icon: Container(
-                      child: Column(
-                        children: [
-                          Container(
-                            height: 55.h,
-                            width: 55.w,
-                              child: Lottie.asset('assets/animations/Moon_v08.json',
-                                  fit: BoxFit.fill, ),
-                         ),
-                          SizedBox(height: 8.h,),
+                    icon: IslamTeachingIcon(isCurrent: tabsRouter.activeIndex != 1, isKazakh: EasyLocalization.of(context)!.locale.toString() == 'kk',),
 
-                        ],
+                    label:EasyLocalization.of(context)!.locale.toString() == 'kk'?  'Islam_study'.tr() : ''),
+                BottomNavigationBarItem(
+                  icon: Column(
+                    children: [
+                      SizedBox(
+                        height: 55.h,
+                        width: 55.w,
+                        child: Lottie.asset(
+                          'assets/animations/Moon_v08.json',
+                          fit: BoxFit.fill,
+                        ),
                       ),
-                    ),
-                    label: 'dream_interpretation'.tr(),),
+                      SizedBox(
+                        height: 8.h,
+                      ),
+                    ],
+                  ),
+                  label: 'dream_interpretation'.tr(),
+                ),
                 BottomNavigationBarItem(
                   icon: tabsRouter.activeIndex != 3
                       ? SvgPicture.asset(Assets.book2Svg)

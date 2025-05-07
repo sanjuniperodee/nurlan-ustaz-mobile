@@ -4,7 +4,6 @@ import 'dart:async';
 
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
@@ -34,14 +33,14 @@ mixin MainRunner {
     required AppBuilder<D> appBuilder,
   }) async {
     // ignore: avoid-ignoring-return-values
-    WidgetsFlutterBinding.ensureInitialized();
     await initLocator();
     await EasyLocalization.ensureInitialized();
     EasyLocalization.logger.enableLevels = [];
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
-    await NotificationService().init();
+    // TODO: notification service crashing the application when something goes wrong
+    // await NotificationService().init();
 
     // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
@@ -53,9 +52,9 @@ mixin MainRunner {
           Locale('kk'),
           Locale('ru'),
         ],
-        startLocale: const Locale('kk'),
+        startLocale: const Locale('ru'),
         path: 'assets/translations',
-        fallbackLocale: const Locale('kk'),
+        fallbackLocale: const Locale('ru'),
         child: app,
       ),
     );

@@ -20,6 +20,7 @@ import '../widgets/dhikr_button_widget.dart';
 @RoutePage()
 class DhikrDetailPage extends StatefulWidget {
   final ResultTeachingDTO result;
+
   const DhikrDetailPage({super.key, required this.result});
 
   @override
@@ -29,6 +30,7 @@ class DhikrDetailPage extends StatefulWidget {
 class _DhikrDetailPageState extends State<DhikrDetailPage> {
   int _counter = 0;
   late bool isFavorite;
+
   @override
   void initState() {
     // TODO: implement initState
@@ -61,11 +63,12 @@ class _DhikrDetailPageState extends State<DhikrDetailPage> {
               fit: BoxFit.cover,
             ),
             Positioned.fill(
-              // left: 280.r,
+                // left: 280.r,
                 child: Opacity(
-                  opacity: 0.5,
-                  child:  Lottie.asset('assets/animations/Book_V04.json',fit: BoxFit.cover),
-                )),
+              opacity: 0.5,
+              child: Lottie.asset('assets/animations/Book_V04.json',
+                  fit: BoxFit.cover),
+            )),
             SizedBox(
               child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
@@ -82,7 +85,7 @@ class _DhikrDetailPageState extends State<DhikrDetailPage> {
                           title: widget.result.name ?? 'ERROR',
                           onTap: () {
                             BlocProvider.of<DhikrsCubit>(context)
-                                .dhikrs(page: 1,isFirstCall: true)
+                                .dhikrs(page: 1, isFirstCall: true)
                                 .then((value) => Navigator.pop(context));
                           },
                         ),
@@ -139,9 +142,10 @@ class _DhikrDetailPageState extends State<DhikrDetailPage> {
                               SizedBox(
                                 height: 90.h,
                               ),
-                              AudioItemWidget(
-                                audioUrl: widget.result.audio ?? '',
-                              ),
+                              if (widget.result.audio != null)
+                                AudioItemWidget(
+                                  audioUrl: widget.result.audio ?? '',
+                                ),
                             ],
                           ),
                         ),

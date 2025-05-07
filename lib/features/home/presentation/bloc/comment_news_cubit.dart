@@ -12,7 +12,7 @@ class CommentNewsCubit extends Cubit<CommentNewsState> {
   final HomeRepository _homeRepository;
   CommentNewsCubit(
     this._homeRepository,
-  ) : super(const CommentNewsState.initialState());
+  ) : super(const CommentNewsState.initial());
 
   Future<void> commentsNews({
     required int page,
@@ -20,13 +20,13 @@ class CommentNewsCubit extends Cubit<CommentNewsState> {
     int? id,
   }) async {
     page > 1
-        ? emit(const CommentNewsState.loadingMoreState())
-        : emit(const CommentNewsState.loadingState());
+        ? emit(const CommentNewsState.loadingMore())
+        : emit(const CommentNewsState.loading());
     final failureOrUser = await _homeRepository.commentNews(
         page: page, isFirstCall: isFirstCall, id: id);
     failureOrUser.fold(
       (l) {
-        emit(CommentNewsState.errorState(message: mapFailureToMessageBack(l)));
+        emit(CommentNewsState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         emit(CommentNewsState.loaded(comments: r));
@@ -36,17 +36,14 @@ class CommentNewsCubit extends Cubit<CommentNewsState> {
 }
 
 @freezed
-class CommentNewsState with _$CommentNewsState {
-  const factory CommentNewsState.initialState() = _InitialPage;
-
-  const factory CommentNewsState.loadingState() = _LoadingState;
-  const factory CommentNewsState.loadingMoreState() = _LoadingMoreState;
-
+sealed class CommentNewsState with _$CommentNewsState {
+  const factory CommentNewsState.initial() = CommentNewsInitialPage;
+  const factory CommentNewsState.loading() = CommentNewsLoadingState;
+  const factory CommentNewsState.loadingMore() = CommentNewsLoadingMoreState;
   const factory CommentNewsState.loaded({
     required List<ResultHomeDTO> comments,
-  }) = _LoadedState;
-
-  const factory CommentNewsState.errorState({
+  }) = CommentNewsLoadedState;
+  const factory CommentNewsState.error({
     required String message,
-  }) = _ErrorState;
+  }) = CommentNewsErrorState;
 }

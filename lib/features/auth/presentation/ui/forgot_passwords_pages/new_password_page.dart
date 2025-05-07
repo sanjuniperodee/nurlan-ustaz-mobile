@@ -1,5 +1,4 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,11 +7,8 @@ import 'package:pinput/pinput.dart';
 import '../../../../../core/common/colors.dart';
 import '../../../../app/presentation/widgets/app_button.dart';
 import '../../../../app/presentation/widgets/custom_app_bar.dart';
-import '../../../../app/presentation/widgets/custom_snackbars.dart';
 import '../../../../app/presentation/widgets/custom_text_form_profile.dart';
-import '../../../../app/presentation/widgets/validators.dart';
 import '../../bloc/forgot_password_cubit.dart';
-import '../login_form.dart';
 
 class NewPasswordPage extends StatefulWidget {
   const NewPasswordPage({Key? key}) : super(key: key);
@@ -91,7 +87,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                 height: 36.h,
               ),
               CustomTextFormProfile(
-                onChanged: (String) {
+                onChanged: (String value) {
                   setState(() {});
                 },
                 controller: firstPasswordController,
@@ -109,7 +105,7 @@ class _NewPasswordPageState extends State<NewPasswordPage> {
                 height: 18.h,
               ),
               CustomTextFormProfile(
-                onChanged: (String) {
+                onChanged: ( value) {
                   setState(() {});
                 },
                 controller: secondPasswordController,

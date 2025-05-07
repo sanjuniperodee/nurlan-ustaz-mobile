@@ -27,29 +27,29 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   final AuthLocalDs _authLocalDs;
 
   AppBloc(this._authRepository, this._notAuthLogic, this._authLocalDs)
-      : super(const AppState.loadingState()) {
+      : super(const AppState.loading()) {
     _notAuthLogic.statusSubject.listen(
       (value) async {
         log('_startListenDio message from stream :: $value');
 
         if (value == 401) {
-          emit(AppState.notAuthorizedDialogState());
+          emit(AppState.notAuthorizedDialog());
         }
       },
     );
 
     on<AppEvent>(
-      (AppEvent event, Emitter<AppState> emit) async => event.map(
-        exiting: (_Exiting event) async => _exit(event, emit),
-        deleting: (_Deleting event) async => _deleteUser(event, emit),
-        checkAuth: (_CheckAuth event) async => _checkAuth(event, emit),
-        logining: (_Logining event) async => _login(event, emit),
-        refreshLocal: (_RefreshLocal event) async => _refreshLocal(emit),
-        onboardingSave: (_OnboardingSave event) async =>
-            _onboarding(event, emit),
-        nonAuthorizedDialog: (_NonAuthorizedDialog event) async =>
-            _nonAuthorizedDialog(emit),
-      ),
+      (AppEvent event, Emitter<AppState> emit) async {
+        return await switch (event) {
+          _Exiting() => _exit(event, emit),
+          _Deleting() => _deleteUser(event, emit),
+          _CheckAuth() => _checkAuth(event, emit),
+          _Logining() => _login(event, emit),
+          _RefreshLocal() => _refreshLocal(emit),
+          _OnboardingSave() => _onboarding(event, emit),
+          _NonAuthorizedDialog() => _nonAuthorizedDialog(emit),
+        };
+      },
     );
   }
 
@@ -60,7 +60,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     final failureOrOnboarding = await _authRepository.getOnboardingStatus();
     await failureOrOnboarding.fold((l) {
       log('AppBloc authChecking l: $l');
-      emit(const AppState.onBoardingState());
+      emit(const AppState.onBoarding());
       return;
     }, (r) async {
       if (r) {
@@ -70,7 +70,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         await _tokenCheck(emit);
         // emit.isDone;
       } else {
-        emit(const AppState.onBoardingState());
+        emit(const AppState.onBoarding());
         return;
       }
     });
@@ -91,9 +91,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     final result = _authRepository.authCheck();
 
     result.fold(
-      (l) => emit(const AppState.inAppState()),
+      (l) => emit(const AppState.inApp()),
       (r) {
-        emit(const AppState.inAppState());
+        emit(const AppState.inApp());
       },
     );
   }
@@ -101,20 +101,20 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   Future<void> _nonAuthorizedDialog(
     Emitter<AppState> emit,
   ) async {
-    emit(const AppState.notAuthorizedState());
+    emit(const AppState.notAuthorized());
   }
 
   Future<void> _exit(
     _Exiting event,
     Emitter<AppState> emit,
   ) async {
-    final result = await _authRepository.logOut();
+    final result = _authRepository.logOut();
 
     result.fold(
       (l) {
-        emit(const AppState.inAppState());
+        emit(const AppState.inApp());
       },
-      (r) => emit(const AppState.notAuthorizedState()),
+      (r) => emit(const AppState.notAuthorized()),
     );
   }
 
@@ -127,9 +127,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     result.fold(
       (l) {
         log('##### _DELETE USER::: ${mapFailureToMessage(l)}');
-        emit(const AppState.loadingState());
+        emit(const AppState.loading());
       },
-      (r) => emit(const AppState.notAuthorizedState()),
+      (r) => emit(const AppState.notAuthorized()),
     );
   }
 
@@ -139,7 +139,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   ) async {
     log('AppBloc Hello', name: _tag);
     // _sendDeviceTokenToBack();
-    emit(const AppState.inAppState());
+    emit(const AppState.inApp());
   }
 
   Future<void> _onboarding(
@@ -158,6 +158,6 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       },
     );
 
-    emit(const AppState.loadingState());
+    emit(const AppState.loading());
   }
 }

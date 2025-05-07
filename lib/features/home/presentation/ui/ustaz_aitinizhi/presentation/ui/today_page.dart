@@ -31,99 +31,72 @@ class _TodayChatPageState extends State<TodayChatPage> {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<TodayChatCubit, TodayChatState>(
-        listener: (context, state) {
-      state.maybeWhen(
-          orElse: () {},
-          errorState: (message) {
-            buildErrorCustomSnackBar(context, message);
-          });
-      // TODO: implement listener
-    }, builder: (context, state) {
-      log(state.toString());
-      return state.maybeWhen(orElse: () {
-        return Container();
-      }, errorState: (message) {
-        return Container();
-      }, loadingState: () {
-        return const Padding(
-          padding: EdgeInsets.only(top: 300),
-          child: Center(
-            child: CircularProgressIndicator(
-              color: AppColors.linearBlue,
-            ),
-          ),
-        );
-      }, initialState: (questions, channel, user) {
-        //BlocProvider.of<TodayChatCubit>(context).getQuestionByDate(DateFormat('yyyy-MM-dd').format(DateTime.now()));
+      listener: (context, state) {
+        if (state is TodayChatErrorState) {
+          buildErrorCustomSnackBar(context, state.message);
+        }
+      },
+      builder: (context, state) {
+        log(state.toString());
 
-
-        return Column(
-          children: [
-            SizedBox(
-              height: 34.h,
+        return switch (state) {
+          TodayChatLoadingState() => const Padding(
+              padding: EdgeInsets.only(top: 300),
+              child: Center(
+                child: CircularProgressIndicator(
+                  color: AppColors.linearBlue,
+                ),
+              ),
             ),
-            Container(
-              width: 1.sw,
-              decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    begin: Alignment.topRight,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color(0xFFFAE0AB),
-                      Color(0xFFF9A502),
-                    ],
+          TodayChatInitialState(:final questions, :final channel) => Column(
+              children: [
+                SizedBox(
+                  height: 25.h,
+                ),
+                SizedBox(
+                  width: double.infinity,
+                  height: 180.h,
+                  child: Hero(
+                    tag: 'UA',
+                    child: Image.asset(
+                      'assets/images/ustaz_aitinizh.png',
+                      fit: BoxFit.fill,
+                    ),
                   ),
-                  borderRadius: BorderRadius.circular(24)),
-              padding: EdgeInsets.only(
-                  top: 19.r, bottom: 19.r, left: 92.r, right: 92.r),
-              child: Column(
-                children: [
-                  SvgPicture.asset(Assets.boxStorySvg),
-                  SizedBox(
-                    height: 12.h,
-                  ),
-                  Text(
-                    'can_question'.tr(),
+                ),
+                SizedBox(
+                  height: 8.h,
+                ),
+                InkWell(
+                  onTap: () async {
+                    await context.read<TodayChatCubit>().connectSocket();
+                  },
+                  child: Text(
+                    'warning_24'.tr(),
+                    style: getTextStyle(CustomTextStyles.s12w600)
+                        .copyWith(fontFamily: FontTypes.SF_Pro.name),
                     textAlign: TextAlign.center,
-                    style: getTextStyle(CustomTextStyles.s16w200)
-                        .copyWith(
-                            fontFamily: FontTypes.Philosopher.name,
-                            fontSize: 24.sp,
-                            fontWeight: FontWeight.w700)
-                        .apply(color: AppColors.white),
-                  )
-                ],
-              ),
-            ),
-            SizedBox(
-              height: 8.h,
-            ),
-            InkWell(
-              onTap: () async {
-                await context.read<TodayChatCubit>().connectSocket();
-              },
-              child: Text(
-                'warning_24'.tr(),
-                style: getTextStyle(CustomTextStyles.s12w600)
-                    .copyWith(fontFamily: FontTypes.SF_Pro.name),
-              ),
-            ),
-            SizedBox(
-              height: 16.h,
-            ),
+                  ),
+                ),
+                SizedBox(
+                  height: 16.h,
+                ),
 
-            QuestionsList(
-              questions: questions.reversed.toList(),
-              isSocket: channel == null ? null : false,
-            ),
+                QuestionsList(
+                  questions: questions.reversed.toList(),
+                  isSocket: channel == null ? null : false,
+                ),
 
-            SizedBox(
-              height: 200,
+                SizedBox(
+                  height: 200,
+                ),
+                //QuestionsList(questions: questions,),
+              ],
             ),
-            //QuestionsList(questions: questions,),
-          ],
-        );
-      });
-    });
+          // TODO: error widget
+          _ => const SizedBox.shrink()
+        };
+      },
+    );
   }
 }

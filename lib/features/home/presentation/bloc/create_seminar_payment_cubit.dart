@@ -18,36 +18,44 @@ class CreateSeminarPaymentCubit extends Cubit<CreateSeminarPaymentState> {
 
   CreateSeminarPaymentCubit(
     this._repository,
-  ) : super(const CreateSeminarPaymentState.initialState());
+  ) : super(const CreateSeminarPaymentState.initial());
 
   Future<void> createSeminarPayment(
     int id,
     BuildContext context,
   ) async {
-    emit(_LoadingState());
+    emit(CreateSeminarPaymentState.loading());
     String tusZhoruDynamicLink = await DynamicLink().createSeminarLink(id);
     final result = await _repository.createSeminarPayment(
         id: id, backUrl: tusZhoruDynamicLink);
     result.fold((l) {
-      emit(_ErrorState(message: mapFailureToMessageBack(l)));
-    }, (r) async {
-      final Uri url = Uri.parse(r.pgRedirectUrl.toString());
-      if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-        throw Exception('Could not launch');
+      try {
+        emit(CreateSeminarPaymentState.error(message: mapFailureToMessage(l)));
+      } catch (e) {
+        emit(CreateSeminarPaymentState.error(message: l.toString()));
       }
+    }, (r) async {
+      emit(CreateSeminarPaymentState.successPay());
+
+      // final Uri url = Uri.parse(r.pgRedirectUrl.toString());
+      // if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      //   throw Exception('Could not launch');
+      // }
     });
   }
 }
 
 @freezed
-class CreateSeminarPaymentState with _$CreateSeminarPaymentState {
-  const factory CreateSeminarPaymentState.initialState() = _InitialPage;
-
-  const factory CreateSeminarPaymentState.loadingState() = _LoadingState;
-
-  const factory CreateSeminarPaymentState.loaded() = _LoadedState;
-
-  const factory CreateSeminarPaymentState.errorState({
+sealed class CreateSeminarPaymentState with _$CreateSeminarPaymentState {
+  const factory CreateSeminarPaymentState.initial() =
+      CreateSeminarPaymentInitialPage;
+  const factory CreateSeminarPaymentState.loading() =
+      CreateSeminarPaymentLoadingState;
+  const factory CreateSeminarPaymentState.loaded() =
+      CreateSeminarPaymentLoadedState;
+  const factory CreateSeminarPaymentState.error({
     required String message,
-  }) = _ErrorState;
+  }) = CreateSeminarPaymentErrorState;
+  const factory CreateSeminarPaymentState.successPay() =
+      CreateSeminarPaymentSuccessPay;
 }

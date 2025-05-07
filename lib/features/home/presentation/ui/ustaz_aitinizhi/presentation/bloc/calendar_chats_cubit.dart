@@ -15,15 +15,13 @@ part 'calendar_chats_cubit.freezed.dart';
 class CalendarChatsCubit extends Cubit<CalendarChatsState> {
   CalendarChatsCubit(
     this._homeRepository,
-  ) : super(const CalendarChatsState.initialState()) {
-    getChatsMonth(DateTime.now())..then((value) {
-      getQuestionByDate(DateFormat('yyyy-MM-dd').format(DateTime.now()));
+  ) : super(const CalendarChatsState.initial()) {
+    getChatsMonth(DateTime.now())
+      ..then((value) {
+        getQuestionByDate(DateFormat('yyyy-MM-dd').format(DateTime.now()));
+      });
 
-    });
-
-
-
-      // getChatByDate(
+    // getChatByDate(
     //     DateFormat('yyyy-MM-dd')
     //         .format(DateTime.now().copyWith(day: 1))
     //         .toString(),
@@ -51,30 +49,28 @@ class CalendarChatsCubit extends Cubit<CalendarChatsState> {
         endTime: DateFormat('yyyy-MM-dd').format(lastDayDateTime));
     return result.fold((l) => {}, (r) {
       chatsss = r.toList();
-      emit(const _InitialState().copyWith(chats: r));
+      emit(CalendarChatsState.initial(chats: r));
     });
   }
 
-
-
   Future<void> getQuestionByDate(String dateTime) async {
     if (!chatsss.map((e) => e.date).toList().contains(dateTime)) {
-      emit(const _InitialState().copyWith(questions: null,chats: chatsss));
+      emit(CalendarChatsState.initial(questions: null, chats: chatsss));
       return;
     } else {
-      emit(const _InitialState().copyWith(questions: null,chats: chatsss,isLoading:true));
+      emit(CalendarChatsState.initial(
+          questions: null, chats: chatsss, isLoading: true));
 
       final dayChat =
           chatsss.toList().firstWhere((element) => element.date == dateTime);
-      final result =
-          await _homeRepository.questions(id: dayChat.id!, isFirstCall: false,page: 1);
+      final result = await _homeRepository.questions(
+          id: dayChat.id!, isFirstCall: false, page: 1);
       return result.fold(
-          (l) => {
-                emit(const _InitialState()
-                    .copyWith(questions: null, chats: chatsss,isLoading:false))
-              }, (r) async {
-            log(r.toString());
-        emit(_InitialState().copyWith(questions: r.toList(), chats: chatsss,isLoading:false));
+          (l) => emit(CalendarChatsState.initial(
+              questions: null, chats: chatsss, isLoading: false)), (r) async {
+        log(r.toString());
+        emit(CalendarChatsState.initial(
+            questions: r.toList(), chats: chatsss, isLoading: false));
       });
     }
 
@@ -91,35 +87,34 @@ class CalendarChatsCubit extends Cubit<CalendarChatsState> {
     // }
   }
 
-
   Future<void> getQuestionById({int? id}) async {
     if (id == null) {
-      emit(const _InitialState(questions: null));
+      emit(const CalendarChatsState.initial(questions: null));
       return;
     }
     final questions =
-        await _homeRepository.questions(id: id, isFirstCall: true,page: 1);
+        await _homeRepository.questions(id: id, isFirstCall: true, page: 1);
     return questions.fold((l) {
-      emit(const _InitialState(questions: null));
+      emit(const CalendarChatsState.initial(questions: null));
     }, (r) {
-      emit(CalendarChatsState.initialState(questions: r));
+      emit(CalendarChatsState.initial(questions: r));
     });
   }
 }
 
 @freezed
-class CalendarChatsState with _$CalendarChatsState {
-  const factory CalendarChatsState.initialState({
+sealed class CalendarChatsState with _$CalendarChatsState {
+  const factory CalendarChatsState.initial({
     final List<ChatDTO>? chats,
     final List<QuestionDTO>? questions,
     @Default(false) bool isLoading,
-  }) = _InitialState;
+  }) = CalendarChatsInitialState;
 
-  const factory CalendarChatsState.loadedState() = _LoadedState;
+  const factory CalendarChatsState.loaded() = CalendarChatsLoadedState;
 
-  const factory CalendarChatsState.loadingState() = _LoadingState;
+  const factory CalendarChatsState.loading() = CalendarChatsLoadingState;
 
-  const factory CalendarChatsState.errorState({
+  const factory CalendarChatsState.error({
     required String message,
-  }) = _ErrorState;
+  }) = CalendarChatsErrorState;
 }

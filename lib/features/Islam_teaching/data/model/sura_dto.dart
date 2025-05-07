@@ -6,7 +6,7 @@ part 'sura_dto.freezed.dart';
 part 'sura_dto.g.dart';
 
 @freezed
-class SuraDTO with _$SuraDTO {
+abstract class SuraDTO with _$SuraDTO {
   const factory SuraDTO({
     int? count,
     String? next,

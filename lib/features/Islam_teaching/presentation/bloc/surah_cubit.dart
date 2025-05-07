@@ -12,7 +12,7 @@ class SurahCubit extends Cubit<SurahState> {
   final IslamTeachingRepository _islamTeachingRepository;
   SurahCubit(
     this._islamTeachingRepository,
-  ) : super(const SurahState.initialState());
+  ) : super(const SurahState.initial());
 
   Future<void> sura({
     String? search,
@@ -21,8 +21,8 @@ class SurahCubit extends Cubit<SurahState> {
     bool? isFirstCall,
   }) async {
     page > 1
-        ? emit(const SurahState.loadingMoreState())
-        : emit(const SurahState.loadingState());
+        ? emit(const SurahState.loadingMore())
+        : emit(const SurahState.loading());
     final failureOrUser = await _islamTeachingRepository.sura(
         search: search,
         isSaved: isSaved,
@@ -30,7 +30,7 @@ class SurahCubit extends Cubit<SurahState> {
         isFirstCall: isFirstCall);
     failureOrUser.fold(
       (l) {
-        emit(SurahState.errorState(message: mapFailureToMessageBack(l)));
+        emit(SurahState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         emit(SurahState.loaded(sura: r.toSet().toList()));
@@ -40,16 +40,14 @@ class SurahCubit extends Cubit<SurahState> {
 }
 
 @freezed
-class SurahState with _$SurahState {
-  const factory SurahState.initialState() = _InitialPage;
-
-  const factory SurahState.loadingState() = _LoadingState;
-  const factory SurahState.loadingMoreState() = _LoadingMoreState;
+sealed class SurahState with _$SurahState {
+  const factory SurahState.initial() = SurahInitialPage;
+  const factory SurahState.loading() = SurahLoadingState;
+  const factory SurahState.loadingMore() = SurahLoadingMoreState;
   const factory SurahState.loaded({
     required List<ResultTeachingDTO> sura,
-  }) = _LoadedState;
-
-  const factory SurahState.errorState({
+  }) = SurahLoadedState;
+  const factory SurahState.error({
     required String message,
-  }) = _ErrorState;
+  }) = SurahErrorState;
 }

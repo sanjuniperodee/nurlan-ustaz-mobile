@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -8,37 +9,33 @@ import '../../../../core/common/colors.dart';
 import '../../../../core/router/app_router.dart';
 import '../../data/models/tus_zhoru_dto.dart';
 
-class TusZhoruList extends StatefulWidget {
+class TusZhoruList extends StatelessWidget {
   const TusZhoruList({Key? key, required this.tusZhoruList}) : super(key: key);
   final List<TusZhoruDTO> tusZhoruList;
 
   @override
-  State<TusZhoruList> createState() => _TusZhoruListState();
-}
-
-class _TusZhoruListState extends State<TusZhoruList> {
-  @override
   Widget build(BuildContext context) {
-    final list = widget.tusZhoruList;
+    final list = tusZhoruList;
 
     return ListView.separated(
-      padding: EdgeInsets.only(bottom: 100, top: 20.h),
+      padding: EdgeInsets.only(bottom: 30.h, top: 20.h),
       itemCount: list.length,
       shrinkWrap: true,
       physics: const BouncingScrollPhysics(),
       itemBuilder: (context, index) {
+        final item = list[index];
         return Padding(
           padding: EdgeInsets.symmetric(horizontal: 1.sp),
           child: GestureDetector(
             onTap: () {
               context.router.push(TusZhoruDetailRoute(
-                id: list[index].id!,
+                id: item.id!,
               ));
             },
             child: Container(
               height: 75.h,
               decoration: BoxDecoration(
-                color: list[index].isPurchased!
+                color: item.isPurchased!
                     ? AppColors.orange
                     : AppColors.white,
                 borderRadius: BorderRadius.circular(20),
@@ -55,35 +52,22 @@ class _TusZhoruListState extends State<TusZhoruList> {
                       Container(
                         width: 200.w,
                         child: Text(
-                          list[index].title ?? '',
+                          item.title ?? '',
                           style: getTextStyle(CustomTextStyles.s16w500)
                               .copyWith(
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: FontTypes.SF_Pro.name,
-                                  color: list[index].isPurchased!
-                                      ? AppColors.white
-                                      : null),
+                              fontWeight: FontWeight.w600,
+                              fontFamily: FontTypes.SF_Pro.name,
+                              color: item.isPurchased!
+                                  ? AppColors.white
+                                  : null),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         width: 250.w,
-                        child: Text(
-                          list[index].isFree!
-                              ? list[index].fullExplanation ?? ''
-                              : list[index].isPurchased!
-                                  ? list[index].fullExplanation ?? ''
-                                  : list[index].partialExplanation ?? '',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: getTextStyle(CustomTextStyles.s14w400).apply(
-                              fontFamily: FontTypes.SF_Pro.name,
-                              color: list[index].isPurchased!
-                                  ? AppColors.white
-                                  : AppColors.grey1.withOpacity(0.55)),
-                        ),
-                      )
+                        child: buildDescriptionText(item),
+                      ),
                     ],
                   ),
                   SizedBox(
@@ -92,11 +76,11 @@ class _TusZhoruListState extends State<TusZhoruList> {
                   Center(
                     child: SvgPicture.asset(
                       'assets/icons/chevronDown.svg',
-                      color: list[index].isPurchased!
+                      color: item.isPurchased!
                           ? AppColors.white
                           : AppColors.primaryColor,
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -108,6 +92,29 @@ class _TusZhoruListState extends State<TusZhoruList> {
           height: 8.h,
         );
       },
+    );
+  }
+
+  Widget buildDescriptionText(TusZhoruDTO item) {
+    final isPurchased = item.isPurchased ?? false;
+    final text = isPurchased
+        ? item.fullExplanation
+        : item.isFree!
+        ? item.fullExplanation
+        : item.partialExplanation;
+
+    final textStyle = getTextStyle(CustomTextStyles.s14w400).apply(
+        fontFamily: FontTypes.SF_Pro.name,
+        color: isPurchased
+        ? AppColors.white
+            : AppColors.grey1.withOpacity(0.55),
+    );
+
+    return Text(
+    text ?? '',
+    maxLines: 1,
+    overflow: TextOverflow.ellipsis,
+    style: textStyle,
     );
   }
 }

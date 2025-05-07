@@ -1,9 +1,10 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
-import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
-import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
+import 'package:flutter_svg/svg.dart';
+
+import '../../../../core/common/app_styles.dart';
+import '../../../../core/common/assets.dart';
+import '../../../../core/common/colors.dart';
 
 class CustomAppBar extends StatelessWidget {
   final String title;
@@ -21,82 +22,48 @@ class CustomAppBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return hideIcon != null && hideIcon == false
-        ? Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-            Center(
-              child: Container(
-                width: 200.w,
-                child: Text(
-                  title,
-                  textAlign: TextAlign.center,
-                  style: getTextStyle(CustomTextStyles.s20w700)
-                      .copyWith(color: color ?? AppColors.white, fontSize: 36),
-                  overflow: TextOverflow.ellipsis,
+    return Stack(
+      children: [
+        Center(
+          child: Container(
+            width: 200.w, // Adjust as needed
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Flexible(
+                  child: Text(
+                    title,
+                    textAlign: TextAlign.center,
+                    style: getTextStyle(CustomTextStyles.s20w700)
+                        .apply(color: color ?? AppColors.white),
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                  ),
                 ),
+              ],
+            ),
+          ),
+        ),
+        if (!(hideIcon != null && hideIcon == false))
+          Positioned(
+            left: 0,
+            child: GestureDetector(
+              onTap: onTap != null
+                  ? () {
+                onTap!();
+              }
+                  : () {
+                Navigator.of(context).pop();
+              },
+              child: SvgPicture.asset(
+                Assets.backButtonSvg,
+                color: color ?? AppColors.white,
               ),
             ),
-          ]
-            // : [
-            //     GestureDetector(
-            //         onTap: onTap != null
-            //             ? () {
-            //                 onTap!();
-            //               }
-            //             : () {
-            //                 Navigator.pop(context);
-            //               },
-            //         child: SvgPicture.asset(
-            //           Assets.backButtonSvg,
-            //           color: color ?? AppColors.white,
-            //         )),
-            //     Expanded(
-            //       flex:10,
-            //       child: Align(
-            //         alignment: Alignment.center,
-            //         child: Container(
-            //           width: 150.w,
-            //           child: Text(
-            //             title,
-            //             textAlign: TextAlign.center,
-            //             style: getTextStyle(CustomTextStyles.s20w700)
-            //                 .apply(color: color ?? AppColors.white),
-            //             overflow: TextOverflow.ellipsis,
-            //           ),
-            //         ),
-            //       ),
-            //     )
-            //   ],
-            )
-        : Stack(
-            children: [
-              Center(
-                child: Container(
-                  width: 200.w,
-                  child: Text(
-                title,
-                textAlign: TextAlign.center,
-                style: getTextStyle(CustomTextStyles.s20w700)
-                    .apply(color: color ?? AppColors.white),
-                overflow: TextOverflow.ellipsis,
-              ),
-                ),
-              ),
-              Positioned(
-                left: 0,
-                child: GestureDetector(
-                    onTap: onTap != null
-                        ? () {
-                            onTap!();
-                          }
-                        : () {
-                            Navigator.pop(context);
-                          },
-                    child: SvgPicture.asset(
-                      Assets.backButtonSvg,
-                      color: color ?? AppColors.white,
-                    )),
-              ),
-            ],
-          );
+          ),
+      ],
+    );
   }
 }
+
+

@@ -1,12 +1,12 @@
-import 'package:json_annotation/json_annotation.dart';
+// ignore_for_file: invalid_annotation_target
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'token_dto.freezed.dart';
 part 'token_dto.g.dart';
 
-
 @freezed
-class TokenDTO with _$TokenDTO {
+abstract class TokenDTO with _$TokenDTO {
   const factory TokenDTO({
     @JsonKey(name: "refresh") String? refresh,
     @JsonKey(name: "access") String? access,
@@ -15,8 +15,9 @@ class TokenDTO with _$TokenDTO {
   factory TokenDTO.fromJson(Map<String, dynamic> json) =>
       _$TokenDTOFromJson(json);
 }
+
 @freezed
-class TokenCreateDTO with _$TokenCreateDTO {
+abstract class TokenCreateDTO with _$TokenCreateDTO {
   const factory TokenCreateDTO({
     @JsonKey(name: "email") String? email,
     @JsonKey(name: "password") String? password,
@@ -25,12 +26,12 @@ class TokenCreateDTO with _$TokenCreateDTO {
   factory TokenCreateDTO.fromJson(Map<String, dynamic> json) =>
       _$TokenCreateDTOFromJson(json);
 }
-@freezed
-class ActivateUserDTO with _$ActivateUserDTO {
-  const factory ActivateUserDTO({
-    @JsonKey(name: "user_id") int? user_id,
-    @JsonKey(name: "code") String? code,
 
+@freezed
+abstract class ActivateUserDTO with _$ActivateUserDTO {
+  const factory ActivateUserDTO({
+    @JsonKey(name: "user_id") int? userId,
+    @JsonKey(name: "code") String? code,
   }) = _ActivateUserDTO;
 
   factory ActivateUserDTO.fromJson(Map<String, dynamic> json) =>

@@ -17,7 +17,7 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
 
   OnBoardingCubit(
     this._onBoardingRepository,
-  ) : super(const OnBoardingState.initialState()) {
+  ) : super(const OnBoardingState.initial()) {
     // _controller.initialize();
     //
     // getVideo().then((value) => _controller =
@@ -28,13 +28,13 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
   late VideoPlayerController _controller;
 
   Future<List<OnBoardingVideoDTO>> getVideo() async {
-    emit(_LoadingState());
+    emit(OnBoardingState.loading());
     final result = await _onBoardingRepository.onBoardingVideo();
     return result.fold((l) {
       return [];
     }, (r) {
       log('videos---${r.toList().toString()}');
-      emit(_InitialPage(videoList: r.toList()));
+      emit(OnBoardingState.initial(videoList: r.toList()));
       return r.toList();
     });
   }
@@ -47,15 +47,13 @@ class OnBoardingCubit extends Cubit<OnBoardingState> {
 }
 
 @freezed
-class OnBoardingState with _$OnBoardingState {
-  const factory OnBoardingState.initialState(
-      {@Default([]) List<OnBoardingVideoDTO> videoList}) = _InitialPage;
-
-  const factory OnBoardingState.loadingState() = _LoadingState;
-
-  const factory OnBoardingState.loaded() = _LoadedState;
-
-  const factory OnBoardingState.errorState({
+sealed class OnBoardingState with _$OnBoardingState {
+  const factory OnBoardingState.initial(
+          {@Default([]) List<OnBoardingVideoDTO> videoList}) =
+      OnBoardingInitialPage;
+  const factory OnBoardingState.loading() = OnBoardingLoadingState;
+  const factory OnBoardingState.loaded() = OnBoardingLoadedState;
+  const factory OnBoardingState.error({
     required String message,
-  }) = _ErrorState;
+  }) = OnBoardingErrorState;
 }

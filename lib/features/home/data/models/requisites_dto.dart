@@ -5,7 +5,7 @@ part 'requisites_dto.freezed.dart';
 part 'requisites_dto.g.dart';
 
 @freezed
-class RequisitesDTO with _$RequisitesDTO {
+abstract class RequisitesDTO with _$RequisitesDTO {
   const factory RequisitesDTO({
     required int id,
     @JsonKey(name: "bank_account_number") String? bankAccountNumber,

@@ -18,107 +18,89 @@ class CalendarChatsPage extends StatefulWidget {
 }
 
 class _CalendarChatsPageState extends State<CalendarChatsPage> {
-
-
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<CalendarChatsCubit, CalendarChatsState>(
       listener: (context, state) {
-        state.maybeWhen(
-            orElse: () {},
-            errorState: (message) {
-              buildErrorCustomSnackBar(context, message);
-            },
-            loadingState: () {
-              return const Align(
-                alignment: Alignment.center,
-                child: Center(
-                  child: CircularProgressIndicator(
-                    color: AppColors.linearBlue,
-                  ),
-                ),
-              );
-            });
+        if (state is CalendarChatsErrorState) {
+          buildErrorCustomSnackBar(context, state.message);
+        }
       },
       builder: (context, state) {
-        return state.maybeWhen(
-          orElse: () {
-            return const Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.linearBlue,
-                ));
-          },
-          errorState: (message) {
-            return const Center(
-                child: CircularProgressIndicator(
-                  color: AppColors.linearBlue,
-                ));
-          },
-          initialState: (chats, questions, isLoading) {
-
-            final List<DateTime> datesWithChat =
-                chats?.map((e) => DateTime.parse(e.date!)).toList() ?? [];
-            print(datesWithChat);
-            return Column(
-              children: [
-                Padding(
-                  padding:
-                  EdgeInsets.symmetric(vertical: 27.h, horizontal: 10.w),
-                  child: Container(
-                    height: 414,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: AppColors.white,
-                      borderRadius: BorderRadius.circular(30.r),
-                    ),
-                    child: CustomCalendarChat(
-                      daysWithChat: datesWithChat,
-                      onDateSelected: (DateTime date) {
-                        context.read<CalendarChatsCubit>().chatPer(DateFormat(
-                            'yyyy-MM-dd').format(date).toString());
-                      },
-                      onMonthChanged: (DateTime time) {},
-                      hideBottomBar: false,
-                      startOnMonday: true,
-                      weekDays: const [
-                        'Дс',
-                        'Сс',
-                        'Ср',
-                        'Бс',
-                        'Жм',
-                        'Сн',
-                        'Жк'
-                      ],
-                      events: const {},
-                      isExpandable: false,
-                      eventDoneColor: Colors.green,
-                      selectedColor: Colors.pink,
-                      todayColor: AppColors.orange,
-                      eventColor: Colors.deepPurple,
-                      locale: '${context.locale.languageCode},${context.locale
-                          .countryCode}',
-                      todayButtonText: '',
-                      isExpanded: true,
-                      dayOfWeekStyle: TextStyle(
-                        color: AppColors.grey2,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 12,
-                      ),
+        if (state is CalendarChatsInitialState) {
+          final questions = state.questions;
+          final List<DateTime> datesWithChat =
+              state.chats?.map((e) => DateTime.parse(e.date!)).toList() ?? [];
+          print(datesWithChat);
+          return Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.symmetric(vertical: 27.h, horizontal: 10.w),
+                child: Container(
+                  height: 414,
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: AppColors.white,
+                    borderRadius: BorderRadius.circular(30.r),
+                  ),
+                  child: CustomCalendarChat(
+                    daysWithChat: datesWithChat,
+                    onDateSelected: (DateTime date) {
+                      context.read<CalendarChatsCubit>().chatPer(
+                          DateFormat('yyyy-MM-dd').format(date).toString());
+                    },
+                    onMonthChanged: (DateTime time) {},
+                    hideBottomBar: false,
+                    startOnMonday: true,
+                    weekDays: [
+                      'calendar.m'.tr(),
+                      'calendar.t'.tr(),
+                      'calendar.w'.tr(),
+                      'calendar.r'.tr(),
+                      'calendar.f'.tr(),
+                      'calendar.s'.tr(),
+                      'calendar.u'.tr(),
+                    ],
+                    events: const {},
+                    isExpandable: false,
+                    eventDoneColor: Colors.green,
+                    selectedColor: Colors.pink,
+                    todayColor: AppColors.orange,
+                    eventColor: Colors.deepPurple,
+                    locale:
+                        '${context.locale.languageCode},${context.locale.countryCode}',
+                    todayButtonText: '',
+                    isExpanded: true,
+                    dayOfWeekStyle: const TextStyle(
+                      color: AppColors.grey2,
+                      fontWeight: FontWeight.w400,
+                      fontSize: 12,
                     ),
                   ),
                 ),
-                isLoading == true ?  Container(
-                  height: 200.h,
+              ),
+              state.isLoading == true
+                  ? SizedBox(
+                      height: 200.h,
+                      child: const Center(
+                        child: CircularProgressIndicator(
+                          color: AppColors.linearBlue,
+                        ),
+                      ),
+                    )
+                  : (questions != null)
+                      ? QuestionsList(
+                          questions: questions.reversed.toSet().toList())
+                      : Container()
+            ],
+          );
+        }
 
-                  child: Center(child: CircularProgressIndicator(
-                    color: AppColors.linearBlue,
-                  ),),) :
-                 (questions != null) ? QuestionsList(
-                    questions: questions.reversed.toSet().toList()) : Container()
-              ],
-            );
-          },
-        );
+        // TODO: error widget
+        return const Center(
+            child: CircularProgressIndicator(
+          color: AppColors.linearBlue,
+        ));
       },
     );
   }

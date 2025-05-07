@@ -41,25 +41,23 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                   newPasController.text.isEmpty ||
                   pasController.text.isEmpty),
               isLoading: isLoading,
-
               onTap: (curPasController.text.isEmpty ||
                           newPasController.text.isEmpty ||
                           pasController.text.isEmpty) ==
                       true
                   ? null
                   : () {
-
                       if (newPasController.text != pasController.text) {
-                         buildErrorCustomSnackBar(
+                        buildErrorCustomSnackBar(
                             context, 'password_dont_match'.tr());
-                         return;
+                        return;
                       }
                       if (curPasController.text.isEmpty ||
                           newPasController.text.isEmpty ||
                           pasController.text.isEmpty) {
-                         buildErrorCustomSnackBar(
+                        buildErrorCustomSnackBar(
                             context, 'write_all_line'.tr());
-                         return;
+                        return;
                       } else {
                         setState(() {
                           isLoading = true;
@@ -77,22 +75,22 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                       }
                     },
               text: 'ready'.tr()),
-
         ),
       ),
       body: BlocConsumer<ChangePassCubit, ChangePassState>(
         listener: (context, state) {
-          state.maybeWhen(
-            loaded: (status) {
-              if(status)
-              buildSuccessCustomSnackBar(context, status == true ? 'SUCCESS' : 'Error');
-            },
-            errorState: (message) {
+          switch (state) {
+            case ChangePassLoadedState(:final status):
+              if (status) {
+                buildSuccessCustomSnackBar(
+                    context, status == true ? 'SUCCESS' : 'Error');
+              }
+              break;
+            case ChangePassErrorState(:final message):
               buildErrorCustomSnackBar(context, message);
-            },
-            orElse: () {},
-          );
-          // TODO: implement listener
+              break;
+            default:
+          }
         },
         builder: (context, state) {
           return SizedBox(
@@ -106,7 +104,7 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                     SizedBox(
                       height: 80.h,
                     ),
-                     CustomAppBar(
+                    CustomAppBar(
                       color: AppColors.black,
                       title: 'password_change'.tr(),
                     ),
@@ -119,13 +117,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                           });
                         },
                         controller: curPasController,
-
                         hintText: 'current_password'.tr(),
                         labelText: 'current_password'.tr(),
                         onChanged: (value) {
                           setState(() {});
                         }),
-
                     SizedBox(
                       height: 24.h,
                     ),
@@ -137,13 +133,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                             obscureNewPass = !obscureNewPass;
                           });
                         },
-
                         hintText: 'new_password'.tr(),
                         labelText: 'new_password'.tr(),
                         onChanged: (value) {
                           setState(() {});
                         }),
-
                     SizedBox(
                       height: 24.h,
                     ),
@@ -155,13 +149,11 @@ class _ChangePasswordPageState extends State<ChangePasswordPage> {
                           });
                         },
                         controller: pasController,
-
                         hintText: 'repeat_new_password'.tr(),
                         labelText: 'repeat_new_password'.tr(),
                         onChanged: (value) {
                           setState(() {});
                         }),
-
                   ],
                 ),
               ),

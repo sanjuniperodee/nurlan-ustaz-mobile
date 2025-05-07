@@ -11,14 +11,14 @@ class PostServiceCubit extends Cubit<PostServiceState> {
   final HomeRepository _homeRepository;
   PostServiceCubit(
     this._homeRepository,
-  ) : super(const PostServiceState.initialState());
+  ) : super(const PostServiceState.initial());
 
   Future<void> postService({required List<int> id}) async {
-    emit(const PostServiceState.loadingState());
+    emit(const PostServiceState.loading());
     final failureOrUser = await _homeRepository.postImamService(id: id);
     failureOrUser.fold(
       (l) {
-        emit(PostServiceState.errorState(message: mapFailureToMessageBack(l)));
+        emit(PostServiceState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         emit(PostServiceState.loaded(url: r));
@@ -28,14 +28,12 @@ class PostServiceCubit extends Cubit<PostServiceState> {
 }
 
 @freezed
-class PostServiceState with _$PostServiceState {
-  const factory PostServiceState.initialState() = _InitialPage;
-
-  const factory PostServiceState.loadingState() = _LoadingState;
-
-  const factory PostServiceState.loaded({required String url}) = _LoadedState;
-
-  const factory PostServiceState.errorState({
+sealed class PostServiceState with _$PostServiceState {
+  const factory PostServiceState.initial() = PostServiceInitialPage;
+  const factory PostServiceState.loading() = PostServiceLoadingState;
+  const factory PostServiceState.loaded({required String url}) =
+      PostServiceLoadedState;
+  const factory PostServiceState.error({
     required String message,
-  }) = _ErrorState;
+  }) = PostServiceErrorState;
 }

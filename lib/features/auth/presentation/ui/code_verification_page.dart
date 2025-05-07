@@ -83,94 +83,93 @@ class _CodeVerificationPageState extends State<CodeVerificationPage> {
   Widget build(BuildContext context) {
     return BlocConsumer<CodeVerificationCubit, CodeVerificationState>(
       builder: (context, state) {
-        return state.maybeWhen(
-          orElse: () {
-            return Container();
-          },
-          loadingState: () {
-            return const Scaffold(
-              body: Center(
-                child: CircularProgressIndicator(),
-              ),
-            );
-          },
-          initialState: () {
-            return Scaffold(
-              floatingActionButtonLocation:
-              FloatingActionButtonLocation.centerFloat,
-              floatingActionButton: Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: CustomAppButtonTimer(
-                    isActive: true,
-                    onTap: () async {
-                      context
-                          .read<CodeVerificationCubit>()
-                          .resendCode(widget.email);
-                    },
-                    text: 'send_again'.tr(),
-                  )),
-              backgroundColor: AppColors.white,
-              body: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 17.w),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: 56.h,
-                      ),
-                      CustomAppBar(
-                        title: 'confirmation_code'.tr(),
-                        color: AppColors.black,
-                      ),
-                      SizedBox(
-                        height: 36.h,
-                      ),
-                      Text(
-                        '${'mail_code'.tr()}${widget.email}',
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: 18.h),
-                      Pinput(
-                        submittedPinTheme: submitted,
-                        focusedPinTheme: focusPinTheme,
-                        defaultPinTheme: defaultPinTheme,
-                        length: 6,
-                        keyboardType:
-                        TextInputType.numberWithOptions(decimal: false),
-                        useNativeKeyboard: true,
-                        inputFormatters: [
-                          FilteringTextInputFormatter.allow(RegExp('[0-9.,]+')),
-                        ],
-                        controller: pinController,
-                        onCompleted: (String value) async {
-                          context.read<CodeVerificationCubit>().sendCode(
-                              pinController.text,
-                              widget.userId,
-                              TokenCreateDTO(
-                                  email: widget.email, password: widget.password));
-                        },
-                      ),
-                    ],
-                  ),
+        if (state is CodeVerificationLoadingState) {
+          return const Scaffold(
+            body: Center(
+              child: CircularProgressIndicator(),
+            ),
+          );
+        }
+
+        if (state is CodeVerificationInitialState) {
+          return Scaffold(
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+            floatingActionButton: Padding(
+                padding: const EdgeInsets.all(16),
+                child: CustomAppButtonTimer(
+                  isActive: true,
+                  onTap: () async {
+                    context
+                        .read<CodeVerificationCubit>()
+                        .resendCode(widget.email);
+                  },
+                  text: 'send_again'.tr(),
+                )),
+            backgroundColor: AppColors.white,
+            body: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              child: Padding(
+                padding: EdgeInsets.symmetric(horizontal: 17.w),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 56.h,
+                    ),
+                    CustomAppBar(
+                      title: 'confirmation_code'.tr(),
+                      color: AppColors.black,
+                    ),
+                    SizedBox(
+                      height: 36.h,
+                    ),
+                    Text(
+                      '${'mail_code'.tr()}${widget.email}',
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 18.h),
+                    Pinput(
+                      submittedPinTheme: submitted,
+                      focusedPinTheme: focusPinTheme,
+                      defaultPinTheme: defaultPinTheme,
+                      length: 6,
+                      keyboardType:
+                          const TextInputType.numberWithOptions(decimal: false),
+                      useNativeKeyboard: true,
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(RegExp('[0-9.,]+')),
+                      ],
+                      controller: pinController,
+                      onCompleted: (String value) async {
+                        context.read<CodeVerificationCubit>().sendCode(
+                            pinController.text,
+                            widget.userId,
+                            TokenCreateDTO(
+                                email: widget.email,
+                                password: widget.password));
+                      },
+                    ),
+                  ],
                 ),
               ),
-            );
-          },
-        );
+            ),
+          );
+        }
 
+        // TODO: error widget
+        return const SizedBox.shrink();
       },
       listener: (context, state) {
-        state.maybeWhen(
-          loadedState: () {
+        switch (state) {
+          case CodeVerificationLoadedState():
             context.router.push(const LauncherAppRoute());
-          },
-          errorState: (message) {
+            break;
+          case CodeVerificationErrorState(:final message):
             pinController.clear();
-            return buildErrorCustomSnackBar(context, message);
-          },
-          orElse: () {},
-        );
+            buildErrorCustomSnackBar(context, message);
+            break;
+          default:
+        }
       },
     );
   }

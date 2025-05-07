@@ -5,7 +5,7 @@ part 'geonames_dto.freezed.dart';
 part 'geonames_dto.g.dart';
 
 @freezed
-class GeonamesDTO with _$GeonamesDTO {
+abstract class GeonamesDTO with _$GeonamesDTO {
   const factory GeonamesDTO({
     String? lng,
     String? lat,

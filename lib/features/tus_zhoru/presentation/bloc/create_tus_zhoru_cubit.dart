@@ -2,10 +2,9 @@ import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:get_ip_address/get_ip_address.dart';
 import 'package:injectable/injectable.dart';
+import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/data/repositories/tus_zhoru_repository.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../app/app_dinamic_link.dart';
 import '../../data/models/tus_zhoru_dto.dart';
@@ -18,12 +17,12 @@ class CreateTusZhoruCubit extends Cubit<CreateTusZhoruState> {
 
   CreateTusZhoruCubit(
     this._repository,
-  ) : super(const CreateTusZhoruState.initialState());
+  ) : super(const CreateTusZhoruState.initial());
 
   late List<TusZhoruDTO> tosZhoruList;
 
   Future<void> createCustomTusZhoruPayment(int id, bool isCustom) async {
-    emit(_LoadingState());
+    emit(const CreateTusZhoruState.loading());
 
     String tusZhoruDynamicLink = isCustom
         ? await DynamicLink().createCustomTusZhoruLink(id)
@@ -32,36 +31,38 @@ class CreateTusZhoruCubit extends Cubit<CreateTusZhoruState> {
     log(tusZhoruDynamicLink);
     final result = isCustom
         ? await _repository.createCustomTusZhoruPayment(
-            id: id, backUrl: tusZhoruDynamicLink)
+            id: id,
+          )
         : await _repository.createTusZhoruPayment(
             id: id, backUrl: tusZhoruDynamicLink);
-    result.fold((l) => {}, (r) async {
-      print(r.toString());
-      final Uri url = Uri.parse(r.pgRedirectUrl.toString());
-      if (!await launchUrl(url,mode: LaunchMode.externalApplication)) {
-        throw Exception('Could not launch');
-      }
+    result.fold((l) {
+      emit(CreateTusZhoruState.error(message: mapFailureToMessage(l)));
+    }, (r) {
+      emit(const CreateTusZhoruState.success(message: ''));
     });
   }
 
   Future<void> createTusZhoru(String title, String description) async {
     final result = await _repository.createTusZhoru(
         title: title, description: description);
-    return result.fold((l) => {}, (r) {emit(_LoadedState(tusZhoru: r));});
+    return result.fold((l) => {}, (r) {
+      emit(CreateTusZhoruState.loaded(tusZhoru: r));
+    });
   }
 }
 
 @freezed
-class CreateTusZhoruState with _$CreateTusZhoruState {
-  const factory CreateTusZhoruState.initialState() = _InitialPage;
-
-  const factory CreateTusZhoruState.loadingState() = _LoadingState;
-
+sealed class CreateTusZhoruState with _$CreateTusZhoruState {
+  const factory CreateTusZhoruState.initial() = CreateTusZhoruInitialState;
+  const factory CreateTusZhoruState.loading() = CreateTusZhoruLoadingState;
   const factory CreateTusZhoruState.loaded({
     required TusZhoruDTO tusZhoru,
-  }) = _LoadedState;
+  }) = CreateTusZhoruLoadedState;
 
-  const factory CreateTusZhoruState.errorState({
+  const factory CreateTusZhoruState.error({
     required String message,
-  }) = _ErrorState;
+  }) = CreateTusZhoruErrorState;
+  const factory CreateTusZhoruState.success({
+    required String message,
+  }) = CreateTusZhoruSuccessState;
 }

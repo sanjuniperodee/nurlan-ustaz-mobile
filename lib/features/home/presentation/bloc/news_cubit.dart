@@ -12,7 +12,7 @@ class NewsCubit extends Cubit<NewsState> {
   final HomeRepository _homeRepository;
   NewsCubit(
     this._homeRepository,
-  ) : super(const NewsState.initialState());
+  ) : super(const NewsState.initial());
 
   Future<void> news({
     String? search,
@@ -21,35 +21,30 @@ class NewsCubit extends Cubit<NewsState> {
     bool? isFirstCall,
   }) async {
     page > 1
-        ? emit(const NewsState.loadingMoreState())
-        : emit(const NewsState.loadingState());
+        ? emit(const NewsState.loadingMore())
+        : emit(const NewsState.loading());
     final failureOrUser = await _homeRepository.news(
         search: search, isSaved: isSaved, page: page, isFirstCall: isFirstCall);
     failureOrUser.fold(
       (l) {
-        emit(NewsState.errorState(message: mapFailureToMessageBack(l)));
+        emit(NewsState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         emit(NewsState.loaded(news: r.toSet().toList()));
       },
     );
   }
-
-  
 }
 
 @freezed
-class NewsState with _$NewsState {
-  const factory NewsState.initialState() = _InitialPage;
-
-  const factory NewsState.loadingState() = _LoadingState;
-  const factory NewsState.loadingMoreState() = _LoadingMoreState;
-
+sealed class NewsState with _$NewsState {
+  const factory NewsState.initial() = NewsInitialPage;
+  const factory NewsState.loading() = NewsLoadingState;
+  const factory NewsState.loadingMore() = NewsLoadingMoreState;
   const factory NewsState.loaded({
     required List<ResultHomeDTO> news,
-  }) = _LoadedState;
-
-  const factory NewsState.errorState({
+  }) = NewsLoadedState;
+  const factory NewsState.error({
     required String message,
-  }) = _ErrorState;
+  }) = NewsErrorState;
 }

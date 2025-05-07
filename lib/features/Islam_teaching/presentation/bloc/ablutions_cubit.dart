@@ -13,19 +13,19 @@ class AblutionsCubit extends Cubit<AblutionsState> {
   final IslamTeachingRepository _islamTeachingRepository;
   AblutionsCubit(
     this._islamTeachingRepository,
-  ) : super(const AblutionsState.initialState());
+  ) : super(const AblutionsState.initial());
 
   List<NamazDTO> abl = [];
   List<PillarsDTO> pre = [];
   Future<void> ablutions({required String gender}) async {
-    emit(const AblutionsState.loadingState());
+    emit(const AblutionsState.loading());
 
     final failureOrUser =
         await _islamTeachingRepository.ablutions(gender: gender);
 
     failureOrUser.fold(
       (l) {
-        emit(AblutionsState.errorState(message: mapFailureToMessageBack(l)));
+        emit(AblutionsState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         abl = r;
@@ -35,14 +35,14 @@ class AblutionsCubit extends Cubit<AblutionsState> {
   }
 
   Future<void> prayerTimes({required String gender}) async {
-    emit(const AblutionsState.loadingState());
+    emit(const AblutionsState.loading());
 
     final failureOrUser =
         await _islamTeachingRepository.prayerTimes(gender: gender);
 
     failureOrUser.fold(
       (l) {
-        emit(AblutionsState.errorState(message: mapFailureToMessageBack(l)));
+        emit(AblutionsState.error(message: mapFailureToMessageBack(l)));
       },
       (r) {
         pre = r;
@@ -53,17 +53,14 @@ class AblutionsCubit extends Cubit<AblutionsState> {
 }
 
 @freezed
-class AblutionsState with _$AblutionsState {
-  const factory AblutionsState.initialState() = _InitialPage;
-
-  const factory AblutionsState.loadingState() = _LoadingState;
-
+sealed class AblutionsState with _$AblutionsState {
+  const factory AblutionsState.initial() = AblutionsInitialPage;
+  const factory AblutionsState.loading() = AblutionsLoadingState;
   const factory AblutionsState.loaded({
     required List<NamazDTO> abl,
     required List<PillarsDTO> pre,
-  }) = _LoadedState;
-
-  const factory AblutionsState.errorState({
+  }) = AblutionsLoadedState;
+  const factory AblutionsState.error({
     required String message,
-  }) = _ErrorState;
+  }) = AblutionsErrorState;
 }
