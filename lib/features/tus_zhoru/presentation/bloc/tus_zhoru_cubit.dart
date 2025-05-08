@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_windowmanager/flutter_windowmanager.dart';
+import 'package:flutter_windowmanager_plus/flutter_windowmanager_plus.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
@@ -27,15 +27,17 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
   late List<TusZhoruDTO> customTusZhoruList;
 
   Future<void> secureScreen() async {
+    // TODO: replace with "secure_application" plugin?
     Platform.isAndroid
-        ? await FlutterWindowManager.addFlags(FlutterWindowManager.FLAG_SECURE)
+        ? await FlutterWindowManagerPlus.addFlags(
+            FlutterWindowManagerPlus.FLAG_SECURE)
         : await securityChannel.invokeMethod('secureApp');
   }
 
   Future<void> unSecureScreen() async {
     Platform.isAndroid
-        ? await FlutterWindowManager.clearFlags(
-            FlutterWindowManager.FLAG_SECURE)
+        ? await FlutterWindowManagerPlus.clearFlags(
+            FlutterWindowManagerPlus.FLAG_SECURE)
         : await securityChannel.invokeMethod('unsecureApp');
   }
 
