@@ -20,17 +20,13 @@ dependencies:
   geolocator: ^13.0.4
   url_launcher: ^6.1.11
   image_picker: ^1.1.2
-  audioplayers: ^6.4.0
   video_player: ^2.7.0
   path_provider: ^2.0.15
-  better_player: ^0.0.83
   webview_flutter: ^4.11.0
-  qr_code_scanner: ^1.0.1
   package_info_plus: ^8.3.0
-  network_info_plus: ^6.1.4
   shared_preferences: ^2.0.15
   permission_handler: ^12.0.0+1
-  flutter_windowmanager: ^0.2.0
+  flutter_windowmanager_plus: ^1.0.1
   internet_connection_checker: ^3.0.1
   flutter_local_notifications: ^19.1.0
   syncfusion_flutter_pdfviewer: ^29.1.40
@@ -46,7 +42,6 @@ dependencies:
   auto_route: ^10.0.1
   injectable: ^2.1.0
   flutter_bloc: ^9.1.1
-  get_ip_address: ^0.0.5
   chucker_flutter: ^1.3.5
   json_annotation: ^4.9.0
   stop_watch_timer: ^3.2.2

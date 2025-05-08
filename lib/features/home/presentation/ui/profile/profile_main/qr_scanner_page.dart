@@ -10,7 +10,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_sn
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/bloc/qr_scanner_cubit.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+// import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 import '../../../../../../core/common/colors.dart';
 import '../../../../../app/presentation/widgets/custom_app_bar.dart';
@@ -25,18 +25,19 @@ class QrScannerPage extends StatefulWidget {
 
 class _QrScannerPage extends State<QrScannerPage> {
   bool _switchValue = false;
-  Barcode? result;
-  QRViewController? controller;
+  // TODO: implement using "mobile_scanner" package instead
+  // Barcode? result;
+  // QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
 
   @override
   void reassemble() {
     super.reassemble();
-    if (Platform.isAndroid) {
-      controller!.pauseCamera();
-    } else if (Platform.isIOS) {
-      controller!.resumeCamera();
-    }
+    // if (Platform.isAndroid) {
+    //   controller!.pauseCamera();
+    // } else if (Platform.isIOS) {
+    //   controller!.resumeCamera();
+    // }
   }
 
   Future<void> _requestCameraPermission() async {
@@ -101,23 +102,23 @@ class _QrScannerPage extends State<QrScannerPage> {
                       SizedBox(
                         height: 70.h,
                       ),
-                      Container(
-                          height: 500.h,
-                          width: double.infinity,
-                          child: _buildQrView(context)),
+                      // Container(
+                      //     height: 500.h,
+                      //     width: double.infinity,
+                      //     child: _buildQrView(context)),
                       SizedBox(
                         height: 30.h,
                       ),
                       IconButton(
                           onPressed: () async {
-                            Future<bool?>? isFlash =
-                                controller?.getFlashStatus();
-                            bool? resolvedBoolValue = await isFlash;
-                            log(resolvedBoolValue.toString());
-                            log(_switchValue.toString());
-                            _switchValue = !_switchValue;
-                            controller?.toggleFlash();
-                            setState(() {});
+                            // Future<bool?>? isFlash =
+                            //     controller?.getFlashStatus();
+                            // bool? resolvedBoolValue = await isFlash;
+                            // log(resolvedBoolValue.toString());
+                            // log(_switchValue.toString());
+                            // _switchValue = !_switchValue;
+                            // controller?.toggleFlash();
+                            // setState(() {});
                           },
                           icon: AnimatedCrossFade(
                             firstChild: const Icon(
@@ -142,49 +143,49 @@ class _QrScannerPage extends State<QrScannerPage> {
     );
   }
 
-  Widget _buildQrView(BuildContext context) {
-    var scanArea = (MediaQuery.of(context).size.width < 400 ||
-            MediaQuery.of(context).size.height < 400)
-        ? 300.0
-        : 300.0;
-    return QRView(
-      cameraFacing: CameraFacing.back,
-      key: qrKey,
-      onQRViewCreated: _onQRViewCreated,
-      overlay: QrScannerOverlayShape(
-          borderColor: AppColors.blue,
-          borderRadius: 10,
-          borderLength: 30,
-          borderWidth: 10,
-          cutOutSize: scanArea),
-      onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
-    );
-  }
+  // Widget _buildQrView(BuildContext context) {
+  //   var scanArea = (MediaQuery.of(context).size.width < 400 ||
+  //           MediaQuery.of(context).size.height < 400)
+  //       ? 300.0
+  //       : 300.0;
+  //   return QRView(
+  //     cameraFacing: CameraFacing.back,
+  //     key: qrKey,
+  //     onQRViewCreated: _onQRViewCreated,
+  //     overlay: QrScannerOverlayShape(
+  //         borderColor: AppColors.blue,
+  //         borderRadius: 10,
+  //         borderLength: 30,
+  //         borderWidth: 10,
+  //         cutOutSize: scanArea),
+  //     onPermissionSet: (ctrl, p) => _onPermissionSet(context, ctrl, p),
+  //   );
+  // }
 
-  void _onQRViewCreated(QRViewController controller) {
-    setState(() {
-      this.controller = controller;
-    });
-    controller.scannedDataStream.listen((scanData) async {
-      if (!scanData.code
-          .toString()
-          .contains('https://dev.nurlanustaz.kz/api/banner/use-ticket')) {
-        buildErrorCustomSnackBar(context, 'QR.qr_error_url'.tr());
-      } else {
-        controller.pauseCamera();
-        context
-            .read<QrScannerCubit>()
-            .checkTicket(url: scanData.code.toString());
-      }
-    });
-  }
+  // void _onQRViewCreated(QRViewController controller) {
+  //   setState(() {
+  //     this.controller = controller;
+  //   });
+  //   controller.scannedDataStream.listen((scanData) async {
+  //     if (!scanData.code
+  //         .toString()
+  //         .contains('https://dev.nurlanustaz.kz/api/banner/use-ticket')) {
+  //       buildErrorCustomSnackBar(context, 'QR.qr_error_url'.tr());
+  //     } else {
+  //       controller.pauseCamera();
+  //       context
+  //           .read<QrScannerCubit>()
+  //           .checkTicket(url: scanData.code.toString());
+  //     }
+  //   });
+  // }
 
-  void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
-    if (!p) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('QR.qr_permission'.tr())),
-      );
-      Permission.camera;
-    }
-  }
+  // void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
+  //   if (!p) {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(content: Text('QR.qr_permission'.tr())),
+  //     );
+  //     Permission.camera;
+  //   }
+  // }
 }
