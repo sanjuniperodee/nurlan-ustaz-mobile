@@ -35,7 +35,7 @@ mixin EndPoints {
   static const String prayerTimes = '/api/islam/prayer-times/';
   static const String timings = '/api/islam/prayer-times/timings/';
   static const String geoNames = '/api/notifications/devices/geo_names/';
-  static const String notification = '/api/notifications/devices/';
+  static const String notification = '/api/notifications/devices';
   static const String getNotification = '/api/notifications/notifications/';
 
   static const String setCity = '/api/notifications/devices/';
@@ -75,6 +75,4 @@ mixin EndPoints {
   //cards
   static const String cards = '/api/payment/cards/';
   static const String addCards = '/api/payment/add-card/';
-
-
 }

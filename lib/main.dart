@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:ui';
 
-import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -71,7 +70,6 @@ Future<void> main() async {
       await firebaseListen();
       // await firebaseInit();
       await checkLocationPermission();
-      ChuckerFlutter.showOnRelease = false;
       FlutterError.onError = (errorDetails) {
         FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
       };

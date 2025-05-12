@@ -52,7 +52,7 @@ mixin MainRunner {
           Locale('kk'),
           Locale('ru'),
         ],
-        startLocale: const Locale('ru'),
+        // startLocale: const Locale('ru'),
         path: 'assets/translations',
         fallbackLocale: const Locale('ru'),
         child: app,

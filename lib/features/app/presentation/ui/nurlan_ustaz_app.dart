@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:chucker_flutter/chucker_flutter.dart';
+// import 'package:chucker_flutter/chucker_flutter.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +61,6 @@ class _NurlanUstazAppState extends State<NurlanUstazApp> {
                 // key: rootNavigatorKey,
                 routerConfig: _rootRouter.config(
                     navigatorObservers: () => [
-                          ChuckerFlutter.navigatorObserver,
                           FirebaseAnalyticsObserver(
                               analytics: _firebaseAnalytics),
                         ]),

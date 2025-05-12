@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
@@ -15,38 +15,39 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_sn
 import 'package:nurlan_ustaz_flutter/features/auth/data/datasource/local/auth_local_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_post_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_report_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_sem_post_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_detail_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/widgets/comment_deep_item_widget.dart';
 
 @RoutePage()
-class CommentPageSem extends StatefulWidget {
+class CommentNewsPage extends StatefulWidget {
   final int id;
-  const CommentPageSem({super.key, required this.id});
+  const CommentNewsPage({super.key, required this.id});
 
   @override
-  State<CommentPageSem> createState() => _CommentPageSemState();
+  State<CommentNewsPage> createState() => _CommentNewsPageState();
 }
 
-class _CommentPageSemState extends State<CommentPageSem> {
+class _CommentNewsPageState extends State<CommentNewsPage> {
   final ScrollController _scrollController = ScrollController();
   int page = 1;
   final TextEditingController _textEditingController = TextEditingController();
   List<ResultHomeDTO> listOfComments = [];
   bool isLoadingMore = false;
-  int? idChildComment;
   FocusNode focusNode = FocusNode();
+  int? idChildComment;
   UserDto? user;
   @override
   void initState() {
     // TODO: implement initState
-    BlocProvider.of<CommentSemCubit>(context)
-        .commentsSem(page: 1, isFirstCall: true, id: widget.id);
+    BlocProvider.of<CommentNewsCubit>(context)
+        .commentsNews(page: 1, isFirstCall: true, id: widget.id);
     getIt<AuthLocalDs>().getUserFromCacheNull().then((value) {
       user = value;
     });
+
     _scrollController.addListener(_scrollListener);
     WidgetsBinding.instance.addPostFrameCallback((_) {
       FocusScope.of(context).requestFocus(focusNode);
@@ -67,8 +68,8 @@ class _CommentPageSemState extends State<CommentPageSem> {
       appBar: AppBar(
         leading: GestureDetector(
             onTap: () {
-              BlocProvider.of<SeminarDetailCubit>(context)
-                  .seminarDetail(id: widget.id)
+              BlocProvider.of<NewsDetailCubit>(context)
+                  .newsDetail(id: widget.id)
                   .then((value) => Navigator.pop(context));
             },
             child: const Icon(
@@ -136,33 +137,34 @@ class _CommentPageSemState extends State<CommentPageSem> {
                             child: TextField(
                               autofocus: true, // Set autofocus to true
                               focusNode: focusNode,
-                              maxLength: 999,
                               controller: _textEditingController,
+                              maxLength: 999,
                               decoration: InputDecoration(
                                   hintText: 'write_comm'.tr(),
                                   counterText: '',
                                   border: InputBorder.none),
                             ),
                           ),
-                          BlocListener<CommentSemPostCubit,
-                              CommentSemPostState>(
+                          BlocListener<CommentNewsPostCubit,
+                              CommentNewsPostState>(
                             listener: (context, state) {
-                              log(state.toString());
-                              if (state is CommentSemPostLoadedState) {
-                                context.read<CommentSemCubit>().commentsSem(
+                              if (state is CommentNewsLoadedState) {
+                                context.read<CommentNewsCubit>().commentsNews(
                                     page: 1, isFirstCall: true, id: widget.id);
                               }
+                              log(state.toString());
                             },
                             child: IconButton(
                               icon: const Icon(Icons.send),
                               onPressed: () {
-                                BlocProvider.of<CommentSemPostCubit>(context)
-                                    .seminarCommentPost(
+                                BlocProvider.of<CommentNewsPostCubit>(context)
+                                    .newsCommentPost(
                                   body: _textEditingController.text,
                                   id: widget.id,
                                   commentId: idChildComment,
                                 );
                                 idChildComment = null;
+                                setState(() {});
                                 _textEditingController.clear();
                               },
                             ),
@@ -174,17 +176,16 @@ class _CommentPageSemState extends State<CommentPageSem> {
                 ],
               ),
             ),
-      body: BlocConsumer<CommentSemCubit, CommentSemState>(
+      body: BlocConsumer<CommentNewsCubit, CommentNewsState>(
         listener: (context, state) {
-          isLoadingMore = state is CommentSemLoadingMoreState;
-          if (state is CommentSemLoadedState) {
+          isLoadingMore = state is CommentNewsLoadingMoreState;
+          if (state is CommentNewsLoadedState) {
             listOfComments = state.comments;
-          } else if (state is CommentSemErrorState) {
+          } else if (state is CommentNewsErrorState) {
             buildErrorCustomSnackBar(context, state.message);
           }
         },
         builder: (context, state) {
-          log('LIST${listOfComments.toString()}');
           return ListView(
             children: [
               // if (listOfComments != null)
@@ -326,7 +327,7 @@ class _CommentPageSemState extends State<CommentPageSem> {
                                                           height: 56.h,
                                                           color:
                                                               AppColors.grey1,
-                                                          child: Center(
+                                                          child: const Center(
                                                               child: Icon(Icons
                                                                   .info_outline)),
                                                         ),
@@ -375,8 +376,8 @@ class _CommentPageSemState extends State<CommentPageSem> {
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
       page++;
-      BlocProvider.of<CommentSemCubit>(context)
-          .commentsSem(page: page, id: widget.id);
+      BlocProvider.of<CommentNewsCubit>(context)
+          .commentsNews(page: page, id: widget.id);
     }
   }
 }
