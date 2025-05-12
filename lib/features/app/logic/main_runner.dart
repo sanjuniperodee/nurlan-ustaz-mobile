@@ -32,8 +32,7 @@ mixin MainRunner {
     required AsyncDependencies<D> asyncDependencies,
     required AppBuilder<D> appBuilder,
   }) async {
-    // ignore: avoid-ignoring-return-values
-    await initLocator();
+    await configureDependencies();
     await EasyLocalization.ensureInitialized();
     EasyLocalization.logger.enableLevels = [];
     await Firebase.initializeApp(

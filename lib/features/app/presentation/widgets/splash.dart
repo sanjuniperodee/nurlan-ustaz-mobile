@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 
@@ -19,7 +20,7 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     Future.delayed(const Duration(seconds: 2), () {
       // AppRouter().routes
-      getIt<AppRouter>().pushAll([
+      GetIt.I<AppRouter>().pushAll([
         const LauncherAppRoute(
           children: [
             MainRouterPage(),

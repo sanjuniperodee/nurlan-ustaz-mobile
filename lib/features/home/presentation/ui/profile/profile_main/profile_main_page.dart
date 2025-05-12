@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/core/utils/alert_utilrs.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
@@ -24,7 +25,7 @@ import '../../../../../zhosparlar/presentation/bloc/zhosparym_cubit.dart';
 
 @RoutePage()
 class ProfileMainPage extends StatefulWidget {
-  const ProfileMainPage({Key? key}) : super(key: key);
+  const ProfileMainPage({super.key});
 
   @override
   State<ProfileMainPage> createState() => _ProfileMainPage();
@@ -34,22 +35,22 @@ class _ProfileMainPage extends State<ProfileMainPage> {
   @override
   void initState() {
     BlocProvider.of<GetProfileCubit>(context).getUser();
-    chosenLang = getIt<AuthLocalDs>().getLocale();
+    chosenLang = GetIt.I<AuthLocalDs>().getLocale();
     chosenLang = (chosenLang == 'kz' || chosenLang == 'kk') ? 'kk' : 'ru';
     super.initState();
   }
 
   Map<String, String> langMap = {
-    //'🇷🇺 Русский': 'ru',
+    '🇷🇺 Русский': 'ru',
     '🇰🇿 Қазақша': 'kk',
   };
 
   Map<String, String> localMap = {
-    //'ru': '🇷🇺 Русский ',
+    'ru': '🇷🇺 Русский ',
     'kk': '🇰🇿 Қазақша',
   };
   Map<String, String> langMapText = {
-    //'ru': 'Русский',
+    'ru': 'Русский',
     'kk': 'Қазақша',
   };
   String? chosenLang;

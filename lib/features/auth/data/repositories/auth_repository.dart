@@ -46,7 +46,7 @@ abstract class AuthRepository {
   Future<Either<Failure, bool>> newPass(
       {required String curPass, required String newPass, required String pass});
 
-  Either<Failure, TokenDTO> authCheck();
+  Future<Either<Failure, TokenDTO>> authCheck();
 
   Either<Failure, String> logOut();
 
@@ -171,13 +171,14 @@ class AuthRepositoryImpl extends AuthRepository {
       try {
         final TokenDTO result =
             await remoteDS.createJwt(tokenCreateDTO: createTokenDTO);
-        localDS.saveToken(token: result);
-        final UserDto? user = await remoteDS.getUser();
-        if (user != null) {
-          localDS.saveUser(user: user);
-        }
-        final UserDto? users = await localDS.getUserFromCacheNull();
-        log('USERRRR${users.toString()}');
+        await localDS.saveToken(result);
+        final user = await remoteDS.getUser();
+        // if (user != null) {
+        // TODO: User нигде не используется? Зачем тогда его хранить?
+        localDS.saveUser(user: user);
+        // }
+        // final UserDto? users = await localDS.getUserFromCacheNull();
+        // log('USERRRR${users.toString()}');
         return Right(result);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -236,9 +237,9 @@ class AuthRepositoryImpl extends AuthRepository {
   }
 
   @override
-  Either<Failure, TokenDTO> authCheck() {
+  Future<Either<Failure, TokenDTO>> authCheck() async {
     try {
-      final TokenDTO? token = localDS.getTokenFromCache();
+      final token = await localDS.getTokenFromCacheNull();
       log(
         'AuthRepositoryImpl authCheck:: ${token}',
         name: _tag,

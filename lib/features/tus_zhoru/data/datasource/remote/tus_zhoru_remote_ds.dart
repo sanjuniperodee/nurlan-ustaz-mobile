@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
 import 'package:nurlan_ustaz_flutter/core/model/freedom_payment_dto.dart';
-import 'package:nurlan_ustaz_flutter/core/platform/dio_wrapper.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/data/models/tus_zhoru_dto.dart';
@@ -39,13 +38,9 @@ abstract class TusZhoruRemoteDs {
 
 @Injectable(as: TusZhoruRemoteDs)
 class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
-  late final Dio dio;
-  final DioWrapper dioWrapper;
+  TusZhoruRemoteDsImpl(this.dio);
 
-  TusZhoruRemoteDsImpl(this.dioWrapper) {
-    dioWrapper.path('');
-    dio = dioWrapper.dio;
-  }
+  final Dio dio;
 
   int? lpc;
   int? lpb;

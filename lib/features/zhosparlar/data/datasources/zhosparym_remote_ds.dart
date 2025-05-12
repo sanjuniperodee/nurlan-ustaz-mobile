@@ -3,7 +3,6 @@ import 'dart:developer';
 
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'package:nurlan_ustaz_flutter/core/platform/dio_wrapper.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/checklist_day_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/checklist_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/checklist_task_dto.dart';
@@ -39,14 +38,9 @@ abstract class ZhosparymRemoteDs {
 
 @Injectable(as: ZhosparymRemoteDs)
 class ZhosparymRemoteDsImpl extends ZhosparymRemoteDs {
+  ZhosparymRemoteDsImpl(this.dio);
+
   late final Dio dio;
-  final DioWrapper dioWrapper;
-
-  ZhosparymRemoteDsImpl(this.dioWrapper) {
-    dioWrapper.path('');
-    dio = dioWrapper.dio;
-  }
-
   int? lpp;
   List<CheckListDto> checkLists = [];
 

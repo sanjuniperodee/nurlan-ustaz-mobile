@@ -12,6 +12,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get_it/get_it.dart';
 import 'package:nurlan_ustaz_flutter/core/model/async_app_dependecies.dart';
 import 'package:nurlan_ustaz_flutter/features/app/logic/main_runner.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/nurlan_ustaz_app.dart';
@@ -55,7 +56,7 @@ Future<void> firebaseInit() async {
 Future<void> main() async {
   runZonedGuarded(
     () async {
-      getIt.registerSingleton<AppRouter>(AppRouter());
+      GetIt.instance.registerSingleton<AppRouter>(AppRouter());
 
       WidgetsFlutterBinding.ensureInitialized();
       await SystemChrome.setPreferredOrientations(
@@ -114,7 +115,7 @@ Future<void> navigateToTusZhoru(Uri link) async {
   if (queryParams.isNotEmpty) {
     var id = queryParams['id'];
     if (id != null) {
-      getIt<AppRouter>().pushAll([
+      GetIt.I<AppRouter>().pushAll([
         const LauncherAppRoute(
           children: [
             MainRouterPage(),
@@ -132,7 +133,7 @@ Future<void> navigateToCustomTusZhoru(Uri link) async {
   if (queryParams.isNotEmpty) {
     var id = queryParams['id'];
     if (id != null) {
-      getIt<AppRouter>().pushAll([
+      GetIt.I<AppRouter>().pushAll([
         const LauncherAppRoute(
           children: [
             MainRouterPage(),
@@ -152,7 +153,7 @@ Future<void> navigateToSeminar(Uri link) async {
   if (queryParams.isNotEmpty) {
     var id = queryParams['id'];
     if (id != null) {
-      getIt<AppRouter>().pushAll([
+      GetIt.I<AppRouter>().pushAll([
         const LauncherAppRoute(
           children: [
             MainRouterPage(),
@@ -172,7 +173,7 @@ Future<void> navigateToDuas(Uri link) async {
   if (queryParams.length > 0) {
     var id = queryParams['id'];
     if (id != null) {
-      getIt<AppRouter>().pushAll([
+      GetIt.I<AppRouter>().pushAll([
         const LauncherAppRoute(
           children: [
             MainRouterPage(),
@@ -192,7 +193,7 @@ Future<void> navigateToNews(Uri link) async {
   if (queryParams.length > 0) {
     var id = queryParams['id'];
     if (id != null) {
-      getIt<AppRouter>().pushAll([
+      GetIt.I<AppRouter>().pushAll([
         const LauncherAppRoute(
           children: [
             MainRouterPage(),
@@ -212,7 +213,7 @@ Future<void> navigateToName(Uri link) async {
   if (queryParams.isNotEmpty) {
     var id = queryParams['id'];
     if (id != null) {
-      getIt<AppRouter>().pushAll([
+      GetIt.I<AppRouter>().pushAll([
         const LauncherAppRoute(
           children: [
             MainRouterPage(),

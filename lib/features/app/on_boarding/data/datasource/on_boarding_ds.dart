@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'package:nurlan_ustaz_flutter/core/platform/dio_wrapper.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/checklist_dto.dart';
 
 import 'package:nurlan_ustaz_flutter/update_service/app_version_model.dart';
@@ -13,24 +12,21 @@ import '../../../../../../../core/error/excepteion.dart';
 import '../../../../../../../core/platform/network_helper.dart';
 import '../models/on_boarding_video_dto.dart';
 
-
 abstract class OnBoardingDs {
+  const OnBoardingDs();
+
   Future<List<OnBoardingVideoDTO>> onBoardingVideo();
   Future<AppVersionsModel> appVersionModel();
 }
 
 @Injectable(as: OnBoardingDs)
 class OnBoardingDsImpl extends OnBoardingDs {
-  late final Dio dio;
-  final DioWrapper dioWrapper;
+  const OnBoardingDsImpl(this.dio);
 
-  OnBoardingDsImpl(this.dioWrapper) {
-    dioWrapper.path('');
-    dio = dioWrapper.dio;
-  }
+  final Dio dio;
 
-  int? lpp;
-  List<CheckListDto> checkLists = [];
+  // int? lpp;
+  // List<CheckListDto> checkLists = [];
 
   @override
   Future<List<OnBoardingVideoDTO>> onBoardingVideo() async {
@@ -55,7 +51,8 @@ class OnBoardingDsImpl extends OnBoardingDs {
   @override
   Future<AppVersionsModel> appVersionModel() async {
     try {
-      final String type = Platform.operatingSystem;
+      final type = Platform.isMacOS ? 'ios' : Platform.operatingSystem;
+      // if (Platform.isMacOS) type = 'ios';
       final response = await dio.get('${EndPoints.appVersions}/$type/');
       return AppVersionsModel.fromJson(response.data as Map<String, dynamic>);
     } on DioError catch (e) {

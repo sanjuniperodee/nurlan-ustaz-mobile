@@ -6,7 +6,6 @@ import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
 import 'package:nurlan_ustaz_flutter/core/model/freedom_payment_dto.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/cache_helper/prefs.dart';
-import 'package:nurlan_ustaz_flutter/core/platform/dio_wrapper.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/card_model.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/faq_model_dto.dart';
@@ -113,8 +112,7 @@ abstract class HomeRemoteDs {
   Future<List<ChatDTO>> chats(
       {required String startTime, required String endTime});
 
-  Future<void> createSeminarPayment(
-      {required int id, required String backUrl});
+  Future<void> createSeminarPayment({required int id, required String backUrl});
 
   Future<List<QuestionDTO>> questions(
       {int? currentPage,
@@ -134,19 +132,14 @@ abstract class HomeRemoteDs {
   Future<String> checkTicket({required String url});
   Future<List<CardDTO>> getCards({String? search});
   Future<String> getAddCardUrl();
-    Future<void> setDefaultCard({required int cardId});
-
+  Future<void> setDefaultCard({required int cardId});
 }
 
 @Injectable(as: HomeRemoteDs)
 class HomeRemoteDsImpl extends HomeRemoteDs {
-  late final Dio dio;
-  final DioWrapper dioWrapper;
+  HomeRemoteDsImpl(this.dio);
 
-  HomeRemoteDsImpl(this.dioWrapper) {
-    dioWrapper.path('');
-    dio = dioWrapper.dio;
-  }
+  final Dio dio;
 
   List<ResultHomeDTO> newsPage = [];
   int? lpn;
@@ -175,7 +168,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
           'back_url': backUrl,
         },
       );
-      return(response.data);
+      return (response.data);
     } on DioError catch (e) {
       throw ServerException(
         message:
@@ -338,9 +331,12 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   }
 
   @override
-  Future<TimingsDTO> timings(
-      {required double lat, required double long}) async {
+  Future<TimingsDTO> timings({
+    required double lat,
+    required double long,
+  }) async {
     try {
+      print('CALLED TIMINGS');
       final response = await dio.post(EndPoints.timings, data: {
         'latitude': lat,
         'longitude': long,
@@ -928,7 +924,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       {required String registrationId}) async {
     try {
       final response = await dio.get(
-        '${EndPoints.notification}/$registrationId/',
+        '${EndPoints.notification}$registrationId/',
         data: {'registration_id': registrationId},
       );
       log('NOTI::::${response.data.toString()}');
@@ -951,7 +947,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
     try {
       final FormData formData = FormData.fromMap(notification.toJson());
       final response = await dio.patch(
-        '${EndPoints.notification}/$registrationId/',
+        '${EndPoints.notification}$registrationId/',
         data: formData,
       );
       return NotificationDTO.fromJson(response.data);
@@ -1018,14 +1014,14 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       );
     }
   }
-  
+
   @override
-  Future<void> setDefaultCard({required int cardId})async {
-   try {
-       await dio.get(
+  Future<void> setDefaultCard({required int cardId}) async {
+    try {
+      await dio.get(
         '${EndPoints.cards}$cardId/set-default-card/',
       );
-      
+
       throw 'ERROR';
     } on DioError catch (e) {
       throw ServerException(

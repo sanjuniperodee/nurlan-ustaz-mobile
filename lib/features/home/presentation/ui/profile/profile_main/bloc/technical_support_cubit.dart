@@ -38,8 +38,10 @@ class TechnicalSupportCubit extends Cubit<TechnicalSupportState> {
       jsonDecode(sharedPreferences.get(SharedKeys.TOKEN).toString())
           as Map<String, dynamic>,
     );
-    _channel = IOWebSocketChannel.connect("$WebSocketUrl/api/support/chat/",
-        headers: {"Authorization": "Bearer ${token.access}"});
+    _channel = IOWebSocketChannel.connect(
+      EndPoints.wsSupportChat,
+      headers: {"Authorization": "Bearer ${token.access}"},
+    );
     emit(TechnicalSupportState.initial(
         channel: _channel, questions: [], user: _userDto));
     // emit(const _LoadingState());

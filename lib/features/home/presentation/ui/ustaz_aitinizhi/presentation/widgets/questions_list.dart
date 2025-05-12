@@ -20,149 +20,149 @@ class QuestionsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        ...questions
-            .map((e) => Column(
-                  children: [
-                    Container(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 16.w, vertical: 16.h),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
+        ...questions.map(
+          (e) {
+            final avatar = e.avatar;
+            return Column(
+              children: [
+                Container(
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 16.w, vertical: 16.h),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Row(
+                          ClipRRect(
+                              borderRadius: BorderRadius.circular(90),
+                              child: isSocket != null
+                                  ? avatar != null
+                                      ? Center(
+                                          child: CachedNetworkImage(
+                                          imageUrl:
+                                              EndPoints.imgUrlBuilder(avatar),
+                                          fit: BoxFit.cover,
+                                          height: 40.r,
+                                          width: 40.r,
+                                        ))
+                                      : SvgPicture.asset(
+                                          'assets/icons/user.svg')
+                                  : e.user?.avatar != null
+                                      ? Center(
+                                          child: CachedNetworkImage(
+                                          imageUrl: e.user?.avatar ?? '',
+                                          fit: BoxFit.cover,
+                                          height: 40.r,
+                                          width: 40.r,
+                                        ))
+                                      : SvgPicture.asset(
+                                          'assets/icons/user.svg')),
+                          SizedBox(
+                            width: 8.w,
+                          ),
+                          Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              ClipRRect(
-                                  borderRadius: BorderRadius.circular(90),
-                                  child: isSocket != null
-                                      ? e.avatar != null
-                                          ? Center(
-                                              child: CachedNetworkImage(
-                                              imageUrl:
-                                                  '${SERVER_ + e.avatar!}',
-                                              fit: BoxFit.cover,
-                                              height: 40.r,
-                                              width: 40.r,
-                                            ))
-                                          : SvgPicture.asset(
-                                              'assets/icons/user.svg')
-                                      : e.user?.avatar != null
-                                          ? Center(
-                                              child: CachedNetworkImage(
-                                              imageUrl: e.user?.avatar ?? '',
-                                              fit: BoxFit.cover,
-                                              height: 40.r,
-                                              width: 40.r,
-                                            ))
-                                          : SvgPicture.asset(
-                                              'assets/icons/user.svg')),
-                              SizedBox(
-                                width: 8.w,
-                              ),
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      SizedBox(
-                                        width: 160.w,
-                                        child: Text(
-                                          isSocket != null
-                                              ? e.fullName ?? ''
-                                              : e.user?.fullName ?? '',
-                                          style: getTextStyle(
-                                                  CustomTextStyles.s14w500)
+                                  SizedBox(
+                                    width: 160.w,
+                                    child: Text(
+                                      isSocket != null
+                                          ? e.fullName ?? ''
+                                          : e.user?.fullName ?? '',
+                                      style:
+                                          getTextStyle(CustomTextStyles.s14w500)
                                               .copyWith(
                                                   fontFamily:
                                                       FontTypes.SF_Pro.name,
                                                   fontWeight: FontWeight.w600),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 8.w,
-                                      ),
-                                      Text(
-                                        DateFormat(
-                                                DateTime.now().day ==
-                                                        DateTime.parse(
-                                                                e.createdAt ??
-                                                                    '')
-                                                            .day
-                                                    ? 'Бүгін, HH:mm'
-                                                    : 'd MMMM, HH:mm',
-                                                context.locale.languageCode)
-                                            .format(DateTime.parse(
-                                                    e.createdAt ?? '')
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 8.w,
+                                  ),
+                                  Text(
+                                    DateFormat(
+                                            DateTime.now().day ==
+                                                    DateTime.parse(
+                                                            e.createdAt ?? '')
+                                                        .day
+                                                ? 'Бүгін, HH:mm'
+                                                : 'd MMMM, HH:mm',
+                                            context.locale.languageCode)
+                                        .format(
+                                            DateTime.parse(e.createdAt ?? '')
                                                 .toLocal())
-                                            .toString(),
-                                        style: getTextStyle(
-                                                CustomTextStyles.s12w400)
+                                        .toString(),
+                                    style:
+                                        getTextStyle(CustomTextStyles.s12w400)
                                             .copyWith(
                                                 fontFamily:
                                                     FontTypes.SF_Pro.name,
                                                 color: AppColors.grey1
                                                     .withOpacity(0.55)),
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 8.h,
-                                  ),
-                                  SizedBox(
-                                      width: 245.w,
-                                      child: Text(
-                                        isSocket != null
-                                            ? e.message ?? ''
-                                            : e.body ?? '',
-                                      )),
-                                ],
-                              )
-                            ],
-                          ),
-                          if (e.is_allowed != null) ...[
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 50.w, vertical: 15.h),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  CircleAvatar(
-                                      backgroundColor: AppColors.white,
-                                      child: Image.asset(
-                                        'assets/images/imam_nurlan.png',
-                                      )),
-                                  SizedBox(
-                                    width: 4.w,
-                                  ),
-                                  Text(
-                                    '${'Answer'.tr()}: ${e.is_allowed! ? 'Will'.tr() : 'was_not'.tr()}',
-                                    style:
-                                        getTextStyle(CustomTextStyles.s14w600)
-                                            .copyWith(
-                                                fontFamily:
-                                                    FontTypes.SF_Pro.name,
-                                                fontWeight: FontWeight.w600),
                                   )
                                 ],
                               ),
-                            ),
-                          ]
+                              SizedBox(
+                                height: 8.h,
+                              ),
+                              SizedBox(
+                                  width: 245.w,
+                                  child: Text(
+                                    isSocket != null
+                                        ? e.message ?? ''
+                                        : e.body ?? '',
+                                  )),
+                            ],
+                          )
                         ],
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24),
-                      child: Divider(
-                        color: AppColors.black.withOpacity(0.3),
-                      ),
-                    )
-                  ],
-                ))
-            .toList()
+                      if (e.is_allowed != null) ...[
+                        Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 50.w, vertical: 15.h),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              CircleAvatar(
+                                  backgroundColor: AppColors.white,
+                                  child: Image.asset(
+                                    'assets/images/imam_nurlan.png',
+                                  )),
+                              SizedBox(
+                                width: 4.w,
+                              ),
+                              Text(
+                                '${'Answer'.tr()}: ${e.is_allowed! ? 'Will'.tr() : 'was_not'.tr()}',
+                                style: getTextStyle(CustomTextStyles.s14w600)
+                                    .copyWith(
+                                        fontFamily: FontTypes.SF_Pro.name,
+                                        fontWeight: FontWeight.w600),
+                              )
+                            ],
+                          ),
+                        ),
+                      ]
+                    ],
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24),
+                  child: Divider(
+                    color: AppColors.black.withOpacity(0.3),
+                  ),
+                )
+              ],
+            );
+          },
+        )
       ],
     );
   }

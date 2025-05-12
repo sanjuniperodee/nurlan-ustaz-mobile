@@ -48,195 +48,196 @@ Future<void> notificationTapBackground(
     final String objectType = data['object_type'];
     final String objectId = data['object_id'];
 
-    switch (objectType) {
-      case 'seminar':
-        getIt<AppRouter>().pushAll([
-          const LauncherAppRoute(
-            children: [
-              MainRouterPage(),
-            ],
-          ),
-          SeminarDetailRoute(id: int.parse(objectId)),
-        ]);
-        break;
+    // TODO: deeplink
+    // switch (objectType) {
+    //   case 'seminar':
+    //     getIt<AppRouter>().pushAll([
+    //       const LauncherAppRoute(
+    //         children: [
+    //           MainRouterPage(),
+    //         ],
+    //       ),
+    //       SeminarDetailRoute(id: int.parse(objectId)),
+    //     ]);
+    //     break;
 
-      case 'news':
-        getIt<AppRouter>().pushAll([
-          const LauncherAppRoute(
-            children: [
-              MainRouterPage(),
-            ],
-          ),
-          NewsDetailRoute(id: int.parse(objectId)),
-        ]);
-        break;
+    //   case 'news':
+    //     getIt<AppRouter>().pushAll([
+    //       const LauncherAppRoute(
+    //         children: [
+    //           MainRouterPage(),
+    //         ],
+    //       ),
+    //       NewsDetailRoute(id: int.parse(objectId)),
+    //     ]);
+    //     break;
 
-      case 'charity':
-        if (objectId != '0' && objectId.isNotEmpty) {
-          getIt<AppRouter>().pushAll([
-            const LauncherAppRoute(
-              children: [
-                MainRouterPage(),
-              ],
-            ),
-            const CharityRoute(),
-          ]);
-        }
-        break;
+    //   case 'charity':
+    //     if (objectId != '0' && objectId.isNotEmpty) {
+    //       getIt<AppRouter>().pushAll([
+    //         const LauncherAppRoute(
+    //           children: [
+    //             MainRouterPage(),
+    //           ],
+    //         ),
+    //         const CharityRoute(),
+    //       ]);
+    //     }
+    //     break;
 
-      case 'muslim_name':
-        if (objectId != '0' && objectId.isNotEmpty) {
-          getIt<AppRouter>().pushAll([
-            const LauncherAppRoute(
-              children: [
-                MainRouterPage(),
-              ],
-            ),
-            NameDetailRoute(id: int.parse(objectId)),
-          ]);
-        }
-        break;
+    //   case 'muslim_name':
+    //     if (objectId != '0' && objectId.isNotEmpty) {
+    //       getIt<AppRouter>().pushAll([
+    //         const LauncherAppRoute(
+    //           children: [
+    //             MainRouterPage(),
+    //           ],
+    //         ),
+    //         NameDetailRoute(id: int.parse(objectId)),
+    //       ]);
+    //     }
+    //     break;
 
-      case 'dream_interpretation':
-        if (objectId != '0' && objectId.isNotEmpty) {
-          getIt<AppRouter>().pushAll([
-            const LauncherAppRoute(
-              children: [
-                MainRouterPage(),
-              ],
-            ),
-            TusZhoruDetailRoute(id: int.parse(objectId)),
-          ]);
-        }
-        break;
+    //   case 'dream_interpretation':
+    //     if (objectId != '0' && objectId.isNotEmpty) {
+    //       getIt<AppRouter>().pushAll([
+    //         const LauncherAppRoute(
+    //           children: [
+    //             MainRouterPage(),
+    //           ],
+    //         ),
+    //         TusZhoruDetailRoute(id: int.parse(objectId)),
+    //       ]);
+    //     }
+    //     break;
 
-      case 'partner_shop':
-        if (objectId != '0' && objectId.isNotEmpty) {
-          getIt<AppRouter>().pushAll([
-            const LauncherAppRoute(
-              children: [
-                MainRouterPage(),
-              ],
-            ),
-            const ShopRoute(),
-          ]);
-        }
-        break;
+    //   case 'partner_shop':
+    //     if (objectId != '0' && objectId.isNotEmpty) {
+    //       getIt<AppRouter>().pushAll([
+    //         const LauncherAppRoute(
+    //           children: [
+    //             MainRouterPage(),
+    //           ],
+    //         ),
+    //         const ShopRoute(),
+    //       ]);
+    //     }
+    //     break;
 
-      case 'imam_service':
-        if (objectId != '0' && objectId.isNotEmpty) {
-          getIt<AppRouter>().pushAll([
-            const LauncherAppRoute(
-              children: [
-                MainRouterPage(),
-              ],
-            ),
-            const ServicesRoute(),
-          ]);
-        }
-        break;
+    //   case 'imam_service':
+    //     if (objectId != '0' && objectId.isNotEmpty) {
+    //       getIt<AppRouter>().pushAll([
+    //         const LauncherAppRoute(
+    //           children: [
+    //             MainRouterPage(),
+    //           ],
+    //         ),
+    //         const ServicesRoute(),
+    //       ]);
+    //     }
+    //     break;
 
-      case 'custom_dream':
-        if (objectId != '0' && objectId.isNotEmpty) {
-          getIt<AppRouter>().pushAll([
-            const LauncherAppRoute(
-              children: [
-                MainRouterPage(),
-              ],
-            ),
-            CustomTusZhoruDetailRoute(id: int.parse(objectId)),
-          ]);
-        }
-        break;
+    //   case 'custom_dream':
+    //     if (objectId != '0' && objectId.isNotEmpty) {
+    //       getIt<AppRouter>().pushAll([
+    //         const LauncherAppRoute(
+    //           children: [
+    //             MainRouterPage(),
+    //           ],
+    //         ),
+    //         CustomTusZhoruDetailRoute(id: int.parse(objectId)),
+    //       ]);
+    //     }
+    //     break;
 
-      case 'order_dream':
-        if (objectId != '0' && objectId.isNotEmpty) {
-          getIt<AppRouter>().pushAll([
-            const LauncherAppRoute(
-              children: [
-                MainRouterPage(),
-              ],
-            ),
-            TusZhoruDetailRoute(id: int.parse(objectId)),
-          ]);
-        }
-        break;
+    //   case 'order_dream':
+    //     if (objectId != '0' && objectId.isNotEmpty) {
+    //       getIt<AppRouter>().pushAll([
+    //         const LauncherAppRoute(
+    //           children: [
+    //             MainRouterPage(),
+    //           ],
+    //         ),
+    //         TusZhoruDetailRoute(id: int.parse(objectId)),
+    //       ]);
+    //     }
+    //     break;
 
-      case 'order_seminar':
-        if (objectId != '0' && objectId.isNotEmpty) {
-          getIt<AppRouter>().pushAll([
-            const LauncherAppRoute(
-              children: [
-                MainRouterPage(),
-              ],
-            ),
-            SeminarDetailRoute(id: int.parse(objectId)),
-          ]);
-        }
-        break;
+    //   case 'order_seminar':
+    //     if (objectId != '0' && objectId.isNotEmpty) {
+    //       getIt<AppRouter>().pushAll([
+    //         const LauncherAppRoute(
+    //           children: [
+    //             MainRouterPage(),
+    //           ],
+    //         ),
+    //         SeminarDetailRoute(id: int.parse(objectId)),
+    //       ]);
+    //     }
+    //     break;
 
-      case 'live_in_progress':
-        if (objectId != '0' && objectId.isNotEmpty) {
-          final Uri url = Uri.parse(objectId);
-          if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-            throw Exception('Could not launch');
-          }
-        }
-        break;
+    //   case 'live_in_progress':
+    //     if (objectId != '0' && objectId.isNotEmpty) {
+    //       final Uri url = Uri.parse(objectId);
+    //       if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+    //         throw Exception('Could not launch');
+    //       }
+    //     }
+    //     break;
 
-      case 'live':
-        if (objectId != '0' && objectId.isNotEmpty) {
-          getIt<AppRouter>().pushAll([
-            const LauncherAppRoute(
-              children: [
-                MainRouterPage(),
-              ],
-            ),
-            LiveBroadcastsRoute(),
-          ]);
-        }
-        break;
+    //   case 'live':
+    //     if (objectId != '0' && objectId.isNotEmpty) {
+    //       getIt<AppRouter>().pushAll([
+    //         const LauncherAppRoute(
+    //           children: [
+    //             MainRouterPage(),
+    //           ],
+    //         ),
+    //         LiveBroadcastsRoute(),
+    //       ]);
+    //     }
+    //     break;
 
-      case 'tell_me_ustaz':
-        getIt<AppRouter>().pushAll([
-          const LauncherAppRoute(
-            children: [
-              MainRouterPage(),
-            ],
-          ),
-          const UstazAitinizhiRoute(),
-        ]);
-        break;
+    //   case 'tell_me_ustaz':
+    //     getIt<AppRouter>().pushAll([
+    //       const LauncherAppRoute(
+    //         children: [
+    //           MainRouterPage(),
+    //         ],
+    //       ),
+    //       const UstazAitinizhiRoute(),
+    //     ]);
+    //     break;
 
-      case 'checklist':
-        if (objectId != '0' && objectId.isNotEmpty) {
-          getIt<AppRouter>().pushAll([
-            const LauncherAppRoute(
-              children: [
-                MainRouterPage(),
-              ],
-            ),
-            const ZhosparymMainRouterPage(),
-          ]);
-        }
-        break;
+    //   case 'checklist':
+    //     if (objectId != '0' && objectId.isNotEmpty) {
+    //       getIt<AppRouter>().pushAll([
+    //         const LauncherAppRoute(
+    //           children: [
+    //             MainRouterPage(),
+    //           ],
+    //         ),
+    //         const ZhosparymMainRouterPage(),
+    //       ]);
+    //     }
+    //     break;
 
-      case 'ayat_of_the_day':
-        if (objectId != '0' && objectId.isNotEmpty) {
-          getIt<AppRouter>().pushAll([
-            const LauncherAppRoute(
-              children: [
-                IslamTeachingRouterPage(),
-              ],
-            ),
-            // const ShopRoute(),
-          ]);
-        }
-        break;
+    //   case 'ayat_of_the_day':
+    //     if (objectId != '0' && objectId.isNotEmpty) {
+    //       getIt<AppRouter>().pushAll([
+    //         const LauncherAppRoute(
+    //           children: [
+    //             IslamTeachingRouterPage(),
+    //           ],
+    //         ),
+    //         // const ShopRoute(),
+    //       ]);
+    //     }
+    //     break;
 
-      default:
-        log('NO');
-    }
+    //   default:
+    //     log('NO');
+    // }
 
     log(data.toString());
   } catch (e) {
@@ -427,6 +428,7 @@ class NotificationService {
   }
 
   Future<String?> getDeviceToken() async {
+    if (!Platform.isAndroid && !Platform.isIOS) return 'not supported';
     final String? deviceToken = await FirebaseMessaging.instance.getToken();
 
     log('DEVICE TOKEN :::::${deviceToken}');

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
@@ -47,8 +48,7 @@ class _MainPageState extends State<MainPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
-    String chosenLang = getIt<AuthLocalDs>().getLocale();
+    String chosenLang = GetIt.I<AuthLocalDs>().getLocale();
     Intl.defaultLocale = chosenLang.replaceAll('kz', 'kk');
     BlocProvider.of<NewsMainCubit>(context).newsMain(
       currentPage: 1,
@@ -143,7 +143,7 @@ class _MainPageState extends State<MainPage> {
                           ),
                           onRefresh: () {
                             String chosenLang =
-                                getIt<AuthLocalDs>().getLocale();
+                                GetIt.I<AuthLocalDs>().getLocale();
                             Intl.defaultLocale =
                                 chosenLang.replaceAll('kz', 'kk');
                             BlocProvider.of<NewsMainCubit>(context).newsMain(
