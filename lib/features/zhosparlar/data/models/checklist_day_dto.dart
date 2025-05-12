@@ -2,7 +2,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'checklist_task_dto.dart';
-import 'events_type_enum.dart';
 
 part 'checklist_day_dto.freezed.dart';
 part 'checklist_day_dto.g.dart';

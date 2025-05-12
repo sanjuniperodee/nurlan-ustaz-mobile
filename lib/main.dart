@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:developer';
-import 'dart:ui';
 
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -17,7 +16,6 @@ import 'package:nurlan_ustaz_flutter/core/model/async_app_dependecies.dart';
 import 'package:nurlan_ustaz_flutter/features/app/logic/main_runner.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/nurlan_ustaz_app.dart';
 import 'core/router/app_router.dart';
-import 'core/services/locator_service.dart';
 import 'core/services/notification_service.dart';
 
 Future<void> firebaseListen() async {
@@ -170,7 +168,7 @@ Future<void> navigateToDuas(Uri link) async {
 
   var deepLink = link;
   final queryParams = deepLink.queryParameters;
-  if (queryParams.length > 0) {
+  if (queryParams.isNotEmpty) {
     var id = queryParams['id'];
     if (id != null) {
       GetIt.I<AppRouter>().pushAll([
@@ -190,7 +188,7 @@ Future<void> navigateToNews(Uri link) async {
 
   var deepLink = link;
   final queryParams = deepLink.queryParameters;
-  if (queryParams.length > 0) {
+  if (queryParams.isNotEmpty) {
     var id = queryParams['id'];
     if (id != null) {
       GetIt.I<AppRouter>().pushAll([

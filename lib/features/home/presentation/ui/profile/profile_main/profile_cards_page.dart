@@ -17,7 +17,7 @@ import '../../../../../app/presentation/widgets/custom_app_bar.dart';
 
 @RoutePage()
 class ProfileCardsPage extends StatefulWidget {
-  const ProfileCardsPage({Key? key}) : super(key: key);
+  const ProfileCardsPage({super.key});
 
   @override
   State<ProfileCardsPage> createState() => _ProfileCardsPageState();
@@ -75,7 +75,7 @@ class _ProfileCardsPageState extends State<ProfileCardsPage> {
             ));
           }
 
-          final _cards = state.cards;
+          final cards = state.cards;
           return GlobalCustomBody(
             child: SizedBox(
               height: 1.1.sh,
@@ -89,7 +89,7 @@ class _ProfileCardsPageState extends State<ProfileCardsPage> {
                     SizedBox(
                       height: 20.h,
                     ),
-                    _cards.isEmpty
+                    cards.isEmpty
                         ? Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -110,7 +110,7 @@ class _ProfileCardsPageState extends State<ProfileCardsPage> {
                           )
                         : ListView.builder(
                             padding: EdgeInsets.only(bottom: 100.h),
-                            itemCount: _cards.length,
+                            itemCount: cards.length,
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
@@ -150,14 +150,14 @@ class _ProfileCardsPageState extends State<ProfileCardsPage> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              if (_cards[index].cardNumber !=
+                                              if (cards[index].cardNumber !=
                                                   null)
                                                 Text(
-                                                  _cards[index]
+                                                  cards[index]
                                                           .cardNumber!
                                                           .startsWith('4')
                                                       ? 'Visa'
-                                                      : _cards[index]
+                                                      : cards[index]
                                                               .cardNumber!
                                                               .startsWith('5')
                                                           ? 'MasterCard'
@@ -175,7 +175,7 @@ class _ProfileCardsPageState extends State<ProfileCardsPage> {
                                                 height: 4.h,
                                               ),
                                               Text(
-                                                '${_cards[index].cardNumber}',
+                                                '${cards[index].cardNumber}',
                                                 style: getTextStyle(
                                                         CustomTextStyles
                                                             .s16w400)
@@ -192,9 +192,9 @@ class _ProfileCardsPageState extends State<ProfileCardsPage> {
                                             await BlocProvider.of<CardsCubit>(
                                                     context)
                                                 .setDefaultCard(
-                                                    cardId: _cards[index].id);
+                                                    cardId: cards[index].id);
                                           },
-                                          child: _cards[index].isDefault!
+                                          child: cards[index].isDefault!
                                               ? SvgPicture.asset(
                                                   Assets.radioOnSvg)
                                               : SvgPicture.asset(

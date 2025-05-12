@@ -4,9 +4,7 @@ import 'dart:developer';
 //import 'package:calendar_agenda/calendar_agenda.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:intl/intl.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/horizontal_calendar/custom_full_calendar.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
@@ -48,7 +46,7 @@ class CustomCalendarAgenda extends StatefulWidget
   final List<CheckListDayDto> checklist;
 
   CustomCalendarAgenda({
-    Key? key,
+    super.key,
     required this.initialDate,
     required this.firstDate,
     required this.lastDate,
@@ -81,26 +79,25 @@ class CustomCalendarAgenda extends StatefulWidget
         assert(
           !firstDate.isAfter(lastDate),
           'lastDate must be on or after firstDate',
-        ),
-        super(key: key);
+        );
 
   @override
   CustomCalendarAgendaState createState() => CustomCalendarAgendaState();
 
   @override
-  Size get preferredSize => new Size.fromHeight(250.0);
+  Size get preferredSize => Size.fromHeight(250.0);
 }
 
 class CustomCalendarAgendaState extends State<CustomCalendarAgenda>
     with TickerProviderStateMixin {
-  ItemScrollController _scrollController = new ItemScrollController();
+  final ItemScrollController _scrollController = ItemScrollController();
 
   late Color backgroundColor;
   late double padding;
   late Widget leading;
   late double _scrollAlignment;
 
-  List<String> _eventDates = [];
+  final List<String> _eventDates = [];
   List<DateTime> _dates = [];
   DateTime? _selectedDate;
   int? _daySelectedIndex;
@@ -303,7 +300,7 @@ class CustomCalendarAgendaState extends State<CustomCalendarAgenda>
                                     Text(
                                       date.day == DateTime.now().day
                                           ? 'today'.tr()
-                                          : '${DateFormat('dd\nMMM').format(date)}',
+                                          : DateFormat('dd\nMMM').format(date),
                                       style: getTextStyle(CustomTextStyles.s12w400)
                                           .copyWith(
                                         fontFamily: FontTypes.SF_Pro.name,
@@ -347,7 +344,7 @@ class CustomCalendarAgendaState extends State<CustomCalendarAgenda>
       );
     }
 
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: widget.appbar ? 210 : 150.0,
       child: Stack(
@@ -364,7 +361,7 @@ class CustomCalendarAgendaState extends State<CustomCalendarAgenda>
             top: widget.appbar ? 50.0 : 20.0,
             child: Padding(
               padding: EdgeInsets.only(right: padding, left: 10),
-              child: Container(
+              child: SizedBox(
                 width: MediaQuery.of(context).size.width - padding,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -428,7 +425,7 @@ class CustomCalendarAgendaState extends State<CustomCalendarAgenda>
         } else {
           height = (MediaQuery.of(context).size.height - 100.0);
         }
-        return Container(
+        return SizedBox(
           height: widget.fullCalendarScroll == FullCalendarScroll.vertical
               ? height
               : (MediaQuery.of(context).size.height / 7) * 4.3,

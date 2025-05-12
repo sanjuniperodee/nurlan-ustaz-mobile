@@ -15,8 +15,7 @@ import '../common/colors.dart';
 
 class SuccesPayDialog extends StatelessWidget {
   const SuccesPayDialog(
-      {Key? key, required this.price, required this.id, required this.isCustom})
-      : super(key: key);
+      {super.key, required this.price, required this.id, required this.isCustom});
   final String price;
   final int id;
   final bool isCustom;

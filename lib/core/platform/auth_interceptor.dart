@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
@@ -51,8 +50,9 @@ class AuthInterceptor extends QueuedInterceptor {
     DioException err,
     ErrorInterceptorHandler handler,
   ) async {
-    if (err.response?.statusCode != HttpStatus.unauthorized)
+    if (err.response?.statusCode != HttpStatus.unauthorized) {
       return handler.next(err);
+    }
 
     eventLogger?.call('401 status code. Trying to refresh tokens...');
     final token = optionOf(await authLocalDs.getTokenFromCacheNull());

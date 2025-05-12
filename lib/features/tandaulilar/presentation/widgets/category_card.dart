@@ -14,12 +14,11 @@ class CategoryCard extends StatelessWidget {
   final void Function() onTap;
 
   const CategoryCard(
-      {Key? key,
+      {super.key,
       required this.title,
       required this.imageList,
       this.titleColor,
-      required this.onTap})
-      : super(key: key);
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +46,7 @@ class CategoryCard extends StatelessWidget {
                   if (index < imageList.length) {
                     final imageUrl = imageList[index].cover;
                     if (imageUrl != null && imageUrl.isNotEmpty) {
-                      return Container(
+                      return SizedBox(
                         height: 82.h,
                         width: 82.w,
                         child: ClipRRect(

@@ -10,12 +10,12 @@ class FloatinContainerWidget extends StatelessWidget {
   final void Function()? onTap;
   final String? color;
   const FloatinContainerWidget({
-    Key? key,
+    super.key,
     required this.text,
     required this.url,
     this.onTap,
     this.color,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

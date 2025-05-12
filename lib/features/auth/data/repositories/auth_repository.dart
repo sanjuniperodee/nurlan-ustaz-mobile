@@ -241,7 +241,7 @@ class AuthRepositoryImpl extends AuthRepository {
     try {
       final token = await localDS.getTokenFromCacheNull();
       log(
-        'AuthRepositoryImpl authCheck:: ${token}',
+        'AuthRepositoryImpl authCheck:: $token',
         name: _tag,
       );
       if (token == null) {

@@ -3,7 +3,6 @@ import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/common/constants.dart';
 import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
-import 'package:nurlan_ustaz_flutter/core/model/freedom_payment_dto.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_info.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/data/datasource/remote/tus_zhoru_remote_ds.dart';

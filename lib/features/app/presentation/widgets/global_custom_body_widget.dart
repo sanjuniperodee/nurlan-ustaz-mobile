@@ -5,8 +5,7 @@ import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 
 class GlobalCustomBody extends StatefulWidget {
   const GlobalCustomBody(
-      {Key? key, this.right, this.left, this.child, this.top})
-      : super(key: key);
+      {super.key, this.right, this.left, this.child, this.top});
   final double? right;
   final double? left;
   final double? top;

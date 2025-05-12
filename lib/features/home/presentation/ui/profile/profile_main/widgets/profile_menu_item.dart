@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -11,14 +10,13 @@ class ProfileMenuItem extends StatelessWidget {
   final TextStyle? titleStyle;
 
   const ProfileMenuItem(
-      {Key? key, required this.title, required this.onTap, this.isExit, this.titleStyle,})
-      : super(key: key);
+      {super.key, required this.title, required this.onTap, this.isExit, this.titleStyle,});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: Container(
+      child: SizedBox(
         height: 44,
         child: isExit != null
             ? Row(

@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -20,12 +19,11 @@ import '../widgets/custom_button_timer.dart';
 @RoutePage()
 class CodeVerificationPage extends StatefulWidget {
   const CodeVerificationPage(
-      {Key? key,
+      {super.key,
       required this.email,
       required this.userId,
       required this.password,
-      required this.userPayload})
-      : super(key: key);
+      required this.userPayload});
   final UserPayload userPayload;
   final String email;
   final int userId;

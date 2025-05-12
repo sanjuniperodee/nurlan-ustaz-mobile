@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -11,12 +10,11 @@ class CustomTabBar extends StatelessWidget {
   final double? height;
   final int length;
   const CustomTabBar(
-      {Key? key,
+      {super.key,
       required this.tabs,
       this.height,
       required this.onTap,
-      required this.length})
-      : super(key: key);
+      required this.length});
 
   @override
   Widget build(BuildContext context) {

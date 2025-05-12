@@ -1,7 +1,6 @@
 // ignore_for_file: invalid_annotation_target
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'events_type_enum.dart';
 
 part 'checklist_dto.freezed.dart';
 part 'checklist_dto.g.dart';

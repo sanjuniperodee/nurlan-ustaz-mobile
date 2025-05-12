@@ -17,7 +17,7 @@ import '../../../../../app/presentation/widgets/custom_app_bar.dart';
 
 @RoutePage()
 class ProfileNotificationPage extends StatefulWidget {
-  const ProfileNotificationPage({Key? key}) : super(key: key);
+  const ProfileNotificationPage({super.key});
 
   @override
   State<ProfileNotificationPage> createState() => _ProfileNotificationPage();

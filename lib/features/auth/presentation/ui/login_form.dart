@@ -13,11 +13,9 @@ import '../../../../core/router/app_router.dart';
 import '../../../app/presentation/widgets/app_button.dart';
 import '../../../app/presentation/widgets/custom_snackbars.dart';
 import '../../../app/presentation/widgets/custom_text_form_profile.dart';
-import '../bloc/login_cubit.dart';
-import '../bloc/login_cubit.dart';
 
 class LoginForm extends StatefulWidget {
-  const LoginForm({Key? key}) : super(key: key);
+  const LoginForm({super.key});
 
   @override
   State<LoginForm> createState() => _LoginFormState();

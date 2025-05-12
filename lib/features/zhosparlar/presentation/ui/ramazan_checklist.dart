@@ -25,8 +25,7 @@ import '../widgets/task_details_dialog.dart';
 
 @RoutePage()
 class RamazanChecklistPage extends StatefulWidget {
-  const RamazanChecklistPage({Key? key, required this.checkList})
-      : super(key: key);
+  const RamazanChecklistPage({super.key, required this.checkList});
   final CheckListDto checkList;
 
   @override
@@ -34,7 +33,7 @@ class RamazanChecklistPage extends StatefulWidget {
 }
 
 class _RamazanChecklistPageState extends State<RamazanChecklistPage> {
-  CustomCalendarAgendaController _calendarAgendaControllerNotAppBar =
+  final CustomCalendarAgendaController _calendarAgendaControllerNotAppBar =
       CustomCalendarAgendaController();
 
   int selectedIndex = -1;
@@ -143,7 +142,7 @@ class _RamazanChecklistPageState extends State<RamazanChecklistPage> {
                         ),
                       ),
                       isLoading
-                          ? Container(
+                          ? SizedBox(
                               height: 200,
                               child: const Center(
                                   child: CircularProgressIndicator(

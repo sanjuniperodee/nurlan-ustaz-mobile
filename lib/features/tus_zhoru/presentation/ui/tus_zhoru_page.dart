@@ -25,9 +25,9 @@ class TusZhoruPage extends StatefulWidget {
   final String? type;
 
   const TusZhoruPage({
-    Key? key,
+    super.key,
     this.type,
-  }) : super(key: key);
+  });
 
   @override
   State<TusZhoruPage> createState() => _TusZhoruPageState();
@@ -217,14 +217,14 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
 
   Future<void> _scrollListener() async {
     if (ConstantHome.globalCountTusZhoru == itemsLength) {
-      log('${ConstantHome.globalCountTusZhoru.toString()}');
+      log(ConstantHome.globalCountTusZhoru.toString());
       log(itemsLength.toString());
       return;
     } else {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        await currentIndex++;
-        log('kolll----${currentIndex}');
+        currentIndex++;
+        log('kolll----$currentIndex');
         await BlocProvider.of<TusZhoruCubit>(context)
             .paginatedTusZhoru(page: currentIndex, isFirstCall: true);
         setState(() {});

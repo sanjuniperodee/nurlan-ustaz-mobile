@@ -1,9 +1,6 @@
-import 'dart:developer';
-import 'dart:ui';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -15,8 +12,7 @@ import '../../../../core/utils/pay_dialog.dart';
 import '../../data/models/tus_zhoru_dto.dart';
 
 class CustomTusZhoruList extends StatefulWidget {
-  const CustomTusZhoruList({Key? key, required this.tusZhoruList})
-      : super(key: key);
+  const CustomTusZhoruList({super.key, required this.tusZhoruList});
   final List<TusZhoruDTO> tusZhoruList;
 
   @override
@@ -79,7 +75,7 @@ class _CustomTusZhoruListState extends State<CustomTusZhoruList> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Container(
+                                SizedBox(
                                   width: 200.w,
                                   child: Text(
                                     list[index].title ?? '',
@@ -89,7 +85,7 @@ class _CustomTusZhoruListState extends State<CustomTusZhoruList> {
                                     maxLines: 1,
                                   ),
                                 ),
-                                Container(
+                                SizedBox(
                                   width: 200,
                                   child: Text(
                                     list[index].description ?? '',

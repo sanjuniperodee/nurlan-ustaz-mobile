@@ -10,7 +10,7 @@ import '../../../../../core/common/colors.dart';
 
 
 class ServiceCard extends StatelessWidget {
-  const ServiceCard({Key? key, required this.event, required this.nextPage, required this.previousPage, required this.isDialog}) : super(key: key);
+  const ServiceCard({super.key, required this.event, required this.nextPage, required this.previousPage, required this.isDialog});
   final EventDto event;
   final Function nextPage;
   final Function previousPage;

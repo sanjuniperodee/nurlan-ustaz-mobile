@@ -4,7 +4,6 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
-import 'package:nurlan_ustaz_flutter/core/model/freedom_payment_dto.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/cache_helper/prefs.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/card_model.dart';
@@ -169,7 +168,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
         },
       );
       return (response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'].toString(),
@@ -184,7 +183,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
         '${EndPoints.lives}/$id/toggle_save/',
       );
       return true;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -199,7 +198,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
         '${EndPoints.news}/$id/toggle_save/',
       );
       return true;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -214,7 +213,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
         '${EndPoints.news}/$id/toggle_like/',
       );
       return true;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -230,7 +229,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
         'reason': reason,
       });
       return true;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -248,7 +247,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       );
 
       return GetNotiDTO.fromJson((response.data as Map<String, dynamic>));
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -265,7 +264,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       return ((response.data as List<dynamic>))
           .map((e) => ResultHomeDTO.fromJson(e))
           .toList();
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -290,7 +289,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       return ((response.data as Map<String, dynamic>)['results'] as List)
           .map((x) => ResultHomeDTO.fromJson(x as Map<String, dynamic>))
           .toList();
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -307,7 +306,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       return ((response.data as Map<String, dynamic>)['results'] as List)
           .map((x) => FaqModelDTO.fromJson(x as Map<String, dynamic>))
           .toList();
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -322,7 +321,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       return ((response.data as Map<String, dynamic>)['geonames'] as List)
           .map((x) => GeonamesDTO.fromJson(x as Map<String, dynamic>))
           .toList();
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -345,7 +344,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       return TimingsDTO.fromJson(
         (response.data['data']['timings'] as Map<String, dynamic>),
       );
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -369,7 +368,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       return NotificationDTO.fromJson(
         (response.data as Map<String, dynamic>),
       );
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -386,7 +385,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       return ResultHomeDTO.fromJson(
         (response.data as Map<String, dynamic>),
       );
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -404,7 +403,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       return ResultHomeDTO.fromJson(
         (response.data as Map<String, dynamic>),
       );
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -419,7 +418,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
         '${EndPoints.seminar}/$id/toggle_save/',
       );
       return true;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -434,7 +433,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
         '${EndPoints.seminar}/$id/toggle_like/',
       );
       return true;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -454,7 +453,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
         'body': body,
       });
       return true;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -476,7 +475,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       });
 
       return true;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -494,7 +493,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       });
 
       return true;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -511,7 +510,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       });
 
       return true;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -546,7 +545,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       }
       // log('PAGE${response.data['meta']['pagination']['page']}');
       throw 'ERROR';
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -582,7 +581,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
 
       // log('PAGE${response.data['meta']['pagination']['page']}');
       throw 'ERROR';
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -619,7 +618,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
 
       // log('PAGE${response.data['meta']['pagination']['page']}');
       throw 'ERROR';
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -657,7 +656,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       }
       // log('PAGE${response.data['meta']['pagination']['page']}');
       throw 'ERROR';
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -675,7 +674,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       return ((response.data as Map<String, dynamic>)['results'] as List)
           .map((x) => ResultHomeDTO.fromJson(x as Map<String, dynamic>))
           .toList();
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -721,7 +720,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       }
       // log('PAGE${response.data['meta']['pagination']['page']}');
       throw 'ERROR';
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -767,7 +766,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       }
       // log('PAGE${response.data['meta']['pagination']['page']}');
       throw 'ERROR';
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -786,7 +785,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       );
       log(response.data.toString());
       return (response.data as Map<String, dynamic>)['url'] as String;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -836,7 +835,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
 
       // log('PAGE${response.data['meta']['pagination']['page']}');
       throw 'ERROR';
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -860,7 +859,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
         return chatList;
       }
       throw 'ERROR';
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -894,7 +893,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
 
       // log('PAGE${response.data['meta']['pagination']['page']}');
       throw 'ERROR';
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -911,7 +910,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
         data: jsonEncode(notification.toJson()),
       );
       return NotificationDTO.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'].toString(),
@@ -929,7 +928,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       );
       log('NOTI::::${response.data.toString()}');
       return NotificationDTO.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'].toString(),
@@ -941,7 +940,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   Future<NotificationDTO> patchNotificationDevice(
       {required String registrationId,
       required NotificationDTO notification}) async {
-    log('Atai-${registrationId}');
+    log('Atai-$registrationId');
     log('Atai1-${notification.toString()}');
 
     try {
@@ -951,7 +950,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
         data: formData,
       );
       return NotificationDTO.fromJson(response.data);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message: e.response?.data.toString() ?? 'error',
       );
@@ -966,7 +965,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       );
       log(response.data.toString());
       return (response.data.toString());
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message: (e.response!.data.toString()),
       );
@@ -987,7 +986,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
         return cardList;
       }
       throw 'ERROR';
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -1007,7 +1006,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
         return cardAddUrl;
       }
       throw 'ERROR';
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -1023,7 +1022,7 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
       );
 
       throw 'ERROR';
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,

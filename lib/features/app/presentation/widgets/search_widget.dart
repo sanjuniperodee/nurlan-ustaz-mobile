@@ -6,9 +6,9 @@ import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 
 class SearchWidget extends StatelessWidget {
   const SearchWidget({
-    Key? key,
+    super.key,
     required this.onChanged,
-  }) : super(key: key);
+  });
   final void Function(String)? onChanged;
 
   @override

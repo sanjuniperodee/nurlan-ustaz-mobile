@@ -16,7 +16,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/charities_c
 
 @RoutePage()
 class CharityPage extends StatefulWidget {
-  const CharityPage({Key? key}) : super(key: key);
+  const CharityPage({super.key});
 
   @override
   State<CharityPage> createState() => _CharityPageState();

@@ -15,11 +15,10 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_cu
 import 'package:nurlan_ustaz_flutter/features/home/data/models/media_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/get_noti_cubit.dart';
 
-import '../../data/models/get_noti_dto.dart';
 
 @RoutePage()
 class NotificationPage extends StatefulWidget {
-  const NotificationPage({Key? key}) : super(key: key);
+  const NotificationPage({super.key});
 
   @override
   State<NotificationPage> createState() => _NotificationPageState();
@@ -46,7 +45,7 @@ class _NotificationPageState extends State<NotificationPage> {
             );
           }
           final res = state.res;
-          log('уведомления-${res}');
+          log('уведомления-$res');
           return GlobalCustomBody(
             child: SingleChildScrollView(
               physics: BouncingScrollPhysics(),

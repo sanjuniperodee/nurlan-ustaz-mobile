@@ -1,7 +1,7 @@
 //  Copyright (c) 2019 Aleksander Woźniak
 //  Licensed under Apache License v2.0
 
-library simple_gesture_detector;
+library;
 
 import 'package:flutter/material.dart';
 
@@ -15,7 +15,7 @@ class SimpleGestureDetector extends StatefulWidget {
   final VoidCallback? onSwipeRight;
 
   const SimpleGestureDetector({
-    Key? key,
+    super.key,
     required this.child,
     this.swipeConfig = const SimpleSwipeConfig(),
     this.behavior,
@@ -23,7 +23,7 @@ class SimpleGestureDetector extends StatefulWidget {
     this.onSwipeDown,
     this.onSwipeLeft,
     this.onSwipeRight,
-  }) : super(key: key);
+  });
 
   @override
   _SimpleGestureDetectorState createState() => _SimpleGestureDetectorState();
@@ -137,7 +137,6 @@ class _SimpleGestureDetectorState extends State<SimpleGestureDetector> {
   Widget build(BuildContext context) {
     return GestureDetector(
       behavior: widget.behavior,
-      child: widget.child,
       onVerticalDragStart: _canSwipeVertically() ? _onVerticalDragStart : null,
       onVerticalDragUpdate:
       _canSwipeVertically() ? _onVerticalDragUpdate : null,
@@ -148,6 +147,7 @@ class _SimpleGestureDetectorState extends State<SimpleGestureDetector> {
       _canSwipeHorizontally() ? _onHorizontalDragUpdate : null,
       onHorizontalDragEnd:
       _canSwipeHorizontally() ? _onHorizontalDragEnd : null,
+      child: widget.child,
     );
   }
 }

@@ -1,30 +1,25 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:carousel_slider/carousel_controller.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_detail_page.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/event_dto.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../core/common/app_styles.dart';
 import '../../../../../core/common/colors.dart';
-import '../../../../app/presentation/ui/nurlan_ustaz_app.dart';
 import '../../../../app/presentation/widgets/app_button.dart';
 import 'dart:math' as math; // import this
 
 class SeminarCard extends StatelessWidget {
   const SeminarCard(
-      {Key? key,
+      {super.key,
       required this.event,
       required this.nextPage,
       required this.previousPage,
       required this.isDialog,
-      required this.mainContext})
-      : super(key: key);
+      required this.mainContext});
   final EventDto event;
   final Function nextPage;
   final Function previousPage;
@@ -50,7 +45,7 @@ class SeminarCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Container(
+              SizedBox(
                 width: 209.w,
                 child: Text(
                   '${event.title}',

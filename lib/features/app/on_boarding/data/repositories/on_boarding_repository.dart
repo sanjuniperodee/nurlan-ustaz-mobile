@@ -5,7 +5,6 @@ import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 
-import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/checklist_dto.dart';
 import 'package:nurlan_ustaz_flutter/update_service/app_version_model.dart';
 
 import '../../../../../../../core/common/constants.dart';
@@ -49,7 +48,7 @@ class OnBoardingRepositoryImpl extends OnBoardingRepository {
         final AppVersionsModel model = await remoteDS.appVersionModel();
         log('result from repo - ${model.toString()}');
         return model;
-      } on ServerException catch (e) {
+      } on ServerException {
         return null;
       }
     } else {

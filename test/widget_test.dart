@@ -8,7 +8,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/nurlan_ustaz_app.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/main_page.dart';
 
 
 void main() {

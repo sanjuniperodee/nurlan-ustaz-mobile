@@ -9,8 +9,7 @@ import '../../../../core/common/colors.dart';
 
 class IslamTeachingIcon extends StatelessWidget {
   const IslamTeachingIcon(
-      {Key? key, required this.isCurrent, required this.isKazakh})
-      : super(key: key);
+      {super.key, required this.isCurrent, required this.isKazakh});
   final bool isCurrent;
   final bool isKazakh;
 
@@ -19,7 +18,7 @@ class IslamTeachingIcon extends StatelessWidget {
     return isCurrent == true
         ? isKazakh == true
             ? SvgPicture.asset(Assets.bookSvg)
-            : Container(
+            : SizedBox(
                 height: 20.h,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.end,
@@ -48,7 +47,7 @@ class IslamTeachingIcon extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Container(
+                    SizedBox(
                       height: 22.5.h,
                       width: 22.5.w,
                       child: SvgPicture.asset(Assets.book_1Svg),

@@ -8,7 +8,6 @@ import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 
 import 'package:nurlan_ustaz_flutter/features/auth/data/repositories/auth_repository.dart';
 
-import '../../auth/data/datasource/local/auth_local_ds.dart';
 
 part 'app_bloc.freezed.dart';
 

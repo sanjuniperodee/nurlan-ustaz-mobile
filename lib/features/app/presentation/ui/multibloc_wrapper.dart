@@ -76,7 +76,6 @@ import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zh
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/bloc/checklist_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/bloc/zhosparym_cubit.dart';
 
-import '../../../../core/services/locator_service.dart';
 import '../../../tus_zhoru/presentation/bloc/custom_tus_zhoru_details_cubit.dart';
 
 class MultiblocWrapper extends StatefulWidget {

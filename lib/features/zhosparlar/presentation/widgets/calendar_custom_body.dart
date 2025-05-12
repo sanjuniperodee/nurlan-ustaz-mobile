@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 
-import '../../../../core/common/colors.dart';
 
 class CalendarCustomBody extends StatelessWidget {
   final double? right;
   final double? left;
   final Widget? child;
   const CalendarCustomBody({
-    Key? key,
+    super.key,
     this.child,
     this.right,
     this.left,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

@@ -12,15 +12,15 @@ import '../bloc/checklist_cubit.dart';
 
 class TaskDetailsDialog extends StatelessWidget {
   TaskDetailsDialog({
-    Key? key,
+    super.key,
     this.task,
     required this.day,
-  }) : super(key: key);
+  });
 
   final CheckListTaskDto? task;
   final CheckListDayDto day;
 
-  TextEditingController _controller = TextEditingController();
+  final TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

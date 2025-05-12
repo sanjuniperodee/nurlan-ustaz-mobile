@@ -12,7 +12,7 @@ import 'package:video_player/video_player.dart';
 import '../../../bloc/app_bloc.dart';
 
 class OnBoardingPage extends StatefulWidget {
-  const OnBoardingPage({Key? key}) : super(key: key);
+  const OnBoardingPage({super.key});
 
   @override
   State<OnBoardingPage> createState() => _OnBoardingPageState();
@@ -22,8 +22,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   // ChewieController? _chewieController;
   int currentIndex = 0;
   final PageController _pageController = PageController();
-  List<Chewie> _chewieWidgets = [];
-  List<ChewieController> _chewieControllers = [];
+  final List<Chewie> _chewieWidgets = [];
+  final List<ChewieController> _chewieControllers = [];
   List<VideoPlayerController> videos = [
     VideoPlayerController.asset(
       'assets/video/1_v.MP4',

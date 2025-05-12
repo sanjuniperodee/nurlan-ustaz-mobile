@@ -7,10 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
-import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/firebase_options.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:timezone/timezone.dart' as tz;
 
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -431,14 +428,14 @@ class NotificationService {
     if (!Platform.isAndroid && !Platform.isIOS) return 'not supported';
     final String? deviceToken = await FirebaseMessaging.instance.getToken();
 
-    log('DEVICE TOKEN :::::${deviceToken}');
+    log('DEVICE TOKEN :::::$deviceToken');
     return deviceToken;
   }
 
   Future<void> _requestPermissionToNotifications(
-    FirebaseMessaging _messaging,
+    FirebaseMessaging messaging,
   ) async {
-    final NotificationSettings settings = await _messaging.requestPermission();
+    final NotificationSettings settings = await messaging.requestPermission();
 
     if (settings.authorizationStatus == AuthorizationStatus.authorized) {
       if (kDebugMode) {

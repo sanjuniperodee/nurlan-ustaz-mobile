@@ -25,7 +25,7 @@ class CustomTextFormField extends StatefulWidget {
 
 
   const CustomTextFormField({
-    Key? key,
+    super.key,
     required this.hintText,
     this.controller,
     this.validator,
@@ -39,7 +39,7 @@ class CustomTextFormField extends StatefulWidget {
     this.enabled = true,
     this.obscureText = false,
     this.obscureIcon, this.onFieldSubmitted, this.maxLines, this.minLines,
-  }) : super(key: key);
+  });
 
   @override
   State<CustomTextFormField> createState() => _CustomTextFormFieldState();

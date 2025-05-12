@@ -21,7 +21,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_fav_cu
 @RoutePage()
 class NewsPage extends StatefulWidget {
   final String? type;
-  const NewsPage({Key? key, this.type}) : super(key: key);
+  const NewsPage({super.key, this.type});
 
   @override
   State<NewsPage> createState() => _NewsPageState();
@@ -62,11 +62,9 @@ class _NewsPageState extends State<NewsPage> {
           if (state is NewsLoadedState) {
             listOfNews = state.news;
             listOfFav.clear();
-            listOfNews.forEach(
-              (element) {
+            for (var element in listOfNews) {
                 listOfFav.add(element.isSaved!);
-              },
-            );
+              }
 
             setState(() {});
           } else if (state is NewsErrorState) {

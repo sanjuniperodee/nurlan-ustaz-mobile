@@ -16,7 +16,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/widgets/NamazCon
 @RoutePage()
 class NamazPage extends StatefulWidget {
   final GeonamesDTO? geonamesDTO;
-  const NamazPage({Key? key, this.geonamesDTO}) : super(key: key);
+  const NamazPage({super.key, this.geonamesDTO});
 
   @override
   State<NamazPage> createState() => _NamazPageState();

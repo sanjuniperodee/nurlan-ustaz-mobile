@@ -20,12 +20,12 @@ class NamazContainerWidget extends StatefulWidget {
   final String namazName;
   final String namazTime;
   const NamazContainerWidget({
-    Key? key,
+    super.key,
     required this.name,
     required this.time,
     required this.namazName,
     required this.namazTime,
-  }) : super(key: key);
+  });
 
   @override
   State<NamazContainerWidget> createState() => _NamazContainerWidgetState();
@@ -112,7 +112,7 @@ class _NamazContainerWidgetState extends State<NamazContainerWidget> {
                             .setPresetMinuteTime(int.parse(widget.time.substring(3, 5)));
                         _stopWatchTimer.onStartTimer();
                       });
-                    };
+                    }
                     return Text(
                       displayTime,
                       style: getTextStyle(CustomTextStyles.s16w400)

@@ -13,19 +13,19 @@ class CustomAppBar extends StatelessWidget {
   final Color? color;
 
   const CustomAppBar({
-    Key? key,
+    super.key,
     required this.title,
     this.onTap,
     this.hideIcon,
     this.color,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
         Center(
-          child: Container(
+          child: SizedBox(
             width: 200.w, // Adjust as needed
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

@@ -11,7 +11,7 @@ import '../../../../app/presentation/widgets/custom_text_form_profile.dart';
 import '../../bloc/forgot_password_cubit.dart';
 
 class NewPasswordPage extends StatefulWidget {
-  const NewPasswordPage({Key? key}) : super(key: key);
+  const NewPasswordPage({super.key});
 
   @override
   State<NewPasswordPage> createState() => _NewPasswordPageState();

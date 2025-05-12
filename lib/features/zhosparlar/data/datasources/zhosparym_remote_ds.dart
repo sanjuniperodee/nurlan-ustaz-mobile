@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -63,7 +62,7 @@ class ZhosparymRemoteDsImpl extends ZhosparymRemoteDs {
         return events;
       }
       throw 'ERROR';
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -94,7 +93,7 @@ class ZhosparymRemoteDsImpl extends ZhosparymRemoteDs {
       }
       // log('PAGE${response.data['meta']['pagination']['page']}');
       throw 'ERROR';
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response?.data as Map<String, dynamic>)['message'].toString(),
@@ -115,7 +114,7 @@ class ZhosparymRemoteDsImpl extends ZhosparymRemoteDs {
             .toList();
       }
       throw 'ERROR';
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response?.data as Map<String, dynamic>)['message'].toString(),
@@ -141,7 +140,7 @@ class ZhosparymRemoteDsImpl extends ZhosparymRemoteDs {
         return;
       }
       throw 'ERROR';
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message: (e.response?.data).toString(),
       );
@@ -162,7 +161,7 @@ class ZhosparymRemoteDsImpl extends ZhosparymRemoteDs {
         return;
       }
       throw 'ERROR';
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message: (e.response?.data).toString(),
       );
@@ -183,7 +182,7 @@ class ZhosparymRemoteDsImpl extends ZhosparymRemoteDs {
         return;
       }
       throw 'ERROR';
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message: (e.response?.data).toString(),
       );
@@ -200,7 +199,7 @@ class ZhosparymRemoteDsImpl extends ZhosparymRemoteDs {
         return;
       }
       throw 'ERROR';
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response?.data as Map<String, dynamic>)['message'].toString(),
@@ -221,7 +220,7 @@ class ZhosparymRemoteDsImpl extends ZhosparymRemoteDs {
             .toList();
       }
       throw 'ERROR';
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response?.data as Map<String, dynamic>)['message'].toString(),

@@ -3,10 +3,8 @@ import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/checklist_dto.dart';
 
 import 'package:nurlan_ustaz_flutter/update_service/app_version_model.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 import '../../../../../../../core/error/excepteion.dart';
 import '../../../../../../../core/platform/network_helper.dart';
@@ -40,7 +38,7 @@ class OnBoardingDsImpl extends OnBoardingDs {
             .toList();
       }
       throw 'ERROR';
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response?.data as Map<String, dynamic>)['message'].toString(),
@@ -55,7 +53,7 @@ class OnBoardingDsImpl extends OnBoardingDs {
       // if (Platform.isMacOS) type = 'ios';
       final response = await dio.get('${EndPoints.appVersions}/$type/');
       return AppVersionsModel.fromJson(response.data as Map<String, dynamic>);
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response?.data as Map<String, dynamic>)['message'].toString(),

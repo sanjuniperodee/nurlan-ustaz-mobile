@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
-import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/core/utils/alert_utilrs.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
@@ -248,62 +247,60 @@ class _ProfileMainPage extends State<ProfileMainPage> {
                                                               onTap: () {
                                                                 log('язык был $chosenLang');
                                                                 log('язык выбрал ${langMap[r]}');
-                                                                if (r != null) {
-                                                                  chosenLang =
+                                                                chosenLang =
+                                                                    langMap[
+                                                                        r];
+
+                                                                log(chosenLang
+                                                                    .toString());
+                                                                context
+                                                                    .setLocale(
+                                                                  Locale(
                                                                       langMap[
-                                                                          r];
+                                                                          r]!),
+                                                                );
 
-                                                                  log(chosenLang
-                                                                      .toString());
-                                                                  context
-                                                                      .setLocale(
-                                                                    Locale(
-                                                                        langMap[
-                                                                            r]!),
-                                                                  );
+                                                                debugPrint(context
+                                                                    .locale
+                                                                    .toString());
+                                                                final String
+                                                                    newLocal =
+                                                                    langMap[
+                                                                        r]!;
 
-                                                                  debugPrint(context
-                                                                      .locale
-                                                                      .toString());
-                                                                  final String
-                                                                      newLocal =
-                                                                      langMap[
-                                                                          r]!;
-
-                                                                  final appState =
-                                                                      BlocProvider.of<AppBloc>(
-                                                                              context)
-                                                                          .state;
-                                                                  appState
-                                                                      .maybeWhen(
-                                                                    inApp: () {
-                                                                      BlocProvider.of<
-                                                                          LanguageCubit>(
-                                                                        context,
-                                                                      ).changeLanguage(
-                                                                        language:
-                                                                            newLocal,
-                                                                      );
-                                                                      BlocProvider.of<ZhosparymCubit>(
-                                                                              context)
-                                                                          .calendarEvents(
-                                                                              DateTime.now());
-                                                                    },
-                                                                    orElse: () {
-                                                                      BlocProvider.of<
-                                                                          LanguageCubit>(
-                                                                        context,
-                                                                      ).changeLocal();
-                                                                      BlocProvider.of<ZhosparymCubit>(
-                                                                              context)
-                                                                          .calendarEvents(
-                                                                              DateTime.now());
-                                                                    },
-                                                                  );
-                                                                  setState(
-                                                                      () {});
-                                                                }
-                                                                Navigator.pop(
+                                                                final appState =
+                                                                    BlocProvider.of<AppBloc>(
+                                                                            context)
+                                                                        .state;
+                                                                appState
+                                                                    .maybeWhen(
+                                                                  inApp: () {
+                                                                    BlocProvider.of<
+                                                                        LanguageCubit>(
+                                                                      context,
+                                                                    ).changeLanguage(
+                                                                      language:
+                                                                          newLocal,
+                                                                    );
+                                                                    BlocProvider.of<ZhosparymCubit>(
+                                                                            context)
+                                                                        .calendarEvents(
+                                                                            DateTime.now());
+                                                                  },
+                                                                  orElse: () {
+                                                                    BlocProvider.of<
+                                                                        LanguageCubit>(
+                                                                      context,
+                                                                    ).changeLocal();
+                                                                    BlocProvider.of<ZhosparymCubit>(
+                                                                            context)
+                                                                        .calendarEvents(
+                                                                            DateTime.now());
+                                                                  },
+                                                                );
+                                                                setState(
+                                                                    () {});
+                                                                                                                              Navigator.pop(
                                                                     context);
                                                                 // setState(() {
                                                                 //   selectedIndex = index;

@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,7 +14,7 @@ import '../../../../../../../core/common/colors.dart';
 import '../ui/ustaz_aitinizhi.dart';
 
 class SurakDialog extends StatefulWidget {
-  const SurakDialog({Key? key, required this.channelSocket}) : super(key: key);
+  const SurakDialog({super.key, required this.channelSocket});
   final IOWebSocketChannel? channelSocket;
 
   @override
@@ -31,7 +30,7 @@ class _SurakDialogState extends State<SurakDialog> {
       contentPadding: EdgeInsets.all(0),
       elevation: 50000,
       backgroundColor: AppColors.white.withOpacity(0.000000000000000001),
-      content: Container(
+      content: SizedBox(
         width: 320.w,
         height: 300.h,
         child: Stack(
@@ -138,7 +137,7 @@ class _SurakDialogState extends State<SurakDialog> {
             Positioned(
               left: 115.w,
               bottom: 210.h,
-              child: Container(
+              child: SizedBox(
                 height: 74.h,
                 width: 74.w,
                 child: ClipRRect(

@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -23,7 +22,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_fav
 @RoutePage()
 class SeminarPage extends StatefulWidget {
   final String? type;
-  const SeminarPage({Key? key, this.type}) : super(key: key);
+  const SeminarPage({super.key, this.type});
 
   @override
   State<SeminarPage> createState() => _SeminarPageState();
@@ -66,11 +65,9 @@ class _SeminarPageState extends State<SeminarPage> {
           if (state is SeminarLoadedState) {
             listOfSeminars = state.news;
             listOfFav.clear();
-            listOfSeminars.forEach(
-              (element) {
+            for (var element in listOfSeminars) {
                 listOfFav.add(element.isSaved!);
-              },
-            );
+              }
 
             // setState(() {});
           } else if (state is SeminarErrorState) {

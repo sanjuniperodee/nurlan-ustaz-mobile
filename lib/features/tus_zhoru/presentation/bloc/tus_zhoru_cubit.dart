@@ -1,7 +1,6 @@
 import 'dart:developer';
 import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_windowmanager_plus/flutter_windowmanager_plus.dart';
@@ -20,7 +19,7 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
 
   TusZhoruCubit(
     this._repository,
-  ) : super(const TusZhoruState.initial()) {}
+  ) : super(const TusZhoruState.initial());
   final MethodChannel securityChannel = MethodChannel('app_security_channel');
 
   late List<TusZhoruDTO> tosZhoruList;

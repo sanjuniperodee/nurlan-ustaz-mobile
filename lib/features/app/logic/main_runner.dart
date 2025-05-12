@@ -8,7 +8,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
-import 'package:nurlan_ustaz_flutter/core/services/notification_service.dart';
 import 'package:nurlan_ustaz_flutter/firebase_options.dart';
 
 typedef AsyncDependencies<D> = Future<D> Function();

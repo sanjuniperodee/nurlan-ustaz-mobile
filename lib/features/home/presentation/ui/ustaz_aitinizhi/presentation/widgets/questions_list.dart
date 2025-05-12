@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -11,8 +10,7 @@ import '../../../../../../../core/platform/network_helper.dart';
 import '../../data/models/question_model.dart';
 
 class QuestionsList extends StatelessWidget {
-  const QuestionsList({Key? key, required this.questions, this.isSocket})
-      : super(key: key);
+  const QuestionsList({super.key, required this.questions, this.isSocket});
   final List<QuestionDTO> questions;
   final bool? isSocket;
 

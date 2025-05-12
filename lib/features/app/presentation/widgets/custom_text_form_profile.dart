@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -25,7 +24,7 @@ class CustomTextFormProfile extends StatelessWidget {
   final Color? helperColor;
 
   const CustomTextFormProfile(
-      {Key? key,
+      {super.key,
       required this.hintText,
       required this.labelText,
       this.onChanged,
@@ -39,8 +38,7 @@ class CustomTextFormProfile extends StatelessWidget {
       this.helperText,
       this.keyboardType,
       this.obscureText,
-      this.obscure, this.inputAction,  this.helperColor})
-      : super(key: key);
+      this.obscure, this.inputAction,  this.helperColor});
 
   @override
   Widget build(BuildContext context) {

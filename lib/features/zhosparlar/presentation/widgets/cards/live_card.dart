@@ -13,7 +13,7 @@ import '../../../../app/presentation/widgets/app_button.dart';
 
 
 class LiveCard extends StatelessWidget {
-  const LiveCard({Key? key, required this.event, required this.nextPage, required this.previousPage, required this.isDialog}) : super(key: key);
+  const LiveCard({super.key, required this.event, required this.nextPage, required this.previousPage, required this.isDialog});
   final EventDto event;
   final Function nextPage;
   final Function previousPage;
@@ -128,7 +128,7 @@ class LiveCard extends StatelessWidget {
                         height: 24,
                         width: 24,
                       ))),
-              Container(
+              SizedBox(
                 height: 35.w,
                 width: 150.w,
                 child: AppButton(onTap: () async {

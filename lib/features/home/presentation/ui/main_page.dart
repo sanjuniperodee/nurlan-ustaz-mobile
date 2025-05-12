@@ -9,12 +9,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get_it/get_it.dart';
-import 'package:lottie/lottie.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
-import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
@@ -281,7 +279,7 @@ class _MainPageState extends State<MainPage> {
                                                         .spaceBetween,
                                                 children: [
                                                   Text(
-                                                      '${geo.name ?? 'Алматы'}, ${DateFormat('dd.MM.yyyy', '${context.locale.languageCode}').format(DateTime.now()).toLocale()}',
+                                                      '${geo.name ?? 'Алматы'}, ${DateFormat('dd.MM.yyyy', context.locale.languageCode).format(DateTime.now()).toLocale()}',
                                                       style: getTextStyle(
                                                               CustomTextStyles
                                                                   .s16w400)
@@ -386,7 +384,7 @@ class _MainPageState extends State<MainPage> {
                                         text: '${'tell_me_ustaz'.tr()}...',
                                       ),
                                       SizedBox(height: 16.h),
-                                      Container(
+                                      SizedBox(
                                         width: double.infinity,
                                         height: 180.h,
                                         child: InkWell(
@@ -731,7 +729,6 @@ class _TimesStateWidgetState extends State<TimesStateWidget> {
               _stopWatchTimer.onStartTimer();
             });
           }
-          ;
           return Text(
             displayTime,
             style: getTextStyle(CustomTextStyles.s16w400)

@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
@@ -22,7 +21,7 @@ class _SplashScreenState extends State<SplashScreen> {
             Positioned(
               left: -146.70,
               top: -139.19,
-              child: Container(
+              child: SizedBox(
                 width: 570.73,
                 height: 405.12,
                 child: Stack(
@@ -97,7 +96,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     const SizedBox(width: 231.79),
-                    Container(
+                    SizedBox(
                       width: 66.66,
                       height: 11.34,
                       child: Stack(
@@ -105,7 +104,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           Positioned(
                             left: 42.33,
                             top: 0,
-                            child: Container(
+                            child: SizedBox(
                               width: 24.33,
                               height: 11.33,
                               child: Stack(children: [

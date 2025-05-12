@@ -33,7 +33,7 @@ class _CustomAppButtonTimerState extends State<CustomAppButtonTimer> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: widget.color ?? null,
+          color: widget.color,
           gradient: widget.isActive == true
               ? widget.color != null
                   ? null
