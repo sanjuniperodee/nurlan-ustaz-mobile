@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:auto_route/annotations.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
@@ -11,7 +10,7 @@ import '../../../../../app/presentation/widgets/custom_app_bar.dart';
 
 @RoutePage()
 class PaymentCheckPage extends StatefulWidget {
-  const PaymentCheckPage({Key? key, required this.checkUrl}) : super(key: key);
+  const PaymentCheckPage({super.key, required this.checkUrl});
   final String checkUrl;
 
   @override
@@ -41,7 +40,7 @@ class _PaymentCheckPageState extends State<PaymentCheckPage> {
               CustomAppBar(
                 title: 'salam',
               ),
-              Container(
+              SizedBox(
                 width: double.infinity,
                 height: 500.h,
                 child: WebViewWidget(

@@ -29,7 +29,7 @@ class AppButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-          color: color ?? null,
+          color: color,
           gradient: isActive == true
               ? color != null
                   ? null

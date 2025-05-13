@@ -7,10 +7,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
-import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/datasource/local/auth_local_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
@@ -44,7 +44,7 @@ class _CommentSemPageState extends State<CommentSemPage> {
     // TODO: implement initState
     BlocProvider.of<CommentSemCubit>(context)
         .commentsSem(page: 1, isFirstCall: true, id: widget.id);
-    getIt<AuthLocalDs>().getUserFromCacheNull().then((value) {
+    GetIt.I<AuthLocalDs>().getUserFromCacheNull().then((value) {
       user = value;
     });
     _scrollController.addListener(_scrollListener);

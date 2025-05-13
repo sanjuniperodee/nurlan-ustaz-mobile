@@ -9,10 +9,10 @@ class DhikrButtonWidget extends StatelessWidget {
   final String svg;
   final void Function()? onTap;
   const DhikrButtonWidget({
-    Key? key,
+    super.key,
     required this.svg,
     required this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

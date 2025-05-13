@@ -11,7 +11,7 @@ import '../../../../../../../core/common/colors.dart';
 import '../../../../../../app/presentation/widgets/custom_snackbars.dart';
 
 class CalendarChatsPage extends StatefulWidget {
-  const CalendarChatsPage({Key? key}) : super(key: key);
+  const CalendarChatsPage({super.key});
 
   @override
   State<CalendarChatsPage> createState() => _CalendarChatsPageState();

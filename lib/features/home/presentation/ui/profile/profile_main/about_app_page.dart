@@ -8,13 +8,12 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_cu
 import 'package:nurlan_ustaz_flutter/features/home/data/models/card_model.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/prj_info_cubit.dart';
 
-import '../../../../../../core/common/assets.dart';
 import '../../../../../../core/common/colors.dart';
 import '../../../../../app/presentation/widgets/custom_app_bar.dart';
 
 @RoutePage()
 class AboutAppPage extends StatefulWidget {
-  const AboutAppPage({Key? key}) : super(key: key);
+  const AboutAppPage({super.key});
 
   @override
   State<AboutAppPage> createState() => _AboutAppPageState();

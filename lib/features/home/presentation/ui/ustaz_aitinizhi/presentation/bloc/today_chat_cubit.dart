@@ -32,7 +32,7 @@ class TodayChatCubit extends Cubit<TodayChatState> {
   late UserDto _userDto;
 
   Future<void> connectSocket() async {
-    log('${WebSocketUrl}');
+    // log('${WebSocketUrl}');
     //emit(_LoadingState());
 
     final user = await _authRepo.getUser();
@@ -45,8 +45,9 @@ class TodayChatCubit extends Cubit<TodayChatState> {
           as Map<String, dynamic>,
     );
     final channel = IOWebSocketChannel.connect(
-        Uri.parse("${WebSocketUrl}/api/tell-me-ustaz/chat/"),
-        headers: {"Authorization": "Bearer ${token.access}"});
+      Uri.parse(EndPoints.wsTellMeUstazChat),
+      headers: {"Authorization": "Bearer ${token.access}"},
+    );
 
     channel.stream.listen((event) async {
       emit(const TodayChatState.loading());

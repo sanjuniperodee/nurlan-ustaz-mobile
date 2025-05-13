@@ -8,9 +8,9 @@ import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/ayat_dto
 class AyatDayCardWidget extends StatelessWidget {
   final AyatDTO ayatDTO;
   const AyatDayCardWidget({
-    Key? key,
+    super.key,
     required this.ayatDTO,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

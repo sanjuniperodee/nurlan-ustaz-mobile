@@ -5,9 +5,9 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
-import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
@@ -15,14 +15,15 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profi
 
 @RoutePage()
 class TechnicalSupportPage extends StatefulWidget {
-  const TechnicalSupportPage({Key? key}) : super(key: key);
+  const TechnicalSupportPage({super.key});
 
   @override
   State<TechnicalSupportPage> createState() => _TechnicalSupportPageState();
 }
 
 class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
-  TechnicalSupportCubit technicalSupportCubit = getIt<TechnicalSupportCubit>();
+  TechnicalSupportCubit technicalSupportCubit =
+      GetIt.I<TechnicalSupportCubit>();
   final TextEditingController _textEditingController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
@@ -30,8 +31,6 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
-
     technicalSupportCubit.connectSocket();
 
     super.initState();

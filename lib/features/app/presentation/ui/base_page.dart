@@ -10,52 +10,29 @@ import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/islam_teaching_icon.dart';
 
-class Base extends StatefulWidget {
-  const Base({super.key});
-
-  @override
-  State<Base> createState() => _BaseState();
-}
-
-class _BaseState extends State<Base> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  bool isShow = false;
+@RoutePage()
+class BasePage extends StatelessWidget {
+  const BasePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
-        transitionBuilder: (context,child, animation){
-          return TweenAnimationBuilder<Offset>(
-            tween: Tween(begin: Offset(0.0, 1.0), end: Offset.zero),
-            duration: Duration(milliseconds: 500), // Adjust the duration as needed.
-            curve: Curves.easeInOutCubic, // Adjust the curve as needed.
-            builder: (context, offset, child) {
-              return Transform.translate(
-                offset: offset,
-                child: Opacity(
-                  opacity: animation.value,
-                  child: child,
-                ),
-              );
-            },
-            child: child,
-          );
-        },
-
+      transitionBuilder: (context, child, animation) {
+        return FadeTransition(
+          opacity: animation,
+          child: child,
+        );
+      },
       backgroundColor: Color(0xFFF1F1F1),
       extendBody: true,
-      routes: [
-        const MainRouterPage(),
-        const IslamTeachingRouterPage(),
+      routes: const [
+        MainRouterPage(),
+        IslamTeachingRouterPage(),
         TusZhoruRouterPage(),
-        const TandaulilarMainRouterPage(),
-        const ZhosparymMainRouterPage(),
+        TandaulilarMainRouterPage(),
+        ZhosparymMainRouterPage(),
       ],
-      bottomNavigationBuilder: (_, tabsRouter) {
+      bottomNavigationBuilder: (context, tabsRouter) {
         return ClipRRect(
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(30.0).r,
@@ -74,17 +51,17 @@ class _BaseState extends State<Base> {
               selectedItemColor: AppColors.primaryColor,
               unselectedItemColor: AppColors.grey1,
               // unselectedLabelStyle: TextStyle(fontSize: 10),
-              onTap: (index) {
-                if (tabsRouter.activeIndex == index) {
-                  setState(() {
-                    isShow = true;
-                  });
-                  //tabsRouter.popTop();
-                } else {
-                  tabsRouter.setActiveIndex(index);
-                }
-
-              },
+              onTap: tabsRouter.setActiveIndex,
+              // (index) {
+              //   if (tabsRouter.activeIndex == index) {
+              //     // setState(() {
+              //     //   isShow = true;
+              //     // });
+              //     //tabsRouter.popTop();
+              //   } else {
+              //     tabsRouter.setActiveIndex(index);
+              //   }
+              // },
               currentIndex: tabsRouter.activeIndex,
               items: [
                 BottomNavigationBarItem(
@@ -100,9 +77,16 @@ class _BaseState extends State<Base> {
                   label: 'main_page'.tr(),
                 ),
                 BottomNavigationBarItem(
-                    icon: IslamTeachingIcon(isCurrent: tabsRouter.activeIndex != 1, isKazakh: EasyLocalization.of(context)!.locale.toString() == 'kk',),
-
-                    label:EasyLocalization.of(context)!.locale.toString() == 'kk'?  'Islam_study'.tr() : ''),
+                    icon: IslamTeachingIcon(
+                      isCurrent: tabsRouter.activeIndex != 1,
+                      isKazakh:
+                          EasyLocalization.of(context)!.locale.toString() ==
+                              'kk',
+                    ),
+                    label:
+                        EasyLocalization.of(context)!.locale.toString() == 'kk'
+                            ? 'Islam_study'.tr()
+                            : ''),
                 BottomNavigationBarItem(
                   icon: Column(
                     children: [
@@ -111,7 +95,7 @@ class _BaseState extends State<Base> {
                         width: 55.w,
                         child: Lottie.asset(
                           'assets/animations/Moon_v08.json',
-                          fit: BoxFit.fill,
+                          // fit: BoxFit.fill,
                         ),
                       ),
                       SizedBox(

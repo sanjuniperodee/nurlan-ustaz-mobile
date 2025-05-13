@@ -9,7 +9,7 @@ import '../../../../../../../core/common/colors.dart';
 import '../about_app_page.dart';
 
 class LanguageSettingsBottomSheet extends StatefulWidget {
-  const LanguageSettingsBottomSheet({Key? key}) : super(key: key);
+  const LanguageSettingsBottomSheet({super.key});
 
   @override
   State<LanguageSettingsBottomSheet> createState() =>

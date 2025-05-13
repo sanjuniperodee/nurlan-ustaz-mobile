@@ -21,7 +21,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/timings_cub
 class GeonamesPage extends StatefulWidget {
   final void Function()? callback;
   final String? type;
-  const GeonamesPage({Key? key, this.callback, this.type}) : super(key: key);
+  const GeonamesPage({super.key, this.callback, this.type});
 
   @override
   State<GeonamesPage> createState() => _GeonamesPageState();

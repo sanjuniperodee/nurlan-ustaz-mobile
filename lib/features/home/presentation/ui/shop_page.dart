@@ -17,7 +17,7 @@ import 'package:url_launcher/url_launcher.dart';
 
 @RoutePage()
 class ShopPage extends StatefulWidget {
-  const ShopPage({Key? key}) : super(key: key);
+  const ShopPage({super.key});
 
   @override
   State<ShopPage> createState() => _ShopPageState();
@@ -96,16 +96,16 @@ class _ShopPageState extends State<ShopPage> {
                             return Container(
                               height: 100,
                               width: 100,
+                              decoration: BoxDecoration(
+                                  color: const Color(0xFFFEEDCC),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(12))),
                               child: Center(
                                 child: Text(
                                   topPartners[index].name ?? 'ERROR',
                                   textAlign: TextAlign.center,
                                 ),
                               ),
-                              decoration: BoxDecoration(
-                                  color: const Color(0xFFFEEDCC),
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(12))),
                             );
                           }
 
@@ -153,16 +153,16 @@ class _ShopPageState extends State<ShopPage> {
                             return Container(
                               height: 100,
                               width: 100,
+                              decoration: BoxDecoration(
+                                  color: const Color(0xFFFEEDCC),
+                                  borderRadius: const BorderRadius.all(
+                                      Radius.circular(12))),
                               child: Center(
                                 child: Text(
                                   otherPartners[index].name ?? 'ERROR',
                                   textAlign: TextAlign.center,
                                 ),
                               ),
-                              decoration: BoxDecoration(
-                                  color: const Color(0xFFFEEDCC),
-                                  borderRadius: const BorderRadius.all(
-                                      Radius.circular(12))),
                             );
                           }
                           return ClipRRect(
@@ -192,10 +192,10 @@ class _ShopPageState extends State<ShopPage> {
     );
   }
 
-  Future<void> _launchUrl(String _urll) async {
-    final Uri _url = Uri.parse('${_urll}');
-    if (!await launchUrl(_url)) {
-      throw Exception('Could not launch $_url');
+  Future<void> _launchUrl(String urll) async {
+    final Uri url = Uri.parse(urll);
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
     }
   }
 }

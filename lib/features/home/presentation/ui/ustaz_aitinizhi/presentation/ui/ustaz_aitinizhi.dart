@@ -19,7 +19,7 @@ import '../../../../../../app/presentation/widgets/custom_tab_bar.dart';
 
 @RoutePage()
 class UstazAitinizhiPage extends StatefulWidget {
-  const UstazAitinizhiPage({Key? key}) : super(key: key);
+  const UstazAitinizhiPage({super.key});
 
   @override
   State<UstazAitinizhiPage> createState() => _UstazAitinizhiPageState();
@@ -66,7 +66,7 @@ class _UstazAitinizhiPageState extends State<UstazAitinizhiPage> {
         child: Scaffold(
           floatingActionButton: currentIndex == 0
               ? showButton
-                  ? Container(
+                  ? SizedBox(
                       width: double.infinity,
                       height: 80.h,
                       child: Padding(

@@ -117,7 +117,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
   @override
   void initState() {
     BlocProvider.of<ZhosparymCubit>(context).getCheckList()
-      ..then((value) {
+      .then((value) {
         BlocProvider.of<ZhosparymCubit>(context).calendarEvents(DateTime.now());
       });
     super.initState();
@@ -494,7 +494,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                         ),
                                       ),
                                     ))
-                                .toList(),
+                                ,
                           ],
                         ),
                       ),

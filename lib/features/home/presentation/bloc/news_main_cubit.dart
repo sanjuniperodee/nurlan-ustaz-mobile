@@ -20,7 +20,7 @@ class NewsMainCubit extends Cubit<NewsMainState> {
     int? currentPage,
   }) async {
     final deviceToken = await NotificationService().getDeviceToken();
-    print('DEVICE TOKEN----${deviceToken}');
+    print('DEVICE TOKEN----$deviceToken');
 
     final failureOrUser = await _homeRepository.newsMain(
         isSaved: isSaved, currentPage: currentPage);

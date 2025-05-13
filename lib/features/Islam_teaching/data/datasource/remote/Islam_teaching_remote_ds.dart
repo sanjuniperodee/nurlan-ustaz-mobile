@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
-import 'package:nurlan_ustaz_flutter/core/platform/dio_wrapper.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/ayat_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/namaz_dto.dart';
@@ -59,12 +58,9 @@ abstract class IslamTeachingRemoteDs {
 
 @Injectable(as: IslamTeachingRemoteDs)
 class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
-  late final Dio dio;
-  final DioWrapper dioWrapper;
-  IslamTeachingRemoteDsImpl(this.dioWrapper) {
-    dioWrapper.path('');
-    dio = dioWrapper.dio;
-  }
+  IslamTeachingRemoteDsImpl(this.dio);
+
+  final Dio dio;
   List<ResultTeachingDTO> islamNamesPageMan = [];
   List<ResultTeachingDTO> islamNamesPageWoman = [];
   List<ResultTeachingDTO> surahPage = [];
@@ -84,7 +80,7 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
       return AyatDTO.fromJson(
         (response.data as Map<String, dynamic>),
       );
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -101,7 +97,7 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
       return ResultTeachingDTO.fromJson(
         (response.data as Map<String, dynamic>),
       );
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -118,7 +114,7 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
       return ResultTeachingDTO.fromJson(
         (response.data as Map<String, dynamic>),
       );
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -133,7 +129,7 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
         '${EndPoints.surahs}/$id/toggle_save/',
       );
       return true;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -148,7 +144,7 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
         '${EndPoints.muslimNames}/$id/toggle_save/',
       );
       return true;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -163,7 +159,7 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
         '${EndPoints.dhikrs}/$id/toggle_save/',
       );
       return true;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -178,7 +174,7 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
         '${EndPoints.duha}/$id/toggle_save/',
       );
       return true;
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -194,7 +190,7 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
       return ((response.data as List<dynamic>))
           .map((e) => PillarsDTO.fromJson(e))
           .toList();
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -211,7 +207,7 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
       return ((response.data as List<dynamic>))
           .map((e) => NamazDTO.fromJson(e))
           .toList();
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -227,7 +223,7 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
       return ((response.data as List<dynamic>))
           .map((e) => NamazDTO.fromJson(e))
           .toList();
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -244,7 +240,7 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
       return ((response.data as List<dynamic>))
           .map((e) => PillarsDTO.fromJson(e))
           .toList();
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -288,7 +284,7 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
       }
       // log('PAGE${response.data['meta']['pagination']['page']}');
       throw 'ERROR';
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -344,7 +340,7 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
       log(response.data);
       // log('PAGE${response.data['meta']['pagination']['page']}');
       throw 'ERROR';
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -400,7 +396,7 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
       log(response.data);
       // log('PAGE${response.data['meta']['pagination']['page']}');
       throw 'ERROR';
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -444,7 +440,7 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
       }
       // log('PAGE${response.data['meta']['pagination']['page']}');
       throw 'ERROR';
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -489,7 +485,7 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
       }
       // log('PAGE${response.data['meta']['pagination']['page']}');
       throw 'ERROR';
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -506,7 +502,7 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
       return ((response.data as List<dynamic>))
           .map((e) => PillarsDTO.fromJson(e))
           .toList();
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
@@ -528,7 +524,7 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
       return ((response.data as List<dynamic>))
           .map((e) => NamesOfAllahDTO.fromJson(e))
           .toList();
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       throw ServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,

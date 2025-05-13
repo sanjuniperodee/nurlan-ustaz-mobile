@@ -1,4 +1,4 @@
-library flutter_clean_calendar;
+library;
 
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -12,8 +12,8 @@ import 'custom_calendar_event.dart';
 
 // Export NeatCleanCalendarEvent for using it in the application
 
-typedef DayBuilder(BuildContext context, DateTime day);
-typedef EventListBuilder(
+typedef DayBuilder = Function(BuildContext context, DateTime day);
+typedef EventListBuilder = Function(
     BuildContext context, List<CustomCalendarEvent> events);
 
 class Range {
@@ -99,7 +99,7 @@ class CustomCalendarChat extends StatefulWidget {
   final String? expandableDateFormat;
   final List<DateTime> daysWithChat;
 
-  CustomCalendarChat({
+  const CustomCalendarChat({super.key, 
     this.onMonthChanged,
     this.onDateSelected,
     this.onRangeSelected,
@@ -146,6 +146,7 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
   DateTime get selectedDate => _selectedDate;
   List<CustomCalendarEvent>? _selectedEvents;
 
+  @override
   void initState() {
     super.initState();
     isExpanded = widget.isExpanded;
@@ -166,9 +167,9 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
   }
 
   Widget get nameAndIconRow {
-    var todayIcon;
-    var leftArrow;
-    var rightArrow;
+    StatelessWidget todayIcon;
+    StatelessWidget leftArrow;
+    StatelessWidget rightArrow;
 
     if (!widget.hideArrows) {
       leftArrow = IconButton(
@@ -191,8 +192,8 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
 
     if (!widget.hideTodayIcon) {
       todayIcon = InkWell(
-        child: Text(widget.todayButtonText),
         onTap: resetToToday,
+        child: Text(widget.todayButtonText),
       );
     } else {
       todayIcon = Container();
@@ -257,8 +258,7 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
     List<Widget> dayWidgets = [];
     List<DateTime> calendarDays =
         isExpanded ? selectedMonthsDays : selectedWeekDays as List<DateTime>;
-    widget.weekDays.forEach(
-      (day) {
+    for (var day in widget.weekDays) {
         dayWidgets.add(
           CustomCalendarChatTile(
             daysWithChat: widget.daysWithChat,
@@ -277,17 +277,15 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
                 ),
           ),
         );
-      },
-    );
+      }
 
     bool monthStarted = false;
     bool monthEnded = false;
 
-    calendarDays.forEach(
-      (day) {
+    for (var day in calendarDays) {
         if (day.hour > 0) {
           day = day.toLocal();
-          day = day.subtract(new Duration(hours: day.hour));
+          day = day.subtract(Duration(hours: day.hour));
         }
 
         if (monthStarted && day.day == 01) {
@@ -298,7 +296,7 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
           monthStarted = true;
         }
 
-        if (this.widget.dayBuilder != null) {
+        if (widget.dayBuilder != null) {
           // Use the dayBuilder widget passed as parameter to render the date tile
           dayWidgets.add(
             CustomCalendarChatTile(
@@ -329,8 +327,7 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
                 inMonth: day.month == selectedDate.month),
           );
         }
-      },
-    );
+      }
     return dayWidgets;
   }
 
@@ -408,7 +405,7 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
                       DateFormat('HH:mm').format(event.startTime).toString();
                   final String end =
                       DateFormat('HH:mm').format(event.endTime).toString();
-                  return Container(
+                  return SizedBox(
                     height: 60.0,
                     child: InkWell(
                       onTap: () {
@@ -602,9 +599,9 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
   }
 
   void updateSelectedRange(DateTime start, DateTime end) {
-    Range _rangeSelected = Range(start, end);
+    Range rangeSelected = Range(start, end);
     if (widget.onRangeSelected != null) {
-      widget.onRangeSelected!(_rangeSelected);
+      widget.onRangeSelected!(rangeSelected);
     }
   }
 
@@ -635,8 +632,9 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
   void toggleExpanded() {
     if (widget.isExpandable) {
       setState(() => isExpanded = !isExpanded);
-      if (widget.onExpandStateChanged != null)
+      if (widget.onExpandStateChanged != null) {
         widget.onExpandStateChanged!(isExpanded);
+      }
     }
   }
 
@@ -703,7 +701,7 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
   }
 
   _lastDayOfWeek(DateTime date) {
-    return _firstDayOfWeek(date).add(new Duration(days: 7));
+    return _firstDayOfWeek(date).add(Duration(days: 7));
   }
 
   /// The function [_daysInMonth] takes the parameter [month] (which is of type [DateTime])
@@ -712,7 +710,7 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
   List<DateTime> _daysInMonth(DateTime month) {
     var first = Utils.firstDayOfMonth(month);
     var daysBefore = first.weekday;
-    var firstToDisplay = first.subtract(new Duration(days: daysBefore - 1));
+    var firstToDisplay = first.subtract(Duration(days: daysBefore - 1));
     var last = Utils.lastDayOfMonth(month);
 
     var daysAfter = 7 - last.weekday;
@@ -724,7 +722,7 @@ class _CustomCalendarChatState extends State<CustomCalendarChat> {
 
     // Adding an extra day necessary. Otherwise the week with days in next month
     // would always end on Saturdays.
-    var lastToDisplay = last.add(new Duration(days: daysAfter + 1));
+    var lastToDisplay = last.add(Duration(days: daysAfter + 1));
     return Utils.daysInRange(firstToDisplay, lastToDisplay).toList();
   }
 }
@@ -734,8 +732,8 @@ class ExpansionCrossFade extends StatelessWidget {
   final Widget expanded;
   final bool isExpanded;
 
-  ExpansionCrossFade(
-      {required this.collapsed,
+  const ExpansionCrossFade(
+      {super.key, required this.collapsed,
       required this.expanded,
       required this.isExpanded});
 

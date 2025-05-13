@@ -6,10 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 
-import 'package:nurlan_ustaz_flutter/features/app/logic/not_auth_logic.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/repositories/auth_repository.dart';
-
-import '../../auth/data/datasource/local/auth_local_ds.dart';
 
 part 'app_bloc.freezed.dart';
 
@@ -23,20 +20,18 @@ final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
 @singleton
 class AppBloc extends Bloc<AppEvent, AppState> {
   final AuthRepository _authRepository;
-  final NotAuthLogic _notAuthLogic;
-  final AuthLocalDs _authLocalDs;
+  // final NotAuthLogic _notAuthLogic;
 
-  AppBloc(this._authRepository, this._notAuthLogic, this._authLocalDs)
-      : super(const AppState.loading()) {
-    _notAuthLogic.statusSubject.listen(
-      (value) async {
-        log('_startListenDio message from stream :: $value');
+  AppBloc(this._authRepository) : super(const AppState.loading()) {
+    // _notAuthLogic.statusSubject.listen(
+    //   (value) async {
+    //     log('_startListenDio message from stream :: $value');
 
-        if (value == 401) {
-          emit(AppState.notAuthorizedDialog());
-        }
-      },
-    );
+    //     if (value == 401) {
+    //       emit(AppState.notAuthorizedDialog());
+    //     }
+    //   },
+    // );
 
     on<AppEvent>(
       (AppEvent event, Emitter<AppState> emit) async {
@@ -46,34 +41,27 @@ class AppBloc extends Bloc<AppEvent, AppState> {
           _CheckAuth() => _checkAuth(event, emit),
           _Logining() => _login(event, emit),
           _RefreshLocal() => _refreshLocal(emit),
-          _OnboardingSave() => _onboarding(event, emit),
           _NonAuthorizedDialog() => _nonAuthorizedDialog(emit),
+          _NonAuthorized() => _nonAuthorized(emit),
         };
       },
     );
+  }
+
+  Future<void> _nonAuthorized(
+    Emitter<AppState> emit,
+  ) async {
+    emit(AppState.notAuthorizedDialog());
   }
 
   Future<void> _checkAuth(
     _CheckAuth event,
     Emitter<AppState> emit,
   ) async {
-    final failureOrOnboarding = await _authRepository.getOnboardingStatus();
-    await failureOrOnboarding.fold((l) {
-      log('AppBloc authChecking l: $l');
-      emit(const AppState.onBoarding());
-      return;
-    }, (r) async {
-      if (r) {
-        log('AppBloc authChecking: $r');
-        // emit(const AppState.notAuthorizedState());
-        //await _authChecking();
-        await _tokenCheck(emit);
-        // emit.isDone;
-      } else {
-        emit(const AppState.onBoarding());
-        return;
-      }
-    });
+    // emit(const AppState.notAuthorizedState());
+    //await _authChecking();
+    await _tokenCheck(emit);
+    // emit.isDone;
   }
 
   Future<void> _refreshLocal(
@@ -88,7 +76,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
   Future<void> _tokenCheck(
     Emitter<AppState> emit,
   ) async {
-    final result = _authRepository.authCheck();
+    final result = await _authRepository.authCheck();
 
     result.fold(
       (l) => emit(const AppState.inApp()),
@@ -140,24 +128,5 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     log('AppBloc Hello', name: _tag);
     // _sendDeviceTokenToBack();
     emit(const AppState.inApp());
-  }
-
-  Future<void> _onboarding(
-    _OnboardingSave event,
-    Emitter<AppState> emit,
-  ) async {
-    final failureOrSuccess =
-        await _authRepository.saveOnboardingStatus(isOnboarding: true);
-
-    failureOrSuccess.fold(
-      (l) {
-        log('AuthentificationCubit saveOnboardingStatus: $l');
-      },
-      (r) {
-        log('AuthentificationCubit saveOnboardingStatus: $r');
-      },
-    );
-
-    emit(const AppState.loading());
   }
 }

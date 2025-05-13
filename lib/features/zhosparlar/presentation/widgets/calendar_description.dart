@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import '../../../../core/common/app_styles.dart';
 
 class CalendarDescription extends StatefulWidget {
-  const CalendarDescription({Key? key}) : super(key: key);
+  const CalendarDescription({super.key});
 
   @override
   State<CalendarDescription> createState() => _CalendarDescriptionState();
@@ -16,7 +16,7 @@ class _CalendarDescriptionState extends State<CalendarDescription> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Container(
+        SizedBox(
           height: 24,
           child: Row(
             children: [
@@ -47,7 +47,7 @@ class _CalendarDescriptionState extends State<CalendarDescription> {
             ],
           ),
         ),
-        Container(
+        SizedBox(
           height: 24,
           child: Row(
             children: [

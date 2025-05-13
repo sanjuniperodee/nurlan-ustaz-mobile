@@ -8,7 +8,7 @@ import '../../../../core/common/app_styles.dart';
 import '../../../../core/common/colors.dart';
 
 class PrivatePolicyText extends StatelessWidget {
-  const PrivatePolicyText({Key? key}) : super(key: key);
+  const PrivatePolicyText({super.key});
 
   @override
   Widget build(BuildContext context) {

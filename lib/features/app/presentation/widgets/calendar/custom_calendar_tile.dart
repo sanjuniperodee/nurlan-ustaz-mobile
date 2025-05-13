@@ -5,7 +5,6 @@ import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/event_dto.d
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/events_type_enum.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/date_statuses.dart';
 
-import '../../../../zhosparlar/data/models/events_type_enum.dart';
 import 'custom_date_utils.dart';
 
 /// [CalendarTile] is responsible for displaying one calendar event entry below
@@ -125,9 +124,9 @@ class CalendarTile extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w400,
-                      color: isSelected && this.date != null
+                      color: isSelected && date != null
                           ? Colors.white
-                          : Utils.isSameDay(this.date!, DateTime.now())
+                          : Utils.isSameDay(date!, DateTime.now())
                               ? todayColor
                               : inMonth
                                   ? Colors.black

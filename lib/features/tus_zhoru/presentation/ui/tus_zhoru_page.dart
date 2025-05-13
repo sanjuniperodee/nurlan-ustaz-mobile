@@ -20,34 +20,42 @@ import '../../../app/presentation/widgets/custom_snackbars.dart';
 import '../../../app/presentation/widgets/custom_tab_bar.dart';
 import '../../../app/presentation/widgets/search_widget.dart';
 
-@RoutePage(name: 'TusZhoruRouterPage')
-class TusZhoruPage extends StatefulWidget {
-  final String? type;
-
-  const TusZhoruPage({
-    Key? key,
-    this.type,
-  }) : super(key: key);
+@RoutePage()
+class SavedTusZhoruPage extends TusZhoruPage {
+  const SavedTusZhoruPage({super.key});
 
   @override
-  State<TusZhoruPage> createState() => _TusZhoruPageState();
+  // ignore: no_logic_in_create_state
+  State<TusZhoruPage> createState() => _TusZhoruPageState(isSaved: true);
 }
 
-bool isLoading = false;
-int currentIndex = 1;
-final _scrollController = ScrollController();
-int itemsLength = 0;
+@RoutePage(name: 'TusZhoruRouterPage')
+class TusZhoruPage extends StatefulWidget {
+  const TusZhoruPage({super.key});
+
+  @override
+  // ignore: no_logic_in_create_state
+  State<TusZhoruPage> createState() => _TusZhoruPageState(isSaved: false);
+}
 
 class _TusZhoruPageState extends State<TusZhoruPage> {
+  _TusZhoruPageState({required this.isSaved});
+
+  final bool isSaved;
+
+  bool isLoading = false;
+  int currentIndex = 1;
+  final _scrollController = ScrollController();
+  int itemsLength = 0;
   @override
   void initState() {
     _scrollController.addListener(_scrollListener);
 
-    widget.type == 'isSave'
-        ? BlocProvider.of<TusZhoruCubit>(context)
+    isSaved
+        ? context
+            .read<TusZhoruCubit>()
             .tusZhoruT(page: 1, isFirstCall: true, isSaved: true)
-        : BlocProvider.of<TusZhoruCubit>(context)
-            .tusZhoruT(page: 1, isFirstCall: true);
+        : context.read<TusZhoruCubit>().tusZhoruT(page: 1, isFirstCall: true);
 
     super.initState();
   }
@@ -88,7 +96,7 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
 
           return Scaffold(
             floatingActionButton: currentIndex == 1
-                ? widget.type == 'isSave'
+                ? isSaved
                     ? const SizedBox()
                     : Padding(
                         padding: const EdgeInsets.only(
@@ -117,10 +125,10 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                       height: 20.h,
                     ),
                     CustomAppBar(
-                      title: widget.type == 'isSave'
+                      title: isSaved
                           ? 'save_dream_interpretation'.tr()
                           : 'dream_interpretation'.tr(),
-                      hideIcon: widget.type == 'isSave' ? true : false,
+                      hideIcon: isSaved,
                     ),
                     SizedBox(
                       height: 36.h,
@@ -165,8 +173,9 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
                         ),
                       ],
                       onTap: (int value) {
-                        context.read<TusZhoruCubit>().switchTab(
-                            value, widget.type == 'isSave' ? 'save' : '');
+                        context
+                            .read<TusZhoruCubit>()
+                            .switchTab(value, isSaved ? 'save' : '');
                       },
                       length: 2,
                     ),
@@ -217,15 +226,16 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
 
   Future<void> _scrollListener() async {
     if (ConstantHome.globalCountTusZhoru == itemsLength) {
-      log('${ConstantHome.globalCountTusZhoru.toString()}');
+      log(ConstantHome.globalCountTusZhoru.toString());
       log(itemsLength.toString());
       return;
     } else {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        await currentIndex++;
-        log('kolll----${currentIndex}');
-        await BlocProvider.of<TusZhoruCubit>(context)
+        currentIndex++;
+        log('kolll----$currentIndex');
+        await context
+            .read<TusZhoruCubit>()
             .paginatedTusZhoru(page: currentIndex, isFirstCall: true);
         setState(() {});
       }

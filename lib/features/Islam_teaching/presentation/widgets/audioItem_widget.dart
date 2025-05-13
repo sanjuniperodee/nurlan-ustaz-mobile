@@ -159,7 +159,7 @@ class _AudioItemWidgetState extends State<AudioItemWidget> {
             child: ValueListenableBuilder<ProgressBarState>(
               valueListenable: progressNotifier,
               builder: (_, value, __) {
-                log('VVV:${value}');
+                log('VVV:$value');
                 return Padding(
                   padding: const EdgeInsets.only(top: 13.0, left: 8, right: 8),
                   child: ProgressBar(

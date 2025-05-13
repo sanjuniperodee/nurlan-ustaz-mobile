@@ -8,9 +8,9 @@ class MainButton extends StatelessWidget {
   final String text;
   final void Function()? onTap;
   const MainButton({
-    Key? key,
+    super.key,
     required this.text, this.onTap,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

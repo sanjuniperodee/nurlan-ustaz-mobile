@@ -8,8 +8,8 @@ part 'token_dto.g.dart';
 @freezed
 abstract class TokenDTO with _$TokenDTO {
   const factory TokenDTO({
-    @JsonKey(name: "refresh") String? refresh,
-    @JsonKey(name: "access") String? access,
+    @JsonKey(name: "refresh") required String refresh,
+    @JsonKey(name: "access") required String access,
   }) = _TokenDTO;
 
   factory TokenDTO.fromJson(Map<String, dynamic> json) =>

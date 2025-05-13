@@ -1,6 +1,5 @@
 // ignore_for_file: invalid_annotation_target
 
-import 'package:json_annotation/json_annotation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'app_version_model.freezed.dart';

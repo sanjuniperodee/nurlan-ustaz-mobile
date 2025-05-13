@@ -1,4 +1,3 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 

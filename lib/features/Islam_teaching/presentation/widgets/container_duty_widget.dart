@@ -7,10 +7,10 @@ class ContainerDutyWidget extends StatelessWidget {
   final String title;
   final String body;
   const ContainerDutyWidget({
-    Key? key,
+    super.key,
     required this.title,
     required this.body,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

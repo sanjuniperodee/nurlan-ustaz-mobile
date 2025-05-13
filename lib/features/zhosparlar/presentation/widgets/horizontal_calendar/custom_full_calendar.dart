@@ -20,8 +20,8 @@ class CustomFullCalendar extends StatefulWidget {
   final List<String>? events;
   final Function onDateChange;
 
-  CustomFullCalendar({
-    Key? key,
+  const CustomFullCalendar({
+    super.key,
     this.endDate,
     required this.startDate,
     required this.padding,
@@ -35,7 +35,7 @@ class CustomFullCalendar extends StatefulWidget {
     this.selectedDate,
     this.fullCalendarDay,
     this.calendarScroll,
-  }) : super(key: key);
+  });
   @override
   _FullCalendarState createState() => _FullCalendarState();
 }
@@ -50,6 +50,7 @@ class _FullCalendarState extends State<CustomFullCalendar> {
 
   late PageController _horizontalScroll;
 
+  @override
   void initState() {
     setState(() {
       startDate = DateTime.parse(
@@ -107,11 +108,11 @@ class _FullCalendarState extends State<CustomFullCalendar> {
 
       months.sort((b, a) => a!.compareTo(b!));
 
-      final _index = months.indexWhere((element) =>
+      final index = months.indexWhere((element) =>
           element!.month == widget.selectedDate!.month &&
           element.year == widget.selectedDate!.year);
 
-      _initialPage = _index;
+      _initialPage = index;
       _horizontalScroll = PageController(initialPage: _initialPage);
 
       return Container(
@@ -186,7 +187,7 @@ class _FullCalendarState extends State<CustomFullCalendar> {
                     ),
                   ),
                   ScrollablePositionedList.builder(
-                    initialScrollIndex: _index,
+                    initialScrollIndex: index,
                     itemCount: months.length,
                     reverse: true,
                     physics: BouncingScrollPhysics(),
@@ -220,9 +221,9 @@ class _FullCalendarState extends State<CustomFullCalendar> {
     for (var day = 12; day <= 18; day++) {
       weekday == WeekDay.long
           ? daysNames.add(DateFormat.EEEE(locale.toString())
-              .format(DateTime.parse('1970-01-' + day.toString())))
+              .format(DateTime.parse('1970-01-$day')))
           : daysNames.add(DateFormat.E(locale.toString())
-              .format(DateTime.parse('1970-01-' + day.toString())));
+              .format(DateTime.parse('1970-01-$day')));
     }
 
     return Row(

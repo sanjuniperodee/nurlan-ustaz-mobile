@@ -1,78 +1,80 @@
-// ignore_for_file: constant_identifier_names
-const TEST = 'http://86.107.45.90';
-const TEST2 = 'https://dev.nurlanustaz.kz';
-const PROD = 'https://api.nurlanimam.com';
-const SERVER_ = PROD;
-final WebSocketUrl = 'wss://${SERVER_.split('//').last}';
-
 mixin EndPoints {
-  static const String onBoarding = '/api/support/onboarding/';
-  static const String appVersions = '/api/support/app-version/';
+  static const testHost = '86.107.45.90';
+  static const test2Host = 'dev.nurlanustaz.kz';
+  static const prodHost = 'api.nurlanimam.com';
+  static const apiUrl = 'https://$prodHost/api';
+  static const wsUrl = 'wss://$prodHost/api';
+
+  static String imgUrlBuilder(String path) => 'https://$prodHost$path';
+
+  static const String onBoarding = '/support/onboarding/';
+  static const String appVersions = '/support/app-version/';
+
+  // ws
+  static const String wsSupportChat = "$wsUrl/support/chat/";
+  static const String wsTellMeUstazChat = "$wsUrl/tell-me-ustaz/chat/";
 
   /// auth
-  static const String createUser = '/api/users/';
-  static const String activateUser = '/api/users/activation/';
-  static const String createToken = '/api/jwt/create/';
-  static const String refreshToken = '/api/jwt/refresh/';
-  static const String verifyToken = '/api/jwt/verify/';
+  static const String createUser = '/users/';
+  static const String activateUser = '/users/activation/';
+  static const String createToken = '/jwt/create/';
+  static const String refreshToken = '/jwt/refresh/';
+  static const String verifyToken = '/jwt/verify/';
 
-  static const String resetPassword = '/api/users/reset_password/';
-  static const String resetPasswordConfirm =
-      '/api/users/reset_password_confirm/';
-  static const String resetConfirmCode =
-      '/api/users/reset_password_confirm_code/';
-  static const String resendActivation = '/api/users/resend_activation/';
+  static const String resetPassword = '/users/reset_password/';
+  static const String resetPasswordConfirm = '/users/reset_password_confirm/';
+  static const String resetConfirmCode = '/users/reset_password_confirm_code/';
+  static const String resendActivation = '/users/resend_activation/';
 
-  static const String register = '/api/v1/register';
-  static const String registerVerify = '/api/v1/verifyUserPhone';
-  static const String passwordVerify = '/api/v1/password-reset/verify';
-  static const String passwordUpdate = '/api/v1/password-reset/update';
+  static const String register = '/v1/register';
+  static const String registerVerify = '/v1/verifyUserPhone';
+  static const String passwordVerify = '/v1/password-reset/verify';
+  static const String passwordUpdate = '/v1/password-reset/update';
 
-  static const String newPass = '/api/users/set_password/';
-  static const String sendCode = '/api/v1/sendCode';
+  static const String newPass = '/users/set_password/';
+  static const String sendCode = '/v1/sendCode';
 
   //HOME
-  static const String prayerTimes = '/api/islam/prayer-times/';
-  static const String timings = '/api/islam/prayer-times/timings/';
-  static const String geoNames = '/api/notifications/devices/geo_names/';
-  static const String notification = '/api/notifications/devices';
-  static const String getNotification = '/api/notifications/notifications/';
+  static const String prayerTimes = '/islam/prayer-times/';
+  static const String timings = '/islam/prayer-times/timings/';
+  static const String geoNames = '/notifications/devices/geo_names/';
+  static const String notification = '/notifications/devices/';
+  static const String getNotification = '/notifications/notifications/';
 
-  static const String setCity = '/api/notifications/devices/';
-  static const String banner = '/api/v1/banners';
-  static const String faq = '/api/support/faq/';
-  static const String prjInfo = '/api/support/project-info/';
-  static const String seminar = '/api/banner/seminars/';
-  static const String charities = '/api/additional-services/charities/';
-  static const String imamServices = '/api/additional-services/imam-services/';
-  static const String lives = '/api/blog/lives/';
-  static const String partners = '/api/additional-services/partners/';
-  static const String news = '/api/banner/news/';
-  static const String commentReport = '/api/support/reports/';
-  static const String chats = '/api/tell-me-ustaz/chats/';
+  static const String setCity = '/notifications/devices/';
+  static const String banner = '/v1/banners';
+  static const String faq = '/support/faq/';
+  static const String prjInfo = '/support/project-info/';
+  static const String seminar = '/banner/seminars/';
+  static const String charities = '/additional-services/charities/';
+  static const String imamServices = '/additional-services/imam-services/';
+  static const String lives = '/blog/lives/';
+  static const String partners = '/additional-services/partners/';
+  static const String news = '/banner/news/';
+  static const String commentReport = '/support/reports/';
+  static const String chats = '/tell-me-ustaz/chats/';
 
 // TUS ZHORU
-  static const String tusZhoru = '/api/dream-book/interpretations/';
-  static const String customTusZhoru =
-      '/api/dream-book/custom-interpretations/';
+  static const String tusZhoru = '/dream-book/interpretations/';
+  static const String customTusZhoru = '/dream-book/custom-interpretations/';
 
   //ISLAM TEACHING
 
-  static const String ayatOfDay = '/api/knowledge/surahs/ayat_of_the_day/';
-  static const String pillars = '/api/islam/pillars/';
-  static const String ablutions = '/api/islam/ablutions/';
-  static const String fatwas = '/api/knowledge/fatwas/';
-  static const String namesOfAllah = '/api/knowledge/names_of_allah/';
-  static const String surahs = '/api/knowledge/surahs/';
-  static const String duha = '/api/knowledge/duas/';
-  static const String dhikrs = '/api/knowledge/dhikrs/';
-  static const String muslimNames = '/api/knowledge/muslim_names/';
+  static const String ayatOfDay = '/knowledge/surahs/ayat_of_the_day/';
+  static const String pillars = '/islam/pillars/';
+  static const String ablutions = '/islam/ablutions/';
+  static const String fatwas = '/knowledge/fatwas/';
+  static const String namesOfAllah = '/knowledge/names_of_allah/';
+  static const String surahs = '/knowledge/surahs/';
+  static const String duha = '/knowledge/duas/';
+  static const String dhikrs = '/knowledge/dhikrs/';
+  static const String muslimNames = '/knowledge/muslim_names/';
 
   //ZHOSPARYM
-  static const String events = '/api/calendar/events/';
-  static const String checklist = '/api/calendar/checklists/';
-  static const String checklistDays = '/api/calendar/checklist-days/';
+  static const String events = '/calendar/events/';
+  static const String checklist = '/calendar/checklists/';
+  static const String checklistDays = '/calendar/checklist-days/';
   //cards
-  static const String cards = '/api/payment/cards/';
-  static const String addCards = '/api/payment/add-card/';
+  static const String cards = '/payment/cards/';
+  static const String addCards = '/payment/add-card/';
 }

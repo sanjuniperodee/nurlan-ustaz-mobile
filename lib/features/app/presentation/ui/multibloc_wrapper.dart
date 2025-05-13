@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get_it/get_it.dart';
 
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/ablutions_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/ayat_of_day_cubit.dart';
@@ -75,226 +76,220 @@ import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zh
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/bloc/checklist_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/bloc/zhosparym_cubit.dart';
 
-import '../../../../core/services/locator_service.dart';
 import '../../../tus_zhoru/presentation/bloc/custom_tus_zhoru_details_cubit.dart';
 
-class MultiblocWrapper extends StatefulWidget {
-  final Widget child;
+class MultiblocWrapper extends StatelessWidget {
   const MultiblocWrapper({
     super.key,
     required this.child,
   });
 
-  @override
-  State<MultiblocWrapper> createState() => _MultiblocWrapperState();
-}
+  final Widget child;
 
-class _MultiblocWrapperState extends State<MultiblocWrapper> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
         ///
-      
+
         BlocProvider<AppBloc>(
-          create: (context) => getIt<AppBloc>(),
+          create: (context) => GetIt.I<AppBloc>(),
         ),
         //On Boarding
         BlocProvider<OnBoardingCubit>(
-          create: (context) => getIt<OnBoardingCubit>(),
+          create: (context) => GetIt.I<OnBoardingCubit>(),
         ),
         BlocProvider<LanguageCubit>(
-          create: (context) => getIt<LanguageCubit>(),
+          create: (context) => GetIt.I<LanguageCubit>(),
         ),
         //AUTH
-        BlocProvider<AuthCubit>(create: (context) => getIt<AuthCubit>()),
+        BlocProvider<AuthCubit>(create: (context) => GetIt.I<AuthCubit>()),
         BlocProvider<RegistrationCubit>(
-            create: (context) => getIt<RegistrationCubit>()),
-        BlocProvider<LoginCubit>(create: (context) => getIt<LoginCubit>()),
+            create: (context) => GetIt.I<RegistrationCubit>()),
+        BlocProvider<LoginCubit>(create: (context) => GetIt.I<LoginCubit>()),
         BlocProvider<CodeVerificationCubit>(
-            create: (context) => getIt<CodeVerificationCubit>()),
+            create: (context) => GetIt.I<CodeVerificationCubit>()),
         BlocProvider<GetProfileCubit>(
-          create: (context) => getIt<GetProfileCubit>(),
+          create: (context) => GetIt.I<GetProfileCubit>(),
         ),
         BlocProvider<ChangePassCubit>(
-          create: (context) => getIt<ChangePassCubit>(),
+          create: (context) => GetIt.I<ChangePassCubit>(),
         ),
         BlocProvider<RenameUserCubit>(
-            create: (context) => getIt<RenameUserCubit>()),
+            create: (context) => GetIt.I<RenameUserCubit>()),
         BlocProvider<ForgotPasswordCubitCubit>(
-            create: (context) => getIt<ForgotPasswordCubitCubit>()),
+            create: (context) => GetIt.I<ForgotPasswordCubitCubit>()),
 
         //
         //HOME
         //
 
         BlocProvider<TechnicalSupportCubit>(
-          create: (context) => getIt<TechnicalSupportCubit>(),
+          create: (context) => GetIt.I<TechnicalSupportCubit>(),
         ),
 
         BlocProvider<PaymentTickCubit>(
-          create: (context) => getIt<PaymentTickCubit>(),
+          create: (context) => GetIt.I<PaymentTickCubit>(),
         ),
 
         BlocProvider<GetNotiCubit>(
-          create: (context) => getIt<GetNotiCubit>(),
+          create: (context) => GetIt.I<GetNotiCubit>(),
         ),
         BlocProvider<TimingsCubit>(
-          create: (context) => getIt<TimingsCubit>(),
+          create: (context) => GetIt.I<TimingsCubit>(),
         ),
         BlocProvider<SetCityCubit>(
-          create: (context) => getIt<SetCityCubit>(),
+          create: (context) => GetIt.I<SetCityCubit>(),
         ),
         BlocProvider<GeonamesCubit>(
-          create: (context) => getIt<GeonamesCubit>(),
+          create: (context) => GetIt.I<GeonamesCubit>(),
         ),
         BlocProvider<FaqCubit>(
-          create: (context) => getIt<FaqCubit>(),
+          create: (context) => GetIt.I<FaqCubit>(),
         ),
         BlocProvider<CreateSeminarPaymentCubit>(
-          create: (context) => getIt<CreateSeminarPaymentCubit>(),
+          create: (context) => GetIt.I<CreateSeminarPaymentCubit>(),
         ),
         BlocProvider<NewsCubit>(
-          create: (context) => getIt<NewsCubit>(),
+          create: (context) => GetIt.I<NewsCubit>(),
         ),
         BlocProvider<SeminarCubit>(
-          create: (context) => getIt<SeminarCubit>(),
+          create: (context) => GetIt.I<SeminarCubit>(),
         ),
         BlocProvider<ServicesCubit>(
-          create: (context) => getIt<ServicesCubit>(),
+          create: (context) => GetIt.I<ServicesCubit>(),
         ),
         BlocProvider<CharitiesCubit>(
-          create: (context) => getIt<CharitiesCubit>(),
+          create: (context) => GetIt.I<CharitiesCubit>(),
         ),
         BlocProvider<CommentReportCubit>(
-          create: (context) => getIt<CommentReportCubit>(),
+          create: (context) => GetIt.I<CommentReportCubit>(),
         ),
         BlocProvider<CommentNewsCubit>(
-          create: (context) => getIt<CommentNewsCubit>(),
+          create: (context) => GetIt.I<CommentNewsCubit>(),
         ),
         BlocProvider<CommentNewsLikeCubit>(
-          create: (context) => getIt<CommentNewsLikeCubit>(),
+          create: (context) => GetIt.I<CommentNewsLikeCubit>(),
         ),
         BlocProvider<CommentNewsPostCubit>(
-          create: (context) => getIt<CommentNewsPostCubit>(),
+          create: (context) => GetIt.I<CommentNewsPostCubit>(),
         ),
         BlocProvider<CommentSemCubit>(
-          create: (context) => getIt<CommentSemCubit>(),
+          create: (context) => GetIt.I<CommentSemCubit>(),
         ),
         BlocProvider<CommentSemPostCubit>(
-          create: (context) => getIt<CommentSemPostCubit>(),
+          create: (context) => GetIt.I<CommentSemPostCubit>(),
         ),
         BlocProvider<LivesCubit>(
-          create: (context) => getIt<LivesCubit>(),
+          create: (context) => GetIt.I<LivesCubit>(),
         ),
         BlocProvider<PartnersCubit>(
-          create: (context) => getIt<PartnersCubit>(),
+          create: (context) => GetIt.I<PartnersCubit>(),
         ),
         BlocProvider<NewsMainCubit>(
-          create: (context) => getIt<NewsMainCubit>(),
+          create: (context) => GetIt.I<NewsMainCubit>(),
         ),
         BlocProvider<PostServiceCubit>(
-          create: (context) => getIt<PostServiceCubit>(),
+          create: (context) => GetIt.I<PostServiceCubit>(),
         ),
         BlocProvider<PrjInfoCubit>(
-          create: (context) => getIt<PrjInfoCubit>(),
+          create: (context) => GetIt.I<PrjInfoCubit>(),
         ),
         BlocProvider<SeminarFavCubit>(
-          create: (context) => getIt<SeminarFavCubit>(),
+          create: (context) => GetIt.I<SeminarFavCubit>(),
         ),
         BlocProvider<LivesFavCubit>(
-          create: (context) => getIt<LivesFavCubit>(),
+          create: (context) => GetIt.I<LivesFavCubit>(),
         ),
 
         BlocProvider<CommentSemLikeCubit>(
-          create: (context) => getIt<CommentSemLikeCubit>(),
+          create: (context) => GetIt.I<CommentSemLikeCubit>(),
         ),
         BlocProvider<NewsFavCubit>(
-          create: (context) => getIt<NewsFavCubit>(),
+          create: (context) => GetIt.I<NewsFavCubit>(),
         ),
         BlocProvider<NewsDetailCubit>(
-          create: (context) => getIt<NewsDetailCubit>(),
+          create: (context) => GetIt.I<NewsDetailCubit>(),
         ),
         BlocProvider<SeminarDetailCubit>(
-          create: (context) => getIt<SeminarDetailCubit>(),
+          create: (context) => GetIt.I<SeminarDetailCubit>(),
         ),
 
         BlocProvider<ProfileNotificationCubit>(
-          create: (context) => getIt<ProfileNotificationCubit>(),
+          create: (context) => GetIt.I<ProfileNotificationCubit>(),
         ),
         //ISlAM TEACHING
         //
         BlocProvider<AblutionsCubit>(
-          create: (context) => getIt<AblutionsCubit>(),
+          create: (context) => GetIt.I<AblutionsCubit>(),
         ),
         BlocProvider<DhikrsCubit>(
-          create: (context) => getIt<DhikrsCubit>(),
+          create: (context) => GetIt.I<DhikrsCubit>(),
         ),
         BlocProvider<DhikrsFavoriteCubit>(
-          create: (context) => getIt<DhikrsFavoriteCubit>(),
+          create: (context) => GetIt.I<DhikrsFavoriteCubit>(),
         ),
         BlocProvider<DuaDetailCubit>(
-          create: (context) => getIt<DuaDetailCubit>(),
+          create: (context) => GetIt.I<DuaDetailCubit>(),
         ),
         BlocProvider<AyatOfDayCubit>(
-          create: (context) => getIt<AyatOfDayCubit>(),
+          create: (context) => GetIt.I<AyatOfDayCubit>(),
         ),
         BlocProvider<PillarsCubit>(
-          create: (context) => getIt<PillarsCubit>(),
+          create: (context) => GetIt.I<PillarsCubit>(),
         ),
         BlocProvider<SurahCubit>(
-          create: (context) => getIt<SurahCubit>(),
+          create: (context) => GetIt.I<SurahCubit>(),
         ),
         BlocProvider<DuasCubit>(
-          create: (context) => getIt<DuasCubit>(),
+          create: (context) => GetIt.I<DuasCubit>(),
         ),
         BlocProvider<IslamNamesCubit>(
-          create: (context) => getIt<IslamNamesCubit>(),
+          create: (context) => GetIt.I<IslamNamesCubit>(),
         ),
 
         BlocProvider<NamazDetailCubit>(
-          create: (context) => getIt<NamazDetailCubit>(),
+          create: (context) => GetIt.I<NamazDetailCubit>(),
         ),
         BlocProvider<SurahFavoriteCubit>(
-          create: (context) => getIt<SurahFavoriteCubit>(),
+          create: (context) => GetIt.I<SurahFavoriteCubit>(),
         ),
         BlocProvider<NamesOfAllahCubit>(
-          create: (context) => getIt<NamesOfAllahCubit>(),
+          create: (context) => GetIt.I<NamesOfAllahCubit>(),
         ),
 
         BlocProvider<IslamNameDetailCubit>(
-          create: (context) => getIt<IslamNameDetailCubit>(),
+          create: (context) => GetIt.I<IslamNameDetailCubit>(),
         ),
         //TANDAULILAR
         //
         BlocProvider<TandaulilarCubit>(
-          create: (context) => getIt<TandaulilarCubit>(),
+          create: (context) => GetIt.I<TandaulilarCubit>(),
         ),
         //USTAZ AITNIZH
         BlocProvider<CalendarChatsCubit>(
-            create: (context) => getIt<CalendarChatsCubit>()),
+            create: (context) => GetIt.I<CalendarChatsCubit>()),
         BlocProvider<TodayChatCubit>(
-            create: (context) => getIt<TodayChatCubit>()),
+            create: (context) => GetIt.I<TodayChatCubit>()),
         //TUS ZHORU
         BlocProvider<TusZhoruCubit>(
-            create: (context) => getIt<TusZhoruCubit>()),
+            create: (context) => GetIt.I<TusZhoruCubit>()),
         BlocProvider<CreateTusZhoruCubit>(
-            create: (context) => getIt<CreateTusZhoruCubit>()),
+            create: (context) => GetIt.I<CreateTusZhoruCubit>()),
         BlocProvider<TusZhoruDetailsCubit>(
-            create: (context) => getIt<TusZhoruDetailsCubit>()),
+            create: (context) => GetIt.I<TusZhoruDetailsCubit>()),
         BlocProvider<CustomTusZhoruDetailsCubit>(
-            create: (context) => getIt<CustomTusZhoruDetailsCubit>()),
+            create: (context) => GetIt.I<CustomTusZhoruDetailsCubit>()),
         //ZHOSPARLARIM
         BlocProvider<ZhosparymCubit>(
-            create: (context) => getIt<ZhosparymCubit>()),
+            create: (context) => GetIt.I<ZhosparymCubit>()),
         BlocProvider<CheckListCubit>(
-            create: (context) => getIt<CheckListCubit>()),
+            create: (context) => GetIt.I<CheckListCubit>()),
         BlocProvider<QrScannerCubit>(
-            create: (context) => getIt<QrScannerCubit>()),
-            BlocProvider<CardsCubit>(
-            create: (context) => getIt<CardsCubit>()),
+            create: (context) => GetIt.I<QrScannerCubit>()),
+        BlocProvider<CardsCubit>(create: (context) => GetIt.I<CardsCubit>()),
       ],
-      child: widget.child,
+      child: child,
     );
   }
 }

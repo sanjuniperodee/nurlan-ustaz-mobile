@@ -33,7 +33,7 @@ import '../../../../../app/presentation/widgets/custom_app_bar.dart';
 @RoutePage()
 class ProfileInfoPage extends StatefulWidget {
   final UserDto userDTO;
-  const ProfileInfoPage({Key? key, required this.userDTO}) : super(key: key);
+  const ProfileInfoPage({super.key, required this.userDTO});
 
   @override
   State<ProfileInfoPage> createState() => _ProfileInfoPageState();
@@ -344,6 +344,6 @@ Future<XFile?> getImageXFileByUrl(String? url) async {
     return null;
   }
   var file = await DefaultCacheManager().getSingleFile(url);
-  XFile result = await XFile(file.path);
+  XFile result = XFile(file.path);
   return result;
 }

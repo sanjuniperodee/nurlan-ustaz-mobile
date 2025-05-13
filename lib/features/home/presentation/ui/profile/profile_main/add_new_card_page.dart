@@ -7,14 +7,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/bloc/cards_cubit.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 import '../../../../../../core/common/colors.dart';
 
 @RoutePage()
 class AddNewCardPage extends StatefulWidget {
-  const AddNewCardPage({Key? key, required this.addCardUrl}) : super(key: key);
+  const AddNewCardPage({super.key, required this.addCardUrl});
   final String addCardUrl;
 
   @override

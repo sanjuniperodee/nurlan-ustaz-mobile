@@ -7,6 +7,7 @@ import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/cache_helper/prefs.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_info.dart';
+import 'package:nurlan_ustaz_flutter/core/platform/platform_helper.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/datasource/local/home_local_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/datasource/remote/home_remote_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/card_model.dart';
@@ -148,13 +149,9 @@ abstract class HomeRepository {
       {required String registrationId, required NotificationDTO notification});
 
   Future<Either<Failure, String>> checkTicket({required String url});
-  Future<Either<Failure, List<CardDTO>>> getCards(
-      { String? search  });
-        Future<Either<Failure, String>> getAddCArdUrl();
-                Future<Either<Failure, void>> setDefaultCard({required int cardId});
-
-
-
+  Future<Either<Failure, List<CardDTO>>> getCards({String? search});
+  Future<Either<Failure, String>> getAddCArdUrl();
+  Future<Either<Failure, void>> setDefaultCard({required int cardId});
 }
 
 @Singleton(as: HomeRepository)
@@ -218,15 +215,15 @@ class HomeRepositoryImpl extends HomeRepository {
   }) async {
     if (await networkInfo.isConnected) {
       try {
-        if(isSaved == null){
+        if (isSaved == null) {
           Prefs prefs = Prefs();
           final String? cacheToken = await prefs.getDeviceToken();
           final String? firebaseToken =
-          await NotificationService().getDeviceToken();
-          final String type = Platform.operatingSystem.toString();
+              await NotificationService().getDeviceToken();
+
+          final type = PlatformHelper.operatingSystem;
 
           if (cacheToken == null) {
-
             await remoteDS.postNotificationDevice(
               notification: NotificationDeviceDTO(
                 registrationId: firebaseToken,
@@ -235,24 +232,23 @@ class HomeRepositoryImpl extends HomeRepository {
             );
             await prefs.saveDeviceToken(firebaseToken!);
           } else if (cacheToken != firebaseToken) {
-
             NotificationDTO notificationDeviceDTO =
-            NotificationDTO(registrationId: firebaseToken, type: type);
+                NotificationDTO(registrationId: firebaseToken, type: type);
             await remoteDS
                 .patchNotificationDevice(
-                registrationId: cacheToken,
-                notification: notificationDeviceDTO)
+                    registrationId: cacheToken,
+                    notification: notificationDeviceDTO)
                 .then((value) => prefs.saveDeviceToken(firebaseToken!));
-          }else {
+          } else {
             NotificationDTO notificationDeviceDTO =
-            NotificationDTO(registrationId: firebaseToken, type: type);
+                NotificationDTO(registrationId: firebaseToken, type: type);
             await remoteDS.patchNotificationDevice(
               registrationId: cacheToken,
-              notification:  notificationDeviceDTO, // Define an empty notification
+              notification:
+                  notificationDeviceDTO, // Define an empty notification
             );
           }
         }
-
 
         final List<ResultHomeDTO> res =
             await remoteDS.newsMain(isSaved: isSaved, currentPage: currentPage);
@@ -302,7 +298,7 @@ class HomeRepositoryImpl extends HomeRepository {
       {required int id, required String backUrl}) async {
     if (await networkInfo.isConnected) {
       try {
-        final  result =
+        final result =
             await remoteDS.createSeminarPayment(id: id, backUrl: backUrl);
 
         return Right(result);
@@ -587,34 +583,32 @@ class HomeRepositoryImpl extends HomeRepository {
   }) async {
     if (await networkInfo.isConnected) {
       try {
-        if(isSaved == null){
+        if (isSaved == null) {
           final String? deviceToken =
-          await NotificationService().getDeviceToken();
-          final String type = Platform.operatingSystem.toString();
+              await NotificationService().getDeviceToken();
+          final String type = PlatformHelper.operatingSystem;
           final result =
-          await getNotificationDevice(registrationId: deviceToken ?? '');
+              await getNotificationDevice(registrationId: deviceToken ?? '');
           result.fold((l) async {
             if (Platform.isIOS || Platform.isAndroid) {
               await remoteDS.postNotificationDevice(
                   notification: NotificationDeviceDTO(
-                    registrationId: deviceToken,
-                    type: type,
-                  ));
+                registrationId: deviceToken,
+                type: type,
+              ));
             }
           }, (r) async {
-
             if (r.registrationId != deviceToken) {
               if (Platform.isIOS || Platform.isAndroid) {
                 await remoteDS.postNotificationDevice(
                     notification: NotificationDeviceDTO(
-                      registrationId: deviceToken,
-                      type: type,
-                    ));
+                  registrationId: deviceToken,
+                  type: type,
+                ));
               }
             }
           });
         }
-
 
         final List<ResultHomeDTO> news = await remoteDS.news(
             search: search,
@@ -827,13 +821,12 @@ class HomeRepositoryImpl extends HomeRepository {
       return Left(ServerFailure(message: NO_INTERNET_TEXT));
     }
   }
-  
+
   @override
   Future<Either<Failure, List<CardDTO>>> getCards({String? search}) async {
     if (await networkInfo.isConnected) {
       try {
-        final List<CardDTO> cards =
-            await remoteDS.getCards(search: search);
+        final List<CardDTO> cards = await remoteDS.getCards(search: search);
         return Right(cards);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -842,13 +835,12 @@ class HomeRepositoryImpl extends HomeRepository {
       return Left(ServerFailure(message: NO_INTERNET_TEXT));
     }
   }
-  
+
   @override
-  Future<Either<Failure, String>> getAddCArdUrl() async{
-     if (await networkInfo.isConnected) {
+  Future<Either<Failure, String>> getAddCArdUrl() async {
+    if (await networkInfo.isConnected) {
       try {
-        final String addCardUrl =
-            await remoteDS.getAddCardUrl();
+        final String addCardUrl = await remoteDS.getAddCardUrl();
         return Right(addCardUrl);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));
@@ -857,12 +849,12 @@ class HomeRepositoryImpl extends HomeRepository {
       return Left(ServerFailure(message: NO_INTERNET_TEXT));
     }
   }
-  
+
   @override
-  Future<Either<Failure, void>> setDefaultCard({required int cardId}) async{
-     if (await networkInfo.isConnected) {
+  Future<Either<Failure, void>> setDefaultCard({required int cardId}) async {
+    if (await networkInfo.isConnected) {
       try {
-            await remoteDS.setDefaultCard(cardId: cardId);
+        await remoteDS.setDefaultCard(cardId: cardId);
         return const Right(null);
       } on ServerException catch (e) {
         return Left(ServerFailure(message: e.message));

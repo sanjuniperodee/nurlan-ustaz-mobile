@@ -5,8 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
-import 'package:nurlan_ustaz_flutter/features/app/on_boarding/data/repositories/on_boarding_repository.dart';
+import 'package:nurlan_ustaz_flutter/core/platform/platform_helper.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -31,7 +30,9 @@ class AppVersionService {
     String appVersion = packageInfo.version;
     log('current - $appVersion');
     return AppVersionsModel(
-        version: appVersion, deviceType: Platform.operatingSystem.toString());
+      version: appVersion,
+      deviceType: PlatformHelper.operatingSystem,
+    );
   }
 
   Future checkAppVersion(BuildContext context) async {

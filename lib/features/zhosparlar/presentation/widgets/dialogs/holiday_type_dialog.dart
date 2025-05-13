@@ -1,13 +1,10 @@
-import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../core/common/app_styles.dart';
 import '../../../../../core/common/colors.dart';
@@ -15,7 +12,7 @@ import '../../../../app/presentation/widgets/app_button.dart';
 import '../../../data/models/event_dto.dart';
 
 class HolidayDialog extends StatelessWidget {
-  const HolidayDialog({Key? key, required this.event, required this.mainContext, required this.gradient}) : super(key: key);
+  const HolidayDialog({super.key, required this.event, required this.mainContext, required this.gradient});
   final EventDto event;
   final BuildContext mainContext;
   final LinearGradient gradient;
@@ -97,7 +94,7 @@ class HolidayDialog extends StatelessWidget {
                   SizedBox(
                     width: 8.w,
                   ),
-                  Container(
+                  SizedBox(
 
                     width: 200.w,
                     child: Text(
@@ -132,6 +129,5 @@ class HolidayDialog extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }

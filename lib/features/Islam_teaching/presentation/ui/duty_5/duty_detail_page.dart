@@ -95,10 +95,10 @@ class _DutyDetailPageState extends State<DutyDetailPage> {
     );
   }
 
-  Future<void> _launchUrl(String _urll) async {
-    final Uri _url = Uri.parse('${_urll}');
-    if (!await launchUrl(_url, mode: LaunchMode.externalApplication)) {
-      throw Exception('Could not launch $_url');
+  Future<void> _launchUrl(String urll) async {
+    final Uri url = Uri.parse(urll);
+    if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
+      throw Exception('Could not launch $url');
     }
   }
 }

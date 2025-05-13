@@ -15,8 +15,7 @@ import '../common/colors.dart';
 
 class PayDialog extends StatefulWidget {
   const PayDialog(
-      {Key? key, required this.price, required this.id, required this.isCustom})
-      : super(key: key);
+      {super.key, required this.price, required this.id, required this.isCustom});
   final String price;
   final int id;
   final bool isCustom;
@@ -108,13 +107,12 @@ class _PayDialogState extends State<PayDialog> {
                               await BlocProvider.of<TusZhoruCubit>(context)
                                   .getCustomTusZhoruT(page: 1);
                             } else {
-                              await BlocProvider.of<TusZhoruCubit>(context)
+                              BlocProvider.of<TusZhoruCubit>(context)
                                   .tosZhoruList;
                             }
                             await BlocProvider.of<CreateTusZhoruCubit>(context)
                                 .createCustomTusZhoruPayment(
                                     widget.id, widget.isCustom);
-                          } catch (e) {
                           } finally {
                             setState(() {
                               isLoading = false;
@@ -128,7 +126,7 @@ class _PayDialogState extends State<PayDialog> {
                             } else {
                               print('ne custom');
 
-                              await BlocProvider.of<TusZhoruCubit>(context)
+                              BlocProvider.of<TusZhoruCubit>(context)
                                   .tosZhoruList;
                             }
                           }

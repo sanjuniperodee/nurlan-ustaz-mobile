@@ -21,7 +21,7 @@ import '../../../../core/common/assets.dart';
 @RoutePage()
 class LiveBroadcastsPage extends StatefulWidget {
   final String? type;
-  const LiveBroadcastsPage({Key? key, this.type}) : super(key: key);
+  const LiveBroadcastsPage({super.key, this.type});
 
   @override
   State<LiveBroadcastsPage> createState() => _LiveBroadcastsPageState();
@@ -63,11 +63,9 @@ class _LiveBroadcastsPageState extends State<LiveBroadcastsPage> {
           if (state is LivesLoadedState) {
             listOfLives = state.lives;
             listOfFav.clear();
-            listOfLives.forEach(
-              (element) {
+            for (var element in listOfLives) {
                 listOfFav.add(element.isSaved!);
-              },
-            );
+              }
 
             setState(() {});
           } else if (state is LivesErrorState) {
@@ -307,10 +305,10 @@ class _LiveBroadcastsPageState extends State<LiveBroadcastsPage> {
     }
   }
 
-  Future<void> _launchUrl(String _urll) async {
-    final Uri _url = Uri.parse('${_urll}');
-    if (!await launchUrl(_url)) {
-      throw Exception('Could not launch $_url');
+  Future<void> _launchUrl(String urll) async {
+    final Uri url = Uri.parse(urll);
+    if (!await launchUrl(url)) {
+      throw Exception('Could not launch $url');
     }
   }
 }

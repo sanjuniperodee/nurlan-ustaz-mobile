@@ -8,7 +8,7 @@ import '../../../../../../../core/common/colors.dart';
 import '../about_app_page.dart';
 
 class RegionSettingsBottomSheet extends StatefulWidget {
-  const RegionSettingsBottomSheet({Key? key}) : super(key: key);
+  const RegionSettingsBottomSheet({super.key});
 
   @override
   State<RegionSettingsBottomSheet> createState() =>

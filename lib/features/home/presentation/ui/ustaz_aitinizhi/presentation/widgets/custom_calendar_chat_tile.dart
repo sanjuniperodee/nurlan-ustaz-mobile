@@ -45,7 +45,7 @@ class CustomCalendarChatTile extends StatelessWidget {
   final bool? isChat;
   final List<DateTime>? daysWithChat;
 
-  CustomCalendarChatTile({
+  const CustomCalendarChatTile({super.key, 
     this.onDateSelected,
     this.date,
     this.child,
@@ -72,8 +72,8 @@ class CustomCalendarChatTile extends StatelessWidget {
     // We decide, if this calendar tile should display a day name in the header row. If this is the
     // case, we return a widget, that contains a text widget with style property [dayOfWeekStyle]
     if (isDayOfWeek) {
-      return new InkWell(
-        child: new Container(
+      return InkWell(
+        child: Container(
           alignment: Alignment.center,
           child: Text(
             dayOfWeek ?? '',
@@ -123,9 +123,9 @@ class CustomCalendarChatTile extends StatelessWidget {
                   style: TextStyle(
                       fontSize: 14.0,
                       fontWeight: FontWeight.w400,
-                      color: isSelected && this.date != null
+                      color: isSelected && date != null
                           ? Colors.white
-                          : Utils.isSameDay(this.date!, DateTime.now())
+                          : Utils.isSameDay(date!, DateTime.now())
                               ? todayColor
                               : inMonth
                                   ? Colors.black
@@ -133,7 +133,7 @@ class CustomCalendarChatTile extends StatelessWidget {
                                       .grey), // Grey color for previous or next months dates
                 ),
                 // Dots for the events
-                events != null && events!.length > 0
+                events != null && events!.isNotEmpty
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: events!.map((event) {
@@ -154,9 +154,10 @@ class CustomCalendarChatTile extends StatelessWidget {
                                 // color property of the CleanCalendarEvent. If both aren't set, then
                                 // the accent color of the theme get used.
                                 color: (() {
-                                  if (event.isDone)
+                                  if (event.isDone) {
                                     return eventDoneColor ??
                                         Theme.of(context).primaryColor;
+                                  }
                                   if (isSelected) return Colors.white;
                                   return eventColor ?? AppColors.orange;
                                 }())),
@@ -177,8 +178,8 @@ class CustomCalendarChatTile extends StatelessWidget {
     // be rendered to display weekday or date
     if (child != null) {
       return InkWell(
-        child: child,
         onTap: onDateSelected,
+        child: child,
       );
     }
     return Container(

@@ -11,8 +11,7 @@ class CategoryTitleCard extends StatelessWidget {
   final String title;
   final void Function() onTap;
 
-  const CategoryTitleCard({Key? key, required this.title, required this.onTap})
-      : super(key: key);
+  const CategoryTitleCard({super.key, required this.title, required this.onTap});
 
   @override
   Widget build(BuildContext context) {

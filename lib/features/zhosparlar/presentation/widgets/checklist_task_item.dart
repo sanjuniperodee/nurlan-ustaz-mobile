@@ -1,8 +1,6 @@
 import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -17,11 +15,10 @@ import '../bloc/checklist_cubit.dart';
 
 class ChecklistTaskItem extends StatefulWidget {
   const ChecklistTaskItem(
-      {Key? key,
+      {super.key,
       required this.index,
       required this.task,
-      required this.checkListDayDto, required this.selectedDate})
-      : super(key: key);
+      required this.checkListDayDto, required this.selectedDate});
   final int index;
   final CheckListTaskDto task;
   final CheckListDayDto checkListDayDto;
@@ -46,7 +43,7 @@ class _ChecklistTaskItemState extends State<ChecklistTaskItem> {
   @override
   Widget build(BuildContext context) {
     log(widget.task.title!);
-    log(widget.task!.title!.isEmpty.toString());
+    log(widget.task.title!.isEmpty.toString());
     return Slidable(
       
       
@@ -114,7 +111,7 @@ class _ChecklistTaskItemState extends State<ChecklistTaskItem> {
               ],
             ),
             isLoading == true
-                ? Container(
+                ? SizedBox(
                     height: 20,
                     width: 20,
                     child: const Center(

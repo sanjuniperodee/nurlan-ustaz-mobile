@@ -10,7 +10,7 @@ import '../../../../core/router/app_router.dart';
 import '../../data/models/tus_zhoru_dto.dart';
 
 class TusZhoruList extends StatelessWidget {
-  const TusZhoruList({Key? key, required this.tusZhoruList}) : super(key: key);
+  const TusZhoruList({super.key, required this.tusZhoruList});
   final List<TusZhoruDTO> tusZhoruList;
 
   @override
@@ -49,7 +49,7 @@ class TusZhoruList extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Container(
+                      SizedBox(
                         width: 200.w,
                         child: Text(
                           item.title ?? '',

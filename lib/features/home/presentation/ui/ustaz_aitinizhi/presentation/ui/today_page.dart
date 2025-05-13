@@ -4,17 +4,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/presentation/bloc/today_chat_cubit.dart';
 
 import '../../../../../../../core/common/app_styles.dart';
-import '../../../../../../../core/common/assets.dart';
 import '../../../../../../../core/common/colors.dart';
 import '../../../../../../app/presentation/widgets/custom_snackbars.dart';
 import '../widgets/questions_list.dart';
 
 class TodayChatPage extends StatefulWidget {
-  const TodayChatPage({Key? key}) : super(key: key);
+  const TodayChatPage({super.key});
 
   @override
   State<TodayChatPage> createState() => _TodayChatPageState();

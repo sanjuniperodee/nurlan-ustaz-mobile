@@ -17,13 +17,13 @@ class CommentDeepItemWidget extends StatefulWidget {
   final bool ans;
   final void Function()? callback;
   const CommentDeepItemWidget({
-    Key? key,
+    super.key,
     required this.resultHomeDTO,
     required this.id,
     required this.type,
     required this.ans,
     this.callback,
-  }) : super(key: key);
+  });
 
   @override
   State<CommentDeepItemWidget> createState() => _CommentDeepItemWidgetState();

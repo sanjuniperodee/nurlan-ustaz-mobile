@@ -1,5 +1,4 @@
 import 'package:auto_route/auto_route.dart';
-import 'dart:ui';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,7 +29,7 @@ class TusZhoruDetailPage extends StatefulWidget {
 class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
   late bool _isFav;
   double opacity = 0.3;
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   final double triggerOffset = 200.0; // Change opacity below this offset
 
   @override

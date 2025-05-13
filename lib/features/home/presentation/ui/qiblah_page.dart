@@ -19,19 +19,22 @@ class _QiblahPageState extends State<QiblahPage> {
     return FutureBuilder(
       future: _deviceSupport,
       builder: (_, AsyncSnapshot<bool?> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting)
+        if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
             child: CircularProgressIndicator(),
           );
-        if (snapshot.hasError)
+        }
+        if (snapshot.hasError) {
           return Center(
             child: Text("Error: ${snapshot.error.toString()}"),
           );
+        }
 
-        if (snapshot.data!)
+        if (snapshot.data!) {
           return const QiblahWidget();
-        else
+        } else {
           return Container();
+        }
       },
     );
   }

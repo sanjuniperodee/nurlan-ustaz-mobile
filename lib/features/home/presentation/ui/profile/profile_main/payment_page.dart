@@ -8,7 +8,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
-import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/payment_tick_cubit.dart';
@@ -21,7 +20,7 @@ import '../../../../../app/presentation/widgets/custom_tab_bar.dart';
 
 @RoutePage()
 class PaymentsPage extends StatefulWidget {
-  const PaymentsPage({Key? key}) : super(key: key);
+  const PaymentsPage({super.key});
 
   @override
   State<PaymentsPage> createState() => _PaymentsPageState();

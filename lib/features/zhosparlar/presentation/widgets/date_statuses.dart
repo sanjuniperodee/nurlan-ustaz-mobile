@@ -1,11 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/events_type_enum.dart';
 
 import '../../../../core/common/colors.dart';
 
 class DateStatusesWidget extends StatelessWidget {
-  DateStatusesWidget({Key? key, required this.events}) : super(key: key);
+  const DateStatusesWidget({super.key, required this.events});
   final List<EventsType?> events;
 
   EdgeInsets getEdgeInsets(

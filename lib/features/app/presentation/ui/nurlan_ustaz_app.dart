@@ -1,17 +1,14 @@
-import 'dart:developer';
 
 // import 'package:chucker_flutter/chucker_flutter.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
-import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
-import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/multibloc_wrapper.dart';
-
-final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
+import 'package:nurlan_ustaz_flutter/features/auth/data/datasource/local/auth_local_ds.dart';
 
 class NurlanUstazApp extends StatefulWidget {
   const NurlanUstazApp({super.key});
@@ -21,7 +18,7 @@ class NurlanUstazApp extends StatefulWidget {
 }
 
 class _NurlanUstazAppState extends State<NurlanUstazApp> {
-  late AppRouter _rootRouter;
+  late AppRouter appRouter;
 
   // checkAppVersion() async {
   //   log('app_version');
@@ -34,8 +31,11 @@ class _NurlanUstazAppState extends State<NurlanUstazApp> {
 
   @override
   void initState() {
-    //checkAppVersion();
-    _rootRouter = getIt<AppRouter>();
+    // checkAppVersion();
+    appRouter = AppRouter(
+      authGuard: AuthGuard(authLocalDs: GetIt.I()),
+      onboardingGuard: OnboardingGuard(onboardingLocalDs: GetIt.I()),
+    );
 
     super.initState();
   }
@@ -46,44 +46,31 @@ class _NurlanUstazAppState extends State<NurlanUstazApp> {
       child: ScreenUtilInit(
         designSize: const Size(375, 812),
         builder: (context, child) {
-          return BlocConsumer<LanguageCubit, LanguageState>(
-            listener: (context, state) {
-              if (state is LanguageLoadedState) {
-                setState(() {
-                  log('SETSTATE:::');
-                });
-              }
-            },
-            builder: (context, state) {
-              return MaterialApp.router(
-                themeAnimationDuration: const Duration(milliseconds: 100),
-                // title: 'Flutter Demo',
-                // key: rootNavigatorKey,
-                routerConfig: _rootRouter.config(
-                    navigatorObservers: () => [
-                          FirebaseAnalyticsObserver(
-                              analytics: _firebaseAnalytics),
-                        ]),
+          return MaterialApp.router(
+            themeAnimationDuration: const Duration(milliseconds: 100),
 
-                debugShowCheckedModeBanner: false,
-                locale: EasyLocalization.of(context)?.locale,
-                localizationsDelegates:
-                    EasyLocalization.of(context)?.delegates.toList(),
-                // ...context.localizationDelegates,
-                // CountryLocalizat
-                // ions.delegate,
+            routerConfig: appRouter.config(
+              navigatorObservers: () => [
+                FirebaseAnalyticsObserver(analytics: _firebaseAnalytics),
+              ],
+              reevaluateListenable: ReevaluateListenable.stream(
+                GetIt.I<AuthLocalDs>(),
+              ),
+            ),
 
-                supportedLocales:
-                    EasyLocalization.of(context)!.supportedLocales,
-                theme: ThemeData(
-                  useMaterial3: false,
-                  fontFamily: 'Poppins',
-                  visualDensity: VisualDensity.adaptivePlatformDensity,
-                ),
-                // routerDelegate: _rootRouter.delegate(),
-                // routeInformationParser: _rootRouter.defaultRouteParser(),
-              );
-            },
+            debugShowCheckedModeBanner: false,
+            locale: EasyLocalization.of(context)?.locale,
+            supportedLocales: EasyLocalization.of(context)!.supportedLocales,
+            localizationsDelegates: EasyLocalization.of(context)?.delegates,
+            // ...context.localizationDelegates,
+            // CountryLocalizat
+            // ions.delegate,
+
+            theme: ThemeData(
+              useMaterial3: false,
+              fontFamily: 'Poppins',
+              visualDensity: VisualDensity.adaptivePlatformDensity,
+            ),
           );
         },
       ),

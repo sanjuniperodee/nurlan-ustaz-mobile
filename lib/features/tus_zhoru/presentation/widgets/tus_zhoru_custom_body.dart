@@ -1,15 +1,11 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
-import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 
-import '../../../../core/common/colors.dart';
 
 class TusZhoruCustomBody extends StatefulWidget {
-  const TusZhoruCustomBody({Key? key, this.right, this.left, this.child})
-      : super(key: key);
+  const TusZhoruCustomBody({super.key, this.right, this.left, this.child});
   final double? right;
   final double? left;
   final Widget? child;

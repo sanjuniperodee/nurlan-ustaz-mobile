@@ -14,9 +14,9 @@ import '../../widgets/custom_button_timer.dart';
 @RoutePage()
 class CodeVerificationForgotPage extends StatefulWidget {
   const CodeVerificationForgotPage({
-    Key? key,
+    super.key,
     required this.email,
-  }) : super(key: key);
+  });
   final String email;
 
   @override

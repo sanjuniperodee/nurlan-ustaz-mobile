@@ -47,7 +47,7 @@ class ForgotPasswordCubitCubit extends Cubit<ForgotPasswordState> {
       emit(ForgotPasswordState.error(message: mapFailureToMessageBack(l)));
       emit(ForgotPasswordState.verificationCode(userId: userId));
     }, (r) {
-      log('${r}------sessionID');
+      log('$r------sessionID');
       sessionId = r;
       emit(const ForgotPasswordState.newPassword());
     });
