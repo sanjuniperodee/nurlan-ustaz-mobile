@@ -2,7 +2,6 @@ part of 'app_bloc.dart';
 
 @freezed
 sealed class AppState with _$AppState {
-  const factory AppState.onBoarding() = _OnBoardingState;
   const factory AppState.loading() = _LoadingState;
   const factory AppState.notAuthorizedDialog() = _NotAuthorizedDialogState;
   const factory AppState.notAuthorized() = _NotAuthorizedState;
@@ -17,7 +16,6 @@ sealed class AppState with _$AppState {
 extension AppStatePatternMatchingExt on AppState {
   R maybeWhen<R>({
     required R Function() orElse,
-    R Function()? onBoarding,
     R Function()? loading,
     R Function()? notAuthorizedDialog,
     R Function()? notAuthorized,
@@ -27,7 +25,6 @@ extension AppStatePatternMatchingExt on AppState {
     R Function(String message)? error,
   }) {
     return switch (this) {
-      _OnBoardingState() => onBoarding?.call() ?? orElse(),
       _LoadingState() => loading?.call() ?? orElse(),
       _NotAuthorizedDialogState() => notAuthorizedDialog?.call() ?? orElse(),
       _NotAuthorizedState() => notAuthorized?.call() ?? orElse(),
@@ -39,7 +36,6 @@ extension AppStatePatternMatchingExt on AppState {
   }
 
   void whenOrNull({
-    void Function()? onBoarding,
     void Function()? loading,
     void Function()? notAuthorizedDialog,
     void Function()? notAuthorized,
@@ -49,7 +45,6 @@ extension AppStatePatternMatchingExt on AppState {
     void Function(String message)? error,
   }) {
     return switch (this) {
-      _OnBoardingState() => onBoarding?.call(),
       _LoadingState() => loading?.call(),
       _NotAuthorizedDialogState() => notAuthorizedDialog?.call(),
       _NotAuthorizedState() => notAuthorized?.call(),

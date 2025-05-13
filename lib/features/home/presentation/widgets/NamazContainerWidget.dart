@@ -1,5 +1,3 @@
-
-
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -100,16 +98,17 @@ class _NamazContainerWidgetState extends State<NamazContainerWidget> {
                     if (!_stopWatchTimer.isRunning) {
                       _stopWatchTimer.onStopTimer();
 
+                      // TODO: WTH
                       BlocProvider.of<TimingsCubit>(context)
                           .timings(
                         43.25,
                         76.91667,
                       )
                           .then((value) {
-                        _stopWatchTimer
-                            .setPresetHoursTime(int.parse(widget.time.substring(0, 2)));
-                        _stopWatchTimer
-                            .setPresetMinuteTime(int.parse(widget.time.substring(3, 5)));
+                        _stopWatchTimer.setPresetHoursTime(
+                            int.parse(widget.time.substring(0, 2)));
+                        _stopWatchTimer.setPresetMinuteTime(
+                            int.parse(widget.time.substring(3, 5)));
                         _stopWatchTimer.onStartTimer();
                       });
                     }

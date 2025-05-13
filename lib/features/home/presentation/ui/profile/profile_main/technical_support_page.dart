@@ -31,8 +31,6 @@ class _TechnicalSupportPageState extends State<TechnicalSupportPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
-
     technicalSupportCubit.connectSocket();
 
     super.initState();

@@ -152,7 +152,7 @@ class _LoginFormState extends State<LoginForm> {
           case LoginLoadedState():
             emailController.clear();
             passwordController.clear();
-            AutoRouter.of(context).pushAndPopUntil(const LauncherAppRoute(),
+            AutoRouter.of(context).pushAndPopUntil(const BaseRoute(),
                 predicate: (route) => false);
             break;
           case LoginErrorState(:final message):

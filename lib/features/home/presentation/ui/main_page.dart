@@ -48,13 +48,15 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     String chosenLang = GetIt.I<AuthLocalDs>().getLocale();
     Intl.defaultLocale = chosenLang.replaceAll('kz', 'kk');
-    BlocProvider.of<NewsMainCubit>(context).newsMain(
-      currentPage: 1,
-      // isFirstCall: true,
-    );
+
+    context.read<NewsMainCubit>().newsMain(
+          currentPage: 1,
+          // isFirstCall: true,
+        );
     _checkInternetConnection();
 
     // _logAppOpen();
+    // TODO: WTH
     BlocProvider.of<TimingsCubit>(context).timings(
       43.25,
       76.91667,
@@ -144,10 +146,11 @@ class _MainPageState extends State<MainPage> {
                                 GetIt.I<AuthLocalDs>().getLocale();
                             Intl.defaultLocale =
                                 chosenLang.replaceAll('kz', 'kk');
-                            BlocProvider.of<NewsMainCubit>(context).newsMain(
-                              currentPage: 1,
-                              // isFirstCall: true,
-                            );
+                            context.read<NewsMainCubit>().newsMain(
+                                  currentPage: 1,
+                                  // isFirstCall: true,
+                                );
+                            // TODO: WTH
                             BlocProvider.of<TimingsCubit>(context).timings(
                               43.25,
                               76.91667,
@@ -715,7 +718,7 @@ class _TimesStateWidgetState extends State<TimesStateWidget> {
 
           if (!_stopWatchTimer.isRunning) {
             _stopWatchTimer.onStopTimer();
-
+            // TODO: WTH
             BlocProvider.of<TimingsCubit>(context)
                 .timings(
               43.25,

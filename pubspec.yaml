@@ -35,6 +35,7 @@ dependencies:
 
   # dart
   dio: ^5.2.0
+  meta: ^1.16.0
   get_it: ^8.0.3
   dartz: ^0.10.1
   rxdart: ^0.28.0
@@ -52,6 +53,10 @@ dependencies:
   web_socket_channel: ^3.0.3
   cached_network_image: ^3.4.1
   flutter_cache_manager: ^3.3.1
+  re_seedwork:
+    git:
+      url: https://github.com/radomir9720/re_seedwork.git
+      ref: "1.1.0"
 
   # firebase
   firebase_core: ^3.13.0

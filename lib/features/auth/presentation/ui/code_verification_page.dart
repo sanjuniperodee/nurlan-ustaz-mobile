@@ -1,4 +1,3 @@
-
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -160,7 +159,7 @@ class _CodeVerificationPageState extends State<CodeVerificationPage> {
       listener: (context, state) {
         switch (state) {
           case CodeVerificationLoadedState():
-            context.router.push(const LauncherAppRoute());
+            context.router.push(const BaseRoute());
             break;
           case CodeVerificationErrorState(:final message):
             pinController.clear();

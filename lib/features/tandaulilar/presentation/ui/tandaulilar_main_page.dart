@@ -147,9 +147,8 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
                                   CategoryTitleCard(
                                       title: 'dream_interpretations'.tr(),
                                       onTap: () {
-                                        context.router.push(
-                                          TusZhoruRouterPage(type: 'isSave'),
-                                        );
+                                        context.router
+                                            .push(SavedTusZhoruRoute());
                                       }),
                                   CategoryTitleCard(
                                       title: 'names'.tr(),

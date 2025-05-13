@@ -1,8 +1,8 @@
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
+import 'package:nurlan_ustaz_flutter/core/platform/platform_helper.dart';
 
 import 'package:nurlan_ustaz_flutter/update_service/app_version_model.dart';
 
@@ -49,7 +49,7 @@ class OnBoardingDsImpl extends OnBoardingDs {
   @override
   Future<AppVersionsModel> appVersionModel() async {
     try {
-      final type = Platform.isMacOS ? 'ios' : Platform.operatingSystem;
+      final type = PlatformHelper.operatingSystem;
       // if (Platform.isMacOS) type = 'ios';
       final response = await dio.get('${EndPoints.appVersions}/$type/');
       return AppVersionsModel.fromJson(response.data as Map<String, dynamic>);

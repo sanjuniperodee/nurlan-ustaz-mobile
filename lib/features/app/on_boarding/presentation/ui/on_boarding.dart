@@ -1,16 +1,19 @@
 import 'dart:developer';
+import 'package:auto_route/auto_route.dart';
 import 'package:chewie/chewie.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
+import 'package:nurlan_ustaz_flutter/features/app/data/datasource/onboarding_local_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/app/on_boarding/bloc/on_boarding_cubit.dart';
 import 'package:video_player/video_player.dart';
 
-import '../../../bloc/app_bloc.dart';
 
+@RoutePage()
 class OnBoardingPage extends StatefulWidget {
   const OnBoardingPage({super.key});
 
@@ -196,7 +199,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           duration: const Duration(seconds: 1), curve: Curves.ease);
       setState(() {});
     } else {
-      BlocProvider.of<AppBloc>(context).add(const AppEvent.onboardingSave());
+      // BlocProvider.of<AppBloc>(context).add(const AppEvent.onboardingSave());
+      await GetIt.I<OnboardingLocalDs>().markOnboardingShowed();
     }
   }
 
@@ -215,8 +219,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           _chewieControllers[currentIndex].play();
         } else {
           // Last video has ended, handle as needed
-          BlocProvider.of<AppBloc>(context)
-              .add(const AppEvent.onboardingSave());
+          // BlocProvider.of<AppBloc>(context)
+          //     .add(const AppEvent.onboardingSave());
+          await GetIt.I<OnboardingLocalDs>().markOnboardingShowed();
         }
       }
     }

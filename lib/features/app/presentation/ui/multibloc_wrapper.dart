@@ -78,18 +78,14 @@ import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/bloc/zhosp
 
 import '../../../tus_zhoru/presentation/bloc/custom_tus_zhoru_details_cubit.dart';
 
-class MultiblocWrapper extends StatefulWidget {
-  final Widget child;
+class MultiblocWrapper extends StatelessWidget {
   const MultiblocWrapper({
     super.key,
     required this.child,
   });
 
-  @override
-  State<MultiblocWrapper> createState() => _MultiblocWrapperState();
-}
+  final Widget child;
 
-class _MultiblocWrapperState extends State<MultiblocWrapper> {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -293,7 +289,7 @@ class _MultiblocWrapperState extends State<MultiblocWrapper> {
             create: (context) => GetIt.I<QrScannerCubit>()),
         BlocProvider<CardsCubit>(create: (context) => GetIt.I<CardsCubit>()),
       ],
-      child: widget.child,
+      child: child,
     );
   }
 }

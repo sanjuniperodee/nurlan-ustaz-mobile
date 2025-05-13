@@ -35,7 +35,7 @@ class _NamazPageState extends State<NamazPage> {
   ];
   @override
   void initState() {
-    // TODO: implement initState
+    // TODO: WTH
     BlocProvider.of<TimingsCubit>(context).timings(
       43.25,
       76.91667,

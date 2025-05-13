@@ -902,8 +902,9 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   }
 
   @override
-  Future<NotificationDTO> postNotificationDevice(
-      {required NotificationDeviceDTO notification}) async {
+  Future<NotificationDTO> postNotificationDevice({
+    required NotificationDeviceDTO notification,
+  }) async {
     try {
       final response = await dio.post(
         EndPoints.notification,
@@ -937,9 +938,10 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   }
 
   @override
-  Future<NotificationDTO> patchNotificationDevice(
-      {required String registrationId,
-      required NotificationDTO notification}) async {
+  Future<NotificationDTO> patchNotificationDevice({
+    required String registrationId,
+    required NotificationDTO notification,
+  }) async {
     log('Atai-$registrationId');
     log('Atai1-${notification.toString()}');
 

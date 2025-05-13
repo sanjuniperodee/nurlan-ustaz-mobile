@@ -1,22 +1,17 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:dartz/dartz.dart';
+// import 'package:dartz/dartz.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/common/shared_keys.dart';
 import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/token_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
+import 'package:re_seedwork/re_seedwork.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-abstract class AuthLocalDs {
-  Future<bool> getOnboardingStatusFromCache();
-
-  Future<void> saveOnboardingStatusToCache({
-    required bool isOnboarding,
-  });
-
+abstract class AuthLocalDs extends ValueStore<TokenDTO?> {
   Future<void> saveLocale({
     required String locale,
   });
@@ -30,7 +25,7 @@ abstract class AuthLocalDs {
 
   // TokenDTO getTokenFromCache();
   Future<UserDto?> getUserFromCacheNull();
-  Future<TokenDTO?> getTokenFromCacheNull();
+  Future<TokenDTO?> getTokenFromCacheNull({bool forceFromStorage = false});
   Future<void> removeUserFromCache();
   // Future<TokenDTO> refreshJwt({
   //   required TokenDTO token,
@@ -38,18 +33,32 @@ abstract class AuthLocalDs {
   // Future<bool> verifyJwt({required String accessToken});
 }
 
-@Injectable(as: AuthLocalDs)
-class AuthLocalDsImpl extends AuthLocalDs {
-  AuthLocalDsImpl({
+@Singleton(as: AuthLocalDs)
+class AuthLocalDsImpl extends InMemoryValueStore<TokenDTO?>
+    implements AuthLocalDs {
+  AuthLocalDsImpl(
+    super.value, {
     required this.secureStorage,
     required this.sharedPreferences,
-  }) : _token = null;
+  });
+
+  @FactoryMethod(preResolve: true)
+  static Future<AuthLocalDsImpl> init({
+    required FlutterSecureStorage secureStorage,
+    required SharedPreferences sharedPreferences,
+  }) async {
+    final ds = AuthLocalDsImpl(
+      null,
+      secureStorage: secureStorage,
+      sharedPreferences: sharedPreferences,
+    );
+    await ds.getTokenFromCacheNull(forceFromStorage: true);
+    return ds;
+  }
 
   final SharedPreferences sharedPreferences;
 
   final FlutterSecureStorage secureStorage;
-
-  Option<TokenDTO>? _token;
 
   // @override
   // Future<TokenDTO> refreshJwt({
@@ -102,25 +111,6 @@ class AuthLocalDsImpl extends AuthLocalDs {
   // }
 
   @override
-  Future<bool> getOnboardingStatusFromCache() async {
-    final bool? isOnboarding =
-        sharedPreferences.getBool(SharedKeys.IS_ONBOARDING);
-    try {
-      if (isOnboarding == null) {
-        throw CacheException(
-          message: 'В кэше нет запрашиваемые данные: isOnboarding',
-        );
-      } else {
-        return isOnboarding;
-      }
-    } catch (e) {
-      throw CacheException(
-        message: 'В кэше нет запрашиваемые данные: isOnboarding, $e',
-      );
-    }
-  }
-
-  @override
   String getLocale() {
     try {
       final String? locale = sharedPreferences.getString(SharedKeys.APP_LOCALE);
@@ -140,20 +130,12 @@ class AuthLocalDsImpl extends AuthLocalDs {
   }
 
   @override
-  Future<void> saveOnboardingStatusToCache({required bool isOnboarding}) async {
-    sharedPreferences.setBool(SharedKeys.IS_ONBOARDING, isOnboarding);
-
-    // if onboarding true i open login/reg page
-    // else when onboarding false or null i show onboarding screen
-  }
-
-  @override
   Future<void> saveToken(TokenDTO token) async {
-    _token = Some(token);
     await secureStorage.write(
       key: SharedKeys.TOKEN,
       value: jsonEncode(token.toJson()),
     );
+    add(token);
   }
 
   @override
@@ -185,16 +167,18 @@ class AuthLocalDsImpl extends AuthLocalDs {
   }
 
   @override
-  Future<TokenDTO?> getTokenFromCacheNull() async {
-    if (_token == null) {
+  Future<TokenDTO?> getTokenFromCacheNull({
+    bool forceFromStorage = false,
+  }) async {
+    if (forceFromStorage) {
       final string = await secureStorage.read(key: SharedKeys.TOKEN);
 
-      if (string == null) return null;
-
-      _token = Some(TokenDTO.fromJson(jsonDecode(string)));
+      final token =
+          string == null ? null : TokenDTO.fromJson(jsonDecode(string));
+      add(token);
     }
 
-    return _token?.toNullable();
+    return data;
 
     // try {
     //   // log('TOKEN:::${sharedPreferences.get(SharedKeys.TOKEN).toString()}');
@@ -235,7 +219,6 @@ class AuthLocalDsImpl extends AuthLocalDs {
   Future<void> removeUserFromCache() async {
     secureStorage.delete(key: SharedKeys.TOKEN);
     secureStorage.delete(key: SharedKeys.USER);
-    _token = const None();
     // sharedPreferences.remove(SharedKeys.USER_FROM_CACHE);
   }
 }

@@ -27,23 +27,23 @@ Future<void> configureDependencies() async {
         headers: {HttpHeaders.acceptHeader: ContentType.json},
       ))
     ..registerLazySingleton(() => InternetConnectionChecker.instance);
-
-  getIt
-    ..init()
-    ..get<Dio>().interceptors.addAll([
-      AuthInterceptor(
-        authLocalDs: getIt.get(),
-        authRemoteDs: getIt.get(),
-        client: getIt.get(),
-        tokenIsExpiredCallback: Jwt.isExpired,
-        onUnauthorizedHit: () =>
-            getIt.get<AppBloc>().add(AppEvent.nonAuthorized()),
-      ),
-      PrettyDioLogger(
-        requestHeader: true,
-        requestBody: true,
-        responseBody: false,
-        responseHeader: false,
-      ),
-    ]);
+  //
+  await getIt.init();
+  //
+  getIt.get<Dio>().interceptors.addAll([
+    AuthInterceptor(
+      authLocalDs: getIt.get(),
+      authRemoteDs: getIt.get(),
+      client: getIt.get(),
+      tokenIsExpiredCallback: Jwt.isExpired,
+      onUnauthorizedHit: () =>
+          getIt.get<AppBloc>().add(AppEvent.nonAuthorized()),
+    ),
+    PrettyDioLogger(
+      requestHeader: true,
+      requestBody: true,
+      responseBody: false,
+      responseHeader: false,
+    ),
+  ]);
 }

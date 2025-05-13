@@ -18,12 +18,6 @@ import '../../../../core/platform/network_info.dart';
 const _tag = 'AuthRepository';
 
 abstract class AuthRepository {
-  Future<Either<Failure, bool>> getOnboardingStatus();
-
-  Future<Either<Failure, bool>> saveOnboardingStatus({
-    required bool isOnboarding,
-  });
-
   Future<Either<Failure, String>> saveLocale({
     required String locale,
   });
@@ -89,28 +83,6 @@ class AuthRepositoryImpl extends AuthRepository {
       final String msg = localDS.getLocale();
 
       return Right(msg);
-    } on CacheException catch (e) {
-      return Left(CacheFailure(message: e.message));
-    }
-  }
-
-  @override
-  Future<Either<Failure, bool>> getOnboardingStatus() async {
-    try {
-      final bool isOnboarding = await localDS.getOnboardingStatusFromCache();
-      return Right(isOnboarding);
-    } on CacheException catch (e) {
-      return Left(CacheFailure(message: e.message));
-    }
-  }
-
-  @override
-  Future<Either<Failure, bool>> saveOnboardingStatus({
-    required bool isOnboarding,
-  }) async {
-    try {
-      await localDS.saveOnboardingStatusToCache(isOnboarding: isOnboarding);
-      return const Right(true);
     } on CacheException catch (e) {
       return Left(CacheFailure(message: e.message));
     }

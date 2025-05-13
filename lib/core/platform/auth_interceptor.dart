@@ -40,12 +40,6 @@ class AuthInterceptor extends QueuedInterceptor {
   final void Function()? onUnauthorizedHit;
 
   @override
-  void onResponse(Response response, ResponseInterceptorHandler handler) {
-    print('Response: $response');
-    super.onResponse(response, handler);
-  }
-
-  @override
   Future<void> onError(
     DioException err,
     ErrorInterceptorHandler handler,

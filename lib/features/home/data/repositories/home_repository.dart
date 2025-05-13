@@ -7,6 +7,7 @@ import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/cache_helper/prefs.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_info.dart';
+import 'package:nurlan_ustaz_flutter/core/platform/platform_helper.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/datasource/local/home_local_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/datasource/remote/home_remote_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/card_model.dart';
@@ -219,9 +220,8 @@ class HomeRepositoryImpl extends HomeRepository {
           final String? cacheToken = await prefs.getDeviceToken();
           final String? firebaseToken =
               await NotificationService().getDeviceToken();
-          // TODO: macos throws exception
-          final String type =
-              Platform.isIOS ? 'ios' : Platform.operatingSystem.toString();
+
+          final type = PlatformHelper.operatingSystem;
 
           if (cacheToken == null) {
             await remoteDS.postNotificationDevice(
@@ -586,8 +586,7 @@ class HomeRepositoryImpl extends HomeRepository {
         if (isSaved == null) {
           final String? deviceToken =
               await NotificationService().getDeviceToken();
-          final String type =
-              Platform.isMacOS ? 'ios' : Platform.operatingSystem.toString();
+          final String type = PlatformHelper.operatingSystem;
           final result =
               await getNotificationDevice(registrationId: deviceToken ?? '');
           result.fold((l) async {
