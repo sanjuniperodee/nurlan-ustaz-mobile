@@ -20,7 +20,6 @@ class FaqPage extends StatefulWidget {
 class _FaqPageState extends State<FaqPage> {
   @override
   void initState() {
-    // TODO: implement initState
     BlocProvider.of<FaqCubit>(context).faq();
     super.initState();
   }

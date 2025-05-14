@@ -38,7 +38,6 @@ class _ServicesPageState extends State<ServicesPage> {
   bool isLoadingMore = false;
   @override
   void initState() {
-    // TODO: implement initState
     BlocProvider.of<ServicesCubit>(context)
         .services(page: 1, isFirstCall: true);
     _scrollController.addListener(_scrollListener);

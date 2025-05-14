@@ -30,7 +30,6 @@ class _NameDetailPageState extends State<NameDetailPage> {
   late bool isFavorite;
   @override
   void initState() {
-    // TODO: implement initState
     BlocProvider.of<IslamNameDetailCubit>(context)
         .islamNameDetail(id: widget.id);
     super.initState();

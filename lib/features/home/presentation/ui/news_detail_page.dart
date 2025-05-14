@@ -38,7 +38,6 @@ class _NewsDetailPageState extends State<NewsDetailPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     BlocProvider.of<NewsDetailCubit>(context).newsDetail(id: widget.id);
     super.initState();
   }

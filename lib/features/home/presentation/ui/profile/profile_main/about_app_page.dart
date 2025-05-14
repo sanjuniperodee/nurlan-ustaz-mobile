@@ -24,7 +24,6 @@ int selectedIndex = -1;
 class _AboutAppPageState extends State<AboutAppPage> {
   @override
   void initState() {
-    // TODO: implement initState
     BlocProvider.of<PrjInfoCubit>(context).prjInfo();
     super.initState();
   }

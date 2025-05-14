@@ -30,7 +30,6 @@ class _CharityPageState extends State<CharityPage> {
   bool isLoadingMore = false;
   @override
   void initState() {
-    // TODO: implement initState
     BlocProvider.of<CharitiesCubit>(context)
         .charities(page: 1, isFirstCall: true);
     _scrollController.addListener(_scrollListener);

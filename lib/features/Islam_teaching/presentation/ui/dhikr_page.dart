@@ -31,7 +31,6 @@ class _DhikrPageState extends State<DhikrPage> {
   bool isLoadingMore = false;
   @override
   void initState() {
-    // TODO: implement initState
     widget.type == 'isSave'
         ? BlocProvider.of<DhikrsCubit>(context)
             .dhikrs(page: 1, isFirstCall: true, isSaved: true)

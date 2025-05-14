@@ -1,4 +1,3 @@
-
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -39,7 +38,6 @@ class _SeminarPageState extends State<SeminarPage> {
   List<bool> listOfFav = [];
   @override
   void initState() {
-    // TODO: implement initState
     widget.type == 'isSave'
         ? BlocProvider.of<SeminarCubit>(context)
             .seminar(page: 1, isFirstCall: true, isSaved: true)
@@ -66,8 +64,8 @@ class _SeminarPageState extends State<SeminarPage> {
             listOfSeminars = state.news;
             listOfFav.clear();
             for (var element in listOfSeminars) {
-                listOfFav.add(element.isSaved!);
-              }
+              listOfFav.add(element.isSaved!);
+            }
 
             // setState(() {});
           } else if (state is SeminarErrorState) {

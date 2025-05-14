@@ -41,7 +41,6 @@ class _CommentNewsPageState extends State<CommentNewsPage> {
   UserDto? user;
   @override
   void initState() {
-    // TODO: implement initState
     BlocProvider.of<CommentNewsCubit>(context)
         .commentsNews(page: 1, isFirstCall: true, id: widget.id);
     GetIt.I<AuthLocalDs>().getUserFromCacheNull().then((value) {

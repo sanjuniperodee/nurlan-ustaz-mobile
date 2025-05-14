@@ -36,7 +36,6 @@ class _NamePageState extends State<NamePage> {
   List<ResultTeachingDTO> listOfIslamNames = [];
   @override
   void initState() {
-    // TODO: implement initState
     widget.type == 'isSave'
         ? BlocProvider.of<IslamNamesCubit>(context)
             .islamNamesMan(page: 1, isFirstCall: true, isSaved: true)

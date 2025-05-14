@@ -25,7 +25,6 @@ class _SurahDetailPageState extends State<SurahDetailPage> {
   late bool isFavorite;
   @override
   void initState() {
-    // TODO: implement initState
     isFavorite = widget.result.isSaved!;
     super.initState();
   }
@@ -43,11 +42,12 @@ class _SurahDetailPageState extends State<SurahDetailPage> {
               fit: BoxFit.cover,
             ),
             Positioned.fill(
-              // left: 280.r,
+                // left: 280.r,
                 child: Opacity(
-                  opacity: 0.5,
-                  child:  Lottie.asset('assets/animations/Book_V04.json',fit: BoxFit.cover),
-                )),
+              opacity: 0.5,
+              child: Lottie.asset('assets/animations/Book_V04.json',
+                  fit: BoxFit.cover),
+            )),
             SizedBox(
               child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
@@ -81,12 +81,13 @@ class _SurahDetailPageState extends State<SurahDetailPage> {
                             ),
                             Row(
                               children: [
-                                if(widget.result.audio != null)InkWell(
-                                    onTap: () {
-                                      showAlertDialog(context);
-                                    },
-                                    child: SvgPicture.asset(
-                                        'assets/icons/nota.svg')),
+                                if (widget.result.audio != null)
+                                  InkWell(
+                                      onTap: () {
+                                        showAlertDialog(context);
+                                      },
+                                      child: SvgPicture.asset(
+                                          'assets/icons/nota.svg')),
                                 SizedBox(
                                   width: 16.w,
                                 ),

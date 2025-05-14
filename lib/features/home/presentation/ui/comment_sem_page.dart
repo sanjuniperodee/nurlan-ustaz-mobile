@@ -41,7 +41,6 @@ class _CommentSemPageState extends State<CommentSemPage> {
   UserDto? user;
   @override
   void initState() {
-    // TODO: implement initState
     BlocProvider.of<CommentSemCubit>(context)
         .commentsSem(page: 1, isFirstCall: true, id: widget.id);
     GetIt.I<AuthLocalDs>().getUserFromCacheNull().then((value) {

@@ -34,8 +34,6 @@ class _CommentDeepItemWidgetState extends State<CommentDeepItemWidget> {
   late int likeCount;
   @override
   void initState() {
-    // TODO: implement initState
-
     isLiked = widget.resultHomeDTO.isLiked!;
     likeCount = widget.resultHomeDTO.likesCount!;
     super.initState();

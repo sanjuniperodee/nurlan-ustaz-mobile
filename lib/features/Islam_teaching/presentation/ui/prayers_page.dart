@@ -31,7 +31,6 @@ class _PrayersPageState extends State<PrayersPage> {
   bool isLoadingMore = false;
   @override
   void initState() {
-    // TODO: implement initState
     widget.type == 'isSave'
         ? BlocProvider.of<DuasCubit>(context)
             .duas(page: 1, isFirstCall: true, isSaved: true)
