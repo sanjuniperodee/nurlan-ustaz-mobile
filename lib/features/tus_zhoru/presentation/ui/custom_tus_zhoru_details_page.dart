@@ -99,9 +99,8 @@ class _TusZhoruDetailPage extends State<CustomTusZhoruDetailPage> {
                             child: CustomAppBar(
                               title: tusZhoruModel?.title ?? '',
                               onTap: () async {
-                                BlocProvider.of<TusZhoruCubit>(context)
-                                    .unSecureScreen();
-                                BlocProvider.of<TusZhoruCubit>(context)
+                                context
+                                    .read<TusZhoruCubit>()
                                     .getCustomTusZhoruT();
 
                                 Navigator.pop(context);

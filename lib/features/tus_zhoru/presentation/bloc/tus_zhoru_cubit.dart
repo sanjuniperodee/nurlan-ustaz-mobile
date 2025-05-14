@@ -1,9 +1,6 @@
 import 'dart:developer';
-import 'dart:io';
 
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_windowmanager_plus/flutter_windowmanager_plus.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
@@ -20,25 +17,9 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
   TusZhoruCubit(
     this._repository,
   ) : super(const TusZhoruState.initial());
-  final MethodChannel securityChannel = MethodChannel('app_security_channel');
 
   late List<TusZhoruDTO> tosZhoruList;
   late List<TusZhoruDTO> customTusZhoruList;
-
-  Future<void> secureScreen() async {
-    // TODO: replace with "secure_application" plugin?
-    Platform.isAndroid
-        ? await FlutterWindowManagerPlus.addFlags(
-            FlutterWindowManagerPlus.FLAG_SECURE)
-        : await securityChannel.invokeMethod('secureApp');
-  }
-
-  Future<void> unSecureScreen() async {
-    Platform.isAndroid
-        ? await FlutterWindowManagerPlus.clearFlags(
-            FlutterWindowManagerPlus.FLAG_SECURE)
-        : await securityChannel.invokeMethod('unsecureApp');
-  }
 
   Future<void> toggleFav(int id) async {
     final result = await _repository.tusZhoruFavorite(id: id);
