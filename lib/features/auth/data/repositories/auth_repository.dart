@@ -146,8 +146,7 @@ class AuthRepositoryImpl extends AuthRepository {
         await localDS.saveToken(result);
         final user = await remoteDS.getUser();
         // if (user != null) {
-        // TODO: User нигде не используется? Зачем тогда его хранить?
-        localDS.saveUser(user: user);
+        await localDS.saveUser(user: user);
         // }
         // final UserDto? users = await localDS.getUserFromCacheNull();
         // log('USERRRR${users.toString()}');
