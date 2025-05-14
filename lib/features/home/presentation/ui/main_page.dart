@@ -2,7 +2,6 @@ import 'dart:developer';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -53,7 +52,6 @@ class _MainPageState extends State<MainPage> {
           currentPage: 1,
           // isFirstCall: true,
         );
-    _checkInternetConnection();
 
     // _logAppOpen();
     // TODO: WTH
@@ -549,30 +547,6 @@ class _MainPageState extends State<MainPage> {
         ),
       ),
     );
-  }
-
-  Future<void> _checkInternetConnection() async {
-    var connectivityResult = await Connectivity().checkConnectivity();
-    if (connectivityResult == ConnectivityResult.none) {
-      // ignore: use_build_context_synchronously
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('no_internet_text'.tr()),
-            content: Text("no_internet_content".tr()),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: Text("cancel".tr()),
-              ),
-            ],
-          );
-        },
-      );
-    }
   }
 
   int indexOfNextNames(List time) {

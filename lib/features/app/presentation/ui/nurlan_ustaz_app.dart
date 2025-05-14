@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
+import 'package:nurlan_ustaz_flutter/core/services/connection_service.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/multibloc_wrapper.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/datasource/local/auth_local_ds.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:secure_application/secure_application.dart';
 
 class NurlanUstazApp extends StatefulWidget {
@@ -33,6 +35,7 @@ class _NurlanUstazAppState extends State<NurlanUstazApp> {
     // checkAppVersion();
     appRouter = AppRouter(
       authGuard: AuthGuard(authLocalDs: GetIt.I()),
+      connectionGuard: ConnectionGuard(connectionService: GetIt.I()),
       onboardingGuard: OnboardingGuard(onboardingLocalDs: GetIt.I()),
     );
 
@@ -49,7 +52,10 @@ class _NurlanUstazAppState extends State<NurlanUstazApp> {
           FirebaseAnalyticsObserver(analytics: _firebaseAnalytics),
         ],
         reevaluateListenable: ReevaluateListenable.stream(
-          GetIt.I<AuthLocalDs>(),
+          Rx.merge([
+            GetIt.I<AuthLocalDs>(),
+            GetIt.I<ConnectionService>(),
+          ]),
         ),
       ),
 

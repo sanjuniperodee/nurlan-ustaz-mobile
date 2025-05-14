@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:nurlan_ustaz_flutter/core/services/connection_service.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/ayat_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/namaz_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/pillars_dto.dart';
@@ -57,6 +58,7 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/shop_page.dar
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/presentation/ui/ustaz_aitinizhi.dart';
 
 import 'package:nurlan_ustaz_flutter/features/home/presentation/widgets/geonames_page.dart';
+import 'package:nurlan_ustaz_flutter/features/app/no_connection/no_connection_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/ui/tandaulilar_main_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/custom_tus_zhoru_details_page.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/ui/question_page.dart';
@@ -83,11 +85,13 @@ part 'app_router.gr.dart';
 // guards
 part 'guards/onboarding_guard.dart';
 part 'guards/auth_guard.dart';
+part 'guards/connection_guard.dart';
 
 @AutoRouterConfig()
 class AppRouter extends RootStackRouter {
   AppRouter({
     required this.authGuard,
+    required this.connectionGuard,
     required this.onboardingGuard,
   });
 
@@ -98,254 +102,273 @@ class AppRouter extends RootStackRouter {
   @protected
   final AuthGuard authGuard;
 
+  @protected
+  final ConnectionGuard connectionGuard;
+
   @override
   List<AutoRoute> get routes => [
         AutoRoute(
-          page: BaseRoute.page,
-          guards: [onboardingGuard],
           path: '/',
+          page: AppFlow.page,
+          guards: [connectionGuard, onboardingGuard],
           children: [
             AutoRoute(
+              page: BaseRoute.page,
               path: '',
-              page: MainRouterPage.page,
+              children: [
+                AutoRoute(
+                  path: '',
+                  page: MainRouterPage.page,
+                ),
+                AutoRoute(
+                  path: 'islam-teaching',
+                  page: IslamTeachingRouterPage.page,
+                ),
+                AutoRoute(
+                  path: 'tus-zhoru',
+                  page: TusZhoruRouterPage.page,
+                ),
+                AutoRoute(
+                  path: 'tandaulilar',
+                  page: TandaulilarMainRouterPage.page,
+                ),
+                AutoRoute(
+                  path: 'zhosparym',
+                  page: ZhosparymMainRouterPage.page,
+                ),
+              ],
+            ),
+            // AutoRoute(
+            //   initial: true,
+            //   page: SplashRoute.page,
+            // ),
+            AutoRoute(
+              path: 'onboarding',
+              page: OnBoardingRoute.page,
             ),
             AutoRoute(
-              path: 'islam-teaching',
-              page: IslamTeachingRouterPage.page,
+              path: 'geonames',
+              page: GeonamesRoute.page,
             ),
             AutoRoute(
-              path: 'tus-zhoru',
-              page: TusZhoruRouterPage.page,
+              path: 'technical-support',
+              page: TechnicalSupportRoute.page,
             ),
             AutoRoute(
-              path: 'tandaulilar',
-              page: TandaulilarMainRouterPage.page,
+              path: 'ramazan-check-list',
+              page: RamazanChecklistRoute.page,
             ),
             AutoRoute(
-              path: 'zhosparym',
-              page: ZhosparymMainRouterPage.page,
+              path: 'add-new-card',
+              page: AddNewCardRoute.page,
             ),
+            AutoRoute(
+              path: 'change-password',
+              page: ChangePasswordRoute.page,
+            ),
+            AutoRoute(
+              path: 'profile-notification',
+              page: ProfileNotificationRoute.page,
+            ),
+            AutoRoute(
+              path: 'faq',
+              page: FaqRoute.page,
+            ),
+            AutoRoute(
+              path: 'about-app',
+              page: AboutAppRoute.page,
+            ),
+            AutoRoute(
+              path: 'profile-cards',
+              page: ProfileCardsRoute.page,
+            ),
+            AutoRoute(
+              path: 'profile',
+              page: ProfileMainRoute.page,
+            ),
+            AutoRoute(
+              path: 'payments',
+              page: PaymentsRoute.page,
+            ),
+            AutoRoute(
+              path: 'profile-info',
+              page: ProfileInfoRoute.page,
+            ),
+            AutoRoute(
+              path: 'ustaz-aitinizh',
+              page: UstazAitinizhiRoute.page,
+            ),
+            AutoRoute(
+              path: 'seminar',
+              page: SeminarRoute.page,
+            ),
+            AutoRoute(
+              path: 'seminar-detail',
+              page: SeminarDetailRoute.page,
+            ),
+            AutoRoute(
+              path: 'notification',
+              page: NotificationRoute.page,
+            ),
+            AutoRoute(
+              path: 'charity',
+              page: CharityRoute.page,
+            ),
+            AutoRoute(
+              path: 'charity-detail',
+              page: CharityDetailRoute.page,
+            ),
+            AutoRoute(
+              path: 'services',
+              page: ServicesRoute.page,
+            ),
+            AutoRoute(
+              path: 'live-broadcast',
+              page: LiveBroadcastsRoute.page,
+            ),
+            AutoRoute(
+              path: 'shop',
+              page: ShopRoute.page,
+            ),
+            AutoRoute(
+              path: 'news',
+              page: NewsRoute.page,
+            ),
+            AutoRoute(
+              path: 'news-detail',
+              page: NewsDetailRoute.page,
+            ),
+            AutoRoute(
+              path: 'namaz',
+              page: NamazRoute.page,
+            ),
+            AutoRoute(
+              path: 'qiblah',
+              page: QiblahRoute.page,
+            ),
+            AutoRoute(
+              path: 'comment-seminar',
+              page: CommentSemRoute.page,
+            ),
+            AutoRoute(
+              path: 'comment-news',
+              page: CommentNewsRoute.page,
+            ),
+            AutoRoute(
+              path: 'saved-tus-zhoru',
+              page: SavedTusZhoruRoute.page,
+            ),
+            AutoRoute(
+              path: 'tus-zhoru-detail',
+              page: TusZhoruDetailRoute.page,
+            ),
+            AutoRoute(
+              path: 'custom-tus-zhoru-detail',
+              page: CustomTusZhoruDetailRoute.page,
+            ),
+            AutoRoute(
+              path: 'question',
+              page: QuestionRoute.page,
+            ),
+            AutoRoute(
+              path: 'ayat-day',
+              page: AyatDayRoute.page,
+            ),
+            AutoRoute(
+              path: 'duty',
+              page: DutyRoute.page,
+            ),
+            AutoRoute(
+              path: 'duty-detail',
+              page: DutyDetailRoute.page,
+            ),
+            AutoRoute(
+              path: 'Allah-names',
+              page: AllahNamesRoute.page,
+            ),
+            AutoRoute(
+              path: 'dhikr',
+              page: DhikrRoute.page,
+            ),
+            AutoRoute(
+              path: 'dhikr-detail',
+              page: DhikrDetailRoute.page,
+            ),
+            AutoRoute(
+              path: 'prayers',
+              page: PrayersRoute.page,
+            ),
+            AutoRoute(
+              path: 'prayers-detail',
+              page: PrayersDetailRoute.page,
+            ),
+            AutoRoute(
+              path: 'surah',
+              page: SurahRoute.page,
+            ),
+            AutoRoute(
+              path: 'surah-detail',
+              page: SurahDetailRoute.page,
+            ),
+            AutoRoute(
+              path: 'name',
+              page: NameRoute.page,
+            ),
+            AutoRoute(
+              path: 'name-detail',
+              page: NameDetailRoute.page,
+            ),
+            AutoRoute(
+              path: 'namaz-read',
+              page: NamazReadRoute.page,
+            ),
+            AutoRoute(
+              path: 'namaz-pattern',
+              page: NamazPatternRoute.page,
+            ),
+            AutoRoute(
+              path: 'wudhu',
+              page: WudhuRoute.page,
+            ),
+            AutoRoute(
+              path: 'forgot-password',
+              page: ForgotPasswordRoute.page,
+            ),
+            AutoRoute(
+              path: 'login',
+              page: LoginRoute.page,
+            ),
+            AutoRoute(
+              path: 'code-verification',
+              page: CodeVerificationRoute.page,
+            ),
+            AutoRoute(
+              path: 'code-verification-forgot',
+              page: CodeVerificationForgotRoute.page,
+            ),
+            AutoRoute(
+              path: 'holiday-detail',
+              page: HolidayDetailRoute.page,
+            ),
+            AutoRoute(
+              path: 'qr-scanner',
+              page: QrScannerRoute.page,
+            ),
+            AutoRoute(
+              path: 'payment-check',
+              page: PaymentCheckRoute.page,
+            )
           ],
         ),
-        // AutoRoute(
-        //   initial: true,
-        //   page: SplashRoute.page,
-        // ),
         AutoRoute(
-          path: '/onboarding',
-          page: OnBoardingRoute.page,
+          path: '/no-connection',
+          page: NoConnectionRoute.page,
         ),
-        AutoRoute(
-          path: '/geonames',
-          page: GeonamesRoute.page,
-        ),
-        AutoRoute(
-          path: '/technical-support',
-          page: TechnicalSupportRoute.page,
-        ),
-        AutoRoute(
-          path: '/ramazan-check-list',
-          page: RamazanChecklistRoute.page,
-        ),
-        AutoRoute(
-          path: '/add-new-card',
-          page: AddNewCardRoute.page,
-        ),
-        AutoRoute(
-          path: '/change-password',
-          page: ChangePasswordRoute.page,
-        ),
-        AutoRoute(
-          path: '/profile-notification',
-          page: ProfileNotificationRoute.page,
-        ),
-        AutoRoute(
-          path: '/faq',
-          page: FaqRoute.page,
-        ),
-        AutoRoute(
-          path: '/about-app',
-          page: AboutAppRoute.page,
-        ),
-        AutoRoute(
-          path: '/profile-cards',
-          page: ProfileCardsRoute.page,
-        ),
-        AutoRoute(
-          path: '/profile',
-          page: ProfileMainRoute.page,
-        ),
-        AutoRoute(
-          path: '/payments',
-          page: PaymentsRoute.page,
-        ),
-        AutoRoute(
-          path: '/profile-info',
-          page: ProfileInfoRoute.page,
-        ),
-        AutoRoute(
-          path: '/ustaz-aitinizh',
-          page: UstazAitinizhiRoute.page,
-        ),
-        AutoRoute(
-          path: '/seminar',
-          page: SeminarRoute.page,
-        ),
-        AutoRoute(
-          path: '/seminar-detail',
-          page: SeminarDetailRoute.page,
-        ),
-        AutoRoute(
-          path: '/notification',
-          page: NotificationRoute.page,
-        ),
-        AutoRoute(
-          path: '/charity',
-          page: CharityRoute.page,
-        ),
-        AutoRoute(
-          path: '/charity-detail',
-          page: CharityDetailRoute.page,
-        ),
-        AutoRoute(
-          path: '/services',
-          page: ServicesRoute.page,
-        ),
-        AutoRoute(
-          path: '/live-broadcast',
-          page: LiveBroadcastsRoute.page,
-        ),
-        AutoRoute(
-          path: '/shop',
-          page: ShopRoute.page,
-        ),
-        AutoRoute(
-          path: '/news',
-          page: NewsRoute.page,
-        ),
-        AutoRoute(
-          path: '/news-detail',
-          page: NewsDetailRoute.page,
-        ),
-        AutoRoute(
-          path: '/namaz',
-          page: NamazRoute.page,
-        ),
-        AutoRoute(
-          path: '/qiblah',
-          page: QiblahRoute.page,
-        ),
-        AutoRoute(
-          path: '/comment-seminar',
-          page: CommentSemRoute.page,
-        ),
-        AutoRoute(
-          path: '/comment-news',
-          page: CommentNewsRoute.page,
-        ),
-        AutoRoute(
-          path: '/saved-tus-zhoru',
-          page: SavedTusZhoruRoute.page,
-        ),
-        AutoRoute(
-          path: '/tus-zhoru-detail',
-          page: TusZhoruDetailRoute.page,
-        ),
-        AutoRoute(
-          path: '/custom-tus-zhoru-detail',
-          page: CustomTusZhoruDetailRoute.page,
-        ),
-        AutoRoute(
-          path: '/question',
-          page: QuestionRoute.page,
-        ),
-        AutoRoute(
-          path: '/ayat-day',
-          page: AyatDayRoute.page,
-        ),
-        AutoRoute(
-          path: '/duty',
-          page: DutyRoute.page,
-        ),
-        AutoRoute(
-          path: '/duty-detail',
-          page: DutyDetailRoute.page,
-        ),
-        AutoRoute(
-          path: '/Allah-names',
-          page: AllahNamesRoute.page,
-        ),
-        AutoRoute(
-          path: '/dhikr',
-          page: DhikrRoute.page,
-        ),
-        AutoRoute(
-          path: '/dhikr-detail',
-          page: DhikrDetailRoute.page,
-        ),
-        AutoRoute(
-          path: '/prayers',
-          page: PrayersRoute.page,
-        ),
-        AutoRoute(
-          path: '/prayers-detail',
-          page: PrayersDetailRoute.page,
-        ),
-        AutoRoute(
-          path: '/surah',
-          page: SurahRoute.page,
-        ),
-        AutoRoute(
-          path: '/surah-detail',
-          page: SurahDetailRoute.page,
-        ),
-        AutoRoute(
-          path: '/name',
-          page: NameRoute.page,
-        ),
-        AutoRoute(
-          path: '/name-detail',
-          page: NameDetailRoute.page,
-        ),
-        AutoRoute(
-          path: '/namaz-read',
-          page: NamazReadRoute.page,
-        ),
-        AutoRoute(
-          path: '/namaz-pattern',
-          page: NamazPatternRoute.page,
-        ),
-        AutoRoute(
-          path: '/wudhu',
-          page: WudhuRoute.page,
-        ),
-        AutoRoute(
-          path: '/forgot-password',
-          page: ForgotPasswordRoute.page,
-        ),
-        AutoRoute(
-          path: '/login',
-          page: LoginRoute.page,
-        ),
-        AutoRoute(
-          path: '/code-verification',
-          page: CodeVerificationRoute.page,
-        ),
-        AutoRoute(
-          path: '/code-verification-forgot',
-          page: CodeVerificationForgotRoute.page,
-        ),
-        AutoRoute(
-          path: '/holiday-detail',
-          page: HolidayDetailRoute.page,
-        ),
-        AutoRoute(
-          path: '/qr-scanner',
-          page: QrScannerRoute.page,
-        ),
-        AutoRoute(
-          path: '/payment-check',
-          page: PaymentCheckRoute.page,
-        )
+        RedirectRoute(path: '*', redirectTo: '/'),
       ];
+}
+
+@RoutePage(name: 'AppFlow')
+class AppScope extends AutoRouter {
+  const AppScope({super.key});
 }

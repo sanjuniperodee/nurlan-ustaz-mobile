@@ -12,9 +12,6 @@ import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_payload.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_payload2.dart';
 
-import '../../../../core/common/constants.dart';
-import '../../../../core/platform/network_info.dart';
-
 const _tag = 'AuthRepository';
 
 abstract class AuthRepository {
@@ -58,10 +55,8 @@ abstract class AuthRepository {
 class AuthRepositoryImpl extends AuthRepository {
   final AuthRemoteDs remoteDS;
   final AuthLocalDs localDS;
-  final NetworkInfo networkInfo;
 
   AuthRepositoryImpl({
-    required this.networkInfo,
     required this.remoteDS,
     required this.localDS,
   });
@@ -91,71 +86,54 @@ class AuthRepositoryImpl extends AuthRepository {
   @override
   Future<Either<Failure, UserPayload>> postUser(
       {required UserPayload userDTO}) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final UserPayload result = await remoteDS.postUser(userDTO: userDTO);
+    try {
+      final UserPayload result = await remoteDS.postUser(userDTO: userDTO);
 
-        return Right(result);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(message: e.message));
-      }
-    } else {
-      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message));
     }
   }
 
   @override
   Future<Either<Failure, UserDto>> rename(
       {required UserPayload2 user, XFile? avatar}) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final UserDto result =
-            await remoteDS.rename(user: user, avatar: avatar);
+    try {
+      final UserDto result = await remoteDS.rename(user: user, avatar: avatar);
 
-        return Right(result);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(message: e.message));
-      }
-    } else {
-      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message));
     }
   }
 
   @override
   Future<Either<Failure, UserDto>> getUser() async {
-    if (await networkInfo.isConnected) {
-      try {
-        final UserDto result = await remoteDS.getUser();
+    try {
+      final UserDto result = await remoteDS.getUser();
 
-        return Right(result);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(message: e.message));
-      }
-    } else {
-      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message));
     }
   }
 
   @override
   Future<Either<Failure, TokenDTO>> createJTW(
       {required TokenCreateDTO createTokenDTO}) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final TokenDTO result =
-            await remoteDS.createJwt(tokenCreateDTO: createTokenDTO);
-        await localDS.saveToken(result);
-        final user = await remoteDS.getUser();
-        // if (user != null) {
-        await localDS.saveUser(user: user);
-        // }
-        // final UserDto? users = await localDS.getUserFromCacheNull();
-        // log('USERRRR${users.toString()}');
-        return Right(result);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(message: e.message));
-      }
-    } else {
-      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    try {
+      final TokenDTO result =
+          await remoteDS.createJwt(tokenCreateDTO: createTokenDTO);
+      await localDS.saveToken(result);
+      final user = await remoteDS.getUser();
+      // if (user != null) {
+      await localDS.saveUser(user: user);
+      // }
+      // final UserDto? users = await localDS.getUserFromCacheNull();
+      // log('USERRRR${users.toString()}');
+      return Right(result);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message));
     }
   }
 
@@ -164,46 +142,33 @@ class AuthRepositoryImpl extends AuthRepository {
       {required String curPass,
       required String newPass,
       required String pass}) async {
-    if (await networkInfo.isConnected) {
-      try {
-        await remoteDS.changePass(
-            curPass: curPass, newPass: newPass, pass: pass);
-        return const Right(true);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(message: e.message));
-      }
-    } else {
-      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    try {
+      await remoteDS.changePass(curPass: curPass, newPass: newPass, pass: pass);
+      return const Right(true);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message));
     }
   }
 
   @override
   Future<Either<Failure, bool>> deleteUser() async {
-    if (await networkInfo.isConnected) {
-      try {
-        await remoteDS.deleteUser();
-        localDS.removeUserFromCache();
-        return const Right(true);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(message: e.message));
-      }
-    } else {
-      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    try {
+      await remoteDS.deleteUser();
+      localDS.removeUserFromCache();
+      return const Right(true);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message));
     }
   }
 
   @override
   Future<Either<Failure, bool>> activateUser(
       {required ActivateUserDTO activateUserDTO}) async {
-    if (await networkInfo.isConnected) {
-      try {
-        await remoteDS.activateUser(activateUserDTO: activateUserDTO);
-        return const Right(true);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(message: e.message));
-      }
-    } else {
-      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    try {
+      await remoteDS.activateUser(activateUserDTO: activateUserDTO);
+      return const Right(true);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message));
     }
   }
 
@@ -238,15 +203,11 @@ class AuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<Either<Failure, int>> resetPassword({required String mail}) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final id = await remoteDS.resetPassword(mail: mail);
-        return Right(id);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(message: e.message));
-      }
-    } else {
-      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    try {
+      final id = await remoteDS.resetPassword(mail: mail);
+      return Right(id);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message));
     }
   }
 
@@ -255,52 +216,40 @@ class AuthRepositoryImpl extends AuthRepository {
       {required String sessionId,
       required String newPassword,
       required String reNewPassword}) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final id = await remoteDS.resetPasswordConfirm(
-            sessionId: sessionId,
-            newPassword: newPassword,
-            reNewPassword: reNewPassword);
-        return Right(id);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(message: e.message));
-      }
-    } else {
-      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    try {
+      final id = await remoteDS.resetPasswordConfirm(
+          sessionId: sessionId,
+          newPassword: newPassword,
+          reNewPassword: reNewPassword);
+      return Right(id);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message));
     }
   }
 
   @override
   Future<Either<Failure, String>> ressetConfirmCode(
       {required ActivateUserDTO activateUserDTO}) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final id = await remoteDS.confirmCode(
-          activateUserDTO: activateUserDTO,
-        );
-        return Right(id);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(message: e.message));
-      }
-    } else {
-      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    try {
+      final id = await remoteDS.confirmCode(
+        activateUserDTO: activateUserDTO,
+      );
+      return Right(id);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message));
     }
   }
 
   @override
   Future<Either<Failure, String>> resendActivation(
       {required String email}) async {
-    if (await networkInfo.isConnected) {
-      try {
-        final id = await remoteDS.resendActivation(
-          email: email,
-        );
-        return Right(id);
-      } on ServerException catch (e) {
-        return Left(ServerFailure(message: e.message));
-      }
-    } else {
-      return Left(ServerFailure(message: NO_INTERNET_TEXT));
+    try {
+      final id = await remoteDS.resendActivation(
+        email: email,
+      );
+      return Right(id);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message));
     }
   }
 }
