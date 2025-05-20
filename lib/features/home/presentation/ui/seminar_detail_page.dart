@@ -363,7 +363,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                                                             .s16w400)
                                                                     .copyWith(
                                                                         fontFamily: FontTypes
-                                                                            .SF_Pro
+                                                                            .SFPro
                                                                             .name),
                                                                 textAlign:
                                                                     TextAlign
@@ -417,7 +417,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                                                       '${result.price!.toInt()} тг ${'dream_pay'.tr()}',
                                                                       style: getTextStyle(CustomTextStyles.s14w400).copyWith(
                                                                           fontFamily: FontTypes
-                                                                              .SF_Pro
+                                                                              .SFPro
                                                                               .name,
                                                                           color:
                                                                               AppColors.white)),
@@ -458,7 +458,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                                                           color: AppColors
                                                                               .blue,
                                                                           fontFamily: FontTypes
-                                                                              .SF_Pro
+                                                                              .SFPro
                                                                               .name,
                                                                           decoration:
                                                                               TextDecoration.underline),
@@ -493,7 +493,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                                                             .tr(),
                                                                         style: getTextStyle(CustomTextStyles.s12w400).copyWith(
                                                                             fontFamily:
-                                                                                FontTypes.SF_Pro.name,
+                                                                                FontTypes.SFPro.name,
                                                                             color: AppColors.blue,
                                                                             decoration: TextDecoration.underline)),
                                                                   ),

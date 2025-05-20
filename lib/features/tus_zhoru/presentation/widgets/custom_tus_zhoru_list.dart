@@ -1,4 +1,3 @@
-
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -79,8 +78,11 @@ class _CustomTusZhoruListState extends State<CustomTusZhoruList> {
                                   width: 200.w,
                                   child: Text(
                                     list[index].title ?? '',
-                                    style: getTextStyle(CustomTextStyles.s16w500)
-                                        .apply(fontFamily: FontTypes.SF_Pro.name),
+                                    style:
+                                        getTextStyle(CustomTextStyles.s16w500)
+                                            .apply(
+                                                fontFamily:
+                                                    FontTypes.SFPro.name),
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 1,
                                   ),
@@ -95,7 +97,7 @@ class _CustomTusZhoruListState extends State<CustomTusZhoruList> {
                                         getTextStyle(CustomTextStyles.s14w400)
                                             .apply(
                                                 fontFamily:
-                                                    FontTypes.SF_Pro.name,
+                                                    FontTypes.SFPro.name,
                                                 color: AppColors.grey1
                                                     .withOpacity(0.55)),
                                   ),
@@ -141,7 +143,7 @@ class _CustomTusZhoruListState extends State<CustomTusZhoruList> {
                 "section".tr(),
                 textAlign: TextAlign.center,
                 style: getTextStyle(CustomTextStyles.s14w500)
-                    .copyWith(fontFamily: FontTypes.SF_Pro.name),
+                    .copyWith(fontFamily: FontTypes.SFPro.name),
               ),
             ),
           );

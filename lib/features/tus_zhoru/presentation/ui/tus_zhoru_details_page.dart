@@ -10,6 +10,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_butto
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_details_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/widgets/tus_zhoru_custom_body.dart';
+import 'package:secure_application/secure_gate.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/utils/pay_dialog.dart';
@@ -34,21 +35,14 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
 
   @override
   void initState() {
-    BlocProvider.of<TusZhoruDetailsCubit>(context).getTusZhoruById(widget.id);
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      BlocProvider.of<TusZhoruCubit>(context).secureScreen();
-    });
+    context.read<TusZhoruDetailsCubit>().getTusZhoruById(widget.id);
     super.initState();
     _scrollController.addListener(_handleScroll);
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        BlocProvider.of<TusZhoruCubit>(context).unSecureScreen();
-        return true;
-      },
+    return SecureGate(
       child: BlocBuilder<TusZhoruDetailsCubit, TusZhoruDetailsState>(
           builder: (context, state) {
         if (state is TusZhoruDetailsLoadingState) {
@@ -119,9 +113,8 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                             child: CustomAppBar(
                               title: tusZhoruModel.title ?? '',
                               onTap: () async {
-                                BlocProvider.of<TusZhoruCubit>(context)
-                                    .unSecureScreen();
-                                BlocProvider.of<TusZhoruCubit>(context)
+                                context
+                                    .read<TusZhoruCubit>()
                                     .tusZhoruT(page: 1, isFirstCall: true);
                                 Navigator.pop(context);
                               },
@@ -184,7 +177,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                                 CustomTextStyles.s16w400)
                                             .copyWith(
                                                 fontFamily:
-                                                    FontTypes.SF_Pro.name,
+                                                    FontTypes.SFPro.name,
                                                 height: 1.5),
                                         overflow: TextOverflow.fade,
                                       ),
@@ -239,8 +232,8 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                               style: getTextStyle(
                                                       CustomTextStyles.s16w500)
                                                   .copyWith(
-                                                      fontFamily: FontTypes
-                                                          .SF_Pro.name),
+                                                      fontFamily:
+                                                          FontTypes.SFPro.name),
                                             ),
                                             _isFav == false
                                                 ? SvgPicture.asset(
@@ -285,8 +278,8 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                               style: getTextStyle(
                                                       CustomTextStyles.s16w500)
                                                   .copyWith(
-                                                      fontFamily: FontTypes
-                                                          .SF_Pro.name),
+                                                      fontFamily:
+                                                          FontTypes.SFPro.name),
                                             ),
                                             SvgPicture.asset(
                                               'assets/icons/share.svg',

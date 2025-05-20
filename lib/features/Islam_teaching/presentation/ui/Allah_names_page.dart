@@ -24,7 +24,6 @@ class AllahNamesPage extends StatefulWidget {
 class _AllahNamesPageState extends State<AllahNamesPage> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     BlocProvider.of<NamesOfAllahCubit>(context).namesOfAllah();
   }

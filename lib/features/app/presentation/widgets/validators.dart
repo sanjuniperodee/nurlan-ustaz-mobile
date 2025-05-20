@@ -1,5 +1,72 @@
 import 'package:easy_localization/easy_localization.dart';
 
+typedef TextValidation = (bool Function(String? text), String);
+
+final class ValidatorManager extends Object {
+  ValidatorManager({required this.validations})
+      : assert(validations.isNotEmpty);
+
+  ValidatorManager.notEmpty([List<TextValidation>? additionalValidations])
+      : validations = [
+          notEmptyValidation,
+          ...?additionalValidations,
+        ];
+
+  ValidatorManager.password([List<TextValidation>? additionalValidations])
+      : validations = [
+          notEmptyValidation,
+          passwordValidation,
+          ...?additionalValidations,
+        ];
+
+  ValidatorManager.email([List<TextValidation>? additionalValidations])
+      : validations = [
+          notEmptyValidation,
+          emailValidation,
+          ...?additionalValidations,
+        ];
+
+  ValidatorManager.twelveSymbolsPhone(
+      [List<TextValidation>? additionalValidations])
+      : validations = [
+          notEmptyValidation,
+          twelveSymbolsPhoneValidation,
+          ...?additionalValidations,
+        ];
+
+  final List<TextValidation> validations;
+
+  String? call(String? text) {
+    for (final validation in validations) {
+      if (validation.$1(text)) continue;
+      return validation.$2;
+    }
+    return null;
+  }
+
+  static TextValidation notEmptyValidation = (
+    (String? text) => text?.isNotEmpty ?? false,
+    'the_field_cannot_be_empty'.tr(),
+  );
+
+  static TextValidation emailValidation = (
+    (String? text) => RegExp(
+            r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+        .hasMatch(text ?? ''),
+    'write_correct_email'.tr(),
+  );
+
+  static TextValidation passwordValidation = (
+    (String? text) => (text?.length ?? 0) >= 8,
+    'Пароль должен содержать минимум 8 символов',
+  );
+
+  static TextValidation twelveSymbolsPhoneValidation = (
+    (String? text) => (text?.length ?? 0) == 12,
+    'Введите номер телефона',
+  );
+}
+
 String? notEmptyValidator(String? value) {
   if (value == null || value.isEmpty) {
     return 'the_field_cannot_be_empty'.tr();
@@ -30,12 +97,9 @@ String? phoneOrEmailValidator(String? value) {
 
 bool isValidEmail(String value) {
   return RegExp(
-      r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
+          r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$')
       .hasMatch(value);
 }
-
-
-
 
 String? phoneOrValidator(String? value) {
   if (value == null || value.isEmpty) {

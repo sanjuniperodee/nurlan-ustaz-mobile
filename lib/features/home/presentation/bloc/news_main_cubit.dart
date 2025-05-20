@@ -19,9 +19,6 @@ class NewsMainCubit extends Cubit<NewsMainState> {
     bool? isSaved,
     int? currentPage,
   }) async {
-    final deviceToken = await NotificationService().getDeviceToken();
-    print('DEVICE TOKEN----$deviceToken');
-
     final failureOrUser = await _homeRepository.newsMain(
         isSaved: isSaved, currentPage: currentPage);
     failureOrUser.fold(

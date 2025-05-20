@@ -28,9 +28,8 @@ class NamazPatternPage extends StatefulWidget {
   State<NamazPatternPage> createState() => _NamazPatternPageState();
 }
 
-int currentIndex = 0;
-
 class _NamazPatternPageState extends State<NamazPatternPage> {
+  int currentIndex = 0;
   @override
   void initState() {
     BlocProvider.of<AblutionsCubit>(context).ablutions(gender: 'M');

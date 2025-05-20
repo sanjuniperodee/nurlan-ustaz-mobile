@@ -79,7 +79,7 @@ class _SurakDialogState extends State<SurakDialog> {
                             enabled: true,
                             labelText: "${'tell_me_ustaz'.tr()}...",
                             labelStyle: getTextStyle(CustomTextStyles.s14w600)
-                                .copyWith(fontFamily: FontTypes.SF_Pro.name),
+                                .copyWith(fontFamily: FontTypes.SFPro.name),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(25.0),
                               borderSide: BorderSide(
@@ -126,7 +126,7 @@ class _SurakDialogState extends State<SurakDialog> {
                           style: getTextStyle(CustomTextStyles.s16w500)
                               .copyWith(
                                   color: AppColors.white,
-                                  fontFamily: FontTypes.SF_Pro.name),
+                                  fontFamily: FontTypes.SFPro.name),
                         )),
                       ),
                     )

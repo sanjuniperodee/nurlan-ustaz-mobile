@@ -8,9 +8,13 @@ import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/event_dto.d
 import '../../../../../core/common/app_styles.dart';
 import '../../../../../core/common/colors.dart';
 
-
 class ServiceCard extends StatelessWidget {
-  const ServiceCard({super.key, required this.event, required this.nextPage, required this.previousPage, required this.isDialog});
+  const ServiceCard(
+      {super.key,
+      required this.event,
+      required this.nextPage,
+      required this.previousPage,
+      required this.isDialog});
   final EventDto event;
   final Function nextPage;
   final Function previousPage;
@@ -58,8 +62,7 @@ class ServiceCard extends StatelessWidget {
               Text(
                 '${event.date}',
                 style: getTextStyle(CustomTextStyles.s16w400).copyWith(
-                    fontFamily: FontTypes.SF_Pro.name,
-                    color: AppColors.black),
+                    fontFamily: FontTypes.SFPro.name, color: AppColors.black),
               ),
             ],
           ),
@@ -79,8 +82,7 @@ class ServiceCard extends StatelessWidget {
               Text(
                 '${event.time}',
                 style: getTextStyle(CustomTextStyles.s16w400).copyWith(
-                    fontFamily: FontTypes.SF_Pro.name,
-                    color: AppColors.black),
+                    fontFamily: FontTypes.SFPro.name, color: AppColors.black),
               ),
             ],
           ),
@@ -100,39 +102,42 @@ class ServiceCard extends StatelessWidget {
               Text(
                 '${event.address}',
                 style: getTextStyle(CustomTextStyles.s16w400).copyWith(
-                    fontFamily: FontTypes.SF_Pro.name,
-                    color: AppColors.black),
+                    fontFamily: FontTypes.SFPro.name, color: AppColors.black),
               ),
             ],
           ),
-          SizedBox(height: 16,),
+          SizedBox(
+            height: 16,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              isDialog ? Container(): IconButton(
-                  onPressed: () {
-                    previousPage();
-
-                  },
-                  icon: Transform(
-                      transform: Matrix4.rotationY(math.pi),
-                      child: SvgPicture.asset(
+              isDialog
+                  ? Container()
+                  : IconButton(
+                      onPressed: () {
+                        previousPage();
+                      },
+                      icon: Transform(
+                          transform: Matrix4.rotationY(math.pi),
+                          child: SvgPicture.asset(
+                            'assets/icons/chevron_right.svg',
+                            color: AppColors.blue,
+                            height: 24,
+                            width: 24,
+                          ))),
+              isDialog
+                  ? Container()
+                  : IconButton(
+                      onPressed: () {
+                        nextPage();
+                      },
+                      icon: SvgPicture.asset(
                         'assets/icons/chevron_right.svg',
                         color: AppColors.blue,
                         height: 24,
                         width: 24,
-                      ))),
-
-              isDialog ? Container(): IconButton(
-                  onPressed: () {
-                    nextPage();
-                  },
-                  icon: SvgPicture.asset(
-                    'assets/icons/chevron_right.svg',
-                    color: AppColors.blue,
-                    height: 24,
-                    width: 24,
-                  )),
+                      )),
             ],
           )
         ],

@@ -2,33 +2,42 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
-
-import '../../../auth/data/repositories/auth_repository.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/data/datasource/remote/auth_remote_ds.dart';
 
 part 'change_pass_cubit.freezed.dart';
 
 @singleton
 class ChangePassCubit extends Cubit<ChangePassState> {
-  final AuthRepository _authRepository;
   ChangePassCubit(
-    this._authRepository,
+    this.authRemoteDs,
   ) : super(const ChangePassState.initial());
 
-  Future<void> changePass(
-      {required String curPass,
-      required String newPass,
-      required String pass}) async {
-    final failureOrUser = await _authRepository.newPass(
-        curPass: curPass, newPass: newPass, pass: pass);
-    failureOrUser.fold(
-      (l) {
-        emit(ChangePassState.error(message: mapFailureToMessageBack(l)));
-        emit(ChangePassState.initial());
-      },
-      (r) {
-        emit(ChangePassState.loaded(status: r));
-      },
-    );
+  final AuthRemoteDs authRemoteDs;
+
+  Future<void> changePass({
+    required String curPass,
+    required String newPass,
+    required String pass,
+  }) async {
+    try {
+      await authRemoteDs.changePass(
+          curPass: curPass, newPass: newPass, pass: pass);
+      emit(ChangePassState.loaded(status: true));
+    } catch (e) {
+      emit(
+        ChangePassState.error(
+          message: mapFailureToMessageBack(
+            ServerFailure(message: e.toString()),
+          ),
+        ),
+      );
+      emit(ChangePassState.initial());
+      rethrow;
+    }
+    // failureOrUser.fold(
+    //   (l) {},
+    //   (r) {},
+    // );
   }
 }
 

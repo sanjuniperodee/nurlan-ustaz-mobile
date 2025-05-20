@@ -12,7 +12,6 @@ import 'package:nurlan_ustaz_flutter/features/app/data/datasource/onboarding_loc
 import 'package:nurlan_ustaz_flutter/features/app/on_boarding/bloc/on_boarding_cubit.dart';
 import 'package:video_player/video_player.dart';
 
-
 @RoutePage()
 class OnBoardingPage extends StatefulWidget {
   const OnBoardingPage({super.key});
@@ -158,7 +157,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                     child: Text(
                       'Аумин 🤲',
                       style: getTextStyle(CustomTextStyles.s16w500).copyWith(
-                        fontFamily: FontTypes.SF_Pro.name,
+                        fontFamily: FontTypes.SFPro.name,
                         color: AppColors.white,
                       ),
                     ),

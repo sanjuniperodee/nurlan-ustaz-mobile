@@ -1,28 +1,74 @@
+import 'package:dry_bloc/dry_bloc.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:nurlan_ustaz_flutter/core/error/exception.dart';
 
-Future<bool?> buildSuccessCustomSnackBar(BuildContext context, String message) {
-  return Fluttertoast.showToast(
-    msg: message,
-    toastLength: Toast.LENGTH_LONG,
-    gravity: ToastGravity.CENTER,
-    timeInSecForIosWeb: 2,
-    backgroundColor: const Color.fromARGB(255, 204, 241, 220),
-    textColor: Colors.black,
-    fontSize: 16.0,
-  );
+extension SnackBarExtension on BuildContext {
+  Future<SnackBarClosedReason> showSuccessSnackBar(String message) {
+    return buildSuccessCustomSnackBar(this, message);
+  }
+
+  Future<SnackBarClosedReason> showErrorSnackBar(String message) {
+    return buildErrorCustomSnackBar(this, message);
+  }
+
+  Future<SnackBarClosedReason> showExceptionErrorSnackBar(
+    DryBlocException exc, [
+    String? defaultMessage,
+  ]) {
+    final def = defaultMessage ?? 'error.information_passed_to_developers'.tr();
+    return buildErrorCustomSnackBar(
+      this,
+      exc.maybeWhen(
+        fatal: (error) {
+          if (error is! ServerException) return def;
+          return error.maybeWhenServerException(
+            orElse: (_, __) => 'error.server'.tr(),
+            client: (message, statusCode) => message,
+          );
+        },
+        orElse: (_) => def,
+      ),
+    );
+  }
 }
 
-Future<bool?> buildErrorCustomSnackBar(BuildContext context, String message) {
-  return Fluttertoast.showToast(
-    msg: message,
-    toastLength: Toast.LENGTH_SHORT,
-    gravity: ToastGravity.CENTER,
-    timeInSecForIosWeb: 2,
-    backgroundColor: const Color.fromARGB(255, 236, 120, 118),
-    textColor: Colors.white,
-    fontSize: 16.0,
-  );
+Future<SnackBarClosedReason> buildSuccessCustomSnackBar(
+    BuildContext context, String message) {
+  return ScaffoldMessenger.of(context)
+      .showSnackBar(
+        SnackBar(
+          content: Text(
+            message,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 16.0,
+            ),
+          ),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: const Color.fromARGB(255, 204, 241, 220),
+        ),
+      )
+      .closed;
+}
+
+Future<SnackBarClosedReason> buildErrorCustomSnackBar(
+    BuildContext context, String message) {
+  return ScaffoldMessenger.of(context)
+      .showSnackBar(
+        SnackBar(
+          content: Text(
+            message,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16.0,
+            ),
+          ),
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: const Color.fromARGB(255, 236, 120, 118),
+        ),
+      )
+      .closed;
 }
 
 // buildErrorCustomSnackBar

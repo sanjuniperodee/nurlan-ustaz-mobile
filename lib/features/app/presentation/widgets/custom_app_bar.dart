@@ -1,3 +1,4 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -48,13 +49,7 @@ class CustomAppBar extends StatelessWidget {
           Positioned(
             left: 0,
             child: GestureDetector(
-              onTap: onTap != null
-                  ? () {
-                onTap!();
-              }
-                  : () {
-                Navigator.of(context).pop();
-              },
+              onTap: onTap ?? context.router.pop,
               child: SvgPicture.asset(
                 Assets.backButtonSvg,
                 color: color ?? AppColors.white,
@@ -65,5 +60,3 @@ class CustomAppBar extends StatelessWidget {
     );
   }
 }
-
-

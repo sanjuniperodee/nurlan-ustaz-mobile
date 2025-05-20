@@ -4,12 +4,30 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 
 class GlobalCustomBody extends StatefulWidget {
-  const GlobalCustomBody(
-      {super.key, this.right, this.left, this.child, this.top});
-  final double? right;
-  final double? left;
-  final double? top;
+  const GlobalCustomBody({
+    super.key,
+    this.padding = const EdgeInsets.only(
+      top: 60,
+      left: 16,
+      right: 16,
+      bottom: 0,
+    ),
+    this.topGradientOffset,
+    this.topOrnamentOffset,
+    this.child,
+  });
+
+  @protected
+  final EdgeInsets padding;
+
+  @protected
   final Widget? child;
+
+  @protected
+  final double? topGradientOffset;
+
+  @protected
+  final double? topOrnamentOffset;
 
   @override
   State<GlobalCustomBody> createState() => _GlobalCustomBodyState();
@@ -34,11 +52,16 @@ class _GlobalCustomBodyState extends State<GlobalCustomBody>
       height: 1.sh,
       child: Stack(
         children: [
-          Image.asset(
-            Assets.gradient,
-            fit: BoxFit.cover,
+          Positioned(
+            top: widget.topGradientOffset,
+            left: 0,
+            right: 0,
+            child: Image.asset(
+              Assets.gradient,
+            ),
           ),
           Positioned(
+            top: widget.topOrnamentOffset,
             left: 185.r,
             child: ShaderMask(
               shaderCallback: (rect) {
@@ -66,11 +89,7 @@ class _GlobalCustomBodyState extends State<GlobalCustomBody>
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(
-              top: widget.left ?? 60,
-              left: widget.left ?? 16,
-              right: widget.right ?? 16,
-            ).r,
+            padding: widget.padding.r,
             child: widget.child ?? const SizedBox(),
           ),
         ],

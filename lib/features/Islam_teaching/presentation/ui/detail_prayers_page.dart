@@ -33,7 +33,6 @@ class _PrayersDetailPageState extends State<PrayersDetailPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     BlocProvider.of<DuaDetailCubit>(context).duaDetail(id: widget.id);
     super.initState();
   }

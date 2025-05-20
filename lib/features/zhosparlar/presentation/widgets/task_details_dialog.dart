@@ -39,7 +39,7 @@ class TaskDetailsDialog extends StatelessWidget {
           children: [
             const SizedBox(height: 16),
             Text(
-             'New_task'.tr(),
+              'New_task'.tr(),
               style: TextStyle(
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
@@ -54,7 +54,7 @@ class TaskDetailsDialog extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w400,
-                  fontFamily: FontTypes.SF_Pro.name,
+                  fontFamily: FontTypes.SFPro.name,
                   color: AppColors.grey1.withOpacity(0.5),
                 ),
                 textAlign: TextAlign.center,
@@ -74,18 +74,18 @@ class TaskDetailsDialog extends StatelessWidget {
                   ],
                   decoration: InputDecoration(
                     contentPadding:
-                    EdgeInsets.symmetric(horizontal: 3, vertical: 2),
+                        EdgeInsets.symmetric(horizontal: 3, vertical: 2),
                     floatingLabelBehavior: FloatingLabelBehavior.never,
-                    labelText:'Text'.tr(),
+                    labelText: 'Text'.tr(),
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25),
                       borderSide:
-                      BorderSide(color: AppColors.grey1.withOpacity(0.2)),
+                          BorderSide(color: AppColors.grey1.withOpacity(0.2)),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(25),
                       borderSide:
-                      BorderSide(color: AppColors.grey1.withOpacity(0.2)),
+                          BorderSide(color: AppColors.grey1.withOpacity(0.2)),
                     ),
                     filled: true,
                     fillColor: AppColors.blue.withOpacity(0.05),
@@ -113,7 +113,7 @@ class TaskDetailsDialog extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w400,
-                        fontFamily: FontTypes.SF_Pro.name,
+                        fontFamily: FontTypes.SFPro.name,
                       ),
                     ),
                   ),
@@ -129,17 +129,16 @@ class TaskDetailsDialog extends StatelessWidget {
                         if (task!.title != _controller.text) {
                           if (_controller.text.isEmpty) {
                             buildErrorCustomSnackBar(
-                                context,
-                                'write_line'.tr());
+                                context, 'write_line'.tr());
                           } else {
                             Navigator.pop(context);
                             context
                                 .read<CheckListCubit>()
                                 .completeTask(
-                              day,
-                              task!.copyWith(title: _controller.value.text),
-                              task!.isCompleted!,
-                            )
+                                  day,
+                                  task!.copyWith(title: _controller.value.text),
+                                  task!.isCompleted!,
+                                )
                                 .then((value) {
                               buildSuccessCustomSnackBar(
                                   context, 'success'.tr());
@@ -155,8 +154,7 @@ class TaskDetailsDialog extends StatelessWidget {
                               .read<CheckListCubit>()
                               .postTask(day, _controller.text)
                               .then((value) {
-                            buildSuccessCustomSnackBar(
-                                context, 'saved'.tr());
+                            buildSuccessCustomSnackBar(context, 'saved'.tr());
                           });
                         } else {
                           Navigator.pop(context);
@@ -168,7 +166,7 @@ class TaskDetailsDialog extends StatelessWidget {
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w500,
-                        fontFamily: FontTypes.SF_Pro.name,
+                        fontFamily: FontTypes.SFPro.name,
                         color: AppColors.blue,
                       ),
                     ),

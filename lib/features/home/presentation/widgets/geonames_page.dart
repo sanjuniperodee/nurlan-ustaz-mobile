@@ -13,9 +13,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_sn
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/geonames_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/geonames_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/get_profile_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/set_city_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/timings_cubit.dart';
 
 @RoutePage()
 class GeonamesPage extends StatefulWidget {
@@ -88,20 +86,21 @@ class _GeonamesPageState extends State<GeonamesPage> {
                           ),
                           BlocListener<SetCityCubit, SetCityState>(
                             listener: (context, state) {
-                              if (state is SetCityLoadedState) {
-                                widget.type == 'profile'
-                                    ? BlocProvider.of<GetProfileCubit>(context)
-                                        .getUser()
-                                        .then((value) =>
-                                            context.router.maybePop())
-                                    : BlocProvider.of<TimingsCubit>(context)
-                                        .timings(
-                                          double.parse(geoa[geoIndex].lat!),
-                                          double.parse(geoa[geoIndex].lng!),
-                                        )
-                                        .then((value) =>
-                                            context.router.maybePop());
-                              }
+                              // TODO: profile. Что тут происходит?
+                              // if (state is SetCityLoadedState) {
+                              //   widget.type == 'profile'
+                              //       ? BlocProvider.of<GetProfileCubit>(context)
+                              //           .getUser()
+                              //           .then((value) =>
+                              //               context.router.maybePop())
+                              //       : BlocProvider.of<TimingsCubit>(context)
+                              //           .timings(
+                              //             double.parse(geoa[geoIndex].lat!),
+                              //             double.parse(geoa[geoIndex].lng!),
+                              //           )
+                              //           .then((value) =>
+                              //               context.router.maybePop());
+                              // }
                             },
                             child: ListView.builder(
                               itemCount: geoa.length,

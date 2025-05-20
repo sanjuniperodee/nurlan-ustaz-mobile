@@ -1,0 +1,83 @@
+import 'dart:io';
+
+import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/bloc/cards_cubit.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+
+import '../../../../../core/common/colors.dart';
+
+@RoutePage()
+class AddNewCardPage extends StatefulWidget {
+  const AddNewCardPage({super.key, required this.addCardUrl});
+  final String addCardUrl;
+
+  @override
+  State<AddNewCardPage> createState() => _AddNewCardPageState();
+}
+
+class _AddNewCardPageState extends State<AddNewCardPage> {
+  final controller = WebViewController();
+
+  @override
+  void initState() {
+    super.initState();
+    controller
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..loadRequest(Uri.parse(widget.addCardUrl));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print('ssilka2-${widget.addCardUrl}');
+    // ignore: deprecated_member_use
+    return WillPopScope(
+      onWillPop: () async {
+        BlocProvider.of<CardsCubit>(context).getCardList();
+        return true;
+      },
+      child: Scaffold(
+          appBar: AppBar(
+            title: Text(
+              'add_card_title'.tr(),
+              style: getTextStyle(CustomTextStyles.s20w700,
+                  color: AppColors.white),
+              textAlign: TextAlign.center,
+            ),
+            centerTitle: true,
+            flexibleSpace: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.topRight,
+                  colors: AppColors.gradientPrimaryActiveButton
+                      .colors, // Specify your gradient colors
+                ),
+              ),
+            ),
+          ),
+          body: Padding(
+            padding: Platform.isIOS
+                ? const EdgeInsets.only(bottom: 30).r
+                : EdgeInsets.zero,
+            child: SizedBox(
+              width: 1.sw,
+              height: 1.sh,
+              child: WebViewWidget(
+                // javascriptMode: JavascriptMode.unrestricted,
+                // onWebViewCreated: (controller) {
+                //   controller.loadUrl(widget.addCardUrl);
+                // },
+                controller: controller,
+                // allowsInlineMediaPlayback: true,
+                // initialUrl: Uri.parse(widget.addCardUrl).toString(),
+              ),
+            ),
+          )),
+    );
+  }
+}

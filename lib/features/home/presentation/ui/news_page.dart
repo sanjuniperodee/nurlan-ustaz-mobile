@@ -37,7 +37,6 @@ class _NewsPageState extends State<NewsPage> {
   List<bool> listOfFav = [];
   @override
   void initState() {
-    // TODO: implement initState
     widget.type == 'isSave'
         ? BlocProvider.of<NewsCubit>(context)
             .news(page: 1, isFirstCall: true, isSaved: true)
@@ -63,8 +62,8 @@ class _NewsPageState extends State<NewsPage> {
             listOfNews = state.news;
             listOfFav.clear();
             for (var element in listOfNews) {
-                listOfFav.add(element.isSaved!);
-              }
+              listOfFav.add(element.isSaved!);
+            }
 
             setState(() {});
           } else if (state is NewsErrorState) {

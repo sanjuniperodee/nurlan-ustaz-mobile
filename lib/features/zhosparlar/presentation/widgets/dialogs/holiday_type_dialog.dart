@@ -1,4 +1,3 @@
-
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,11 @@ import '../../../../app/presentation/widgets/app_button.dart';
 import '../../../data/models/event_dto.dart';
 
 class HolidayDialog extends StatelessWidget {
-  const HolidayDialog({super.key, required this.event, required this.mainContext, required this.gradient});
+  const HolidayDialog(
+      {super.key,
+      required this.event,
+      required this.mainContext,
+      required this.gradient});
   final EventDto event;
   final BuildContext mainContext;
   final LinearGradient gradient;
@@ -41,8 +44,7 @@ class HolidayDialog extends StatelessWidget {
                       topRight: Radius.circular(20.r),
                       topLeft: Radius.circular(20.r),
                     ),
-                    gradient:
-                    gradient,
+                    gradient: gradient,
                     image: const DecorationImage(
                       opacity: 0.3,
                       image: AssetImage("assets/images/ooo.png"),
@@ -95,12 +97,11 @@ class HolidayDialog extends StatelessWidget {
                     width: 8.w,
                   ),
                   SizedBox(
-
                     width: 200.w,
                     child: Text(
                       '${DateFormat('dd.MM.yyyy').format(DateTime.parse(event.date ?? ''))}  ${event.title}',
                       style: getTextStyle(CustomTextStyles.s16w400).copyWith(
-                          fontFamily: FontTypes.SF_Pro.name,
+                          fontFamily: FontTypes.SFPro.name,
                           color: AppColors.black),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -117,8 +118,9 @@ class HolidayDialog extends StatelessWidget {
                   child: AppButton(
                       textSize: 14.sp,
                       onTap: () async {
-                         Navigator.of(context).pop();
-                         mainContext.router.push(HolidayDetailRoute(event: event));
+                        Navigator.of(context).pop();
+                        mainContext.router
+                            .push(HolidayDetailRoute(event: event));
                       },
                       text: 'next_page'.tr())),
             ),

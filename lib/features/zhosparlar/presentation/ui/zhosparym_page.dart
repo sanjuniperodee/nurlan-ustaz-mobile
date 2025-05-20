@@ -116,10 +116,9 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
 
   @override
   void initState() {
-    BlocProvider.of<ZhosparymCubit>(context).getCheckList()
-      .then((value) {
-        BlocProvider.of<ZhosparymCubit>(context).calendarEvents(DateTime.now());
-      });
+    BlocProvider.of<ZhosparymCubit>(context).getCheckList().then((value) {
+      BlocProvider.of<ZhosparymCubit>(context).calendarEvents(DateTime.now());
+    });
     super.initState();
   }
 
@@ -407,8 +406,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                               Text(
                                 'Important_dates'.tr(),
                                 style: getTextStyle(CustomTextStyles.s14w500)
-                                    .copyWith(
-                                        fontFamily: FontTypes.SF_Pro.name),
+                                    .copyWith(fontFamily: FontTypes.SFPro.name),
                               ),
                             SizedBox(
                               height: 16.h,
@@ -472,7 +470,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                                             .s16w600)
                                                     .copyWith(
                                                         fontFamily: FontTypes
-                                                            .SF_Pro.name,
+                                                            .SFPro.name,
                                                         color: AppColors.white,
                                                         fontWeight:
                                                             FontWeight.w700),
@@ -484,7 +482,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                                             .s16w600)
                                                     .copyWith(
                                                         fontFamily: FontTypes
-                                                            .SF_Pro.name,
+                                                            .SFPro.name,
                                                         color: AppColors.white,
                                                         fontWeight:
                                                             FontWeight.w700),
@@ -493,8 +491,7 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
                                           ),
                                         ),
                                       ),
-                                    ))
-                                ,
+                                    )),
                           ],
                         ),
                       ),

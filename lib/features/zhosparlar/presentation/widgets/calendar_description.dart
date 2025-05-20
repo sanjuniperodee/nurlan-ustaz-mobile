@@ -26,10 +26,7 @@ class _CalendarDescriptionState extends State<CalendarDescription> {
                 decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     gradient: LinearGradient(
-                        colors: [
-                          Color(0xFFDD5000),
-                          Color(0xFFFEC552)
-                        ],
+                        colors: [Color(0xFFDD5000), Color(0xFFFEC552)],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight)),
               ),
@@ -38,11 +35,8 @@ class _CalendarDescriptionState extends State<CalendarDescription> {
               ),
               Text(
                 context.tr('live'),
-                style:
-                getTextStyle(CustomTextStyles.s12w500)
-                    .copyWith(
-                    fontFamily:
-                    FontTypes.SF_Pro.name),
+                style: getTextStyle(CustomTextStyles.s12w500)
+                    .copyWith(fontFamily: FontTypes.SFPro.name),
               )
             ],
           ),
@@ -57,10 +51,7 @@ class _CalendarDescriptionState extends State<CalendarDescription> {
                 decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     gradient: LinearGradient(
-                        colors: [
-                          Color(0xFF1151C2),
-                          Color(0xFF8F8CF7)
-                        ],
+                        colors: [Color(0xFF1151C2), Color(0xFF8F8CF7)],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight)),
               ),
@@ -69,11 +60,8 @@ class _CalendarDescriptionState extends State<CalendarDescription> {
               ),
               Text(
                 context.tr('Services'),
-                style:
-                getTextStyle(CustomTextStyles.s12w500)
-                    .copyWith(
-                    fontFamily:
-                    FontTypes.SF_Pro.name),
+                style: getTextStyle(CustomTextStyles.s12w500)
+                    .copyWith(fontFamily: FontTypes.SFPro.name),
               )
             ],
           ),
@@ -88,10 +76,7 @@ class _CalendarDescriptionState extends State<CalendarDescription> {
                 decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     gradient: LinearGradient(
-                        colors: [
-                          Color(0xFF1E8428),
-                          Color(0xFF61F8EF)
-                        ],
+                        colors: [Color(0xFF1E8428), Color(0xFF61F8EF)],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight)),
               ),
@@ -100,11 +85,8 @@ class _CalendarDescriptionState extends State<CalendarDescription> {
               ),
               Text(
                 context.tr('Seminar'),
-                style:
-                getTextStyle(CustomTextStyles.s12w500)
-                    .copyWith(
-                    fontFamily:
-                    FontTypes.SF_Pro.name),
+                style: getTextStyle(CustomTextStyles.s12w500)
+                    .copyWith(fontFamily: FontTypes.SFPro.name),
               )
             ],
           ),

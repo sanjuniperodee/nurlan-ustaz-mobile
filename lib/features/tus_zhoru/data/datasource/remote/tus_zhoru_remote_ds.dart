@@ -1,7 +1,6 @@
-
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
-import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
+import 'package:nurlan_ustaz_flutter/core/error/exception.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/data/models/tus_zhoru_dto.dart';
@@ -86,7 +85,7 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
       // log('PAGE${response.data['meta']['pagination']['page']}');
       throw 'ERROR';
     } on DioException catch (e) {
-      throw ServerException(
+      throw ClientServerException(
         message:
             (e.response?.data as Map<String, dynamic>)['message'].toString(),
       );
@@ -127,7 +126,7 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
       // log('PAGE${response.data['meta']['pagination']['page']}');
       throw 'ERROR';
     } on DioException catch (e) {
-      throw ServerException(
+      throw ClientServerException(
         message:
             (e.response?.data as Map<String, dynamic>)['message'].toString(),
       );
@@ -167,7 +166,7 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
       // log('PAGE${response.data['meta']['pagination']['page']}');
       throw 'ERROR';
     } on DioException catch (e) {
-      throw ServerException(
+      throw ClientServerException(
         message:
             (e.response?.data as Map<String, dynamic>)['message'].toString(),
       );
@@ -187,7 +186,7 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
       );
       return TusZhoruDTO.fromJson(response.data);
     } on DioException catch (e) {
-      throw ServerException(
+      throw ClientServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
@@ -205,7 +204,7 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
       );
       return (response.data);
     } on DioException catch (e) {
-      throw ServerException(
+      throw ClientServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'].toString(),
       );
@@ -224,7 +223,7 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
       );
       return response.data;
     } on DioException catch (e) {
-      throw ServerException(
+      throw ClientServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'].toString(),
       );
@@ -239,7 +238,7 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
       );
       return true;
     } on DioException catch (e) {
-      throw ServerException(
+      throw ClientServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
@@ -254,7 +253,7 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
       );
       return TusZhoruDTO.fromJson(response.data);
     } on DioException catch (e) {
-      throw ServerException(
+      throw ClientServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'].toString(),
       );
@@ -269,7 +268,7 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
       );
       return TusZhoruDTO.fromJson(response.data);
     } on DioException catch (e) {
-      throw ServerException(
+      throw ClientServerException(
         message:
             (e.response!.data as Map<String, dynamic>)['message'].toString(),
       );

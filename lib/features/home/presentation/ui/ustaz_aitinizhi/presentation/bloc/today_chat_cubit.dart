@@ -7,7 +7,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
-import 'package:nurlan_ustaz_flutter/features/auth/data/repositories/auth_repository.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/repositories/home_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:web_socket_channel/io.dart';
@@ -22,9 +21,12 @@ part 'today_chat_cubit.freezed.dart';
 
 @singleton
 class TodayChatCubit extends Cubit<TodayChatState> {
-  TodayChatCubit(this._homeRepository, this.sharedPreferences, this._authRepo)
-      : super(const TodayChatState.initial());
-  final AuthRepository _authRepo;
+  TodayChatCubit(
+    this._homeRepository,
+    this.sharedPreferences,
+    // this._authRepo,
+  ) : super(const TodayChatState.initial());
+  // final AuthRepository _authRepo;
   final HomeRepository _homeRepository;
   final SharedPreferences sharedPreferences;
   late List<ChatDTO> chatsss;
@@ -35,10 +37,11 @@ class TodayChatCubit extends Cubit<TodayChatState> {
     // log('${WebSocketUrl}');
     //emit(_LoadingState());
 
-    final user = await _authRepo.getUser();
-    user.fold((l) => {}, (r) {
-      _userDto = r;
-    });
+    // TODO: profile
+    // final user = await _authRepo.getUser();
+    // user.fold((l) => {}, (r) {
+    //   _userDto = r;
+    // });
     List<QuestionDTO> test = [];
     TokenDTO? token = TokenDTO.fromJson(
       jsonDecode(sharedPreferences.get(SharedKeys.TOKEN).toString())

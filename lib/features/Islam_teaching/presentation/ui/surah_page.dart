@@ -31,7 +31,6 @@ class _SurahPageState extends State<SurahPage> {
   bool isLoadingMore = false;
   @override
   void initState() {
-    // TODO: implement initState
     BlocProvider.of<SurahCubit>(context).sura(page: 1, isFirstCall: true);
     _scrollController.addListener(_scrollListener);
     super.initState();

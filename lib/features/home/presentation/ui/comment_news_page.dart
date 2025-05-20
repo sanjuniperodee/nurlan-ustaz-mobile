@@ -7,18 +7,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get_it/get_it.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
-import 'package:nurlan_ustaz_flutter/features/auth/data/datasource/local/auth_local_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_post_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_report_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_detail_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/bloc/profile_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/widgets/comment_deep_item_widget.dart';
 
 @RoutePage()
@@ -41,12 +40,15 @@ class _CommentNewsPageState extends State<CommentNewsPage> {
   UserDto? user;
   @override
   void initState() {
-    // TODO: implement initState
-    BlocProvider.of<CommentNewsCubit>(context)
+    context
+        .read<CommentNewsCubit>()
         .commentsNews(page: 1, isFirstCall: true, id: widget.id);
-    GetIt.I<AuthLocalDs>().getUserFromCacheNull().then((value) {
-      user = value;
-    });
+
+    // TODO: user
+    // GetIt.I<AuthLocalDs>().getUserFromCacheNull().then((value) {
+    //   user = value;
+    // });
+    user = context.read<ProfileCubit>().state.toNullable;
 
     _scrollController.addListener(_scrollListener);
     WidgetsBinding.instance.addPostFrameCallback((_) {

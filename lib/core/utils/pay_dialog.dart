@@ -15,7 +15,10 @@ import '../common/colors.dart';
 
 class PayDialog extends StatefulWidget {
   const PayDialog(
-      {super.key, required this.price, required this.id, required this.isCustom});
+      {super.key,
+      required this.price,
+      required this.id,
+      required this.isCustom});
   final String price;
   final int id;
   final bool isCustom;
@@ -86,7 +89,7 @@ class _PayDialogState extends State<PayDialog> {
                 child: Text(
                   "dream_payment".tr(),
                   style: getTextStyle(CustomTextStyles.s16w400)
-                      .copyWith(fontFamily: FontTypes.SF_Pro.name),
+                      .copyWith(fontFamily: FontTypes.SFPro.name),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -139,7 +142,7 @@ class _PayDialogState extends State<PayDialog> {
                           child: Text('${widget.price} тг ${"dream_pay".tr()}',
                               style: getTextStyle(CustomTextStyles.s14w400)
                                   .copyWith(
-                                      fontFamily: FontTypes.SF_Pro.name,
+                                      fontFamily: FontTypes.SFPro.name,
                                       color: AppColors.white)),
                         ),
                 ),
@@ -177,7 +180,7 @@ class _PayDialogState extends State<PayDialog> {
               'publicOferta'.tr(),
               style: getTextStyle(CustomTextStyles.s12w400).copyWith(
                   color: AppColors.blue,
-                  fontFamily: FontTypes.SF_Pro.name,
+                  fontFamily: FontTypes.SFPro.name,
                   decoration: TextDecoration.underline),
             ),
           ),
@@ -199,7 +202,7 @@ class _PayDialogState extends State<PayDialog> {
             },
             child: Text('payment_process'.tr(),
                 style: getTextStyle(CustomTextStyles.s12w400).copyWith(
-                    fontFamily: FontTypes.SF_Pro.name,
+                    fontFamily: FontTypes.SFPro.name,
                     color: AppColors.blue,
                     decoration: TextDecoration.underline)),
           ),

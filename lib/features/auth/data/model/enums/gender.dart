@@ -4,5 +4,9 @@ enum Gender {
   @JsonValue('M')
   male,
   @JsonValue('F')
-  female,
+  female;
+
+  bool get isMale => this == Gender.male;
+
+  bool get isFemale => this == Gender.female;
 }

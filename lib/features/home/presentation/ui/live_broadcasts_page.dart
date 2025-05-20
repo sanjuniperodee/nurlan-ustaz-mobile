@@ -37,7 +37,6 @@ class _LiveBroadcastsPageState extends State<LiveBroadcastsPage> {
   List<bool> listOfFav = [];
   @override
   void initState() {
-    // TODO: implement initState
     widget.type == 'isSave'
         ? BlocProvider.of<LivesCubit>(context)
             .lives(page: 1, isFirstCall: true, isSaved: true)
@@ -64,8 +63,8 @@ class _LiveBroadcastsPageState extends State<LiveBroadcastsPage> {
             listOfLives = state.lives;
             listOfFav.clear();
             for (var element in listOfLives) {
-                listOfFav.add(element.isSaved!);
-              }
+              listOfFav.add(element.isSaved!);
+            }
 
             setState(() {});
           } else if (state is LivesErrorState) {

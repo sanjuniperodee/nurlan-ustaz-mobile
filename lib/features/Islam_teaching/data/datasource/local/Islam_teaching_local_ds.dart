@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/common/shared_keys.dart';
-import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
+import 'package:nurlan_ustaz_flutter/core/error/exception.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 abstract class IslamTeachingLocalDs {
@@ -26,11 +26,6 @@ class IslamTeachingLocalDsImpl extends IslamTeachingLocalDs {
 
   @override
   Future<bool> getOnboardingStatusFromCache() async {
-
-
-
-
-
     final bool? isOnboarding =
         sharedPreferences.getBool(SharedKeys.IS_ONBOARDING);
     try {
@@ -48,7 +43,7 @@ class IslamTeachingLocalDsImpl extends IslamTeachingLocalDs {
     }
   }
 
-@override
+  @override
   String getLocale() {
     try {
       final String? locale = sharedPreferences.getString(SharedKeys.APP_LOCALE);

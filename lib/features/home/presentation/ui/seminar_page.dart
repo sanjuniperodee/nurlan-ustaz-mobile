@@ -1,4 +1,3 @@
-
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -18,6 +17,8 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/search_wi
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_fav_cubit.dart';
+import 'package:secure_application/secure_application.dart';
+import 'package:secure_application/secure_gate.dart';
 
 @RoutePage()
 class SeminarPage extends StatefulWidget {
@@ -31,7 +32,7 @@ class SeminarPage extends StatefulWidget {
 class _SeminarPageState extends State<SeminarPage> {
   int selectedIndex = -1;
 
-  final ScrollController _scrollController = ScrollController();
+  final _scrollController = ScrollController();
   int page = 1;
   String searchText = '';
   List<ResultHomeDTO> listOfSeminars = [];
@@ -39,12 +40,10 @@ class _SeminarPageState extends State<SeminarPage> {
   List<bool> listOfFav = [];
   @override
   void initState() {
-    // TODO: implement initState
-    widget.type == 'isSave'
-        ? BlocProvider.of<SeminarCubit>(context)
-            .seminar(page: 1, isFirstCall: true, isSaved: true)
-        : BlocProvider.of<SeminarCubit>(context)
-            .seminar(page: 1, isFirstCall: true);
+    context
+        .read<SeminarCubit>()
+        .seminar(page: 1, isFirstCall: true, isSaved: widget.type == 'isSave');
+
     _scrollController.addListener(_scrollListener);
     super.initState();
   }
@@ -57,199 +56,207 @@ class _SeminarPageState extends State<SeminarPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.lightBlue,
-      body: BlocConsumer<SeminarCubit, SeminarState>(
-        listener: (context, state) {
-          isLoadingMore = state is SeminarLoadingMoreState;
-          if (state is SeminarLoadedState) {
-            listOfSeminars = state.news;
-            listOfFav.clear();
-            for (var element in listOfSeminars) {
+    return SecureGate(
+      child: Scaffold(
+        backgroundColor: AppColors.lightBlue,
+        body: BlocConsumer<SeminarCubit, SeminarState>(
+          listener: (context, state) {
+            isLoadingMore = state is SeminarLoadingMoreState;
+            if (state is SeminarLoadedState) {
+              listOfSeminars = state.news;
+              listOfFav.clear();
+              for (var element in listOfSeminars) {
                 listOfFav.add(element.isSaved!);
               }
 
-            // setState(() {});
-          } else if (state is SeminarErrorState) {
-            buildErrorCustomSnackBar(context, state.message);
-          }
-        },
-        builder: (context, state) {
-          return GlobalCustomBody(
-            child: SizedBox(
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  children: [
-                    CustomAppBar(
-                      onTap: () {
-                        context.router.maybePop();
-                      },
-                      title: widget.type == 'isSave'
-                          ? 'Favourite_sev'.tr()
-                          : 'Seminar'.tr(),
-                    ),
-                    SizedBox(
-                      height: 36.h,
-                    ),
-                    SearchWidget(
-                      onChanged: (string) async {
-                        searchText = string;
-                        if (string.isEmpty) {
-                          listOfSeminars = [];
-                          BlocProvider.of<SeminarCubit>(context)
-                              .seminar(page: 1, isFirstCall: true);
-                        } else {
-                          await Future.delayed(
-                              const Duration(milliseconds: 1000), () {
-                            BlocProvider.of<SeminarCubit>(context).seminar(
-                                page: 1, search: searchText, isFirstCall: true);
-                          });
-                        }
-                      },
-                    ),
-                    if (state is SeminarLoadedState)
-                      ListView.builder(
-                        itemCount: listOfSeminars.length,
-                        shrinkWrap: true,
-                        physics: const BouncingScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: EdgeInsets.only(bottom: 20.r),
-                            child: GestureDetector(
-                              onTap: () {
-                                context.router.push(
-                                  SeminarDetailRoute(
-                                    id: listOfSeminars[index].id!,
-                                    search: searchText,
+              // setState(() {});
+            } else if (state is SeminarErrorState) {
+              buildErrorCustomSnackBar(context, state.message);
+            }
+          },
+          builder: (context, state) {
+            return GlobalCustomBody(
+              child: SizedBox(
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    children: [
+                      CustomAppBar(
+                        onTap: () {
+                          context.router.maybePop();
+                        },
+                        title: widget.type == 'isSave'
+                            ? 'Favourite_sev'.tr()
+                            : 'Seminar'.tr(),
+                      ),
+                      SizedBox(
+                        height: 36.h,
+                      ),
+                      SearchWidget(
+                        onChanged: (string) async {
+                          searchText = string;
+                          if (string.isEmpty) {
+                            listOfSeminars = [];
+                            BlocProvider.of<SeminarCubit>(context)
+                                .seminar(page: 1, isFirstCall: true);
+                          } else {
+                            await Future.delayed(
+                                const Duration(milliseconds: 1000), () {
+                              if (!context.mounted) return;
+                              context.read<SeminarCubit>().seminar(
+                                  page: 1,
+                                  search: searchText,
+                                  isFirstCall: true);
+                            });
+                          }
+                        },
+                      ),
+                      if (state is SeminarLoadedState)
+                        ListView.builder(
+                          itemCount: listOfSeminars.length,
+                          shrinkWrap: true,
+                          physics: const BouncingScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            return Padding(
+                              padding: EdgeInsets.only(bottom: 20.r),
+                              child: GestureDetector(
+                                onTap: () {
+                                  context.router.push(
+                                    SeminarDetailRoute(
+                                      id: listOfSeminars[index].id!,
+                                      search: searchText,
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  height: 116.h,
+                                  width: 1.sw,
+                                  decoration: BoxDecoration(
+                                    color: AppColors.white,
+                                    borderRadius: BorderRadius.circular(20),
                                   ),
-                                );
-                              },
-                              child: Container(
-                                height: 116.h,
-                                width: 1.sw,
-                                decoration: BoxDecoration(
-                                  color: AppColors.white,
-                                  borderRadius: BorderRadius.circular(20),
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                    vertical: 8.r, horizontal: 8.r),
-                                child: Row(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: const BorderRadius.all(
-                                              Radius.circular(12))
-                                          .r,
-                                      child: Hero(
-                                        tag: 'seminar',
-                                        child: CachedNetworkImage(
-                                          imageUrl:
-                                              listOfSeminars[index].cover ?? '',
-                                          fit: BoxFit.cover,
-                                          height: 100.r,
-                                          width: 100.r,
-                                          errorWidget: (a, b, c) => SizedBox(
-                                            width: 100.r,
+                                  padding: EdgeInsets.symmetric(
+                                      vertical: 8.r, horizontal: 8.r),
+                                  child: Row(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: const BorderRadius.all(
+                                                Radius.circular(12))
+                                            .r,
+                                        child: Hero(
+                                          tag: 'seminar',
+                                          child: CachedNetworkImage(
+                                            imageUrl:
+                                                listOfSeminars[index].cover ??
+                                                    '',
+                                            fit: BoxFit.cover,
                                             height: 100.r,
+                                            width: 100.r,
+                                            errorWidget: (a, b, c) => SizedBox(
+                                              width: 100.r,
+                                              height: 100.r,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 12.w,
-                                    ),
-                                    Expanded(
-                                      // width: 240.w,
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                DateFormat('dd.MM.yyyy').format(
-                                                    DateTime.parse(
-                                                        listOfSeminars[index]
-                                                            .startTime
-                                                            .toString())),
-                                                style: getTextStyle(
-                                                        CustomTextStyles
-                                                            .s12w400)
-                                                    .apply(
-                                                        color: AppColors.grey1),
-                                              ),
-                                              SizedBox(
-                                                height: 5.h,
-                                              ),
-                                              Flexible(
-                                                child: SizedBox(
-                                                  width: 190.w,
-                                                  child: Text(
-                                                    listOfSeminars[index]
-                                                            .title ??
-                                                        'ERROR',
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: getTextStyle(
-                                                            CustomTextStyles
-                                                                .s16w500)
-                                                        .apply(
-                                                            color: AppColors
-                                                                .black),
+                                      SizedBox(
+                                        width: 12.w,
+                                      ),
+                                      Expanded(
+                                        // width: 240.w,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  DateFormat('dd.MM.yyyy')
+                                                      .format(DateTime.parse(
+                                                          listOfSeminars[index]
+                                                              .startTime
+                                                              .toString())),
+                                                  style: getTextStyle(
+                                                          CustomTextStyles
+                                                              .s12w400)
+                                                      .apply(
+                                                          color:
+                                                              AppColors.grey1),
+                                                ),
+                                                SizedBox(
+                                                  height: 5.h,
+                                                ),
+                                                Flexible(
+                                                  child: SizedBox(
+                                                    width: 190.w,
+                                                    child: Text(
+                                                      listOfSeminars[index]
+                                                              .title ??
+                                                          'ERROR',
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: getTextStyle(
+                                                              CustomTextStyles
+                                                                  .s16w500)
+                                                          .apply(
+                                                              color: AppColors
+                                                                  .black),
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                          GestureDetector(
-                                              onTap: () {
-                                                BlocProvider.of<
-                                                            SeminarFavCubit>(
-                                                        context)
-                                                    .seminarFavorite(
-                                                        id: listOfSeminars[
-                                                                    index]
-                                                                .id ??
-                                                            0);
-                                                listOfFav[index] =
-                                                    !listOfFav[index];
+                                              ],
+                                            ),
+                                            GestureDetector(
+                                                onTap: () {
+                                                  BlocProvider.of<
+                                                              SeminarFavCubit>(
+                                                          context)
+                                                      .seminarFavorite(
+                                                          id: listOfSeminars[
+                                                                      index]
+                                                                  .id ??
+                                                              0);
+                                                  listOfFav[index] =
+                                                      !listOfFav[index];
 
-                                                setState(() {});
-                                              },
-                                              child: listOfFav[index]
-                                                  ? SvgPicture.asset(
-                                                      Assets.bookMark1Svg)
-                                                  : SvgPicture.asset(
-                                                      Assets.bookMarkSvg)),
-                                        ],
+                                                  setState(() {});
+                                                },
+                                                child: listOfFav[index]
+                                                    ? SvgPicture.asset(
+                                                        Assets.bookMark1Svg)
+                                                    : SvgPicture.asset(
+                                                        Assets.bookMarkSvg)),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          );
-                        },
+                            );
+                          },
+                        ),
+                      SizedBox(
+                        height: 10.h,
                       ),
-                    SizedBox(
-                      height: 10.h,
-                    ),
-                    isLoadingMore
-                        ? const Align(
-                            alignment: Alignment.center,
-                            child: CircularProgressIndicator())
-                        : const SizedBox(),
-                  ],
+                      isLoadingMore
+                          ? const Align(
+                              alignment: Alignment.center,
+                              child: CircularProgressIndicator())
+                          : const SizedBox(),
+                    ],
+                  ),
                 ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

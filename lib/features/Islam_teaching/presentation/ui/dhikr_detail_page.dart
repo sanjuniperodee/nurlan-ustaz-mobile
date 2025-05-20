@@ -33,7 +33,6 @@ class _DhikrDetailPageState extends State<DhikrDetailPage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     isFavorite = widget.result.isSaved!;
     super.initState();
   }

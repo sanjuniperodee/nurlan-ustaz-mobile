@@ -17,7 +17,10 @@ class PrivatePolicyText extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) =>  MyPdfViewer(assetPdf: 'PDF.pdf', title: 'agree3'.tr(),),
+            builder: (context) => MyPdfViewer(
+              assetPdf: 'PDF.pdf',
+              title: 'agree3'.tr(),
+            ),
           ),
         );
       },
@@ -27,35 +30,41 @@ class PrivatePolicyText extends StatelessWidget {
             // textDirection: TextDirection.RTL,
             text: TextSpan(
           style: getTextStyle(CustomTextStyles.s14w400)
-              .copyWith(fontFamily: FontTypes.SF_Pro.name),
+              .copyWith(fontFamily: FontTypes.SFPro.name),
           children: [
             TextSpan(
                 text: 'agree1'.tr(),
                 style: getTextStyle(CustomTextStyles.s14w400).copyWith(
-                    fontFamily: FontTypes.SF_Pro.name, color: AppColors.blue),
+                    fontFamily: FontTypes.SFPro.name, color: AppColors.blue),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>  MyPdfViewer(assetPdf: 'PDF.pdf', title: 'agree3'.tr(),),
+                        builder: (context) => MyPdfViewer(
+                          assetPdf: 'PDF.pdf',
+                          title: 'agree3'.tr(),
+                        ),
                       ),
                     );
                   }),
             TextSpan(
                 text: "agree2".tr(),
                 style: getTextStyle(CustomTextStyles.s14w400)
-                    .copyWith(fontFamily: FontTypes.SF_Pro.name)),
+                    .copyWith(fontFamily: FontTypes.SFPro.name)),
             TextSpan(
                 text: 'agree3'.tr(),
                 style: getTextStyle(CustomTextStyles.s14w400).copyWith(
-                    fontFamily: FontTypes.SF_Pro.name, color: AppColors.blue),
+                    fontFamily: FontTypes.SFPro.name, color: AppColors.blue),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) =>  MyPdfViewer(assetPdf: 'PDF.pdf', title: 'agree3'.tr(),),
+                        builder: (context) => MyPdfViewer(
+                          assetPdf: 'PDF.pdf',
+                          title: 'agree3'.tr(),
+                        ),
                       ),
                     );
                   })
