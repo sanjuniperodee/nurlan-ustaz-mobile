@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/core/utils/pagination_constant.dart';
-import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/widgets/custom_tus_zhoru_list.dart';
@@ -62,165 +61,155 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<LanguageCubit, LanguageState>(
-      listenWhen: (previous, current) => current is LanguageLoadedState,
-      listener: (context, state) => setState(() {}),
-      child: BlocConsumer<TusZhoruCubit, TusZhoruState>(
-        listener: (context, state) {
-          switch (state) {
-            case TusZhoruInitialPage(:final currentPage, :final tusZhoruList):
-              setState(() {
-                currentIndex = currentPage;
-                itemsLength = tusZhoruList.length;
-              });
-              break;
-            case TusZhoruLoadedState():
-              context.router.push(const QuestionRoute());
-              break;
-            case TusZhoruLoadingState():
-              isLoading = true;
-              break;
-            case TusZhoruErrorState(:final message):
-              buildErrorCustomSnackBar(context, message);
-              break;
-          }
-        },
-        builder: (context, state) {
-          if (state is! TusZhoruInitialPage) {
-            return const SizedBox.shrink();
-          }
+    return BlocConsumer<TusZhoruCubit, TusZhoruState>(
+      listener: (context, state) {
+        switch (state) {
+          case TusZhoruInitialPage(:final currentPage, :final tusZhoruList):
+            setState(() {
+              currentIndex = currentPage;
+              itemsLength = tusZhoruList.length;
+            });
+            break;
+          case TusZhoruLoadedState():
+            context.router.push(const QuestionRoute());
+            break;
+          case TusZhoruLoadingState():
+            isLoading = true;
+            break;
+          case TusZhoruErrorState(:final message):
+            buildErrorCustomSnackBar(context, message);
+            break;
+        }
+      },
+      builder: (context, state) {
+        if (state is! TusZhoruInitialPage) {
+          return const SizedBox.shrink();
+        }
 
-          final tusZhoruList = state.tusZhoruList;
-          final currentIndex = state.currentIndex;
-          final customTusZhoru = state.customTusZhoru;
+        final tusZhoruList = state.tusZhoruList;
+        final currentIndex = state.currentIndex;
+        final customTusZhoru = state.customTusZhoru;
 
-          return Scaffold(
-            floatingActionButton: currentIndex == 1
-                ? isSaved
-                    ? const SizedBox()
-                    : Padding(
-                        padding: const EdgeInsets.only(
-                                bottom: 160, left: 16, right: 16)
-                            .r,
-                        child: AppButton(
-                            onTap: () {
-                              context.router.push(
-                                const QuestionRoute(),
-                              );
-                            },
-                            text: 'type_dream'.tr()),
-                      )
-                : null,
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerDocked,
-            floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
-            backgroundColor: const Color(0xFFECF5FF),
-            body: TusZhoruCustomBody(
-              child: SingleChildScrollView(
-                controller: _scrollController,
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    CustomAppBar(
-                      title: isSaved
-                          ? 'save_dream_interpretation'.tr()
-                          : 'dream_interpretation'.tr(),
-                      hideIcon: isSaved,
-                    ),
-                    SizedBox(
-                      height: 36.h,
-                    ),
-                    SearchWidget(
-                      onChanged: (value) {
-                        log(value);
+        return Scaffold(
+          floatingActionButton: currentIndex == 1
+              ? isSaved
+                  ? const SizedBox()
+                  : Padding(
+                      padding: const EdgeInsets.only(
+                              bottom: 160, left: 16, right: 16)
+                          .r,
+                      child: AppButton(
+                          onTap: () {
+                            context.router.push(
+                              const QuestionRoute(),
+                            );
+                          },
+                          text: 'type_dream'.tr()),
+                    )
+              : null,
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          floatingActionButtonAnimator: FloatingActionButtonAnimator.scaling,
+          backgroundColor: const Color(0xFFECF5FF),
+          body: TusZhoruCustomBody(
+            child: SingleChildScrollView(
+              controller: _scrollController,
+              physics: const BouncingScrollPhysics(),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  CustomAppBar(
+                    title: isSaved
+                        ? 'save_dream_interpretation'.tr()
+                        : 'dream_interpretation'.tr(),
+                    hideIcon: isSaved,
+                  ),
+                  SizedBox(
+                    height: 36.h,
+                  ),
+                  SearchWidget(
+                    onChanged: (value) {
+                      log(value);
 
-                        if (currentIndex == 0) {
-                          value.isEmpty
-                              ? context
-                                  .read<TusZhoruCubit>()
-                                  .tusZhoruT(page: 1, isFirstCall: true)
-                              : context.read<TusZhoruCubit>().tusZhoruT(
-                                  search: value, page: 1, isFirstCall: true);
-                        }
-                        if (currentIndex == 1) {
-                          value.isEmpty
-                              ? context
-                                  .read<TusZhoruCubit>()
-                                  .getCustomTusZhoruT(
-                                      page: 1, isFirstCall: true)
-                              : context
-                                  .read<TusZhoruCubit>()
-                                  .getCustomTusZhoruT(
-                                      search: value,
-                                      page: 1,
-                                      isFirstCall: true);
-                        }
-                      },
-                    ),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    CustomTabBar(
-                      tabs: [
-                        Tab(
-                          text: 'all'.tr(),
-                        ),
-                        Tab(
-                          text: 'personal_dream'.tr(),
-                        ),
-                      ],
-                      onTap: (int value) {
-                        context
-                            .read<TusZhoruCubit>()
-                            .switchTab(value, isSaved ? 'save' : '');
-                      },
-                      length: 2,
-                    ),
-                    isLoading == true
-                        ? CircularProgressIndicator.adaptive(
-                            backgroundColor: AppColors.linearBlue,
-                          )
-                        : AnimatedCrossFade(
-                            firstChild: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                TusZhoruList(tusZhoruList: tusZhoruList),
-                                if (ConstantHome.globalCountTusZhoru >
-                                    itemsLength)
-                                  Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 20.h),
-                                    child: const CircularProgressIndicator(
-                                      color: AppColors.linearBlue,
-                                    ),
-                                  )
-                              ],
-                            ),
-                            secondChild: CustomTusZhoruList(
-                                tusZhoruList: customTusZhoru),
-                            crossFadeState: currentIndex == 0
-                                ? CrossFadeState.showFirst
-                                : CrossFadeState.showSecond,
-                            duration: Duration(milliseconds: 200)),
+                      if (currentIndex == 0) {
+                        value.isEmpty
+                            ? context
+                                .read<TusZhoruCubit>()
+                                .tusZhoruT(page: 1, isFirstCall: true)
+                            : context.read<TusZhoruCubit>().tusZhoruT(
+                                search: value, page: 1, isFirstCall: true);
+                      }
+                      if (currentIndex == 1) {
+                        value.isEmpty
+                            ? context
+                                .read<TusZhoruCubit>()
+                                .getCustomTusZhoruT(page: 1, isFirstCall: true)
+                            : context.read<TusZhoruCubit>().getCustomTusZhoruT(
+                                search: value, page: 1, isFirstCall: true);
+                      }
+                    },
+                  ),
+                  SizedBox(
+                    height: 20.h,
+                  ),
+                  CustomTabBar(
+                    tabs: [
+                      Tab(
+                        text: 'all'.tr(),
+                      ),
+                      Tab(
+                        text: 'personal_dream'.tr(),
+                      ),
+                    ],
+                    onTap: (int value) {
+                      context
+                          .read<TusZhoruCubit>()
+                          .switchTab(value, isSaved ? 'save' : '');
+                    },
+                    length: 2,
+                  ),
+                  isLoading == true
+                      ? CircularProgressIndicator.adaptive(
+                          backgroundColor: AppColors.linearBlue,
+                        )
+                      : AnimatedCrossFade(
+                          firstChild: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              TusZhoruList(tusZhoruList: tusZhoruList),
+                              if (ConstantHome.globalCountTusZhoru >
+                                  itemsLength)
+                                Padding(
+                                  padding: EdgeInsets.symmetric(vertical: 20.h),
+                                  child: const CircularProgressIndicator(
+                                    color: AppColors.linearBlue,
+                                  ),
+                                )
+                            ],
+                          ),
+                          secondChild:
+                              CustomTusZhoruList(tusZhoruList: customTusZhoru),
+                          crossFadeState: currentIndex == 0
+                              ? CrossFadeState.showFirst
+                              : CrossFadeState.showSecond,
+                          duration: Duration(milliseconds: 200)),
 
-                    // tusZhoruList.currentIndex == 0
-                    //     ? TusZhoruList(tusZhoruList: tusZhoruList.tusZhoruList)
-                    //     : CustomTusZhoruList(
-                    //         tusZhoruList: tusZhoruList.customTusZhoru),
+                  // tusZhoruList.currentIndex == 0
+                  //     ? TusZhoruList(tusZhoruList: tusZhoruList.tusZhoruList)
+                  //     : CustomTusZhoruList(
+                  //         tusZhoruList: tusZhoruList.customTusZhoru),
 
-                    SizedBox(
-                      height: 105.h,
-                    ),
-                  ],
-                ),
+                  SizedBox(
+                    height: 105.h,
+                  ),
+                ],
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 

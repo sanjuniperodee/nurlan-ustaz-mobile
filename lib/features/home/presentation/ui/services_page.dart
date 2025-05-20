@@ -72,7 +72,7 @@ class _ServicesPageState extends State<ServicesPage> {
               'above'.tr(),
               textAlign: TextAlign.center,
               style: getTextStyle(CustomTextStyles.s16w400)
-                  .copyWith(fontFamily: FontTypes.SF_Pro.name),
+                  .copyWith(fontFamily: FontTypes.SFPro.name),
             ),
             SizedBox(
               height: 24.h,

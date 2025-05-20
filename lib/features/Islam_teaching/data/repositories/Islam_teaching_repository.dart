@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
-import 'package:nurlan_ustaz_flutter/core/error/excepteion.dart';
+import 'package:nurlan_ustaz_flutter/core/error/exception.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/datasource/remote/Islam_teaching_remote_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/ayat_dto.dart';

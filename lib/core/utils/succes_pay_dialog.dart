@@ -15,7 +15,10 @@ import '../common/colors.dart';
 
 class SuccesPayDialog extends StatelessWidget {
   const SuccesPayDialog(
-      {super.key, required this.price, required this.id, required this.isCustom});
+      {super.key,
+      required this.price,
+      required this.id,
+      required this.isCustom});
   final String price;
   final int id;
   final bool isCustom;
@@ -55,13 +58,13 @@ class SuccesPayDialog extends StatelessWidget {
               child: Text(
                 'Өтінішіңіз қабылданды. 24 сағат ішінде  жауап ала аласыз',
                 style: getTextStyle(CustomTextStyles.s16w400)
-                    .copyWith(fontFamily: FontTypes.SF_Pro.name),
+                    .copyWith(fontFamily: FontTypes.SFPro.name),
                 textAlign: TextAlign.center,
               ),
             ),
             SizedBox(height: 27.h),
             Padding(
-              padding:  EdgeInsets.symmetric(horizontal: 16.w),
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
               child: MaterialButton(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(27.r)),
@@ -69,35 +72,34 @@ class SuccesPayDialog extends StatelessWidget {
                 onPressed: () async {
                   if (isCustom == true) {
                     var customTusZhoru =
-                        await BlocProvider.of<CustomTusZhoruDetailsCubit>(context)
+                        await BlocProvider.of<CustomTusZhoruDetailsCubit>(
+                                context)
                             .getCustomTusZhoruById(id);
                     log(customTusZhoru.toString());
                     Navigator.of(context).pop();
                     if (customTusZhoru != null) {
                       context.router.push(
                           CustomTusZhoruDetailRoute(id: customTusZhoru.id!));
-                      BlocProvider.of<TusZhoruCubit>(context).customTusZhoruList;
-
+                      BlocProvider.of<TusZhoruCubit>(context)
+                          .customTusZhoruList;
                     }
                   } else {
-                    var tusZhoru = await BlocProvider.of<TusZhoruDetailsCubit>(context)
-                        .getTusZhoruById(id);
+                    var tusZhoru =
+                        await BlocProvider.of<TusZhoruDetailsCubit>(context)
+                            .getTusZhoruById(id);
                     Navigator.of(context).pop();
                     log(tusZhoru.toString());
                     if (tusZhoru != null) {
-                      context.router.push(
-                          TusZhoruDetailRoute(id: tusZhoru.id!));
+                      context.router
+                          .push(TusZhoruDetailRoute(id: tusZhoru.id!));
                     }
-
                   }
-
-
                 },
                 color: AppColors.orange,
                 child: Center(
                   child: Text('Керемет',
                       style: getTextStyle(CustomTextStyles.s14w400).copyWith(
-                          fontFamily: FontTypes.SF_Pro.name,
+                          fontFamily: FontTypes.SFPro.name,
                           color: AppColors.white)),
                 ),
               ),

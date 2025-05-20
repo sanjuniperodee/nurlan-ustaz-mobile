@@ -22,8 +22,6 @@ class CustomTextFormField extends StatefulWidget {
   final int? maxLines;
   final int? minLines;
 
-
-
   const CustomTextFormField({
     super.key,
     required this.hintText,
@@ -38,7 +36,10 @@ class CustomTextFormField extends StatefulWidget {
     this.inputFormatters,
     this.enabled = true,
     this.obscureText = false,
-    this.obscureIcon, this.onFieldSubmitted, this.maxLines, this.minLines,
+    this.obscureIcon,
+    this.onFieldSubmitted,
+    this.maxLines,
+    this.minLines,
   });
 
   @override
@@ -72,45 +73,47 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
       cursorColor: AppColors.black,
       autofocus: widget.autoFocus,
       decoration: InputDecoration(
-        contentPadding: EdgeInsets.symmetric(horizontal: 16,vertical: 10),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         hintText: widget.hintText.toString(),
         hintStyle: getTextStyle(
           CustomTextStyles.s16w400,
           color: AppColors.grey1,
-        ).copyWith(fontFamily: FontTypes.SF_Pro.name),
+        ).copyWith(fontFamily: FontTypes.SFPro.name),
         suffixIcon: widget.suffixIcon == null
             ? null
             : GestureDetector(
-          onTap: () {
-            setState(() {
-              obscureText = !obscureText;
-            });
-          },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: obscureText
-                ? [widget.suffixIcon!]
-                : widget.obscureIcon == null
-                ? [widget.suffixIcon!]
-                : [widget.obscureIcon!],
-          ),
-        ),
+                onTap: () {
+                  setState(() {
+                    obscureText = !obscureText;
+                  });
+                },
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: obscureText
+                      ? [widget.suffixIcon!]
+                      : widget.obscureIcon == null
+                          ? [widget.suffixIcon!]
+                          : [widget.obscureIcon!],
+                ),
+              ),
         filled: true,
         fillColor: AppColors.white,
-
-        focusedBorder:  OutlineInputBorder(
+        focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(24),
           borderSide: BorderSide(color: AppColors.white),
         ),
-        enabledBorder:  OutlineInputBorder(
+        enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(24),
-          borderSide: BorderSide(color: AppColors.white),        ),
-        errorBorder:  OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.white),
+        ),
+        errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(24),
-          borderSide: BorderSide(color: AppColors.white),        ),
-        focusedErrorBorder:  OutlineInputBorder(
+          borderSide: BorderSide(color: AppColors.white),
+        ),
+        focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(24),
-          borderSide: BorderSide(color: AppColors.white),        ),
+          borderSide: BorderSide(color: AppColors.white),
+        ),
       ),
     );
   }

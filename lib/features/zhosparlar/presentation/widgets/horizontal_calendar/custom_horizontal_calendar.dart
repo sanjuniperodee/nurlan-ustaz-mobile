@@ -221,36 +221,39 @@ class CustomCalendarAgendaState extends State<CustomCalendarAgenda>
                               children: [
                                 Stack(
                                   children: [
-
                                     Center(
                                       child: CircularProgressIndicator(
                                         color: AppColors.linearBlue,
                                         value: widget.checklist
-                                            .map((e) => DateTime.parse(e.date).day)
-                                            .toList()
-                                            .contains(date.day)
+                                                .map((e) =>
+                                                    DateTime.parse(e.date).day)
+                                                .toList()
+                                                .contains(date.day)
                                             ? _eventDates.contains(date
-                                            .toString()
-                                            .split(" ")
-                                            .first)
-                                            ? widget.checklist
-                                            .firstWhere((element) =>
-                                        DateTime.parse(element.date)
-                                            .day ==
-                                            date.day)
-                                            .percentage
-                                            .toInt() /
-                                            100
-                                            : 0
+                                                    .toString()
+                                                    .split(" ")
+                                                    .first)
+                                                ? widget.checklist
+                                                        .firstWhere((element) =>
+                                                            DateTime.parse(
+                                                                    element
+                                                                        .date)
+                                                                .day ==
+                                                            date.day)
+                                                        .percentage
+                                                        .toInt() /
+                                                    100
+                                                : 0
                                             : 0,
                                         backgroundColor: widget.checklist
-                                            .firstWhere((element) =>
-                                        DateTime.parse(element.date)
-                                            .day ==
-                                            date.day)
-                                            .percentage
-                                            .toInt() !=
-                                            0
+                                                    .firstWhere((element) =>
+                                                        DateTime.parse(
+                                                                element.date)
+                                                            .day ==
+                                                        date.day)
+                                                    .percentage
+                                                    .toInt() !=
+                                                0
                                             ? AppColors.blue.withOpacity(0.4)
                                             : AppColors.grey1.withOpacity(0.3),
                                       ),
@@ -260,28 +263,32 @@ class CustomCalendarAgendaState extends State<CustomCalendarAgenda>
                                       child: Center(
                                         child: Text(
                                           (_eventDates
-                                              .map((e) => DateTime.parse(e).day)
-                                              .toList()
-                                              .indexOf(date.day) +
-                                              1)
+                                                      .map((e) =>
+                                                          DateTime.parse(e).day)
+                                                      .toList()
+                                                      .indexOf(date.day) +
+                                                  1)
                                               .toString(),
                                           style: TextStyle(
                                             fontSize: 16.0,
                                             color: widget.checklist
-                                                .map((e) =>
-                                            DateTime.parse(e.date).day)
-                                                .toList()
-                                                .contains(date.day)
+                                                    .map((e) =>
+                                                        DateTime.parse(e.date)
+                                                            .day)
+                                                    .toList()
+                                                    .contains(date.day)
                                                 ? widget.checklist
-                                                .firstWhere((element) =>
-                                            DateTime.parse(element.date)
-                                                .day ==
-                                                date.day)
-                                                .percentage
-                                                .toInt() !=
-                                                0
-                                                ? AppColors.blue
-                                                : AppColors.grey1
+                                                            .firstWhere((element) =>
+                                                                DateTime.parse(
+                                                                        element
+                                                                            .date)
+                                                                    .day ==
+                                                                date.day)
+                                                            .percentage
+                                                            .toInt() !=
+                                                        0
+                                                    ? AppColors.blue
+                                                    : AppColors.grey1
                                                 : AppColors.grey1,
                                             fontWeight: FontWeight.w600,
                                           ),
@@ -301,27 +308,27 @@ class CustomCalendarAgendaState extends State<CustomCalendarAgenda>
                                       date.day == DateTime.now().day
                                           ? 'today'.tr()
                                           : DateFormat('dd\nMMM').format(date),
-                                      style: getTextStyle(CustomTextStyles.s12w400)
-                                          .copyWith(
-                                        fontFamily: FontTypes.SF_Pro.name,
+                                      style:
+                                          getTextStyle(CustomTextStyles.s12w400)
+                                              .copyWith(
+                                        fontFamily: FontTypes.SFPro.name,
                                         color: AppColors.grey1,
                                       ),
                                     ),
                                     if (widget.checklist
-                                        .firstWhere((element) =>
-                                    DateTime.parse(element.date)
-                                        .day ==
-                                        date.day)
-                                        .percentage
-                                        .toInt() !=
+                                            .firstWhere((element) =>
+                                                DateTime.parse(element.date)
+                                                    .day ==
+                                                date.day)
+                                            .percentage
+                                            .toInt() !=
                                         0)
                                       Text(
                                         '${widget.checklist.firstWhere((element) => DateTime.parse(element.date).day == date.day).percentage.toInt()}%',
                                         style: getTextStyle(
-                                            CustomTextStyles.s12w400)
+                                                CustomTextStyles.s12w400)
                                             .copyWith(
-                                          fontFamily:
-                                          FontTypes.SF_Pro.name,
+                                          fontFamily: FontTypes.SFPro.name,
                                           color: AppColors.blue,
                                         ),
                                       ),
@@ -332,7 +339,6 @@ class CustomCalendarAgendaState extends State<CustomCalendarAgenda>
 
                             // _eventDates
                             //         .contains(date.toString().split(" ").first)
-
                           ],
                         ),
                       ),

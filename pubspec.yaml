@@ -53,6 +53,8 @@ dependencies:
   web_socket_channel: ^3.0.3
   cached_network_image: ^3.4.1
   flutter_cache_manager: ^3.3.1
+  dry_bloc:
+    path: ../dry_bloc
   re_seedwork:
     git:
       url: https://github.com/radomir9720/re_seedwork.git
@@ -76,7 +78,6 @@ dependencies:
   carousel_slider: ^5.0.0
   flutter_slidable: ^4.0.0
   dropdown_button2: ^2.3.9
-  timer_button_fork: ^4.0.1
   flutter_screenutil: ^5.7.0
   audio_video_progress_bar: ^2.0.3
   flutter_widget_from_html: ^0.15.3
@@ -121,33 +122,17 @@ flutter:
     - assets/fonts/
     - assets/translations/
   fonts:
-    - family: SF_Pro
+    - family: SFPro
       fonts:
-        - asset: assets/fonts/SF-Pro-Display-Thin.otf
-          weight: 100
-        - asset: assets/fonts/SF-Pro-Display-ThinItalic.otf
-          weight: 100
-          style: italic
-        - asset: assets/fonts/SF-Pro-Display-Ultralight.otf
-          weight: 200
-        - asset: assets/fonts/SF-Pro-Display-UltralightItalic.otf
-          weight: 200
-          style: italic
-        - asset: assets/fonts/SF-Pro-Display-Regular.otf
+        - asset: assets/fonts/SFProText-Regular.ttf
           weight: 400
-        - asset: assets/fonts/SF-Pro-Display-RegularItalic.otf
+        - asset: assets/fonts/SFProText-RegularItalic.ttf
           weight: 400
           style: italic
-        - asset: assets/fonts/SF-Pro-Display-Semibold.otf
+        - asset: assets/fonts/SFProText-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/SFProText-Semibold.ttf
           weight: 600
-        - asset: assets/fonts/SF-Pro-Display-SemiboldItalic.otf
-          weight: 600
-          style: italic
-        - asset: assets/fonts/SF-Pro-Text-Bold.otf
-          weight: 700
-        - asset: assets/fonts/SF-Pro-Text-BoldItalic.otf
-          weight: 700
-          style: italic
 
     - family: Philosopher
       fonts:

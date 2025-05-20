@@ -112,7 +112,7 @@ class _RamazanChecklistPageState extends State<RamazanChecklistPage> {
                                   '${'today'.tr()}, ${DateFormat('dd MMMM').format(DateTime.now().toLocal())} ',
                                   style: getTextStyle(CustomTextStyles.s14w400)
                                       .copyWith(
-                                          fontFamily: FontTypes.SF_Pro.name,
+                                          fontFamily: FontTypes.SFPro.name,
                                           color: AppColors.white),
                                 ),
                                 Text(

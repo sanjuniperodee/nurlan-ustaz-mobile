@@ -85,19 +85,7 @@ Future<void> main() async {
       // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
       // final app = await _initApp(shouldSend, asyncDependencies, appBuilder);
-      runApp(
-        EasyLocalization(
-          useFallbackTranslations: true,
-          supportedLocales: const [
-            Locale('kk'),
-            Locale('ru'),
-          ],
-          // startLocale: const Locale('ru'),
-          path: 'assets/translations',
-          fallbackLocale: const Locale('ru'),
-          child: const NurlanUstazApp(),
-        ),
-      );
+      runApp(const NurlanUstazApp());
     },
     (error, stack) {
       FirebaseCrashlytics.instance.recordError(error, stack);

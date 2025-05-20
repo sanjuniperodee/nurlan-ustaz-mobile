@@ -81,7 +81,7 @@ class SeminarCard extends StatelessWidget {
               Text(
                 DateFormat('dd.MM.yyyy').format(DateTime.parse(event.date!)),
                 style: getTextStyle(CustomTextStyles.s16w400).copyWith(
-                    fontFamily: FontTypes.SF_Pro.name, color: AppColors.black),
+                    fontFamily: FontTypes.SFPro.name, color: AppColors.black),
               ),
             ],
           ),
@@ -102,7 +102,7 @@ class SeminarCard extends StatelessWidget {
                 DateFormat('HH:mm')
                     .format(DateFormat('HH:mm:ss').parse(event.time!)),
                 style: getTextStyle(CustomTextStyles.s16w400).copyWith(
-                    fontFamily: FontTypes.SF_Pro.name, color: AppColors.black),
+                    fontFamily: FontTypes.SFPro.name, color: AppColors.black),
               ),
             ],
           ),
@@ -123,8 +123,7 @@ class SeminarCard extends StatelessWidget {
                 Text(
                   '${event.address}',
                   style: getTextStyle(CustomTextStyles.s16w400).copyWith(
-                      fontFamily: FontTypes.SF_Pro.name,
-                      color: AppColors.black),
+                      fontFamily: FontTypes.SFPro.name, color: AppColors.black),
                 ),
               ],
             ),

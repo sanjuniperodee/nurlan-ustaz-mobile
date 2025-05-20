@@ -15,6 +15,7 @@ import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/dhi
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_5/duty_detail_page.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_5/duty_page.dart';
 
+import 'package:nurlan_ustaz_flutter/features/app/auth_required_dialog.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/base_page.dart';
 import 'package:nurlan_ustaz_flutter/features/app/on_boarding/presentation/ui/on_boarding.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/duty_5/namaz_pattern_page.dart';
@@ -26,11 +27,18 @@ import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/ui/sur
 import 'package:nurlan_ustaz_flutter/features/app/data/datasource/onboarding_local_ds.dart'
     show OnboardingLocalDs;
 import 'package:nurlan_ustaz_flutter/features/auth/data/datasource/local/auth_local_ds.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/widgets/logout_confirmation_dialog.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/widgets/delete_profile_confirmation_dialog.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
-import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/code_verification_page.dart';
-import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/forgot_passwords_pages/code_verification_forgot.dart';
-import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/forgot_passwords_pages/forgot_password_page.dart';
-import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/login_page.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/registration/code_verification_page.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/registration/registration_tab.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/registration/registration_scope.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/forgot_password/code_verification_forgot.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/forgot_password/forgot_password_page.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/forgot_password/new_password_page.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/forgot_password/forgot_password_scope.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/authorization_page.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/presentation/ui/login_tab.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/geonames_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/charity_detail_page.dart';
@@ -39,17 +47,18 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/comment_sem_p
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/main_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/news_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/notifications_page.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/about_app_page.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/add_new_card_page.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/change_password_page.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/payment_check_page.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/payment_page.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/profile_cards_page.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/profile_info_page.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/profile_main_page.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/profile_notification_page.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/qr_scanner_page.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/technical_support_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/about_app_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/add_new_card_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/change_password_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/payment_check_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/payment_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_cards_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_info_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_notification_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/qr_scanner_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/technical_support_page.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/widgets/change_language_bottom_sheet.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/qiblah_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_detail_page.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/seminar_page.dart';
@@ -70,12 +79,11 @@ import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/widgets/ho
 import '../../features/Islam_teaching/presentation/ui/detail_prayers_page.dart';
 import '../../features/Islam_teaching/presentation/ui/name_detail_page.dart';
 import '../../features/Islam_teaching/presentation/ui/surah_detail_page.dart';
-import '../../features/auth/data/model/user_payload.dart';
 import '../../features/home/presentation/ui/comment_news_page.dart';
 import '../../features/home/presentation/ui/live_broadcasts_page.dart';
 import '../../features/home/presentation/ui/namaz_page.dart';
 import '../../features/home/presentation/ui/news_detail_page.dart';
-import '../../features/home/presentation/ui/profile/profile_main/faq_page.dart';
+import '../../features/home/presentation/ui/profile/faq_page.dart';
 import '../../features/zhosparlar/data/models/checklist_dto.dart';
 import '../../features/zhosparlar/data/models/event_dto.dart';
 import '../../features/zhosparlar/presentation/ui/ramazan_checklist.dart';
@@ -147,6 +155,48 @@ class AppRouter extends RootStackRouter {
               page: OnBoardingRoute.page,
             ),
             AutoRoute(
+              path: 'login',
+              page: AuthorizationRoute.page,
+              children: [
+                AutoRoute(
+                  path: '',
+                  page: LoginTabRoute.page,
+                ),
+                AutoRoute(
+                  path: 'registration',
+                  page: RegistrationFlow.page,
+                  children: [
+                    AutoRoute(
+                      path: '',
+                      page: RegistrationTabRoute.page,
+                    ),
+                    AutoRoute(
+                      path: 'code-verification',
+                      page: CodeVerificationRoute.page,
+                    ),
+                  ],
+                ),
+              ],
+            ),
+            AutoRoute(
+              path: 'forgot-password',
+              page: ForgotPasswordFlow.page,
+              children: [
+                AutoRoute(
+                  path: '',
+                  page: ForgotPasswordRoute.page,
+                ),
+                AutoRoute(
+                  path: 'code-verification-forgot',
+                  page: CodeVerificationForgotRoute.page,
+                ),
+                AutoRoute(
+                  path: 'new-password',
+                  page: NewPasswordRoute.page,
+                ),
+              ],
+            ),
+            AutoRoute(
               path: 'geonames',
               page: GeonamesRoute.page,
             ),
@@ -178,6 +228,7 @@ class AppRouter extends RootStackRouter {
               path: 'about-app',
               page: AboutAppRoute.page,
             ),
+            //
             AutoRoute(
               path: 'profile-cards',
               page: ProfileCardsRoute.page,
@@ -185,7 +236,24 @@ class AppRouter extends RootStackRouter {
             AutoRoute(
               path: 'profile',
               page: ProfileMainRoute.page,
+              guards: [authGuard],
             ),
+            CustomRoute(
+              path: 'change-language',
+              page: ChangeLanguageBottomSheetRoute.page,
+              customRouteBuilder: modalSheetBuilder,
+            ),
+            CustomRoute(
+              path: 'confirm-logout',
+              page: LogoutConfirmationDialogRoute.page,
+              customRouteBuilder: dialogRouteBuilder,
+            ),
+            CustomRoute(
+              path: 'confirm-delete-profile',
+              page: DeleteProfileConfirmationDialogRoute.page,
+              customRouteBuilder: dialogRouteBuilder,
+            ),
+            //
             AutoRoute(
               path: 'payments',
               page: PaymentsRoute.page,
@@ -331,22 +399,6 @@ class AppRouter extends RootStackRouter {
               page: WudhuRoute.page,
             ),
             AutoRoute(
-              path: 'forgot-password',
-              page: ForgotPasswordRoute.page,
-            ),
-            AutoRoute(
-              path: 'login',
-              page: LoginRoute.page,
-            ),
-            AutoRoute(
-              path: 'code-verification',
-              page: CodeVerificationRoute.page,
-            ),
-            AutoRoute(
-              path: 'code-verification-forgot',
-              page: CodeVerificationForgotRoute.page,
-            ),
-            AutoRoute(
               path: 'holiday-detail',
               page: HolidayDetailRoute.page,
             ),
@@ -360,6 +412,11 @@ class AppRouter extends RootStackRouter {
             )
           ],
         ),
+        CustomRoute(
+          path: '/auth-required-dialog',
+          page: AuthRequiredDialogRoute.page,
+          customRouteBuilder: dialogRouteBuilder,
+        ),
         AutoRoute(
           path: '/no-connection',
           page: NoConnectionRoute.page,
@@ -371,4 +428,30 @@ class AppRouter extends RootStackRouter {
 @RoutePage(name: 'AppFlow')
 class AppScope extends AutoRouter {
   const AppScope({super.key});
+}
+
+Route<T> dialogRouteBuilder<T>(
+  BuildContext context,
+  Widget child,
+  AutoRoutePage<T> page,
+) {
+  return DialogRoute(
+    settings: page,
+    builder: (context) => child,
+    context: context,
+    useSafeArea: false,
+  );
+}
+
+Route<T> modalSheetBuilder<T>(
+  BuildContext context,
+  Widget child,
+  AutoRoutePage<T> page,
+) {
+  return ModalBottomSheetRoute(
+    settings: page,
+    builder: (context) => child,
+    isScrollControlled: true,
+    backgroundColor: Colors.transparent,
+  );
 }

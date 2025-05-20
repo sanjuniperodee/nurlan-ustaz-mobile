@@ -1,103 +1,108 @@
+import 'dart:async';
+
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
-
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
-import 'package:timer_button_fork/timer_button_fork.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
 
 class CustomAppButtonTimer extends StatefulWidget {
-  const CustomAppButtonTimer(
-      {super.key,
-      required this.onTap,
-      required this.text,
-      this.color,
-      this.textColor,
-      this.inactiveTextColor,
-      this.isLoading = false,
-      this.isActive = true});
+  const CustomAppButtonTimer({
+    super.key,
+    required this.onTap,
+    required this.text,
+    this.isLoading = false,
+    this.timeoutSeconds = 15,
+    this.launchOnInit = true,
+  });
 
-  final Function()? onTap;
   final String text;
-  final Color? color;
-  final Color? textColor;
-  final Color? inactiveTextColor;
   final bool isLoading;
-  final bool? isActive;
+  final int timeoutSeconds;
+  final bool launchOnInit;
+
+  /// true - relaunch timer. false - don't
+  final Future<bool> Function() onTap;
 
   @override
   State<CustomAppButtonTimer> createState() => _CustomAppButtonTimerState();
 }
 
 class _CustomAppButtonTimerState extends State<CustomAppButtonTimer> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          color: widget.color,
-          gradient: widget.isActive == true
-              ? widget.color != null
-                  ? null
-                  : AppColors.gradientPrimaryActiveButton
-              : AppColors.gradientPrimaryDisabledButton,
-          borderRadius: const BorderRadius.all(Radius.circular(30)).r),
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        width: 339.w,
-        child: TimerButton(
-          secPostFix: ' сек',
-          label: widget.text,
-          timeOutInSeconds: 15,
-          onPressed: () {
+  late final _TimerNotifier timerNotifier;
 
-              widget.onTap!();
-          },
-          buttonType: ButtonType.TextButton,
-          color: AppColors.white.withOpacity(0.000009),
-          disabledColor: AppColors.white.withOpacity(0.000009),
-          activeTextStyle: getTextStyle(CustomTextStyles.s16w700).copyWith(
-              fontFamily: FontTypes.Philosopher.name, color: AppColors.white),
-          disabledTextStyle: getTextStyle(CustomTextStyles.s16w700).copyWith(
-              fontFamily: FontTypes.Philosopher.name, color: AppColors.white),
-        ),
-      ),
+  @override
+  void initState() {
+    timerNotifier = _TimerNotifier(
+      widget.launchOnInit ? widget.timeoutSeconds : null,
+      timeoutSeconds: widget.timeoutSeconds,
     );
 
-    // return Container(
-    //   decoration: BoxDecoration(
-    //       color: widget.color ?? null,
-    //       gradient: widget.isActive == true
-    //           ? widget.color != null
-    //               ? null
-    //               : AppColors.gradientPrimaryActiveButton
-    //           : AppColors.gradientPrimaryDisabledButton,
-    //       borderRadius: const BorderRadius.all(Radius.circular(30)).r),
-    //   child: MaterialButton(
-    //     onPressed: widget.onTap,
-    //     child: Container(
-    //       padding: const EdgeInsets.all(10),
-    //       width: 339.w,
-    //       child: widget.isLoading
-    //           ? Container(
-    //               height: 15.h,
-    //               width: 15.w,
-    //               padding: const EdgeInsets.all(0.0).r,
-    //               child: const Center(child: CircularProgressIndicator()),
-    //             )
-    //           : SizedBox(
-    //               child: Text(widget.text,
-    //                   textAlign: TextAlign.center,
-    //                   style: getTextStyle(CustomTextStyles.s16w200)
-    //                       .apply(fontFamily: FontTypes.Philosopher.name)
-    //                       .copyWith(
-    //                           fontWeight: FontWeight.w700, fontSize: 24.sp)
-    //                       .apply(
-    //                         color: widget.onTap != null
-    //                             ? widget.textColor ?? AppColors.white
-    //                             : AppColors.grey1,
-    //                       )),
-    //             ),
-    //     ),
-    //   ),
-    // );
+    if (widget.launchOnInit) timerNotifier.launch();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    timerNotifier.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ValueListenableBuilder(
+      valueListenable: timerNotifier,
+      builder: (context, value, child) {
+        final isRunning = value != null;
+        final timerText = isRunning ? ' | $value ${"seconds_short".tr()}' : '';
+        final onTapIsActive = !isRunning && !widget.isLoading;
+        return AppButton(
+          isLoading: widget.isLoading,
+          textSize: 16.sp,
+          isActive: !isRunning,
+          textColor: AppColors.white,
+          inactiveTextColor: AppColors.white,
+          // onTap: null,
+          onTap: isRunning
+              ? null
+              : () async {
+                  if (!onTapIsActive) return;
+                  final launchTimer = await widget.onTap();
+                  if (launchTimer) timerNotifier.launch();
+                },
+          text: '${widget.text}$timerText',
+        );
+      },
+    );
+  }
+}
+
+class _TimerNotifier extends ValueNotifier<int?> {
+  _TimerNotifier(super.value, {required this.timeoutSeconds});
+
+  @protected
+  final int timeoutSeconds;
+
+  Timer? timer;
+
+  void launch() {
+    timer?.cancel();
+    value = timeoutSeconds;
+    timer = Timer.periodic(
+      Duration(seconds: 1),
+      (timer) {
+        final v = value;
+        if (v == null) return timer.cancel();
+        if (v <= 0) return value = null;
+        value = v - 1;
+      },
+    );
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    timer = null;
+    super.dispose();
   }
 }

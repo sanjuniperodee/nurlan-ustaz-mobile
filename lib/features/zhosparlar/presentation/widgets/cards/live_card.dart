@@ -11,9 +11,13 @@ import '../../../../../core/common/app_styles.dart';
 import '../../../../../core/common/colors.dart';
 import '../../../../app/presentation/widgets/app_button.dart';
 
-
 class LiveCard extends StatelessWidget {
-  const LiveCard({super.key, required this.event, required this.nextPage, required this.previousPage, required this.isDialog});
+  const LiveCard(
+      {super.key,
+      required this.event,
+      required this.nextPage,
+      required this.previousPage,
+      required this.isDialog});
   final EventDto event;
   final Function nextPage;
   final Function previousPage;
@@ -64,8 +68,7 @@ class LiveCard extends StatelessWidget {
               Text(
                 DateFormat('dd.MM.yyyy').format(DateTime.parse(event.date!)),
                 style: getTextStyle(CustomTextStyles.s16w400).copyWith(
-                    fontFamily: FontTypes.SF_Pro.name,
-                    color: AppColors.black),
+                    fontFamily: FontTypes.SFPro.name, color: AppColors.black),
               ),
             ],
           ),
@@ -83,10 +86,10 @@ class LiveCard extends StatelessWidget {
                 width: 8.w,
               ),
               Text(
-                DateFormat('HH:mm').format(DateFormat('HH:mm:ss').parse(event.time!)),
+                DateFormat('HH:mm')
+                    .format(DateFormat('HH:mm:ss').parse(event.time!)),
                 style: getTextStyle(CustomTextStyles.s16w400).copyWith(
-                    fontFamily: FontTypes.SF_Pro.name,
-                    color: AppColors.black),
+                    fontFamily: FontTypes.SFPro.name, color: AppColors.black),
               ),
             ],
           ),
@@ -106,48 +109,56 @@ class LiveCard extends StatelessWidget {
               Text(
                 '${event.address}',
                 style: getTextStyle(CustomTextStyles.s16w400).copyWith(
-                    fontFamily: FontTypes.SF_Pro.name,
-                    color: AppColors.black),
+                    fontFamily: FontTypes.SFPro.name, color: AppColors.black),
               ),
             ],
           ),
-          SizedBox(height: 16,),
+          SizedBox(
+            height: 16,
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              isDialog ? Container() :IconButton(
-                  onPressed: () {
-                    previousPage();
-
+              isDialog
+                  ? Container()
+                  : IconButton(
+                      onPressed: () {
+                        previousPage();
+                      },
+                      icon: Transform(
+                          transform: Matrix4.rotationY(math.pi),
+                          child: SvgPicture.asset(
+                            'assets/icons/chevron_right.svg',
+                            color: AppColors.blue,
+                            height: 24,
+                            width: 24,
+                          ))),
+              SizedBox(
+                height: 35.w,
+                width: 150.w,
+                child: AppButton(
+                  onTap: () async {
+                    final Uri url = Uri.parse('${event.address}');
+                    if (!await launchUrl(url)) {
+                      throw Exception('Could not launch $url');
+                    }
                   },
-                  icon: Transform(
-                      transform: Matrix4.rotationY(math.pi),
-                      child: SvgPicture.asset(
+                  text: 'next_page'.tr(),
+                  textSize: 14.sp,
+                ),
+              ),
+              isDialog
+                  ? Container()
+                  : IconButton(
+                      onPressed: () {
+                        nextPage();
+                      },
+                      icon: SvgPicture.asset(
                         'assets/icons/chevron_right.svg',
                         color: AppColors.blue,
                         height: 24,
                         width: 24,
-                      ))),
-              SizedBox(
-                height: 35.w,
-                width: 150.w,
-                child: AppButton(onTap: () async {
-                  final Uri url = Uri.parse('${event.address}');
-                  if (!await launchUrl(url)) {
-                  throw Exception('Could not launch $url');
-                  }
-                }, text: 'next_page'.tr(),textSize: 14.sp,),
-              ),
-              isDialog ? Container()   : IconButton(
-                  onPressed: () {
-                    nextPage();
-                  },
-                  icon: SvgPicture.asset(
-                    'assets/icons/chevron_right.svg',
-                    color: AppColors.blue,
-                    height: 24,
-                    width: 24,
-                  )),
+                      )),
             ],
           )
         ],

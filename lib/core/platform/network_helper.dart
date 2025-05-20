@@ -16,6 +16,7 @@ mixin EndPoints {
 
   /// auth
   static const String createUser = '/users/';
+  static const String currentUser = '/users/me/';
   static const String activateUser = '/users/activation/';
   static const String createToken = '/jwt/create/';
   static const String refreshToken = '/jwt/refresh/';

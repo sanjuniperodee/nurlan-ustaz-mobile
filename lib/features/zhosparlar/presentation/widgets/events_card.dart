@@ -10,7 +10,11 @@ import '../../../../core/common/app_styles.dart';
 import '../../../../core/common/colors.dart';
 
 class EventContainer extends StatelessWidget {
-  const EventContainer(this.event, {super.key, required this.nextPage, required this.previousPage, required this.maincontext});
+  const EventContainer(this.event,
+      {super.key,
+      required this.nextPage,
+      required this.previousPage,
+      required this.maincontext});
 
   final EventDto event;
   final Function nextPage;
@@ -21,13 +25,28 @@ class EventContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     switch (event.type!) {
       case (EventsType.groupService):
-        return  ServiceCard(event: event, nextPage: nextPage, previousPage: previousPage, isDialog: false,);
+        return ServiceCard(
+          event: event,
+          nextPage: nextPage,
+          previousPage: previousPage,
+          isDialog: false,
+        );
       case (EventsType.seminar):
-        return SeminarCard(event: event, nextPage: nextPage, previousPage:
-          previousPage, isDialog: false, mainContext: maincontext,);
+        return SeminarCard(
+          event: event,
+          nextPage: nextPage,
+          previousPage: previousPage,
+          isDialog: false,
+          mainContext: maincontext,
+        );
       case (EventsType.live):
-        return SeminarCard(event: event, nextPage: nextPage, previousPage:
-        previousPage, isDialog: false, mainContext: maincontext,);
+        return SeminarCard(
+          event: event,
+          nextPage: nextPage,
+          previousPage: previousPage,
+          isDialog: false,
+          mainContext: maincontext,
+        );
       case (EventsType.holiday):
         return Container(
           color: Colors.purple,
@@ -63,7 +82,7 @@ class EventContainer extends StatelessWidget {
                   Text(
                     '23.03.2023ж Рамазан айы',
                     style: getTextStyle(CustomTextStyles.s16w400).copyWith(
-                        fontFamily: FontTypes.SF_Pro.name,
+                        fontFamily: FontTypes.SFPro.name,
                         color: AppColors.black),
                   ),
                 ],

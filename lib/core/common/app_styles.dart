@@ -30,7 +30,12 @@ enum CustomTextStyles {
   s24w700,
 }
 
-enum FontTypes { Philosopher, SF_Pro }
+enum FontTypes { Philosopher, SFPro }
+
+mixin FontFamily {
+  static const philosopher = 'Philosopher';
+  static const sfPro = 'SFPro';
+}
 
 TextStyle getTextStyle(
   CustomTextStyles textStyle, {
@@ -96,25 +101,25 @@ TextStyle getTextStyle(
       return TextStyle(
           fontWeight: FontWeight.w200,
           fontSize: 14.sp,
-          fontFamily: FontTypes.SF_Pro.name,
+          fontFamily: fontFamily.name,
           color: color);
     case CustomTextStyles.s16w200:
       return TextStyle(
           fontWeight: FontWeight.w200,
           fontSize: 16.sp,
-          fontFamily: FontTypes.SF_Pro.name,
+          fontFamily: fontFamily.name,
           color: color);
     case CustomTextStyles.s24w700:
       return TextStyle(
           fontWeight: FontWeight.w700,
           fontSize: 24.sp,
-          fontFamily: FontTypes.SF_Pro.name,
+          fontFamily: fontFamily.name,
           color: color);
     case CustomTextStyles.s36w500:
       return TextStyle(
           fontWeight: FontWeight.w500,
           fontSize: 36.sp,
-          fontFamily: FontTypes.SF_Pro.name,
+          fontFamily: fontFamily.name,
           color: color);
     default:
       return const TextStyle();

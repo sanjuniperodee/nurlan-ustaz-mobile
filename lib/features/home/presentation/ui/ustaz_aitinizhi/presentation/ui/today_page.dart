@@ -72,7 +72,7 @@ class _TodayChatPageState extends State<TodayChatPage> {
                   child: Text(
                     'warning_24'.tr(),
                     style: getTextStyle(CustomTextStyles.s12w600)
-                        .copyWith(fontFamily: FontTypes.SF_Pro.name),
+                        .copyWith(fontFamily: FontTypes.SFPro.name),
                     textAlign: TextAlign.center,
                   ),
                 ),

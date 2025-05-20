@@ -1,5 +1,6 @@
 {
-
+  "kk_locale_name": "🇰🇿 Қазақша",
+  "ru_locale_name": "🇷🇺 Русский",
   "namaz_time": "Таң намазы уақыты",
   "exit": "Шығу",
   "exit2": "Шығу",
@@ -245,7 +246,20 @@
   "success_payment": "Сәтті төлем",
   "add_card_title": "Картаны қосу",
   "empty_cards": "Төлем жасау үшін жаңа карта жасаңыз",
-  "retry": "Қайталау"
+  "retry": "Қайталау",
+  "the_field_cannot_be_empty": "Өріс бос болуы мүмкін емес",
+  "yes": "Иә",
+  "success_authorization": "Сәтті авторизация",
+  "error": {
+    "information_passed_to_developers": "Қате. Ақпарат әзірлеушілерге жіберілді",
+    "server": "Сервер қатесі. Ақпарат әзірлеушілерге жіберілді"
+  },
+  "password_changed_successfully": "Құпия сөз сәтті өзгертілді",
+  "code_sent_successfully": "Код сәтті жіберілді",
+  "successful_registration": "Сәтті тіркеу",
+  "seconds_short": "сек",
+  "profile_updated_successfully": "Профиль сәтті жаңартылды",
+  "profile_removed_successfully": "Профиль сәтті жойылды"
 
 
 

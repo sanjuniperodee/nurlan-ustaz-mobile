@@ -11,13 +11,14 @@ final class AuthGuard extends AutoRouteGuard {
     NavigationResolver resolver,
     StackRouter router,
   ) async {
-    final token = await authLocalDs.getTokenFromCacheNull();
-    if (token != null) return resolver.next();
-    unawaited(resolver.redirectUntil(const MainRouterPage()));
-    unawaited(
-      authLocalDs.firstWhere((token) => token != null).then(
-            (value) => resolver.next(),
-          ),
-    );
+    final token = await authLocalDs.getToken();
+    if (token.isPresent) return resolver.next();
+    final goToAuth = await router.push<bool>(AuthRequiredDialogRoute());
+    if (goToAuth == true) {
+      await resolver.redirectUntil(const AuthorizationRoute());
+      final token = await authLocalDs.getToken();
+      if (token.isPresent) return resolver.next();
+    }
+    return resolver.next(false);
   }
 }

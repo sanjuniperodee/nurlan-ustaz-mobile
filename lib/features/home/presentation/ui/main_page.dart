@@ -7,12 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:get_it/get_it.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
-import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/main_button.dart';
@@ -21,8 +19,6 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_main_c
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/timings_cubit.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
-
-import '../../../auth/data/datasource/local/auth_local_ds.dart';
 
 @RoutePage(name: 'MainRouterPage')
 class MainPage extends StatefulWidget {
@@ -45,9 +41,6 @@ class _MainPageState extends State<MainPage> {
 
   @override
   void initState() {
-    String chosenLang = GetIt.I<AuthLocalDs>().getLocale();
-    Intl.defaultLocale = chosenLang.replaceAll('kz', 'kk');
-
     context.read<NewsMainCubit>().newsMain(
           currentPage: 1,
           // isFirstCall: true,
@@ -98,147 +91,179 @@ class _MainPageState extends State<MainPage> {
         url: Assets.banner5Svg,
       ),
     ];
-    return BlocListener<LanguageCubit, LanguageState>(
-      listenWhen: (previous, current) => current is LanguageLoadedState,
-      listener: (context, state) => setState(() {}),
-      child: Scaffold(
-        backgroundColor: AppColors.lightBlue,
-        body: BlocBuilder<TimingsCubit, TimingsState>(
-          builder: (context, state) {
-            if (state is! TimingsLoadedState) {
-              return const Center(
-                child: CircularProgressIndicator(color: AppColors.linearBlue),
-              );
-            }
-            final not = state.not;
-            final geo = state.geo;
-            final namaz = not.toJson();
-            times = namaz.values.toList();
-            return BlocConsumer<NewsMainCubit, NewsMainState>(
-              listener: (context, state) {
-                if (state is NewsMainErrorState) {
-                  buildErrorCustomSnackBar(context, state.message);
-                }
-              },
-              builder: (context, state) {
-                return switch (state) {
-                  NewsMainLoadedState(:final res) => GlobalCustomBody(
-                      left: 0,
-                      right: 0,
-                      top: 0,
-                      child: SizedBox(
-                        child: SmartRefresher(
-                          enablePullDown: true,
-                          controller: controller,
-                          header: CustomHeader(
-                            builder: (context, mode) {
-                              return const Center(
-                                child: CircularProgressIndicator(
-                                  color: AppColors.linearBlue,
-                                ),
-                              ); // Return an empty container to remove the default text
-                            },
-                          ),
-                          onRefresh: () {
-                            String chosenLang =
-                                GetIt.I<AuthLocalDs>().getLocale();
-                            Intl.defaultLocale =
-                                chosenLang.replaceAll('kz', 'kk');
-                            context.read<NewsMainCubit>().newsMain(
-                                  currentPage: 1,
-                                  // isFirstCall: true,
-                                );
-                            // TODO: WTH
-                            BlocProvider.of<TimingsCubit>(context).timings(
-                              43.25,
-                              76.91667,
-                            );
+    return Scaffold(
+      backgroundColor: AppColors.lightBlue,
+      body: BlocBuilder<TimingsCubit, TimingsState>(
+        builder: (context, state) {
+          if (state is! TimingsLoadedState) {
+            return const Center(
+              child: CircularProgressIndicator(color: AppColors.linearBlue),
+            );
+          }
+          final not = state.not;
+          final geo = state.geo;
+          final namaz = not.toJson();
+          times = namaz.values.toList();
+          return BlocConsumer<NewsMainCubit, NewsMainState>(
+            listener: (context, state) {
+              if (state is NewsMainErrorState) {
+                buildErrorCustomSnackBar(context, state.message);
+              }
+            },
+            builder: (context, state) {
+              return switch (state) {
+                NewsMainLoadedState(:final res) => GlobalCustomBody(
+                    padding: EdgeInsets.zero,
+                    child: SizedBox(
+                      child: SmartRefresher(
+                        enablePullDown: true,
+                        controller: controller,
+                        header: CustomHeader(
+                          builder: (context, mode) {
+                            return const Center(
+                              child: CircularProgressIndicator(
+                                color: AppColors.linearBlue,
+                              ),
+                            ); // Return an empty container to remove the default text
                           },
-                          child: SingleChildScrollView(
-                            physics: const BouncingScrollPhysics(),
-                            child: Column(
-                              mainAxisSize: MainAxisSize.max,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 45.h,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    top: 16.h,
-                                    right: 16.w,
-                                    left: 16.w,
-                                  ).r,
-                                  child: Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Image.asset(
-                                        'assets/images/new_l.png',
-                                        width: 145.w,
-                                        height: 39.h,
-                                      ),
-                                      Row(
-                                        children: [
-                                          GestureDetector(
-                                              onTap: () {
-                                                context.router.push(
-                                                  const NotificationRoute(),
-                                                );
-                                              },
-                                              child: SvgPicture.asset(
-                                                  Assets.notiSvg)),
-                                          SizedBox(
-                                            width: 8.r,
+                        ),
+                        onRefresh: () {
+                          context.read<NewsMainCubit>().newsMain(
+                                currentPage: 1,
+                                // isFirstCall: true,
+                              );
+                          // TODO: почему координаты захардкожены
+                          BlocProvider.of<TimingsCubit>(context).timings(
+                            43.25,
+                            76.91667,
+                          );
+                        },
+                        child: SingleChildScrollView(
+                          physics: const BouncingScrollPhysics(),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 45.h,
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                  top: 16.h,
+                                  right: 16.w,
+                                  left: 16.w,
+                                ).r,
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/new_l.png',
+                                      width: 145.w,
+                                      height: 39.h,
+                                    ),
+                                    Row(
+                                      children: [
+                                        GestureDetector(
+                                            onTap: () {
+                                              context.router.push(
+                                                const NotificationRoute(),
+                                              );
+                                            },
+                                            child: SvgPicture.asset(
+                                                Assets.notiSvg)),
+                                        SizedBox(
+                                          width: 8.r,
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            context.router.push(
+                                              const ProfileMainRoute(),
+                                            );
+                                          },
+                                          child: SvgPicture.asset(
+                                            Assets.userSvg,
                                           ),
-                                          GestureDetector(
-                                              onTap: () {
-                                                context.router.push(
-                                                  const ProfileMainRoute(),
-                                                );
-                                              },
-                                              child: SvgPicture.asset(
-                                                  Assets.userSvg)),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(height: 32.h),
-                                SizedBox(
-                                  height: 56.h,
-                                  width: 1.sw,
-                                  child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    physics: const BouncingScrollPhysics(),
-                                    itemCount: list.length,
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) {
-                                      return InkWell(
-                                        onTap: () {
-                                          context.router.push(
-                                            myRouteHome[index],
-                                          );
-                                        },
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                              right: 10.r,
-                                              left: index == 0 ? 17 : 0),
-                                          child: Container(
-                                            padding: EdgeInsets.symmetric(
-                                                horizontal: 10.r),
-                                            height: 56,
-                                            decoration: BoxDecoration(
-                                              color: AppColors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(75),
-                                            ),
+                              ),
+                              SizedBox(height: 32.h),
+                              SizedBox(
+                                height: 56.h,
+                                width: 1.sw,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  physics: const BouncingScrollPhysics(),
+                                  itemCount: list.length,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    return InkWell(
+                                      onTap: () {
+                                        context.router.push(
+                                          myRouteHome[index],
+                                        );
+                                      },
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                            right: 10.r,
+                                            left: index == 0 ? 17 : 0),
+                                        child: Container(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal: 10.r),
+                                          height: 56,
+                                          decoration: BoxDecoration(
+                                            color: AppColors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(75),
+                                          ),
+                                          child: Row(
+                                            children: [
+                                              SvgPicture.asset(list[index].url),
+                                              SizedBox(width: 8.r),
+                                              Text(list[index].title,
+                                                  style: getTextStyle(
+                                                          CustomTextStyles
+                                                              .s16w400)
+                                                      .apply(
+                                                          fontFamily: FontTypes
+                                                              .Philosopher
+                                                              .name)),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                              SizedBox(height: 20.h),
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(right: 16.0, left: 16)
+                                        .r,
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    InkWell(
+                                      onTap: () {
+                                        context.router.push(
+                                          NamazRoute(),
+                                        );
+                                      },
+                                      child: Column(
+                                        children: [
+                                          Align(
+                                            alignment: Alignment.centerLeft,
                                             child: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
-                                                SvgPicture.asset(
-                                                    list[index].url),
-                                                SizedBox(width: 8.r),
-                                                Text(list[index].title,
+                                                Text(
+                                                    '${geo.name ?? 'Алматы'}, ${DateFormat('dd.MM.yyyy', context.locale.languageCode).format(DateTime.now()).toLocale()}',
                                                     style: getTextStyle(
                                                             CustomTextStyles
                                                                 .s16w400)
@@ -247,40 +272,32 @@ class _MainPageState extends State<MainPage> {
                                                                 FontTypes
                                                                     .Philosopher
                                                                     .name)),
+                                                // SizedBox(
+                                                //   width: 175.w,
+                                                // ),
+                                                SvgPicture.asset(
+                                                    Assets.arrowUpOutlineSvg),
                                               ],
                                             ),
                                           ),
-                                        ),
-                                      );
-                                    },
-                                  ),
-                                ),
-                                SizedBox(height: 20.h),
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                          right: 16.0, left: 16)
-                                      .r,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      InkWell(
-                                        onTap: () {
-                                          context.router.push(
-                                            NamazRoute(),
-                                          );
-                                        },
-                                        child: Column(
-                                          children: [
-                                            Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
+                                          SizedBox(
+                                            height: 16.h,
+                                          ),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Row(
                                                 children: [
+                                                  SvgPicture.asset(
+                                                      Assets.shalatSvg),
+                                                  SizedBox(
+                                                    width: 10.r,
+                                                  ),
                                                   Text(
-                                                      '${geo.name ?? 'Алматы'}, ${DateFormat('dd.MM.yyyy', context.locale.languageCode).format(DateTime.now()).toLocale()}',
+                                                      '${namasNames[indexOfNextNames(times)]} ${'Namaz_time'.tr()}',
                                                       style: getTextStyle(
                                                               CustomTextStyles
                                                                   .s16w400)
@@ -289,33 +306,163 @@ class _MainPageState extends State<MainPage> {
                                                                   FontTypes
                                                                       .Philosopher
                                                                       .name)),
-                                                  // SizedBox(
-                                                  //   width: 175.w,
-                                                  // ),
-                                                  SvgPicture.asset(
-                                                      Assets.arrowUpOutlineSvg),
                                                 ],
                                               ),
+                                              Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.end,
+                                                children: [
+                                                  Text(
+                                                    namasTimestoSend(),
+                                                    style: getTextStyle(
+                                                            CustomTextStyles
+                                                                .s16w400)
+                                                        .apply(
+                                                            fontFamily:
+                                                                FontTypes
+                                                                    .Philosopher
+                                                                    .name)
+                                                        .apply(
+                                                            color:
+                                                                AppColors.blue),
+                                                  ),
+                                                  TimesStateWidget(
+                                                    time: timesToSend(),
+                                                  )
+                                                ],
+                                              )
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    // SizedBox(
+                                    //   height: 100.h,
+                                    //   child: MaterialButton(
+                                    //     onPressed: () {
+                                    //       TabsRouterScope.of(context)
+                                    //           ?.controller
+                                    //           .setActiveIndex(2);
+                                    //     },
+                                    //     child: OverflowBox(
+                                    //         minWidth: 345.w,
+                                    //         maxWidth: 345.w,
+                                    //         minHeight: 75.h,
+                                    //         maxHeight: 75.h,
+                                    //         child: Lottie.asset(
+                                    //             'assets/animations/tus_zhoru_button_${EasyLocalization.of(
+                                    //                 context)!
+                                    //                 .locale
+                                    //                 .toString() ==
+                                    //                 'kk' ? 'kz' : 'ru'}.json')),
+                                    //   ),
+                                    // ),
+                                    MainButton(
+                                      onTap: () async {
+                                        context.router
+                                            .push(UstazAitinizhiRoute());
+                                      },
+                                      text: '${'tell_me_ustaz'.tr()}...',
+                                    ),
+                                    SizedBox(height: 16.h),
+                                    SizedBox(
+                                      width: double.infinity,
+                                      height: 180.h,
+                                      child: InkWell(
+                                        onTap: () => context.router
+                                            .push(const UstazAitinizhiRoute()),
+                                        child: Hero(
+                                          tag: 'UA',
+                                          child: Image.asset(
+                                            'assets/images/ustaz_aitinizh.png',
+                                            fit: BoxFit.fill,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(height: 16.h),
+                                    InkWell(
+                                      onTap: () {
+                                        context.router.push(
+                                          NewsRoute(),
+                                        );
+                                      },
+                                      child: MainButton(
+                                        text: 'news'.tr(),
+                                      ),
+                                    ),
+                                    SizedBox(height: 16.h),
+                                  ],
+                                ),
+                              ),
+                              SizedBox(
+                                height: 216.h,
+                                width: 1.sw,
+                                child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  physics: const BouncingScrollPhysics(),
+                                  itemCount: res.length,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding: EdgeInsets.only(
+                                          right: 12.r,
+                                          left: index == 0 ? 16 : 0),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          context.router.push(
+                                            NewsDetailRoute(
+                                              id: res[index].id!,
                                             ),
-                                            SizedBox(
-                                              height: 16.h,
-                                            ),
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Row(
+                                          );
+                                        },
+                                        child: Container(
+                                          height: 110.h,
+                                          width: 180.w,
+                                          decoration: BoxDecoration(
+                                            color: AppColors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                          ),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              ClipRRect(
+                                                borderRadius:
+                                                    const BorderRadius.only(
+                                                  topLeft: Radius.circular(30),
+                                                  topRight: Radius.circular(30),
+                                                ),
+                                                child: CachedNetworkImage(
+                                                  imageUrl:
+                                                      res[index].cover ?? '',
+                                                  fit: BoxFit.cover,
+                                                  height: 110.h,
+                                                  width: double.infinity,
+                                                  errorWidget: (a, b, c) =>
+                                                      SizedBox(
+                                                    height: 110.h,
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(width: 12.r),
+                                              Padding(
+                                                padding: EdgeInsets.only(
+                                                    left: 12.r,
+                                                    top: 4.r,
+                                                    bottom: 4.r),
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
                                                   children: [
-                                                    SvgPicture.asset(
-                                                        Assets.shalatSvg),
-                                                    SizedBox(
-                                                      width: 10.r,
-                                                    ),
+                                                    SizedBox(height: 2.h),
                                                     Text(
-                                                        '${namasNames[indexOfNextNames(times)]} ${'Namaz_time'.tr()}',
+                                                        res[index].title ??
+                                                            'ERROR',
+                                                        overflow:
+                                                            TextOverflow.fade,
                                                         style: getTextStyle(
                                                                 CustomTextStyles
                                                                     .s16w400)
@@ -324,16 +471,13 @@ class _MainPageState extends State<MainPage> {
                                                                     FontTypes
                                                                         .Philosopher
                                                                         .name)),
-                                                  ],
-                                                ),
-                                                Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
-                                                  children: [
+                                                    SizedBox(height: 2.h),
                                                     Text(
-                                                      namasTimestoSend(),
+                                                      DateFormat('dd.MM.yyyy')
+                                                          .format(DateTime
+                                                              .parse(res[index]
+                                                                  .createdAt
+                                                                  .toString())),
                                                       style: getTextStyle(
                                                               CustomTextStyles
                                                                   .s16w400)
@@ -344,207 +488,39 @@ class _MainPageState extends State<MainPage> {
                                                                       .name)
                                                           .apply(
                                                               color: AppColors
-                                                                  .blue),
+                                                                  .grey1),
                                                     ),
-                                                    TimesStateWidget(
-                                                      time: timesToSend(),
-                                                    )
+                                                    SizedBox(height: 4.h),
                                                   ],
-                                                )
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      // SizedBox(
-                                      //   height: 100.h,
-                                      //   child: MaterialButton(
-                                      //     onPressed: () {
-                                      //       TabsRouterScope.of(context)
-                                      //           ?.controller
-                                      //           .setActiveIndex(2);
-                                      //     },
-                                      //     child: OverflowBox(
-                                      //         minWidth: 345.w,
-                                      //         maxWidth: 345.w,
-                                      //         minHeight: 75.h,
-                                      //         maxHeight: 75.h,
-                                      //         child: Lottie.asset(
-                                      //             'assets/animations/tus_zhoru_button_${EasyLocalization.of(
-                                      //                 context)!
-                                      //                 .locale
-                                      //                 .toString() ==
-                                      //                 'kk' ? 'kz' : 'ru'}.json')),
-                                      //   ),
-                                      // ),
-                                      MainButton(
-                                        onTap: () async {
-                                          context.router
-                                              .push(UstazAitinizhiRoute());
-                                        },
-                                        text: '${'tell_me_ustaz'.tr()}...',
-                                      ),
-                                      SizedBox(height: 16.h),
-                                      SizedBox(
-                                        width: double.infinity,
-                                        height: 180.h,
-                                        child: InkWell(
-                                          onTap: () => context.router.push(
-                                              const UstazAitinizhiRoute()),
-                                          child: Hero(
-                                            tag: 'UA',
-                                            child: Image.asset(
-                                              'assets/images/ustaz_aitinizh.png',
-                                              fit: BoxFit.fill,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(height: 16.h),
-                                      InkWell(
-                                        onTap: () {
-                                          context.router.push(
-                                            NewsRoute(),
-                                          );
-                                        },
-                                        child: MainButton(
-                                          text: 'news'.tr(),
-                                        ),
-                                      ),
-                                      SizedBox(height: 16.h),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 216.h,
-                                  width: 1.sw,
-                                  child: ListView.builder(
-                                    scrollDirection: Axis.horizontal,
-                                    physics: const BouncingScrollPhysics(),
-                                    itemCount: res.length,
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) {
-                                      return Padding(
-                                        padding: EdgeInsets.only(
-                                            right: 12.r,
-                                            left: index == 0 ? 16 : 0),
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            context.router.push(
-                                              NewsDetailRoute(
-                                                id: res[index].id!,
+                                                ),
                                               ),
-                                            );
-                                          },
-                                          child: Container(
-                                            height: 110.h,
-                                            width: 180.w,
-                                            decoration: BoxDecoration(
-                                              color: AppColors.white,
-                                              borderRadius:
-                                                  BorderRadius.circular(30),
-                                            ),
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                ClipRRect(
-                                                  borderRadius:
-                                                      const BorderRadius.only(
-                                                    topLeft:
-                                                        Radius.circular(30),
-                                                    topRight:
-                                                        Radius.circular(30),
-                                                  ),
-                                                  child: CachedNetworkImage(
-                                                    imageUrl:
-                                                        res[index].cover ?? '',
-                                                    fit: BoxFit.cover,
-                                                    height: 110.h,
-                                                    width: double.infinity,
-                                                    errorWidget: (a, b, c) =>
-                                                        SizedBox(
-                                                      height: 110.h,
-                                                    ),
-                                                  ),
-                                                ),
-                                                SizedBox(width: 12.r),
-                                                Padding(
-                                                  padding: EdgeInsets.only(
-                                                      left: 12.r,
-                                                      top: 4.r,
-                                                      bottom: 4.r),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      SizedBox(height: 2.h),
-                                                      Text(
-                                                          res[index].title ??
-                                                              'ERROR',
-                                                          overflow:
-                                                              TextOverflow.fade,
-                                                          style: getTextStyle(
-                                                                  CustomTextStyles
-                                                                      .s16w400)
-                                                              .apply(
-                                                                  fontFamily:
-                                                                      FontTypes
-                                                                          .Philosopher
-                                                                          .name)),
-                                                      SizedBox(height: 2.h),
-                                                      Text(
-                                                        DateFormat('dd.MM.yyyy')
-                                                            .format(DateTime
-                                                                .parse(res[
-                                                                        index]
-                                                                    .createdAt
-                                                                    .toString())),
-                                                        style: getTextStyle(
-                                                                CustomTextStyles
-                                                                    .s16w400)
-                                                            .apply(
-                                                                fontFamily:
-                                                                    FontTypes
-                                                                        .Philosopher
-                                                                        .name)
-                                                            .apply(
-                                                                color: AppColors
-                                                                    .grey1),
-                                                      ),
-                                                      SizedBox(height: 4.h),
-                                                    ],
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
+                                            ],
                                           ),
                                         ),
-                                      );
-                                    },
-                                  ),
+                                      ),
+                                    );
+                                  },
                                 ),
-                                SizedBox(
-                                  height: 145.h,
-                                ),
-                              ],
-                            ),
+                              ),
+                              SizedBox(
+                                height: 145.h,
+                              ),
+                            ],
                           ),
                         ),
                       ),
                     ),
-                  // TODO: error widget
-                  _ => const Center(
-                      child: CircularProgressIndicator(
-                        color: AppColors.linearBlue,
-                      ),
+                  ),
+                // TODO: error widget
+                _ => const Center(
+                    child: CircularProgressIndicator(
+                      color: AppColors.linearBlue,
                     ),
-                };
-              },
-            );
-          },
-        ),
+                  ),
+              };
+            },
+          );
+        },
       ),
     );
   }

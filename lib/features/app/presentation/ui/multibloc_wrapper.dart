@@ -1,34 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get_it/get_it.dart';
-
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/ablutions_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/ayat_of_day_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/dhikrs_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/dhikrs_favorite_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/dua_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/duas_cubit.dart';
-
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/islam_name_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/islam_names_cubit.dart';
-
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/namaz_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/names_of_Allah_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/pillars_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/surah_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/surah_favorite_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/app/bloc/app_bloc.dart';
-import 'package:nurlan_ustaz_flutter/features/app/bloc/other_list_bloc/language_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/app/on_boarding/bloc/on_boarding_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/auth_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/code_verification_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/forgot_password_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/login_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/registration_cubit.dart';
-
-import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/rename_user_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/data/datasource/local/profile_local_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/change_pass_cubit.dart';
-
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/charities_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/comment_news_like_cubit.dart';
@@ -41,15 +30,12 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/create_semi
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/faq_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/geonames_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/get_noti_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/get_profile_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/lives_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/lives_fav_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_fav_cubit.dart';
-
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/news_main_cubit.dart';
-
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/partners_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/payment_tick_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/post_service_cubit.dart';
@@ -59,22 +45,22 @@ import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_cub
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_detail_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/seminar_fav_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/services_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/bloc/cards_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/bloc/qr_scanner_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/profile_main/bloc/technical_support_cubit.dart';
-
-import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/presentation/bloc/calendar_chats_cubit.dart';
-import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/presentation/bloc/today_chat_cubit.dart';
-
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/set_city_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/bloc/timings_cubit.dart';
-
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/bloc/cards_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/bloc/load_profile_bloc.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/bloc/profile_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/bloc/qr_scanner_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/bloc/technical_support_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/presentation/bloc/calendar_chats_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/presentation/bloc/today_chat_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/bloc/tandaulilar_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/create_tus_zhoru_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_details_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/bloc/checklist_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/bloc/zhosparym_cubit.dart';
+import 'package:provider/provider.dart';
 
 import '../../../tus_zhoru/presentation/bloc/custom_tus_zhoru_details_cubit.dart';
 
@@ -88,37 +74,26 @@ class MultiblocWrapper extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
+    return MultiProvider(
       providers: [
-        ///
-
-        BlocProvider<AppBloc>(
-          create: (context) => GetIt.I<AppBloc>(),
+        InheritedProvider<ProfileLocalDs>(
+          create: (context) => GetIt.I(),
+          dispose: (context, value) => value.close(),
         ),
         //On Boarding
         BlocProvider<OnBoardingCubit>(
           create: (context) => GetIt.I<OnBoardingCubit>(),
         ),
-        BlocProvider<LanguageCubit>(
-          create: (context) => GetIt.I<LanguageCubit>(),
-        ),
         //AUTH
-        BlocProvider<AuthCubit>(create: (context) => GetIt.I<AuthCubit>()),
-        BlocProvider<RegistrationCubit>(
-            create: (context) => GetIt.I<RegistrationCubit>()),
-        BlocProvider<LoginCubit>(create: (context) => GetIt.I<LoginCubit>()),
-        BlocProvider<CodeVerificationCubit>(
-            create: (context) => GetIt.I<CodeVerificationCubit>()),
-        BlocProvider<GetProfileCubit>(
-          create: (context) => GetIt.I<GetProfileCubit>(),
+        BlocProvider<AuthCubit>(
+          create: (context) => AuthCubit(
+            authLocalDs: GetIt.I(),
+            profileLocalDs: GetIt.I(),
+          ),
         ),
         BlocProvider<ChangePassCubit>(
           create: (context) => GetIt.I<ChangePassCubit>(),
         ),
-        BlocProvider<RenameUserCubit>(
-            create: (context) => GetIt.I<RenameUserCubit>()),
-        BlocProvider<ForgotPasswordCubitCubit>(
-            create: (context) => GetIt.I<ForgotPasswordCubitCubit>()),
 
         //
         //HOME
@@ -126,6 +101,18 @@ class MultiblocWrapper extends StatelessWidget {
 
         BlocProvider<TechnicalSupportCubit>(
           create: (context) => GetIt.I<TechnicalSupportCubit>(),
+        ),
+
+        BlocProvider(
+          create: (context) => LoadProfileBloc(
+            profileRemoteDs: GetIt.I(),
+            profileLocalDs: context.read(),
+          )..add(const LoadProfileEvent()),
+        ),
+        BlocProvider(
+          create: (context) => ProfileCubit(
+            profileLocalDs: context.read(),
+          ),
         ),
 
         BlocProvider<PaymentTickCubit>(

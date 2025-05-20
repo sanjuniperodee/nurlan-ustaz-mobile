@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get_it/get_it.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
@@ -30,8 +31,8 @@ class BasePage extends StatelessWidget {
       ],
       bottomNavigationBuilder: (context, tabsRouter) {
         return BottomNavBar(
-          currentIndex: tabsRouter.activeIndex,
-          onTap: tabsRouter.setActiveIndex,
+          tabsRouter: tabsRouter,
+          authLocalDs: GetIt.I(),
           items: [
             BottomNavBarItem.asset(
               active: Assets.home_1Svg,
@@ -45,8 +46,8 @@ class BasePage extends StatelessWidget {
             ),
             BottomNavBarItem.widget(
               widget: SizedBox(
-                height: 55.h,
-                width: 55.w,
+                height: 50.h,
+                width: 50.w,
                 child: Lottie.asset('assets/animations/Moon_v08.json'),
               ),
               label: 'dream_interpretation',
@@ -59,6 +60,7 @@ class BasePage extends StatelessWidget {
             BottomNavBarItem.asset(
               active: Assets.calendar_1Svg,
               inactive: Assets.calendarSvg,
+              requiresAuth: true,
               label: 'plans',
             ),
           ],

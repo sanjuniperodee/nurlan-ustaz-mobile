@@ -35,9 +35,7 @@ class TusZhoruList extends StatelessWidget {
             child: Container(
               height: 75.h,
               decoration: BoxDecoration(
-                color: item.isPurchased!
-                    ? AppColors.orange
-                    : AppColors.white,
+                color: item.isPurchased! ? AppColors.orange : AppColors.white,
                 borderRadius: BorderRadius.circular(20),
               ),
               padding: EdgeInsets.symmetric(vertical: 13.h, horizontal: 16.w),
@@ -55,11 +53,11 @@ class TusZhoruList extends StatelessWidget {
                           item.title ?? '',
                           style: getTextStyle(CustomTextStyles.s16w500)
                               .copyWith(
-                              fontWeight: FontWeight.w600,
-                              fontFamily: FontTypes.SF_Pro.name,
-                              color: item.isPurchased!
-                                  ? AppColors.white
-                                  : null),
+                                  fontWeight: FontWeight.w600,
+                                  fontFamily: FontTypes.SFPro.name,
+                                  color: item.isPurchased!
+                                      ? AppColors.white
+                                      : null),
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -100,21 +98,19 @@ class TusZhoruList extends StatelessWidget {
     final text = isPurchased
         ? item.fullExplanation
         : item.isFree!
-        ? item.fullExplanation
-        : item.partialExplanation;
+            ? item.fullExplanation
+            : item.partialExplanation;
 
     final textStyle = getTextStyle(CustomTextStyles.s14w400).apply(
-        fontFamily: FontTypes.SF_Pro.name,
-        color: isPurchased
-        ? AppColors.white
-            : AppColors.grey1.withOpacity(0.55),
+      fontFamily: FontTypes.SFPro.name,
+      color: isPurchased ? AppColors.white : AppColors.grey1.withOpacity(0.55),
     );
 
     return Text(
-    text ?? '',
-    maxLines: 1,
-    overflow: TextOverflow.ellipsis,
-    style: textStyle,
+      text ?? '',
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: textStyle,
     );
   }
 }

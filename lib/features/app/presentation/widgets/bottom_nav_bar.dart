@@ -1,25 +1,35 @@
+import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
+import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/data/datasource/local/auth_local_ds.dart';
 
 sealed class BottomNavBarItem {
-  const BottomNavBarItem._({required this.label});
+  const BottomNavBarItem._({
+    required this.label,
+    this.requiresAuth = false,
+  });
 
   const factory BottomNavBarItem.asset({
     required String active,
     required String inactive,
     required String label,
+    bool requiresAuth,
   }) = _AssetBottomNavBarItem;
 
   const factory BottomNavBarItem.widget({
     required Widget widget,
     required String label,
+    bool requiresAuth,
   }) = _CustomWidgetBottomNavBarItem;
 
   final String label;
+
+  final bool requiresAuth;
 
   bool get isAsset => this is _AssetBottomNavBarItem;
 }
@@ -29,6 +39,7 @@ class _AssetBottomNavBarItem extends BottomNavBarItem {
     required this.active,
     required this.inactive,
     required super.label,
+    super.requiresAuth,
   }) : super._();
   final String active;
   final String inactive;
@@ -38,6 +49,7 @@ class _CustomWidgetBottomNavBarItem extends BottomNavBarItem {
   const _CustomWidgetBottomNavBarItem({
     required this.widget,
     required super.label,
+    super.requiresAuth,
   }) : super._();
   final Widget widget;
 }
@@ -45,19 +57,19 @@ class _CustomWidgetBottomNavBarItem extends BottomNavBarItem {
 class BottomNavBar extends StatelessWidget {
   const BottomNavBar({
     required this.items,
-    required this.currentIndex,
-    required this.onTap,
+    required this.tabsRouter,
+    required this.authLocalDs,
     super.key,
   });
+
+  @protected
+  final TabsRouter tabsRouter;
 
   @protected
   final List<BottomNavBarItem> items;
 
   @protected
-  final int currentIndex;
-
-  @protected
-  final void Function(int index) onTap;
+  final AuthLocalDs authLocalDs;
 
   @protected
   static const kBarBorderRadiusValue = 40.0;
@@ -102,7 +114,7 @@ class BottomNavBar extends StatelessWidget {
                 items.length,
                 (index) {
                   final item = items[index];
-                  final isActive = currentIndex == index;
+                  final isActive = tabsRouter.activeIndex == index;
                   return Expanded(
                     child: Material(
                       type: MaterialType.transparency,
@@ -115,7 +127,24 @@ class BottomNavBar extends StatelessWidget {
                                 ? kEdgeItemRadius
                                 : null,
                           ),
-                          onTap: () => onTap(index),
+                          onTap: () async {
+                            if (item.requiresAuth) {
+                              final token = await authLocalDs.getToken();
+                              if (!token.isPresent && context.mounted) {
+                                final goToAuth = await context.router
+                                    .push<bool>(AuthRequiredDialogRoute());
+                                if (goToAuth != true || !context.mounted) {
+                                  return;
+                                }
+
+                                await context.router
+                                    .push(const AuthorizationRoute());
+                                final token = await authLocalDs.getToken();
+                                if (!token.isPresent) return;
+                              }
+                            }
+                            tabsRouter.setActiveIndex(index);
+                          },
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [

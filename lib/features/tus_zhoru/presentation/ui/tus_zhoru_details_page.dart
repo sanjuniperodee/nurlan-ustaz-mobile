@@ -177,7 +177,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                                 CustomTextStyles.s16w400)
                                             .copyWith(
                                                 fontFamily:
-                                                    FontTypes.SF_Pro.name,
+                                                    FontTypes.SFPro.name,
                                                 height: 1.5),
                                         overflow: TextOverflow.fade,
                                       ),
@@ -232,8 +232,8 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                               style: getTextStyle(
                                                       CustomTextStyles.s16w500)
                                                   .copyWith(
-                                                      fontFamily: FontTypes
-                                                          .SF_Pro.name),
+                                                      fontFamily:
+                                                          FontTypes.SFPro.name),
                                             ),
                                             _isFav == false
                                                 ? SvgPicture.asset(
@@ -278,8 +278,8 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                               style: getTextStyle(
                                                       CustomTextStyles.s16w500)
                                                   .copyWith(
-                                                      fontFamily: FontTypes
-                                                          .SF_Pro.name),
+                                                      fontFamily:
+                                                          FontTypes.SFPro.name),
                                             ),
                                             SvgPicture.asset(
                                               'assets/icons/share.svg',

@@ -155,7 +155,7 @@ class _TusZhoruDetailPage extends State<CustomTusZhoruDetailPage> {
                                           getTextStyle(CustomTextStyles.s16w400)
                                               .copyWith(
                                                   fontFamily:
-                                                      FontTypes.SF_Pro.name,
+                                                      FontTypes.SFPro.name,
                                                   height: 1.5),
                                       overflow: TextOverflow.fade,
                                     ),
@@ -170,7 +170,7 @@ class _TusZhoruDetailPage extends State<CustomTusZhoruDetailPage> {
                                                   CustomTextStyles.s14w400)
                                               .copyWith(
                                                   fontFamily:
-                                                      FontTypes.SF_Pro.name,
+                                                      FontTypes.SFPro.name,
                                                   color: AppColors.grey1),
                                         ),
                                         SizedBox(height: 15.h),

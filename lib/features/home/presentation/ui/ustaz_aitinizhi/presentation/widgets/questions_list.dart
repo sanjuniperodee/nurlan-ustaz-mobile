@@ -77,7 +77,7 @@ class QuestionsList extends StatelessWidget {
                                           getTextStyle(CustomTextStyles.s14w500)
                                               .copyWith(
                                                   fontFamily:
-                                                      FontTypes.SF_Pro.name,
+                                                      FontTypes.SFPro.name,
                                                   fontWeight: FontWeight.w600),
                                       overflow: TextOverflow.ellipsis,
                                     ),
@@ -102,7 +102,7 @@ class QuestionsList extends StatelessWidget {
                                         getTextStyle(CustomTextStyles.s12w400)
                                             .copyWith(
                                                 fontFamily:
-                                                    FontTypes.SF_Pro.name,
+                                                    FontTypes.SFPro.name,
                                                 color: AppColors.grey1
                                                     .withOpacity(0.55)),
                                   )
@@ -141,7 +141,7 @@ class QuestionsList extends StatelessWidget {
                                 '${'Answer'.tr()}: ${e.is_allowed! ? 'Will'.tr() : 'was_not'.tr()}',
                                 style: getTextStyle(CustomTextStyles.s14w600)
                                     .copyWith(
-                                        fontFamily: FontTypes.SF_Pro.name,
+                                        fontFamily: FontTypes.SFPro.name,
                                         fontWeight: FontWeight.w600),
                               )
                             ],

@@ -1,4 +1,6 @@
 {
+  "kk_locale_name": "🇰🇿 Қазақша",
+  "ru_locale_name": "🇷🇺 Русский",
   "namaz_time": "Время утренней молитвы",
   "exit": "Выход",
   "exit2": "Выйти",
@@ -40,7 +42,6 @@
   "terms_agreement": "Согласие с условиями использования и политикой конфиденциальности",
   "Entry": "Вход",
   "registration": "Регистрация",
-
   "dream_interpretation": "Сонник",
   "tell_me_ustaz": "Расскажи мне, устаз",
   "main_page": "Главная",
@@ -244,9 +245,18 @@
   "success_payment": "Успешная оплата ",
   "add_card_title": "Добавление карты",
   "empty_cards": "Для совершения оплаты создайте новую карту",
-  "retry": "Повторить"
-
-
-
-
+  "retry": "Повторить",
+  "the_field_cannot_be_empty": "Поле не может быть пустым",
+  "yes": "Да",
+  "success_authorization": "Успешная авторизация",
+  "error": {
+    "information_passed_to_developers": "Ошибка. Информация передана разработчикам",
+    "server": "Ошибка сервера. Информация передана разработчикам"
+  },
+  "password_changed_successfully": "Пароль успешно изменен",
+  "code_sent_successfully": "Код успешно отправлен",
+  "successful_registration": "Успешная регистрация",
+  "seconds_short": "сек",
+  "profile_updated_successfully": "Профиль успешно обновлен",
+  "profile_removed_successfully": "Профиль успешно удален"
 }

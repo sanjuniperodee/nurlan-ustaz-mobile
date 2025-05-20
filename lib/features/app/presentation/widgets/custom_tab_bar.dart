@@ -28,9 +28,10 @@ class CustomTabBar extends StatelessWidget {
             color: AppColors.white.withOpacity(0.5)),
         child: TabBar(
           labelStyle: getTextStyle(CustomTextStyles.s16w500)
-              .copyWith(fontFamily: FontTypes.SF_Pro.name),
+              .copyWith(fontFamily: FontTypes.SFPro.name),
           labelColor: AppColors.black,
           padding: EdgeInsets.zero,
+          indicatorSize: TabBarIndicatorSize.tab,
           indicator: BoxDecoration(
             color: AppColors.white,
             borderRadius: BorderRadius.circular(24.sp),

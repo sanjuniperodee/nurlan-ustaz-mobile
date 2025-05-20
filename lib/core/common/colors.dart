@@ -9,7 +9,7 @@ class AppColors {
 
   static const Color primaryColor = Color(0xFFF9A502);
   static const Color black = Color(0xFF252525);
-  static Color grey1 = const Color(0xFF252525).withOpacity(0.55);
+  static const Color grey1 = Color.fromRGBO(25, 25, 25, .55);
   static const Color grey2 = Color(0xFFB1AFAF);
   static const Color danger = Colors.orange;
   static const Color white = Colors.white;
