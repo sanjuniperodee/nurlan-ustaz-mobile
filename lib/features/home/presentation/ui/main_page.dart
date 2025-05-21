@@ -11,7 +11,9 @@ import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
-import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
+import 'package:nurlan_ustaz_flutter/core/widgets/action_result_widget.dart';
+import 'package:nurlan_ustaz_flutter/core/widgets/app_progress_indicator.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/main_button.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/banner_local_model.dart';
@@ -47,11 +49,11 @@ class _MainPageState extends State<MainPage> {
         );
 
     // _logAppOpen();
-    // TODO: WTH
-    BlocProvider.of<TimingsCubit>(context).timings(
-      43.25,
-      76.91667,
-    );
+    // TODO: полчему координаты захардкожены
+    context.read<TimingsCubit>().timings(
+          43.25,
+          76.91667,
+        );
     super.initState();
   }
 
@@ -104,14 +106,23 @@ class _MainPageState extends State<MainPage> {
           final geo = state.geo;
           final namaz = not.toJson();
           times = namaz.values.toList();
-          return BlocConsumer<NewsMainCubit, NewsMainState>(
-            listener: (context, state) {
-              if (state is NewsMainErrorState) {
-                buildErrorCustomSnackBar(context, state.message);
-              }
-            },
+          return BlocBuilder<NewsMainCubit, NewsMainState>(
             builder: (context, state) {
               return switch (state) {
+                NewsMainErrorState() => ActionResultPage.error(
+                    automaticallyImplyCloseButton: false,
+                    automaticallyImplyPopButton: false,
+                    content:
+                        context.tr('error.information_passed_to_developers'),
+                    bottom: AppButton(
+                      onTap: () {
+                        context.read<NewsMainCubit>().newsMain(
+                              currentPage: 1,
+                            );
+                      },
+                      text: context.tr('retry'),
+                    ),
+                  ),
                 NewsMainLoadedState(:final res) => GlobalCustomBody(
                     padding: EdgeInsets.zero,
                     child: SizedBox(
@@ -511,12 +522,7 @@ class _MainPageState extends State<MainPage> {
                       ),
                     ),
                   ),
-                // TODO: error widget
-                _ => const Center(
-                    child: CircularProgressIndicator(
-                      color: AppColors.linearBlue,
-                    ),
-                  ),
+                _ => const AppProgressIndicator(),
               };
             },
           );
@@ -643,7 +649,6 @@ class _TimesStateWidgetState extends State<TimesStateWidget> {
 
   @override
   void initState() {
-    log(' NEXT${widget.time.toString()}');
     _stopWatchTimer.setPresetHoursTime(int.parse(widget.time.substring(0, 2)));
     _stopWatchTimer.setPresetMinuteTime(int.parse(widget.time.substring(3, 5)));
     _stopWatchTimer.onStartTimer();
