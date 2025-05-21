@@ -171,29 +171,41 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
-                                        SizedBox(
-                                          height: 12.h,
-                                        ),
-                                        SvgPicture.asset(list[index].url),
-                                        SizedBox(
-                                          height: 12.h,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              list[index].title,
-                                              style: getTextStyle(
-                                                      CustomTextStyles.s16w500)
-                                                  .apply(
-                                                      color: AppColors.black),
+                                        // SizedBox(height: 12.h),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                            vertical: 12,
+                                          ).w,
+                                          child: SizedBox.square(
+                                            dimension: 41.w,
+                                            child: SvgPicture.asset(
+                                              list[index].url,
                                             ),
-                                            const Icon(
-                                              Icons.arrow_forward_ios_rounded,
-                                              color: AppColors.orange,
-                                            ),
-                                          ],
+                                          ),
+                                        ),
+                                        // SizedBox(height: 12.h),
+                                        Expanded(
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Expanded(
+                                                child: Text(
+                                                  list[index].title,
+                                                  style: getTextStyle(
+                                                          CustomTextStyles
+                                                              .s16w500)
+                                                      .apply(
+                                                          color:
+                                                              AppColors.black),
+                                                ),
+                                              ),
+                                              const Icon(
+                                                Icons.arrow_forward_ios_rounded,
+                                                color: AppColors.orange,
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                         // Expanded(
                                         //   child: Align(
