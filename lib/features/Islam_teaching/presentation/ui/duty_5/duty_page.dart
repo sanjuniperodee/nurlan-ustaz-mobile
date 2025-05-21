@@ -3,17 +3,15 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:lottie/lottie.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/pillars_cubit.dart';
+import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/widgets/islam_teaching_grid_view_card.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_app_bar.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/banner_local_model.dart';
-
-import '../../../../../core/common/app_styles.dart';
 
 @RoutePage()
 class DutyPage extends StatefulWidget {
@@ -111,77 +109,31 @@ class _DutyPageState extends State<DutyPage> {
                           GridView.builder(
                             itemCount: state.pillars.length,
                             shrinkWrap: true,
-                            padding: const EdgeInsets.all(0),
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 16).w,
                             physics: const NeverScrollableScrollPhysics(),
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
                               childAspectRatio: (60 / 54).r,
-                              // crossAxisSpacing: 1.0,
-                              mainAxisSpacing: 16.0,
                               crossAxisCount: 2,
+                              crossAxisSpacing: 16.0,
+                              mainAxisSpacing: 16.0,
                             ),
                             itemBuilder: (BuildContext context, int index) {
-                              return Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 16.0, right: 16)
-                                        .r,
-                                child: InkWell(
-                                  onTap: () {
-                                    context.router.push(DutyDetailRoute(
-                                        pillarsDTO: state.pillars[index]));
-                                  },
-                                  child: Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 34, horizontal: 24),
-                                    decoration: BoxDecoration(
-                                      color: AppColors.white,
-                                      borderRadius: BorderRadius.circular(42.0),
+                              final item = list[index];
+                              return IslamTeachingGridViewCard(
+                                title: state.pillars[index].title ?? 'ERROR',
+                                svgPicturePath: item.url,
+                                withShadow: true,
+                                backgroundColor:
+                                    Theme.of(context).scaffoldBackgroundColor,
+                                onTap: () {
+                                  context.router.push(
+                                    DutyDetailRoute(
+                                      pillarsDTO: state.pillars[index],
                                     ),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        SvgPicture.asset(
-                                          list[index].url,
-                                          height: 50,
-                                        ),
-                                        SizedBox(
-                                          height: 12.h,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              state.pillars[index].title ??
-                                                  'ERROR',
-                                              overflow: TextOverflow.ellipsis,
-                                              style: getTextStyle(
-                                                      CustomTextStyles.s16w500)
-                                                  .apply(
-                                                      color: AppColors.black),
-                                            ),
-                                            Icon(
-                                              Icons.arrow_forward_ios_outlined,
-                                              color: AppColors.orange,
-                                            ),
-                                          ],
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        // const Align(
-                                        //   alignment: Alignment.centerRight,
-                                        //   child: Icon(
-                                        //     Icons
-                                        //         .arrow_forward_ios_outlined,
-                                        //     color: AppColors.orange,
-                                        //   ),
-                                        // )
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                                  );
+                                },
                               );
                             },
                           ),
