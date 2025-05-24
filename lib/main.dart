@@ -54,16 +54,18 @@ Future<void> main() async {
       WidgetsFlutterBinding.ensureInitialized();
       await SystemChrome.setPreferredOrientations(
           [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-      await Firebase.initializeApp();
+      await Firebase.initializeApp(
+        options: DefaultFirebaseOptions.currentPlatform,
+      );
       await FirebaseCrashlytics.instance
           .setCrashlyticsCollectionEnabled(kReleaseMode);
       await FirebaseAnalytics.instance
           .setAnalyticsCollectionEnabled(kReleaseMode);
       // TODO(Radomir): Remove Firebase Dynamix Links from project, as it is deprecated
       // await FirebaseDynamicLinks.instance.getInitialLink();
-      await firebaseListen();
+      // await firebaseListen();
       // await firebaseInit();
-      await checkLocationPermission();
+      // await checkLocationPermission();
       FlutterError.onError = (errorDetails) {
         FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
       };
@@ -76,15 +78,12 @@ Future<void> main() async {
       await configureDependencies();
       await EasyLocalization.ensureInitialized();
       EasyLocalization.logger.enableLevels = [];
-      await Firebase.initializeApp(
-        options: DefaultFirebaseOptions.currentPlatform,
-      );
+
       // TODO: notification service crashing the application when something goes wrong
       // await NotificationService().init();
 
       // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-      // final app = await _initApp(shouldSend, asyncDependencies, appBuilder);
       runApp(const NurlanUstazApp());
     },
     (error, stack) {
