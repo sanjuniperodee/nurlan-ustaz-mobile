@@ -11,7 +11,7 @@ class LoadProfileEvent {
 typedef LoadProfileState = DrySuccessDataState<UserDto, Object>;
 
 class LoadProfileBloc
-    extends DrySuccessDataStateBloc<LoadProfileEvent, UserDto, Object> {
+    extends DrySuccessDataBloc<LoadProfileEvent, UserDto, Object> {
   LoadProfileBloc({
     required this.profileRemoteDs,
     required this.profileLocalDs,

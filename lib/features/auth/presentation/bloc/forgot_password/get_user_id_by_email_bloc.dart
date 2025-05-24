@@ -10,8 +10,8 @@ class GetUserIdByEmailEvent {
 
 typedef GetUserIdByEmailState = DrySuccessDataState<(String, int), Object>;
 
-class GetUserIdByEmailBloc extends DrySuccessDataStateBloc<
-    GetUserIdByEmailEvent, (String, int), Object> {
+class GetUserIdByEmailBloc
+    extends DrySuccessDataBloc<GetUserIdByEmailEvent, (String, int), Object> {
   GetUserIdByEmailBloc({required this.authRemoteDs}) {
     handle<GetUserIdByEmailEvent>(
       (event) async =>

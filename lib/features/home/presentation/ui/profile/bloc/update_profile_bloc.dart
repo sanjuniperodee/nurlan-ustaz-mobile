@@ -17,7 +17,7 @@ class UpdateProfileEvent {
 
 typedef UpdateProfileState = DryEmptyState<Object>;
 
-class UpdateProfileBloc extends DryEmptyStateBloc<UpdateProfileEvent, Object> {
+class UpdateProfileBloc extends DryEmptyBloc<UpdateProfileEvent, Object> {
   UpdateProfileBloc(
       {required this.authRemoteDs, required this.profileLocalDs}) {
     handle<UpdateProfileEvent>(

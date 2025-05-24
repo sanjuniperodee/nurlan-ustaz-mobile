@@ -17,11 +17,14 @@ class VerifyForgotCodeEvent {
 typedef VerifyForgotCodeState = DrySuccessDataState<String, Object>;
 
 class VerifyForgotCodeBloc
-    extends DrySuccessDataStateBloc<VerifyForgotCodeEvent, String, Object> {
+    extends DrySuccessDataBloc<VerifyForgotCodeEvent, String, Object> {
   VerifyForgotCodeBloc({required this.authRemoteDs}) {
     handle<VerifyForgotCodeEvent>(
       (event) => authRemoteDs.confirmCode(
-        activateUserDTO: ActivateUserDTO(),
+        activateUserDTO: ActivateUserDTO(
+          code: event.code,
+          userId: event.userId,
+        ),
       ),
     );
   }

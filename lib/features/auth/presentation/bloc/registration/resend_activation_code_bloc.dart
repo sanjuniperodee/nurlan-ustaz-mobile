@@ -11,7 +11,7 @@ class ResendActivationCodeEvent {
 typedef ResendActivationCodeState = DryEmptyState<Object>;
 
 class ResendActivationCodeBloc
-    extends DryEmptyStateBloc<ResendActivationCodeEvent, Object> {
+    extends DryEmptyBloc<ResendActivationCodeEvent, Object> {
   ResendActivationCodeBloc({
     required this.authRemoteDs,
   }) {

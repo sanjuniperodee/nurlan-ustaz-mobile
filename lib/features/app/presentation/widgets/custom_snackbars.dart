@@ -13,7 +13,7 @@ extension SnackBarExtension on BuildContext {
   }
 
   Future<SnackBarClosedReason> showExceptionErrorSnackBar(
-    DryBlocException exc, [
+    DryException exc, [
     String? defaultMessage,
   ]) {
     final def = defaultMessage ?? 'error.information_passed_to_developers'.tr();

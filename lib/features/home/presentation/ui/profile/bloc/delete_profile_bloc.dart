@@ -9,7 +9,7 @@ class DeleteProfileEvent {
 
 typedef DeleteProfileState = DryEmptyState<Object>;
 
-class DeleteProfileBloc extends DryEmptyStateBloc<DeleteProfileEvent, Object> {
+class DeleteProfileBloc extends DryEmptyBloc<DeleteProfileEvent, Object> {
   DeleteProfileBloc({
     required this.authLocalDs,
     required this.authRemoteDs,

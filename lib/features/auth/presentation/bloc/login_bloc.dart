@@ -11,7 +11,7 @@ class LoginEvent {
 
 typedef LoginState = DryEmptyState<Object>;
 
-class LoginBloc extends DryEmptyStateBloc<LoginEvent, Object> {
+class LoginBloc extends DryEmptyBloc<LoginEvent, Object> {
   LoginBloc({
     required this.authRemoteDs,
     super.initialState,

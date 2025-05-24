@@ -22,8 +22,7 @@ class SetNewPasswordEvent {
 
 typedef SetNewPasswordState = DryEmptyState<Object>;
 
-class SetNewPasswordBloc
-    extends DryEmptyStateBloc<SetNewPasswordEvent, Object> {
+class SetNewPasswordBloc extends DryEmptyBloc<SetNewPasswordEvent, Object> {
   SetNewPasswordBloc({required this.authRemoteDs}) {
     handle<SetNewPasswordEvent>(
       (event) async {

@@ -19,7 +19,7 @@ class VerifyCodeEvent {
 
 typedef VerifyCodeState = DryEmptyState<Object>;
 
-class VerifyCodeBloc extends DryEmptyStateBloc<VerifyCodeEvent, Object> {
+class VerifyCodeBloc extends DryEmptyBloc<VerifyCodeEvent, Object> {
   VerifyCodeBloc({required this.authRemoteDs}) {
     handle<VerifyCodeEvent>(
       (event) async {

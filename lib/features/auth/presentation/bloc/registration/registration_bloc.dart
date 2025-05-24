@@ -6,7 +6,7 @@ import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
 typedef RegistrationState = DrySuccessDataState<UserDto, Object>;
 
 final class RegistrationBloc
-    extends DrySuccessDataStateBloc<UserDto, UserDto, Object> {
+    extends DrySuccessDataBloc<UserDto, UserDto, Object> {
   RegistrationBloc({
     required this.authRemoteDs,
     super.initialState,
