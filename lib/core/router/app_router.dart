@@ -118,11 +118,12 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           path: '/',
           page: AppFlow.page,
-          guards: [connectionGuard, onboardingGuard],
+          guards: [connectionGuard],
           children: [
             AutoRoute(
               page: BaseRoute.page,
               path: '',
+              guards: [onboardingGuard],
               children: [
                 AutoRoute(
                   path: '',
