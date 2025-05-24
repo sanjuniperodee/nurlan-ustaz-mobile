@@ -59,98 +59,95 @@ class _AllahNamesPageState extends State<AllahNamesPage> {
                   fit: BoxFit.cover,
                 ),
                 Positioned.fill(
-                    // left: 280.r,
-                    child: Opacity(
-                  opacity: 0.5,
-                  child: Lottie.asset('assets/animations/Book_V04.json',
-                      fit: BoxFit.cover),
-                )),
-                SizedBox(
-                  child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      child: Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              height: 56.h,
-                            ),
-                            CustomAppBar(
-                              title: 'Allah_names'.tr(),
-                            ),
-                            SizedBox(
-                              height: 36.h,
-                            ),
-                            SearchWidget(onChanged: (string) {
-                              BlocProvider.of<NamesOfAllahCubit>(context)
+                  // left: 280.r,
+                  child: Opacity(
+                    opacity: 0.5,
+                    child: Lottie.asset('assets/animations/Book_V04.json',
+                        fit: BoxFit.cover),
+                  ),
+                ),
+                Positioned.fill(
+                  left: 16.w,
+                  right: 16.w,
+                  child: CustomScrollView(
+                    slivers: [
+                      SliverList.list(
+                        children: [
+                          SizedBox(height: 56.h),
+                          CustomAppBar(
+                            title: 'Allah_names'.tr(),
+                          ),
+                          SizedBox(height: 36.h),
+                          SearchWidget(
+                            onChanged: (string) {
+                              context
+                                  .read<NamesOfAllahCubit>()
                                   .namesOfAllah(search: string);
-                            }),
-                            ListView.builder(
-                              itemCount: names.length,
-                              shrinkWrap: true,
-                              physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (context, index) {
-                                return Padding(
-                                  padding: const EdgeInsets.only(top: 8.0),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: AppColors.white,
-                                        borderRadius:
-                                            BorderRadius.circular(20)),
-                                    child: Theme(
-                                      data: theme,
-                                      child: ExpansionTile(
-                                        expandedCrossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        childrenPadding: const EdgeInsets.only(
-                                                left: 16, right: 16)
-                                            .r,
-                                        collapsedIconColor: AppColors.black,
-                                        iconColor: AppColors.black,
-                                        title: Text(
-                                          '${names[index].name ?? 'ERROR'}   ${names[index].arabic ?? 'ERROR'}',
-                                          style: getTextStyle(
-                                              CustomTextStyles.s16w400),
-                                        ),
-                                        children: <Widget>[
-                                          Text(
-                                            names[index].translation ?? 'ERROR',
-                                            style: getTextStyle(
-                                                    CustomTextStyles.s14w400)
-                                                .apply(color: AppColors.black),
-                                          ),
-                                          SizedBox(
-                                            height: 12.h,
-                                          ),
-                                          if (names[index].audio != null)
-                                            AudioItemWidget(
-                                              audioUrl:
-                                                  names[index].audio ?? '',
-                                            ),
-                                          SizedBox(
-                                            height: 12.h,
-                                          ),
-                                          Text(
-                                            names[index].description ?? 'ERROR',
-                                            style: getTextStyle(
-                                                    CustomTextStyles.s14w400)
-                                                .apply(color: AppColors.black),
-                                          ),
-                                          SizedBox(
-                                            height: 12.h,
-                                          ),
-                                        ],
-                                      ),
-                                    ),
+                            },
+                          ),
+                          SizedBox(height: 16.h),
+                        ],
+                      ),
+                      SliverList.builder(
+                        itemCount: names.length,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 8.0),
+                            child: Container(
+                              decoration: BoxDecoration(
+                                  color: AppColors.white,
+                                  borderRadius: BorderRadius.circular(20)),
+                              child: Theme(
+                                data: theme,
+                                child: ExpansionTile(
+                                  expandedCrossAxisAlignment:
+                                      CrossAxisAlignment.start,
+                                  childrenPadding:
+                                      const EdgeInsets.only(left: 16, right: 16)
+                                          .r,
+                                  collapsedIconColor: AppColors.black,
+                                  iconColor: AppColors.black,
+                                  title: Text(
+                                    '${names[index].name ?? 'ERROR'}   ${names[index].arabic ?? 'ERROR'}',
+                                    style:
+                                        getTextStyle(CustomTextStyles.s16w400),
                                   ),
-                                );
-                              },
-                            )
-                          ],
-                        ),
-                      )),
+                                  children: <Widget>[
+                                    Text(
+                                      names[index].translation ?? 'ERROR',
+                                      style:
+                                          getTextStyle(CustomTextStyles.s14w400)
+                                              .apply(color: AppColors.black),
+                                    ),
+                                    SizedBox(
+                                      height: 12.h,
+                                    ),
+                                    if (names[index].audio != null)
+                                      AudioItemWidget(
+                                        audioUrl: names[index].audio ?? '',
+                                      ),
+                                    SizedBox(
+                                      height: 12.h,
+                                    ),
+                                    Text(
+                                      names[index].description ?? 'ERROR',
+                                      style:
+                                          getTextStyle(CustomTextStyles.s14w400)
+                                              .apply(color: AppColors.black),
+                                    ),
+                                    SizedBox(
+                                      height: 12.h,
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                      SliverToBoxAdapter(child: SizedBox(height: 16.h)),
+                    ],
+                  ),
                 ),
               ],
             ),
