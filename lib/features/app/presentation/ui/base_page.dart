@@ -55,6 +55,7 @@ class BasePage extends StatelessWidget {
             BottomNavBarItem.asset(
               inactive: Assets.book2Svg,
               active: Assets.book_2Svg,
+              requiresAuth: true,
               label: 'Favourite',
             ),
             BottomNavBarItem.asset(
