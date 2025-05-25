@@ -118,12 +118,11 @@ class AppRouter extends RootStackRouter {
         AutoRoute(
           path: '/',
           page: AppFlow.page,
-          guards: [connectionGuard],
+          guards: [connectionGuard, onboardingGuard],
           children: [
             AutoRoute(
               page: BaseRoute.page,
               path: '',
-              guards: [onboardingGuard],
               children: [
                 AutoRoute(
                   path: '',
@@ -151,10 +150,6 @@ class AppRouter extends RootStackRouter {
             //   initial: true,
             //   page: SplashRoute.page,
             // ),
-            AutoRoute(
-              path: 'onboarding',
-              page: OnBoardingRoute.page,
-            ),
             AutoRoute(
               path: 'login',
               page: AuthorizationRoute.page,
@@ -412,6 +407,10 @@ class AppRouter extends RootStackRouter {
               page: PaymentCheckRoute.page,
             )
           ],
+        ),
+        AutoRoute(
+          path: '/onboarding',
+          page: OnBoardingRoute.page,
         ),
         CustomRoute(
           path: '/auth-required-dialog',
