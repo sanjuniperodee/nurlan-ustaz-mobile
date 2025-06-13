@@ -44,13 +44,13 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCQxX7a8fHl-mACtVzL1WHx2S2YMCPUAaQ',
-    appId: '1:53340493475:web:262e866301916779f1d116',
-    messagingSenderId: '53340493475',
-    projectId: 'nurlanustazdev0',
-    authDomain: 'nurlanustazdev0.firebaseapp.com',
-    storageBucket: 'nurlanustazdev0.appspot.com',
-    measurementId: 'G-ZGZ01Q17HR',
+    apiKey: 'AIzaSyA1RT9_0vJTuYBNqffMgb7ImOBao1mZUuA',
+    appId: '1:280448489679:web:0ae3230cb5e8bbf9d7bfba',
+    messagingSenderId: '280448489679',
+    projectId: 'nurlanustazanalytics',
+    authDomain: 'nurlanustazanalytics.firebaseapp.com',
+    storageBucket: 'nurlanustazanalytics.firebasestorage.app',
+    measurementId: 'G-NPPQBDR0TW',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
@@ -63,11 +63,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDmeow6oyX2cWv1OX6oj9NiEDBKmvKdXIw',
-    appId: '1:280448489679:ios:81108d4cc41893ccd7bfba',
+    appId: '1:280448489679:ios:cca1f0a70905dc78d7bfba',
     messagingSenderId: '280448489679',
     projectId: 'nurlanustazanalytics',
     storageBucket: 'nurlanustazanalytics.firebasestorage.app',
-    iosBundleId: 'com.nurlan.ustaz.flutter',
+    iosBundleId: 'com.nurlanustaz.app',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
@@ -78,4 +78,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'nurlanustazanalytics.firebasestorage.app',
     iosBundleId: 'com.nurlan.ustaz.flutter',
   );
+
 }

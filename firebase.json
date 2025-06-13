@@ -11,7 +11,7 @@
             "ios": {
                 "default": {
                     "projectId": "nurlanustazanalytics",
-                    "appId": "1:280448489679:ios:c55039c67d12876fd7bfba",
+                    "appId": "1:280448489679:ios:cca1f0a70905dc78d7bfba",
                     "uploadDebugSymbols": true,
                     "fileOutput": "ios/Runner/GoogleService-Info.plist"
                 }
@@ -29,8 +29,9 @@
                     "projectId": "nurlanustazanalytics",
                     "configurations": {
                         "android": "1:280448489679:android:0eabadf205f11bded7bfba",
-                        "ios": "1:280448489679:ios:c55039c67d12876fd7bfba",
-                        "macos": "1:280448489679:ios:81108d4cc41893ccd7bfba"
+                        "ios": "1:280448489679:ios:cca1f0a70905dc78d7bfba",
+                        "macos": "1:280448489679:ios:81108d4cc41893ccd7bfba",
+                        "web": "1:280448489679:web:0ae3230cb5e8bbf9d7bfba"
                     }
                 }
             }
