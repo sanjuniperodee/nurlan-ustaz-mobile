@@ -99,10 +99,15 @@ Future<void> main() async {
       await EasyLocalization.ensureInitialized();
       EasyLocalization.logger.enableLevels = [];
 
-      // TODO: notification service crashing the application when something goes wrong
-      // await NotificationService().init();
-
-      // FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+      // Notification service: wrapped in try/catch so a crash here never kills the app
+      try {
+        await NotificationService().init();
+        FirebaseMessaging.onBackgroundMessage(firebaseMessagingBackgroundHandler);
+      } catch (e, stack) {
+        if (!kIsWeb) {
+          FirebaseCrashlytics.instance.recordError(e, stack);
+        }
+      }
 
       runApp(const NurlanUstazApp());
     },

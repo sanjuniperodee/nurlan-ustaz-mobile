@@ -64,8 +64,8 @@ dependencies:
   firebase_analytics: ^11.4.6
   firebase_crashlytics: ^4.3.6
   firebase_messaging: ^15.2.6
-  firebase_dynamic_links: ^6.1.6
-  
+  firebase_dynamic_links: ^6.1.6  # DEPRECATED — remove once all deep links are migrated
+
   # ui
   pinput: ^5.0.1
   lottie: ^3.3.1

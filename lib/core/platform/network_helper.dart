@@ -3,15 +3,15 @@ mixin EndPoints {
   static const test2Host = 'dev.nurlanustaz.kz';
   static const prodHost = 'api.nurlanimam.kz';
 
-  // Local development — switch between local and prod by commenting/uncommenting
-  static const localHost = 'api.nurlanimam.kz';
-  static const apiUrl = 'https://$localHost/api';
-  static const wsUrl = 'wss://$localHost/api';
-  // Production:
+  // Active host — currently pointing to production
+  static const activeHost = 'api.nurlanimam.kz';
+  static const apiUrl = 'https://$activeHost/api';
+  static const wsUrl = 'wss://$activeHost/api';
+  // To switch to a different host, change activeHost above.
   // static const apiUrl = 'https://$prodHost/api';
   // static const wsUrl = 'wss://$prodHost/api';
 
-  static String imgUrlBuilder(String path) => 'https://$localHost$path';
+  static String imgUrlBuilder(String path) => 'https://$activeHost$path';
 
   static const String onBoarding = '/support/onboarding/';
   static const String appVersions = '/support/app-version/';
