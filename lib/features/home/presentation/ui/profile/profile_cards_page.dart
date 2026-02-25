@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
@@ -10,6 +11,7 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_butto
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/custom_snackbars.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/bloc/cards_cubit.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../../core/common/assets.dart';
 import '../../../../../core/common/colors.dart';
@@ -52,9 +54,17 @@ class _ProfileCardsPageState extends State<ProfileCardsPage> {
                   setState(() {
                     isLoadingButton = false;
                   });
-                  context.router.push(
-                    AddNewCardRoute(addCardUrl: url),
-                  );
+                  if (kIsWeb) {
+                    final uri = Uri.parse(url);
+                    if (await canLaunchUrl(uri)) {
+                      await launchUrl(uri, mode: LaunchMode.platformDefault);
+                    }
+                  } else {
+                    // On mobile platforms, open in in-app WebView screen
+                    context.router.push(
+                      AddNewCardRoute(addCardUrl: url),
+                    );
+                  }
                 }
               },
               text: 'new_card'.tr()),
