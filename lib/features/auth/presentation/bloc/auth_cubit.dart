@@ -21,7 +21,7 @@ class AuthCubit extends Cubit<Optional<TokenDTO>> with ConsumerBlocMixin {
   }
 
   Future<void> logout() async {
-    final token = authLocalDs.data.valueOrNull;
+    final token = authLocalDs.data.toNullable;
     if (token != null && token.refresh.isNotEmpty) {
       try {
         await authRemoteDs.blacklistRefresh(refresh: token.refresh);
