@@ -187,18 +187,62 @@ class _ProfileCardsPageState extends State<ProfileCardsPage> {
                                           ),
                                         ],
                                       ),
-                                      GestureDetector(
-                                          onTap: () async {
-                                            await BlocProvider.of<CardsCubit>(
-                                                    context)
-                                                .setDefaultCard(
-                                                    cardId: cards[index].id);
-                                          },
-                                          child: cards[index].isDefault!
-                                              ? SvgPicture.asset(
-                                                  Assets.radioOnSvg)
-                                              : SvgPicture.asset(
-                                                  Assets.radioCircleSvg))
+                                      Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          GestureDetector(
+                                            onTap: () async {
+                                              await BlocProvider.of<CardsCubit>(
+                                                      context)
+                                                  .setDefaultCard(
+                                                      cardId: cards[index].id);
+                                            },
+                                            child: cards[index].isDefault!
+                                                ? SvgPicture.asset(
+                                                    Assets.radioOnSvg)
+                                                : SvgPicture.asset(
+                                                    Assets.radioCircleSvg),
+                                          ),
+                                          SizedBox(width: 8.w),
+                                          GestureDetector(
+                                            onTap: () async {
+                                              final confirm = await showDialog<bool>(
+                                                context: context,
+                                                builder: (ctx) => AlertDialog(
+                                                  title: Text('delete_card'.tr()),
+                                                  content: Text(
+                                                    'delete_card_confirm'.tr(),
+                                                  ),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(ctx, false),
+                                                      child: Text('cancel'.tr()),
+                                                    ),
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(ctx, true),
+                                                      child: Text('delete'.tr()),
+                                                    ),
+                                                  ],
+                                                ),
+                                              );
+                                              if (confirm == true &&
+                                                  context.mounted) {
+                                                await BlocProvider.of<CardsCubit>(
+                                                        context)
+                                                    .removeCard(
+                                                        cardId: cards[index].id);
+                                              }
+                                            },
+                                            child: Icon(
+                                              Icons.delete_outline,
+                                              size: 24.r,
+                                              color: AppColors.grey1,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ],
                                   ),
                                 ),

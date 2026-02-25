@@ -200,6 +200,7 @@ class AppRouter extends RootStackRouter {
             AutoRoute(
               path: 'technical-support',
               page: TechnicalSupportRoute.page,
+              guards: [authGuard],
             ),
             AutoRoute(
               path: 'ramazan-check-list',
@@ -208,14 +209,17 @@ class AppRouter extends RootStackRouter {
             AutoRoute(
               path: 'add-new-card',
               page: AddNewCardRoute.page,
+              guards: [authGuard],
             ),
             AutoRoute(
               path: 'change-password',
               page: ChangePasswordRoute.page,
+              guards: [authGuard],
             ),
             AutoRoute(
               path: 'profile-notification',
               page: ProfileNotificationRoute.page,
+              guards: [authGuard],
             ),
             AutoRoute(
               path: 'faq',
@@ -229,6 +233,7 @@ class AppRouter extends RootStackRouter {
             AutoRoute(
               path: 'profile-cards',
               page: ProfileCardsRoute.page,
+              guards: [authGuard],
             ),
             AutoRoute(
               path: 'profile',
@@ -254,10 +259,12 @@ class AppRouter extends RootStackRouter {
             AutoRoute(
               path: 'payments',
               page: PaymentsRoute.page,
+              guards: [authGuard],
             ),
             AutoRoute(
               path: 'profile-info',
               page: ProfileInfoRoute.page,
+              guards: [authGuard],
             ),
             AutoRoute(
               path: 'ustaz-aitinizh',

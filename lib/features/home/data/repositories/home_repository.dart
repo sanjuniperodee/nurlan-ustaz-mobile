@@ -151,6 +151,7 @@ abstract class HomeRepository {
   Future<Either<Failure, List<CardDTO>>> getCards({String? search});
   Future<Either<Failure, String>> getAddCArdUrl();
   Future<Either<Failure, void>> setDefaultCard({required int cardId});
+  Future<Either<Failure, void>> removeCard({required int cardId});
 }
 
 @Singleton(as: HomeRepository)
@@ -869,6 +870,16 @@ class HomeRepositoryImpl extends HomeRepository {
   Future<Either<Failure, void>> setDefaultCard({required int cardId}) async {
     try {
       await remoteDS.setDefaultCard(cardId: cardId);
+      return const Right(null);
+    } on ServerException catch (e) {
+      return Left(ServerFailure(message: e.message));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> removeCard({required int cardId}) async {
+    try {
+      await remoteDS.removeCard(cardId: cardId);
       return const Right(null);
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message));

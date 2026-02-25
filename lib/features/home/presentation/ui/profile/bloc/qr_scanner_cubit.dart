@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/repositories/home_repository.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -14,9 +15,13 @@ class QrScannerCubit extends Cubit<QrScannerState> {
   final HomeRepository _homeRepository;
   final SharedPreferences sharedPreferences;
 
+  /// Allowed ticket URL prefix (same host as API so dev/prod both work).
+  static String get _useTicketPrefix =>
+      '${EndPoints.apiUrl}/banner/use-ticket';
+
   Future<void> checkTicket({required String url}) async {
     emit(const QrScannerState.loading());
-    if (!url.contains('https://dev.nurlanustaz.kz/api/banner/use-ticket')) {
+    if (!url.contains(_useTicketPrefix)) {
       emit(const QrScannerState.error(
           message: 'Произошла ошибка при сканировании QR-кода'));
       emit(const QrScannerState.initial());

@@ -26,6 +26,7 @@ mixin EndPoints {
   static const String activateUser = '/users/activation/';
   static const String createToken = '/jwt/create/';
   static const String refreshToken = '/jwt/refresh/';
+  static const String blacklistToken = '/jwt/blacklist/';
   static const String verifyToken = '/jwt/verify/';
 
   static const String resetPassword = '/users/reset_password/';
@@ -77,4 +78,6 @@ mixin EndPoints {
   //cards
   static const String cards = '/payment/cards/';
   static const String addCard = '/payment/cards/add/';
+  /// DELETE cards/<id>/remove/ — delete card by DB id (token stays server-side).
+  static String cardRemove(int cardId) => '$cards$cardId/remove/';
 }

@@ -16,6 +16,9 @@ abstract class AuthRemoteDs {
 
   Future<TokenDTO> refreshJwt(TokenDTO tokens);
 
+  /// Blacklist refresh token on logout (optional; do not block logout on failure).
+  Future<void> blacklistRefresh({required String refresh});
+
   Future<void> activateUser({required ActivateUserDTO activateUserDTO});
 
   Future<void> deleteUser();
@@ -174,5 +177,13 @@ class AuthRemoteDsImpl extends AuthRemoteDs {
     );
 
     return TokenDTO.fromJson(response.data);
+  }
+
+  @override
+  Future<void> blacklistRefresh({required String refresh}) async {
+    await dio.post(
+      EndPoints.blacklistToken,
+      data: {'refresh': refresh},
+    );
   }
 }

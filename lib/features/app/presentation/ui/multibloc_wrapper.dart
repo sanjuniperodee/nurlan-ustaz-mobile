@@ -89,6 +89,7 @@ class MultiblocWrapper extends StatelessWidget {
           create: (context) => AuthCubit(
             authLocalDs: GetIt.I(),
             profileLocalDs: GetIt.I(),
+            authRemoteDs: GetIt.I(),
           ),
         ),
         BlocProvider<ChangePassCubit>(

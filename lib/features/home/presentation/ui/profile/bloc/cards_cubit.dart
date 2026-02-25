@@ -50,6 +50,27 @@ class CardsCubit extends Cubit<CardsState> {
       });
     });
   }
+
+  Future<void> removeCard({required int cardId}) async {
+    emit(const CardsState.loading());
+    await homeRepo.removeCard(cardId: cardId).then((value) {
+      value.fold((l) {
+        emit(CardsState.error(message: mapFailureToMessage(l)));
+        homeRepo.getCards().then((v) {
+          v.fold((_) {}, (r) => emit(CardsState.loaded(cards: r.toList())));
+        });
+      }, (_) {
+        homeRepo.getCards().then((v) {
+          v.fold((l) {
+            emit(CardsState.error(message: mapFailureToMessage(l)));
+            emit(const CardsState.loaded(cards: []));
+          }, (r) {
+            emit(CardsState.loaded(cards: r.toList()));
+          });
+        });
+      });
+    });
+  }
 }
 
 @freezed

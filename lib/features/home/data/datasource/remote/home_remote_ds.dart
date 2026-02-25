@@ -112,6 +112,7 @@ abstract class HomeRemoteDs {
   Future<List<CardDTO>> getCards({String? search});
   Future<String> getAddCardUrl();
   Future<void> setDefaultCard({required int cardId});
+  Future<void> removeCard({required int cardId});
 }
 
 @Injectable(as: HomeRemoteDs)
@@ -374,4 +375,8 @@ class HomeRemoteDsImpl extends HomeRemoteDs {
   @override
   Future<void> setDefaultCard({required int cardId}) =>
       paymentDs.setDefaultCard(cardId: cardId);
+
+  @override
+  Future<void> removeCard({required int cardId}) =>
+      paymentDs.removeCard(cardId: cardId);
 }

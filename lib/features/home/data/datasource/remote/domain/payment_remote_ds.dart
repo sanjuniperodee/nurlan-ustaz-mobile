@@ -8,6 +8,7 @@ abstract class PaymentRemoteDs {
   Future<List<CardDTO>> getCards({String? search});
   Future<String> getAddCardUrl();
   Future<void> setDefaultCard({required int cardId});
+  Future<void> removeCard({required int cardId});
 }
 
 @Injectable(as: PaymentRemoteDs)
@@ -68,6 +69,19 @@ class PaymentRemoteDsImpl implements PaymentRemoteDs {
       throw ClientServerException(
         message: (e.response!.data as Map<String, dynamic>)['message'] as String,
       );
+    }
+  }
+
+  @override
+  Future<void> removeCard({required int cardId}) async {
+    try {
+      await dio.delete(EndPoints.cardRemove(cardId));
+    } on DioException catch (e) {
+      final data = e.response?.data;
+      final message = data is Map<String, dynamic>
+          ? (data['message']?.toString() ?? e.message ?? 'Unknown error')
+          : (e.message ?? 'Unknown error');
+      throw ClientServerException(message: message);
     }
   }
 }
