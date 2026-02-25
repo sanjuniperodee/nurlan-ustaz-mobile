@@ -5,13 +5,13 @@ mixin EndPoints {
 
   // Local development — switch between local and prod by commenting/uncommenting
   static const localHost = 'api.nurlanimam.kz';
-  static const apiUrl = 'http://$localHost/api';
-  static const wsUrl = 'ws://$localHost/api';
+  static const apiUrl = 'https://$localHost/api';
+  static const wsUrl = 'wss://$localHost/api';
   // Production:
   // static const apiUrl = 'https://$prodHost/api';
   // static const wsUrl = 'wss://$prodHost/api';
 
-  static String imgUrlBuilder(String path) => 'http://$localHost$path';
+  static String imgUrlBuilder(String path) => 'https://$localHost$path';
 
   static const String onBoarding = '/support/onboarding/';
   static const String appVersions = '/support/app-version/';
