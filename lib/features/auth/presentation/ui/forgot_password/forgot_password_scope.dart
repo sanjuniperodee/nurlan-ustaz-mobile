@@ -15,7 +15,7 @@ class ForgotPasswordScope extends AutoRouter {
       return MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => GetUserIdByEmailBloc(authRemoteDs: GetIt.I()),
+            create: (context) => GetUserIdByEmailBloc(authRepository: GetIt.I()),
           ),
           //
           BlocListener<GetUserIdByEmailBloc, GetUserIdByEmailState>(

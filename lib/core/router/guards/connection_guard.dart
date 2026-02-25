@@ -8,12 +8,20 @@ final class ConnectionGuard extends AutoRouteGuard {
 
   @override
   void onNavigation(NavigationResolver resolver, StackRouter router) {
-    if (connectionService.data) return resolver.next();
+    final resolved = [false];
+    void doNext() {
+      if (resolved[0]) return;
+      resolved[0] = true;
+      resolver.next();
+    }
+
+    if (connectionService.data) {
+      doNext();
+      return;
+    }
     unawaited(resolver.redirectUntil(const NoConnectionRoute()));
     unawaited(
-      connectionService.firstWhere((element) => element).then((value) {
-        resolver.next();
-      }),
+      connectionService.firstWhere((element) => element).then((_) => doNext()),
     );
   }
 }

@@ -245,6 +245,8 @@
   "error_payment": "Төлем қатесі",
   "success_payment": "Сәтті төлем",
   "add_card_title": "Картаны қосу",
+  "add_card_web_hint": "Картаны қосу сілтемесін браузерде ашыңыз.",
+  "add_card_web_button": "Картаны қосу парағын ашу",
   "empty_cards": "Төлем жасау үшін жаңа карта жасаңыз",
   "retry": "Қайталау",
   "the_field_cannot_be_empty": "Өріс бос болуы мүмкін емес",

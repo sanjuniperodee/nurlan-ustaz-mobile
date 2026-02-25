@@ -1,6 +1,5 @@
-import 'dart:io';
-
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:nurlan_ustaz_flutter/core/platform/platform_check.dart' show isMacOS;
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,7 +22,7 @@ final class SecureStorage {
   final FlutterSecureStorage secureStorage;
 
   Future<String?> read(String key) async {
-    if (Platform.isMacOS) {
+    if (isMacOS) {
       return preferences.getString(key);
     }
 
@@ -31,7 +30,7 @@ final class SecureStorage {
   }
 
   Future<void> delete(String key) async {
-    if (Platform.isMacOS) {
+    if (isMacOS) {
       await preferences.remove(key);
       return;
     }
@@ -40,7 +39,7 @@ final class SecureStorage {
   }
 
   Future<void> write({required String key, required String value}) async {
-    if (Platform.isMacOS) {
+    if (isMacOS) {
       await preferences.setString(key, value);
       return;
     }

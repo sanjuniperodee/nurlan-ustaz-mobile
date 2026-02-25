@@ -21,7 +21,7 @@ class PillarsCubit extends Cubit<PillarsState> {
 
     failureOrUser.fold(
       (l) {
-        emit(PillarsState.error(message: mapFailureToMessageBack(l)));
+        emit(PillarsState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(PillarsState.loaded(pillars: r.toSet().toList()));

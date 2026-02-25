@@ -39,7 +39,7 @@ class PaymentTickCubit extends Cubit<PaymentTickState> {
 
     failureOrUser.fold(
       (l) {
-        emit(PaymentTickState.error(message: mapFailureToMessageBack(l)));
+        emit(PaymentTickState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         listTus =
@@ -63,7 +63,7 @@ class PaymentTickCubit extends Cubit<PaymentTickState> {
         page: 1, isFirstCall: true, search: search);
     result.fold(
       (l) {
-        emit(PaymentTickState.error(message: mapFailureToMessageBack(l)));
+        emit(PaymentTickState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         final purchasedList =
@@ -93,7 +93,7 @@ class PaymentTickCubit extends Cubit<PaymentTickState> {
     );
     failureOrUser.fold(
       (l) {
-        emit(PaymentTickState.error(message: mapFailureToMessageBack(l)));
+        emit(PaymentTickState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         listHome = r;

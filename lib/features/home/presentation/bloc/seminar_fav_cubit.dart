@@ -18,7 +18,7 @@ class SeminarFavCubit extends Cubit<SeminarFavState> {
     final failureOrUser = await _homeRepository.seminarFavorite(id: id);
     failureOrUser.fold(
       (l) {
-        emit(SeminarFavState.errorState(message: mapFailureToMessageBack(l)));
+        emit(SeminarFavState.errorState(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(const SeminarFavState.loaded());

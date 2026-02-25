@@ -19,7 +19,7 @@ class DhikrsFavoriteCubit extends Cubit<DhikrsFavoriteState> {
     failureOrUser.fold(
       (l) {
         emit(DhikrsFavoriteState.errorState(
-            message: mapFailureToMessageBack(l)));
+            message: mapFailureToMessage(l)));
       },
       (r) {
         emit(const DhikrsFavoriteState.loaded());

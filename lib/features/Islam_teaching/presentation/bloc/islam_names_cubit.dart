@@ -27,7 +27,7 @@ class IslamNamesCubit extends Cubit<IslamNamesState> {
         search: search, isSaved: isSaved, page: page, isFirstCall: isFirstCall);
     failureOrUser.fold(
       (l) {
-        emit(IslamNamesState.error(message: mapFailureToMessageBack(l)));
+        emit(IslamNamesState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(IslamNamesState.loaded(islam: r.toSet().toList()));
@@ -48,7 +48,7 @@ class IslamNamesCubit extends Cubit<IslamNamesState> {
         search: search, isSaved: isSaved, page: page, isFirstCall: isFirstCall);
     failureOrUser.fold(
       (l) {
-        emit(IslamNamesState.error(message: mapFailureToMessageBack(l)));
+        emit(IslamNamesState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(IslamNamesState.loaded(islam: r.toSet().toList()));

@@ -15,32 +15,29 @@ class AyatOfDayCubit extends Cubit<AyatOfDayState> {
     this._islamTeachingRepository,
   ) : super(const AyatOfDayState.initial());
 
-  late AyatDTO ayat;
+  AyatDTO? _ayat;
   List<PillarsDTO> fatyas = [];
-  Future<void> auatOfDay() async {
+
+  /// Loads both ayat of the day and fatwas sequentially to avoid race conditions.
+  Future<void> loadData() async {
     emit(const AyatOfDayState.loading());
 
-    final failureOrUser = await _islamTeachingRepository.ayatOfDay();
-
-    failureOrUser.fold(
+    final ayatResult = await _islamTeachingRepository.ayatOfDay();
+    final ayat = ayatResult.fold(
       (l) {
-        emit(AyatOfDayState.error(message: mapFailureToMessageBack(l)));
+        emit(AyatOfDayState.error(message: mapFailureToMessage(l)));
+        return null;
       },
-      (r) {
-        ayat = r;
-        emit(AyatOfDayState.loaded(ayat: ayat, pillars: fatyas));
-      },
+      (r) => r,
     );
-  }
+    if (ayat == null) return;
 
-  Future<void> fatya() async {
-    emit(const AyatOfDayState.loading());
+    _ayat = ayat;
 
-    final failureOrUser = await _islamTeachingRepository.fatwas();
-
-    failureOrUser.fold(
+    final fatwasResult = await _islamTeachingRepository.fatwas();
+    fatwasResult.fold(
       (l) {
-        emit(AyatOfDayState.error(message: mapFailureToMessageBack(l)));
+        emit(AyatOfDayState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         fatyas = r;

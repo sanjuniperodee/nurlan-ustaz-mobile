@@ -30,7 +30,7 @@ class DuasCubit extends Cubit<DuasState> {
         isFirstCall: isFirstCall);
     failureOrUser.fold(
       (l) {
-        emit(DuasState.error(message: mapFailureToMessageBack(l)));
+        emit(DuasState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(DuasState.loaded(duha: r.toSet().toList()));

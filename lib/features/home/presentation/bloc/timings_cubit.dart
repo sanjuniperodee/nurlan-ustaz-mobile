@@ -34,10 +34,15 @@ class TimingsCubit extends Cubit<TimingsState> {
   ];
 
   Future<void> timings(double? lat, double? long) async {
+    // debug log
+    // ignore: avoid_print
+    print('TimingsCubit: timings() called with lat=$lat, long=$long');
     emit(const TimingsState.loading());
     final GeonamesDTO? geo = _homeLocalDs.getGeoFromCacheNull();
 
     if (geo != null) {
+      // ignore: avoid_print
+      print('TimingsCubit: using geo from cache ${geo.lat}, ${geo.lng}');
       await fetchTimingsAndHandleNotifications(
         lat: double.parse(geo.lat ?? lat.toString()),
         long: double.parse(geo.lng ?? long.toString()),
@@ -57,33 +62,46 @@ class TimingsCubit extends Cubit<TimingsState> {
     required double long,
     GeonamesDTO? geo,
   }) async {
-    final failureOrUser = await _homeRepository.timings(lat: lat, long: long);
+    // ignore: avoid_print
+    print('TimingsCubit: fetchTimingsAndHandleNotifications lat=$lat long=$long');
+    try {
+      final failureOrUser = await _homeRepository.timings(lat: lat, long: long);
 
-    failureOrUser.fold(
-      (l) {
-        emit(TimingsState.error(message: mapFailureToMessageBack(l)));
-      },
-      (r) async {
-        Prefs prefs = Prefs();
-        final String? dev = await prefs.getDeviceToken();
-        final result = await _homeRepository.getNotificationDevice(
-            registrationId: dev ?? '');
-
-        result.fold((l) {}, (notification) {
-          handlePrayerTimesNotification(notification, r);
-        });
-
-        emit(TimingsState.loaded(
-          not: r,
-          geo: geo ??
+      failureOrUser.fold(
+        (l) {
+          // ignore: avoid_print
+          print('TimingsCubit: timings failure -> ${mapFailureToMessage(l)}');
+          emit(TimingsState.error(message: mapFailureToMessage(l)));
+        },
+        (r) {
+          // ignore: avoid_print
+          print('TimingsCubit: timings success, emitting loaded');
+          final geoData = geo ??
               const GeonamesDTO(
                 name: 'Алматы',
                 lat: '43.25',
                 lng: '76.91667',
-              ),
-        ));
-      },
-    );
+              );
+          emit(TimingsState.loaded(not: r, geo: geoData));
+
+          // Настройка уведомлений — не блокируем UI
+          // ignore: avoid_print
+          print('TimingsCubit: starting async notification fetch');
+          Prefs().getDeviceToken().then((dev) {
+            _homeRepository
+                .getNotificationDevice(registrationId: dev ?? '')
+                .then((result) {
+              result.fold((_) {}, (notification) {
+                handlePrayerTimesNotification(notification, r);
+              });
+            });
+          });
+        },
+      );
+    } catch (_) {
+      emit(const TimingsState.error(
+          message: 'Не удалось загрузить время намаза'));
+    }
   }
 
   void handlePrayerTimesNotification(

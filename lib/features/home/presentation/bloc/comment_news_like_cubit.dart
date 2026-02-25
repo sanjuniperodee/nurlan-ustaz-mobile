@@ -22,7 +22,7 @@ class CommentNewsLikeCubit extends Cubit<CommentNewsLikeState> {
     failureOrUser.fold(
       (l) {
         emit(CommentNewsLikeState.errorState(
-            message: mapFailureToMessageBack(l)));
+            message: mapFailureToMessage(l)));
       },
       (r) {
         emit(const CommentNewsLikeState.loaded());

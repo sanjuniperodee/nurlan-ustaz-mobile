@@ -19,7 +19,7 @@ class CommentReportCubit extends Cubit<CommentReportState> {
     failureOrUser.fold(
       (l) {
         emit(
-            CommentReportState.errorState(message: mapFailureToMessageBack(l)));
+            CommentReportState.errorState(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(const CommentReportState.loaded());

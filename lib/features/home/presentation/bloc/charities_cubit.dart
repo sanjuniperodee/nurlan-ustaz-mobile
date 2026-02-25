@@ -25,7 +25,7 @@ class CharitiesCubit extends Cubit<CharitiesState> {
         await _homeRepository.charities(page: page, isFirstCall: isFirstCall);
     failureOrUser.fold(
       (l) {
-        emit(CharitiesState.error(message: mapFailureToMessageBack(l)));
+        emit(CharitiesState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(CharitiesState.loaded(charities: r));

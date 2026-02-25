@@ -26,7 +26,7 @@ class CommentSemCubit extends Cubit<CommentSemState> {
         page: page, isFirstCall: isFirstCall, id: id);
     failureOrUser.fold(
       (l) {
-        emit(CommentSemState.error(message: mapFailureToMessageBack(l)));
+        emit(CommentSemState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(CommentSemState.loaded(comments: r));

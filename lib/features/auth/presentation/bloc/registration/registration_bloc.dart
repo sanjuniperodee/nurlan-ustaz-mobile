@@ -1,22 +1,26 @@
 import 'package:dry_bloc/dry_bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:nurlan_ustaz_flutter/features/auth/data/datasource/remote/auth_remote_ds.dart';
+import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/user_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/data/repository/auth_repository.dart';
 
 typedef RegistrationState = DrySuccessDataState<UserDto, Object>;
 
 final class RegistrationBloc
     extends DrySuccessDataBloc<UserDto, UserDto, Object> {
   RegistrationBloc({
-    required this.authRemoteDs,
+    required this.authRepository,
     super.initialState,
   }) {
     handle<UserDto>((userDTO) async {
-      final p = await authRemoteDs.postUser(userDTO: userDTO);
-      return userDTO.copyWith(id: p.id);
+      final result = await authRepository.postUser(userDTO: userDTO);
+      return result.fold(
+        (l) => throw Exception(mapFailureToMessage(l)),
+        (p) => userDTO.copyWith(id: p.id),
+      );
     });
   }
 
   @protected
-  final AuthRemoteDs authRemoteDs;
+  final AuthRepository authRepository;
 }

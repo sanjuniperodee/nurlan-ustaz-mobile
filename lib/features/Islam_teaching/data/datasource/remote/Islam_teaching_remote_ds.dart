@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/exception.dart';
+import 'package:nurlan_ustaz_flutter/core/platform/dio_helper.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/ayat_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/data/model/namaz_dto.dart';
@@ -76,6 +77,9 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
     try {
       final response = await dio.get(
         EndPoints.ayatOfDay,
+        // Публичный эндпоинт – не шлём авторизацию, чтобы не ловить 401
+        // при битом токене и не блокировать загрузку страницы.
+        options: DioHelperMixin.skipAuthOption,
       );
       return AyatDTO.fromJson(
         (response.data as Map<String, dynamic>),
@@ -126,13 +130,22 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
   Future<bool> surahFavorite({required int id}) async {
     try {
       final response = await dio.post(
-        '${EndPoints.surahs}/$id/toggle_save/',
+        '${EndPoints.surahs}$id/toggle_save/',
+        options: DioHelperMixin.requiresAuthorizationOption,
       );
+      if (response.statusCode == 412) {
+        throw ClientServerException(
+          message: response.statusMessage ?? 'Please log in to save.',
+        );
+      }
       return true;
     } on DioException catch (e) {
+      final data = e.response?.data;
+      final message = data is Map<String, dynamic>
+          ? (data['message'] as String?)
+          : null;
       throw ClientServerException(
-        message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        message: message ?? e.response?.statusMessage ?? e.message ?? 'Request failed',
       );
     }
   }
@@ -141,13 +154,22 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
   Future<bool> islamNamesFavorite({required int id}) async {
     try {
       final response = await dio.post(
-        '${EndPoints.muslimNames}/$id/toggle_save/',
+        '${EndPoints.muslimNames}$id/toggle_save/',
+        options: DioHelperMixin.requiresAuthorizationOption,
       );
+      if (response.statusCode == 412) {
+        throw ClientServerException(
+          message: response.statusMessage ?? 'Please log in to save.',
+        );
+      }
       return true;
     } on DioException catch (e) {
+      final data = e.response?.data;
+      final message = data is Map<String, dynamic>
+          ? (data['message'] as String?)
+          : null;
       throw ClientServerException(
-        message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        message: message ?? e.response?.statusMessage ?? e.message ?? 'Request failed',
       );
     }
   }
@@ -156,13 +178,22 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
   Future<bool> dhikrsFavorite({required int id}) async {
     try {
       final response = await dio.post(
-        '${EndPoints.dhikrs}/$id/toggle_save/',
+        '${EndPoints.dhikrs}$id/toggle_save/',
+        options: DioHelperMixin.requiresAuthorizationOption,
       );
+      if (response.statusCode == 412) {
+        throw ClientServerException(
+          message: response.statusMessage ?? 'Please log in to save.',
+        );
+      }
       return true;
     } on DioException catch (e) {
+      final data = e.response?.data;
+      final message = data is Map<String, dynamic>
+          ? (data['message'] as String?)
+          : null;
       throw ClientServerException(
-        message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        message: message ?? e.response?.statusMessage ?? e.message ?? 'Request failed',
       );
     }
   }
@@ -171,13 +202,22 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
   Future<bool> duasFavorite({required int id}) async {
     try {
       final response = await dio.post(
-        '${EndPoints.duha}/$id/toggle_save/',
+        '${EndPoints.duha}$id/toggle_save/',
+        options: DioHelperMixin.requiresAuthorizationOption,
       );
+      if (response.statusCode == 412) {
+        throw ClientServerException(
+          message: response.statusMessage ?? 'Please log in to save.',
+        );
+      }
       return true;
     } on DioException catch (e) {
+      final data = e.response?.data;
+      final message = data is Map<String, dynamic>
+          ? (data['message'] as String?)
+          : null;
       throw ClientServerException(
-        message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        message: message ?? e.response?.statusMessage ?? e.message ?? 'Request failed',
       );
     }
   }
@@ -236,6 +276,7 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
     try {
       final response = await dio.get(
         EndPoints.pillars,
+        options: DioHelperMixin.skipAuthOption,
       );
       return ((response.data as List<dynamic>))
           .map((e) => PillarsDTO.fromJson(e))
@@ -263,6 +304,7 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
       }
       final response = await dio.get(
         EndPoints.surahs,
+        options: isSaved == true ? null : DioHelperMixin.skipAuthOption,
         queryParameters: {
           'page[number]': currentPage,
           // 'page[size]': 6,
@@ -307,6 +349,7 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
       }
       final response = await dio.get(
         EndPoints.muslimNames,
+        options: isSaved == true ? null : DioHelperMixin.skipAuthOption,
         queryParameters: {
           if (currentPage != null) 'page[number]': currentPage,
           'page[size]': 6,
@@ -363,6 +406,7 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
       }
       final response = await dio.get(
         EndPoints.muslimNames,
+        options: isSaved == true ? null : DioHelperMixin.skipAuthOption,
         queryParameters: {
           if (currentPage != null) 'page[number]': currentPage,
           'page[size]': 6,
@@ -419,6 +463,7 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
       }
       final response = await dio.get(
         EndPoints.dhikrs,
+        options: isSaved == true ? null : DioHelperMixin.skipAuthOption,
         queryParameters: {
           'page[number]': currentPage,
           // 'page[size]': 6,
@@ -463,6 +508,7 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
       }
       final response = await dio.get(
         EndPoints.duha,
+        options: isSaved == true ? null : DioHelperMixin.skipAuthOption,
         queryParameters: {
           'page[number]': currentPage,
           // 'page[size]': 6,
@@ -498,16 +544,47 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
     try {
       final response = await dio.get(
         EndPoints.fatwas,
+        options: DioHelperMixin.skipAuthOption,
       );
-      return ((response.data as List<dynamic>))
-          .map((e) => PillarsDTO.fromJson(e))
+      final data = response.data;
+
+      // Бэкенд может вернуть либо список, либо обёртку с results/data.
+      List<dynamic> items;
+      if (data is List) {
+        items = data;
+      } else if (data is Map<String, dynamic>) {
+        final inner = data['results'] ?? data['data'] ?? data['fatwas'];
+        if (inner is List) {
+          items = inner;
+        } else {
+          throw ClientServerException(
+            message: 'Invalid fatwas response format',
+          );
+        }
+      } else {
+        throw ClientServerException(
+          message: 'Invalid fatwas response type',
+        );
+      }
+
+      return items
+          .map((e) => PillarsDTO.fromJson(e as Map<String, dynamic>))
           .toList();
     } on DioException catch (e) {
       throw ClientServerException(
-        message:
-            (e.response!.data as Map<String, dynamic>)['message'] as String,
+        message: _extractErrorMessage(e),
       );
     }
+  }
+
+  static String _extractErrorMessage(DioException e) {
+    final data = e.response?.data;
+    if (data == null) return e.message ?? 'Unknown error';
+    if (data is Map<String, dynamic>) {
+      return data['message']?.toString() ?? data['detail']?.toString() ?? 'Unknown error';
+    }
+    if (data is String) return data;
+    return data.toString();
   }
 
   @override
@@ -516,6 +593,7 @@ class IslamTeachingRemoteDsImpl extends IslamTeachingRemoteDs {
     try {
       final response = await dio.get(
         EndPoints.namesOfAllah,
+        options: isSaved == true ? null : DioHelperMixin.skipAuthOption,
         queryParameters: {
           if (isSaved != null) 'is_saved': isSaved,
           if (search != null) 'search': search,

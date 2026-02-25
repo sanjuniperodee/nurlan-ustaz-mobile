@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
 import 'package:nurlan_ustaz_flutter/core/services/connection_service.dart';
@@ -21,16 +19,21 @@ class NoConnectionInterceptor extends QueuedInterceptor {
     DioException err,
     ErrorInterceptorHandler handler,
   ) async {
-    final error = err.error;
-    // If an exception was thrown, saying that there is no connection,
-    // wait until the connection is established, and repeat the request
-    if (error is SocketException) {
-      if (error.osError?.message == 'No address associated with hostname') {
-        await connectionService.firstWhere((hasConnection) => hasConnection);
-        final options = err.requestOptions;
+    // Retry ONLY when there was no internet connection and it is restored.
+    // If the backend host is unreachable (wrong URL/port), blindly retrying
+    // on every `connectionError` will lead to an infinite loop and the UI
+    // will stay in the loading state forever.
+    if (err.type == DioExceptionType.connectionError) {
+      // Re-check actual connectivity state.
+      final hasConnection = await connectionService.checkConnection();
 
-        return handler.resolve(
-          await client.request(
+      // If we were offline, wait until we go online and retry once.
+      if (!hasConnection) {
+        await connectionService.firstWhere((isOnline) => isOnline);
+
+        final options = err.requestOptions;
+        try {
+          final response = await client.request(
             options.path,
             data: options.data,
             options: Options(
@@ -39,10 +42,17 @@ class NoConnectionInterceptor extends QueuedInterceptor {
               contentType: options.contentType,
             ),
             queryParameters: options.queryParameters,
-          ),
-        );
+          );
+
+          return handler.resolve(response);
+        } on DioException catch (e) {
+          // If retry also fails, propagate the error so higher layers
+          // can emit an error state instead of hanging.
+          return handler.next(e);
+        }
       }
     }
+
     return handler.next(err);
   }
 

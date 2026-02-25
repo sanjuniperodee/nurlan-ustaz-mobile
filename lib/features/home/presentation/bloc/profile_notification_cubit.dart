@@ -13,6 +13,31 @@ import '../../data/models/notification_item_dto.dart';
 
 part 'profile_notification_cubit.freezed.dart';
 
+/// Maps notification key to copyWith. Explicit switch avoids fragile dynamic key.
+NotificationDTO _applyNotificationToggle(
+    NotificationDTO dto, String key, bool value) {
+  switch (key) {
+    case 'dreams':
+      return dto.copyWith(customDreams: value);
+    case 'prayer_times':
+      return dto.copyWith(prayerTimes: value);
+    case 'ayat_of_the_day':
+      return dto.copyWith(ayatOfTheDay: value);
+    case 'live_broadcasts':
+      return dto.copyWith(liveBroadcasts: value);
+    case 'tell_me_ustaz':
+      return dto.copyWith(tellMeUstaz: value);
+    case 'checklist_results':
+      return dto.copyWith(checklistResults: value);
+    case 'seminar_tickets':
+      return dto.copyWith(seminarTickets: value);
+    case 'new_content':
+      return dto.copyWith(newContent: value);
+    default:
+      return dto;
+  }
+}
+
 @singleton
 class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
   final HomeRepository _homeRepository;
@@ -40,63 +65,11 @@ class ProfileNotificationCubit extends Cubit<ProfileNotificationState> {
   Future<void> switchNotify(
       NotificationItemDTO notificationItemDTO, bool value) async {
     emit(const ProfileNotificationState.loading());
-    log(notificationItemDTO.title!);
-    final notification = notificationDeviceDTO.toJson();
-    notification[notificationItemDTO.title!] = value;
-    notificationDeviceDTO = NotificationDTO.fromJson(notification);
+    final key = notificationItemDTO.title;
+    if (key == null || key.isEmpty) return;
 
-    // void handleType(String namazTime) {
-    //
-    //
-    //   switch (namazTime) {
-    //     case 'dreams':
-    //       notificationDeviceDTO =
-    //           notificationDeviceDTO.copyWith(customDreams: value);
-    //       // Code for case1
-    //       break;
-    //     case 'prayer_times':
-    //       notificationDeviceDTO =
-    //           notificationDeviceDTO.copyWith(prayerTimes: value);
-    //       // Code for case2
-    //       break;
-    //     case 'ayat_of_the_day':
-    //       notificationDeviceDTO =
-    //           notificationDeviceDTO.copyWith(ayatOfTheDay: value);
-    //       // Code for case3
-    //       break;
-    //     case 'live_broadcasts':
-    //       notificationDeviceDTO =
-    //           notificationDeviceDTO.copyWith(liveBroadcasts: value);
-    //       // Code for case3
-    //       break;
-    //     case 'tell_me_ustaz':
-    //       notificationDeviceDTO =
-    //           notificationDeviceDTO.copyWith(tellMeUstaz: value);
-    //       // Code for case3
-    //       break;
-    //     case 'checklist_results':
-    //       notificationDeviceDTO =
-    //           notificationDeviceDTO.copyWith(checklistResults: value);
-    //       // Code for case3
-    //       break;
-    //     case 'seminar_tickets':
-    //       notificationDeviceDTO =
-    //           notificationDeviceDTO.copyWith(seminarTickets: value);
-    //       // Code for case3
-    //       break;
-    //     case 'new_content':
-    //       notificationDeviceDTO =
-    //           notificationDeviceDTO.copyWith(newContent: value);
-    //       // Code for case3
-    //       break;
-    //
-    //     default:
-    //       // Code for default case
-    //       break;
-    //   }
-    // }
-
-    //handleType(notificationItemDTO.title!);
+    notificationDeviceDTO = _applyNotificationToggle(
+        notificationDeviceDTO, key, value);
 
     emit(
       ProfileNotificationState.initial(

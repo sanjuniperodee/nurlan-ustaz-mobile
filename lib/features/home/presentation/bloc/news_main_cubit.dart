@@ -24,7 +24,7 @@ class NewsMainCubit extends Cubit<NewsMainState> {
         isSaved: isSaved, currentPage: currentPage);
     failureOrUser.fold(
       (l) {
-        emit(NewsMainState.error(message: mapFailureToMessageBack(l)));
+        emit(NewsMainState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(NewsMainState.loaded(res: r));

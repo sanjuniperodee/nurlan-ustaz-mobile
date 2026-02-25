@@ -1,7 +1,8 @@
 import 'package:dry_bloc/dry_bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:nurlan_ustaz_flutter/features/auth/data/datasource/remote/auth_remote_ds.dart';
+import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/token_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/data/repository/auth_repository.dart';
 
 class SetNewPasswordEvent {
   const SetNewPasswordEvent({
@@ -23,24 +24,30 @@ class SetNewPasswordEvent {
 typedef SetNewPasswordState = DryEmptyState<Object>;
 
 class SetNewPasswordBloc extends DryEmptyBloc<SetNewPasswordEvent, Object> {
-  SetNewPasswordBloc({required this.authRemoteDs}) {
-    handle<SetNewPasswordEvent>(
-      (event) async {
-        await authRemoteDs.resetPasswordConfirm(
-          sessionId: event.sessionId,
-          newPassword: event.newPassword,
-          reNewPassword: event.reNewPassword,
-        );
-        await authRemoteDs.createJwt(
-          tokenCreateDTO: TokenCreateDTO(
-            email: event.email,
-            password: event.newPassword,
-          ),
-        );
-      },
-    );
+  SetNewPasswordBloc({required this.authRepository}) {
+    handle<SetNewPasswordEvent>((event) async {
+      final confirmResult = await authRepository.resetPasswordConfirm(
+        sessionId: event.sessionId,
+        newPassword: event.newPassword,
+        reNewPassword: event.reNewPassword,
+      );
+      confirmResult.fold(
+        (l) => throw Exception(mapFailureToMessage(l)),
+        (_) {},
+      );
+      final jwtResult = await authRepository.createJwt(
+        tokenCreateDTO: TokenCreateDTO(
+          email: event.email,
+          password: event.newPassword,
+        ),
+      );
+      jwtResult.fold(
+        (l) => throw Exception(mapFailureToMessage(l)),
+        (_) {},
+      );
+    });
   }
 
   @protected
-  final AuthRemoteDs authRemoteDs;
+  final AuthRepository authRepository;
 }

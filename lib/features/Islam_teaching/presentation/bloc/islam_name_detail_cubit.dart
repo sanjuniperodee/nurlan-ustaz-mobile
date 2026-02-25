@@ -23,7 +23,7 @@ class IslamNameDetailCubit extends Cubit<IslamNameDetailState> {
     );
     failureOrUser.fold(
       (l) {
-        emit(IslamNameDetailState.error(message: mapFailureToMessageBack(l)));
+        emit(IslamNameDetailState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         res = r;

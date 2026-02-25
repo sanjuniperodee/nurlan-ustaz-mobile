@@ -19,7 +19,7 @@ class GeonamesCubit extends Cubit<GeonamesState> {
     final failureOrUser = await _homeRepository.geoNames(name: name);
     failureOrUser.fold(
       (l) {
-        emit(GeonamesState.error(message: mapFailureToMessageBack(l)));
+        emit(GeonamesState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(GeonamesState.loaded(geo: r));

@@ -39,7 +39,7 @@ class CodeVerificationForgotPage extends StatefulWidget
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => VerifyForgotCodeBloc(authRemoteDs: GetIt.I()),
+          create: (context) => VerifyForgotCodeBloc(authRepository: GetIt.I()),
         ),
         //
         BlocListener<VerifyForgotCodeBloc, VerifyForgotCodeState>(

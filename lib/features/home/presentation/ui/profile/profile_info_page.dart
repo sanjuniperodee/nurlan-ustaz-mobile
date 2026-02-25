@@ -46,14 +46,14 @@ class ProfileInfoPage extends StatefulWidget implements AutoRouteWrapper {
       providers: [
         BlocProvider(
           create: (context) => UpdateProfileBloc(
-            authRemoteDs: GetIt.I(),
+            authRepository: GetIt.I(),
             profileLocalDs: context.read(),
           ),
         ),
         BlocProvider(
           create: (context) => DeleteProfileBloc(
             authLocalDs: GetIt.I(),
-            authRemoteDs: GetIt.I(),
+            authRepository: GetIt.I(),
           ),
         ),
         //

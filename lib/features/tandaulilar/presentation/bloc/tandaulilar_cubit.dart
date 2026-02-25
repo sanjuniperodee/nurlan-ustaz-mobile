@@ -51,32 +51,32 @@ class TandaulilarCubit extends Cubit<TandaulilarState> {
       isFirstCall: isFirstCall,
     );
 
+    List<ResultHomeDTO>? loadedLives;
+    List<ResultHomeDTO>? loadedNews;
+    List<ResultHomeDTO>? loadedSeminars;
+    String? errorMessage;
+
     failureOrLives.fold(
-      (l) {
-        emit(TandaulilarState.error(message: mapFailureToMessageBack(l)));
-      },
-      (r) {
-        lives = r;
-      },
+      (l) => errorMessage ??= mapFailureToMessage(l),
+      (r) => loadedLives = r,
     );
-
     failureOrNews.fold(
-      (l) {
-        emit(TandaulilarState.error(message: mapFailureToMessageBack(l)));
-      },
-      (r) {
-        news = r;
-      },
+      (l) => errorMessage ??= mapFailureToMessage(l),
+      (r) => loadedNews = r,
+    );
+    failureOrSeminars.fold(
+      (l) => errorMessage ??= mapFailureToMessage(l),
+      (r) => loadedSeminars = r,
     );
 
-    failureOrSeminars.fold(
-      (l) {
-        emit(TandaulilarState.error(message: mapFailureToMessageBack(l)));
-      },
-      (r) {
-        seminars = r;
-      },
-    );
+    if (errorMessage != null) {
+      emit(TandaulilarState.error(message: errorMessage!));
+      return;
+    }
+
+    lives = loadedLives!;
+    news = loadedNews!;
+    seminars = loadedSeminars!;
     log('pppp-${lives.map((e) => e.cover).toList().toString() + news.map((e) => e.cover).toList().toString() + seminars.map((e) => e.cover).toList().toString()}');
 
     emit(TandaulilarState.loaded(lives: lives, news: news, seminars: seminars));
@@ -93,7 +93,7 @@ class TandaulilarCubit extends Cubit<TandaulilarState> {
         search: search, isSaved: true, page: page, isFirstCall: isFirstCall);
     failureOrUser.fold(
       (l) {
-        emit(TandaulilarState.error(message: mapFailureToMessageBack(l)));
+        emit(TandaulilarState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         lives = r;
@@ -114,7 +114,7 @@ class TandaulilarCubit extends Cubit<TandaulilarState> {
         search: search, isSaved: true, page: page, isFirstCall: isFirstCall);
     failureOrUser.fold(
       (l) {
-        emit(TandaulilarState.error(message: mapFailureToMessageBack(l)));
+        emit(TandaulilarState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         news = r;
@@ -139,7 +139,7 @@ class TandaulilarCubit extends Cubit<TandaulilarState> {
     );
     failureOrUser.fold(
       (l) {
-        emit(TandaulilarState.error(message: mapFailureToMessageBack(l)));
+        emit(TandaulilarState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         seminars = r;

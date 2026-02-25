@@ -1,9 +1,10 @@
-import 'dart:io';
-
 import 'package:dartz/dartz.dart';
+import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/exception.dart';
+import 'package:nurlan_ustaz_flutter/core/platform/platform_check.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
+import 'package:nurlan_ustaz_flutter/core/model/freedom_payment_dto.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/cache_helper/prefs.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/platform_helper.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/datasource/local/home_local_ds.dart';
@@ -132,7 +133,7 @@ abstract class HomeRepository {
   Future<Either<Failure, List<QuestionDTO>>> questions(
       {required int id, String? search, int? page, bool? isFirstCall});
 
-  Future<Either<Failure, void>> createSeminarPayment(
+  Future<Either<Failure, FreedomPaymentDTO>> createSeminarPayment(
       {required int id, required String backUrl});
 
   Future<Either<Failure, NotificationDTO>> notificationDevice({
@@ -154,13 +155,37 @@ abstract class HomeRepository {
 
 @Singleton(as: HomeRepository)
 class HomeRepositoryImpl extends HomeRepository {
-  final HomeRemoteDs remoteDS;
-  final HomeLocalDs localDS;
-
   HomeRepositoryImpl(
     this.localDS, {
     required this.remoteDS,
   });
+
+  final HomeRemoteDs remoteDS;
+  final HomeLocalDs localDS;
+
+  // Pagination state (moved from datasource)
+  List<ResultHomeDTO> _newsCache = [];
+  int? _newsTotalPages;
+
+  List<ResultHomeDTO> _seminarCache = [];
+  int? _seminarTotalPages;
+
+  List<ResultHomeDTO> _livesCache = [];
+  int? _livesTotalPages;
+
+  List<ResultHomeDTO> _charitiesCache = [];
+  int? _charitiesTotalPages;
+
+  List<ResultHomeDTO> _commentSemCache = [];
+  int? _commentSemTotalPages;
+  int? _commentSemId;
+
+  List<ResultHomeDTO> _commentNewsCache = [];
+  int? _commentNewsTotalPages;
+  int? _commentNewsId;
+
+  List<MediaDTO> _servicesCache = [];
+  int? _servicesTotalPages;
 
   @override
   Future<Either<Failure, bool>> livesFavorite({required int id}) async {
@@ -198,37 +223,52 @@ class HomeRepositoryImpl extends HomeRepository {
     int? currentPage,
   }) async {
     try {
-      if (isSaved == null) {
-        Prefs prefs = Prefs();
-        final String? cacheToken = await prefs.getDeviceToken();
-        final String? firebaseToken =
-            await NotificationService().getDeviceToken();
+      // Регистрация пуш‑устройства не должна ломать загрузку новостей.
+      // На платформах, где пуши не поддерживаются (macOS/web), полностью
+      // пропускаем этот блок, т.к. некоторые реализации
+      // NotificationService().getDeviceToken() могут никогда не завершаться
+      // и тогда главная страница вечно висит в состоянии загрузки.
+      if (isSaved == null && (isIOS || isAndroid)) {
+        try {
+          final prefs = Prefs();
+          final String? cacheToken = await prefs.getDeviceToken();
+          final String? firebaseToken =
+              await NotificationService().getDeviceToken();
 
-        final type = PlatformHelper.operatingSystem;
+          final type = PlatformHelper.operatingSystem;
 
-        if (cacheToken == null) {
-          await remoteDS.postNotificationDevice(
-            notification: NotificationDeviceDTO(
-              registrationId: firebaseToken,
-              type: type,
-            ),
-          );
-          await prefs.saveDeviceToken(firebaseToken!);
-        } else if (cacheToken != firebaseToken) {
-          NotificationDTO notificationDeviceDTO =
-              NotificationDTO(registrationId: firebaseToken, type: type);
-          await remoteDS
-              .patchNotificationDevice(
-                  registrationId: cacheToken,
-                  notification: notificationDeviceDTO)
-              .then((value) => prefs.saveDeviceToken(firebaseToken!));
-        } else {
-          NotificationDTO notificationDeviceDTO =
-              NotificationDTO(registrationId: firebaseToken, type: type);
-          await remoteDS.patchNotificationDevice(
-            registrationId: cacheToken,
-            notification: notificationDeviceDTO, // Define an empty notification
-          );
+          if (cacheToken == null) {
+            await remoteDS.postNotificationDevice(
+              notification: NotificationDeviceDTO(
+                registrationId: firebaseToken,
+                type: type,
+              ),
+            );
+            if (firebaseToken != null) {
+              await prefs.saveDeviceToken(firebaseToken);
+            }
+          } else if (cacheToken != firebaseToken) {
+            final notificationDeviceDTO =
+                NotificationDTO(registrationId: firebaseToken, type: type);
+            await remoteDS
+                .patchNotificationDevice(
+                    registrationId: cacheToken,
+                    notification: notificationDeviceDTO)
+                .then((value) async {
+              if (firebaseToken != null) {
+                await prefs.saveDeviceToken(firebaseToken);
+              }
+            });
+          } else {
+            final notificationDeviceDTO =
+                NotificationDTO(registrationId: firebaseToken, type: type);
+            await remoteDS.patchNotificationDevice(
+              registrationId: cacheToken,
+              notification: notificationDeviceDTO,
+            );
+          }
+        } catch (_) {
+          // Игнорируем любые ошибки регистрации устройства.
         }
       }
 
@@ -237,6 +277,8 @@ class HomeRepositoryImpl extends HomeRepository {
       return Right(res);
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message));
+    } catch (e) {
+      return Left(ServerFailure(message: e.toString()));
     }
   }
 
@@ -265,7 +307,7 @@ class HomeRepositoryImpl extends HomeRepository {
   }
 
   @override
-  Future<Either<Failure, void>> createSeminarPayment(
+  Future<Either<Failure, FreedomPaymentDTO>> createSeminarPayment(
       {required int id, required String backUrl}) async {
     try {
       final result =
@@ -283,6 +325,18 @@ class HomeRepositoryImpl extends HomeRepository {
     try {
       final TimingsDTO res = await remoteDS.timings(lat: lat, long: long);
       return Right(res);
+    } on DioException catch (e) {
+      final err = e.error;
+      if (err is ServerException) {
+        return Left(ServerFailure(message: err.message));
+      }
+      String? msg;
+      if (e.response?.data is Map<String, dynamic>) {
+        final d = e.response!.data as Map<String, dynamic>;
+        msg = d['message']?.toString() ?? d['detail']?.toString();
+      }
+      return Left(ServerFailure(
+          message: msg ?? e.message ?? 'Ошибка загрузки времени намаза'));
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message));
     }
@@ -456,12 +510,28 @@ class HomeRepositoryImpl extends HomeRepository {
     bool? isFirstCall,
   }) async {
     try {
-      final List<ResultHomeDTO> lives = await remoteDS.lives(
-          search: search,
-          isSaved: isSaved,
-          currentPage: page,
-          isFirstCall: isFirstCall);
-      return Right(lives);
+      if (isFirstCall ?? false) {
+        _livesCache = [];
+        _livesTotalPages = null;
+      }
+      final currentPage = page ?? 1;
+      if (_livesTotalPages != null &&
+          currentPage >= _livesTotalPages! &&
+          currentPage != 1) {
+        return Right(List.from(_livesCache));
+      }
+      final res = await remoteDS.livesPage(
+        search: search,
+        isSaved: isSaved,
+        page: currentPage,
+      );
+      _livesTotalPages = res.totalPages;
+      if (currentPage == 1) {
+        _livesCache = List.from(res.items);
+      } else {
+        _livesCache.addAll(res.items);
+      }
+      return Right(List.from(_livesCache));
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message));
     }
@@ -492,7 +562,7 @@ class HomeRepositoryImpl extends HomeRepository {
         final result =
             await getNotificationDevice(registrationId: deviceToken ?? '');
         result.fold((l) async {
-          if (Platform.isIOS || Platform.isAndroid) {
+          if (isIOS || isAndroid) {
             await remoteDS.postNotificationDevice(
                 notification: NotificationDeviceDTO(
               registrationId: deviceToken,
@@ -501,7 +571,7 @@ class HomeRepositoryImpl extends HomeRepository {
           }
         }, (r) async {
           if (r.registrationId != deviceToken) {
-            if (Platform.isIOS || Platform.isAndroid) {
+            if (isIOS || isAndroid) {
               await remoteDS.postNotificationDevice(
                   notification: NotificationDeviceDTO(
                 registrationId: deviceToken,
@@ -512,12 +582,28 @@ class HomeRepositoryImpl extends HomeRepository {
         });
       }
 
-      final List<ResultHomeDTO> news = await remoteDS.news(
-          search: search,
-          isSaved: isSaved,
-          currentPage: page,
-          isFirstCall: isFirstCall);
-      return Right(news);
+      if (isFirstCall ?? false) {
+        _newsCache = [];
+        _newsTotalPages = null;
+      }
+      final currentPage = page ?? 1;
+      if (_newsTotalPages != null &&
+          currentPage >= _newsTotalPages! &&
+          currentPage != 1) {
+        return Right(List.from(_newsCache));
+      }
+      final res = await remoteDS.newsPage(
+        search: search,
+        isSaved: isSaved,
+        page: currentPage,
+      );
+      _newsTotalPages = res.totalPages;
+      if (currentPage == 1) {
+        _newsCache = List.from(res.items);
+      } else {
+        _newsCache.addAll(res.items);
+      }
+      return Right(List.from(_newsCache));
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message));
     }
@@ -529,9 +615,25 @@ class HomeRepositoryImpl extends HomeRepository {
     bool? isFirstCall,
   }) async {
     try {
-      final List<ResultHomeDTO> charities =
-          await remoteDS.charities(currentPage: page, isFirstCall: isFirstCall);
-      return Right(charities);
+      if (isFirstCall ?? false) {
+        _charitiesCache = [];
+        _charitiesTotalPages = null;
+      }
+      final currentPage = page ?? 1;
+      if (_charitiesTotalPages != null &&
+          currentPage >= _charitiesTotalPages! &&
+          currentPage != 1) {
+        return Right(List.from(_charitiesCache));
+      }
+      final res =
+          await remoteDS.charitiesPage(page: currentPage);
+      _charitiesTotalPages = res.totalPages;
+      if (currentPage == 1) {
+        _charitiesCache = List.from(res.items);
+      } else {
+        _charitiesCache.addAll(res.items);
+      }
+      return Right(List.from(_charitiesCache));
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message));
     }
@@ -544,9 +646,28 @@ class HomeRepositoryImpl extends HomeRepository {
     int? id,
   }) async {
     try {
-      final List<ResultHomeDTO> charities = await remoteDS.commentNews(
-          currentPage: page, isFirstCall: isFirstCall, id: id);
-      return Right(charities);
+      if (id == null) {
+        return Right([]);
+      }
+      if (isFirstCall ?? false || _commentNewsId != id) {
+        _commentNewsCache = [];
+        _commentNewsTotalPages = null;
+        _commentNewsId = id;
+      }
+      final currentPage = page ?? 1;
+      if (_commentNewsTotalPages != null &&
+          currentPage >= _commentNewsTotalPages! &&
+          currentPage != 1) {
+        return Right(List.from(_commentNewsCache));
+      }
+      final res = await remoteDS.commentNewsPage(id: id, page: currentPage);
+      _commentNewsTotalPages = res.totalPages;
+      if (currentPage == 1) {
+        _commentNewsCache = List.from(res.items);
+      } else {
+        _commentNewsCache.addAll(res.items);
+      }
+      return Right(List.from(_commentNewsCache));
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message));
     }
@@ -559,9 +680,28 @@ class HomeRepositoryImpl extends HomeRepository {
     int? id,
   }) async {
     try {
-      final List<ResultHomeDTO> charities = await remoteDS.commentSeminar(
-          currentPage: page, isFirstCall: isFirstCall, id: id);
-      return Right(charities);
+      if (id == null) {
+        return Right([]);
+      }
+      if (isFirstCall ?? false || _commentSemId != id) {
+        _commentSemCache = [];
+        _commentSemTotalPages = null;
+        _commentSemId = id;
+      }
+      final currentPage = page ?? 1;
+      if (_commentSemTotalPages != null &&
+          currentPage >= _commentSemTotalPages! &&
+          currentPage != 1) {
+        return Right(List.from(_commentSemCache));
+      }
+      final res = await remoteDS.commentSeminarPage(id: id, page: currentPage);
+      _commentSemTotalPages = res.totalPages;
+      if (currentPage == 1) {
+        _commentSemCache = List.from(res.items);
+      } else {
+        _commentSemCache.addAll(res.items);
+      }
+      return Right(List.from(_commentSemCache));
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message));
     }
@@ -573,9 +713,24 @@ class HomeRepositoryImpl extends HomeRepository {
     bool? isFirstCall,
   }) async {
     try {
-      final List<MediaDTO> services =
-          await remoteDS.services(currentPage: page, isFirstCall: isFirstCall);
-      return Right(services);
+      if (isFirstCall ?? false) {
+        _servicesCache = [];
+        _servicesTotalPages = null;
+      }
+      final currentPage = page ?? 1;
+      if (_servicesTotalPages != null &&
+          currentPage >= _servicesTotalPages! &&
+          currentPage != 1) {
+        return Right(List.from(_servicesCache));
+      }
+      final res = await remoteDS.servicesPage(page: currentPage);
+      _servicesTotalPages = res.totalPages;
+      if (currentPage == 1) {
+        _servicesCache = List.from(res.items);
+      } else {
+        _servicesCache.addAll(res.items);
+      }
+      return Right(List.from(_servicesCache));
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message));
     }
@@ -590,13 +745,29 @@ class HomeRepositoryImpl extends HomeRepository {
     bool? isPurchased,
   }) async {
     try {
-      final List<ResultHomeDTO> seminar = await remoteDS.seminar(
-          search: search,
-          isSaved: isSaved,
-          currentPage: page,
-          isPurchased: isPurchased,
-          isFirstCall: isFirstCall);
-      return Right(seminar);
+      if (isFirstCall ?? false) {
+        _seminarCache = [];
+        _seminarTotalPages = null;
+      }
+      final currentPage = page ?? 1;
+      if (_seminarTotalPages != null &&
+          currentPage >= _seminarTotalPages! &&
+          currentPage != 1) {
+        return Right(List.from(_seminarCache));
+      }
+      final res = await remoteDS.seminarPage(
+        search: search,
+        isSaved: isSaved,
+        isPurchased: isPurchased,
+        page: currentPage,
+      );
+      _seminarTotalPages = res.totalPages;
+      if (currentPage == 1) {
+        _seminarCache = List.from(res.items);
+      } else {
+        _seminarCache.addAll(res.items);
+      }
+      return Right(List.from(_seminarCache));
     } on ServerException catch (e) {
       return Left(ServerFailure(message: e.message));
     }

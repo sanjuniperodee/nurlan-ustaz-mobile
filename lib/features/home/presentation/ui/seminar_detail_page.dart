@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:auto_route/annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -25,6 +26,7 @@ import '../../../auth/presentation/widgets/pdf_screen.dart';
 @RoutePage()
 class SeminarDetailPage extends StatefulWidget {
   final String? search;
+  @PathParam('id')
   final int id;
 
   const SeminarDetailPage({super.key, this.search, required this.id});
@@ -79,11 +81,10 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
               );
             }
             final result = state.res;
-            print('seminar-platniy-${result.free}');
-            bool scroll = result.media!.length != 1;
-            isFavorite = result.isSaved!;
-            isLiked = result.isLiked!;
-            likeCount = result.likesCount!;
+            bool scroll = (result.media?.length ?? 0) != 1;
+            isFavorite = result.isSaved ?? false;
+            isLiked = result.isLiked ?? false;
+            likeCount = result.likesCount ?? 0;
 
             // final bool isPaid = result.isPurchased == true;
             return Stack(
@@ -101,7 +102,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                       });
                     },
                   ),
-                  items: result.media!.map((i) {
+                  items: (result.media ?? []).map((i) {
                     return Builder(
                       builder: (BuildContext context) {
                         return Hero(
@@ -241,7 +242,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                       InkWell(
                                           onTap: () {
                                             context.router.push(
-                                              CommentSemRoute(id: result.id!),
+                                              CommentSemRoute(id: result.id ?? 0),
                                             );
                                           },
                                           child: SvgPicture.asset(
@@ -289,14 +290,20 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                             ),
                             result.free == true
                                 ? const SizedBox()
-                                : result.startTime!.isAfter(DateTime.now())
-                                    ? result.availableTicket! > 0
+                                : (result.startTime != null &&
+                                        result.startTime!.isAfter(DateTime.now()))
+                                    ? (result.availableTicket ?? 0) > 0
                                         ? AppButton(
                                             isLoading: isLoading,
                                             onTap: () {
+                                              final pageContext = context;
+                                              final paymentCubit = BlocProvider.of<
+                                                  CreateSeminarPaymentCubit>(
+                                                  pageContext);
+                                              final seminarId = result.id ?? 0;
                                               showDialog(
                                                   context: context,
-                                                  builder: (context) {
+                                                  builder: (dialogContext) {
                                                     return Dialog(
                                                       shape: const RoundedRectangleBorder(
                                                           borderRadius:
@@ -330,7 +337,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                                                   .center,
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
-                                                                  .center,
+                                                              .center,
                                                           children: [
                                                             Container(
                                                               height: 64,
@@ -387,34 +394,39 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                                                                 height: 44,
                                                                 onPressed:
                                                                     () async {
+                                                                  if (!pageContext.mounted) return;
                                                                   setState(() {
                                                                     isLoading =
                                                                         true;
                                                                   });
-                                                                  context.router
-                                                                      .maybePop();
-
-                                                                  await BlocProvider.of<
-                                                                              CreateSeminarPaymentCubit>(
-                                                                          context)
-                                                                      .createSeminarPayment(
-                                                                    result.id!,
-                                                                    context,
-                                                                  )
-                                                                      .whenComplete(
-                                                                          () {
-                                                                    setState(
-                                                                        () {
-                                                                      isLoading =
-                                                                          false;
-                                                                    });
-                                                                  });
+                                                                  try {
+                                                                    await paymentCubit.createSeminarPayment(
+                                                                      seminarId,
+                                                                      pageContext,
+                                                                    );
+                                                                  } catch (e, st) {
+                                                                    debugPrint('Seminar payment error: $e $st');
+                                                                    if (pageContext.mounted) {
+                                                                      buildErrorCustomSnackBar(
+                                                                        pageContext,
+                                                                        'error_payment'.tr(),
+                                                                      );
+                                                                    }
+                                                                  } finally {
+                                                                    if (mounted) {
+                                                                      setState(() =>
+                                                                          isLoading = false);
+                                                                      if (dialogContext.mounted) {
+                                                                        Navigator.of(dialogContext).pop();
+                                                                      }
+                                                                    }
+                                                                  }
                                                                 },
                                                                 color: AppColors
                                                                     .orange,
                                                                 child: Center(
-                                                                  child: Text(
-                                                                      '${result.price!.toInt()} тг ${'dream_pay'.tr()}',
+                                                                      child: Text(
+                                                                      '${(result.price ?? 0).toInt()} тг ${'dream_pay'.tr()}',
                                                                       style: getTextStyle(CustomTextStyles.s14w400).copyWith(
                                                                           fontFamily: FontTypes
                                                                               .SFPro
@@ -525,7 +537,7 @@ class _SeminarDetailPageState extends State<SeminarDetailPage> {
                             GestureDetector(
                               onTap: () {
                                 context.router.push(
-                                  CommentSemRoute(id: result.id!),
+                                  CommentSemRoute(id: result.id ?? 0),
                                 );
                               },
                               child: Text(

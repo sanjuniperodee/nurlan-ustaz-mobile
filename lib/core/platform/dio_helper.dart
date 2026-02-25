@@ -1,19 +1,24 @@
 import 'package:dio/dio.dart';
 
 mixin DioHelperMixin {
-  static const requiresAuthorizationKey = 'requiresAuthorization';
-  static const requiresAuthorizationHeader = {requiresAuthorizationKey: true};
+  /// Stored in Options.extra only (never sent to server) to avoid CORS.
+  static const requiresAuthorizationExtraKey = 'requiresAuthorization';
   static Options requiresAuthorizationOption = Options(
-    headers: requiresAuthorizationHeader,
+    extra: {requiresAuthorizationExtraKey: true},
   );
+
+  /// Use for public endpoints (AllowAny) to avoid 401 when token is expired.
+  /// JWTAuthentication fails before AllowAny is checked.
+  static const skipAuthExtraKey = 'skipAuth';
+  static Options skipAuthOption = Options(extra: {skipAuthExtraKey: true});
 }
 
 extension DioOptionsExtension on Options {
   Options addRequiresAuthorizationHeader() {
     return copyWith(
-      headers: {
-        ...?headers,
-        ...DioHelperMixin.requiresAuthorizationHeader,
+      extra: {
+        ...?extra,
+        DioHelperMixin.requiresAuthorizationExtraKey: true,
       },
     );
   }
@@ -21,6 +26,10 @@ extension DioOptionsExtension on Options {
 
 extension DioRequestOptionsExtension on RequestOptions {
   bool get doesRequireAuthorization {
-    return headers[DioHelperMixin.requiresAuthorizationKey] == true;
+    return extra[DioHelperMixin.requiresAuthorizationExtraKey] == true;
+  }
+
+  bool get shouldSkipAuth {
+    return extra[DioHelperMixin.skipAuthExtraKey] == true;
   }
 }

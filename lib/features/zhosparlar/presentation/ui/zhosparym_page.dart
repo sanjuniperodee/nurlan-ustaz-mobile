@@ -11,6 +11,7 @@ import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
+import 'package:nurlan_ustaz_flutter/core/widgets/action_result_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/event_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/presentation/bloc/checklist_cubit.dart';
@@ -131,6 +132,23 @@ class _ZhosparymPageState extends State<ZhosparymPage> {
         }
       },
       builder: (context, state) {
+        if (state is ZhosparymErrorState) {
+          return ActionResultPage.error(
+            automaticallyImplyCloseButton: false,
+            automaticallyImplyPopButton: false,
+            content: state.message,
+            bottom: AppButton(
+              onTap: () {
+                BlocProvider.of<ZhosparymCubit>(context).getCheckList().then(
+                    (value) {
+                  BlocProvider.of<ZhosparymCubit>(context)
+                      .calendarEvents(DateTime.now());
+                });
+              },
+              text: context.tr('retry'),
+            ),
+          );
+        }
         if (state is ZhosparymInitialState) {
           final events = state.events;
           final checklist = state.checklist;

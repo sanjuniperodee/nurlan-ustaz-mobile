@@ -25,7 +25,7 @@ class AblutionsCubit extends Cubit<AblutionsState> {
 
     failureOrUser.fold(
       (l) {
-        emit(AblutionsState.error(message: mapFailureToMessageBack(l)));
+        emit(AblutionsState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         abl = r;
@@ -42,7 +42,7 @@ class AblutionsCubit extends Cubit<AblutionsState> {
 
     failureOrUser.fold(
       (l) {
-        emit(AblutionsState.error(message: mapFailureToMessageBack(l)));
+        emit(AblutionsState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         pre = r;

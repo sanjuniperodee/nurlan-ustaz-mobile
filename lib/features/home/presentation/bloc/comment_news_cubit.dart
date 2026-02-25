@@ -26,7 +26,7 @@ class CommentNewsCubit extends Cubit<CommentNewsState> {
         page: page, isFirstCall: isFirstCall, id: id);
     failureOrUser.fold(
       (l) {
-        emit(CommentNewsState.error(message: mapFailureToMessageBack(l)));
+        emit(CommentNewsState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(CommentNewsState.loaded(comments: r));

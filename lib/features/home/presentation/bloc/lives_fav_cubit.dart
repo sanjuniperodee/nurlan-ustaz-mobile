@@ -17,7 +17,7 @@ class LivesFavCubit extends Cubit<LivesFavState> {
     final failureOrUser = await _homeRepository.livesFavorite(id: id);
     failureOrUser.fold(
       (l) {
-        emit(LivesFavState.errorState(message: mapFailureToMessageBack(l)));
+        emit(LivesFavState.errorState(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(const LivesFavState.loaded());

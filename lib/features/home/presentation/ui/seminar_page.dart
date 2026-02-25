@@ -66,7 +66,7 @@ class _SeminarPageState extends State<SeminarPage> {
               listOfSeminars = state.news;
               listOfFav.clear();
               for (var element in listOfSeminars) {
-                listOfFav.add(element.isSaved!);
+                listOfFav.add(element.isSaved ?? false);
               }
 
               // setState(() {});

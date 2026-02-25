@@ -31,7 +31,7 @@ class RegistrationTab extends StatefulWidget implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider(
-      create: (context) => RegistrationBloc(authRemoteDs: GetIt.I()),
+      create: (context) => RegistrationBloc(authRepository: GetIt.I()),
       child: this,
     );
   }

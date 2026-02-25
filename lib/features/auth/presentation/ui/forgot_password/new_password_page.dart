@@ -36,7 +36,7 @@ class NewPasswordPage extends StatefulWidget implements AutoRouteWrapper {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (context) => SetNewPasswordBloc(authRemoteDs: GetIt.I()),
+          create: (context) => SetNewPasswordBloc(authRepository: GetIt.I()),
         ),
         //
         BlocListener<SetNewPasswordBloc, SetNewPasswordState>(

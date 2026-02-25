@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/exception.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
+import 'package:nurlan_ustaz_flutter/core/model/freedom_payment_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/data/datasource/remote/tus_zhoru_remote_ds.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/data/models/tus_zhoru_dto.dart';
@@ -23,9 +24,9 @@ abstract class TusZhoruRepository {
       {String? search, int? page, bool? isFirstCall});
   Future<Either<Failure, TusZhoruDTO>> createTusZhoru(
       {required String title, required String description});
-  Future<Either<Failure, String>> createCustomTusZhoruPayment(
-      {required int id});
-  Future<Either<Failure, String>> createTusZhoruPayment(
+  Future<Either<Failure, FreedomPaymentDTO>> createCustomTusZhoruPayment(
+      {required int id, required String backUrl});
+  Future<Either<Failure, FreedomPaymentDTO>> createTusZhoruPayment(
       {required int id, required String backUrl});
   Future<Either<Failure, bool>> tusZhoruFavorite({required int id});
   Future<Either<Failure, TusZhoruDTO>> getTusZhoruById({required int id});
@@ -107,11 +108,13 @@ class TusZhoruRepositoryImpl extends TusZhoruRepository {
   }
 
   @override
-  Future<Either<Failure, String>> createCustomTusZhoruPayment({
+  Future<Either<Failure, FreedomPaymentDTO>> createCustomTusZhoruPayment({
     required int id,
+    required String backUrl,
   }) async {
     try {
-      final result = await remoteDS.createCustomTusZhoruPayment(id: id);
+      final result =
+          await remoteDS.createCustomTusZhoruPayment(id: id, backUrl: backUrl);
 
       return Right(result);
     } on ServerException catch (e) {
@@ -120,10 +123,10 @@ class TusZhoruRepositoryImpl extends TusZhoruRepository {
   }
 
   @override
-  Future<Either<Failure, String>> createTusZhoruPayment(
+  Future<Either<Failure, FreedomPaymentDTO>> createTusZhoruPayment(
       {required int id, required String backUrl}) async {
     try {
-      final String result =
+      final result =
           await remoteDS.createTusZhoruPayment(id: id, backUrl: backUrl);
 
       return Right(result);

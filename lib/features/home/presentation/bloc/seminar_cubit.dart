@@ -34,7 +34,7 @@ class SeminarCubit extends Cubit<SeminarState> {
     );
     failureOrUser.fold(
       (l) {
-        emit(SeminarState.error(message: mapFailureToMessageBack(l)));
+        emit(SeminarState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(SeminarState.loaded(news: r.toSet().toList()));

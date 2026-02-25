@@ -17,7 +17,7 @@ class NewsFavCubit extends Cubit<NewsFavState> {
     final failureOrUser = await _homeRepository.newsFavorite(id: id);
     failureOrUser.fold(
       (l) {
-        emit(NewsFavState.errorState(message: mapFailureToMessageBack(l)));
+        emit(NewsFavState.errorState(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(const NewsFavState.loaded());

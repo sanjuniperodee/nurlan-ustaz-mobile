@@ -23,7 +23,7 @@ class DuaDetailCubit extends Cubit<DuaDetailState> {
     );
     failureOrUser.fold(
       (l) {
-        emit(DuaDetailState.error(message: mapFailureToMessageBack(l)));
+        emit(DuaDetailState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         res = r;

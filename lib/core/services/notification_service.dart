@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:easy_localization/easy_localization.dart';
+import 'package:nurlan_ustaz_flutter/core/platform/platform_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -385,7 +385,7 @@ class NotificationService {
     _messaging = FirebaseMessaging.instance;
     _messaging.getInitialMessage().then((value) => log('Message is $value'));
 
-    if (Platform.isIOS) {
+    if (isIOS) {
       await _requestPermissionToNotifications(_messaging);
     }
 
@@ -401,10 +401,10 @@ class NotificationService {
       final RemoteNotification? notification = event.notification;
 
       final AndroidNotification? android =
-          Platform.isAndroid ? event.notification?.android : null;
+          isAndroid ? event.notification?.android : null;
 
       if (notification != null) {
-        if (Platform.isAndroid && android != null) {
+        if (isAndroid && android != null) {
           flutterLocalNotificationsPlugin.show(
             notification.hashCode,
             notification.title,
@@ -425,7 +425,7 @@ class NotificationService {
   }
 
   Future<String?> getDeviceToken() async {
-    if (!Platform.isAndroid && !Platform.isIOS) return 'not supported';
+    if (!isAndroid && !isIOS) return 'not supported';
     final String? deviceToken = await FirebaseMessaging.instance.getToken();
 
     log('DEVICE TOKEN :::::$deviceToken');

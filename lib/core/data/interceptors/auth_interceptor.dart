@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:dio/dio.dart';
 import 'package:meta/meta.dart';
@@ -57,7 +56,7 @@ class AuthInterceptor extends QueuedInterceptor {
     DioException err,
     ErrorInterceptorHandler handler,
   ) async {
-    if (err.response?.statusCode != HttpStatus.unauthorized) {
+    if (err.response?.statusCode != 401) {
       return handler.next(err);
     }
 
@@ -92,7 +91,7 @@ class AuthInterceptor extends QueuedInterceptor {
                 method: options.method,
                 headers: {
                   ...options.headers,
-                  HttpHeaders.authorizationHeader: freshTokens.access,
+                  'authorization': 'Bearer ${freshTokens.access}',
                 },
                 contentType: options.contentType,
                 validateStatus: (status) => true,
@@ -130,11 +129,17 @@ class AuthInterceptor extends QueuedInterceptor {
     RequestOptions options,
     RequestInterceptorHandler handler,
   ) async {
+    // Public endpoints (AllowAny): don't send token — backend JWTAuthentication
+    // returns 401 for invalid tokens before AllowAny is checked.
+    if (options.shouldSkipAuth) {
+      return handler.next(options);
+    }
+
     final token = await authLocalDs.getToken();
 
     return token.when(
       presented: (t) {
-        options.headers[HttpHeaders.authorizationHeader] = 'Bearer ${t.access}';
+        options.headers['authorization'] = 'Bearer ${t.access}';
         return handler.next(options);
       },
       undefined: () {
@@ -144,7 +149,7 @@ class AuthInterceptor extends QueuedInterceptor {
           return handler.resolve(
             Response(
               requestOptions: options,
-              statusCode: HttpStatus.preconditionFailed,
+              statusCode: 412,
               statusMessage: 'No auth token. '
                   'Auth token is required for this endpoint'
                   '(${options.path})',

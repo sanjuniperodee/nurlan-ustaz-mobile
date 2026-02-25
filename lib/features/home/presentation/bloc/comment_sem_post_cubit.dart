@@ -26,7 +26,7 @@ class CommentSemPostCubit extends Cubit<CommentSemPostState> {
     );
     failureOrUser.fold(
       (l) {
-        emit(CommentSemPostState.error(message: mapFailureToMessageBack(l)));
+        emit(CommentSemPostState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(const CommentSemPostState.loaded());

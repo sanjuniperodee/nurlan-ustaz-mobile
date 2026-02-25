@@ -20,7 +20,7 @@ class SetCityCubit extends Cubit<SetCityState> {
     final failureOrUser = await _homeRepository.setCity(geo: geo);
     failureOrUser.fold(
       (l) {
-        emit(SetCityState.error(message: mapFailureToMessageBack(l)));
+        emit(SetCityState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(SetCityState.loaded(not: r));

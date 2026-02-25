@@ -13,7 +13,6 @@ import 'package:nurlan_ustaz_flutter/core/services/connection_service.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/multibloc_wrapper.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/datasource/local/auth_local_ds.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:secure_application/secure_application.dart';
 
 class NurlanUstazApp extends StatefulWidget {
   const NurlanUstazApp({super.key});
@@ -85,12 +84,10 @@ class _NurlanUstazAppState extends State<NurlanUstazApp> {
               ),
             ),
             builder: (context, child) {
-              return SecureApplication(
-                child: MultiblocWrapper(
-                  child: ScreenUtilInit(
-                    designSize: const Size(375, 812),
-                    child: child,
-                  ),
+              return MultiblocWrapper(
+                child: ScreenUtilInit(
+                  designSize: const Size(375, 812),
+                  child: child,
                 ),
               );
             },

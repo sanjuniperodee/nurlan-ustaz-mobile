@@ -10,7 +10,6 @@ import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_butto
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/bloc/tus_zhoru_details_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/widgets/tus_zhoru_custom_body.dart';
-import 'package:secure_application/secure_gate.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../../../core/utils/pay_dialog.dart';
@@ -42,8 +41,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return SecureGate(
-      child: BlocBuilder<TusZhoruDetailsCubit, TusZhoruDetailsState>(
+    return BlocBuilder<TusZhoruDetailsCubit, TusZhoruDetailsState>(
           builder: (context, state) {
         if (state is TusZhoruDetailsLoadingState) {
           return const Scaffold(
@@ -58,7 +56,26 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
         }
         if (state is TusZhoruDetailsLoadedState) {
           final tusZhoruModel = state.tusZhoru;
-          _isFav = tusZhoruModel!.isSaved!;
+          if (tusZhoruModel == null) {
+            return Scaffold(
+              body: TusZhoruCustomBody(
+                child: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('error.information_passed_to_developers'.tr()),
+                      SizedBox(height: 16.h),
+                      AppButton(
+                        onTap: () => context.read<TusZhoruDetailsCubit>().getTusZhoruById(widget.id),
+                        text: 'retry'.tr(),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          }
+          _isFav = tusZhoruModel.isSaved ?? false;
 
           final bool isFree = tusZhoruModel.isFree == true;
           final bool isPaid = tusZhoruModel.isPurchased == true;
@@ -83,7 +100,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                             ?.toInt()
                                             .toString() ??
                                         '',
-                                    id: tusZhoruModel.id!,
+                                    id: tusZhoruModel.id ?? 0,
                                     isCustom: false,
                                   );
                                 });
@@ -181,8 +198,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                                 height: 1.5),
                                         overflow: TextOverflow.fade,
                                       ),
-                                      if (tusZhoruModel
-                                                  .isPurchased! == //не куплен
+                                      if ((tusZhoruModel.isPurchased ?? false) ==
                                               false &&
                                           tusZhoruModel.partialExplanation !=
                                               null)
@@ -209,7 +225,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                         setState(() {
                                           BlocProvider.of<TusZhoruDetailsCubit>(
                                                   context)
-                                              .likeTusZhoru(tusZhoruModel.id!);
+                                              .likeTusZhoru(tusZhoruModel.id ?? 0);
                                           _isFav = !_isFav;
                                         });
                                       },
@@ -252,7 +268,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
                                       onTap: () async {
                                         DynamicLink()
                                             .createTusZhoruLink(
-                                                tusZhoruModel.id!)
+                                                tusZhoruModel.id ?? 0)
                                             .then((unguessableDynamicLink) =>
                                                 Share.share(
                                                     unguessableDynamicLink));
@@ -306,8 +322,7 @@ class _TusZhoruDetailPage extends State<TusZhoruDetailPage> {
 
         // TODO: error widget
         return const SizedBox.shrink();
-      }),
-    );
+      });
   }
 
   void _handleScroll() {

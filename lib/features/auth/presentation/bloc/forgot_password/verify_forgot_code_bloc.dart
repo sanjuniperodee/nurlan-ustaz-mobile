@@ -1,7 +1,8 @@
 import 'package:dry_bloc/dry_bloc.dart';
 import 'package:meta/meta.dart';
-import 'package:nurlan_ustaz_flutter/features/auth/data/datasource/remote/auth_remote_ds.dart';
+import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/data/model/token_dto.dart';
+import 'package:nurlan_ustaz_flutter/features/auth/data/repository/auth_repository.dart';
 
 class VerifyForgotCodeEvent {
   const VerifyForgotCodeEvent({
@@ -18,17 +19,21 @@ typedef VerifyForgotCodeState = DrySuccessDataState<String, Object>;
 
 class VerifyForgotCodeBloc
     extends DrySuccessDataBloc<VerifyForgotCodeEvent, String, Object> {
-  VerifyForgotCodeBloc({required this.authRemoteDs}) {
-    handle<VerifyForgotCodeEvent>(
-      (event) => authRemoteDs.confirmCode(
+  VerifyForgotCodeBloc({required this.authRepository}) {
+    handle<VerifyForgotCodeEvent>((event) async {
+      final result = await authRepository.confirmCode(
         activateUserDTO: ActivateUserDTO(
           code: event.code,
           userId: event.userId,
         ),
-      ),
-    );
+      );
+      return result.fold(
+        (l) => throw Exception(mapFailureToMessage(l)),
+        (r) => r,
+      );
+    });
   }
 
   @protected
-  final AuthRemoteDs authRemoteDs;
+  final AuthRepository authRepository;
 }

@@ -18,7 +18,7 @@ class PrjInfoCubit extends Cubit<PrjInfoState> {
     final failureOrUser = await _homeRepository.projectInfo();
     failureOrUser.fold(
       (l) {
-        emit(PrjInfoState.error(message: mapFailureToMessageBack(l)));
+        emit(PrjInfoState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(PrjInfoState.loaded(res: r));

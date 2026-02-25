@@ -19,7 +19,7 @@ class SurahFavoriteCubit extends Cubit<SurahFavoriteState> {
     failureOrUser.fold(
       (l) {
         emit(
-            SurahFavoriteState.errorState(message: mapFailureToMessageBack(l)));
+            SurahFavoriteState.errorState(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(const SurahFavoriteState.loaded());

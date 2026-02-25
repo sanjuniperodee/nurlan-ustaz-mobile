@@ -21,7 +21,7 @@ class NamesOfAllahCubit extends Cubit<NamesOfAllahState> {
 
     failureOrUser.fold(
       (l) {
-        emit(NamesOfAllahState.error(message: mapFailureToMessageBack(l)));
+        emit(NamesOfAllahState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(NamesOfAllahState.loaded(names: r.toSet().toList()));

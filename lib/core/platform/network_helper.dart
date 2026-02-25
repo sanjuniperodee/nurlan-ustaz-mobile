@@ -1,11 +1,17 @@
 mixin EndPoints {
   static const testHost = '86.107.45.90';
   static const test2Host = 'dev.nurlanustaz.kz';
-  static const prodHost = 'api.nurlanimam.com';
-  static const apiUrl = 'https://$prodHost/api';
-  static const wsUrl = 'wss://$prodHost/api';
+  static const prodHost = 'api.nurlanimam.kz';
 
-  static String imgUrlBuilder(String path) => 'https://$prodHost$path';
+  // Local development — switch between local and prod by commenting/uncommenting
+  static const localHost = 'api.nurlanimam.kz';
+  static const apiUrl = 'http://$localHost/api';
+  static const wsUrl = 'ws://$localHost/api';
+  // Production:
+  // static const apiUrl = 'https://$prodHost/api';
+  // static const wsUrl = 'wss://$prodHost/api';
+
+  static String imgUrlBuilder(String path) => 'http://$localHost$path';
 
   static const String onBoarding = '/support/onboarding/';
   static const String appVersions = '/support/app-version/';
@@ -27,13 +33,7 @@ mixin EndPoints {
   static const String resetConfirmCode = '/users/reset_password_confirm_code/';
   static const String resendActivation = '/users/resend_activation/';
 
-  static const String register = '/v1/register';
-  static const String registerVerify = '/v1/verifyUserPhone';
-  static const String passwordVerify = '/v1/password-reset/verify';
-  static const String passwordUpdate = '/v1/password-reset/update';
-
   static const String newPass = '/users/set_password/';
-  static const String sendCode = '/v1/sendCode';
 
   //HOME
   static const String prayerTimes = '/islam/prayer-times/';
@@ -43,7 +43,6 @@ mixin EndPoints {
   static const String getNotification = '/notifications/notifications/';
 
   static const String setCity = '/notifications/devices/';
-  static const String banner = '/v1/banners';
   static const String faq = '/support/faq/';
   static const String prjInfo = '/support/project-info/';
   static const String seminar = '/banner/seminars/';
@@ -77,5 +76,5 @@ mixin EndPoints {
   static const String checklistDays = '/calendar/checklist-days/';
   //cards
   static const String cards = '/payment/cards/';
-  static const String addCards = '/payment/add-card/';
+  static const String addCard = '/payment/cards/add/';
 }

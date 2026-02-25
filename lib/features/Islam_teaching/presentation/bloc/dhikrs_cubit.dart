@@ -30,7 +30,7 @@ class DhikrsCubit extends Cubit<DhikrsState> {
         isFirstCall: isFirstCall);
     failureOrUser.fold(
       (l) {
-        emit(DhikrsState.error(message: mapFailureToMessageBack(l)));
+        emit(DhikrsState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(DhikrsState.loaded(dhikrs: r.toSet().toList()));

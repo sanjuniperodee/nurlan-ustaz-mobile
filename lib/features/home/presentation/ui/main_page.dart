@@ -63,7 +63,40 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    List<String> namasNames = [
+    return Scaffold(
+      backgroundColor: AppColors.lightBlue,
+      body: BlocBuilder<TimingsCubit, TimingsState>(
+        builder: (context, state) {
+          // ignore: avoid_print
+          print('MainPage: TimingsCubit state = ${state.runtimeType}');
+          return switch (state) {
+            TimingsErrorState(:final message) => ActionResultPage.error(
+                automaticallyImplyCloseButton: false,
+                automaticallyImplyPopButton: false,
+                content: message,
+                bottom: AppButton(
+                  onTap: () {
+                    context.read<TimingsCubit>().timings(43.25, 76.91667);
+                  },
+                  text: context.tr('retry'),
+                ),
+              ),
+            TimingsLoadedState() => _buildMainContent(context, state),
+            _ => const Center(
+                child: CircularProgressIndicator(color: AppColors.linearBlue),
+              ),
+          };
+        },
+      ),
+    );
+  }
+
+  Widget _buildMainContent(BuildContext context, TimingsLoadedState timingState) {
+    final not = timingState.not;
+    final geo = timingState.geo;
+    final namaz = not.toJson();
+    times = namaz.values.toList();
+    final namasNames = [
       'Fajr'.tr(),
       'Күн',
       'Zukhr'.tr(),
@@ -71,42 +104,13 @@ class _MainPageState extends State<MainPage> {
       'Maghrib'.tr(),
       'Isha'.tr()
     ];
-    List<BannerLocalModel> list = [
-      BannerLocalModel(
-        title: 'seminar'.tr(),
-        url: Assets.banner1Svg,
-      ),
-      // BannerLocalModel(
-      //   title: 'Charity'.tr(),
-      //   url: Assets.banner2Svg,
-      // ),
-      BannerLocalModel(
-        title: 'Services'.tr(),
-        url: Assets.banner3Svg,
-      ),
-      BannerLocalModel(
-        title: 'live'.tr(),
-        url: Assets.banner4Svg,
-      ),
-      BannerLocalModel(
-        title: 'shop'.tr(),
-        url: Assets.banner5Svg,
-      ),
+    final list = [
+      BannerLocalModel(title: 'seminar'.tr(), url: Assets.banner1Svg),
+      BannerLocalModel(title: 'Services'.tr(), url: Assets.banner3Svg),
+      BannerLocalModel(title: 'live'.tr(), url: Assets.banner4Svg),
+      BannerLocalModel(title: 'shop'.tr(), url: Assets.banner5Svg),
     ];
-    return Scaffold(
-      backgroundColor: AppColors.lightBlue,
-      body: BlocBuilder<TimingsCubit, TimingsState>(
-        builder: (context, state) {
-          if (state is! TimingsLoadedState) {
-            return const Center(
-              child: CircularProgressIndicator(color: AppColors.linearBlue),
-            );
-          }
-          final not = state.not;
-          final geo = state.geo;
-          final namaz = not.toJson();
-          times = namaz.values.toList();
-          return BlocBuilder<NewsMainCubit, NewsMainState>(
+    return BlocBuilder<NewsMainCubit, NewsMainState>(
             builder: (context, state) {
               return switch (state) {
                 NewsMainErrorState() => ActionResultPage.error(
@@ -526,9 +530,6 @@ class _MainPageState extends State<MainPage> {
               };
             },
           );
-        },
-      ),
-    );
   }
 
   int indexOfNextNames(List time) {

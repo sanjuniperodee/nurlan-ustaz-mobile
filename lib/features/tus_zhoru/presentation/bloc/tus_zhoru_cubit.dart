@@ -18,8 +18,8 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
     this._repository,
   ) : super(const TusZhoruState.initial());
 
-  late List<TusZhoruDTO> tosZhoruList;
-  late List<TusZhoruDTO> customTusZhoruList;
+  List<TusZhoruDTO> tosZhoruList = [];
+  List<TusZhoruDTO> customTusZhoruList = [];
 
   Future<void> toggleFav(int id) async {
     final result = await _repository.tusZhoruFavorite(id: id);
@@ -50,6 +50,7 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
     bool? isFirstCall,
     bool? isPurchased,
   }) async {
+    emit(const TusZhoruState.loading());
     final failureOrUser = await _repository.tusZhoru(
         page: page,
         isFirstCall: true,
@@ -58,14 +59,14 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
         isSaved: isSaved);
     failureOrUser.fold(
       (l) {
-        emit(TusZhoruState.error(message: mapFailureToMessageBack(l)));
-        emit(
-            TusZhoruState.initial(tusZhoruList: tosZhoruList, currentIndex: 0));
+        emit(TusZhoruState.error(message: mapFailureToMessage(l)));
+        emit(TusZhoruState.initial(
+            tusZhoruList: tosZhoruList, customTusZhoru: customTusZhoruList, currentIndex: 0));
       },
       (r) {
         tosZhoruList = r.toList();
         emit(TusZhoruState.initial(
-            tusZhoruList: r.toSet().toList(), currentIndex: 0));
+            tusZhoruList: r.toSet().toList(), customTusZhoru: customTusZhoruList, currentIndex: 0));
       },
     );
   }
@@ -86,7 +87,7 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
         isSaved: isSaved);
     failureOrUser.fold(
       (l) {
-        emit(TusZhoruState.error(message: mapFailureToMessageBack(l)));
+        emit(TusZhoruState.error(message: mapFailureToMessage(l)));
         emit(
             TusZhoruState.initial(tusZhoruList: tosZhoruList, currentIndex: 0));
       },
@@ -106,17 +107,21 @@ class TusZhoruCubit extends Cubit<TusZhoruState> {
     int? page,
     bool? isFirstCall,
   }) async {
+    emit(const TusZhoruState.loading());
     final result = await _repository.customTusZhoru(
         page: 1, isFirstCall: true, search: search);
     result.fold(
       (l) {
-        emit(TusZhoruState.error(message: mapFailureToMessageBack(l)));
-        emit(TusZhoruState.initial(customTusZhoru: [], currentIndex: 1));
+        emit(TusZhoruState.error(message: mapFailureToMessage(l)));
+        emit(TusZhoruState.initial(
+            tusZhoruList: tosZhoruList, customTusZhoru: [], currentIndex: 1));
       },
       (r) {
         customTusZhoruList = r;
         emit(TusZhoruState.initial(
-            customTusZhoru: r.toSet().toList(), currentIndex: 1));
+            tusZhoruList: tosZhoruList,
+            customTusZhoru: r.toSet().toList(),
+            currentIndex: 1));
       },
     );
   }

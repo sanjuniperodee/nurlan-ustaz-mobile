@@ -8,6 +8,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
+import 'package:nurlan_ustaz_flutter/core/widgets/action_result_widget.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/bloc/tandaulilar_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/tandaulilar/presentation/widgets/category_card.dart';
@@ -43,7 +45,20 @@ class _TandaulilarMainPageState extends State<TandaulilarMainPage> {
       backgroundColor: AppColors.lightBlue,
       body: BlocBuilder<TandaulilarCubit, TandaulilarState>(
         builder: (context, state) {
-          // TODO: error widget
+          if (state is TandaulilarErrorState) {
+            return ActionResultPage.error(
+              automaticallyImplyCloseButton: false,
+              automaticallyImplyPopButton: false,
+              content: state.message,
+              bottom: AppButton(
+                onTap: () {
+                  BlocProvider.of<TandaulilarCubit>(context)
+                      .fetchAllData(page: 1, isFirstCall: true, isSaved: true);
+                },
+                text: context.tr('retry'),
+              ),
+            );
+          }
           if (state is! TandaulilarLoadedState) {
             return const Center(
               child: CircularProgressIndicator(

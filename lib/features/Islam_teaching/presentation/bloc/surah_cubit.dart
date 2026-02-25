@@ -30,7 +30,7 @@ class SurahCubit extends Cubit<SurahState> {
         isFirstCall: isFirstCall);
     failureOrUser.fold(
       (l) {
-        emit(SurahState.error(message: mapFailureToMessageBack(l)));
+        emit(SurahState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(SurahState.loaded(sura: r.toSet().toList()));

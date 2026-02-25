@@ -19,7 +19,7 @@ class GetNotiCubit extends Cubit<GetNotiState> {
     final failureOrUser = await _homeRepository.getNotifications();
     failureOrUser.fold(
       (l) {
-        emit(GetNotiState.error(message: mapFailureToMessageBack(l)));
+        emit(GetNotiState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(GetNotiState.loaded(res: r));

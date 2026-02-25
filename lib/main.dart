@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dry_bloc/dry_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -10,10 +11,26 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:nurlan_ustaz_flutter/core/error/exception.dart';
 import 'package:nurlan_ustaz_flutter/core/services/locator_service.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/ui/nurlan_ustaz_app.dart';
 import 'package:nurlan_ustaz_flutter/firebase_options.dart';
 import 'core/services/notification_service.dart';
+
+/// Errors we do not report to Crashlytics (expected or plugin not implemented).
+bool _shouldSkipCrashlytics(Object error) {
+  if (error is ClientServerException) return true;
+  if (error is InternalServerException) return true;
+  if (error is DryFatalException) {
+    final inner = error.fatalError;
+    if (inner is ClientServerException) return true;
+    if (inner is InternalServerException) return true;
+    if (inner is MissingPluginException) return true;
+    return false;
+  }
+  if (error is MissingPluginException) return true;
+  return false;
+}
 
 Future<void> firebaseListen() async {
   FirebaseMessaging.instance.getInitialMessage();
@@ -57,8 +74,19 @@ Future<void> main() async {
       await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,
       );
-      await FirebaseCrashlytics.instance
-          .setCrashlyticsCollectionEnabled(kReleaseMode);
+      if (!kIsWeb) {
+        await FirebaseCrashlytics.instance
+            .setCrashlyticsCollectionEnabled(kReleaseMode);
+        FlutterError.onError = (errorDetails) {
+          FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
+        };
+        PlatformDispatcher.instance.onError = (error, stack) {
+          if (!_shouldSkipCrashlytics(error)) {
+            FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
+          }
+          return true;
+        };
+      }
       await FirebaseAnalytics.instance
           .setAnalyticsCollectionEnabled(kReleaseMode);
       // TODO(Radomir): Remove Firebase Dynamix Links from project, as it is deprecated
@@ -66,14 +94,6 @@ Future<void> main() async {
       // await firebaseListen();
       // await firebaseInit();
       // await checkLocationPermission();
-      FlutterError.onError = (errorDetails) {
-        FirebaseCrashlytics.instance.recordFlutterFatalError(errorDetails);
-      };
-      // Pass all uncaught asynchronous errors that aren't handled by the Flutter framework to Crashlytics
-      PlatformDispatcher.instance.onError = (error, stack) {
-        FirebaseCrashlytics.instance.recordError(error, stack, fatal: true);
-        return true;
-      };
 
       await configureDependencies();
       await EasyLocalization.ensureInitialized();
@@ -87,7 +107,9 @@ Future<void> main() async {
       runApp(const NurlanUstazApp());
     },
     (error, stack) {
-      FirebaseCrashlytics.instance.recordError(error, stack);
+      if (!kIsWeb && !_shouldSkipCrashlytics(error)) {
+        FirebaseCrashlytics.instance.recordError(error, stack);
+      }
     },
   );
 }

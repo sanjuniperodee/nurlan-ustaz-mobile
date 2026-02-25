@@ -22,7 +22,7 @@ class LoginTab extends StatefulWidget implements AutoRouteWrapper {
   @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginBloc(authRemoteDs: GetIt.I()),
+      create: (context) => LoginBloc(authRepository: GetIt.I()),
       child: this,
     );
   }

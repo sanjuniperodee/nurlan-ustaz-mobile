@@ -19,7 +19,7 @@ class PartnersCubit extends Cubit<PartnersState> {
     final failureOrUser = await _homeRepository.partners();
     failureOrUser.fold(
       (l) {
-        emit(PartnersState.error(message: mapFailureToMessageBack(l)));
+        emit(PartnersState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(PartnersState.loaded(partners: r));

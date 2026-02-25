@@ -25,7 +25,7 @@ class ServicesCubit extends Cubit<ServicesState> {
         await _homeRepository.services(page: page, isFirstCall: isFirstCall);
     failureOrUser.fold(
       (l) {
-        emit(ServicesState.error(message: mapFailureToMessageBack(l)));
+        emit(ServicesState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(ServicesState.loaded(media: r.toSet().toList()));

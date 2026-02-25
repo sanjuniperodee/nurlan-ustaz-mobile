@@ -28,16 +28,14 @@ class ChecklistTaskItem extends StatefulWidget {
   State<ChecklistTaskItem> createState() => _ChecklistTaskItemState();
 }
 
-late bool isComplete;
-late bool isLoading;
-
 class _ChecklistTaskItemState extends State<ChecklistTaskItem> {
+  late bool isComplete;
+  bool isLoading = false;
+
   @override
   void initState() {
-    isComplete = widget.task.isCompleted!;
-    isLoading = false;
-
     super.initState();
+    isComplete = widget.task.isCompleted!;
   }
 
   @override
@@ -121,19 +119,12 @@ class _ChecklistTaskItemState extends State<ChecklistTaskItem> {
                   )
                 : GestureDetector(
                     onTap: () async {
-                      setState(() {
-                        isLoading = true;
-                      });
-
-                      setState(() {
-                        context
-                            .read<CheckListCubit>()
-                            .completeTask(widget.checkListDayDto, widget.task,
-                                !widget.task.isCompleted!)
-                            .then((value) {
-                          isLoading = false;
-                        });
-                      });
+                      setState(() => isLoading = true);
+                      await context
+                          .read<CheckListCubit>()
+                          .completeTask(widget.checkListDayDto, widget.task,
+                              !widget.task.isCompleted!);
+                      if (mounted) setState(() => isLoading = false);
                     },
                     child: widget.task.isCompleted! == false
                         ? SvgPicture.asset('assets/icons/empty_eclipse.svg')

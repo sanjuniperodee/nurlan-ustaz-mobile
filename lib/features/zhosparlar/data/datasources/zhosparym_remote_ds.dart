@@ -105,7 +105,7 @@ class ZhosparymRemoteDsImpl extends ZhosparymRemoteDs {
   Future<List<CheckListDayDto>> getDays({required int checklistId}) async {
     try {
       final response =
-          await dio.get('${EndPoints.checklist}/$checklistId/days/', data: {
+          await dio.get('${EndPoints.checklist}$checklistId/days/', data: {
         'checklist_id': checklistId.toString(),
       });
       if (response.statusCode == 200) {
@@ -134,7 +134,7 @@ class ZhosparymRemoteDsImpl extends ZhosparymRemoteDs {
         "is_completed": isComplete,
       });
       final response = await dio.put(
-          '${EndPoints.checklistDays}/${checkListDayDto.id}/tasks/${checkListTaskDto.id}/',
+          '${EndPoints.checklistDays}${checkListDayDto.id}/tasks/${checkListTaskDto.id}/',
           data: formdat);
       if (response.statusCode == 200) {
         return;
@@ -152,7 +152,7 @@ class ZhosparymRemoteDsImpl extends ZhosparymRemoteDs {
       {required int checkListDayId, required int checkListTaskId}) async {
     try {
       final response = await dio.delete(
-          '${EndPoints.checklistDays}/$checkListDayId/tasks/$checkListTaskId/',
+          '${EndPoints.checklistDays}$checkListDayId/tasks/$checkListTaskId/',
           data: {
             'checklist_day_id': checkListDayId.toString(),
             'id': checkListTaskId.toString(),
@@ -173,7 +173,7 @@ class ZhosparymRemoteDsImpl extends ZhosparymRemoteDs {
       {required int checkListDayId, required String title}) async {
     try {
       final response = await dio
-          .post('${EndPoints.checklistDays}/$checkListDayId/tasks/', data: {
+          .post('${EndPoints.checklistDays}$checkListDayId/tasks/', data: {
         "checklist_day": checkListDayId,
         'title': title.toString(),
         'is_completed': false,
@@ -193,7 +193,7 @@ class ZhosparymRemoteDsImpl extends ZhosparymRemoteDs {
   Future<void> autoFill({required int checklistId}) async {
     try {
       final response = await dio.post(
-          '${EndPoints.checklist}/$checklistId/days/fill-days/',
+          '${EndPoints.checklist}$checklistId/days/fill-days/',
           data: {});
       if (response.statusCode == 201) {
         return;
@@ -212,7 +212,7 @@ class ZhosparymRemoteDsImpl extends ZhosparymRemoteDs {
       {required int checklistDayId}) async {
     try {
       final response =
-          await dio.get('${EndPoints.checklistDays}/$checklistDayId/tasks/');
+          await dio.get('${EndPoints.checklistDays}$checklistDayId/tasks/');
       if (response.statusCode == 200) {
         log(response.data.toString());
         return (response.data as List)

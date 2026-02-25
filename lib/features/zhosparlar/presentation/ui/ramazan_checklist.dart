@@ -64,6 +64,7 @@ class _RamazanChecklistPageState extends State<RamazanChecklistPage> {
             final selectedDate = state.selectedDate;
             final days = state.days;
             final tasks = state.tasks;
+            final isLoading = state.isLoading;
             final date = selectedDate ?? DateTime.now();
 
             return CalendarCustomBody(

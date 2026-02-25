@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/exception.dart';
+import 'package:nurlan_ustaz_flutter/core/model/freedom_payment_dto.dart';
 import 'package:nurlan_ustaz_flutter/core/platform/network_helper.dart';
 import 'package:nurlan_ustaz_flutter/features/home/data/models/result_home_dto.dart';
 import 'package:nurlan_ustaz_flutter/features/tus_zhoru/data/models/tus_zhoru_dto.dart';
@@ -25,8 +26,9 @@ abstract class TusZhoruRemoteDs {
 
   Future<TusZhoruDTO> createTusZhoru(
       {required String title, required String description});
-  Future<String> createCustomTusZhoruPayment({required int id});
-  Future<String> createTusZhoruPayment(
+  Future<FreedomPaymentDTO> createCustomTusZhoruPayment(
+      {required int id, required String backUrl});
+  Future<FreedomPaymentDTO> createTusZhoruPayment(
       {required int id, required String backUrl});
   Future<bool> tusZhoruFavorite({required int id});
   Future<TusZhoruDTO> getTusZhoruById({required int id});
@@ -194,15 +196,20 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
   }
 
   @override
-  Future<String> createCustomTusZhoruPayment({required int id}) async {
+  Future<FreedomPaymentDTO> createCustomTusZhoruPayment(
+      {required int id, required String backUrl}) async {
     try {
       final response = await dio.post(
-        '${EndPoints.customTusZhoru}/$id/init_purchase/',
+        '${EndPoints.customTusZhoru}$id/init_purchase/',
         data: {
-          'back_url': 'https://www.youtube.com',
+          'back_url': backUrl,
         },
       );
-      return (response.data);
+      final data = Map<String, dynamic>.from(response.data as Map);
+      if (data['pg_payment_id'] != null) {
+        data['pg_payment_id'] = data['pg_payment_id'].toString();
+      }
+      return FreedomPaymentDTO.fromJson(data);
     } on DioException catch (e) {
       throw ClientServerException(
         message:
@@ -212,16 +219,20 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
   }
 
   @override
-  Future<String> createTusZhoruPayment(
+  Future<FreedomPaymentDTO> createTusZhoruPayment(
       {required int id, required String backUrl}) async {
     try {
       final response = await dio.post(
-        '${EndPoints.tusZhoru}/$id/init_purchase/',
+        '${EndPoints.tusZhoru}$id/init_purchase/',
         data: {
           'back_url': backUrl,
         },
       );
-      return response.data;
+      final data = Map<String, dynamic>.from(response.data as Map);
+      if (data['pg_payment_id'] != null) {
+        data['pg_payment_id'] = data['pg_payment_id'].toString();
+      }
+      return FreedomPaymentDTO.fromJson(data);
     } on DioException catch (e) {
       throw ClientServerException(
         message:
@@ -234,7 +245,7 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
   Future<bool> tusZhoruFavorite({required int id}) async {
     try {
       final response = await dio.post(
-        '${EndPoints.tusZhoru}/$id/toggle_save/',
+        '${EndPoints.tusZhoru}$id/toggle_save/',
       );
       return true;
     } on DioException catch (e) {
@@ -249,7 +260,7 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
   Future<TusZhoruDTO> getTusZhoruById({required int id}) async {
     try {
       final response = await dio.get(
-        '${EndPoints.tusZhoru}/$id/',
+        '${EndPoints.tusZhoru}$id/',
       );
       return TusZhoruDTO.fromJson(response.data);
     } on DioException catch (e) {
@@ -264,7 +275,7 @@ class TusZhoruRemoteDsImpl extends TusZhoruRemoteDs {
   Future<TusZhoruDTO> getCustomTusZhoruById({required int id}) async {
     try {
       final response = await dio.get(
-        '${EndPoints.customTusZhoru}/$id/',
+        '${EndPoints.customTusZhoru}$id/',
       );
       return TusZhoruDTO.fromJson(response.data);
     } on DioException catch (e) {

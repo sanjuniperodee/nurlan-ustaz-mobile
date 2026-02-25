@@ -1,7 +1,24 @@
+import 'package:dio/dio.dart';
 import 'package:dry_bloc/dry_bloc.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:nurlan_ustaz_flutter/core/error/exception.dart';
+
+/// Extracts user-facing message from fatal error (DioException wraps ServerException in .error).
+String _messageFromFatalError(Object error, String fallback) {
+  if (error is ServerException) {
+    return error.maybeWhenServerException(
+      orElse: (_, __) => 'error.server'.tr(),
+      client: (message, statusCode) => message,
+      internal: (message, statusCode) =>
+          message.isNotEmpty ? message : 'error.server'.tr(),
+    );
+  }
+  if (error is DioException && error.error is ServerException) {
+    return _messageFromFatalError(error.error as ServerException, fallback);
+  }
+  return fallback;
+}
 
 extension SnackBarExtension on BuildContext {
   Future<SnackBarClosedReason> showSuccessSnackBar(String message) {
@@ -20,13 +37,7 @@ extension SnackBarExtension on BuildContext {
     return buildErrorCustomSnackBar(
       this,
       exc.maybeWhen(
-        fatal: (error) {
-          if (error is! ServerException) return def;
-          return error.maybeWhenServerException(
-            orElse: (_, __) => 'error.server'.tr(),
-            client: (message, statusCode) => message,
-          );
-        },
+        fatal: (error) => _messageFromFatalError(error, def),
         orElse: (_) => def,
       ),
     );

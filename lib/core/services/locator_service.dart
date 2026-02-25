@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:dio/dio.dart';
-import 'package:dio/src/dio/dio_for_native.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
@@ -25,10 +23,10 @@ Future<void> configureDependencies() async {
     ..registerFactory(() => FlutterSecureStorage())
     ..registerLazySingleton(() => sharedPreferences)
     ..registerLazySingleton<Dio>(
-      () => CustomExceptionDio(
+      () => Dio(
         BaseOptions(
           baseUrl: EndPoints.apiUrl,
-          headers: {HttpHeaders.acceptHeader: ContentType.json},
+          headers: {'Accept': 'application/json'},
         ),
       ),
     )
@@ -55,22 +53,4 @@ Future<void> configureDependencies() async {
     ),
     const ExceptionMapperInterceptor(),
   ]);
-}
-
-final class CustomExceptionDio extends DioForNative {
-  CustomExceptionDio([super.baseOptions]);
-
-  @override
-  Future<Response<T>> fetch<T>(RequestOptions requestOptions) async {
-    try {
-      return await super.fetch<T>(requestOptions);
-    } catch (e) {
-      if (e is DioException) {
-        final customException = e.error;
-        if (customException != null) throw customException;
-      }
-
-      rethrow;
-    }
-  }
 }

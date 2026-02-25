@@ -163,6 +163,9 @@ class SeminarCard extends StatelessWidget {
                         }
                       }
                     } else {
+                      if (isDialog) {
+                        Navigator.of(context).pop();
+                      }
                       mainContext.router
                           .push(SeminarDetailRoute(id: event.id!));
                     }

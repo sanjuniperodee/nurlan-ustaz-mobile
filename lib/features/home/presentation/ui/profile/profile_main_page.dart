@@ -4,15 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/widgets/action_result_widget.dart';
 import 'package:nurlan_ustaz_flutter/core/widgets/app_progress_indicator.dart';
+import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/app_button.dart';
 import 'package:nurlan_ustaz_flutter/features/app/presentation/widgets/global_custom_body_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/auth/presentation/bloc/auth_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/bloc/load_profile_bloc.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/bloc/profile_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/profile/widgets/profile_menu_item.dart';
 
-import '../../../../../core/common/app_styles.dart';
 import '../../../../../core/common/assets.dart';
 import '../../../../../core/router/app_router.dart';
 import '../../../../app/presentation/widgets/custom_app_bar.dart';
@@ -33,9 +34,17 @@ class ProfileMainPage extends StatelessWidget {
             ...userLoadState.maybeWhen(
               orElse: (_) => [AppProgressIndicatorSliver()],
               failure: (_) => [
-                ActionResultPage.error(
+                ActionResultWidget.error(
+                  automaticallyImplyPopButton: false,
+                  automaticallyImplyCloseButton: false,
                   content: 'error.information_passed_to_developers'.tr(),
-                )
+                  bottom: AppButton(
+                    onTap: () {
+                      context.read<LoadProfileBloc>().add(const LoadProfileEvent());
+                    },
+                    text: context.tr('retry'),
+                  ),
+                ),
               ],
               success: (d) {
                 final data = user ?? d;

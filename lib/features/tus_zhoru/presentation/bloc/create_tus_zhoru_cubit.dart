@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
@@ -32,12 +33,17 @@ class CreateTusZhoruCubit extends Cubit<CreateTusZhoruState> {
     final result = isCustom
         ? await _repository.createCustomTusZhoruPayment(
             id: id,
+            backUrl: tusZhoruDynamicLink,
           )
         : await _repository.createTusZhoruPayment(
             id: id, backUrl: tusZhoruDynamicLink);
     result.fold((l) {
       emit(CreateTusZhoruState.error(message: mapFailureToMessage(l)));
-    }, (r) {
+    }, (r) async {
+      if (r.pgRedirectUrl != null && r.pgRedirectUrl!.isNotEmpty) {
+        final Uri url = Uri.parse(r.pgRedirectUrl!);
+        await launchUrl(url, mode: LaunchMode.externalApplication);
+      }
       emit(const CreateTusZhoruState.success(message: ''));
     });
   }

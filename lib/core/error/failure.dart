@@ -32,12 +32,3 @@ String mapFailureToMessage(Failure failure) {
   }
 }
 
-String mapFailureToMessageBack(Failure failure) {
-  if (failure is ServerFailure) {
-    return failure.message!;
-  } else if (failure is CacheFailure) {
-    return failure.message!;
-  } else {
-    return 'Unexpected Error';
-  }
-}

@@ -27,7 +27,7 @@ class LivesCubit extends Cubit<LivesState> {
         search: search, isSaved: isSaved, page: page, isFirstCall: isFirstCall);
     failureOrUser.fold(
       (l) {
-        emit(LivesState.error(message: mapFailureToMessageBack(l)));
+        emit(LivesState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(LivesState.loaded(lives: r.toSet().toList()));

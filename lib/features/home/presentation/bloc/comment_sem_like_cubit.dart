@@ -22,7 +22,7 @@ class CommentSemLikeCubit extends Cubit<CommentSemLikeState> {
     failureOrUser.fold(
       (l) {
         emit(CommentSemLikeState.errorState(
-            message: mapFailureToMessageBack(l)));
+            message: mapFailureToMessage(l)));
       },
       (r) {
         emit(const CommentSemLikeState.loaded());

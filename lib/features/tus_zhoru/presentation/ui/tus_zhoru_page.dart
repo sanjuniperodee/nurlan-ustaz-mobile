@@ -14,6 +14,7 @@ import 'package:nurlan_ustaz_flutter/features/tus_zhoru/presentation/widgets/tus
 
 import '../../../../core/common/colors.dart';
 import '../../../../core/router/app_router.dart';
+import '../../../../core/widgets/action_result_widget.dart';
 import '../../../app/presentation/widgets/custom_app_bar.dart';
 import '../../../app/presentation/widgets/custom_snackbars.dart';
 import '../../../app/presentation/widgets/custom_tab_bar.dart';
@@ -82,6 +83,33 @@ class _TusZhoruPageState extends State<TusZhoruPage> {
         }
       },
       builder: (context, state) {
+        if (state is TusZhoruErrorState) {
+          return ActionResultPage.error(
+            automaticallyImplyCloseButton: false,
+            automaticallyImplyPopButton: false,
+            content: state.message,
+            bottom: AppButton(
+              onTap: () {
+                isSaved
+                    ? context
+                        .read<TusZhoruCubit>()
+                        .tusZhoruT(page: 1, isFirstCall: true, isSaved: true)
+                    : context
+                        .read<TusZhoruCubit>()
+                        .tusZhoruT(page: 1, isFirstCall: true);
+              },
+              text: context.tr('retry'),
+            ),
+          );
+        }
+        if (state is TusZhoruLoadingState) {
+          return const Scaffold(
+            backgroundColor: Color(0xFFECF5FF),
+            body: Center(
+              child: CircularProgressIndicator(color: AppColors.linearBlue),
+            ),
+          );
+        }
         if (state is! TusZhoruInitialPage) {
           return const SizedBox.shrink();
         }

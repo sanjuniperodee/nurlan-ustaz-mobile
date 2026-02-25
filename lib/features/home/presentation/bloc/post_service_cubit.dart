@@ -18,7 +18,7 @@ class PostServiceCubit extends Cubit<PostServiceState> {
     final failureOrUser = await _homeRepository.postImamService(id: id);
     failureOrUser.fold(
       (l) {
-        emit(PostServiceState.error(message: mapFailureToMessageBack(l)));
+        emit(PostServiceState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(PostServiceState.loaded(url: r));

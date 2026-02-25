@@ -33,12 +33,12 @@ class CodeVerificationPage extends StatefulWidget implements AutoRouteWrapper {
       providers: [
         BlocProvider(
           create: (context) => ResendActivationCodeBloc(
-            authRemoteDs: GetIt.I(),
+            authRepository: GetIt.I(),
           ),
         ),
         BlocProvider(
           create: (context) => VerifyCodeBloc(
-            authRemoteDs: GetIt.I(),
+            authRepository: GetIt.I(),
           ),
         ),
 

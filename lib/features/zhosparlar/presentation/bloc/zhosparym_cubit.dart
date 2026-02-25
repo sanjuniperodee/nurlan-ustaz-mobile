@@ -6,6 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:nurlan_ustaz_flutter/features/home/presentation/ui/ustaz_aitinizhi/data/models/chat_model.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/models/checklist_dto.dart';
+import 'package:nurlan_ustaz_flutter/core/error/failure.dart';
 import 'package:nurlan_ustaz_flutter/features/zhosparlar/data/repository/zhosparym_repository.dart';
 
 import '../../data/models/event_dto.dart';
@@ -53,10 +54,11 @@ class ZhosparymCubit extends Cubit<ZhosparymState> {
     final events = await _repository.calendarEvents(
         startTime: DateFormat('yyyy-MM-dd').format(date.copyWith(day: 1)),
         endTime: DateFormat('yyyy-MM-dd').format(lastDayDateTime));
-    events.fold((l) => {}, (r) {
-      emit(ZhosparymState.initial(
-          events: r, checklist: checklist, isLoading: false));
-    });
+    events.fold(
+      (l) => emit(ZhosparymState.error(message: mapFailureToMessage(l))),
+      (r) => emit(ZhosparymState.initial(
+          events: r, checklist: checklist, isLoading: false)),
+    );
   }
 }
 

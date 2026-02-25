@@ -23,7 +23,7 @@ class NamazDetailCubit extends Cubit<NamazDetailState> {
 
     failureOrUser.fold(
       (l) {
-        emit(NamazDetailState.error(message: mapFailureToMessageBack(l)));
+        emit(NamazDetailState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(NamazDetailState.loaded(namaz: r));

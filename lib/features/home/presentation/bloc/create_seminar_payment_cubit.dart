@@ -1,3 +1,6 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,12 +36,24 @@ class CreateSeminarPaymentCubit extends Cubit<CreateSeminarPaymentState> {
         emit(CreateSeminarPaymentState.error(message: l.toString()));
       }
     }, (r) async {
+      if (r.pgRedirectUrl != null && r.pgRedirectUrl!.isNotEmpty) {
+        final Uri url = Uri.parse(r.pgRedirectUrl!);
+        // On web, launchUrl after async gap can trigger engine assertion;
+        // defer to next frame and use platformDefault to avoid window assertion.
+        void doLaunch() async {
+          try {
+            if (kIsWeb) {
+              await launchUrl(url, mode: LaunchMode.platformDefault);
+            } else {
+              await launchUrl(url, mode: LaunchMode.externalApplication);
+            }
+          } catch (_) {
+            // Ignore launch errors (e.g. popup blocked)
+          }
+        }
+        SchedulerBinding.instance.addPostFrameCallback((_) => doLaunch());
+      }
       emit(CreateSeminarPaymentState.successPay());
-
-      // final Uri url = Uri.parse(r.pgRedirectUrl.toString());
-      // if (!await launchUrl(url, mode: LaunchMode.externalApplication)) {
-      //   throw Exception('Could not launch');
-      // }
     });
   }
 }

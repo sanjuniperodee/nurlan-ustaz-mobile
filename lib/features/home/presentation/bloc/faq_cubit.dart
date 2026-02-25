@@ -18,7 +18,7 @@ class FaqCubit extends Cubit<FaqState> {
     final failureOrUser = await _homeRepository.faq();
     failureOrUser.fold(
       (l) {
-        emit(FaqState.error(message: mapFailureToMessageBack(l)));
+        emit(FaqState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(FaqState.loaded(faq: r));

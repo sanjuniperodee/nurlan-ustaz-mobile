@@ -27,7 +27,7 @@ class NewsCubit extends Cubit<NewsState> {
         search: search, isSaved: isSaved, page: page, isFirstCall: isFirstCall);
     failureOrUser.fold(
       (l) {
-        emit(NewsState.error(message: mapFailureToMessageBack(l)));
+        emit(NewsState.error(message: mapFailureToMessage(l)));
       },
       (r) {
         emit(NewsState.loaded(news: r.toSet().toList()));

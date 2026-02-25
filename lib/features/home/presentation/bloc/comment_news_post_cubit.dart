@@ -29,7 +29,7 @@ class CommentNewsPostCubit extends Cubit<CommentNewsPostState> {
     failureOrUser.fold(
       (l) {
         emit(CommentNewsPostState.errorState(
-            message: mapFailureToMessageBack(l)));
+            message: mapFailureToMessage(l)));
       },
       (r) {
         log('1');

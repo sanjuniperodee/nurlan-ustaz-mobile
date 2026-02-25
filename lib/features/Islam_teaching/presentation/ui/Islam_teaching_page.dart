@@ -8,6 +8,7 @@ import 'package:nurlan_ustaz_flutter/core/common/app_styles.dart';
 import 'package:nurlan_ustaz_flutter/core/common/assets.dart';
 import 'package:nurlan_ustaz_flutter/core/common/colors.dart';
 import 'package:nurlan_ustaz_flutter/core/router/app_router.dart';
+import 'package:nurlan_ustaz_flutter/core/widgets/action_result_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/bloc/ayat_of_day_cubit.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/widgets/ayat_day__card_widget.dart';
 import 'package:nurlan_ustaz_flutter/features/Islam_teaching/presentation/widgets/islam_teaching_grid_view_card.dart';
@@ -36,8 +37,7 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
   @override
   void initState() {
     super.initState();
-    BlocProvider.of<AyatOfDayCubit>(context).auatOfDay();
-    BlocProvider.of<AyatOfDayCubit>(context).fatya();
+    BlocProvider.of<AyatOfDayCubit>(context).loadData();
   }
 
   @override
@@ -77,7 +77,19 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
           }
         },
         builder: (context, state) {
-          // TODO: error widget
+          if (state is AyatOfDayErrorState) {
+            return ActionResultPage.error(
+              automaticallyImplyCloseButton: false,
+              automaticallyImplyPopButton: false,
+              content: state.message,
+              bottom: AppButton(
+                onTap: () {
+                  BlocProvider.of<AyatOfDayCubit>(context).loadData();
+                },
+                text: context.tr('retry'),
+              ),
+            );
+          }
           if (state is! AyatOfDayLoadedState) {
             return const Center(
               child: CircularProgressIndicator(
@@ -141,11 +153,17 @@ class _IslamTeachingPageState extends State<IslamTeachingPage> {
                                 title: item.title,
                                 svgPicturePath: item.url,
                                 onTap: () {
-                                  item.title == 'Fatwa'.tr()
-                                      ? _launchUrl(fatyas.first.url ?? 'ERROR')
-                                      : context.router.push(
-                                          myRouteHome[index],
-                                        );
+                                  if (item.title == 'Fatwa'.tr()) {
+                                    if (fatyas.isNotEmpty &&
+                                        fatyas.first.url != null &&
+                                        fatyas.first.url!.isNotEmpty) {
+                                      _launchUrl(fatyas.first.url!);
+                                    }
+                                  } else {
+                                    context.router.push(
+                                      myRouteHome[index],
+                                    );
+                                  }
                                 },
                               );
                             },
