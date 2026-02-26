@@ -160,39 +160,58 @@ class _ProfileCardsPageState extends State<ProfileCardsPage> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              if (cards[index].cardNumber !=
-                                                  null)
-                                                Text(
-                                                  cards[index]
-                                                          .cardNumber!
+                                              Builder(
+                                                builder: (_) {
+                                                  final cardNumber =
+                                                      cards[index].cardNumber;
+                                                  if (cardNumber == null ||
+                                                      cardNumber.isEmpty) {
+                                                    return const SizedBox
+                                                        .shrink();
+                                                  }
+                                                  final title = cardNumber
                                                           .startsWith('4')
                                                       ? 'Visa'
-                                                      : cards[index]
-                                                              .cardNumber!
+                                                      : cardNumber
                                                               .startsWith('5')
                                                           ? 'MasterCard'
-                                                          : 'Карта',
-                                                  style: getTextStyle(
-                                                          CustomTextStyles
-                                                              .s14w400)
-                                                      .apply(
-                                                          color:
-                                                              AppColors.grey1,
-                                                          fontFamily: FontTypes
-                                                              .SFPro.name),
-                                                ),
+                                                          : 'Карта';
+                                                  return Text(
+                                                    title,
+                                                    style: getTextStyle(
+                                                            CustomTextStyles
+                                                                .s14w400)
+                                                        .apply(
+                                                            color: AppColors
+                                                                .grey1,
+                                                            fontFamily:
+                                                                FontTypes
+                                                                    .SFPro
+                                                                    .name),
+                                                  );
+                                                },
+                                              ),
                                               SizedBox(
                                                 height: 4.h,
                                               ),
-                                              Text(
-                                                '${cards[index].cardNumber}',
-                                                style: getTextStyle(
-                                                        CustomTextStyles
-                                                            .s16w400)
-                                                    .copyWith(
-                                                        fontFamily: FontTypes
-                                                            .SFPro.name),
-                                              )
+                                              Builder(
+                                                builder: (_) {
+                                                  final cardNumber =
+                                                      cards[index]
+                                                              .cardNumber ??
+                                                          '**** **** **** ****';
+                                                  return Text(
+                                                    cardNumber,
+                                                    style: getTextStyle(
+                                                            CustomTextStyles
+                                                                .s16w400)
+                                                        .copyWith(
+                                                            fontFamily:
+                                                                FontTypes.SFPro
+                                                                    .name),
+                                                  );
+                                                },
+                                              ),
                                             ],
                                           ),
                                         ],
